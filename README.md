@@ -1,6 +1,5 @@
-# Card Generator
-
-Card Generator allows you to create any card and generate it in JPG, JPEG or PNG format. It also allows you to download images in PDF mode.
+# Smoking tracker
+Smoking tracker is a program that allows the user to easily track the number of cigarettes smoked. It also enables the display of data on weekly, monthly and yearly graphs
 
 ## Supported languages
 - Slovenian
