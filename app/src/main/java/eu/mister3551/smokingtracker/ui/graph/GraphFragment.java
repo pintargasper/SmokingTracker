@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import eu.mister3551.smokingtracker.Utils;
 import eu.mister3551.smokingtracker.database.Manager;
 import eu.mister3551.smokingtracker.databinding.FragmentGraphBinding;
 import eu.mister3551.smokingtracker.record.DataPoint;
-import eu.mister3551.smokingtracker.record.Settings;
 import eu.mister3551.smokingtracker.ui.graph.view.GraphView;
 
 public class GraphFragment extends Fragment implements GraphInterface {
@@ -125,8 +125,8 @@ public class GraphFragment extends Fragment implements GraphInterface {
     }
 
     @Override
-    public void onPointClick(DataPoint dataPoint) {
-        //showPopup(dataPoint.getValue());
+    public void onPointClick(DataPoint dataPoint, float x, float y) {
+        showPopup(String.valueOf((int) dataPoint.value()));
     }
 
     private void showData() {
@@ -213,11 +213,11 @@ public class GraphFragment extends Fragment implements GraphInterface {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             LocalDate startOfYear = date.withDayOfYear(1);
             LocalDate endOfYear = date.withDayOfYear(date.lengthOfYear());
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             text_view_current_date_text_yearly.setText(String.valueOf(date.getYear()));
 
-            Cursor cursor = manager.fetchByYear(startOfYear.format(formatter), endOfYear.format(formatter));
+            Cursor cursor = manager.fetchByYear(startOfYear.format(dateTimeFormatter), endOfYear.format(dateTimeFormatter));
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
@@ -262,17 +262,23 @@ public class GraphFragment extends Fragment implements GraphInterface {
         showGraph(binding.getRoot(), data, dateType);
     }
 
-    /*private void showPopup(float value) {
+    //TODO It can be updated so that the popup appears above each point instead of in the middle of the screen.
+    private void showPopup(String value) {
         if (getContext() == null) {
             return;
         }
-        View popupView = getLayoutInflater().inflate(R.layout.fragment_graph_popup, null);
-        popupTextView = popupView.findViewById(R.id.popup_text_view);
-        popupTextView.setText(String.valueOf(value));
+        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.fragment_graph_popup, null);
+        PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-        popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        popupWindow.setOutsideTouchable(true);
-        popupWindow.setFocusable(true);
+        TextView textViewValue = popupView.findViewById(R.id.text_view_value);
+
+        String valueText = String.format(Locale.getDefault(), "%s: %s", getString(R.string.text_view_value), value);
+
+        textViewValue.setText(valueText);
+
         popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
-    }*/
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(popupWindow::dismiss, 1500);
+    }
 }

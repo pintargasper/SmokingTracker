@@ -296,7 +296,8 @@ public class GraphView extends View {
                 float px = 100 + i * ((float) (getWidth() - 200) / (dataPoints.size() > 1 ? dataPoints.size() - 1 : 1));
                 float py = getHeight() - 100 - dataPoints.get(i).value() * ((getHeight() - 200) / maxDataPoint);
                 if (Math.abs(x - px) <= 20 && Math.abs(y - py) <= 20) {
-                    graphInterface.onPointClick(dataPoints.get(i));
+                    graphInterface.onPointClick(dataPoints.get(i), px, py);
+                    graphInterface.onPointClick(dataPoints.get(i), px, py);
                     return true;
                 }
             }

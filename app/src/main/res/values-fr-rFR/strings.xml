@@ -35,6 +35,10 @@
     <string name="button_confirm">Confirmer</string>
     <string name="button_close">Fermer</string>
 
+    <!--fragment_graph-->
+    <string name="text_view_text">Cigarettes fumées</string>
+    <string name="text_view_value">Quantité</string>
+
     <!--fragment_graph_view -->
     <string name="str_monday">Lun</string>
     <string name="str_tuesday">Mar</string>
