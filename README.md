@@ -8,37 +8,13 @@ Smoking tracker is a program that allows the user to easily track the number of 
 - French
 
 ## App preview
+- The screenshots show parts of the app namely…
+  - Home page
+  - Graph page
+  - Settings page
 
-<style>
-  @media (max-width: 700px) {
-    .responsive-table td {
-      display: block;
-      width: 100%;
-      text-align: center;
-    }
-    .responsive-table img {
-      width: 100%;
-      height: auto;
-    }
-  }
-</style>
-
-<table class="responsive-table" align="center">
-  <tr>
-    <td style="text-align: center; padding: 10px;">
-      <img src="images/home_page.png" alt="Home page" width="200" height="410" style="max-height: 410px"/>
-      <br>
-      <span style="display: block; text-align: center;">Home page</span>
-    </td>
-    <td style="text-align: center; padding: 10px;">
-      <img src="images/graph_page.png" alt="Graph page" width="200" height="410" style="max-height: 410px"/>
-      <br>
-      <span style="display: block; text-align: center;">Graph page</span>
-    </td>
-    <td style="text-align: center; padding: 10px;">
-      <img src="images/settings_page.png" alt="Settings page" width="200" height="410" style="max-height: 410px"/>
-      <br>
-      <span style="display: block; text-align: center;">Settings page</span>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <img src="screenshots/home.png" alt="Home page" width="200" style="max-height: 410px"/>
+  <img src="screenshots/graph.png" alt="Graph page" width="200" style="max-height: 410px"/>
+  <img src="screenshots/settings.png" alt="Settings page" width="200" style="max-height: 410px"/>
+</p>
