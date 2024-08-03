@@ -36,7 +36,7 @@
     <string name="button_close">Zapri</string>
 
     <!--fragment_graph-->
-    <string name="text_view_text">Pokajene cigate</string>
+    <string name="text_view_text">Pokajene cigarete</string>
     <string name="text_view_value">Količina</string>
 
     <!--fragment_graph_view -->
