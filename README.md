@@ -9,7 +9,21 @@ Smoking tracker is a program that allows the user to easily track the number of 
 
 ## App preview
 
-<table align="center">
+<style>
+  @media (max-width: 700px) {
+    .responsive-table td {
+      display: block;
+      width: 100%;
+      text-align: center;
+    }
+    .responsive-table img {
+      width: 100%;
+      height: auto;
+    }
+  }
+</style>
+
+<table class="responsive-table" align="center">
   <tr>
     <td style="text-align: center; padding: 10px;">
       <img src="images/home_page.png" alt="Home page" width="200" height="410" style="max-height: 410px"/>
