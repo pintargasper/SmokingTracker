@@ -37,7 +37,7 @@ public class DropdownAdapter extends android.widget.ArrayAdapter<CharSequence> {
     }
 
     private View getCustomView(int position, ViewGroup parent) {
-        View convertView = LayoutInflater.from(context).inflate(R.layout.fragment_settings_dropdown_language, parent, false);
+        View convertView = LayoutInflater.from(context).inflate(R.layout.fragment_settings_dropdown, parent, false);
         ViewHolder viewHolder = new ViewHolder();
 
         viewHolder.textViewOption = convertView.findViewById(R.id.text_view_option);

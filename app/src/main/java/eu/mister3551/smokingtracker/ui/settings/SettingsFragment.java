@@ -1,23 +1,34 @@
 package eu.mister3551.smokingtracker.ui.settings;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.OpenableColumns;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -33,36 +44,73 @@ import eu.mister3551.smokingtracker.R;
 import eu.mister3551.smokingtracker.Utils;
 import eu.mister3551.smokingtracker.adapter.DropdownAdapter;
 import eu.mister3551.smokingtracker.database.Manager;
+import eu.mister3551.smokingtracker.database.download.Data;
+import eu.mister3551.smokingtracker.database.interface_.Callback;
 import eu.mister3551.smokingtracker.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
 
     private FragmentSettingsBinding binding;
     private Manager manager;
+    private Data data;
+    private ActivityResultLauncher<Intent> filePickerLauncher;
+    private Button buttonSelectFile;
+    private Uri uri;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        manager = Utils.getManager().get();
+        this.manager = Utils.getManager().get();
+        this.data = new Data(manager, this.getContext());
 
-        TextView text_view_version = root.findViewById(R.id.text_view_version);
-        Button button_select_language = root.findViewById(R.id.button_select_language);
-        Button button_select_color = root.findViewById(R.id.button_select_color);
-        Button button_select_point_color = root.findViewById(R.id.button_select_point_color);
-        Button button_select_line_color = root.findViewById(R.id.button_select_line_color);
-        Button button_select_paint_style = root.findViewById(R.id.button_select_paint_style);
+        TextView textViewVersion = root.findViewById(R.id.text_view_version);
+        TextView textViewTermsOfService = root.findViewById(R.id.text_view_terms_of_service);
+        TextView textViewPrivacyPolicy = root.findViewById(R.id.text_view_privacy_policy);
+        TextView textViewAuthor = root.findViewById(R.id.text_view_author);
+        Button buttonSelectLanguage = root.findViewById(R.id.button_select_language);
+        Button buttonSelectColor = root.findViewById(R.id.button_select_color);
+        Button buttonSelectPointColor = root.findViewById(R.id.button_select_point_color);
+        Button buttonSelectLineColor = root.findViewById(R.id.button_select_line_color);
+        Button buttonSelectPaintStyle = root.findViewById(R.id.button_select_paint_style);
+        Button buttonSelectDownload= root.findViewById(R.id.button_select_download);
+        Button buttonSelectUpload = root.findViewById(R.id.button_select_upload);
 
-        button_select_language.setOnClickListener(view -> showPopup(root.getContext(), "Language"));
-        button_select_color.setOnClickListener(view -> showPopup(root.getContext(), "Graph color"));
-        button_select_point_color.setOnClickListener(view -> showPopup(root.getContext(), "Point color"));
-        button_select_line_color.setOnClickListener(view -> showPopup(root.getContext(), "Line color"));
-        button_select_paint_style.setOnClickListener(view -> showPopup(root.getContext(), "Paint style"));
+        buttonSelectLanguage.setOnClickListener(view -> showPopup(root.getContext(), "Language"));
+        buttonSelectColor.setOnClickListener(view -> showPopup(root.getContext(), "Graph color"));
+        buttonSelectPointColor.setOnClickListener(view -> showPopup(root.getContext(), "Point color"));
+        buttonSelectLineColor.setOnClickListener(view -> showPopup(root.getContext(), "Line color"));
+        buttonSelectPaintStyle.setOnClickListener(view -> showPopup(root.getContext(), "Paint style"));
+        buttonSelectDownload.setOnClickListener(view -> showPopup(root.getContext(), "Download data"));
+        buttonSelectUpload.setOnClickListener(view -> showPopup(root.getContext(), "Upload data"));
 
-        String version = text_view_version.getText() + " " + getAppVersion(root.getContext());
-        text_view_version.setText(version);
+        String version = getAppVersion(root.getContext());
+        Spannable spannable = (Spannable) Html.fromHtml(
+                textViewVersion.getText().toString().replace("version", version)
+                        .replace(version, "<a href='" + Utils.appVersionLink + "'>" + version + "</a>"),
+                Html.FROM_HTML_MODE_LEGACY);
 
+        textViewVersion.setText(spannable);
+        textViewVersion.setMovementMethod(LinkMovementMethod.getInstance());
+        textViewVersion.setText(spannable);
+        textViewVersion.setMovementMethod(LinkMovementMethod.getInstance());
+
+        textViewVersion.setMovementMethod(LinkMovementMethod.getInstance());
+        textViewAuthor.setMovementMethod(LinkMovementMethod.getInstance());
+        textViewTermsOfService.setMovementMethod(LinkMovementMethod.getInstance());
+        textViewPrivacyPolicy.setMovementMethod(LinkMovementMethod.getInstance());
+
+        this.filePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                        uri = result.getData().getData();
+                        if (uri != null) {
+                            handleFile(uri, buttonSelectFile);
+                        }
+                    }
+                });
         return root;
     }
 
@@ -77,6 +125,8 @@ public class SettingsFragment extends Fragment {
             case "Language" -> showLanguagePopup(context);
             case "Graph color", "Line color", "Point color" -> showColorPopup(context, title);
             case "Paint style" -> showPaintStylePopup(context);
+            case "Download data" -> showDownloadDataPopup(context);
+            case "Upload data" -> showUploadDataPopup(context);
         }
     }
 
@@ -91,8 +141,8 @@ public class SettingsFragment extends Fragment {
 
         CharSequence[] languages = context.getResources().getTextArray(R.array.language_array);
 
-        DropdownAdapter adapter = new DropdownAdapter(context, R.layout.fragment_settings_dropdown_language, languages);
-        adapter.setDropDownViewResource(R.layout.fragment_settings_dropdown_language);
+        DropdownAdapter adapter = new DropdownAdapter(context, R.layout.fragment_settings_dropdown, languages);
+        adapter.setDropDownViewResource(R.layout.fragment_settings_dropdown);
         spinnerLanguage.setAdapter(adapter);
         spinnerLanguage.setSelection(getSelectedLanguageIndex());
 
@@ -140,7 +190,6 @@ public class SettingsFragment extends Fragment {
         bottomSheetDialog.setContentView(bottomSheetView);
 
         Map<Paint.Style, CheckBox> paintStyleCheckBoxMap = initializePaintStyleCheckBoxMap(bottomSheetView);
-
         setupSingleSelectionListener(paintStyleCheckBoxMap, Utils.getSettings().getGraph().getPaintStyle());
 
         Button buttonConfirm = bottomSheetView.findViewById(R.id.button_confirm);
@@ -155,6 +204,118 @@ public class SettingsFragment extends Fragment {
 
         buttonClose.setOnClickListener(view -> bottomSheetDialog.dismiss());
         bottomSheetDialog.show();
+    }
+
+    private void showDownloadDataPopup(Context context) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.fragment_settings_popup_download_data, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        Spinner spinnerFormats = bottomSheetView.findViewById(R.id.spinner_selected_format);
+
+        CharSequence[] formats = context.getResources().getTextArray(R.array.formats_array);
+
+        DropdownAdapter adapter = new DropdownAdapter(context, R.layout.fragment_settings_dropdown, formats);
+        adapter.setDropDownViewResource(R.layout.fragment_settings_dropdown);
+        spinnerFormats.setAdapter(adapter);
+
+        Button buttonDownload = bottomSheetView.findViewById(R.id.button_download);
+        Button buttonClose = bottomSheetView.findViewById(R.id.button_close);
+
+        buttonDownload.setOnClickListener(view -> {
+            showLoadingDialog(context, spinnerFormats.getSelectedItem().toString().toLowerCase(), bottomSheetDialog, false);
+        });
+
+        buttonClose.setOnClickListener(view -> bottomSheetDialog.dismiss());
+        bottomSheetDialog.show();
+    }
+
+    private void showUploadDataPopup(Context context) {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(context);
+        View bottomSheetView = getLayoutInflater().inflate(R.layout.fragment_settings_popup_upload_data, null);
+        bottomSheetDialog.setContentView(bottomSheetView);
+
+        buttonSelectFile = bottomSheetView.findViewById(R.id.button_select_file);
+        Button buttonUpload = bottomSheetView.findViewById(R.id.button_upload);
+        Button buttonClose = bottomSheetView.findViewById(R.id.button_close);
+
+        buttonSelectFile.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setType("*/*");
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            filePickerLauncher.launch(intent);
+        });
+
+        buttonUpload.setOnClickListener(view -> {
+            if (uri != null) {
+                showLoadingDialog(context, getFileExtension(getFileName(uri)), bottomSheetDialog, true);
+            }
+        });
+
+        buttonClose.setOnClickListener(view -> {
+            bottomSheetDialog.dismiss();
+        });
+        bottomSheetDialog.show();
+    }
+
+    private void showLoadingDialog(Context context, String selectedFormat, BottomSheetDialog bottomSheetDialog, boolean isUpload) {
+        BottomSheetDialog loadingDialog = new BottomSheetDialog(context);
+        View loadingView = getLayoutInflater().inflate(R.layout.fragment_loading_popup, null);
+        bottomSheetDialog.dismiss();
+        loadingDialog.setContentView(loadingView);
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
+
+        new Thread(() -> {
+            Callback callback = new Callback() {
+                @Override
+                public void onSuccess(Object object) {
+                    handleDownloadSuccess(loadingView, object, loadingDialog);
+                }
+
+                @Override
+                public void onError(String errorMessage) {
+                    handleDownloadError(loadingView, errorMessage, loadingDialog);
+                }
+            };
+
+            if (isUpload) {
+                data.upload(uri, selectedFormat, callback);
+            } else {
+                data.download(selectedFormat, callback);
+            }
+        }).start();
+    }
+
+    private void handleDownloadSuccess(View loadingView, Object object, BottomSheetDialog loadingDialog) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            updateLoadingUI(loadingView, object.toString());
+            Button buttonClose = loadingView.findViewById(R.id.button_close);
+            buttonClose.setOnClickListener(view -> {
+                loadingDialog.dismiss();
+                Utils.getMainActivity().get().recreateActivity();
+            });
+        });
+    }
+
+    private void handleDownloadError(View loadingView, String errorMessage, BottomSheetDialog loadingDialog) {
+        new Handler(Looper.getMainLooper()).post(() -> {
+            updateLoadingUI(loadingView, errorMessage);
+            Button buttonClose = loadingView.findViewById(R.id.button_close);
+            buttonClose.setOnClickListener(view -> {
+                loadingDialog.dismiss();
+            });
+        });
+    }
+
+    private void updateLoadingUI(View loadingView, String message) {
+        LinearLayout linearLayoutOnLoading = loadingView.findViewById(R.id.linear_layout_on_loading);
+        LinearLayout linearLayoutOnMessage = loadingView.findViewById(R.id.linear_layout_on_message);
+        TextView textViewResponse = loadingView.findViewById(R.id.text_view_response);
+
+        linearLayoutOnLoading.setVisibility(View.GONE);
+        linearLayoutOnMessage.setVisibility(View.VISIBLE);
+        textViewResponse.setText(message);
     }
 
     private Paint.Style getSelectedPaintStyle(Map<Paint.Style, CheckBox> paintStyleCheckBoxMap) {
@@ -291,6 +452,37 @@ public class SettingsFragment extends Fragment {
         return pointColors.stream()
                 .map(Object::toString)
                 .collect(Collectors.joining(";"));
+    }
+
+    private void handleFile(Uri fileUri, Button button) {
+        String fileName = getFileName(fileUri);
+        if (fileName != null && !fileName.isEmpty()) {
+            button.setText(fileName);
+        } else {
+            button.setText(requireContext().getString(R.string.str_unknown_file));
+        }
+    }
+
+    private String getFileName(Uri uri) {
+        String fileName = null;
+        if (Objects.equals(uri.getScheme(), "content")) {
+            try (Cursor cursor = requireContext().getContentResolver().query(uri, null, null, null, null)) {
+                if (cursor != null && cursor.moveToFirst()) {
+                    fileName = cursor.getString(cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME));
+                }
+            }
+        }
+        if (fileName == null) {
+            fileName = uri.getLastPathSegment();
+        }
+        return fileName;
+    }
+
+    private String getFileExtension(String fileName) {
+        if (fileName != null && fileName.contains(".")) {
+            return fileName.substring(fileName.lastIndexOf('.') + 1);
+        }
+        return null;
     }
 
     public static String getAppVersion(Context context) {

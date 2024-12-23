@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Smoking tracker</string>
     <string name="title_home">Home</string>
     <string name="title_graph">Graph</string>
@@ -74,8 +74,15 @@
     <string name="text_view_line_color">Line color</string>
     <string name="button_line_color_select">Select</string>
     <string name="text_view_paint_style">Paint style</string>
+    <string name="text_view_data">Data</string>
+    <string name="text_view_download">Download</string>
+    <string name="text_view_upload">Upload</string>
+    <string name="button_download_upload_select">Select</string>
     <string name="text_view_about">About</string>
-    <string name="text_view_version">Version</string>
+    <string name="text_view_version">Version: version</string>
+    <string name="text_view_terms_of_service">Terms of service: <a href="https://smoking.gasperpintar.com/files/document/termsOfService.html">Visit</a></string>
+    <string name="text_view_privacy_policy">Privacy policy: <a href="https://smoking.gasperpintar.com/files/document/privacyPolicy.html">Visit</a></string>
+    <string name="text_view_author">Author: <a href="https://gasperpintar.com/">Gašper Pintar</a></string>
     <string name="button_save">Save</string>
 
     <!--fragment_settings_popup_colors -->
@@ -95,4 +102,32 @@
         <item>Deutsch</item>
         <item>Français</item>
     </string-array>
+
+    <!--fragment_dashboard_popup -->
+    <string name="button_select_file">Select file</string>
+    <string name="button_download">Download</string>
+    <string name="button_upload">Upload</string>
+    <string name="text_view_download_data">Download data</string>
+    <string name="text_view_upload_data">Upload data</string>
+
+    <string-array name="formats_array" tools:ignore="InconsistentArrays">
+        <item>Xlsx</item>
+    </string-array>
+
+    <!--Data -->
+    <string name="str_file_name">Data</string>
+    <string name="str_something_went_wrong">Something went wrong</string>
+    <string name="str_unknown_file">Unknown file</string>
+    <string name="str_excel_file">Excel file created successfully</string>
+    <string name="str_file_error">Error creating file</string>
+    <string name="str_no_data">There is no data to export</string>
+    <string name="str_csv_file">Csv file successfully created</string>
+    <string name="str_excel_open_file">Error opening Excel file</string>
+    <string name="str_csv_open_file">Error opening Csv file</string>
+    <string name="str_data_imported">Data successfully imported</string>
+
+    <!--fragment_loading_popup -->
+    <string name="text_view_loading">Loading…</string>
+    <string name="text_view_please_wait">Please wait</string>
+    <string name="text_view_response">Response</string>
 </resources>

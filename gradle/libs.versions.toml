@@ -1,5 +1,8 @@
 [versions]
-agp = "8.4.1"
+agp = "8.5.0"
+apachePoi = "5.3.0"
+apachePoiOoxml = "5.2.3"
+itext7CoreVersion = "7.2.3"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -16,6 +19,9 @@ roomRuntime = "2.6.1"
 roomCompiler = "2.6.1"
 
 [libraries]
+apache-poi = { module = "org.apache.poi:poi", version.ref = "apachePoi" }
+apache-poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "apachePoiOoxml" }
+itextpdf-itext7-core = { module = "com.itextpdf:itext7-core", version.ref = "itext7CoreVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

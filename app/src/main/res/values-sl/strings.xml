@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Smoking tracker</string>
     <string name="title_home">Domov</string>
     <string name="title_graph">Graf</string>
@@ -74,8 +74,15 @@
     <string name="text_view_line_color">Barva črte</string>
     <string name="button_line_color_select">Izberi</string>
     <string name="text_view_paint_style">Slog barvanja</string>
+    <string name="text_view_data">Podatki</string>
+    <string name="text_view_download">Prenos</string>
+    <string name="text_view_upload">Naložitev</string>
+    <string name="button_download_upload_select">Izberi</string>
     <string name="text_view_about">O aplikaciji</string>
-    <string name="text_view_version">Različica</string>
+    <string name="text_view_version">Različica: version</string>
+    <string name="text_view_terms_of_service">Pogoji storitve: <a href="https://smoking.gasperpintar.com/files/document/termsOfService.html">Obišči</a></string>
+    <string name="text_view_privacy_policy">Politika zasebnosti: <a href="https://smoking.gasperpintar.com/files/document/privacyPolicy.html">Obišči</a></string>
+    <string name="text_view_author">Avtor: <a href="https://gasperpintar.com/">Gašper Pintar</a></string>
     <string name="button_save">Shrani</string>
 
     <!--fragment_settings_popup_colors -->
@@ -95,4 +102,32 @@
         <item>Deutsch</item>
         <item>Français</item>
     </string-array>
+
+    <!--fragment_dashboard_popup -->
+    <string name="button_select_file">Izberite datoteko</string>
+    <string name="button_download">Prenesi</string>
+    <string name="button_upload">Naloži</string>
+    <string name="text_view_download_data">Prenos podatkov</string>
+    <string name="text_view_upload_data">Naložitev podatkov</string>
+
+    <string-array name="formats_array" tools:ignore="InconsistentArrays">
+        <item>Xlsx</item>
+    </string-array>
+
+    <!-- Data -->
+    <string name="str_file_name">Podatki</string>
+    <string name="str_something_went_wrong">Nekaj je šlo narobe</string>
+    <string name="str_unknown_file">Neznana datoteka</string>
+    <string name="str_excel_file">Excel datoteka uspešno ustvarjena</string>
+    <string name="str_file_error">Napaka pri ustvarjanju datoteke</string>
+    <string name="str_no_data">Ni podatkov za izvoz</string>
+    <string name="str_csv_file">Csv datoteka uspešno ustvarjena</string>
+    <string name="str_excel_open_file">Napaka pri odpiranju Excel datoteke</string>
+    <string name="str_csv_open_file">Napaka pri odpiranju Csv datoteke</string>
+    <string name="str_data_imported">Podatki uspešno uvoženi</string>
+
+    <!--fragment_loading_popup -->
+    <string name="text_view_loading">Prenašanje…</string>
+    <string name="text_view_please_wait">Prosimo počakajte</string>
+    <string name="text_view_response">Odgovor</string>
 </resources>

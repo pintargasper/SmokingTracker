@@ -217,4 +217,120 @@ public class Queries {
                 paintStyle
         );
     }
+
+    public static String getMainData() {
+        return String.format(
+                "SELECT * FROM %s",
+                Database.MAIN_TABLE
+        );
+    }
+
+    public static String getSettingsData() {
+        return String.format(
+                "SELECT * FROM %s",
+                Database.SETTINGS_TABLE
+        );
+    }
+
+    public static String getGraphData() {
+        return String.format(
+                "SELECT * FROM %s",
+                Database.GRAPH_TABLE
+        );
+    }
+
+    public static String getHistoryData() {
+        return String.format(
+                "SELECT * FROM %s",
+                Database.HISTORY_TABLE
+        );
+    }
+
+    public static String newMainRecord(StringBuilder stringBuilder) {
+        return String.format(
+                "INSERT INTO %1$s (id_main, created_at) VALUES (%2$s)",
+                Database.MAIN_TABLE,
+                stringBuilder
+        );
+    }
+
+    public static String newSettingsRecord(StringBuilder stringBuilder) {
+        return String.format(
+                "INSERT INTO %1$s (id_settings, language) VALUES (%2$s)",
+                Database.SETTINGS_TABLE,
+                stringBuilder
+        );
+    }
+
+    public static String newGraphRecord(StringBuilder stringBuilder) {
+        return String.format(
+                "INSERT INTO %1$s (id_graph, color, point_color, line_color, paint_style) VALUES (%2$s)",
+                Database.GRAPH_TABLE,
+                stringBuilder
+        );
+    }
+
+    public static String newHistoryRecord(StringBuilder stringBuilder) {
+        return String.format(
+                "INSERT INTO %1$s (id_history, is_lent, created_at) VALUES (%2$s)",
+                Database.HISTORY_TABLE,
+                stringBuilder
+        );
+    }
+
+    public static String truncateMain() {
+        return String.format(
+                "DELETE FROM %s",
+                Database.MAIN_TABLE
+        );
+    }
+
+    public static String truncateSettings() {
+        return String.format(
+                "DELETE FROM %s",
+                Database.SETTINGS_TABLE
+        );
+    }
+
+    public static String truncateGraph() {
+        return String.format(
+                "DELETE FROM %s",
+                Database.GRAPH_TABLE
+        );
+    }
+
+    public static String truncateHistory() {
+        return String.format(
+                "DELETE FROM %s",
+                Database.HISTORY_TABLE
+        );
+    }
+
+    public static String resetMainSequence() {
+        return String.format(
+                "DELETE FROM sqlite_sequence WHERE name='%s';",
+                Database.MAIN_TABLE
+        );
+    }
+
+    public static String resetSettingsSequence() {
+        return String.format(
+                "DELETE FROM sqlite_sequence WHERE name='%s';",
+                Database.SETTINGS_TABLE
+        );
+    }
+
+    public static String resetGraphSequence() {
+        return String.format(
+                "DELETE FROM sqlite_sequence WHERE name='%s';",
+                Database.GRAPH_TABLE
+        );
+    }
+
+    public static String resetHistorySequence() {
+        return String.format(
+                "DELETE FROM sqlite_sequence WHERE name='%s';",
+                Database.HISTORY_TABLE
+        );
+    }
 }

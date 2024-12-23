@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Smoking tracker</string>
     <string name="title_home">Accueil</string>
     <string name="title_graph">Graphique</string>
@@ -74,8 +74,15 @@
     <string name="text_view_line_color">Couleur de la ligne</string>
     <string name="button_line_color_select">Sélectionner</string>
     <string name="text_view_paint_style">Style de peinture</string>
+    <string name="text_view_data">Données</string>
+    <string name="text_view_download">Téléchargement</string>
+    <string name="text_view_upload">Téléversement</string>
+    <string name="button_download_upload_select">Sélectionner</string>
     <string name="text_view_about">À propos de</string>
-    <string name="text_view_version">Version</string>
+    <string name="text_view_version">Version: version</string>
+    <string name="text_view_terms_of_service">Conditions d\'utilisation: <a href="https://smoking.gasperpintar.com/files/document/termsOfService.html">Visite</a></string>
+    <string name="text_view_privacy_policy">Politique de confidentialité: <a href="https://smoking.gasperpintar.com/files/document/privacyPolicy.html">Visite</a></string>
+    <string name="text_view_author">L\'auteur: <a href="https://gasperpintar.com/">Gašper Pintar</a></string>
     <string name="button_save">Sauvegarder</string>
 
     <!--fragment_settings_popup_colors -->
@@ -95,4 +102,32 @@
         <item>Deutsch</item>
         <item>Français</item>
     </string-array>
+
+    <!--fragment_dashboard_popup -->
+    <string name="button_select_file">Sélectionner le fichier</string>
+    <string name="button_download">Télécharger</string>
+    <string name="button_upload">Télécharger</string>
+    <string name="text_view_download_data">Télécharger les données</string>
+    <string name="text_view_upload_data">Télécharger des données</string>
+
+    <string-array name="formats_array" tools:ignore="InconsistentArrays">
+        <item>Xlsx</item>
+    </string-array>
+
+    <!--Data -->
+    <string name="str_file_name">Données</string>
+    <string name="str_something_went_wrong">Quelque chose s\'est mal passé</string>
+    <string name="str_unknown_file">Fichier inconnu</string>
+    <string name="str_excel_file">Fichier Excel créé avec succès</string>
+    <string name="str_file_error">Erreur lors de la création du fichier</string>
+    <string name="str_no_data">Il n\'y a pas de données à exporter</string>
+    <string name="str_csv_file">Fichier Csv créé avec succès</string>
+    <string name="str_excel_open_file">Erreur lors de l\'ouverture du fichier Excel</string>
+    <string name="str_csv_open_file">Erreur lors de l\'ouverture du fichier Csv</string>
+    <string name="str_data_imported">Données importées avec succès</string>
+
+    <!--fragment_loading_popup -->
+    <string name="text_view_loading">Chargement…</string>
+    <string name="text_view_please_wait">Veuillez patienter</string>
+    <string name="text_view_response">Réponse</string>
 </resources>

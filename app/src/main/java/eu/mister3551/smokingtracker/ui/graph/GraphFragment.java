@@ -262,7 +262,6 @@ public class GraphFragment extends Fragment implements GraphInterface {
         showGraph(binding.getRoot(), data, dateType);
     }
 
-    //TODO It can be updated so that the popup appears above each point instead of in the middle of the screen.
     private void showPopup(String value) {
         if (getContext() == null) {
             return;

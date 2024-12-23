@@ -109,7 +109,7 @@ public class DashboardFragment extends Fragment implements HistoryInterface {
 
     @Override
     public void onItemClick(Context context, int position) {
-        //Toast.makeText(context, "Pozicija" + position, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override

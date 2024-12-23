@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/text_view_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_download_data"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <Spinner
+            android:id="@+id/spinner_selected_format"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"/>
+
+        <Button
+            android:id="@+id/button_download"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/button_download"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/gray"
+            android:layout_marginTop="20dp"/>
+
+        <Button
+            android:id="@+id/button_close"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/button_close"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/gray"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+</ScrollView>

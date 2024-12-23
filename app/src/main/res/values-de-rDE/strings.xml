@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Smoking tracker</string>
     <string name="title_home">Zuhause</string>
     <string name="title_graph">Graph</string>
@@ -74,8 +74,15 @@
     <string name="text_view_line_color">Linienfarbe</string>
     <string name="button_line_color_select">Auswählen</string>
     <string name="text_view_paint_style">Malstil</string>
+    <string name="text_view_data">Daten</string>
+    <string name="text_view_download">Herunterladen</string>
+    <string name="text_view_upload">Hochladen</string>
+    <string name="button_download_upload_select">Auswählen</string>
     <string name="text_view_about">Über</string>
-    <string name="text_view_version">Version</string>
+    <string name="text_view_version">Version: version</string>
+    <string name="text_view_terms_of_service">Servicebedingungen: <a href="https://smoking.gasperpintar.com/files/document/termsOfService.html">Besuchen</a></string>
+    <string name="text_view_privacy_policy">Datenschutzrichtlinie: <a href="https://smoking.gasperpintar.com/files/document/privacyPolicy.html">Besuchen</a></string>
+    <string name="text_view_author">Autor: <a href="https://gasperpintar.com/">Gašper Pintar</a></string>
     <string name="button_save">Speichern</string>
 
     <!--fragment_settings_popup_colors -->
@@ -95,4 +102,32 @@
         <item>Deutsch</item>
         <item>Français</item>
     </string-array>
+
+    <!--fragment_dashboard_popup -->
+    <string name="button_select_file">Datei auswählen</string>
+    <string name="button_download">Herunterladen</string>
+    <string name="button_upload">Hochladen</string>
+    <string name="text_view_download_data">Daten herunterladen</string>
+    <string name="text_view_upload_data">Daten hochladen</string>
+
+    <string-array name="formats_array" tools:ignore="InconsistentArrays">
+        <item>Xlsx</item>
+    </string-array>
+
+    <!--Data -->
+    <string name="str_file_name">Daten</string>
+    <string name="str_something_went_wrong">Etwas ist schief gelaufen</string>
+    <string name="str_unknown_file">Unbekannte Datei</string>
+    <string name="str_excel_file">Excel-Datei erfolgreich erstellt</string>
+    <string name="str_file_error">Fehler beim Erstellen der Datei</string>
+    <string name="str_no_data">Es gibt keine Daten zum Exportieren</string>
+    <string name="str_csv_file">Csv-Datei erfolgreich erstellt</string>
+    <string name="str_excel_open_file">Fehler beim Öffnen der Excel-Datei</string>
+    <string name="str_csv_open_file">Fehler beim Öffnen der Csv-Datei</string>
+    <string name="str_data_imported">Daten erfolgreich importiert</string>
+
+    <!--fragment_loading_popup -->
+    <string name="text_view_loading">Laden…</string>
+    <string name="text_view_please_wait">Bitte warten</string>
+    <string name="text_view_response">Antwort</string>
 </resources>

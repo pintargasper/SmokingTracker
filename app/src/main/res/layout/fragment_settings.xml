@@ -24,7 +24,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingTop="16dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:background="@color/white">
@@ -195,6 +194,75 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/text_view_data"
+                    android:textSize="24sp"
+                    android:textColor="@color/black"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_view_download"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+
+                    <Button
+                        android:id="@+id/button_select_download"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:text="@string/button_download_upload_select"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/gray"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_view_upload"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:ellipsize="end"/>
+
+                    <Button
+                        android:id="@+id/button_select_upload"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:text="@string/button_download_upload_select"
+                        android:textColor="@color/black"
+                        android:backgroundTint="@color/gray"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/text_view_about"
                     android:textSize="24sp"
                     android:textColor="@color/black"
@@ -216,6 +284,63 @@
                         android:textSize="18sp"
                         android:textColor="@color/black"
                         android:maxLines="1"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:id="@+id/text_view_terms_of_service"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_view_terms_of_service"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:linksClickable="true"
+                        android:autoLink="none"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:id="@+id/text_view_privacy_policy"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_view_privacy_policy"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:linksClickable="true"
+                        android:autoLink="none"
+                        android:ellipsize="end"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="16dp">
+
+                    <TextView
+                        android:id="@+id/text_view_author"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/text_view_author"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:maxLines="1"
+                        android:linksClickable="true"
+                        android:autoLink="none"
                         android:ellipsize="end"/>
                 </LinearLayout>
             </LinearLayout>

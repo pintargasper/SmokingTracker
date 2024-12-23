@@ -8,10 +8,10 @@ android {
 
     defaultConfig {
         applicationId = "eu.mister3551.smokingtracker"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0.3"
+        versionName = "1.0.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -36,6 +36,9 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.room.common)
     implementation(libs.room.runtime)
+    implementation(libs.apache.poi)
+    implementation(libs.apache.poi.ooxml)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

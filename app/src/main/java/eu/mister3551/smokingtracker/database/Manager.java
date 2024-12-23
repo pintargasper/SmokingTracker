@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 
 import java.sql.SQLDataException;
+import java.util.List;
+
+import eu.mister3551.smokingtracker.R;
 
 public class Manager {
 
@@ -81,5 +84,50 @@ public class Manager {
 
     public void update(Paint.Style paintStyle) {
         sqLiteDatabase.execSQL(Queries.updatePaintStyle(paintStyle));
+    }
+
+    public Cursor getMainData() {
+        return sqLiteDatabase.rawQuery(Queries.getMainData(), null);
+    }
+
+    public Cursor getSettingsData() {
+        return sqLiteDatabase.rawQuery(Queries.getSettingsData(), null);
+    }
+
+    public Cursor getGraphData() {
+        return sqLiteDatabase.rawQuery(Queries.getGraphData(), null);
+    }
+
+    public Cursor getHistoryData() {
+        return sqLiteDatabase.rawQuery(Queries.getHistoryData(), null);
+    }
+
+    public String insertFromFile(List<String> mainQueries, List<String> settingsQueries, List<String> graphQueries, List<String> historyQueries) {
+        sqLiteDatabase.execSQL(Queries.truncateMain());
+        sqLiteDatabase.execSQL(Queries.truncateSettings());
+        sqLiteDatabase.execSQL(Queries.truncateGraph());
+        sqLiteDatabase.execSQL(Queries.truncateHistory());
+
+        sqLiteDatabase.execSQL(Queries.resetMainSequence());
+        sqLiteDatabase.execSQL(Queries.resetSettingsSequence());
+        sqLiteDatabase.execSQL(Queries.resetGraphSequence());
+        sqLiteDatabase.execSQL(Queries.resetHistorySequence());
+
+        for (String query : mainQueries) {
+            sqLiteDatabase.execSQL(query);
+        }
+
+        for (String query : settingsQueries) {
+            sqLiteDatabase.execSQL(query);
+        }
+
+        for (String query : graphQueries) {
+            sqLiteDatabase.execSQL(query);
+        }
+
+        for (String query : historyQueries) {
+            sqLiteDatabase.execSQL(query);
+        }
+        return context.getString(R.string.str_data_imported);
     }
 }
