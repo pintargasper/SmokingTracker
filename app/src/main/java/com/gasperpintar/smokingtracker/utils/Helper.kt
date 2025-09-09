@@ -1,11 +1,14 @@
 package com.gasperpintar.smokingtracker.utils
 
+import android.content.Context
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.Month
 import java.time.format.DateTimeFormatter
 import kotlin.to
 
@@ -25,6 +28,12 @@ object Helper {
         val startOfMonth = date.withDayOfMonth(1).atStartOfDay()
         val endOfMonth = date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX)
         return startOfMonth to endOfMonth
+    }
+
+    fun getYear(date: LocalDate): Pair<LocalDateTime, LocalDateTime> {
+        val startOfYear: LocalDateTime = date.withDayOfYear(1).atStartOfDay()
+        val endOfYear: LocalDateTime = date.withDayOfYear(date.lengthOfYear()).atTime(LocalTime.MAX)
+        return startOfYear to endOfYear
     }
 
     fun getEndOfDay(): LocalDateTime {
@@ -49,5 +58,34 @@ object Helper {
             createdAt = createdAt,
             lent = if (isLent) 1 else 0
         )
+    }
+
+    fun Context.getDayOfWeekName(dayOfWeek: DayOfWeek): String {
+        return when(dayOfWeek) {
+            DayOfWeek.MONDAY -> getString(R.string.day_monday)
+            DayOfWeek.TUESDAY -> getString(R.string.day_tuesday)
+            DayOfWeek.WEDNESDAY -> getString(R.string.day_wednesday)
+            DayOfWeek.THURSDAY -> getString(R.string.day_thursday)
+            DayOfWeek.FRIDAY -> getString(R.string.day_friday)
+            DayOfWeek.SATURDAY -> getString(R.string.day_saturday)
+            DayOfWeek.SUNDAY -> getString(R.string.day_sunday)
+        }
+    }
+
+    fun Context.getMonthName(month: Month): String {
+        return when(month) {
+            Month.JANUARY -> getString(R.string.month_january)
+            Month.FEBRUARY -> getString(R.string.month_february)
+            Month.MARCH -> getString(R.string.month_march)
+            Month.APRIL -> getString(R.string.month_april)
+            Month.MAY -> getString(R.string.month_may)
+            Month.JUNE -> getString(R.string.month_june)
+            Month.JULY -> getString(R.string.month_july)
+            Month.AUGUST -> getString(R.string.month_august)
+            Month.SEPTEMBER -> getString(R.string.month_september)
+            Month.OCTOBER -> getString(R.string.month_october)
+            Month.NOVEMBER -> getString(R.string.month_november)
+            Month.DECEMBER -> getString(R.string.month_december)
+        }
     }
 }

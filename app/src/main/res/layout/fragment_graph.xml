@@ -1,22 +1,237 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.graph.GraphFragment">
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_graph_weekly"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/graph_weekly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/graph_weekly"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"/>
+
+                <com.gasperpintar.smokingtracker.ui.view.GraphView
+                    android:id="@+id/graph_view_weekly"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"/>
+
+                <LinearLayout
+                    android:id="@+id/graph_controls_weekly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:padding="4dp">
+
+                    <ImageButton
+                        android:id="@+id/previous_day_weekly"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/graph_previous_day_weakly"
+                        android:src="@drawable/ic_outline_arrow_back"
+                        app:tint="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/current_date_weekly"
+                        android:layout_width="160dp"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:text="@string/graph_weekly_date"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textAlignment="center"/>
+
+                    <ImageButton
+                        android:id="@+id/next_day_weekly"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/graph_next_day_weakly"
+                        android:src="@drawable/ic_outline_arrow_forward"
+                        app:tint="?attr/colorOnSurface"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_graph_monthly"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/card_graph_weekly"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/graph_monthly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/graph_monthly"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"/>
+
+                <com.gasperpintar.smokingtracker.ui.view.GraphView
+                    android:id="@+id/graph_view_monthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"/>
+
+                <LinearLayout
+                    android:id="@+id/graph_controls_monthly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:padding="4dp">
+
+                    <ImageButton
+                        android:id="@+id/previous_day_monthly"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/graph_previous_day_monthly"
+                        android:src="@drawable/ic_outline_arrow_back"
+                        app:tint="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/current_date_monthly"
+                        android:layout_width="160dp"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:text="@string/graph_monthly_date"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textAlignment="center"/>
+
+                    <ImageButton
+                        android:id="@+id/next_day_monthly"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/graph_next_day_monthly"
+                        android:src="@drawable/ic_outline_arrow_forward"
+                        app:tint="?attr/colorOnSurface"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_graph_yearly"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:layout_constraintTop_toBottomOf="@id/card_graph_monthly"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/graph_yearly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/graph_yearly"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:gravity="center"
+                    android:layout_marginBottom="8dp"/>
+
+                <com.gasperpintar.smokingtracker.ui.view.GraphView
+                    android:id="@+id/graph_view_yearly"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"/>
+
+                <LinearLayout
+                    android:id="@+id/graph_controls_yearly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:padding="4dp">
+
+                    <ImageButton
+                        android:id="@+id/previous_day_yearly"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/graph_previous_day_yearly"
+                        android:src="@drawable/ic_outline_arrow_back"
+                        app:tint="?attr/colorOnSurface"/>
+
+                    <TextView
+                        android:id="@+id/current_date_yearly"
+                        android:layout_width="160dp"
+                        android:layout_height="48dp"
+                        android:gravity="center"
+                        android:text="@string/graph_yearly_date"
+                        android:textAppearance="?attr/textAppearanceHeadline6"
+                        android:textAlignment="center"/>
+
+                    <ImageButton
+                        android:id="@+id/next_day_yearly"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/graph_next_day_yearly"
+                        android:src="@drawable/ic_outline_arrow_forward"
+                        app:tint="?attr/colorOnSurface"/>
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
