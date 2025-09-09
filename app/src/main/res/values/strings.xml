@@ -37,6 +37,25 @@
     <string name="history_container_edit">Edit record</string>
     <string name="history_container_delete">Delete record</string>
 
+    <string name="settings_category_general">General</string>
+    <string name="settings_category_theme">Theme</string>
+    <string name="settings_category_language">Language</string>
+    <string name="settings_category_notifications">Notifications</string>
+    <string name="settings_theme_light">Light theme</string>
+    <string name="settings_theme_dark">Dark theme</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_language_system">System</string>
+    <string name="settings_language_en" translatable="false">English</string>
+    <string name="settings_language_sl" translatable="false">Slovenščina</string>
+    <string name="settings_category_data">Data</string>
+    <string name="settings_category_data_download_upload">Download/Upload</string>
+    <string name="settings_category_data_action">Open</string>
+    <string name="settings_category_data_about">About</string>
+    <string name="settings_category_data_version">Version %1$s</string>
+    <string name="settings_category_data_version_url" translatable="false">https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker</string>
+    <string name="settings_category_data_website">Website</string>
+    <string name="settings_category_data_website_url" translatable="false">https://smoking.gasperpintar.com</string>
+
     <string name="insert_popup_message">Add record</string>
     <string name="insert_popup_lent">Was this cigarette lent?</string>
     <string name="insert_popup_insert">Add</string>
@@ -50,6 +69,13 @@
     <string name="delete_popup_message">Are you sure to delete this record?</string>
     <string name="delete_popup_confirm">Confirm</string>
     <string name="delete_popup_close">Close</string>
+
+    <string name="download_upload_popup">Download/Upload</string>
+    <string name="download_upload_popup_open">Open File</string>
+    <string name="download_upload_popup_confirm">Confirm</string>
+    <string name="download_upload_popup_close">Close</string>
+    <string name="download_upload_popup_download">Download</string>
+    <string name="download_upload_popup_upload">Upload</string>
 
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>
@@ -71,4 +97,9 @@
     <string name="month_october">October</string>
     <string name="month_november">November</string>
     <string name="month_december">December</string>
+
+    <string name="notification_title">Time for break</string>
+    <string name="notification_content">It\'s been %1$s since your last cigarette</string>
+    <string name="notification_time_format_hours" translatable="false">%1$dh %2$dm %3$ds</string>
+    <string name="notification_time_format_minutes" translatable="false">%1$dm %2$ds</string>
 </resources>

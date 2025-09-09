@@ -11,10 +11,10 @@ object Provider {
     fun getDatabase(context: Context): AppDatabase {
         return databaseInstance ?: synchronized(this) {
             val instance = Room.databaseBuilder(
-                context.applicationContext,
-                AppDatabase::class.java,
-                "smoking_tracker_db"
-            ).build()
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "smoking_tracker_db"
+                    ).build()
             databaseInstance = instance
             instance
         }
