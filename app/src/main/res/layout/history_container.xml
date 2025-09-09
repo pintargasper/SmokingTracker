@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_record"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="?attr/colorSurface"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/timer_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/history_container_timer_label"
+            android:textSize="16sp"
+            android:textColor="?attr/colorOnSurface"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/lent"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <ImageButton
+            android:id="@+id/lent"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/history_container_lent"
+            android:src="@drawable/ic_lent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:visibility="visible"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/timer_label"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/image_button_edit"
+            app:tint="?attr/colorOnSurface"/>
+
+        <ImageButton
+            android:id="@+id/image_button_edit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/history_container_edit"
+            android:src="@drawable/ic_edit"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/lent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/delete"
+            app:tint="?attr/colorOnSurface"/>
+
+        <ImageButton
+            android:id="@+id/delete"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/history_container_delete"
+            android:src="@drawable/ic_delete"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginStart="8dp"
+            app:layout_constraintStart_toEndOf="@id/image_button_edit"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="?attr/colorOnSurface"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

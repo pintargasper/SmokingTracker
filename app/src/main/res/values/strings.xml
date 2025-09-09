@@ -3,4 +3,36 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Graph</string>
     <string name="title_notifications">Settings</string>
+
+    <string name="home_timer_label" translatable="false">%1$02d:%2$02d:%3$02d</string>
+    <string name="home_timer_message">Time past after last cigarette</string>
+    <string name="home_daily_label">Daily</string>
+    <string name="home_daily_value" translatable="false">0</string>
+    <string name="home_weekly_label">Weekly</string>
+    <string name="home_weekly_value" translatable="false">0</string>
+    <string name="home_monthly_label">Monthly</string>
+    <string name="home_monthly_value" translatable="false">0</string>
+    <string name="home_current_date_format" translatable="false">%1$02d.%2$02d.%3$d</string>
+    <string name="home_previous_day">Previous day</string>
+    <string name="home_next_day">Next day</string>
+    <string name="home_add_entry">Add new smoking entry</string>
+
+    <string name="history_container_timer_label" translatable="false">00:00:00</string>
+    <string name="history_container_lent">Lent record</string>
+    <string name="history_container_edit">Edit record</string>
+    <string name="history_container_delete">Delete record</string>
+
+    <string name="insert_popup_message">Add record</string>
+    <string name="insert_popup_lent">Was this cigarette lent?</string>
+    <string name="insert_popup_insert">Add</string>
+    <string name="insert_popup_close">Close</string>
+
+    <string name="edit_popup_message">Date and time</string>
+    <string name="edit_popup_lent">Was this cigarette lent?</string>
+    <string name="edit_popup_confirm">Confirm</string>
+    <string name="edit_popup_close">Close</string>
+
+    <string name="delete_popup_message">Are you sure to delete this record?</string>
+    <string name="delete_popup_confirm">Confirm</string>
+    <string name="delete_popup_close">Close</string>
 </resources>
