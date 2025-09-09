@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#000000</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <color name="secondary">#000000</color>
+    <color name="on_secondary">#FFFFFF</color>
+
+    <color name="background">#FFFFFF</color>
+    <color name="on_background">#000000</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="on_surface">#000000</color>
+
+    <color name="error">#B00020</color>
+    <color name="on_error">#FFFFFF</color>
+</resources>
