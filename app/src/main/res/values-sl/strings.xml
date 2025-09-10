@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">SmokingTracker</string>
-
-    <string name="title_home">Domov</string>
-    <string name="title_dashboard">Graf</string>
-    <string name="title_notifications">Nastavitve</string>
-</resources>

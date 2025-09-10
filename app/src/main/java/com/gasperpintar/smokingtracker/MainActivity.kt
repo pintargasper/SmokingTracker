@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -17,6 +18,7 @@ import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 
@@ -24,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var permissionsHelper: Permissions
+    lateinit var permissionsHelper: Permissions
     lateinit var database: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,14 +50,19 @@ class MainActivity : AppCompatActivity() {
                 scheduleNotificationWorker()
             }
         }
+
+        lifecycleScope.launch {
+            val settings = database.settingsDao().getSettings()
+            applyTheme(themeId = settings?.theme ?: 0)
+        }
     }
 
     private fun scheduleNotificationWorker() {
         val workManager = WorkManager.getInstance(context = this)
 
         val periodicWorkRequest = PeriodicWorkRequestBuilder<Worker>(
-            repeatInterval = 15,
-            repeatIntervalTimeUnit = TimeUnit.MINUTES
+            repeatInterval = 1,
+            repeatIntervalTimeUnit = TimeUnit.HOURS
         ).build()
 
         workManager.enqueueUniquePeriodicWork(

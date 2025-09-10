@@ -20,13 +20,15 @@ interface HistoryDao {
     @Delete
     suspend fun delete(history: HistoryEntity)
 
-    @Query("SELECT * FROM history WHERE createdAt <= :endOfToday AND lent = 0 ORDER BY createdAt DESC LIMIT 1")
+    @Query(value = "SELECT * FROM history WHERE createdAt <= :endOfToday AND lent = 0 ORDER BY createdAt DESC LIMIT 1")
     suspend fun getLastHistoryEntry(endOfToday: LocalDateTime): HistoryEntity?
 
-    @Query("SELECT * FROM history WHERE createdAt BETWEEN :start AND :end ORDER BY createdAt DESC")
+    @Query(value = "SELECT * FROM history WHERE createdAt BETWEEN :start AND :end ORDER BY createdAt DESC")
     suspend fun getHistoryBetween(start: LocalDateTime, end: LocalDateTime): List<HistoryEntity>
 
-    @Query("SELECT COUNT(*) FROM history WHERE createdAt BETWEEN :start AND :end")
+    @Query(value = "SELECT COUNT(*) FROM history WHERE createdAt BETWEEN :start AND :end")
     suspend fun getHistoryCountBetween(start: LocalDateTime, end: LocalDateTime): Int
 
+    @Query(value = "SELECT * FROM history")
+    suspend fun getHistory(): List<HistoryEntity>
 }

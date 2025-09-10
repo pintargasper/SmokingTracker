@@ -102,4 +102,10 @@
     <string name="notification_content">It\'s been %1$s since your last cigarette</string>
     <string name="notification_time_format_hours" translatable="false">%1$dh %2$dm %3$ds</string>
     <string name="notification_time_format_minutes" translatable="false">%1$dm %2$ds</string>
+    <string name="notification_download_title">Download Completed</string>
+    <string name="notification_download_content">File %1$s was successfully downloaded</string>
+    <string name="notification_upload_title">Upload Completed</string>
+    <string name="notification_upload_content">Data successfully loaded</string>
+    <string name="notification_upload_failed_title">Upload Failed</string>
+    <string name="notification_upload_failed_content">Error loading file</string>
 </resources>
