@@ -173,6 +173,14 @@ class GraphFragment : Fragment() {
             }
         }
 
+        val intervalViewsAndStrings = mapOf(
+            GraphInterval.WEEKLY to Pair(binding.graphWeekly, R.string.graph_weekly),
+            GraphInterval.MONTHLY to Pair(binding.graphMonthly, R.string.graph_monthly),
+            GraphInterval.YEARLY to Pair(binding.graphYearly, R.string.graph_yearly)
+        )
+        val (currentTextView, stringResId) = intervalViewsAndStrings[interval]!!
+        currentTextView.text = getString(stringResId, historyList.size)
+
         val currentGraphView = when (interval) {
             GraphInterval.WEEKLY -> binding.graphViewWeekly
             GraphInterval.MONTHLY -> binding.graphViewMonthly
