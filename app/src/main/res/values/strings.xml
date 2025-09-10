@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">SmokingTracker</string>
+    <string name="app_name" translatable="false">Smoking Tracker</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Graph</string>
     <string name="title_notifications">Settings</string>
@@ -15,7 +15,7 @@
     <string name="home_current_date_format" translatable="false">%1$02d.%2$02d.%3$d</string>
     <string name="home_previous_day">Previous day</string>
     <string name="home_next_day">Next day</string>
-    <string name="home_add_entry">Add new smoking entry</string>
+    <string name="home_add_entry">Add new entry</string>
 
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
     <string name="graph_monthly">Monthly Overview (%1$d)</string>
@@ -23,12 +23,12 @@
     <string name="graph_weekly_date" translatable="false">%1$d.%2$d/%3$d.%4$d %5$d</string>
     <string name="graph_monthly_date" translatable="false">%1$s %2$d</string>
     <string name="graph_yearly_date" translatable="false">%1$d</string>
-    <string name="graph_previous_day_weakly">Previous Day Weekly</string>
-    <string name="graph_previous_day_monthly">Previous Day Monthly</string>
-    <string name="graph_previous_day_yearly">Previous Day Yearly</string>
-    <string name="graph_next_day_weakly">Next Day Weekly</string>
-    <string name="graph_next_day_monthly">Next Day Monthly</string>
-    <string name="graph_next_day_yearly">Next Day Yearly</string>
+    <string name="graph_previous_day_weakly">Previous day (Weekly)</string>
+    <string name="graph_previous_day_monthly">Previous day (Monthly)</string>
+    <string name="graph_previous_day_yearly">Previous day (Yearly)</string>
+    <string name="graph_next_day_weakly">Next day (Weekly)</string>
+    <string name="graph_next_day_monthly">Next day (Monthly)</string>
+    <string name="graph_next_day_yearly">Next day (Yearly)</string>
 
     <string name="graph_view_info">There is no data to display the graph</string>
 
@@ -57,12 +57,12 @@
     <string name="settings_category_data_website_url" translatable="false">https://smoking.gasperpintar.com</string>
 
     <string name="insert_popup_message">Add record</string>
-    <string name="insert_popup_lent">Was this cigarette lent?</string>
+    <string name="insert_popup_lent">A lent cigarette?</string>
     <string name="insert_popup_insert">Add</string>
     <string name="insert_popup_close">Close</string>
 
     <string name="edit_popup_message">Date and time</string>
-    <string name="edit_popup_lent">Was this cigarette lent?</string>
+    <string name="edit_popup_lent">A lent cigarette?</string>
     <string name="edit_popup_confirm">Confirm</string>
     <string name="edit_popup_close">Close</string>
 
@@ -71,7 +71,7 @@
     <string name="delete_popup_close">Close</string>
 
     <string name="download_upload_popup">Download/Upload</string>
-    <string name="download_upload_popup_open">Open File</string>
+    <string name="download_upload_popup_open">Open file</string>
     <string name="download_upload_popup_confirm">Confirm</string>
     <string name="download_upload_popup_close">Close</string>
     <string name="download_upload_popup_download">Download</string>
@@ -102,9 +102,9 @@
     <string name="notification_content">It\'s been %1$s since your last cigarette</string>
     <string name="notification_time_format_hours" translatable="false">%1$dh %2$dm %3$ds</string>
     <string name="notification_time_format_minutes" translatable="false">%1$dm %2$ds</string>
-    <string name="notification_download_title">Download Completed</string>
+    <string name="notification_download_title">Download completed</string>
     <string name="notification_download_content">File %1$s was successfully downloaded</string>
-    <string name="notification_upload_title">Upload Completed</string>
+    <string name="notification_upload_title">Upload completed</string>
     <string name="notification_upload_content">Data successfully loaded</string>
     <string name="notification_upload_failed_title">Upload Failed</string>
     <string name="notification_upload_failed_content">Error loading file</string>
