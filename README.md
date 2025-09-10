@@ -59,7 +59,7 @@ The app also supports **automatic backups** if enabled on the device, and featur
 
 ```shell
 # 1️⃣ Clone repository
-git clone [https://github.com/YourUsername/SmokingTracker.git](https://github.com/pintargasper/SmokingTracker.git)
+git clone [https://github.com/pintargasper/SmokingTracker.git](https://github.com/pintargasper/SmokingTracker.git)
 cd SmokingTracker
 
 # 2️⃣ Open project in Android Studio
