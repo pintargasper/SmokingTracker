@@ -11,8 +11,8 @@ The following table lists which versions of Smoking Tracker are currently suppor
 
 ## Reporting a Vulnerability
 
-Smoking Tracker does not use servers or store any data online
-All user data remains locally on the device, which minimizes security risks
+- Smoking Tracker does not use servers or store any data online
+- All user data remains locally on the device, which minimizes security risks
 
 If you believe you have found a security issue (e.g., related to data storage, app permissions, or dependency vulnerabilities), please report it by opening a new **GitHub Issue** in this repository
 
