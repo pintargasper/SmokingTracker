@@ -14,6 +14,7 @@ import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.cardview.widget.CardView
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
@@ -25,6 +26,8 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.utils.Manager
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import java.util.Locale
 
 class SettingsFragment : Fragment() {
 
@@ -54,23 +57,39 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        val notificationsEnabled = areNotificationsEnabled()
+        binding.switchNotifications.isChecked = notificationsEnabled &&
+                (runBlocking { database.settingsDao().getSettings()?.notifications } == 1)
+    }
+
     private fun setupUI() {
-        lifecycleScope.launch {
-            val settingsDao = database.settingsDao()
-            val currentSettings = settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
-            applySettingsToUI(currentSettings)
-            setupListeners(currentSettings)
+        val settingsDao = database.settingsDao()
+        val currentSettings: SettingsEntity = runBlocking {
+            settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
         }
+
+        applySettingsToUI(currentSettings)
+        setupListeners(currentSettings)
 
         binding.buttonDataAction.setOnClickListener { showDataDialog() }
     }
 
-    private suspend fun insertDefaultSettings(settingsDao: SettingsDao) =
-        SettingsEntity(id = 0L, theme = 0, language = 0, notifications = 1).also {
-            settingsDao.insert(settingsEntity = it)
-        }
+    private fun areNotificationsEnabled(): Boolean {
+        return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+    }
 
-    private fun applySettingsToUI(settings: SettingsEntity) = with(binding) {
+    private suspend fun insertDefaultSettings(settingsDao: SettingsDao): SettingsEntity {
+        return SettingsEntity(
+            id = 0L,
+            theme = 0,
+            language = getDefaultLanguageIndex(),
+            notifications = if (areNotificationsEnabled()) 1 else 0
+        ).also { settingsDao.insert(settingsEntity = it) }
+    }
+
+    private fun applySettingsToUI(settings: SettingsEntity) = with(receiver = binding) {
         spinnerTheme.setSelection(settings.theme)
         spinnerLanguage.setSelection(settings.language)
         switchNotifications.isChecked = settings.notifications == 1
@@ -85,26 +104,53 @@ class SettingsFragment : Fragment() {
 
         spinnerLanguage.setupSpinnerListener(currentValue = settings.language) { newValue ->
             updateSettings(settings = settings.copy(language = newValue)) {
-                requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE).edit {
-                    putInt(PREF_LANGUAGE, newValue)
-                }
+                requireContext()
+                    .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                    .edit {
+                        putInt(PREF_LANGUAGE, newValue)
+                    }
                 requireActivity().recreate()
             }
         }
 
         switchNotifications.setOnCheckedChangeListener { _, isChecked ->
             lifecycleScope.launch {
-                updateSettings(settings = settings.copy(notifications = if (isChecked) 1 else 0))
+                val notificationsCurrentlyEnabled = areNotificationsEnabled()
+                if (isChecked) {
+                    if (!notificationsCurrentlyEnabled) {
+                        switchNotifications.isChecked = false
+                        openNotificationSettings()
+                    } else updateSettings(settings = settings.copy(notifications = 1))
+                } else updateSettings(settings = settings.copy(notifications = 0))
             }
         }
     }
 
     private fun Spinner.setupSpinnerListener(currentValue: Int, onChange: suspend (Int) -> Unit) {
         setSelection(currentValue)
+
+        var lastSelectedPosition = currentValue
+        var isFirstSelection = true
+
         onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                lifecycleScope.launch { onChange(position) }
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                if (isFirstSelection) {
+                    isFirstSelection = false
+                    lastSelectedPosition = position
+                    return
+                }
+
+                if (position != lastSelectedPosition) {
+                    lastSelectedPosition = position
+                    lifecycleScope.launch { onChange(position) }
+                }
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
     }
@@ -138,6 +184,7 @@ class SettingsFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 cardOpenFile.visibility = if (position == 1) View.VISIBLE else View.GONE
             }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 cardOpenFile.visibility = View.GONE
             }
@@ -167,10 +214,7 @@ class SettingsFragment : Fragment() {
             }
             dialog.dismiss()
         }
-
-        buttonClose.setOnClickListener {
-            dialog.dismiss()
-        }
+        buttonClose.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
 
@@ -194,6 +238,23 @@ class SettingsFragment : Fragment() {
 
     private fun openUrl(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+    }
+
+    private fun getDefaultLanguageIndex(): Int {
+        val systemLanguageCode = Locale.getDefault().language
+        return when(systemLanguageCode) {
+            "en" -> 1
+            "sl" -> 2
+            else -> 0
+        }
+    }
+
+    private fun openNotificationSettings() {
+        val intent = Intent().apply {
+            action = "android.settings.APP_NOTIFICATION_SETTINGS"
+            putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+        }
+        startActivity(intent)
     }
 
     override fun onDestroyView() {

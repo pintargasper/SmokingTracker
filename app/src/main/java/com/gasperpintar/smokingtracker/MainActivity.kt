@@ -21,6 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,24 +42,33 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         navigationView.setupWithNavController(navController)
 
-        database = Provider.getDatabase(context = this)
-        permissionsHelper = Permissions(activity = this)
-
-        permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
-            if (isGranted) {
-                Notifications.createNotificationChannel(context = this)
-                scheduleNotificationWorker()
-            }
-        }
+        database = Provider.getDatabase(context = this@MainActivity)
+        permissionsHelper = Permissions(activity = this@MainActivity)
 
         lifecycleScope.launch {
             val settings = database.settingsDao().getSettings()
             applyTheme(themeId = settings?.theme ?: 0)
+
+            val sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+            val isFirstRun = sharedPreferences.getBoolean("first_run", true)
+
+            if (isFirstRun || settings?.notifications == 1) {
+                permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
+                    if (isGranted) {
+                        Notifications.createNotificationChannel(this@MainActivity)
+                        scheduleNotificationWorker()
+                    }
+                }
+
+                if (isFirstRun) {
+                    sharedPreferences.edit { putBoolean("first_run", false) }
+                }
+            }
         }
     }
 
     private fun scheduleNotificationWorker() {
-        val workManager = WorkManager.getInstance(context = this)
+        val workManager = WorkManager.getInstance(context = this@MainActivity)
 
         val periodicWorkRequest = PeriodicWorkRequestBuilder<Worker>(
             repeatInterval = 1,
@@ -85,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         val languageId = sharedPreferences.getInt("language", 0)
         val supportedLanguages = newBase.resources.getStringArray(R.array.language_values)
 
-        val selectedLanguage = supportedLanguages.getOrNull(languageId) ?: "system"
+        val selectedLanguage = supportedLanguages.getOrNull(index = languageId) ?: "system"
 
         val locale: Locale =
             if (selectedLanguage == "system") newBase.resources.configuration.locales.get(0)
