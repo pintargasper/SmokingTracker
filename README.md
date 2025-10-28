@@ -12,7 +12,7 @@
 ---
 <div align="center">
 
-[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Website-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://smoking.gasperpintar.com)
+[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Website-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
 
 [![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Download-lightgray?style=for-the-badge&logo=download&logoColor=white)](https://github.com/pintargasper/SmokingTracker/releases/latest)
 [![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Google%20play-lightgray?style=for-the-badge&logo=download&logoColor=white)](https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker)
