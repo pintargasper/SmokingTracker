@@ -22,7 +22,7 @@
     <string name="graph_view_info">Ni podatkov za prikaz grafa</string>
     <string name="history_container_lent">Posodi vnos</string>
     <string name="history_container_edit">Uredi vnos</string>
-    <string name="history_container_delete">izbriši vnos</string>
+    <string name="history_container_delete">Izbriši vnos</string>
     <string name="settings_category_general">Splošno</string>
     <string name="settings_category_theme">Tema</string>
     <string name="settings_category_language">Jezik</string>
