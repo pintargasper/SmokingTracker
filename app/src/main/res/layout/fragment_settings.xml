@@ -296,6 +296,76 @@
                         android:singleLine="true"
                         android:scrollHorizontally="false"/>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/translations_website_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="?attr/actionBarSize">
+
+                    <TextView
+                        android:id="@+id/translations_website"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_category_data_translations_website"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:layout_marginBottom="2dp"/>
+
+                    <TextView
+                        android:id="@+id/translations_website_service_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_category_data_translations_website_url"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:scrollHorizontally="false"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/privacy_policy_url"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="?attr/actionBarSize">
+
+                    <TextView
+                        android:id="@+id/privacy_policy"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_category_data_privacy_policy"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:layout_marginBottom="2dp"/>
+
+                    <TextView
+                        android:id="@+id/privacy_policy_service_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_category_data_privacy_policy_url"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:scrollHorizontally="false"/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

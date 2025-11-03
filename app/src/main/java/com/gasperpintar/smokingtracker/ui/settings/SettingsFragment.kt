@@ -229,6 +229,8 @@ class SettingsFragment : Fragment() {
 
             setupLink(view = versionUrl, url = getString(R.string.settings_category_data_version_url))
             setupLink(view = websiteUrl, url = getString(R.string.settings_category_data_website_url))
+            setupLink(view = translationsWebsiteUrl, url = "https://translate.gasperpintar.com/projects/smokingtracker")
+            setupLink(view = privacyPolicyUrl, url = "https://gasperpintar.com/smoking-tracker/privacy-policy")
         }
     }
 

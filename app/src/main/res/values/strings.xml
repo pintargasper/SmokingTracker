@@ -54,7 +54,11 @@
     <string name="settings_category_data_version">Version %1$s</string>
     <string name="settings_category_data_version_url" translatable="false">https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker</string>
     <string name="settings_category_data_website">Website</string>
-    <string name="settings_category_data_website_url" translatable="false">https://smoking.gasperpintar.com</string>
+    <string name="settings_category_data_website_url" translatable="false">https://gasperpintar.com/smoking-tracker</string>
+    <string name="settings_category_data_translations_website">Help Translate</string>
+    <string name="settings_category_data_translations_website_url">Translate this app on your language using Weblate</string>
+    <string name="settings_category_data_privacy_policy">Security</string>
+    <string name="settings_category_data_privacy_policy_url">Smoking Tracker - Privacy Policy</string>
 
     <string name="insert_popup_message">Add record</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
