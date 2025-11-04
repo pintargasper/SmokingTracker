@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.utils
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
@@ -60,6 +61,7 @@ object Manager {
                 content = context.getString(R.string.notification_upload_content),
                 notificationId = 1004
             )
+            withContext(Dispatchers.Main) { (context as? Activity)?.recreate() }
         } catch (exception: Exception) {
             exception.printStackTrace()
             sendNotification(
@@ -99,6 +101,8 @@ object Manager {
     }
 
     private suspend fun importHistorySheet(workbook: XSSFWorkbook, database: AppDatabase) {
+        database.historyDao().deleteAll()
+        database.historyDao().resetAutoIncrement()
         workbook.getSheet("History")?.forEachIndexed { index, row ->
             if (index == 0) return@forEachIndexed
             val lent = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed

@@ -111,9 +111,9 @@ class HomeFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        val buttonConfirm = dialogView.findViewById<Button>(R.id.button_insert)
-        val buttonClose = dialogView.findViewById<Button>(R.id.button_close)
-        val lentCheckbox = dialogView.findViewById<CheckBox>(R.id.lent_checkbox)
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_insert)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
 
         buttonConfirm.setOnClickListener {
             val entry = HistoryEntity (
@@ -141,11 +141,11 @@ class HomeFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        val buttonConfirm = dialogView.findViewById<Button>(R.id.button_confirm)
-        val buttonClose = dialogView.findViewById<Button>(R.id.button_close)
-        val lentCheckbox = dialogView.findViewById<CheckBox>(R.id.lent_checkbox)
-        val datePicker = dialogView.findViewById<DatePicker>(R.id.date_picker)
-        val timePicker = dialogView.findViewById<TimePicker>(R.id.time_picker)
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
+        val datePicker: DatePicker = dialogView.findViewById(R.id.date_picker)
+        val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
 
         lentCheckbox.isChecked = entry.isLent
         timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
@@ -185,8 +185,8 @@ class HomeFragment : Fragment() {
             .setView(dialogView)
             .create()
 
-        val buttonConfirm = dialogView.findViewById<Button>(R.id.button_confirm)
-        val buttonClose = dialogView.findViewById<Button>(R.id.button_close)
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
 
         buttonConfirm.setOnClickListener {
             lifecycleScope.launch {

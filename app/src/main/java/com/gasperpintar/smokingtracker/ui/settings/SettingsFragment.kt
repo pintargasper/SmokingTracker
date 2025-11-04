@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
@@ -36,6 +38,7 @@ class SettingsFragment : Fragment() {
     private val database by lazy { (requireActivity() as MainActivity).database }
     private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
     private var selectedFileUri: Uri? = null
+    private var selectedFile: TextView? = null
 
     private companion object {
         const val PREFS_NAME = "settings"
@@ -164,6 +167,11 @@ class SettingsFragment : Fragment() {
         filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 selectedFileUri = result.data?.data
+                selectedFile?.text = getString(
+                    R.string.upload_popup_file_status,
+                    getString(R.string.upload_popup_file),
+                    getFileName(uri = result.data?.data)
+                )
             }
         }
     }
@@ -175,8 +183,8 @@ class SettingsFragment : Fragment() {
             .create()
         dialog.show()
 
-        val buttonDownload = dialogView.findViewById<Button>(R.id.button_download)
-        val buttonClose = dialogView.findViewById<Button>(R.id.button_close)
+        val buttonDownload: Button = dialogView.findViewById(R.id.button_download)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
 
         buttonDownload.setOnClickListener {
             requireActivity().lifecycleScope.launch {
@@ -195,9 +203,16 @@ class SettingsFragment : Fragment() {
             .create()
         dialog.show()
 
-        val buttonOpenFile = dialogView.findViewById<Button>(R.id.button_open_file)
-        val buttonConfirm = dialogView.findViewById<Button>(R.id.button_confirm)
-        val buttonBack = dialogView.findViewById<Button>(R.id.button_back)
+        selectedFile = dialogView.findViewById(R.id.text_selected_file)
+        val buttonOpenFile: Button = dialogView.findViewById(R.id.button_open_file)
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+        val buttonBack: Button = dialogView.findViewById(R.id.button_back)
+
+        selectedFile?.text = getString(
+            R.string.upload_popup_file_status,
+            getString(R.string.upload_popup_file),
+            getString(R.string.upload_popup_file_none)
+        )
 
         buttonOpenFile.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -208,7 +223,7 @@ class SettingsFragment : Fragment() {
         }
 
         buttonConfirm.setOnClickListener {
-            lifecycleScope.launch {
+            requireActivity().lifecycleScope.launch {
                 selectedFileUri?.let { fileUri ->
                     Manager.uploadFile(
                         context = requireContext(),
@@ -262,6 +277,19 @@ class SettingsFragment : Fragment() {
             putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
         }
         startActivity(intent)
+    }
+
+    private fun getFileName(uri: Uri?): String {
+        var name = getString(R.string.upload_popup_file_unknown)
+
+        if (uri == null) return name
+        context?.contentResolver?.query(uri, null, null, null, null)?.use { cursor ->
+            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+            if (cursor.moveToFirst() && nameIndex != -1) {
+                name = cursor.getString(nameIndex)
+            }
+        }
+        return name
     }
 
     override fun onDestroyView() {
