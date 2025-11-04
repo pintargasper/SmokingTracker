@@ -23,7 +23,7 @@
             android:textColor="?attr/colorOnSurface"
             android:textSize="18sp"
             android:gravity="center"
-            android:maxLines="2"
+            android:maxLines="1"
             android:ellipsize="end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,6 +111,8 @@
                 android:text="@string/edit_popup_confirm"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="?attr/colorOnSurface"
+                android:ellipsize="end"
+                android:singleLine="true"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
         </androidx.cardview.widget.CardView>
 
@@ -139,6 +141,8 @@
                 android:text="@string/edit_popup_close"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="?attr/colorOnSurface"
+                android:ellipsize="end"
+                android:singleLine="true"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
         </androidx.cardview.widget.CardView>
 

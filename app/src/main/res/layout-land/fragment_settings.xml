@@ -35,6 +35,8 @@
                     android:text="@string/settings_category_general"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="?attr/colorOnSurface"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:layout_marginBottom="5dp"/>
 
                 <LinearLayout
@@ -160,6 +162,8 @@
                     android:text="@string/settings_category_data"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="?attr/colorOnSurface"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:layout_marginBottom="8dp"/>
 
                 <LinearLayout
@@ -180,6 +184,8 @@
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_marginBottom="2dp"/>
 
                     <TextView
@@ -215,6 +221,8 @@
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_marginBottom="2dp"/>
 
                     <TextView
@@ -262,6 +270,8 @@
                     android:text="@string/settings_category_data_about"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="?attr/colorOnSurface"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:layout_marginBottom="8dp"/>
 
                 <LinearLayout
@@ -282,6 +292,8 @@
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_marginBottom="2dp"/>
 
                     <TextView
@@ -316,6 +328,8 @@
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_marginBottom="2dp"/>
 
                     <TextView
@@ -350,6 +364,8 @@
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_marginBottom="2dp"/>
 
                     <TextView
@@ -385,6 +401,8 @@
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
                         android:layout_marginBottom="2dp"/>
 
                     <TextView

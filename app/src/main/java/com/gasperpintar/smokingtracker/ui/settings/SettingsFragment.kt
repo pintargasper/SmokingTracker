@@ -72,8 +72,8 @@ class SettingsFragment : Fragment() {
         applySettingsToUI(currentSettings)
         setupListeners(currentSettings)
 
-        binding.downloadLayout.setOnClickListener { showDataDialog() }
-        binding.uploadLayout.setOnClickListener { showDataDialog() }
+        binding.downloadLayout.setOnClickListener { showDownloadDialog() }
+        binding.uploadLayout.setOnClickListener { showUploadDialog() }
     }
 
     private fun areNotificationsEnabled(): Boolean {
@@ -168,7 +168,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun showDataDialog() {
+    private fun showDownloadDialog() {
         val dialogView = layoutInflater.inflate(R.layout.download_popup, null)
         val dialog = android.app.AlertDialog.Builder(requireContext())
             .setView(dialogView)
@@ -179,7 +179,7 @@ class SettingsFragment : Fragment() {
         val buttonClose = dialogView.findViewById<Button>(R.id.button_close)
 
         buttonDownload.setOnClickListener {
-            lifecycleScope.launch {
+            requireActivity().lifecycleScope.launch {
                 Manager.downloadFile(context = requireContext(), database)
             }
             dialog.dismiss()

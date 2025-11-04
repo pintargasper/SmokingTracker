@@ -37,6 +37,8 @@
                     android:text="@string/graph_weekly"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:gravity="center"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:layout_marginBottom="8dp"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
@@ -111,6 +113,8 @@
                     android:text="@string/graph_monthly"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:gravity="center"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:layout_marginBottom="8dp"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
@@ -187,6 +191,8 @@
                     android:text="@string/graph_yearly"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:gravity="center"
+                    android:ellipsize="end"
+                    android:singleLine="true"
                     android:layout_marginBottom="8dp"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView

@@ -84,10 +84,11 @@
     <string name="download_popup_download">Download</string>
     <string name="download_popup_close">Close</string>
 
-    <string name="upload_popup_open">Open file</string>
+    <string name="upload_popup_select">Select</string>
     <string name="upload_popup_upload">Upload</string>
     <string name="upload_popup_confirm">Confirm</string>
-    <string name="upload_popup_back">Back</string>
+    <string name="upload_popup_close">Close</string>
+    <string name="upload_popup_file_selected">File Selected: %1$s</string>
 
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>

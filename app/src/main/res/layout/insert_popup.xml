@@ -82,6 +82,8 @@
                 android:text="@string/insert_popup_insert"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="?attr/colorOnSurface"
+                android:ellipsize="end"
+                android:singleLine="true"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
         </androidx.cardview.widget.CardView>
 
@@ -110,6 +112,8 @@
                 android:text="@string/insert_popup_close"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="?attr/colorOnSurface"
+                android:ellipsize="end"
+                android:singleLine="true"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
         </androidx.cardview.widget.CardView>
 
