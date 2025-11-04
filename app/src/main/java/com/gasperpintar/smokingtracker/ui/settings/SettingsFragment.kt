@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,14 +15,12 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.dao.SettingsDao
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.utils.Helper
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
@@ -41,6 +37,7 @@ class SettingsFragment : Fragment() {
     private companion object {
         const val PREFS_NAME = "settings"
         const val PREF_LANGUAGE = "language"
+        const val PREF_THEME = "theme"
     }
 
     override fun onCreateView(
@@ -70,18 +67,31 @@ class SettingsFragment : Fragment() {
             settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
         }
 
-        //applySettingsToUI(currentSettings)
-        //setupListeners(currentSettings)
+        val selectedLanguage = requireActivity()
+            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getInt(PREF_LANGUAGE, getDefaultLanguageIndex())
+
+        val selectedTheme = requireActivity()
+            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .getInt(PREF_THEME, 0)
+
+        binding.languageServiceUrl.text = getLanguages()[selectedLanguage]
+        binding.themeServiceUrl.text = getThemes()[selectedTheme]
 
         binding.languageLayout.setOnClickListener {
-            val selectedLanguage = requireActivity()
-                .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                .getInt(PREF_LANGUAGE, getDefaultLanguageIndex())
 
             DialogManager.showLanguageDialog(
                 activity = requireActivity(),
                 selectedLanguage = selectedLanguage,
                 onLanguageSelected = { language -> updateLanguage(language) }
+            )
+        }
+
+        binding.themeLayout.setOnClickListener {
+            DialogManager.showThemeDialog(
+                activity = requireActivity(),
+                selectedTheme = selectedTheme,
+                onThemeSelected = { theme -> updateTheme(theme) }
             )
         }
 
@@ -109,6 +119,15 @@ class SettingsFragment : Fragment() {
             .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
             .edit {
                 putInt(PREF_LANGUAGE, language)
+            }
+        requireActivity().recreate()
+    }
+
+    private fun updateTheme(theme: Int) {
+        requireContext()
+            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit {
+                putInt(PREF_THEME, theme)
             }
         requireActivity().recreate()
     }
@@ -227,6 +246,22 @@ class SettingsFragment : Fragment() {
 
     private fun openUrl(url: String) {
         startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+    }
+
+    private fun getLanguages(): List<String> {
+        return listOf(
+            getString(R.string.settings_language_system),
+            getString(R.string.settings_language_en),
+            getString(R.string.settings_language_sl)
+        )
+    }
+
+    private fun getThemes(): List<String> {
+        return listOf(
+            getString(R.string.settings_theme_system),
+            getString(R.string.settings_theme_light),
+            getString(R.string.settings_theme_dark)
+        )
     }
 
     private fun getDefaultLanguageIndex(): Int {

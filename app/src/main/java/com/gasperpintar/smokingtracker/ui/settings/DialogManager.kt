@@ -5,8 +5,6 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.LinearLayout
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.FragmentActivity
@@ -35,10 +33,6 @@ object DialogManager {
         val checkboxEnglish: CheckBox = dialogView.findViewById(R.id.checkbox_english)
         val checkboxSlovenian: CheckBox = dialogView.findViewById(R.id.checkbox_slovenian)
 
-        val layoutSystem: LinearLayout = dialogView.findViewById(R.id.layout_system)
-        val layoutEnglish: LinearLayout = dialogView.findViewById(R.id.layout_english)
-        val layoutSlovenian: LinearLayout = dialogView.findViewById(R.id.layout_slovenian)
-
         fun applySelectedCheck() {
             checkboxSystem.isChecked = selectedLanguage == 0
             checkboxEnglish.isChecked = selectedLanguage == 1
@@ -56,9 +50,49 @@ object DialogManager {
 
         applySelectedCheck()
 
-        layoutSystem.setOnClickListener { selectLanguage(0, checkboxSystem) }
-        layoutEnglish.setOnClickListener { selectLanguage(1, checkboxEnglish) }
-        layoutSlovenian.setOnClickListener { selectLanguage(2, checkboxSlovenian) }
+        checkboxSystem.setOnClickListener { selectLanguage(0, checkboxSystem) }
+        checkboxEnglish.setOnClickListener { selectLanguage(1, checkboxEnglish) }
+        checkboxSlovenian.setOnClickListener { selectLanguage(2, checkboxSlovenian) }
+        buttonCancel.setOnClickListener { dialog.dismiss() }
+    }
+
+    fun showThemeDialog(
+        activity: FragmentActivity,
+        selectedTheme: Int,
+        onThemeSelected: (Int) -> Unit
+    ) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.theme_popup, null)
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
+            .setView(dialogView)
+            .create()
+        dialog.show()
+
+        val buttonCancel: Button = dialogView.findViewById(R.id.button_close)
+
+        val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
+        val checkboxLightTheme: CheckBox = dialogView.findViewById(R.id.checkbox_light_theme)
+        val checkboxDarkTheme: CheckBox = dialogView.findViewById(R.id.checkbox_dark_theme)
+
+        fun applySelectedCheck() {
+            checkboxSystem.isChecked = selectedTheme == 0
+            checkboxLightTheme.isChecked = selectedTheme == 1
+            checkboxDarkTheme.isChecked = selectedTheme == 2
+        }
+
+        fun selectLanguage(theme: Int, checkbox: CheckBox) {
+            checkboxSystem.isChecked = checkbox == checkboxSystem
+            checkboxLightTheme.isChecked = checkbox == checkboxLightTheme
+            checkboxDarkTheme.isChecked = checkbox == checkboxDarkTheme
+
+            onThemeSelected(theme)
+            dialog.dismiss()
+        }
+
+        applySelectedCheck()
+
+        checkboxSystem.setOnClickListener { selectLanguage(0, checkboxSystem) }
+        checkboxLightTheme.setOnClickListener { selectLanguage(1, checkboxLightTheme) }
+        checkboxDarkTheme.setOnClickListener { selectLanguage(2, checkboxDarkTheme) }
         buttonCancel.setOnClickListener { dialog.dismiss() }
     }
 

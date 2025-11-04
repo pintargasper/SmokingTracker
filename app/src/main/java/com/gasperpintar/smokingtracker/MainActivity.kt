@@ -1,6 +1,7 @@
 package com.gasperpintar.smokingtracker
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +23,9 @@ import kotlinx.coroutines.launch
 import java.util.Locale
 import java.util.concurrent.TimeUnit
 import androidx.core.content.edit
+import androidx.work.PeriodicWorkRequest
+import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import org.apache.commons.compress.archivers.cpio.CpioArchiveEntry
 
 class MainActivity : AppCompatActivity() {
 
@@ -46,12 +50,13 @@ class MainActivity : AppCompatActivity() {
         permissionsHelper = Permissions(activity = this@MainActivity)
 
         lifecycleScope.launch {
-            val settings = database.settingsDao().getSettings()
-            applyTheme(themeId = settings?.theme ?: 0)
+            val settings: SettingsEntity? = database.settingsDao().getSettings()
 
-            val sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-            val isFirstRun = sharedPreferences.getBoolean("first_run", true)
+            val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+            val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
+            val themeId: Int = sharedPreferences.getInt("theme", 0)
 
+            applyTheme(themeId = themeId)
             if (isFirstRun || settings?.notifications == 1) {
                 permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
                     if (isGranted) {
@@ -68,9 +73,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun scheduleNotificationWorker() {
-        val workManager = WorkManager.getInstance(context = this@MainActivity)
+        val workManager: WorkManager = WorkManager.getInstance(context = this@MainActivity)
 
-        val periodicWorkRequest = PeriodicWorkRequestBuilder<Worker>(
+        val periodicWorkRequest: PeriodicWorkRequest = PeriodicWorkRequestBuilder<Worker>(
             repeatInterval = 1,
             repeatIntervalTimeUnit = TimeUnit.HOURS
         ).build()
@@ -91,11 +96,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val sharedPreferences = newBase.getSharedPreferences("settings", MODE_PRIVATE)
-        val languageId = sharedPreferences.getInt("language", 0)
-        val supportedLanguages = newBase.resources.getStringArray(R.array.language_values)
+        val sharedPreferences: SharedPreferences = newBase.getSharedPreferences("settings", MODE_PRIVATE)
+        val languageId: Int = sharedPreferences.getInt("language", 0)
+        val supportedLanguages: Array<out String?> = newBase.resources.getStringArray(R.array.language_values)
 
-        val selectedLanguage = supportedLanguages.getOrNull(index = languageId) ?: "system"
+        val selectedLanguage: String = supportedLanguages.getOrNull(index = languageId) ?: "system"
 
         val locale: Locale =
             if (selectedLanguage == "system") newBase.resources.configuration.locales.get(0)
@@ -107,7 +112,7 @@ class MainActivity : AppCompatActivity() {
         configuration.setLocale(locale)
         configuration.setLayoutDirection(locale)
 
-        val context = newBase.createConfigurationContext(configuration)
+        val context: Context = newBase.createConfigurationContext(configuration)
         super.attachBaseContext(context)
     }
 }
