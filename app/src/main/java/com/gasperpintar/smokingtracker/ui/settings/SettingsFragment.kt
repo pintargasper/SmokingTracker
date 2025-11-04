@@ -13,7 +13,6 @@ import android.widget.Button
 import android.widget.Spinner
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.cardview.widget.CardView
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.edit
 import androidx.core.net.toUri
@@ -73,7 +72,8 @@ class SettingsFragment : Fragment() {
         applySettingsToUI(currentSettings)
         setupListeners(currentSettings)
 
-        binding.buttonDataAction.setOnClickListener { showDataDialog() }
+        binding.downloadLayout.setOnClickListener { showDataDialog() }
+        binding.uploadLayout.setOnClickListener { showDataDialog() }
     }
 
     private fun areNotificationsEnabled(): Boolean {
@@ -169,26 +169,35 @@ class SettingsFragment : Fragment() {
     }
 
     private fun showDataDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.download_upload_popup, null)
+        val dialogView = layoutInflater.inflate(R.layout.download_popup, null)
         val dialog = android.app.AlertDialog.Builder(requireContext())
             .setView(dialogView)
             .create()
+        dialog.show()
 
-        val cardOpenFile = dialogView.findViewById<CardView>(R.id.card_open_file_button)
+        val buttonDownload = dialogView.findViewById<Button>(R.id.button_download)
+        val buttonClose = dialogView.findViewById<Button>(R.id.button_close)
+
+        buttonDownload.setOnClickListener {
+            lifecycleScope.launch {
+                Manager.downloadFile(context = requireContext(), database)
+            }
+            dialog.dismiss()
+        }
+        buttonClose.setOnClickListener { dialog.dismiss() }
+        dialog.show()
+    }
+
+    private fun showUploadDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.upload_popup, null)
+        val dialog = android.app.AlertDialog.Builder(requireContext())
+            .setView(dialogView)
+            .create()
+        dialog.show()
+
         val buttonOpenFile = dialogView.findViewById<Button>(R.id.button_open_file)
         val buttonConfirm = dialogView.findViewById<Button>(R.id.button_confirm)
-        val buttonClose = dialogView.findViewById<Button>(R.id.button_close)
-        val reasonSpinner = dialogView.findViewById<Spinner>(R.id.spinner_reason)
-
-        reasonSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                cardOpenFile.visibility = if (position == 1) View.VISIBLE else View.GONE
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                cardOpenFile.visibility = View.GONE
-            }
-        }
+        val buttonBack = dialogView.findViewById<Button>(R.id.button_back)
 
         buttonOpenFile.setOnClickListener {
             val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
@@ -200,21 +209,17 @@ class SettingsFragment : Fragment() {
 
         buttonConfirm.setOnClickListener {
             lifecycleScope.launch {
-                if (reasonSpinner.selectedItemPosition == 0) {
-                    Manager.downloadFile(context = requireContext(), database)
-                } else {
-                    selectedFileUri?.let { fileUri ->
-                        Manager.uploadFile(
-                            context = requireContext(),
-                            fileUri = fileUri,
-                            database = database
-                        )
-                    }
+                selectedFileUri?.let { fileUri ->
+                    Manager.uploadFile(
+                        context = requireContext(),
+                        fileUri = fileUri,
+                        database = database
+                    )
                 }
             }
             dialog.dismiss()
         }
-        buttonClose.setOnClickListener { dialog.dismiss() }
+        buttonBack.setOnClickListener { dialog.dismiss() }
         dialog.show()
     }
 

@@ -23,11 +23,6 @@
         <item>sl</item>
     </string-array>
 
-    <string-array name="download_entries">
-        <item>@string/download_upload_popup_download</item>
-        <item>@string/download_upload_popup_upload</item>
-    </string-array>
-
     <string-array name="download_values">
         <item>download</item>
         <item>upload</item>

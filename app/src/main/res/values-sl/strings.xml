@@ -32,7 +32,6 @@
     <string name="settings_theme_system">Sistem</string>
     <string name="settings_language_system">Sistem</string>
     <string name="settings_category_data">Podatki</string>
-    <string name="settings_category_data_download_upload">Prenesi/Naloži</string>
     <string name="settings_category_data_action">Odpri</string>
     <string name="settings_category_data_about">O aplikaciji</string>
     <string name="settings_category_data_version">Različica %1$s</string>
@@ -48,12 +47,6 @@
     <string name="delete_popup_message">Ali ste prepričani, da želite izbrisati ta zapis?</string>
     <string name="delete_popup_confirm">Potrdi</string>
     <string name="delete_popup_close">Zapri</string>
-    <string name="download_upload_popup">Prenesi/Naloži</string>
-    <string name="download_upload_popup_open">Odpri datoteko</string>
-    <string name="download_upload_popup_confirm">Potrdi</string>
-    <string name="download_upload_popup_close">Zapri</string>
-    <string name="download_upload_popup_download">Prenesi</string>
-    <string name="download_upload_popup_upload">Naloži</string>
     <string name="day_monday">Ponedeljek</string>
     <string name="day_tuesday">Torek</string>
     <string name="day_wednesday">Sreda</string>

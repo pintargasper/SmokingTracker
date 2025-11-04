@@ -48,7 +48,12 @@
     <string name="settings_language_en" translatable="false">English</string>
     <string name="settings_language_sl" translatable="false">Slovenščina</string>
     <string name="settings_category_data">Data</string>
-    <string name="settings_category_data_download_upload">Download/Upload</string>
+    <string name="settings_category_data_download">Download</string>
+    <string name="settings_category_data_download_url">Download your data into device</string>
+    <string name="settings_category_data_upload">Upload</string>
+    <string name="settings_category_data_upload_url">Upload your data from device</string>
+
+
     <string name="settings_category_data_action">Open</string>
     <string name="settings_category_data_about">About</string>
     <string name="settings_category_data_version">Version %1$s</string>
@@ -74,12 +79,15 @@
     <string name="delete_popup_confirm">Confirm</string>
     <string name="delete_popup_close">Close</string>
 
-    <string name="download_upload_popup">Download/Upload</string>
-    <string name="download_upload_popup_open">Open file</string>
-    <string name="download_upload_popup_confirm">Confirm</string>
-    <string name="download_upload_popup_close">Close</string>
-    <string name="download_upload_popup_download">Download</string>
-    <string name="download_upload_popup_upload">Upload</string>
+    <string name="download_popup">Download your data</string>
+    <string name="download_popup_info">You will be notified of the data transfer via push notification.</string>
+    <string name="download_popup_download">Download</string>
+    <string name="download_popup_close">Close</string>
+
+    <string name="upload_popup_open">Open file</string>
+    <string name="upload_popup_upload">Upload</string>
+    <string name="upload_popup_confirm">Confirm</string>
+    <string name="upload_popup_back">Back</string>
 
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>
