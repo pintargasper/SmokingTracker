@@ -41,6 +41,7 @@
     <string name="settings_category_theme">Theme</string>
     <string name="settings_category_language">Language</string>
     <string name="settings_category_notifications">Notifications</string>
+    <string name="settings_category_notifications_url">Stay informed with notifications and alerts</string>
     <string name="settings_theme_light">Light theme</string>
     <string name="settings_theme_dark">Dark theme</string>
     <string name="settings_theme_system">System</string>
@@ -78,6 +79,11 @@
     <string name="delete_popup_message">Are you sure to delete this record?</string>
     <string name="delete_popup_confirm">Confirm</string>
     <string name="delete_popup_close">Close</string>
+
+    <string name="language_popup">Select language</string>
+    <string name="language_popup_info">Choose your preferred language</string>
+    <string name="language_popup_choose">Choose</string>
+    <string name="language_popup_close">Close</string>
 
     <string name="download_popup">Download your data</string>
     <string name="download_popup_info">You will be notified of the data transfer via push notification</string>

@@ -60,8 +60,8 @@ class SettingsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val notificationsEnabled = areNotificationsEnabled()
-        binding.switchNotifications.isChecked = notificationsEnabled &&
-                (runBlocking { database.settingsDao().getSettings()?.notifications } == 1)
+        //binding.switchNotifications.isChecked = notificationsEnabled &&
+                //(runBlocking { database.settingsDao().getSettings()?.notifications } == 1)
     }
 
     private fun setupUI() {
@@ -70,8 +70,20 @@ class SettingsFragment : Fragment() {
             settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
         }
 
-        applySettingsToUI(currentSettings)
-        setupListeners(currentSettings)
+        //applySettingsToUI(currentSettings)
+        //setupListeners(currentSettings)
+
+        binding.languageLayout.setOnClickListener {
+            val selectedLanguage = requireActivity()
+                .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                .getInt(PREF_LANGUAGE, getDefaultLanguageIndex())
+
+            DialogManager.showLanguageDialog(
+                activity = requireActivity(),
+                selectedLanguage = selectedLanguage,
+                onLanguageSelected = { language -> updateLanguage(language) }
+            )
+        }
 
         binding.downloadLayout.setOnClickListener {
             DialogManager.showDownloadDialog(
@@ -92,6 +104,15 @@ class SettingsFragment : Fragment() {
         }
     }
 
+    private fun updateLanguage(language: Int) {
+        requireContext()
+            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            .edit {
+                putInt(PREF_LANGUAGE, language)
+            }
+        requireActivity().recreate()
+    }
+
     private fun areNotificationsEnabled(): Boolean {
         return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
     }
@@ -105,7 +126,7 @@ class SettingsFragment : Fragment() {
         ).also { settingsDao.insert(settingsEntity = it) }
     }
 
-    private fun applySettingsToUI(settings: SettingsEntity) = with(receiver = binding) {
+    /*private fun applySettingsToUI(settings: SettingsEntity) = with(receiver = binding) {
         spinnerTheme.setSelection(settings.theme)
         spinnerLanguage.setSelection(settings.language)
         switchNotifications.isChecked = settings.notifications == 1
@@ -169,12 +190,7 @@ class SettingsFragment : Fragment() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) = Unit
         }
-    }
-
-    private suspend fun updateSettings(settings: SettingsEntity, afterUpdate: (() -> Unit)? = null) {
-        database.settingsDao().update(settingsEntity = settings)
-        afterUpdate?.invoke()
-    }
+    }*/
 
     private fun setupFilePicker() {
         filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

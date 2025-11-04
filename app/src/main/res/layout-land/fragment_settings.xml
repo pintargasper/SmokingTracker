@@ -40,97 +40,114 @@
                     android:layout_marginBottom="5dp"/>
 
                 <LinearLayout
+                    android:id="@+id/theme_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:minHeight="?attr/actionBarSize">
 
                     <TextView
                         android:id="@+id/text_theme_label"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/settings_category_theme"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"/>
-
-                    <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp"
-                        app:strokeColor="?attr/colorOnSurface"
-                        app:strokeWidth="1dp">
+                        android:text="@string/settings_category_theme"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:layout_marginBottom="2dp"/>
 
-                        <Spinner
-                            android:id="@+id/spinner_theme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_margin="7dp"
-                            android:entries="@array/theme_entries"/>
-                    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/theme_service_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Svetla tema"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:scrollHorizontally="false"/>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/language_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:minHeight="?attr/actionBarSize">
 
                     <TextView
                         android:id="@+id/text_language_label"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/settings_category_language"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"/>
-
-                    <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp"
-                        app:strokeColor="?attr/colorOnSurface"
-                        app:strokeWidth="1dp">
+                        android:text="@string/settings_category_language"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:layout_marginBottom="2dp"/>
 
-                        <Spinner
-                            android:id="@+id/spinner_language"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_margin="7dp"
-                            android:entries="@array/language_entries"/>
-                    </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/language_service_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Slovenščina"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:scrollHorizontally="false"/>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/notifications_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:minHeight="?attr/actionBarSize">
 
                     <TextView
                         android:id="@+id/text_notifications_label"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/settings_category_notifications"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"/>
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switch_notifications"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:trackTint="?attr/colorControlNormal"/>
+                        android:text="@string/settings_category_notifications"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:layout_marginBottom="2dp"/>
+
+                    <TextView
+                        android:id="@+id/notifications_service_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_category_notifications_url"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textSize="13sp"
+                        android:textColor="?attr/colorOnSurface"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:scrollHorizontally="false"/>
                 </LinearLayout>
 
             </LinearLayout>

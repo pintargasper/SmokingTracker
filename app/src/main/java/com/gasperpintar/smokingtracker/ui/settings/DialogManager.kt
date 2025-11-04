@@ -4,6 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.LinearLayout
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.FragmentActivity
@@ -14,6 +17,50 @@ import com.gasperpintar.smokingtracker.utils.Manager
 import kotlinx.coroutines.launch
 
 object DialogManager {
+
+    fun showLanguageDialog(
+        activity: FragmentActivity,
+        selectedLanguage: Int,
+        onLanguageSelected: (Int) -> Unit
+    ) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.language_popup, null)
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
+            .setView(dialogView)
+            .create()
+        dialog.show()
+
+        val buttonCancel: Button = dialogView.findViewById(R.id.button_close)
+
+        val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
+        val checkboxEnglish: CheckBox = dialogView.findViewById(R.id.checkbox_english)
+        val checkboxSlovenian: CheckBox = dialogView.findViewById(R.id.checkbox_slovenian)
+
+        val layoutSystem: LinearLayout = dialogView.findViewById(R.id.layout_system)
+        val layoutEnglish: LinearLayout = dialogView.findViewById(R.id.layout_english)
+        val layoutSlovenian: LinearLayout = dialogView.findViewById(R.id.layout_slovenian)
+
+        fun applySelectedCheck() {
+            checkboxSystem.isChecked = selectedLanguage == 0
+            checkboxEnglish.isChecked = selectedLanguage == 1
+            checkboxSlovenian.isChecked = selectedLanguage == 2
+        }
+
+        fun selectLanguage(language: Int, checkbox: CheckBox) {
+            checkboxSystem.isChecked = checkbox == checkboxSystem
+            checkboxEnglish.isChecked = checkbox == checkboxEnglish
+            checkboxSlovenian.isChecked = checkbox == checkboxSlovenian
+
+            onLanguageSelected(language)
+            dialog.dismiss()
+        }
+
+        applySelectedCheck()
+
+        layoutSystem.setOnClickListener { selectLanguage(0, checkboxSystem) }
+        layoutEnglish.setOnClickListener { selectLanguage(1, checkboxEnglish) }
+        layoutSlovenian.setOnClickListener { selectLanguage(2, checkboxSlovenian) }
+        buttonCancel.setOnClickListener { dialog.dismiss() }
+    }
 
     fun showDownloadDialog(activity: FragmentActivity, database: AppDatabase) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.download_popup, null)
@@ -52,7 +99,7 @@ object DialogManager {
         val textViewSelectedFile: TextView = dialogView.findViewById(R.id.text_selected_file)
         val buttonOpenFile: Button = dialogView.findViewById(R.id.button_open_file)
         val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val buttonBack: Button = dialogView.findViewById(R.id.button_back)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
 
         selectedFileSetter(textViewSelectedFile)
         textViewSelectedFile.text = activity.getString(
@@ -84,6 +131,6 @@ object DialogManager {
                 activity.recreate()
             }
         }
-        buttonBack.setOnClickListener { dialog.dismiss() }
+        buttonClose.setOnClickListener { dialog.dismiss() }
     }
 }
