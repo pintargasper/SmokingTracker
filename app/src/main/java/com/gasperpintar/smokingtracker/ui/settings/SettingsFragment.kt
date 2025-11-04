@@ -5,12 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.OpenableColumns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
@@ -25,7 +23,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.dao.SettingsDao
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
-import com.gasperpintar.smokingtracker.utils.Manager
+import com.gasperpintar.smokingtracker.utils.Helper
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Locale
@@ -75,8 +73,23 @@ class SettingsFragment : Fragment() {
         applySettingsToUI(currentSettings)
         setupListeners(currentSettings)
 
-        binding.downloadLayout.setOnClickListener { showDownloadDialog() }
-        binding.uploadLayout.setOnClickListener { showUploadDialog() }
+        binding.downloadLayout.setOnClickListener {
+            DialogManager.showDownloadDialog(
+                activity = requireActivity(),
+                database = database
+            )
+        }
+
+        binding.uploadLayout.setOnClickListener {
+            DialogManager.showUploadDialog(
+                activity = requireActivity(),
+                database = database,
+                filePickerLauncher = filePickerLauncher,
+                selectedFileSetter = { textView -> selectedFile = textView },
+                getSelectedFileUri = { selectedFileUri },
+                clearSelectedFile = { selectedFileUri = null }
+            )
+        }
     }
 
     private fun areNotificationsEnabled(): Boolean {
@@ -170,77 +183,15 @@ class SettingsFragment : Fragment() {
                 selectedFile?.text = getString(
                     R.string.upload_popup_file_status,
                     getString(R.string.upload_popup_file),
-                    getFileName(uri = result.data?.data)
+                    Helper.getFileName(context = requireActivity(), uri = result.data?.data)
                 )
             }
         }
     }
 
-    private fun showDownloadDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.download_popup, null)
-        val dialog = android.app.AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
-        dialog.show()
-
-        val buttonDownload: Button = dialogView.findViewById(R.id.button_download)
-        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
-
-        buttonDownload.setOnClickListener {
-            requireActivity().lifecycleScope.launch {
-                Manager.downloadFile(context = requireContext(), database)
-            }
-            dialog.dismiss()
-        }
-        buttonClose.setOnClickListener { dialog.dismiss() }
-        dialog.show()
-    }
-
-    private fun showUploadDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.upload_popup, null)
-        val dialog = android.app.AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
-        dialog.show()
-
-        selectedFile = dialogView.findViewById(R.id.text_selected_file)
-        val buttonOpenFile: Button = dialogView.findViewById(R.id.button_open_file)
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val buttonBack: Button = dialogView.findViewById(R.id.button_back)
-
-        selectedFile?.text = getString(
-            R.string.upload_popup_file_status,
-            getString(R.string.upload_popup_file),
-            getString(R.string.upload_popup_file_none)
-        )
-
-        buttonOpenFile.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                addCategory(Intent.CATEGORY_OPENABLE)
-                type = "*/*"
-            }
-            filePickerLauncher.launch(intent)
-        }
-
-        buttonConfirm.setOnClickListener {
-            requireActivity().lifecycleScope.launch {
-                selectedFileUri?.let { fileUri ->
-                    Manager.uploadFile(
-                        context = requireContext(),
-                        fileUri = fileUri,
-                        database = database
-                    )
-                }
-            }
-            dialog.dismiss()
-        }
-        buttonBack.setOnClickListener { dialog.dismiss() }
-        dialog.show()
-    }
-
     private fun setupAbout() {
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
-        val versionName = packageInfo.versionName ?: "Unknown"
+        val versionName = packageInfo.versionName ?: getString(R.string.settings_category_data_version_unknown)
 
         with(receiver = binding) {
             appVersion.text = getString(R.string.settings_category_data_version, versionName)
@@ -277,19 +228,6 @@ class SettingsFragment : Fragment() {
             putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
         }
         startActivity(intent)
-    }
-
-    private fun getFileName(uri: Uri?): String {
-        var name = getString(R.string.upload_popup_file_unknown)
-
-        if (uri == null) return name
-        context?.contentResolver?.query(uri, null, null, null, null)?.use { cursor ->
-            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (cursor.moveToFirst() && nameIndex != -1) {
-                name = cursor.getString(nameIndex)
-            }
-        }
-        return name
     }
 
     override fun onDestroyView() {

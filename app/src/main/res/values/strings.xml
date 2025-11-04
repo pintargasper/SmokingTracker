@@ -53,10 +53,10 @@
     <string name="settings_category_data_upload">Upload</string>
     <string name="settings_category_data_upload_url">Upload your data from device</string>
 
-
     <string name="settings_category_data_action">Open</string>
     <string name="settings_category_data_about">About</string>
     <string name="settings_category_data_version">Version %1$s</string>
+    <string name="settings_category_data_version_unknown">Unknown</string>
     <string name="settings_category_data_version_url" translatable="false">https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker</string>
     <string name="settings_category_data_website">Website</string>
     <string name="settings_category_data_website_url" translatable="false">https://gasperpintar.com/smoking-tracker</string>

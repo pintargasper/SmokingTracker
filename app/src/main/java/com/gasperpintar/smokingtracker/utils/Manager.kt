@@ -61,7 +61,6 @@ object Manager {
                 content = context.getString(R.string.notification_upload_content),
                 notificationId = 1004
             )
-            withContext(Dispatchers.Main) { (context as? Activity)?.recreate() }
         } catch (exception: Exception) {
             exception.printStackTrace()
             sendNotification(
