@@ -1,7 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.settings
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -12,16 +11,16 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.edit
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.dao.SettingsDao
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.utils.Helper
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import java.util.Locale
 
 class SettingsFragment : Fragment() {
@@ -33,12 +32,6 @@ class SettingsFragment : Fragment() {
     private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
     private var selectedFileUri: Uri? = null
     private var selectedFile: TextView? = null
-
-    private companion object {
-        const val PREFS_NAME = "settings"
-        const val PREF_LANGUAGE = "language"
-        const val PREF_THEME = "theme"
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -54,45 +47,58 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        val notificationsEnabled = areNotificationsEnabled()
-        //binding.switchNotifications.isChecked = notificationsEnabled &&
-                //(runBlocking { database.settingsDao().getSettings()?.notifications } == 1)
-    }
-
     private fun setupUI() {
         val settingsDao = database.settingsDao()
-        val currentSettings: SettingsEntity = runBlocking {
-            settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
-        }
 
-        val selectedLanguage = requireActivity()
-            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .getInt(PREF_LANGUAGE, getDefaultLanguageIndex())
+        lifecycleScope.launch {
+            val settings = settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
 
-        val selectedTheme = requireActivity()
-            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .getInt(PREF_THEME, 0)
-
-        binding.languageServiceUrl.text = getLanguages()[selectedLanguage]
-        binding.themeServiceUrl.text = getThemes()[selectedTheme]
-
-        binding.languageLayout.setOnClickListener {
-
-            DialogManager.showLanguageDialog(
-                activity = requireActivity(),
-                selectedLanguage = selectedLanguage,
-                onLanguageSelected = { language -> updateLanguage(language) }
-            )
+            binding.languageServiceUrl.text = getLanguages()[settings.language]
+            binding.themeServiceUrl.text = getThemes()[settings.theme]
         }
 
         binding.themeLayout.setOnClickListener {
-            DialogManager.showThemeDialog(
-                activity = requireActivity(),
-                selectedTheme = selectedTheme,
-                onThemeSelected = { theme -> updateTheme(theme) }
-            )
+            lifecycleScope.launch {
+                val currentTheme = settingsDao.getSettings()?.theme ?: 0
+                DialogManager.showThemeDialog(
+                    activity = requireActivity(),
+                    selectedTheme = currentTheme,
+                    onThemeSelected = { theme -> updateSettingsField(updateBlock = { it.copy(theme = theme) }, recreateActivity = true) }
+                )
+            }
+        }
+
+        binding.languageLayout.setOnClickListener {
+            lifecycleScope.launch {
+                val currentLanguage = settingsDao.getSettings()?.language ?: getDefaultLanguageIndex()
+                DialogManager.showLanguageDialog(
+                    activity = requireActivity(),
+                    selectedLanguage = currentLanguage,
+                    onLanguageSelected = { language -> updateSettingsField(updateBlock = { it.copy(language = language) }, recreateActivity = true) }
+                )
+            }
+        }
+
+        binding.notificationsLayout.setOnClickListener {
+            lifecycleScope.launch {
+                if (!areNotificationsEnabled()) {
+                    openNotificationSettings()
+                    return@launch
+                }
+
+                val currentNotifications = settingsDao.getSettings()?.notifications ?: 0
+                DialogManager.showNotificationsDialog(
+                    activity = requireActivity(),
+                    selectedNotificationOption = currentNotifications,
+                    onNotificationOptionSelected = { notification ->
+                        if (notification == 1 && !areNotificationsEnabled()) {
+                            openNotificationSettings()
+                            return@showNotificationsDialog
+                        }
+                        updateSettingsField(updateBlock = { it.copy(notifications = notification) })
+                    }
+                )
+            }
         }
 
         binding.downloadLayout.setOnClickListener {
@@ -114,22 +120,14 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun updateLanguage(language: Int) {
-        requireContext()
-            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit {
-                putInt(PREF_LANGUAGE, language)
+    private fun updateSettingsField(updateBlock: (SettingsEntity) -> SettingsEntity, recreateActivity: Boolean = false) {
+        val settingsDao = database.settingsDao()
+        lifecycleScope.launch {
+            settingsDao.getSettings()?.let { currentSettings ->
+                settingsDao.update(settingsEntity = updateBlock(currentSettings))
+                if (recreateActivity) requireActivity().recreate()
             }
-        requireActivity().recreate()
-    }
-
-    private fun updateTheme(theme: Int) {
-        requireContext()
-            .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit {
-                putInt(PREF_THEME, theme)
-            }
-        requireActivity().recreate()
+        }
     }
 
     private fun areNotificationsEnabled(): Boolean {
@@ -145,81 +143,17 @@ class SettingsFragment : Fragment() {
         ).also { settingsDao.insert(settingsEntity = it) }
     }
 
-    /*private fun applySettingsToUI(settings: SettingsEntity) = with(receiver = binding) {
-        spinnerTheme.setSelection(settings.theme)
-        spinnerLanguage.setSelection(settings.language)
-        switchNotifications.isChecked = settings.notifications == 1
-    }
-
-    private fun setupListeners(settings: SettingsEntity) = with(receiver = binding) {
-        spinnerTheme.setupSpinnerListener(currentValue = settings.theme) { newValue ->
-            updateSettings(settings = settings.copy(theme = newValue)) {
-                (requireActivity() as MainActivity).applyTheme(themeId = newValue)
-            }
-        }
-
-        spinnerLanguage.setupSpinnerListener(currentValue = settings.language) { newValue ->
-            updateSettings(settings = settings.copy(language = newValue)) {
-                requireContext()
-                    .getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-                    .edit {
-                        putInt(PREF_LANGUAGE, newValue)
-                    }
-                requireActivity().recreate()
-            }
-        }
-
-        switchNotifications.setOnCheckedChangeListener { _, isChecked ->
-            lifecycleScope.launch {
-                val notificationsCurrentlyEnabled = areNotificationsEnabled()
-                if (isChecked) {
-                    if (!notificationsCurrentlyEnabled) {
-                        switchNotifications.isChecked = false
-                        openNotificationSettings()
-                    } else updateSettings(settings = settings.copy(notifications = 1))
-                } else updateSettings(settings = settings.copy(notifications = 0))
-            }
-        }
-    }
-
-    private fun Spinner.setupSpinnerListener(currentValue: Int, onChange: suspend (Int) -> Unit) {
-        setSelection(currentValue)
-
-        var lastSelectedPosition = currentValue
-        var isFirstSelection = true
-
-        onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                if (isFirstSelection) {
-                    isFirstSelection = false
-                    lastSelectedPosition = position
-                    return
-                }
-
-                if (position != lastSelectedPosition) {
-                    lastSelectedPosition = position
-                    lifecycleScope.launch { onChange(position) }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
-    }*/
-
     private fun setupFilePicker() {
         filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                selectedFileUri = result.data?.data
-                selectedFile?.text = getString(
-                    R.string.upload_popup_file_status,
-                    getString(R.string.upload_popup_file),
-                    Helper.getFileName(context = requireActivity(), uri = result.data?.data)
-                )
+                result.data?.data?.let { uri ->
+                    selectedFileUri = uri
+                    selectedFile?.text = getString(
+                        R.string.upload_popup_file_status,
+                        getString(R.string.upload_popup_file),
+                        Helper.getFileName(context = requireActivity(), uri = uri)
+                    )
+                }
             }
         }
     }
@@ -228,15 +162,17 @@ class SettingsFragment : Fragment() {
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
         val versionName = packageInfo.versionName ?: getString(R.string.settings_category_data_version_unknown)
 
-        with(receiver = binding) {
+        with(binding) {
             appVersion.text = getString(R.string.settings_category_data_version, versionName)
             appVersionUrl.text = getString(R.string.settings_category_data_version_url)
             websiteServiceUrl.text = getString(R.string.settings_category_data_website_url)
 
-            setupLink(view = versionUrl, url = getString(R.string.settings_category_data_version_url))
-            setupLink(view = websiteUrl, url = getString(R.string.settings_category_data_website_url))
-            setupLink(view = translationsWebsiteUrl, url = "https://translate.gasperpintar.com/projects/smokingtracker")
-            setupLink(view = privacyPolicyUrl, url = "https://gasperpintar.com/smoking-tracker/privacy-policy")
+            listOf(
+                versionUrl to getString(R.string.settings_category_data_version_url),
+                websiteUrl to getString(R.string.settings_category_data_website_url),
+                translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
+                privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy"
+            ).forEach { (view, url) -> setupLink(view, url) }
         }
     }
 
@@ -250,23 +186,22 @@ class SettingsFragment : Fragment() {
 
     private fun getLanguages(): List<String> {
         return listOf(
-            getString(R.string.settings_language_system),
-            getString(R.string.settings_language_en),
-            getString(R.string.settings_language_sl)
+            getString(R.string.language_popup_check_box_system),
+            getString(R.string.language_popup_check_box_english),
+            getString(R.string.language_popup_check_box_slovenian)
         )
     }
 
     private fun getThemes(): List<String> {
         return listOf(
-            getString(R.string.settings_theme_system),
-            getString(R.string.settings_theme_light),
-            getString(R.string.settings_theme_dark)
+            getString(R.string.theme_popup_check_box_system),
+            getString(R.string.theme_popup_check_box_light_theme),
+            getString(R.string.theme_popup_check_box_dark_theme)
         )
     }
 
     private fun getDefaultLanguageIndex(): Int {
-        val systemLanguageCode = Locale.getDefault().language
-        return when(systemLanguageCode) {
+        return when(Locale.getDefault().language) {
             "en" -> 1
             "sl" -> 2
             else -> 0

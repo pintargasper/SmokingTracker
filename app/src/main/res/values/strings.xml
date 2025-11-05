@@ -42,12 +42,6 @@
     <string name="settings_category_language">Language</string>
     <string name="settings_category_notifications">Notifications</string>
     <string name="settings_category_notifications_url">Stay informed with notifications and alerts</string>
-    <string name="settings_theme_light">Light theme</string>
-    <string name="settings_theme_dark">Dark theme</string>
-    <string name="settings_theme_system">System</string>
-    <string name="settings_language_system">System</string>
-    <string name="settings_language_en" translatable="false">English</string>
-    <string name="settings_language_sl" translatable="false">Slovenščina</string>
     <string name="settings_category_data">Data</string>
     <string name="settings_category_data_download">Download</string>
     <string name="settings_category_data_download_url">Download your data into device</string>
@@ -93,6 +87,11 @@
     <string name="theme_popup_check_box_system">System</string>
     <string name="theme_popup_check_box_light_theme">Light theme</string>
     <string name="theme_popup_check_box_dark_theme">Dark theme</string>
+
+    <string name="notifications_popup">Notifications</string>
+    <string name="notifications_popup_info">Choose your notification preference</string>
+    <string name="notifications_popup_close">Close</string>
+    <string name="notifications_popup_check_box_system">System</string>
 
     <string name="download_popup">Download your data</string>
     <string name="download_popup_info">You will be notified of the data transfer via push notification</string>

@@ -96,6 +96,28 @@ object DialogManager {
         buttonCancel.setOnClickListener { dialog.dismiss() }
     }
 
+    fun showNotificationsDialog(
+        activity: FragmentActivity,
+        selectedNotificationOption: Int,
+        onNotificationOptionSelected: (Int) -> Unit
+    ) {
+        val dialogView = LayoutInflater.from(activity).inflate(R.layout.notifications_popup, null)
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
+            .setView(dialogView)
+            .create()
+        dialog.show()
+
+        val buttonCancel: Button = dialogView.findViewById(R.id.button_close)
+        val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
+
+        checkboxSystem.isChecked = selectedNotificationOption == 1
+
+        checkboxSystem.setOnCheckedChangeListener { _, isChecked ->
+            onNotificationOptionSelected(if (isChecked) 1 else 0)
+        }
+        buttonCancel.setOnClickListener { dialog.dismiss() }
+    }
+
     fun showDownloadDialog(activity: FragmentActivity, database: AppDatabase) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.download_popup, null)
         val dialog = android.app.AlertDialog.Builder(activity)

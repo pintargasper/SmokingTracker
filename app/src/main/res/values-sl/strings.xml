@@ -27,10 +27,6 @@
     <string name="settings_category_theme">Tema</string>
     <string name="settings_category_language">Jezik</string>
     <string name="settings_category_notifications">Obvestila</string>
-    <string name="settings_theme_light">Svetla tema</string>
-    <string name="settings_theme_dark">Temna tema</string>
-    <string name="settings_theme_system">Sistem</string>
-    <string name="settings_language_system">Sistem</string>
     <string name="settings_category_data">Podatki</string>
     <string name="settings_category_data_action">Odpri</string>
     <string name="settings_category_data_about">O aplikaciji</string>

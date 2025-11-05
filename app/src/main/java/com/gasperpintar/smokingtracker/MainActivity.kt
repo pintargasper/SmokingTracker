@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit
 import androidx.core.content.edit
 import androidx.work.PeriodicWorkRequest
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import org.apache.commons.compress.archivers.cpio.CpioArchiveEntry
+import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
             val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
             val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
-            val themeId: Int = sharedPreferences.getInt("theme", 0)
+            val themeId: Int = settings?.theme ?: 0
 
             applyTheme(themeId = themeId)
             if (isFirstRun || settings?.notifications == 1) {
@@ -96,15 +96,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context) {
-        val sharedPreferences: SharedPreferences = newBase.getSharedPreferences("settings", MODE_PRIVATE)
-        val languageId: Int = sharedPreferences.getInt("language", 0)
+        val database = Provider.getDatabase(context = newBase)
+        val settings = runBlocking { database.settingsDao().getSettings() }
+
+        val languageId = settings?.language ?: 0
         val supportedLanguages: Array<out String?> = newBase.resources.getStringArray(R.array.language_values)
+        val selectedLanguage: String = supportedLanguages.getOrNull(languageId) ?: "system"
 
-        val selectedLanguage: String = supportedLanguages.getOrNull(index = languageId) ?: "system"
-
-        val locale: Locale =
-            if (selectedLanguage == "system") newBase.resources.configuration.locales.get(0)
-            else Locale.forLanguageTag(selectedLanguage)
+        val locale: Locale = if (selectedLanguage == "system") {
+            newBase.resources.configuration.locales.get(0)
+        } else Locale.forLanguageTag(selectedLanguage)
 
         Locale.setDefault(locale)
 
