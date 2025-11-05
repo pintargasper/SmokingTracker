@@ -70,7 +70,7 @@
                     android:ellipsize="end"
                     android:text="@string/theme_popup_check_box_system"
                     android:textColor="?attr/colorOnSurface"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:maxWidth="300dp" />
 
 
@@ -82,7 +82,7 @@
                     android:ellipsize="end"
                     android:text="@string/theme_popup_check_box_light_theme"
                     android:textColor="?attr/colorOnSurface"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:maxWidth="300dp" />
 
                 <CheckBox
@@ -93,7 +93,7 @@
                     android:ellipsize="end"
                     android:text="@string/theme_popup_check_box_dark_theme"
                     android:textColor="?attr/colorOnSurface"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:maxWidth="300dp" />
 
             </LinearLayout>

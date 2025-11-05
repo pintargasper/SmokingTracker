@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:text="@string/edit_popup_lent"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 android:textColor="?attr/colorOnSurface"
                 android:gravity="center_vertical"
                 android:maxLines="1"

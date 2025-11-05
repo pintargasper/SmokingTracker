@@ -37,76 +37,6 @@
                     android:textColor="?attr/colorOnSurface"
                     android:layout_marginBottom="5dp"/>
 
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:minHeight="?attr/actionBarSize">
-
-                    <TextView
-                        android:id="@+id/text_theme_label"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/settings_category_theme"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"/>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp"
-                        app:strokeColor="?attr/colorOnSurface"
-                        app:strokeWidth="1dp">
-
-                        <Spinner
-                            android:id="@+id/spinner_theme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_margin="7dp"
-                            android:entries="@array/theme_entries"/>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>-->
-
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:minHeight="?attr/actionBarSize">
-
-                    <TextView
-                        android:id="@+id/text_language_label"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/settings_category_language"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"/>
-
-                    <androidx.cardview.widget.CardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp"
-                        app:strokeColor="?attr/colorOnSurface"
-                        app:strokeWidth="1dp">
-
-                        <Spinner
-                            android:id="@+id/spinner_language"
-                            android:layout_width="wrap_content"
-                            android:layout_height="48dp"
-                            android:layout_margin="7dp"
-                            android:entries="@array/language_entries"/>
-                    </androidx.cardview.widget.CardView>
-                </LinearLayout>-->
-
                 <LinearLayout
                     android:id="@+id/theme_layout"
                     android:layout_width="match_parent"
@@ -134,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -170,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -207,7 +137,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_notifications_url"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -215,31 +145,6 @@
                         android:singleLine="true"
                         android:scrollHorizontally="false"/>
                 </LinearLayout>
-
-                <!--<LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:minHeight="?attr/actionBarSize">
-
-                    <TextView
-                        android:id="@+id/text_notifications_label"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:text="@string/settings_category_notifications"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"/>
-
-                    <com.google.android.material.switchmaterial.SwitchMaterial
-                        android:id="@+id/switch_notifications"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:trackTint="?attr/colorControlNormal"/>
-                </LinearLayout>-->
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -301,7 +206,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_download_url"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -338,7 +243,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_upload_url"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -408,7 +313,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -444,7 +349,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -481,7 +386,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_translations_website_url"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
@@ -518,7 +423,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_privacy_policy_url"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"
                         android:clickable="false"
                         android:focusable="false"
