@@ -1,6 +1,5 @@
 package com.gasperpintar.smokingtracker.utils
 
-import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
@@ -41,7 +40,8 @@ object Manager {
                     R.string.notification_download_content,
                     fileName
                 ),
-                notificationId = 1003
+                notificationId = 1003,
+                database = database
             )
             return@withContext fileUri
         }
@@ -59,7 +59,8 @@ object Manager {
                 context,
                 title = context.getString(R.string.notification_upload_title),
                 content = context.getString(R.string.notification_upload_content),
-                notificationId = 1004
+                notificationId = 1004,
+                database = database
             )
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -67,7 +68,9 @@ object Manager {
                 context,
                 title = context.getString(R.string.notification_upload_failed_title),
                 content = context.getString(R.string.notification_upload_failed_content),
-                notificationId = 1005)
+                notificationId = 1005,
+                database = database
+            )
         }
     }
 
@@ -157,8 +160,9 @@ object Manager {
         return Uri.fromFile(file)
     }
 
-    private fun sendNotification(context: Context, title: String, content: String, notificationId: Int) {
-        if (context !is MainActivity) return
+    private suspend fun sendNotification(context: Context, database: AppDatabase, title: String, content: String, notificationId: Int) {
+        if (context !is MainActivity || database.settingsDao().getSettings()?.notifications != 1) return
+
         context.permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
             if (isGranted) {
                 Notifications.createNotificationChannel(context)
