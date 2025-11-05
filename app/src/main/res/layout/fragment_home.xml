@@ -193,7 +193,7 @@
 
             <ImageButton
                 android:id="@+id/previous_day"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/home_previous_day"
                 android:src="@drawable/ic_outline_arrow_back"
@@ -203,17 +203,19 @@
 
             <TextView
                 android:id="@+id/current_date"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/home_current_date_format"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:gravity="center"/>
 
             <ImageButton
                 android:id="@+id/next_day"
-                android:layout_width="wrap_content"
+                android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/home_next_day"
                 android:src="@drawable/ic_outline_arrow_forward"
@@ -256,11 +258,13 @@
         <Button
             android:id="@+id/button_add_entry"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="55dp"
             android:contentDescription="@string/home_next_day"
             android:text="@string/home_add_entry"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="?attr/colorOnSurface"
+            android:singleLine="true"
+            android:ellipsize="end"
             style="@style/Widget.MaterialComponents.Button.TextButton"/>
     </androidx.cardview.widget.CardView>
 

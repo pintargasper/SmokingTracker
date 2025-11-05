@@ -19,6 +19,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.dao.SettingsDao
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
+import com.gasperpintar.smokingtracker.ui.DialogManager
 import com.gasperpintar.smokingtracker.utils.Helper
 import kotlinx.coroutines.launch
 import java.util.Locale

@@ -1,5 +1,6 @@
-package com.gasperpintar.smokingtracker.ui.settings
+package com.gasperpintar.smokingtracker.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
@@ -12,8 +13,10 @@ import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.utils.Manager
+import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import kotlinx.coroutines.launch
 
+@SuppressLint("InflateParams")
 object DialogManager {
 
     fun showLanguageDialog(
@@ -22,10 +25,9 @@ object DialogManager {
         onLanguageSelected: (Int) -> Unit
     ) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.language_popup, null)
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
-            .setView(dialogView)
-            .create()
-        dialog.show()
+        val dialog = RoundedAlertDialog(context = activity)
+            .setViewChained(dialogView)
+            .showChained()
 
         val buttonCancel: Button = dialogView.findViewById(R.id.button_close)
 
@@ -62,10 +64,9 @@ object DialogManager {
         onThemeSelected: (Int) -> Unit
     ) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.theme_popup, null)
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
-            .setView(dialogView)
-            .create()
-        dialog.show()
+        val dialog = RoundedAlertDialog(context = activity)
+            .setViewChained(dialogView)
+            .showChained()
 
         val buttonCancel: Button = dialogView.findViewById(R.id.button_close)
 
@@ -102,10 +103,9 @@ object DialogManager {
         onNotificationOptionSelected: (Int) -> Unit
     ) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.notifications_popup, null)
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
-            .setView(dialogView)
-            .create()
-        dialog.show()
+        val dialog = RoundedAlertDialog(context = activity)
+            .setViewChained(dialogView)
+            .showChained()
 
         val buttonCancel: Button = dialogView.findViewById(R.id.button_close)
         val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
@@ -120,10 +120,9 @@ object DialogManager {
 
     fun showDownloadDialog(activity: FragmentActivity, database: AppDatabase) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.download_popup, null)
-        val dialog = android.app.AlertDialog.Builder(activity)
-            .setView(dialogView)
-            .create()
-        dialog.show()
+        val dialog = RoundedAlertDialog(context = activity)
+            .setViewChained(dialogView)
+            .showChained()
 
         val buttonDownload: Button = dialogView.findViewById(R.id.button_download)
         val buttonClose: Button = dialogView.findViewById(R.id.button_close)
@@ -146,11 +145,9 @@ object DialogManager {
         clearSelectedFile: () -> Unit,
     ) {
         val dialogView = LayoutInflater.from(activity).inflate(R.layout.upload_popup, null)
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(activity)
-            .setView(dialogView)
-            .create()
-
-        dialog.show()
+        val dialog = RoundedAlertDialog(context = activity)
+            .setViewChained(dialogView)
+            .showChained()
 
         val textViewSelectedFile: TextView = dialogView.findViewById(R.id.text_selected_file)
         val buttonOpenFile: Button = dialogView.findViewById(R.id.button_open_file)

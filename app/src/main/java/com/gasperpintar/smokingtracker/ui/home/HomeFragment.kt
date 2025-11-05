@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.format.DateFormat
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.gasperpintar.smokingtracker.model.HistoryEntry
 import com.gasperpintar.smokingtracker.utils.Helper
 import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
 import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntry
+import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -105,11 +107,12 @@ class HomeFragment : Fragment() {
         updateLastEntry()
     }
 
+    @SuppressLint("InflateParams")
     private fun insertDialog() {
         val dialogView = layoutInflater.inflate(R.layout.insert_popup, null)
-        val dialog = android.app.AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
+        val dialog = RoundedAlertDialog(context = requireActivity())
+            .setViewChained(dialogView)
+            .showChained()
 
         val buttonConfirm: Button = dialogView.findViewById(R.id.button_insert)
         val buttonClose: Button = dialogView.findViewById(R.id.button_close)
@@ -135,11 +138,12 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("InflateParams")
     private fun editDialog(entry: HistoryEntry) {
         val dialogView = layoutInflater.inflate(R.layout.edit_popup, null)
-        val dialog = android.app.AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
+        val dialog = RoundedAlertDialog(context = requireActivity())
+            .setViewChained(dialogView)
+            .showChained()
 
         val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
         val buttonClose: Button = dialogView.findViewById(R.id.button_close)
@@ -179,11 +183,12 @@ class HomeFragment : Fragment() {
         dialog.show()
     }
 
+    @SuppressLint("InflateParams")
     private fun deleteDialog(entry: HistoryEntry) {
         val dialogView = layoutInflater.inflate(R.layout.delete_popup, null)
-        val dialog = android.app.AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .create()
+        val dialog = RoundedAlertDialog(context = requireActivity())
+            .setViewChained(dialogView)
+            .showChained()
 
         val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
         val buttonClose: Button = dialogView.findViewById(R.id.button_close)
