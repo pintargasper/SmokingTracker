@@ -129,7 +129,7 @@ object DialogManager {
 
         buttonDownload.setOnClickListener {
             activity.lifecycleScope.launch {
-                Manager.downloadFile(activity, database)
+                Manager.downloadFile(context = activity, database = database)
             }
             dialog.dismiss()
         }

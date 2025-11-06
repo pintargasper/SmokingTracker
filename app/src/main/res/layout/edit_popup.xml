@@ -68,7 +68,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
+            <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                 android:id="@+id/lent_label"
                 android:layout_width="0dp"
                 android:layout_weight="1"
