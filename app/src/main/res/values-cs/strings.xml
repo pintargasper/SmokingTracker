@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="day_monday">Pondělí</string>
+    <string name="day_tuesday">Úterý</string>
+    <string name="day_wednesday">Středa</string>
+    <string name="day_thursday">Čtvrtek</string>
+    <string name="day_friday">Pátek</string>
+    <string name="day_saturday">Sobota</string>
+    <string name="day_sunday">Neděle</string>
+    <string name="month_january">Leden</string>
+    <string name="month_february">Únor</string>
+    <string name="month_march">Březen</string>
+    <string name="month_april">Duben</string>
+    <string name="month_may">Květen</string>
+    <string name="month_june">Červen</string>
+    <string name="month_july">Červenec</string>
+    <string name="month_august">Srpen</string>
+    <string name="month_september">Září</string>
+    <string name="month_october">Říjen</string>
+    <string name="month_november">Listopad</string>
+    <string name="month_december">Prosinec</string>
 </resources>
