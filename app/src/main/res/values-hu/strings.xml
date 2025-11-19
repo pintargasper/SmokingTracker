@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="day_monday">Hétfő</string>
+    <string name="day_tuesday">Kedd</string>
+    <string name="day_wednesday">Szerda</string>
+    <string name="day_thursday">Csütörtök</string>
+    <string name="day_friday">Péntek</string>
+    <string name="day_saturday">Szombat</string>
+    <string name="day_sunday">Vasárnap</string>
+    <string name="month_january">Január</string>
+    <string name="month_february">Február</string>
+    <string name="month_march">Március</string>
+    <string name="month_april">Április</string>
+    <string name="month_may">Május</string>
+    <string name="month_june">Június</string>
+    <string name="month_july">Július</string>
+    <string name="month_august">Augusztus</string>
+    <string name="month_september">Szeptember</string>
+    <string name="month_october">Október</string>
+    <string name="month_november">November</string>
+    <string name="month_december">December</string>
 </resources>
