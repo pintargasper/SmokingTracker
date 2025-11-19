@@ -1,3 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="day_monday">Ponedjeljak</string>
+    <string name="day_tuesday">Utorak</string>
+    <string name="day_wednesday">Srijeda</string>
+    <string name="day_thursday">Četvrtak</string>
+    <string name="day_friday">Petak</string>
+    <string name="day_saturday">Subuta</string>
+    <string name="day_sunday">Nedjelja</string>
+    <string name="month_january">Siječanj</string>
+    <string name="month_february">Veljača</string>
+    <string name="month_march">Ožujak</string>
+    <string name="month_april">Travanj</string>
+    <string name="month_may">Svibanj</string>
+    <string name="month_june">Lipanj</string>
+    <string name="month_july">Srpanj</string>
+    <string name="month_august">Kolovoz</string>
+    <string name="month_september">Rujan</string>
+    <string name="month_october">Listopad</string>
+    <string name="month_november">Studeni</string>
+    <string name="month_december">Prosinac</string>
 </resources>
