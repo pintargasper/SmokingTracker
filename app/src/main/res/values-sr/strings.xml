@@ -9,9 +9,9 @@
     <string name="home_previous_day">Predhodni dan</string>
     <string name="home_next_day">Sledeći dan</string>
     <string name="home_add_entry">Dodaj novi unos</string>
-    <string name="graph_weekly">Pregled nedelje</string>
-    <string name="graph_monthly">Pregled meseca</string>
-    <string name="graph_yearly">Pregled godine</string>
+    <string name="graph_weekly">Pregled nedelje ( %1$d)</string>
+    <string name="graph_monthly">Pregled meseca ( %1$d)</string>
+    <string name="graph_yearly">Pregled godine ( %1$d)</string>
     <string name="graph_previous_day_weakly">Juče</string>
     <string name="graph_view_info">Ovde nema podataka za prikaz grafikona</string>
     <string name="history_container_lent">Evidenca pozajmljenja</string>
@@ -27,7 +27,7 @@
     <string name="settings_category_data_download_url">Prenesite svoje podatke na uređaj</string>
     <string name="settings_category_data_action">Otvori</string>
     <string name="settings_category_data_about">O</string>
-    <string name="settings_category_data_version">Verzija</string>
+    <string name="settings_category_data_version">Verzija %1$s</string>
     <string name="settings_category_data_version_unknown">Nepoznato</string>
     <string name="settings_category_data_website">Veb-sajt</string>
     <string name="settings_category_data_translations_website">Pomoć pri prevođenju</string>
