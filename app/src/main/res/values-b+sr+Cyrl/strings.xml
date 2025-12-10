@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="day_monday">Понедељак</string>
+    <string name="day_tuesday">Уторак</string>
+    <string name="day_wednesday">Среда</string>
+    <string name="day_thursday">Четвртак</string>
+    <string name="day_friday">Петак</string>
+    <string name="day_saturday">Субота</string>
+    <string name="day_sunday">Недеља</string>
+    <string name="month_january">Јануар</string>
+    <string name="month_february">Фебруар</string>
+    <string name="month_march">Март</string>
+    <string name="month_april">Април</string>
+    <string name="month_may">Мај</string>
+    <string name="month_june">Јун</string>
+    <string name="month_july">Јул</string>
+    <string name="month_august">Август</string>
+    <string name="month_september">Септембар</string>
+    <string name="month_october">Октобар</string>
+    <string name="month_november">Новембар</string>
+    <string name="month_december">Децембар</string>
+    <string name="title_home">Дом</string>
 </resources>
