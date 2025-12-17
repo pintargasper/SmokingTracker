@@ -6,26 +6,26 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.edit
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
+import androidx.viewpager2.widget.ViewPager2
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.gasperpintar.smokingtracker.adapter.main.MainViewPagerAdapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
+import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import androidx.core.content.edit
-import androidx.work.PeriodicWorkRequest
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import kotlinx.coroutines.runBlocking
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,10 +41,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navigationView: BottomNavigationView = binding.navView
-        val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-        val navController = navHostFragment.navController
-        navigationView.setupWithNavController(navController)
+        val viewPager = binding.mainViewPager
+
+        viewPager.adapter = MainViewPagerAdapter(fragmentActivity = this)
+        viewPager.isUserInputEnabled = true
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                navigationView.menu.getItem(position).isChecked = true
+            }
+        })
+
+        navigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> viewPager.setCurrentItem(0, true)
+                R.id.navigation_graph -> viewPager.setCurrentItem(1, true)
+                R.id.navigation_analytics -> viewPager.setCurrentItem(2, true)
+                R.id.navigation_settings -> viewPager.setCurrentItem(3, true)
+            }
+            true
+        }
 
         database = Provider.getDatabase(context = this@MainActivity)
         permissionsHelper = Permissions(activity = this@MainActivity)
@@ -60,7 +76,7 @@ class MainActivity : AppCompatActivity() {
             if (isFirstRun || settings?.notifications == 1) {
                 permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
                     if (isGranted) {
-                        Notifications.createNotificationChannel(this@MainActivity)
+                        Notifications.createNotificationChannel(context = this@MainActivity)
                         scheduleNotificationWorker()
                     }
                 }
