@@ -14,8 +14,14 @@
     <fragment
         android:id="@+id/navigation_graph"
         android:name="com.gasperpintar.smokingtracker.ui.graph.GraphFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_graph"
         tools:layout="@layout/fragment_graph" />
+
+    <fragment
+        android:id="@+id/navigation_analytics"
+        android:name="com.gasperpintar.smokingtracker.ui.analytics.AnalyticsFragment"
+        android:label="@string/title_analytics"
+        tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/navigation_settings"

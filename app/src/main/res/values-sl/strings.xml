@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="title_home">Domov</string>
-    <string name="title_dashboard">Graf</string>
+    <string name="title_graph">Graf</string>
     <string name="title_notifications">Nastavitve</string>
     <string name="home_timer_message">Čas, ki je minil od zadnje cigarete</string>
     <string name="home_daily_label">Dnevno</string>

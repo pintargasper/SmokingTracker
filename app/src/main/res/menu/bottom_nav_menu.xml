@@ -9,7 +9,12 @@
     <item
         android:id="@+id/navigation_graph"
         android:icon="@drawable/ic_graph"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_graph" />
+
+    <item
+        android:id="@+id/navigation_analytics"
+        android:icon="@drawable/ic_analytics"
+        android:title="@string/title_analytics" />
 
     <item
         android:id="@+id/navigation_settings"

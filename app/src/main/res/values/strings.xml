@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name" translatable="false">Smoking Tracker</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Graph</string>
+    <string name="title_graph">Graph</string>
+    <string name="title_analytics">Analytics</string>
     <string name="title_notifications">Settings</string>
 
     <string name="home_timer_label" translatable="false">%1$02d:%2$02d:%3$02d</string>
@@ -31,6 +32,10 @@
     <string name="graph_next_day_yearly">Next day (Yearly)</string>
 
     <string name="graph_view_info">There is no data to display the graph</string>
+
+    <string name="analytics_title">Analytics</string>
+    <string name="analytics_calculator_title">Calculator</string>
+    <string name="analytics_calculator_description">A quick overview of total usage, costs and time</string>
 
     <string name="history_container_timer_label" translatable="false">00:00:00</string>
     <string name="history_container_lent">Lent record</string>
