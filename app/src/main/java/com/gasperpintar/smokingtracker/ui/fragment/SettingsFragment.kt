@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.ui.settings
+package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.app.Activity
 import android.content.Intent

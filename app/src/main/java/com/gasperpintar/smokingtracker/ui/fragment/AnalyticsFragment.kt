@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.ui.analytics
+package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +20,15 @@ class AnalyticsFragment : Fragment() {
         _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        setupUI()
+
         return root
+    }
+
+    private fun setupUI() {
+
+        binding.calculatorLayout.setOnClickListener {
+
+        }
     }
 }

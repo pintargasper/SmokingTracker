@@ -3,10 +3,10 @@ package com.gasperpintar.smokingtracker.adapter.main
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.gasperpintar.smokingtracker.ui.analytics.AnalyticsFragment
-import com.gasperpintar.smokingtracker.ui.graph.GraphFragment
-import com.gasperpintar.smokingtracker.ui.home.HomeFragment
-import com.gasperpintar.smokingtracker.ui.settings.SettingsFragment
+import com.gasperpintar.smokingtracker.ui.fragment.AnalyticsFragment
+import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
+import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
+import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 
 class MainViewPagerAdapter(
     fragmentActivity: FragmentActivity

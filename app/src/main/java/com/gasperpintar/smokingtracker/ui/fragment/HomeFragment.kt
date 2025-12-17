@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.ui.home
+package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle

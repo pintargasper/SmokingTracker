@@ -39,7 +39,7 @@
                     android:gravity="center" />
 
                 <LinearLayout
-                    android:id="@+id/theme_layout"
+                    android:id="@+id/calculator_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -48,7 +48,7 @@
                     android:orientation="vertical">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
-                        android:id="@+id/text_theme_label"
+                        android:id="@+id/text_calculator_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -61,7 +61,7 @@
                         android:textColor="?attr/colorOnSurface" />
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
-                        android:id="@+id/theme_service_url"
+                        android:id="@+id/text_calculator_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="false"

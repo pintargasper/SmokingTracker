@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.ui.graph
+package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
