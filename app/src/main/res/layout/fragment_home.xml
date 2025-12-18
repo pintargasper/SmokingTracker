@@ -33,7 +33,7 @@
                 android:textColor="?attr/colorOnSurface"
                 android:gravity="center"/>
 
-            <TextView
+            <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                 android:id="@+id/timer_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="?attr/colorOnSurface"/>
+                    android:background="?attr/colorOnSurface" />
 
                 <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                     android:id="@+id/weekly_value"
