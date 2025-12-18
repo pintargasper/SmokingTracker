@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Smoking Tracker</string>
+    <string name="app_name">Smoking Tracker</string>
     <string name="title_home">Home</string>
     <string name="title_graph">Graph</string>
     <string name="title_analytics">Analytics</string>
@@ -144,4 +144,38 @@
     <string name="notification_upload_content">Data successfully loaded</string>
     <string name="notification_upload_failed_title">Upload Failed</string>
     <string name="notification_upload_failed_content">Error loading file</string>
+
+    <string name="calculator_cigarettes_per_day">Cigarettes per day</string>
+    <string name="calculator_cigarettes_per_pack">Cigarettes per pack</string>
+    <string name="calculator_price_per_pack">Price per pack</string>
+    <string name="calculator_period">Select period</string>
+    <string name="calculator_start_date">From:</string>
+    <string name="calculator_start_date_hint">Start date</string>
+    <string name="calculator_end_date">To:</string>
+    <string name="calculator_end_date_hint">End date</string>
+    <string name="calculator_button_calculate">Calculate</string>
+
+    <string name="calculator_result_title">Calculation result</string>
+    <string name="calculator_result_popup_button">Close</string>
+    <string name="calculator_result_total_costs_label">Total costs</string>
+    <string name="calculator_result_time_spent_label">Time spent</string>
+    <string name="calculator_result_average_cost_per_hour">Average cost per hour</string>
+    <string name="calculator_result_cost_per_cigarette">Cost per cigarette</string>
+    <string name="calculator_result_average_time_per_cigarette_label">Average time to smoke 1 cigarette</string>
+    <string name="calculator_result_average_time_per_cigarette_description">Estimated at 5 minutes</string>
+    <string name="calculator_result_valute_unit">units</string>
+
+    <plurals name="time_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="two">%d hours</item>
+        <item quantity="few">%d hours</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+
+    <plurals name="time_minutes">
+        <item quantity="one">%d minute</item>
+        <item quantity="two">%d minutes</item>
+        <item quantity="few">%d minutes</item>
+        <item quantity="other">%d minutes</item>
+    </plurals>
 </resources>
