@@ -106,4 +106,39 @@
     <string name="upload_popup_file">Datoteka</string>
     <string name="upload_popup_file_none">Nobena</string>
     <string name="upload_popup_file_unknown">Neznano</string>
+    <string name="app_name">Sledilnik Kajenja</string>
+    <string name="title_analytics">Analitika</string>
+    <string name="analytics_title">Analitika</string>
+    <string name="analytics_calculator_title">Kalkulator</string>
+    <string name="analytics_calculator_description">Hiter pregled skupne porabe, stroškov in časa</string>
+    <string name="calculator_cigarettes_per_day">Cigarete na dan</string>
+    <string name="calculator_cigarettes_per_pack">Cigarete na škatlico</string>
+    <string name="calculator_price_per_pack">Cena na paket</string>
+    <string name="calculator_period">Izberite obdobje</string>
+    <string name="calculator_start_date">Od:</string>
+    <string name="calculator_start_date_hint">Začetni datum</string>
+    <string name="calculator_end_date">Do:</string>
+    <string name="calculator_end_date_hint">Končni datum</string>
+    <string name="calculator_button_calculate">Izračunaj</string>
+    <string name="calculator_result_title">Rezultat izračuna</string>
+    <string name="calculator_result_popup_button">Zapri</string>
+    <string name="calculator_result_total_costs_label">Skupni stroški</string>
+    <string name="calculator_result_time_spent_label">Porabljen čas</string>
+    <string name="calculator_result_average_cost_per_hour">Povprečni stroški na uro</string>
+    <string name="calculator_result_cost_per_cigarette">Cena na cigareto</string>
+    <string name="calculator_result_average_time_per_cigarette_label">Povprečen čas kajenja 1 cigarete</string>
+    <string name="calculator_result_average_time_per_cigarette_description">Predvideno 5 minut</string>
+    <string name="calculator_result_valute_unit">enot</string>
+    <plurals name="time_hours">
+        <item quantity="one">%d ura</item>
+        <item quantity="two">%d uri</item>
+        <item quantity="few">%d ure</item>
+        <item quantity="other">%d ur</item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="one">%d minuta</item>
+        <item quantity="two">%d minuti</item>
+        <item quantity="few">%d minute</item>
+        <item quantity="other">%d minut</item>
+    </plurals>
 </resources>
