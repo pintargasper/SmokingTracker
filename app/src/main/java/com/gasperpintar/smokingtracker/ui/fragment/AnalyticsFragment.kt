@@ -1,10 +1,12 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.gasperpintar.smokingtracker.CalculatorActivity
 import com.gasperpintar.smokingtracker.databinding.FragmentAnalyticsBinding
 
 class AnalyticsFragment : Fragment() {
@@ -28,7 +30,8 @@ class AnalyticsFragment : Fragment() {
     private fun setupUI() {
 
         binding.calculatorLayout.setOnClickListener {
-
+            val intent = Intent(binding.root.context, CalculatorActivity::class.java)
+            binding.root.context.startActivity(intent)
         }
     }
 }

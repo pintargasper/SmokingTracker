@@ -2,15 +2,18 @@
 <resources>
     <style name="Theme.SmokingTracker" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/on_background</item>
+        <item name="android:statusBarColor">@color/on_background</item>
 
-        <item name="colorPrimary">@color/secondary</item>
-        <item name="colorPrimaryVariant">@color/secondary</item>
-        <item name="colorOnPrimary">@color/on_secondary</item>
+        <item name="android:windowLightStatusBar">true</item>
 
-        <item name="colorSecondary">@color/primary</item>
+        <item name="colorPrimary">@color/on_primary</item>
+        <item name="colorPrimaryVariant">@color/on_primary</item>
+        <item name="colorOnPrimary">@color/primary</item>
+
+        <item name="colorSecondary">@color/on_secondary</item>
         <item name="colorSecondaryVariant">@color/primary</item>
-        <item name="colorOnSecondary">@color/on_primary</item>
+        <item name="colorOnSecondary">@color/secondary</item>
 
         <item name="android:colorBackground">@color/on_background</item>
         <item name="colorSurface">@color/on_surface</item>
@@ -22,5 +25,7 @@
 
         <item name="colorControlNormal">@color/surface</item>
         <item name="colorSwitchThumbNormal">@color/on_surface</item>
+
+        <item name="colorAccent">@color/on_primary</item>
     </style>
 </resources>

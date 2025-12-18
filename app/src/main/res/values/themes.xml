@@ -25,5 +25,7 @@
 
         <item name="colorControlNormal">@color/on_surface</item>
         <item name="colorSwitchThumbNormal">@color/surface</item>
+
+        <item name="colorAccent">@color/primary</item>
     </style>
 </resources>

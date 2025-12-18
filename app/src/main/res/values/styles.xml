@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="CustomDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog">
-        <item name="android:windowBackground">@drawable/dialog_background</item>
-        <item name="background">@drawable/dialog_background</item>
-    </style>
-</resources>
