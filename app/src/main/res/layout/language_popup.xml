@@ -71,7 +71,8 @@
                     android:text="@string/language_popup_check_box_system"
                     android:textColor="?attr/colorOnSurface"
                     android:textSize="14sp"
-                    android:maxWidth="300dp" />
+                    android:maxWidth="300dp"
+                    tools:ignore="VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_english"
@@ -79,10 +80,11 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    android:text="@string/language_popup_check_box_english"
+                    android:text="English"
                     android:textColor="?attr/colorOnSurface"
                     android:textSize="14sp"
-                    android:maxWidth="300dp" />
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_slovenian"
@@ -90,10 +92,11 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    android:text="@string/language_popup_check_box_slovenian"
+                    android:text="Slovenščina"
                     android:textColor="?attr/colorOnSurface"
                     android:textSize="14sp"
-                    android:maxWidth="300dp" />
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
             </LinearLayout>
         </ScrollView>

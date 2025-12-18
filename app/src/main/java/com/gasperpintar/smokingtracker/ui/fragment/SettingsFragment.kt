@@ -149,8 +149,8 @@ class SettingsFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
                     selectedFileUri = uri
-                    selectedFile?.text = getString(
-                        R.string.upload_popup_file_status,
+                    selectedFile?.text = String.format(
+                        $$"%1$s: %2$s",
                         getString(R.string.upload_popup_file),
                         Helper.getFileName(context = requireActivity(), uri = uri)
                     )
@@ -165,12 +165,12 @@ class SettingsFragment : Fragment() {
 
         with(binding) {
             appVersion.text = getString(R.string.settings_category_data_version, versionName)
-            appVersionUrl.text = getString(R.string.settings_category_data_version_url)
-            websiteServiceUrl.text = getString(R.string.settings_category_data_website_url)
+            appVersionUrl.text = "https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker"
+            websiteServiceUrl.text = "https://gasperpintar.com/smoking-tracker"
 
             listOf(
-                versionUrl to getString(R.string.settings_category_data_version_url),
-                websiteUrl to getString(R.string.settings_category_data_website_url),
+                versionUrl to "https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker",
+                websiteUrl to "https://gasperpintar.com/smoking-tracker",
                 translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
                 privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy"
             ).forEach { (view, url) -> setupLink(view, url) }
@@ -188,8 +188,8 @@ class SettingsFragment : Fragment() {
     private fun getLanguages(): List<String> {
         return listOf(
             getString(R.string.language_popup_check_box_system),
-            getString(R.string.language_popup_check_box_english),
-            getString(R.string.language_popup_check_box_slovenian)
+            "English",
+            "Slovenščina"
         )
     }
 

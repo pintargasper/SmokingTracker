@@ -1,6 +1,7 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -32,10 +33,11 @@
                     android:id="@+id/timer_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_timer_label"
+                    android:text="%1$02d:%2$02d:%3$02d"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnSurface"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/timer_message"
@@ -95,11 +97,13 @@
                         android:id="@+id/daily_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_daily_value"
+                        android:text="0"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="?attr/colorOnSurface"
                         android:singleLine="true"
-                        android:ellipsize="end" />
+                        android:ellipsize="end"
+                        tools:ignore="HardcodedText" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -137,11 +141,13 @@
                         android:id="@+id/weekly_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_weekly_value"
+                        android:text="0"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="?attr/colorOnSurface"
                         android:singleLine="true"
-                        android:ellipsize="end" />
+                        android:ellipsize="end"
+                        tools:ignore="HardcodedText" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -179,11 +185,13 @@
                         android:id="@+id/monthly_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/home_monthly_value"
+                        android:text="0"
                         android:textAppearance="?attr/textAppearanceBody1"
                         android:textColor="?attr/colorOnSurface"
                         android:singleLine="true"
-                        android:ellipsize="end" />
+                        android:ellipsize="end"
+                        tools:ignore="HardcodedText" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -222,11 +230,12 @@
                     android:id="@+id/current_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_current_date_format"
+                    android:text="%1$02d.%2$02d.%3$d"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    tools:ignore="HardcodedText" />
 
                 <ImageButton
                     android:id="@+id/next_day"

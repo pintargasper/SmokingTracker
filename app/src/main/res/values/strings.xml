@@ -5,15 +5,10 @@
     <string name="title_analytics">Analytics</string>
     <string name="title_notifications">Settings</string>
 
-    <string name="home_timer_label" translatable="false">%1$02d:%2$02d:%3$02d</string>
     <string name="home_timer_message">Time past after last cigarette</string>
     <string name="home_daily_label">Daily</string>
-    <string name="home_daily_value" translatable="false">0</string>
     <string name="home_weekly_label">Weekly</string>
-    <string name="home_weekly_value" translatable="false">0</string>
     <string name="home_monthly_label">Monthly</string>
-    <string name="home_monthly_value" translatable="false">0</string>
-    <string name="home_current_date_format" translatable="false">%1$02d.%2$02d.%3$d</string>
     <string name="home_previous_day">Previous day</string>
     <string name="home_next_day">Next day</string>
     <string name="home_add_entry">Add new entry</string>
@@ -21,23 +16,19 @@
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
     <string name="graph_monthly">Monthly Overview (%1$d)</string>
     <string name="graph_yearly">Yearly Overview (%1$d)</string>
-    <string name="graph_weekly_date" translatable="false">%1$d.%2$d/%3$d.%4$d %5$d</string>
-    <string name="graph_monthly_date" translatable="false">%1$s %2$d</string>
-    <string name="graph_yearly_date" translatable="false">%1$d</string>
+
     <string name="graph_previous_day_weakly">Previous day (Weekly)</string>
     <string name="graph_previous_day_monthly">Previous day (Monthly)</string>
     <string name="graph_previous_day_yearly">Previous day (Yearly)</string>
     <string name="graph_next_day_weakly">Next day (Weekly)</string>
     <string name="graph_next_day_monthly">Next day (Monthly)</string>
     <string name="graph_next_day_yearly">Next day (Yearly)</string>
-
     <string name="graph_view_info">There is no data to display the graph</string>
 
     <string name="analytics_title">Analytics</string>
     <string name="analytics_calculator_title">Calculator</string>
     <string name="analytics_calculator_description">A quick overview of total usage, costs and time</string>
 
-    <string name="history_container_timer_label" translatable="false">00:00:00</string>
     <string name="history_container_lent">Lent record</string>
     <string name="history_container_edit">Edit record</string>
     <string name="history_container_delete">Delete record</string>
@@ -57,9 +48,7 @@
     <string name="settings_category_data_about">About</string>
     <string name="settings_category_data_version">Version %1$s</string>
     <string name="settings_category_data_version_unknown">Unknown</string>
-    <string name="settings_category_data_version_url" translatable="false">https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker</string>
     <string name="settings_category_data_website">Website</string>
-    <string name="settings_category_data_website_url" translatable="false">https://gasperpintar.com/smoking-tracker</string>
     <string name="settings_category_data_translations_website">Help Translate</string>
     <string name="settings_category_data_translations_website_url">Translate this app on your language using Weblate</string>
     <string name="settings_category_data_privacy_policy">Security</string>
@@ -83,8 +72,6 @@
     <string name="language_popup_info">Choose your preferred language</string>
     <string name="language_popup_close">Close</string>
     <string name="language_popup_check_box_system">System</string>
-    <string name="language_popup_check_box_english" translatable="false">English</string>
-    <string name="language_popup_check_box_slovenian" translatable="false">Slovenščina</string>
 
     <string name="theme_popup">Select theme</string>
     <string name="theme_popup_info">Choose your preferred theme</string>
@@ -108,7 +95,6 @@
     <string name="upload_popup_info">You will be notified of the data upload via push notification</string>
     <string name="upload_popup_confirm">Confirm</string>
     <string name="upload_popup_close">Close</string>
-    <string name="upload_popup_file_status" translatable="false">%1$s: %2$s</string>
     <string name="upload_popup_file">File</string>
     <string name="upload_popup_file_none">None</string>
     <string name="upload_popup_file_unknown">Unknown</string>
@@ -136,8 +122,6 @@
 
     <string name="notification_title">Time for break</string>
     <string name="notification_content">It\'s been %1$s since your last cigarette</string>
-    <string name="notification_time_format_hours" translatable="false">%1$dh %2$dm %3$ds</string>
-    <string name="notification_time_format_minutes" translatable="false">%1$dm %2$ds</string>
     <string name="notification_download_title">Download completed</string>
     <string name="notification_download_content">File %1$s was successfully downloaded</string>
     <string name="notification_upload_title">Upload completed</string>

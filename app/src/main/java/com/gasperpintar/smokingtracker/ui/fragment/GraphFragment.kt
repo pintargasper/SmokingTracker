@@ -100,8 +100,8 @@ class GraphFragment : Fragment() {
         loadGraph(
             getDateRange = { Helper.getWeek(selectedDate) },
             labelFormatter = { start, end ->
-                getString(
-                    R.string.graph_weekly_date,
+                String.format(
+                    $$"%1$d.%2$d/%3$d.%4$d %5$d",
                     start.dayOfMonth,
                     start.monthValue,
                     end.dayOfMonth,
@@ -117,8 +117,8 @@ class GraphFragment : Fragment() {
         loadGraph(
             getDateRange = { Helper.getMonth(selectedDate) },
             labelFormatter = { start, _ ->
-                getString(
-                    R.string.graph_monthly_date,
+                String.format(
+                    $$"%1$s %2$d",
                     context?.getMonthName(start.month),
                     start.year
                 )
@@ -131,7 +131,7 @@ class GraphFragment : Fragment() {
         loadGraph(
             getDateRange = { Helper.getYear(selectedDate) },
             labelFormatter = { start, _ ->
-                getString(R.string.graph_yearly_date, start.year)
+                String.format($$"%1$d", start.year)
             },
             interval = GraphInterval.YEARLY
         )

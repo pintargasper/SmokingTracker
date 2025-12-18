@@ -93,8 +93,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun refreshUI() {
-        binding.currentDate.text = getString(
-            R.string.home_current_date_format,
+        binding.currentDate.text = String.format(
+            "%02d.%02d.%d",
             selectedDate.dayOfMonth,
             selectedDate.monthValue,
             selectedDate.year
@@ -234,14 +234,15 @@ class HomeFragment : Fragment() {
         val entry = lastEntry
 
         val timeDifference: String = if (entry?.createdAt != null) {
-            val duration = Duration.between(entry.createdAt, LocalDateTime.now())
-            getString(R.string.home_timer_label,
+            val duration: Duration = Duration.between(entry.createdAt, LocalDateTime.now())
+            String.format(
+                "%02d:%02d:%02d",
                 duration.toHours(),
                 duration.toMinutes() % 60,
                 duration.seconds % 60
             )
         } else {
-            "--:--:--"
+            "00:00:00"
         }
         binding.timerLabel.text = timeDifference
     }

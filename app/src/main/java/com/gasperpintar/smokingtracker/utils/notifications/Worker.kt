@@ -58,15 +58,15 @@ class Worker(
         val seconds = this.seconds % 60
 
         return if (hours > 0) {
-            applicationContext.getString(
-                R.string.notification_time_format_hours,
+            String.format(
+                $$"%1$dh %2$dm %3$ds",
                 hours,
                 minutes,
                 seconds
             )
         } else {
-            applicationContext.getString(
-                R.string.notification_time_format_minutes,
+            String.format(
+                $$"%1$dm %2$ds",
                 minutes,
                 seconds
             )

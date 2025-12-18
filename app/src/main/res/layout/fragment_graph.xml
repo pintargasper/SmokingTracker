@@ -1,6 +1,7 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
@@ -70,9 +71,10 @@
                         android:layout_width="180dp"
                         android:layout_height="48dp"
                         android:gravity="center"
-                        android:text="@string/graph_weekly_date"
+                        android:text="%1$d.%2$d/%3$d.%4$d %5$d"
+                        android:textAlignment="center"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textAlignment="center"/>
+                        tools:ignore="HardcodedText,TextSizeCheck" />
 
                     <ImageButton
                         android:id="@+id/next_day_weekly"
@@ -146,9 +148,10 @@
                         android:layout_width="180dp"
                         android:layout_height="48dp"
                         android:gravity="center"
-                        android:text="@string/graph_monthly_date"
+                        android:text="%1$s %2$d"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        tools:ignore="HardcodedText" />
 
                     <ImageButton
                         android:id="@+id/next_day_monthly"
@@ -224,9 +227,10 @@
                         android:layout_width="180dp"
                         android:layout_height="48dp"
                         android:gravity="center"
-                        android:text="@string/graph_yearly_date"
+                        android:text="%1$d"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textAlignment="center"/>
+                        android:textAlignment="center"
+                        tools:ignore="HardcodedText" />
 
                     <ImageButton
                         android:id="@+id/next_day_yearly"

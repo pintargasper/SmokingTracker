@@ -155,8 +155,8 @@ object DialogManager {
         val buttonClose: Button = dialogView.findViewById(R.id.button_close)
 
         selectedFileSetter(textViewSelectedFile)
-        textViewSelectedFile.text = activity.getString(
-            R.string.upload_popup_file_status,
+        textViewSelectedFile.text = String.format(
+            $$"%1$s: %2$s",
             activity.getString(R.string.upload_popup_file),
             activity.getString(R.string.upload_popup_file_none)
         )
