@@ -113,7 +113,7 @@
     <string name="analytics_calculator_description">Hiter pregled skupne porabe, stroškov in časa</string>
     <string name="calculator_cigarettes_per_day">Cigarete na dan</string>
     <string name="calculator_cigarettes_per_pack">Cigarete na škatlico</string>
-    <string name="calculator_price_per_pack">Cena na paket</string>
+    <string name="calculator_price_per_pack">Cena škatlice</string>
     <string name="calculator_period">Izberite obdobje</string>
     <string name="calculator_start_date">Od:</string>
     <string name="calculator_start_date_hint">Začetni datum</string>
@@ -125,7 +125,7 @@
     <string name="calculator_result_total_costs_label">Skupni stroški</string>
     <string name="calculator_result_time_spent_label">Porabljen čas</string>
     <string name="calculator_result_average_cost_per_hour">Povprečni stroški na uro</string>
-    <string name="calculator_result_cost_per_cigarette">Cena na cigareto</string>
+    <string name="calculator_result_cost_per_cigarette">Cena cigarete</string>
     <string name="calculator_result_average_time_per_cigarette_label">Povprečen čas kajenja 1 cigarete</string>
     <string name="calculator_result_average_time_per_cigarette_description">Predvideno 5 minut</string>
     <string name="calculator_result_valute_unit">enot</string>
