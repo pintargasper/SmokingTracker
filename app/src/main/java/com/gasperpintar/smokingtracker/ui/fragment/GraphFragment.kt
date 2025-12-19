@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -96,6 +97,7 @@ class GraphFragment : Fragment() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     private suspend fun loadWeeklyData() {
         loadGraph(
             getDateRange = { Helper.getWeek(selectedDate) },
@@ -113,6 +115,7 @@ class GraphFragment : Fragment() {
         )
     }
 
+    @SuppressLint("DefaultLocale")
     private suspend fun loadMonthlyData() {
         loadGraph(
             getDateRange = { Helper.getMonth(selectedDate) },
@@ -127,6 +130,7 @@ class GraphFragment : Fragment() {
         )
     }
 
+    @SuppressLint("DefaultLocale")
     private suspend fun loadYearlyData() {
         loadGraph(
             getDateRange = { Helper.getYear(selectedDate) },

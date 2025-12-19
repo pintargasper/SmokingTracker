@@ -1,14 +1,19 @@
 package com.gasperpintar.smokingtracker
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
+import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -54,6 +59,7 @@ class CalculatorActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("DefaultLocale", "InflateParams")
     private fun calculateResults(dailyCigarettes: Int, cigarettesPerPack: Int, packPrice: Double) {
         val dailyCost = (dailyCigarettes.toDouble() / cigarettesPerPack) * packPrice
         val timePerCigaretteMinutes = 5
@@ -139,5 +145,27 @@ class CalculatorActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        val database = Provider.getDatabase(context = newBase)
+        val settings = runBlocking { database.settingsDao().getSettings() }
+
+        val languageId = settings?.language ?: 0
+        val supportedLanguages: Array<out String?> = newBase.resources.getStringArray(R.array.language_values)
+        val selectedLanguage: String = supportedLanguages.getOrNull(languageId) ?: "system"
+
+        val locale: Locale = if (selectedLanguage == "system") {
+            newBase.resources.configuration.locales.get(0)
+        } else Locale.forLanguageTag(selectedLanguage)
+
+        Locale.setDefault(locale)
+
+        val configuration = Configuration(newBase.resources.configuration)
+        configuration.setLocale(locale)
+        configuration.setLayoutDirection(locale)
+
+        val context: Context = newBase.createConfigurationContext(configuration)
+        super.attachBaseContext(context)
     }
 }

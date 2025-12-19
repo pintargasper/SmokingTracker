@@ -92,6 +92,7 @@ class HomeFragment : Fragment() {
         binding.recyclerviewHistory.adapter = historyAdapter
     }
 
+    @SuppressLint("DefaultLocale")
     private fun refreshUI() {
         binding.currentDate.text = String.format(
             "%02d.%02d.%d",
@@ -230,6 +231,7 @@ class HomeFragment : Fragment() {
         timeDifference = null
     }
 
+    @SuppressLint("DefaultLocale")
     private fun updateTimerLabel() {
         val entry = lastEntry
 
