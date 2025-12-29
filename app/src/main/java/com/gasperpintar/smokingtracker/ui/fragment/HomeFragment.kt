@@ -122,7 +122,7 @@ class HomeFragment : Fragment() {
         buttonConfirm.setOnClickListener {
             val entry = HistoryEntity (
                 id = 0,
-                lent = if (lentCheckbox.isChecked) 1  else 0,
+                lent = if (lentCheckbox.isChecked) 1 else 0,
                 createdAt = LocalDateTime.now()
             )
 
