@@ -3,7 +3,6 @@ package com.gasperpintar.smokingtracker.utils
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
-import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.model.HistoryEntry
@@ -13,7 +12,6 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.Month
 import java.time.format.DateTimeFormatter
-import kotlin.to
 
 object Helper {
 

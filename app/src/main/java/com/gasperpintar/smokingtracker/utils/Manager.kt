@@ -41,7 +41,8 @@ object Manager {
                     fileName
                 ),
                 notificationId = 1003,
-                database = database
+                database = database,
+                fileUri = fileUri
             )
             return@withContext fileUri
         }
@@ -160,17 +161,26 @@ object Manager {
         return Uri.fromFile(file)
     }
 
-    private suspend fun sendNotification(context: Context, database: AppDatabase, title: String, content: String, notificationId: Int) {
+    private suspend fun sendNotification(
+        context: Context,
+        database: AppDatabase,
+        title: String,
+        content: String,
+        notificationId: Int,
+        fileUri: Uri? = null
+    ) {
         if (context !is MainActivity || database.settingsDao().getSettings()?.notifications != 1) return
 
         context.permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
             if (isGranted) {
                 Notifications.createNotificationChannel(context)
+
                 Notifications.sendNotification(
                     context = context,
                     title = title,
                     content = content,
-                    notificationId = notificationId
+                    notificationId = notificationId,
+                    fileUri = fileUri
                 )
             }
         }

@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.annotation.RequiresPermission
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -32,9 +33,22 @@ object Notifications {
     }
 
     @RequiresPermission(value = Manifest.permission.POST_NOTIFICATIONS)
-    fun sendNotification(context: Context, title: String, content: String, notificationId: Int = 1) {
-        val intent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    fun sendNotification(
+        context: Context,
+        title: String,
+        content: String,
+        notificationId: Int = 1,
+        fileUri: Uri? = null
+    ) {
+        val intent: Intent = if (fileUri != null) {
+            Intent(Intent.ACTION_VIEW).apply {
+                setDataAndType(fileUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+        } else {
+            Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
         }
 
         val pendingIntent: PendingIntent = PendingIntent.getActivity(
@@ -52,6 +66,7 @@ object Notifications {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .build()
+
         NotificationManagerCompat.from(context).notify(notificationId, notification)
     }
 }
