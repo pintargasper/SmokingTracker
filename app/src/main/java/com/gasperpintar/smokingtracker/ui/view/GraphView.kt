@@ -77,11 +77,10 @@ class GraphView @JvmOverloads constructor(
         val graphWidth: Float = width - paddingLeft - paddingRight
         val graphHeight: Float = height - paddingTop - paddingBottom
         val maxDataValue: Int = dataList.maxOf { entry: GraphEntry -> entry.quantity }.coerceAtLeast(1)
-        val stepX: Float = graphWidth / (dataList.size - 1).coerceAtLeast(1)
 
         drawAxes(canvas, graphWidth, graphHeight)
         drawYAxisLabels(canvas, graphHeight, maxDataValue)
-        drawDataPoints(canvas, graphHeight, stepX, maxDataValue)
+        drawDataPoints(canvas, graphHeight, maxDataValue)
     }
 
     private fun drawAxes(canvas: Canvas, graphWidth: Float, graphHeight: Float) {
@@ -89,33 +88,69 @@ class GraphView @JvmOverloads constructor(
         canvas.drawLine(paddingLeft, paddingTop + graphHeight, paddingLeft + graphWidth, paddingTop + graphHeight, linePaint)
     }
 
-    private fun drawDataPoints(canvas: Canvas, graphHeight: Float, stepX: Float, maxDataValue: Int) {
-        if (dataList.isEmpty()) {
+    private fun drawDataPoints(
+        canvas: Canvas,
+        graphHeight: Float,
+        maxDataValue: Int
+    ) {
+        var previousX: Float? = null
+        var previousY: Float? = null
+
+        val validEntries: List<Pair<Int, GraphEntry>> =
+            dataList.withIndex()
+                .filter { it.value.quantity > 0 }
+                .map { it.index to it.value }
+
+        if (validEntries.isEmpty()) {
             return
         }
 
-        var previousX: Float = paddingLeft
-        var previousY: Float = paddingTop + graphHeight * (1 - dataList[0].quantity.toFloat() / maxDataValue)
+        val stretchedStepX: Float =
+            (width - paddingLeft - paddingRight) /
+                    (validEntries.size - 1).coerceAtLeast(1)
 
-        val step: Int = if (dataList.size > 15) 2 else 1
+        val step: Int = when {
+            currentGraphInterval == GraphInterval.DAILY && validEntries.size <= 15 -> 1
+            validEntries.size > 15 -> 2
+            else -> 1
+        }
 
-        dataList.forEachIndexed { index: Int, entry: GraphEntry ->
-            val x: Float = paddingLeft + index * stepX
+        validEntries.forEachIndexed { visibleIndex: Int, pair: Pair<Int, GraphEntry> ->
+
+            val originalIndex: Int = pair.first
+            val entry: GraphEntry = pair.second
+
+            val x: Float = paddingLeft + visibleIndex * stretchedStepX
             val y: Float = paddingTop + graphHeight * (1 - entry.quantity.toFloat() / maxDataValue)
 
-            if (index > 0) canvas.drawLine(previousX, previousY, x, y, linePaint)
+            if (previousX != null && previousY != null) {
+                canvas.drawLine(previousX, previousY, x, y, linePaint)
+            }
+
             canvas.drawCircle(x, y, pointRadius, pointPaint)
 
-            if (index % step == 0) {
+            if (visibleIndex % step == 0) {
                 val labelText: String = when (currentGraphInterval) {
-                    GraphInterval.WEEKLY -> context.getDayOfWeekName(entry.date.dayOfWeek).take(n = 3)
-                    GraphInterval.MONTHLY -> String.format(Locale.getDefault(), "%02d.%02d",entry.date.dayOfMonth, entry.date.monthValue)
-                    GraphInterval.YEARLY -> context.getMonthName(entry.date.month).take(n = 3)
+                    GraphInterval.DAILY -> String.format(Locale.getDefault(), "%02d:00", originalIndex)
+                    GraphInterval.WEEKLY -> context.getDayOfWeekName(entry.date.dayOfWeek).take(3)
+                    GraphInterval.MONTHLY ->
+                        String.format(
+                            Locale.getDefault(),
+                            "%02d.%02d",
+                            entry.date.dayOfMonth,
+                            entry.date.monthValue
+                        )
+                    GraphInterval.YEARLY -> context.getMonthName(entry.date.month).take(3)
                 }
 
                 val textWidth: Float = textPaint.measureText(labelText)
                 canvas.withRotation(-45f, x, paddingTop + graphHeight + 60f) {
-                    drawText(labelText, x - textWidth / 2, paddingTop + graphHeight + 60f, textPaint)
+                    drawText(
+                        labelText,
+                        x - textWidth / 2,
+                        paddingTop + graphHeight + 60f,
+                        textPaint
+                    )
                 }
             }
             previousX = x
@@ -148,7 +183,6 @@ class GraphView @JvmOverloads constructor(
             }
 
             canvas.drawText(labelValue.toString(), paddingLeft - 80f, y + 15f, textPaint)
-            canvas.drawLine(paddingLeft, y, width - paddingRight, y, linePaint.apply { alpha = 50 })
 
             index -= stepIncrement
             if (index < 0) return@repeat

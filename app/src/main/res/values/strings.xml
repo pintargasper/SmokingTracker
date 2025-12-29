@@ -13,13 +13,15 @@
     <string name="home_next_day">Next day</string>
     <string name="home_add_entry">Add new entry</string>
 
+    <string name="graph_daily">Daily Overview (%1$d)</string>
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
     <string name="graph_monthly">Monthly Overview (%1$d)</string>
     <string name="graph_yearly">Yearly Overview (%1$d)</string>
-
+    <string name="graph_previous_day_daily">Previous day (Daily)</string>
     <string name="graph_previous_day_weakly">Previous day (Weekly)</string>
     <string name="graph_previous_day_monthly">Previous day (Monthly)</string>
     <string name="graph_previous_day_yearly">Previous day (Yearly)</string>
+    <string name="graph_next_day_daily">Next day (Daily)</string>
     <string name="graph_next_day_weakly">Next day (Weekly)</string>
     <string name="graph_next_day_monthly">Next day (Monthly)</string>
     <string name="graph_next_day_yearly">Next day (Yearly)</string>

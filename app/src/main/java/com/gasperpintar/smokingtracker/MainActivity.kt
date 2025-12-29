@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Locale
 import java.util.concurrent.TimeUnit
+import androidx.core.view.get
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                navigationView.menu.getItem(position).isChecked = true
+                navigationView.menu[position].isChecked = true
             }
         })
 

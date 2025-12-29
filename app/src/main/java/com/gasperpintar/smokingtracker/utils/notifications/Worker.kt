@@ -1,6 +1,7 @@
 package com.gasperpintar.smokingtracker.utils.notifications
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.RequiresPermission
 import androidx.work.CoroutineWorker
@@ -18,7 +19,7 @@ import java.time.LocalDateTime
 class Worker(
     context: Context,
     workerParams: WorkerParameters
-) : CoroutineWorker(context, workerParams) {
+) : CoroutineWorker(appContext = context, workerParams) {
 
     private val database: AppDatabase by lazy { Provider.getDatabase(applicationContext) }
 
@@ -52,6 +53,7 @@ class Worker(
         return Result.success()
     }
 
+    @SuppressLint("DefaultLocale")
     private fun Duration.toReadableString(): String {
         val hours = this.toHours()
         val minutes = this.toMinutes() % 60

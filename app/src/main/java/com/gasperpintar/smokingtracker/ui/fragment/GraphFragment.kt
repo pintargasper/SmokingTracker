@@ -47,6 +47,14 @@ class GraphFragment : Fragment() {
 
     private fun setup() {
         setupNavigation(
+            previous = binding.previousDayDaily,
+            next = binding.nextDayDaily,
+            previousUnit = { it.minusDays(1) },
+            nextUnit = { it.plusDays(1) },
+            loader = ::loadDailyData
+        )
+
+        setupNavigation(
             previous = binding.previousDayWeekly,
             next = binding.nextDayWeekly,
             previousUnit = { it.minusWeeks(1) },
@@ -91,10 +99,27 @@ class GraphFragment : Fragment() {
 
     private fun loadGraphs() {
         lifecycleScope.launch {
+            loadDailyData()
             loadWeeklyData()
             loadMonthlyData()
             loadYearlyData()
         }
+    }
+
+    @SuppressLint("DefaultLocale")
+    private suspend fun loadDailyData() {
+        loadGraph(
+            getDateRange = { Helper.getDay(selectedDate) },
+            labelFormatter = { start, _ ->
+                String.format(
+                    "%02d.%02d.%04d",
+                    start.dayOfMonth,
+                    start.monthValue,
+                    start.year
+                )
+            },
+            interval = GraphInterval.DAILY
+        )
     }
 
     @SuppressLint("DefaultLocale")
@@ -151,6 +176,7 @@ class GraphFragment : Fragment() {
         val endDate = endDateTime.toLocalDate()
 
         val currentDateTextView = when (interval) {
+            GraphInterval.DAILY -> binding.currentDateDaily
             GraphInterval.WEEKLY -> binding.currentDateWeekly
             GraphInterval.MONTHLY -> binding.currentDateMonthly
             GraphInterval.YEARLY -> binding.currentDateYearly
@@ -160,24 +186,47 @@ class GraphFragment : Fragment() {
         val historyList = database.value.historyDao().getHistoryBetween(startDateTime, endDateTime)
 
         val entries: List<GraphEntry> = when (interval) {
+
+            GraphInterval.DAILY -> {
+                val hourlyCountMap: Map<Int, Int> =
+                    historyList.groupingBy { it.createdAt.hour }.eachCount()
+
+                (0..23).map { hour: Int ->
+                    GraphEntry(
+                        quantity = hourlyCountMap[hour] ?: 0,
+                        date = startDate.atTime(hour, 0).toLocalDate()
+                    )
+                }.dropLastWhile { it.quantity == 0 }
+            }
+
             GraphInterval.YEARLY -> {
                 val monthCountMap = historyList.groupingBy { it.createdAt.monthValue }.eachCount()
                 (1..12).map { monthNumber ->
                     val count = monthCountMap[monthNumber] ?: 0
-                    GraphEntry(quantity = count, date = startDate.withMonth(monthNumber).withDayOfMonth(1))
+                    GraphEntry(
+                        quantity = count,
+                        date = startDate.withMonth(monthNumber).withDayOfMonth(1)
+                    )
                 }.dropLastWhile { it.quantity == 0 }
             }
+
             else -> {
                 generateSequence(seed = startDate) { day ->
                     val nextDay = day.plusDays(1)
                     if (nextDay <= endDate) nextDay else null
                 }.map { day ->
-                    GraphEntry(quantity = historyList.count { it.createdAt.toLocalDate() == day }, date = day)
+                    GraphEntry(
+                        quantity = historyList.count {
+                            it.createdAt.toLocalDate() == day
+                        },
+                        date = day
+                    )
                 }.toList().dropLastWhile { it.quantity == 0 }
             }
         }
 
         val intervalViewsAndStrings = mapOf(
+            GraphInterval.DAILY to Pair(binding.graphDaily, R.string.graph_daily),
             GraphInterval.WEEKLY to Pair(binding.graphWeekly, R.string.graph_weekly),
             GraphInterval.MONTHLY to Pair(binding.graphMonthly, R.string.graph_monthly),
             GraphInterval.YEARLY to Pair(binding.graphYearly, R.string.graph_yearly)
@@ -186,11 +235,17 @@ class GraphFragment : Fragment() {
         currentTextView.text = getString(stringResId, historyList.size)
 
         val currentGraphView = when (interval) {
+            GraphInterval.DAILY -> binding.graphViewDaily
             GraphInterval.WEEKLY -> binding.graphViewWeekly
             GraphInterval.MONTHLY -> binding.graphViewMonthly
             GraphInterval.YEARLY -> binding.graphViewYearly
         }
         currentGraphView.setData(data = entries, graphInterval = interval)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadGraphs()
     }
 
     override fun onDestroyView() {
