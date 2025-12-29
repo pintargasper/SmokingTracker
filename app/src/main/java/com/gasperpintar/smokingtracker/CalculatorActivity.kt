@@ -44,10 +44,15 @@ class CalculatorActivity : AppCompatActivity() {
             startDate = null
             true
         }
+
         binding.inputEndDate.setOnLongClickListener {
             binding.inputEndDate.setText("")
             endDate = null
             true
+        }
+
+        binding.buttonBack.setOnClickListener {
+            finish()
         }
 
         binding.buttonCalculate.setOnClickListener {
