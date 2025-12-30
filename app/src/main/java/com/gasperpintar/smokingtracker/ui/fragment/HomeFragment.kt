@@ -24,7 +24,7 @@ import com.gasperpintar.smokingtracker.utils.Helper
 import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
 import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntry
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
-import com.gasperpintar.smokingtracker.utils.WidgetUpdater
+import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
             updateStatistics(selectedDate)
             loadHistoryForDay(selectedDate)
         }
-        WidgetUpdater.updateWidget(context = requireContext())
+        WidgetHelper.updateWidget(context = requireContext())
         updateLastEntry()
     }
 

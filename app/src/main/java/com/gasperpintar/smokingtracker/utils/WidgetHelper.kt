@@ -6,7 +6,7 @@ import android.content.Context
 import android.content.Intent
 import com.gasperpintar.smokingtracker.provider.SmokingTrackerWidget
 
-object WidgetUpdater {
+object WidgetHelper {
 
     fun updateWidget(context: Context) {
         val intent = Intent(context, SmokingTrackerWidget::class.java)
@@ -15,6 +15,10 @@ object WidgetUpdater {
             .getAppWidgetIds(ComponentName(context, SmokingTrackerWidget::class.java))
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
         context.sendBroadcast(intent)
+    }
+
+    fun getString(context: Context, resId: Int): String {
+        return LocalizationHelper.getLocalizedContext(context = context).getString(resId)
     }
 }
 

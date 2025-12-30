@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.utils.Helper
+import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,7 +37,7 @@ class SmokingTrackerWidget : AppWidgetProvider() {
             appWidgetId: Int
         ) {
             val views = RemoteViews(context.packageName, R.layout.widget_smoking_tracker)
-            val database = Provider.getDatabase(context)
+            val database = Provider.getDatabase(context = context)
 
             val today = LocalDate.now()
             val (startOfDay, endOfDay) = Helper.getDay(date = today)
@@ -52,6 +53,9 @@ class SmokingTrackerWidget : AppWidgetProvider() {
                     val monthly = database.historyDao().getHistoryCountBetween(startOfMonth, endOfMonth)
 
                     withContext(context = Dispatchers.Main) {
+                        views.setTextViewText(R.id.widget_daily_label, WidgetHelper.getString(context, R.string.home_daily_label))
+                        views.setTextViewText(R.id.widget_weekly_label, WidgetHelper.getString(context, R.string.home_weekly_label))
+                        views.setTextViewText(R.id.widget_monthly_label, WidgetHelper.getString(context, R.string.home_monthly_label))
                         views.setTextViewText(R.id.widget_daily_value, daily.toString())
                         views.setTextViewText(R.id.widget_weekly_value, weekly.toString())
                         views.setTextViewText(R.id.widget_monthly_value, monthly.toString())

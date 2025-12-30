@@ -2,11 +2,11 @@ package com.gasperpintar.smokingtracker
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import androidx.core.view.get
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -18,15 +18,13 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.util.Locale
 import java.util.concurrent.TimeUnit
-import androidx.core.view.get
 
 class MainActivity : AppCompatActivity() {
 
@@ -112,25 +110,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        val database = Provider.getDatabase(context = newBase)
-        val settings = runBlocking { database.settingsDao().getSettings() }
-
-        val languageId = settings?.language ?: 0
-        val supportedLanguages: Array<out String?> = newBase.resources.getStringArray(R.array.language_values)
-        val selectedLanguage: String = supportedLanguages.getOrNull(languageId) ?: "system"
-
-        val locale: Locale = if (selectedLanguage == "system") {
-            newBase.resources.configuration.locales.get(0)
-        } else Locale.forLanguageTag(selectedLanguage)
-
-        Locale.setDefault(locale)
-
-        val configuration = Configuration(newBase.resources.configuration)
-        configuration.setLocale(locale)
-        configuration.setLayoutDirection(locale)
-
-        val context: Context = newBase.createConfigurationContext(configuration)
-        super.attachBaseContext(context)
+    override fun attachBaseContext(context: Context) {
+        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context))
     }
+
 }
