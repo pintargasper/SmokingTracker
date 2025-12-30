@@ -39,8 +39,13 @@
             <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                 android:id="@+id/text_calculator_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
                 android:text="@string/analytics_calculator_title"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="?attr/colorOnSurface" />
