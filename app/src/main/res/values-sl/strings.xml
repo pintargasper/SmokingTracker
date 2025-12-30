@@ -141,4 +141,7 @@
         <item quantity="few">%d minute</item>
         <item quantity="other">%d minut</item>
     </plurals>
+    <string name="graph_daily">Dnevni pregled (%1$d)</string>
+    <string name="graph_previous_day_daily">Prejšnji dan (Dnevno)</string>
+    <string name="graph_next_day_daily">Naslednji dan (Dnevno)</string>
 </resources>
