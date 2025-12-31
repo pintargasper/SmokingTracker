@@ -61,7 +61,6 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        database = Provider.getDatabase(context = this@MainActivity)
         permissionsHelper = Permissions(activity = this@MainActivity)
 
         lifecycleScope.launch {
@@ -111,7 +110,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(context: Context) {
-        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context))
+        database = Provider.getDatabase(context.applicationContext)
+        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, database = database))
     }
-
 }
