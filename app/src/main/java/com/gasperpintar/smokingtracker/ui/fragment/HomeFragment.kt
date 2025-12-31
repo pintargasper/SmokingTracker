@@ -213,7 +213,7 @@ class HomeFragment : Fragment() {
     private fun updateLastEntry() {
         lifecycleScope.launch {
             lastEntry = database.value.historyDao()
-                .getLastHistoryEntry(endOfToday = Helper.getEndOfDay())
+                .getLastHistoryEntry(endOfToday = Helper.getEndOfDay(date = LocalDate.now()))
             updateTimerLabel()
         }
     }

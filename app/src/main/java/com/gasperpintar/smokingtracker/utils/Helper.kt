@@ -37,6 +37,14 @@ object Helper {
         return startOfYear to endOfYear
     }
 
+    fun getEndOfDay(date: LocalDate): LocalDateTime {
+        return date.atTime(LocalTime.MAX)
+    }
+
+    @Deprecated(
+        message = "Use getEndOfDay(date: LocalDate) instead",
+        replaceWith = ReplaceWith(expression = "getEndOfDay(date)")
+    )
     fun getEndOfDay(): LocalDateTime {
         return LocalDateTime.now().withHour(23)
             .withMinute(59).withSecond(59)
