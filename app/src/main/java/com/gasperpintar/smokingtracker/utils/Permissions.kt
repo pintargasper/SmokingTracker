@@ -7,7 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 
-class Permissions(private val activity: ComponentActivity) {
+open class Permissions(private val activity: ComponentActivity) {
 
     private val requestNotificationPermissionLauncher =
         activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
@@ -16,7 +16,7 @@ class Permissions(private val activity: ComponentActivity) {
 
     private var permissionCallback: ((Boolean) -> Unit)? = null
 
-    fun checkAndRequestNotificationPermission(callback: (Boolean) -> Unit) {
+    open fun checkAndRequestNotificationPermission(callback: (Boolean) -> Unit) {
         permissionCallback = callback
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -24,15 +24,9 @@ class Permissions(private val activity: ComponentActivity) {
                 ContextCompat.checkSelfPermission(
                     activity,
                     Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> {
-                    callback(true)
-                }
-                else -> {
-                    requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                }
+                ) == PackageManager.PERMISSION_GRANTED -> callback(true)
+                else -> requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
-        } else {
-            callback(true)
-        }
+        } else callback(true)
     }
 }
