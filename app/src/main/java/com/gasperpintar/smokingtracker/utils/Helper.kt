@@ -42,7 +42,7 @@ object Helper {
     }
 
     @Deprecated(
-        message = "Use getEndOfDay(date: LocalDate) instead",
+        message = "Since version 1.3.0. Use getEndOfDay(date: LocalDate) instead",
         replaceWith = ReplaceWith(expression = "getEndOfDay(date)")
     )
     fun getEndOfDay(): LocalDateTime {
