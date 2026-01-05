@@ -7,17 +7,55 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.TimePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
+import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
 import com.gasperpintar.smokingtracker.utils.Manager
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import kotlinx.coroutines.launch
 
 @SuppressLint("InflateParams")
 object DialogManager {
+
+    fun showInsertDialog(
+        context: FragmentActivity,
+        layoutInflater: LayoutInflater,
+        database: AppDatabase,
+        lifecycleScope: LifecycleCoroutineScope,
+        refreshUI: () -> Unit
+    ) {
+        val dialogView = layoutInflater.inflate(R.layout.insert_popup, null)
+        val dialog = RoundedAlertDialog(context = context)
+            .setViewChained(dialogView)
+            .showChained()
+
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_insert)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
+
+        buttonConfirm.setOnClickListener {
+            val entry = com.gasperpintar.smokingtracker.database.entity.HistoryEntity(
+                id = 0,
+                lent = if (lentCheckbox.isChecked) 1 else 0,
+                createdAt = java.time.LocalDateTime.now()
+            )
+            lifecycleScope.launch {
+                database.historyDao().insert(history = entry)
+                refreshUI()
+            }
+            dialog.dismiss()
+        }
+
+        buttonClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
 
     fun showLanguageDialog(
         activity: FragmentActivity,
@@ -185,5 +223,85 @@ object DialogManager {
             }
         }
         buttonClose.setOnClickListener { dialog.dismiss() }
+    }
+
+    fun showEditDialog(
+        context: FragmentActivity,
+        layoutInflater: LayoutInflater,
+        database: AppDatabase,
+        lifecycleScope: LifecycleCoroutineScope,
+        entry: com.gasperpintar.smokingtracker.model.HistoryEntry,
+        refreshUI: () -> Unit
+    ) {
+        val dialogView = layoutInflater.inflate(R.layout.edit_popup, null)
+        val dialog = RoundedAlertDialog(context = context)
+            .setViewChained(dialogView)
+            .showChained()
+
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
+        val datePicker: android.widget.DatePicker = dialogView.findViewById(R.id.date_picker)
+        val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
+
+        lentCheckbox.isChecked = entry.isLent
+        timePicker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context))
+
+        entry.createdAt.let { dateTime ->
+            datePicker.updateDate(dateTime.year, dateTime.monthValue - 1, dateTime.dayOfMonth)
+            timePicker.hour = dateTime.hour
+            timePicker.minute = dateTime.minute
+        }
+
+        buttonConfirm.setOnClickListener {
+            val updatedEntry = entry.copy(
+                createdAt = entry.createdAt.withYear(datePicker.year)
+                    .withMonth(datePicker.month + 1)
+                    .withDayOfMonth(datePicker.dayOfMonth)
+                    .withHour(timePicker.hour)
+                    .withMinute(timePicker.minute),
+                isLent = lentCheckbox.isChecked
+            )
+            lifecycleScope.launch {
+                database.historyDao().update(history = updatedEntry.toHistoryEntity())
+                refreshUI()
+            }
+            dialog.dismiss()
+        }
+
+        buttonClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    fun showDeleteDialog(
+        context: FragmentActivity,
+        layoutInflater: LayoutInflater,
+        database: AppDatabase,
+        lifecycleScope: LifecycleCoroutineScope,
+        entry: com.gasperpintar.smokingtracker.model.HistoryEntry,
+        refreshUI: () -> Unit
+    ) {
+        val dialogView = layoutInflater.inflate(R.layout.delete_popup, null)
+        val dialog = RoundedAlertDialog(context = context)
+            .setViewChained(dialogView)
+            .showChained()
+
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+
+        buttonConfirm.setOnClickListener {
+            lifecycleScope.launch {
+                database.historyDao().delete(history = entry.toHistoryEntity())
+                refreshUI()
+            }
+            dialog.dismiss()
+        }
+
+        buttonClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 }

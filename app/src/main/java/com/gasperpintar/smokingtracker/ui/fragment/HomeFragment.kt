@@ -2,28 +2,21 @@ package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.DatePicker
-import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.MainActivity
-import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.adapter.history.HistoryAdapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
-import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.ui.DialogManager
 import com.gasperpintar.smokingtracker.utils.Helper
-import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
 import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntry
-import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -65,7 +58,13 @@ class HomeFragment : Fragment() {
 
     private fun setup() {
         binding.buttonAddEntry.setOnClickListener {
-            insertDialog()
+            DialogManager.showInsertDialog(
+                context = requireActivity(),
+                layoutInflater = layoutInflater,
+                database = database.value,
+                lifecycleScope = lifecycleScope,
+                refreshUI = { refreshUI() }
+            )
         }
 
         binding.previousDay.setOnClickListener {
@@ -82,11 +81,24 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         historyAdapter = HistoryAdapter(
             onEditClick = { entry ->
-                editDialog(entry)
+                DialogManager.showEditDialog(
+                    context = requireActivity(),
+                    layoutInflater = layoutInflater,
+                    database = database.value,
+                    lifecycleScope = lifecycleScope,
+                    entry = entry,
+                    refreshUI = { refreshUI() }
+                )
             },
-
             onDeleteClick = { entry ->
-                deleteDialog(entry)
+                DialogManager.showDeleteDialog(
+                    context = requireActivity(),
+                    layoutInflater = layoutInflater,
+                    database = database.value,
+                    lifecycleScope = lifecycleScope,
+                    entry = entry,
+                    refreshUI = { refreshUI() }
+                )
             }
         )
         binding.recyclerviewHistory.layoutManager = LinearLayoutManager(requireContext())
@@ -95,119 +107,13 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("DefaultLocale")
     private fun refreshUI() {
-        binding.currentDate.text = String.format(
-            "%02d.%02d.%d",
-            selectedDate.dayOfMonth,
-            selectedDate.monthValue,
-            selectedDate.year
-        )
-
+        binding.currentDate.text = LocalizationHelper.formatDate(selectedDate)
         lifecycleScope.launch {
             updateStatistics(selectedDate)
             loadHistoryForDay(selectedDate)
         }
         WidgetHelper.updateWidget(context = requireContext())
         updateLastEntry()
-    }
-
-    @SuppressLint("InflateParams")
-    private fun insertDialog() {
-        val dialogView = layoutInflater.inflate(R.layout.insert_popup, null)
-        val dialog = RoundedAlertDialog(context = requireActivity())
-            .setViewChained(dialogView)
-            .showChained()
-
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_insert)
-        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
-        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
-
-        buttonConfirm.setOnClickListener {
-            val entry = HistoryEntity (
-                id = 0,
-                lent = if (lentCheckbox.isChecked) 1 else 0,
-                createdAt = LocalDateTime.now()
-            )
-
-            lifecycleScope.launch {
-                database.value.historyDao().insert(history = entry)
-                refreshUI()
-            }
-            dialog.dismiss()
-        }
-
-        buttonClose.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-
-    @SuppressLint("InflateParams")
-    private fun editDialog(entry: HistoryEntry) {
-        val dialogView = layoutInflater.inflate(R.layout.edit_popup, null)
-        val dialog = RoundedAlertDialog(context = requireActivity())
-            .setViewChained(dialogView)
-            .showChained()
-
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
-        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
-        val datePicker: DatePicker = dialogView.findViewById(R.id.date_picker)
-        val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
-
-        lentCheckbox.isChecked = entry.isLent
-        timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
-
-        entry.createdAt.let { dateTime ->
-            datePicker.updateDate(dateTime.year, dateTime.monthValue - 1, dateTime.dayOfMonth)
-            timePicker.hour = dateTime.hour
-            timePicker.minute = dateTime.minute
-        }
-
-        buttonConfirm.setOnClickListener {
-            val entry: HistoryEntry = entry.copy(
-                createdAt = entry.createdAt.withYear(datePicker.year)
-                    .withMonth(datePicker.month + 1)
-                    .withDayOfMonth(datePicker.dayOfMonth)
-                    .withHour(timePicker.hour)
-                    .withMinute(timePicker.minute),
-                isLent = lentCheckbox.isChecked
-            )
-
-            lifecycleScope.launch {
-                database.value.historyDao().update(history = entry.toHistoryEntity())
-                refreshUI()
-            }
-            dialog.dismiss()
-        }
-
-        buttonClose.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-
-    @SuppressLint("InflateParams")
-    private fun deleteDialog(entry: HistoryEntry) {
-        val dialogView = layoutInflater.inflate(R.layout.delete_popup, null)
-        val dialog = RoundedAlertDialog(context = requireActivity())
-            .setViewChained(dialogView)
-            .showChained()
-
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
-
-        buttonConfirm.setOnClickListener {
-            lifecycleScope.launch {
-                database.value.historyDao().delete(history = entry.toHistoryEntity())
-                refreshUI()
-            }
-            dialog.dismiss()
-        }
-
-        buttonClose.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 
     private fun updateLastEntry() {
