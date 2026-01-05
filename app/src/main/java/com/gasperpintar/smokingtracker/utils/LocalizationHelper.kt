@@ -39,4 +39,12 @@ object LocalizationHelper {
         val formatter = DateTimeFormatter.ofPattern(pattern, locale)
         return date.format(formatter)
     }
+
+    fun formatWeekRange(start: LocalDate, end: LocalDate): String {
+        val locale = Locale.getDefault()
+        return when (locale.language) {
+            "sl" -> String.format("%02d.%02d/%02d.%02d", start.dayOfMonth, start.monthValue, end.dayOfMonth, end.monthValue)
+            else -> String.format("%02d/%02d-%02d/%02d", start.monthValue, start.dayOfMonth, end.monthValue, end.dayOfMonth)
+        }
+    }
 }

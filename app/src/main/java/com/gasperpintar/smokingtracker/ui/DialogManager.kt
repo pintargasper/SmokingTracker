@@ -1,8 +1,8 @@
 package com.gasperpintar.smokingtracker.ui
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.CheckBox
@@ -19,7 +19,6 @@ import com.gasperpintar.smokingtracker.utils.Manager
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import kotlinx.coroutines.launch
 
-@SuppressLint("InflateParams")
 object DialogManager {
 
     fun showInsertDialog(
@@ -245,7 +244,7 @@ object DialogManager {
         val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
 
         lentCheckbox.isChecked = entry.isLent
-        timePicker.setIs24HourView(android.text.format.DateFormat.is24HourFormat(context))
+        timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
 
         entry.createdAt.let { dateTime ->
             datePicker.updateDate(dateTime.year, dateTime.monthValue - 1, dateTime.dayOfMonth)

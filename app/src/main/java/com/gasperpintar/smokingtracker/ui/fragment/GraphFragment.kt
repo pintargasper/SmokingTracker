@@ -1,6 +1,5 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +14,7 @@ import com.gasperpintar.smokingtracker.model.GraphEntry
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.Helper
 import com.gasperpintar.smokingtracker.utils.Helper.getMonthName
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -106,41 +106,26 @@ class GraphFragment : Fragment() {
         }
     }
 
-    @SuppressLint("DefaultLocale")
     private suspend fun loadDailyData() {
         loadGraph(
             getDateRange = { Helper.getDay(selectedDate) },
             labelFormatter = { start, _ ->
-                String.format(
-                    "%02d.%02d.%04d",
-                    start.dayOfMonth,
-                    start.monthValue,
-                    start.year
-                )
+                LocalizationHelper.formatDate(start)
             },
             interval = GraphInterval.DAILY
         )
     }
 
-    @SuppressLint("DefaultLocale")
     private suspend fun loadWeeklyData() {
         loadGraph(
             getDateRange = { Helper.getWeek(selectedDate) },
             labelFormatter = { start, end ->
-                String.format(
-                    $$"%1$d.%2$d/%3$d.%4$d %5$d",
-                    start.dayOfMonth,
-                    start.monthValue,
-                    end.dayOfMonth,
-                    end.monthValue,
-                    start.year
-                )
+                LocalizationHelper.formatWeekRange(start, end)
             },
             interval = GraphInterval.WEEKLY
         )
     }
 
-    @SuppressLint("DefaultLocale")
     private suspend fun loadMonthlyData() {
         loadGraph(
             getDateRange = { Helper.getMonth(selectedDate) },
@@ -155,7 +140,6 @@ class GraphFragment : Fragment() {
         )
     }
 
-    @SuppressLint("DefaultLocale")
     private suspend fun loadYearlyData() {
         loadGraph(
             getDateRange = { Helper.getYear(selectedDate) },
