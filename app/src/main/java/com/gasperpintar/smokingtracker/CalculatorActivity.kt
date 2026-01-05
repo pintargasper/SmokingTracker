@@ -3,7 +3,6 @@ package com.gasperpintar.smokingtracker
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
@@ -12,17 +11,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
-import kotlinx.coroutines.runBlocking
-import java.text.SimpleDateFormat
+import java.time.ZoneId
 import java.util.Calendar
-import java.util.Locale
 
 class CalculatorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCalculatorBinding
 
-    private val dateFormat = SimpleDateFormat("dd. MM. yyyy", Locale.getDefault())
     private var startDate: Calendar? = null
     private var endDate: Calendar? = null
 
@@ -131,14 +128,16 @@ class CalculatorActivity : AppCompatActivity() {
             calendar.set(selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH))
             if (isStart) {
                 startDate = calendar.clone() as Calendar
-                binding.inputStartDate.setText(dateFormat.format(calendar.time))
+                val localDate = calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                binding.inputStartDate.setText(LocalizationHelper.formatDate(localDate))
                 if (endDate != null && endDate!!.before(startDate)) {
                     endDate = null
                     binding.inputEndDate.setText("")
                 }
             } else {
                 endDate = calendar.clone() as Calendar
-                binding.inputEndDate.setText(dateFormat.format(calendar.time))
+                val localDate = calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+                binding.inputEndDate.setText(LocalizationHelper.formatDate(localDate))
                 if (startDate != null && startDate!!.after(endDate)) {
                     startDate = null
                     binding.inputStartDate.setText("")
@@ -152,25 +151,7 @@ class CalculatorActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        val database = Provider.getDatabase(context = newBase)
-        val settings = runBlocking { database.settingsDao().getSettings() }
-
-        val languageId = settings?.language ?: 0
-        val supportedLanguages: Array<out String?> = newBase.resources.getStringArray(R.array.language_values)
-        val selectedLanguage: String = supportedLanguages.getOrNull(languageId) ?: "system"
-
-        val locale: Locale = if (selectedLanguage == "system") {
-            newBase.resources.configuration.locales.get(0)
-        } else Locale.forLanguageTag(selectedLanguage)
-
-        Locale.setDefault(locale)
-
-        val configuration = Configuration(newBase.resources.configuration)
-        configuration.setLocale(locale)
-        configuration.setLayoutDirection(locale)
-
-        val context: Context = newBase.createConfigurationContext(configuration)
-        super.attachBaseContext(context)
+    override fun attachBaseContext(context: Context) {
+        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, database = Provider.getDatabase(context.applicationContext)))
     }
 }

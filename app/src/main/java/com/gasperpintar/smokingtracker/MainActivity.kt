@@ -53,10 +53,10 @@ class MainActivity : AppCompatActivity() {
 
         navigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.navigation_home -> viewPager.setCurrentItem(0, true)
-                R.id.navigation_graph -> viewPager.setCurrentItem(1, true)
-                R.id.navigation_analytics -> viewPager.setCurrentItem(2, true)
-                R.id.navigation_settings -> viewPager.setCurrentItem(3, true)
+                R.id.navigation_home -> viewPager.setCurrentItem(0, false)
+                R.id.navigation_graph -> viewPager.setCurrentItem(1, false)
+                R.id.navigation_analytics -> viewPager.setCurrentItem(2, false)
+                R.id.navigation_settings -> viewPager.setCurrentItem(3, false)
             }
             true
         }

@@ -5,6 +5,8 @@ import android.content.res.Configuration
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import kotlinx.coroutines.runBlocking
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 object LocalizationHelper {
@@ -26,5 +28,15 @@ object LocalizationHelper {
         configuration.setLayoutDirection(locale)
 
         return context.createConfigurationContext(configuration)
+    }
+
+    fun formatDate(date: LocalDate): String {
+        val locale = Locale.getDefault()
+        val pattern = when (locale.language) {
+            "sl" -> "dd.MM.yyyy"
+            else -> "yyyy-MM-dd"
+        }
+        val formatter = DateTimeFormatter.ofPattern(pattern, locale)
+        return date.format(formatter)
     }
 }
