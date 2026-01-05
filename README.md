@@ -6,6 +6,7 @@
 
 ![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey)
 [![Downloads](https://img.shields.io/github/downloads/pintargasper/smokingtracker/total?style=flat-square)](https://github.com/pintargasper/SmokingTracker/releases)
+[![Translation status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget) 
 
 </div>
 
@@ -22,21 +23,20 @@
 ## Table of Contents
 - [About](#-about)
 - [Supported Languages](#-supported-languages)
+- [Help Translate](#-help-translate)
 - [Dependencies & Versions](#-dependencies--versions)
 - [How to Build](#-how-to-build)
 
 ## 🚀 About
-
-**Smoking Tracker** is an Android application written in **Kotlin**, designed to help users easily track the number of cigarettes smoked. The app allows displaying data on **weekly, monthly, and yearly graphs**, helping users monitor their progress in quitting smoking.
-
-The app also supports **automatic backups** if enabled on the device, and features a **clean, intuitive interface** for ease of use.
+**Smoking Tracker** is an easy to use smoking tracking app that helps you understand your habits and progress towards quitting. Every cigarette you smoke is clearly recorded, giving you detailed insight into your daily, weekly and monthly patterns
 
 **Key Features**
-- **Local data storage** for privacy and security
-- **Daily and historical statistics** with graphs
+- **Local data storage** for greater privacy
+- **Daily, monthly and yearly** statistics with graphs
+-  **Simple analytics** to help you understand your habits
 - **Automatic backups** (device-dependent)
-- **Support for multiple languages** (English and Slovenian)
-- **Simple and intuitive user interface**
+- **Multi language support**: English and Slovenian
+- **Simple and intuitive** user interface
 
 ## 🌐 Supported Languages
 - English
@@ -44,11 +44,23 @@ The app also supports **automatic backups** if enabled on the device, and featur
 
 > Additional languages will be added in future releases
 
+## 🌐 Help translate
+
+<div align="center">
+  <a href="https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget" target="_blank">
+    <img
+      src="http://translate.gasperpintar.com/widget/smokingtracker/multi-auto.svg"
+      width="500px"
+      alt="Help translate"
+    >
+  </a>
+</div>
+
 ## 📝 Dependencies & Versions
 
 **Gradle Plugin & Kotlin**
-- Android Gradle Plugin: 8.13.0
-- Kotlin: 2.2.10
+- Android Gradle Plugin: 8.13.2
+- Kotlin: 2.3.0
 
 **Libraries**
 > All libraries are configured in `libs.versions.toml`.
