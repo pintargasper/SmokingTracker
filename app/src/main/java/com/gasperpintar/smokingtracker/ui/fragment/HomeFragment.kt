@@ -151,21 +151,19 @@ class HomeFragment : Fragment() {
                 duration.toMinutes() % 60,
                 duration.seconds % 60
             )
-        } else {
-            "00:00:00"
-        }
+        } else "00:00:00"
         binding.timerLabel.text = timeDifference
     }
 
     private suspend fun updateStatistics(date: LocalDate) {
-        val (startOfDay, endOfDay) = Helper.getDay(date)
-        val dailyCount = database.value.historyDao().getHistoryCountBetween(startOfDay, endOfDay)
+        val (startOfDay, endOfDay) = Helper.getDay(date = date)
+        val dailyCount = database.value.historyDao().getHistoryCountBetween(start = startOfDay, end = endOfDay)
 
-        val (startOfWeek, endOfWeek) = Helper.getWeek(date)
-        val weeklyCount = database.value.historyDao().getHistoryCountBetween(startOfWeek, endOfWeek)
+        val (startOfWeek, endOfWeek) = Helper.getWeek(date = date)
+        val weeklyCount = database.value.historyDao().getHistoryCountBetween(start = startOfWeek, end = endOfWeek)
 
-        val (startOfMonth, endOfMonth) = Helper.getMonth(date)
-        val monthlyCount = database.value.historyDao().getHistoryCountBetween(startOfMonth, endOfMonth)
+        val (startOfMonth, endOfMonth) = Helper.getMonth(date = date)
+        val monthlyCount = database.value.historyDao().getHistoryCountBetween(start = startOfMonth, end = endOfMonth)
 
         binding.dailyValue.text = dailyCount.toString()
         binding.weeklyValue.text = weeklyCount.toString()
@@ -173,8 +171,8 @@ class HomeFragment : Fragment() {
     }
 
     private suspend fun loadHistoryForDay(date: LocalDate) {
-        val (startOfDay, endOfDay) = Helper.getDay(date)
-        val entityList = database.value.historyDao().getHistoryBetween(startOfDay, endOfDay)
+        val (startOfDay, endOfDay) = Helper.getDay(date = date)
+        val entityList = database.value.historyDao().getHistoryBetween(start = startOfDay, end = endOfDay)
         val historyList = entityList.map { it.toHistoryEntry() }
         historyAdapter.submitList(historyList) {
             binding.recyclerviewHistory.scrollToPosition(0)

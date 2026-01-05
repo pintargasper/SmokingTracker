@@ -108,9 +108,9 @@ class GraphFragment : Fragment() {
 
     private suspend fun loadDailyData() {
         loadGraph(
-            getDateRange = { Helper.getDay(selectedDate) },
+            getDateRange = { Helper.getDay(date = selectedDate) },
             labelFormatter = { start, _ ->
-                LocalizationHelper.formatDate(start)
+                LocalizationHelper.formatDate(date = start)
             },
             interval = GraphInterval.DAILY
         )
@@ -118,9 +118,9 @@ class GraphFragment : Fragment() {
 
     private suspend fun loadWeeklyData() {
         loadGraph(
-            getDateRange = { Helper.getWeek(selectedDate) },
+            getDateRange = { Helper.getWeek(date = selectedDate) },
             labelFormatter = { start, end ->
-                LocalizationHelper.formatWeekRange(start, end)
+                LocalizationHelper.formatWeekRange(start = start, end = end)
             },
             interval = GraphInterval.WEEKLY
         )
@@ -128,7 +128,7 @@ class GraphFragment : Fragment() {
 
     private suspend fun loadMonthlyData() {
         loadGraph(
-            getDateRange = { Helper.getMonth(selectedDate) },
+            getDateRange = { Helper.getMonth(date = selectedDate) },
             labelFormatter = { start, _ ->
                 String.format(
                     $$"%1$s %2$d",
@@ -142,7 +142,7 @@ class GraphFragment : Fragment() {
 
     private suspend fun loadYearlyData() {
         loadGraph(
-            getDateRange = { Helper.getYear(selectedDate) },
+            getDateRange = { Helper.getYear(date = selectedDate) },
             labelFormatter = { start, _ ->
                 String.format($$"%1$d", start.year)
             },

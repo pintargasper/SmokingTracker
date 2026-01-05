@@ -20,10 +20,10 @@ interface HistoryDao {
     @Delete
     suspend fun delete(history: HistoryEntity)
 
-    @Query("DELETE FROM history")
+    @Query(value = "DELETE FROM history")
     suspend fun deleteAll()
 
-    @Query("DELETE FROM sqlite_sequence WHERE name = 'history'")
+    @Query(value = "DELETE FROM sqlite_sequence WHERE name = 'history'")
     suspend fun resetAutoIncrement()
 
     @Query(value = "SELECT * FROM history WHERE createdAt <= :endOfToday AND lent = 0 ORDER BY createdAt DESC LIMIT 1")

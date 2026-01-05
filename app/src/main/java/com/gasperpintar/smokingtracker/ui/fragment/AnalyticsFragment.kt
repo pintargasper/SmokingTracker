@@ -28,7 +28,6 @@ class AnalyticsFragment : Fragment() {
     }
 
     private fun setupUI() {
-
         binding.calculatorLayout.setOnClickListener {
             val intent = Intent(binding.root.context, CalculatorActivity::class.java)
             binding.root.context.startActivity(intent)

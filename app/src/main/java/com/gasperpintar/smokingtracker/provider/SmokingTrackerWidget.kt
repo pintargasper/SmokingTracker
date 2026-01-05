@@ -48,9 +48,9 @@ class SmokingTrackerWidget : AppWidgetProvider() {
 
             CoroutineScope(context = Dispatchers.IO).launch {
                 try {
-                    val daily = database.historyDao().getHistoryCountBetween(startOfDay, endOfDay)
-                    val weekly = database.historyDao().getHistoryCountBetween(startOfWeek, endOfWeek)
-                    val monthly = database.historyDao().getHistoryCountBetween(startOfMonth, endOfMonth)
+                    val daily = database.historyDao().getHistoryCountBetween(start = startOfDay, end = endOfDay)
+                    val weekly = database.historyDao().getHistoryCountBetween(start = startOfWeek, end = endOfWeek)
+                    val monthly = database.historyDao().getHistoryCountBetween(start = startOfMonth, end = endOfMonth)
 
                     withContext(context = Dispatchers.Main) {
                         views.setTextViewText(R.id.widget_daily_label, WidgetHelper.getString(context = context, database = database, resId = R.string.home_daily_label))
