@@ -6,8 +6,8 @@ The following table lists which versions of Smoking Tracker are currently suppor
 
 | Version  | Supported          |
 | -------- | ------------------ |
-| 1.2.x    | :white_check_mark: |
-| < 1.2.0  | :x:                |
+| 1.3.x    | :white_check_mark: |
+| < 1.3.0  | :x:                |
 
 ## Reporting a Vulnerability
 
