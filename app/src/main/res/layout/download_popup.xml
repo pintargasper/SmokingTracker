@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:text="@string/download_popup"
             android:textColor="?attr/colorOnSurface"
+            android:textStyle="bold"
             android:textSize="18sp"
             android:gravity="center"
             android:maxLines="2"

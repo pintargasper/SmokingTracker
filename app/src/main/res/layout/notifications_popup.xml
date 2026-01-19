@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/notifications_popup"
             android:textColor="?attr/colorOnSurface"
+            android:textStyle="bold"
             android:textSize="18sp"
             android:gravity="center"
             android:singleLine="true"

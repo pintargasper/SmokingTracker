@@ -34,6 +34,8 @@
     <string name="analytics_title">Analytics</string>
     <string name="analytics_calculator_title">Calculator</string>
     <string name="analytics_calculator_description">A quick overview of total usage, costs and time</string>
+    <string name="analytics_achievements_title">Achievements</string>
+    <string name="analytics_achievements_description">Track your milestones and celebrate your progress</string>
 
     <string name="history_container_lent">Lent record</string>
     <string name="history_container_edit">Edit record</string>

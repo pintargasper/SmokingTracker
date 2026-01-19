@@ -20,6 +20,7 @@
             android:layout_height="wrap_content"
             android:text="@string/insert_popup_message"
             android:textColor="?attr/colorOnSurface"
+            android:textStyle="bold"
             android:textSize="18sp"
             android:gravity="center"
             android:maxLines="2"

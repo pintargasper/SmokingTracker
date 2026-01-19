@@ -44,7 +44,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/text_theme_label"
@@ -57,7 +57,8 @@
                         android:focusable="false"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        android:textStyle="bold"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/theme_service_url"
@@ -80,7 +81,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/text_language_label"
@@ -89,11 +90,12 @@
                         android:text="@string/settings_category_language"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
                         android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp" />
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/language_service_url"
@@ -116,7 +118,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/text_notifications_label"
@@ -125,6 +127,7 @@
                         android:text="@string/settings_category_notifications"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
@@ -185,7 +188,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/download_label"
@@ -194,6 +197,7 @@
                         android:text="@string/settings_category_data_download"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
@@ -222,7 +226,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/upload_label"
@@ -231,6 +235,7 @@
                         android:text="@string/settings_category_data_upload"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
@@ -293,7 +298,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/app_version"
@@ -302,6 +307,7 @@
                         android:text="@string/settings_category_data_version"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
@@ -329,7 +335,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/website"
@@ -338,6 +344,7 @@
                         android:text="@string/settings_category_data_website"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
@@ -365,7 +372,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/translations_website"
@@ -374,6 +381,7 @@
                         android:text="@string/settings_category_data_translations_website"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
@@ -402,7 +410,7 @@
                     android:orientation="vertical"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize">
+                    android:minHeight="55dp">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/privacy_policy"
@@ -411,6 +419,7 @@
                         android:text="@string/settings_category_data_privacy_policy"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"
                         android:clickable="false"
                         android:focusable="false"
                         android:ellipsize="end"
