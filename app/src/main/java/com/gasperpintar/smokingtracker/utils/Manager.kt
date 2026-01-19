@@ -107,7 +107,9 @@ object Manager {
         database.historyDao().deleteAll()
         database.historyDao().resetAutoIncrement()
         workbook.getSheet("History")?.forEachIndexed { index, row ->
-            if (index == 0) return@forEachIndexed
+            if (index == 0) {
+                return@forEachIndexed
+            }
             val lent = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed
             val createdAtString = row.getCell(1)?.stringCellValue ?: return@forEachIndexed
             val historyEntity = HistoryEntity(
@@ -155,7 +157,9 @@ object Manager {
 
     private fun saveWorkbookToLegacyStorage(workbook: XSSFWorkbook, fileName: String): Uri {
         val exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        if (!exportDir.exists()) exportDir.mkdirs()
+        if (!exportDir.exists()) {
+            exportDir.mkdirs()
+        }
         val file = File(exportDir, fileName)
         file.outputStream().use { workbook.write(it) }
         return Uri.fromFile(file)
@@ -169,7 +173,9 @@ object Manager {
         notificationId: Int,
         fileUri: Uri? = null
     ) {
-        if (context !is MainActivity || database.settingsDao().getSettings()?.notifications != 1) return
+        if (context !is MainActivity || database.settingsDao().getSettings()?.notifications != 1) {
+            return
+        }
 
         context.permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
             if (isGranted) {

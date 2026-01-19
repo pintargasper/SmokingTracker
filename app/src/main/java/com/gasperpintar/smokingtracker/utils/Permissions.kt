@@ -27,6 +27,8 @@ open class Permissions(private val activity: ComponentActivity) {
                 ) == PackageManager.PERMISSION_GRANTED -> callback(true)
                 else -> requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
-        } else callback(true)
+        } else {
+            callback(true)
+        }
     }
 }

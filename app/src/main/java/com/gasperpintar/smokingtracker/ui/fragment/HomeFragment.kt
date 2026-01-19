@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.MainActivity
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.adapter.history.HistoryAdapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
@@ -105,7 +106,6 @@ class HomeFragment : Fragment() {
         binding.recyclerviewHistory.adapter = historyAdapter
     }
 
-    @SuppressLint("DefaultLocale")
     private fun refreshUI() {
         binding.currentDate.text = LocalizationHelper.formatDate(selectedDate)
         lifecycleScope.launch {
@@ -143,15 +143,31 @@ class HomeFragment : Fragment() {
     private fun updateTimerLabel() {
         val entry = lastEntry
 
-        val timeDifference: String = if (entry?.createdAt != null) {
-            val duration: Duration = Duration.between(entry.createdAt, LocalDateTime.now())
-            String.format(
-                "%02d:%02d:%02d",
-                duration.toHours(),
-                duration.toMinutes() % 60,
-                duration.seconds % 60
-            )
-        } else "00:00:00"
+        val timeDifference = entry?.createdAt?.let { createdAt ->
+            val duration = Duration.between(createdAt, LocalDateTime.now())
+            val totalSeconds = duration.seconds
+
+            val days = totalSeconds / 86400
+            val hours = (totalSeconds % 86400) / 3600
+            val minutes = (totalSeconds % 3600) / 60
+            val seconds = totalSeconds % 60
+
+            val parts = mutableListOf<String>()
+
+            if (days > 0) {
+                parts.add("$days${getString(R.string.home_timer_day)}")
+            }
+
+            if (hours > 0) {
+                parts.add("$hours${getString(R.string.home_timer_hour)}")
+            }
+
+            if (minutes > 0) {
+                parts.add("$minutes${getString(R.string.home_timer_minute)}")
+            }
+            parts.add("$seconds${getString(R.string.home_timer_second)}")
+            parts.joinToString(" ")
+        } ?: "0${getString(R.string.home_timer_second)}"
         binding.timerLabel.text = timeDifference
     }
 

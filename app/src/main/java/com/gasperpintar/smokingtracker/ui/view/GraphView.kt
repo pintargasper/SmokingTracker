@@ -185,7 +185,9 @@ class GraphView @JvmOverloads constructor(
             canvas.drawText(labelValue.toString(), paddingLeft - 80f, y + 15f, textPaint)
 
             index -= stepIncrement
-            if (index < 0) return@repeat
+            if (index < 0) {
+                return@repeat
+            }
         }
     }
 }

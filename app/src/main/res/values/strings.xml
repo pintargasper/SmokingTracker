@@ -6,6 +6,10 @@
     <string name="title_notifications">Settings</string>
 
     <string name="home_timer_message">Time past after last cigarette</string>
+    <string name="home_timer_day">d</string>
+    <string name="home_timer_hour">h</string>
+    <string name="home_timer_minute">m</string>
+    <string name="home_timer_second">s</string>
     <string name="home_daily_label">Daily</string>
     <string name="home_weekly_label">Weekly</string>
     <string name="home_monthly_label">Monthly</string>

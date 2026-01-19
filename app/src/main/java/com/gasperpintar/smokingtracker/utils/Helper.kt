@@ -65,7 +65,11 @@ object Helper {
         return HistoryEntity(
             id = id,
             createdAt = createdAt,
-            lent = if (isLent) 1 else 0
+            lent = if (isLent) {
+                1
+            } else {
+                0
+            }
         )
     }
 
@@ -101,7 +105,9 @@ object Helper {
     fun getFileName(context: Context, uri: Uri?): String {
         var name = context.getString(R.string.upload_popup_file_unknown)
 
-        if (uri == null) return name
+        if (uri == null) {
+            return name
+        }
         context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
             val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
             if (cursor.moveToFirst() && nameIndex != -1) {

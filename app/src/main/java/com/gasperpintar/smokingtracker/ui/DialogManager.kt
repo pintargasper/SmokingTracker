@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.ui
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateFormat
@@ -19,6 +20,7 @@ import com.gasperpintar.smokingtracker.utils.Manager
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import kotlinx.coroutines.launch
 
+@SuppressLint("InflateParams")
 object DialogManager {
 
     fun showInsertDialog(
@@ -40,7 +42,11 @@ object DialogManager {
         buttonConfirm.setOnClickListener {
             val entry = com.gasperpintar.smokingtracker.database.entity.HistoryEntity(
                 id = 0,
-                lent = if (lentCheckbox.isChecked) 1 else 0,
+                lent = if (lentCheckbox.isChecked) {
+                    1
+                } else {
+                    0
+                },
                 createdAt = java.time.LocalDateTime.now()
             )
             lifecycleScope.launch {

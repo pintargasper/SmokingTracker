@@ -22,7 +22,11 @@ class HistoryAdapter(
         val historyEntry = getItem(position)
 
         holder.timerLabel.text = historyEntry.timerLabel
-        holder.lentButton.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
+        holder.lentButton.visibility = if (historyEntry.isLent) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
 
         holder.editButton.setOnClickListener { onEditClick(historyEntry) }
         holder.deleteButton.setOnClickListener { onDeleteClick(historyEntry) }

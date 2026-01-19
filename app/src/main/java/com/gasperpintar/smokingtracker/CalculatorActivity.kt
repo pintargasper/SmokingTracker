@@ -70,7 +70,9 @@ class CalculatorActivity : AppCompatActivity() {
         val days = if (startDate != null && endDate != null && !endDate!!.before(startDate)) {
             val diff = endDate!!.timeInMillis - startDate!!.timeInMillis
             (diff / (1000 * 60 * 60 * 24)).toInt() + 1
-        } else 1
+        } else {
+            1
+        }
 
         val totalCost = dailyCost * days
         val totalTime = dailyTimeMinutes * days
@@ -85,11 +87,19 @@ class CalculatorActivity : AppCompatActivity() {
         totalCostsView.text = String.format("%.2f %s", totalCost, getString(R.string.calculator_result_valute_unit))
 
         val totalCigarettes = dailyCigarettes * days
-        val averageCostPerCigarette = if (totalCigarettes > 0) totalCost / totalCigarettes else 0.0
+        val averageCostPerCigarette = if (totalCigarettes > 0) {
+            totalCost / totalCigarettes
+        } else {
+            0.0
+        }
         averageCostPerCigaretteView.text = String.format("%.3f %s", averageCostPerCigarette, getString(R.string.calculator_result_valute_unit))
 
         val totalHours = totalTime / 60.0
-        val averageCostPerHour = if (totalHours > 0) totalCost / totalHours else 0.0
+        val averageCostPerHour = if (totalHours > 0) {
+            totalCost / totalHours
+        } else {
+            0.0
+        }
         averageCostPerHourView.text = String.format("%.2f %s", averageCostPerHour, getString(R.string.calculator_result_valute_unit))
 
         val dialog = RoundedAlertDialog(context = this)
@@ -100,7 +110,11 @@ class CalculatorActivity : AppCompatActivity() {
         val minutes = totalTime % 60
 
         timeSpentView.text = listOfNotNull(
-            if (hours > 0) resources.getQuantityString(R.plurals.time_hours, hours, hours) else null,
+            if (hours > 0) {
+                resources.getQuantityString(R.plurals.time_hours, hours, hours)
+            } else {
+                null
+            },
             resources.getQuantityString(R.plurals.time_minutes, minutes, minutes)
         ).joinToString(" ")
 
@@ -110,7 +124,11 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     private fun showDatePicker(isStart: Boolean) {
-        val calendar = (if (isStart) startDate else endDate)?.clone() as? Calendar ?: Calendar.getInstance()
+        val calendar = (if (isStart) {
+            startDate
+        } else {
+            endDate
+        })?.clone() as? Calendar ?: Calendar.getInstance()
         val dialogView = layoutInflater.inflate(R.layout.dialog_date_picker, null)
         val calendarView = dialogView.findViewById<CalendarView>(R.id.customCalendarView)
         val selectedDate = calendar.clone() as Calendar

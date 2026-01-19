@@ -127,7 +127,9 @@ class SettingsFragment : Fragment() {
         lifecycleScope.launch {
             settingsDao.getSettings()?.let { currentSettings ->
                 settingsDao.update(settingsEntity = updateBlock(currentSettings))
-                if (recreateActivity) requireActivity().recreate()
+                if (recreateActivity) {
+                    requireActivity().recreate()
+                }
             }
         }
     }
@@ -141,7 +143,11 @@ class SettingsFragment : Fragment() {
             id = 0L,
             theme = 0,
             language = getDefaultLanguageIndex(),
-            notifications = if (areNotificationsEnabled()) 1 else 0
+            notifications = if (areNotificationsEnabled()) {
+                1
+            } else {
+                0
+            }
         ).also { settingsDao.insert(settingsEntity = it) }
     }
 

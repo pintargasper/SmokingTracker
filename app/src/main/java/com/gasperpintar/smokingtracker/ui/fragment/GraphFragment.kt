@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -126,6 +127,7 @@ class GraphFragment : Fragment() {
         )
     }
 
+    @SuppressLint("DefaultLocale")
     private suspend fun loadMonthlyData() {
         loadGraph(
             getDateRange = { Helper.getMonth(date = selectedDate) },
@@ -140,6 +142,7 @@ class GraphFragment : Fragment() {
         )
     }
 
+    @SuppressLint("DefaultLocale")
     private suspend fun loadYearlyData() {
         loadGraph(
             getDateRange = { Helper.getYear(date = selectedDate) },
@@ -197,7 +200,11 @@ class GraphFragment : Fragment() {
             else -> {
                 generateSequence(seed = startDate) { day ->
                     val nextDay = day.plusDays(1)
-                    if (nextDay <= endDate) nextDay else null
+                    if (nextDay <= endDate) {
+                        nextDay
+                    } else {
+                        null
+                    }
                 }.map { day ->
                     GraphEntry(
                         quantity = historyList.count {

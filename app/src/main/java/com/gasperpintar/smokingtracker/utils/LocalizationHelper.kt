@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import com.gasperpintar.smokingtracker.R
@@ -19,7 +20,9 @@ object LocalizationHelper {
 
         val locale: Locale = if (selectedLanguage == "system") {
             context.resources.configuration.locales.get(0)
-        } else Locale.forLanguageTag(selectedLanguage)
+        } else {
+            Locale.forLanguageTag(selectedLanguage)
+        }
 
         Locale.setDefault(locale)
 
@@ -40,6 +43,7 @@ object LocalizationHelper {
         return date.format(formatter)
     }
 
+    @SuppressLint("DefaultLocale")
     fun formatWeekRange(start: LocalDate, end: LocalDate): String {
         val locale = Locale.getDefault()
         return when (locale.language) {
