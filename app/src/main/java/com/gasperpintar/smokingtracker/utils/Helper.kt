@@ -5,7 +5,9 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.type.AchievementUnit
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -115,5 +117,35 @@ object Helper {
             }
         }
         return name
+    }
+
+    fun AchievementEntry.getDisplayText(context: Context): String {
+        return when (unit) {
+            AchievementUnit.HOURS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_hours,
+                    value,
+                    value
+                )
+            AchievementUnit.DAYS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_days,
+                    value,
+                    value
+                )
+            AchievementUnit.WEEKS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_weeks,
+                    value,
+                    value
+                )
+            AchievementUnit.CIGARETTES ->
+                context.resources.getQuantityString(
+                    R.plurals.cigarettes_count,
+                    value,
+                    value
+                )
+            else -> ""
+        }
     }
 }

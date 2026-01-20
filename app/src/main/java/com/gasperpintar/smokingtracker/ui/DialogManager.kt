@@ -7,6 +7,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.activity.result.ActivityResultLauncher
@@ -15,10 +16,15 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
+import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.model.AchievementEntry
+import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.utils.Helper.getDisplayText
 import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
 import com.gasperpintar.smokingtracker.utils.Manager
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 @SuppressLint("InflateParams")
 object DialogManager {
@@ -40,14 +46,14 @@ object DialogManager {
         val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
 
         buttonConfirm.setOnClickListener {
-            val entry = com.gasperpintar.smokingtracker.database.entity.HistoryEntity(
+            val entry = HistoryEntity(
                 id = 0,
                 lent = if (lentCheckbox.isChecked) {
                     1
                 } else {
                     0
                 },
-                createdAt = java.time.LocalDateTime.now()
+                createdAt = LocalDateTime.now()
             )
             lifecycleScope.launch {
                 database.historyDao().insert(history = entry)
@@ -235,7 +241,7 @@ object DialogManager {
         layoutInflater: LayoutInflater,
         database: AppDatabase,
         lifecycleScope: LifecycleCoroutineScope,
-        entry: com.gasperpintar.smokingtracker.model.HistoryEntry,
+        entry: HistoryEntry,
         refreshUI: () -> Unit
     ) {
         val dialogView = layoutInflater.inflate(R.layout.edit_popup, null)
@@ -285,7 +291,7 @@ object DialogManager {
         layoutInflater: LayoutInflater,
         database: AppDatabase,
         lifecycleScope: LifecycleCoroutineScope,
-        entry: com.gasperpintar.smokingtracker.model.HistoryEntry,
+        entry: HistoryEntry,
         refreshUI: () -> Unit
     ) {
         val dialogView = layoutInflater.inflate(R.layout.delete_popup, null)
@@ -303,6 +309,31 @@ object DialogManager {
             }
             dialog.dismiss()
         }
+
+        buttonClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    fun showAchievementsDialog(
+        context: FragmentActivity,
+        layoutInflater: LayoutInflater,
+        entry: AchievementEntry
+    ) {
+        val dialogView = layoutInflater.inflate(R.layout.achievement_popup, null)
+        val dialog = RoundedAlertDialog(context = context)
+            .setViewChained(dialogView)
+            .showChained()
+
+        val achievementImage: ImageView = dialogView.findViewById(R.id.achievement_image)
+        val achievementTitle: TextView = dialogView.findViewById(R.id.achievement_title)
+        val achievementMessage: TextView = dialogView.findViewById(R.id.achievement_message)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+
+        achievementImage.setImageResource(entry.image)
+        achievementTitle.text = entry.getDisplayText(context)
+        achievementMessage.text = entry.message
 
         buttonClose.setOnClickListener {
             dialog.dismiss()

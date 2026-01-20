@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.CalculatorActivity
 import com.gasperpintar.smokingtracker.databinding.FragmentAnalyticsBinding
 
@@ -22,14 +23,19 @@ class AnalyticsFragment : Fragment() {
         _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        setupUI()
+        setup()
 
         return root
     }
 
-    private fun setupUI() {
+    private fun setup() {
         binding.calculatorLayout.setOnClickListener {
             val intent = Intent(binding.root.context, CalculatorActivity::class.java)
+            binding.root.context.startActivity(intent)
+        }
+
+        binding.achievementsLayout.setOnClickListener {
+            val intent = Intent(binding.root.context, AchievementsActivity::class.java)
             binding.root.context.startActivity(intent)
         }
     }

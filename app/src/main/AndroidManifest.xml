@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".CalculatorActivity" />
+        <activity android:name=".AchievementsActivity" />
         <receiver
             android:name=".provider.SmokingTrackerWidget"
             android:exported="true">

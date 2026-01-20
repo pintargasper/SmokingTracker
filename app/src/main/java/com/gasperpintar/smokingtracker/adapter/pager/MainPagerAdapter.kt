@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.adapter.main
+package com.gasperpintar.smokingtracker.adapter.pager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -8,7 +8,7 @@ import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
 import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 
-class MainViewPagerAdapter(
+class MainPagerAdapter(
     fragmentActivity: FragmentActivity
 ) : FragmentStateAdapter(fragmentActivity) {
 

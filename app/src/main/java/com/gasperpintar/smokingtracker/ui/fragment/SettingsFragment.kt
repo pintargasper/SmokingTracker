@@ -43,13 +43,13 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         setupFilePicker()
-        setupUI()
+        setup()
         setupAbout()
 
         return binding.root
     }
 
-    private fun setupUI() {
+    private fun setup() {
         val settingsDao = database.settingsDao()
 
         lifecycleScope.launch {

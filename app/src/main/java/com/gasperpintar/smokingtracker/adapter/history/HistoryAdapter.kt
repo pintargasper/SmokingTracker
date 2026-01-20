@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.adapter.DiffCallback
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 
 class HistoryAdapter(
     private val onEditClick: (HistoryEntry) -> Unit,
     private val onDeleteClick: (HistoryEntry) -> Unit
-) : ListAdapter<HistoryEntry, HistoryViewHolder>(HistoryDiffCallback()) {
+) : ListAdapter<HistoryEntry, HistoryViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val itemView = LayoutInflater.from(parent.context)

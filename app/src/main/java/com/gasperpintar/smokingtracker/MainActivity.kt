@@ -13,7 +13,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gasperpintar.smokingtracker.adapter.main.MainViewPagerAdapter
+import com.gasperpintar.smokingtracker.adapter.pager.MainPagerAdapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         val navigationView: BottomNavigationView = binding.navView
         val viewPager = binding.mainViewPager
 
-        viewPager.adapter = MainViewPagerAdapter(fragmentActivity = this)
+        viewPager.adapter = MainPagerAdapter(fragmentActivity = this)
         viewPager.isUserInputEnabled = true
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
