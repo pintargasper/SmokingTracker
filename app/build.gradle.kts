@@ -2,7 +2,6 @@ import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp") version "2.3.4"
 }
 
@@ -21,24 +20,17 @@ configure<ApplicationExtension> {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
         targetSdk = 36
-        versionCode = 5
-        versionName = "1.3.0"
+        versionCode = 6
+        versionName = "1.4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += mapOf(
-                    "room.schemaLocation" to "$projectDir/schemas"
-                )
-            }
-        }
     }
 
     buildTypes {
         getByName("debug") {
             isDebuggable = true
         }
+
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
@@ -47,6 +39,7 @@ configure<ApplicationExtension> {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -70,13 +63,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
     implementation(libs.poi)
     implementation(libs.poi.ooxml)
+
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.gson)
-    ksp(libs.androidx.room.compiler)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
