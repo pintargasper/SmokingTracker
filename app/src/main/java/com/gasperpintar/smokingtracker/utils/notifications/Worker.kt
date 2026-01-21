@@ -1,7 +1,6 @@
 package com.gasperpintar.smokingtracker.utils.notifications
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.annotation.RequiresPermission
 import androidx.work.CoroutineWorker
@@ -9,12 +8,13 @@ import androidx.work.WorkerParameters
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.utils.Helper
+import com.gasperpintar.smokingtracker.utils.Helper.getDisplayText
+import com.gasperpintar.smokingtracker.utils.Helper.toAchievementEntry
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.Locale
 
 class Worker(
     context: Context,
@@ -25,53 +25,49 @@ class Worker(
 
     @RequiresPermission(value = Manifest.permission.POST_NOTIFICATIONS)
     override suspend fun doWork(): Result {
-        Notifications.createNotificationChannel(applicationContext)
-
         val (_, endOfDay) = Helper.getDay(date = LocalDate.now())
-        val lastHistory: HistoryEntity? = database.historyDao().getLastHistoryEntry(endOfToday = endOfDay)
-        val settings: SettingsEntity? = database.settingsDao().getSettings()
+        val lastHistory = database.historyDao().getLastHistoryEntry(endOfToday = endOfDay)
+        val achievements = database.achievementDao().getAllAchievements()
+        val now = LocalDateTime.now()
+        val totalSeconds = lastHistory?.let { Duration.between(it.createdAt, now).seconds } ?: 0
 
-        val timeSinceLastCigarette = lastHistory?.let {
-            Duration.between(it.createdAt, LocalDateTime.now())
-        }
-
-        if (timeSinceLastCigarette != null &&
-            timeSinceLastCigarette > Duration.ofMinutes(45) &&
-            settings?.notifications == 1
-        ) {
-            val timeString = timeSinceLastCigarette.toReadableString()
-
+        if (totalSeconds >= 3600) {
+            Notifications.createNotificationChannel(applicationContext)
             Notifications.sendNotification(
                 context = applicationContext,
                 title = applicationContext.getString(R.string.notification_title),
                 content = applicationContext.getString(
                     R.string.notification_content,
-                    timeString
+                    formatDuration(totalSeconds)
                 )
             )
+        }
+
+        achievements.forEach { achievement ->
+            val achievementSeconds: Long? = achievement.unit.toSeconds(value = achievement.value)
+            if (achievementSeconds != null && totalSeconds >= achievementSeconds) {
+                Notifications.createNotificationChannel(applicationContext)
+                Notifications.sendNotification(
+                    context = applicationContext,
+                    title = applicationContext.getString(R.string.notification_achievement_unlocked_title),
+                    content = applicationContext.getString(
+                        R.string.notification_achievement_unlocked_content,
+                        achievement.toAchievementEntry().getDisplayText(applicationContext)
+                    )
+                )
+            }
         }
         return Result.success()
     }
 
-    @SuppressLint("DefaultLocale")
-    private fun Duration.toReadableString(): String {
-        val hours = this.toHours()
-        val minutes = this.toMinutes() % 60
-        val seconds = this.seconds % 60
-
+    private fun formatDuration(totalSeconds: Long): String {
+        val hours = totalSeconds / 3600
+        val minutes = (totalSeconds % 3600) / 60
+        val seconds = totalSeconds % 60
         return if (hours > 0) {
-            String.format(
-                $$"%1$dh %2$dm %3$ds",
-                hours,
-                minutes,
-                seconds
-            )
+            String.format(Locale.getDefault(), "%dh %dm %ds", hours, minutes, seconds)
         } else {
-            String.format(
-                $$"%1$dm %2$ds",
-                minutes,
-                seconds
-            )
+            String.format(Locale.getDefault(), "%dm %ds", minutes, seconds)
         }
     }
 }

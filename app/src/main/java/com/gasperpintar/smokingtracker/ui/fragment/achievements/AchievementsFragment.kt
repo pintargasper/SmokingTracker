@@ -51,7 +51,7 @@ class AchievementsFragment : Fragment() {
                     image = it.image,
                     value = it.value,
                     message = it.message,
-                    unlockedAt = it.unlockedAt,
+                    times = it.times,
                     category = it.category,
                     unit = it.unit
                 )
@@ -72,9 +72,6 @@ class AchievementsFragment : Fragment() {
 
     private fun setupRecyclerView() {
         achievementsAdapter = AchievementsAdapter { achievementEntry ->
-            if (achievementEntry.unlockedAt == null) {
-                return@AchievementsAdapter
-            }
             DialogManager.showAchievementsDialog(
                 context = requireActivity(),
                 layoutInflater = layoutInflater,

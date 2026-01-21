@@ -21,7 +21,6 @@ import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
-import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import com.gasperpintar.smokingtracker.utils.JsonHelper
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
@@ -98,15 +97,15 @@ class MainActivity : AppCompatActivity() {
     private fun scheduleNotificationWorker() {
         val workManager: WorkManager = WorkManager.getInstance(context = this@MainActivity)
 
-        val periodicWorkRequest: PeriodicWorkRequest = PeriodicWorkRequestBuilder<Worker>(
+        val workRequest: PeriodicWorkRequest = PeriodicWorkRequestBuilder<com.gasperpintar.smokingtracker.utils.notifications.Worker>(
             repeatInterval = 1,
             repeatIntervalTimeUnit = TimeUnit.HOURS
         ).build()
 
         workManager.enqueueUniquePeriodicWork(
-            uniqueWorkName = "smoking_notification_work",
+            uniqueWorkName = "notification_and_achievement_work",
             ExistingPeriodicWorkPolicy.KEEP,
-            periodicWorkRequest
+            workRequest
         )
     }
 

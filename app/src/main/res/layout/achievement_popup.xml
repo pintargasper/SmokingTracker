@@ -31,10 +31,9 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/achievement_received_date"
+            android:id="@+id/achievement_achieved_times"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/achievement_received_date"
             android:textColor="?attr/colorOnSurface"
             android:textSize="12sp"
             android:gravity="end"
@@ -52,7 +51,7 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/achievements_popup_icon"
             android:src="@mipmap/ic_launcher"
-            app:layout_constraintTop_toBottomOf="@id/achievement_received_date"
+            app:layout_constraintTop_toBottomOf="@id/achievement_achieved_times"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:scaleType="centerInside" />

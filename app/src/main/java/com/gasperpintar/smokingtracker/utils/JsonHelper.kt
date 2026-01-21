@@ -55,7 +55,7 @@ class JsonHelper(private val database: AppDatabase) {
                 image = iconEnum.drawableRes,
                 value = jsonEntry.value,
                 message = jsonEntry.description,
-                unlockedAt = null,
+                times = 0L,
                 category = type,
                 unit = unit
             )

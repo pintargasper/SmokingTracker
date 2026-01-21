@@ -115,7 +115,6 @@
 
     <string name="achievement_popup_header">Achievement unlocked</string>
     <string name="achievements_popup_icon">Achievement icon</string>
-    <string name="achievement_received_date">Achieved on: %1$s</string>
     <string name="achievement_popup_close">Close</string>
 
     <string name="day_monday">Monday</string>
@@ -147,6 +146,8 @@
     <string name="notification_upload_content">Data successfully loaded</string>
     <string name="notification_upload_failed_title">Upload Failed</string>
     <string name="notification_upload_failed_content">Error loading file</string>
+    <string name="notification_achievement_unlocked_title">Achievement unlocked!</string>
+    <string name="notification_achievement_unlocked_content">Badge: %1$s without smoking</string>
 
     <string name="calculator_cigarettes_per_day">Cigarettes per day</string>
     <string name="calculator_cigarettes_per_pack">Cigarettes per pack</string>
@@ -215,5 +216,10 @@
         <item quantity="two">%d cigarettes</item>
         <item quantity="few">%d cigarettes</item>
         <item quantity="other">%d cigarettes</item>
+    </plurals>
+
+    <plurals name="achievement_achieved_times">
+        <item quantity="one">Achieved %d time</item>
+        <item quantity="other">Achieved %d times</item>
     </plurals>
 </resources>

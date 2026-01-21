@@ -1,0 +1,16 @@
+{
+  "SMOKE_FREE_TIME": [
+    { "icon": "LENT", "value": 1, "description": "", "unit": "HOURS" },
+    { "icon": "LENT", "value": 5, "description": "", "unit": "HOURS" },
+    { "icon": "EDIT", "value": 2, "description": "", "unit": "DAYS" },
+    { "icon": "EDIT", "value": 1, "description": "", "unit": "WEEKS" },
+    { "icon": "EDIT", "value": 10, "description": "", "unit": "DAYS" },
+    { "icon": "LENT", "value": 10, "description": "", "unit": "DAYS" }
+  ],
+  "CIGARETTES_AVOIDED": [
+    { "icon": "LENT", "value": 10, "description": "" },
+    { "icon": "LENT", "value": 50, "description": "" },
+    { "icon": "EDIT", "value": 200, "description": "" },
+    { "icon": "LENT", "value": 1000, "description": "" }
+  ]
+}

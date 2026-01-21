@@ -76,13 +76,25 @@ object Helper {
         )
     }
 
+    fun AchievementEntity.toAchievementEntry(): AchievementEntry {
+        return AchievementEntry(
+            id = id,
+            image = image,
+            value = value,
+            message = message,
+            times = times,
+            category = category,
+            unit = unit
+        )
+    }
+
     fun AchievementEntry.toAchievementEntity(): AchievementEntity {
         return AchievementEntity(
             id = id,
             image = image,
             value = value,
             message = message,
-            unlockedAt = unlockedAt,
+            times = times,
             category = category,
             unit = unit
         )
@@ -152,13 +164,24 @@ object Helper {
                     value,
                     value
                 )
+            AchievementUnit.MONTHS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_months,
+                    value,
+                    value
+                )
+            AchievementUnit.YEARS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_years,
+                    value,
+                    value
+                )
             AchievementUnit.CIGARETTES ->
                 context.resources.getQuantityString(
                     R.plurals.cigarettes_count,
                     value,
                     value
                 )
-            else -> ""
         }
     }
 }
