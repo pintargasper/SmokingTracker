@@ -57,6 +57,7 @@ object DialogManager {
             )
             lifecycleScope.launch {
                 database.historyDao().insert(history = entry)
+                database.achievementDao().resetAllAchievements()
                 refreshUI()
             }
             dialog.dismiss()

@@ -56,6 +56,8 @@ class JsonHelper(private val database: AppDatabase) {
                 value = jsonEntry.value,
                 message = jsonEntry.description,
                 times = 0L,
+                lastCompletedAt = null,
+                reset = true,
                 category = type,
                 unit = unit
             )

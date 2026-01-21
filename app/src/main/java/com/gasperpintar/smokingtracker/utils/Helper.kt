@@ -83,6 +83,8 @@ object Helper {
             value = value,
             message = message,
             times = times,
+            lastCompletedAt = lastCompletedAt,
+            reset = reset,
             category = category,
             unit = unit
         )
@@ -95,6 +97,8 @@ object Helper {
             value = value,
             message = message,
             times = times,
+            lastCompletedAt = lastCompletedAt,
+            reset = reset,
             category = category,
             unit = unit
         )
