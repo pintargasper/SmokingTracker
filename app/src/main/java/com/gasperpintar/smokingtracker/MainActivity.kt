@@ -22,7 +22,7 @@ import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.gasperpintar.smokingtracker.utils.JsonHelper
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navigationView: BottomNavigationView = binding.navView
+        val navigationView = binding.navView
         val viewPager = binding.mainViewPager
 
         viewPager.adapter = MainPagerAdapter(fragmentActivity = this)
@@ -69,6 +69,15 @@ class MainActivity : AppCompatActivity() {
             val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
             val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
             val themeId: Int = settings?.theme ?: 0
+
+            val packageInfo = packageManager.getPackageInfo(packageName, 0)
+            val versionName = packageInfo.versionName
+            val lastVersionName = sharedPreferences.getString("last_version_name", null)
+
+            if (versionName != lastVersionName) {
+                JsonHelper(database).initializeAchievementsIfNeeded(this@MainActivity)
+                sharedPreferences.edit { putString("last_version_name", versionName) }
+            }
 
             applyTheme(themeId = themeId)
             if (isFirstRun || settings?.notifications == 1) {

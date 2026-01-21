@@ -115,6 +115,7 @@
 
     <string name="achievement_popup_header">Achievement unlocked</string>
     <string name="achievements_popup_icon">Achievement icon</string>
+    <string name="achievement_received_date">Achieved on: %1$s</string>
     <string name="achievement_popup_close">Close</string>
 
     <string name="day_monday">Monday</string>

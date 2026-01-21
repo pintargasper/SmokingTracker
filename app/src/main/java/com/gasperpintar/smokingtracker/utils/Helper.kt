@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import com.gasperpintar.smokingtracker.type.AchievementUnit
@@ -72,6 +73,18 @@ object Helper {
             } else {
                 0
             }
+        )
+    }
+
+    fun AchievementEntry.toAchievementEntity(): AchievementEntity {
+        return AchievementEntity(
+            id = id,
+            image = image,
+            value = value,
+            message = message,
+            unlockedAt = unlockedAt,
+            category = category,
+            unit = unit
         )
     }
 

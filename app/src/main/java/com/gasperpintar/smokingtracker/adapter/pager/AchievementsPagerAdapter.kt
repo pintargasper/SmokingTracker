@@ -14,9 +14,9 @@ class AchievementsPagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> AchievementsFragment(achievementType = AchievementCategory.SMOKE_FREE_TIME)
-            1 -> AchievementsFragment(achievementType = AchievementCategory.CIGARETTES_AVOIDED)
-            else -> AchievementsFragment(achievementType = AchievementCategory.SMOKE_FREE_TIME)
+            0 -> AchievementsFragment.newInstance(type = AchievementCategory.SMOKE_FREE_TIME)
+            1 -> AchievementsFragment.newInstance(type = AchievementCategory.CIGARETTES_AVOIDED)
+            else -> AchievementsFragment.newInstance(type = AchievementCategory.SMOKE_FREE_TIME)
         }
     }
 }

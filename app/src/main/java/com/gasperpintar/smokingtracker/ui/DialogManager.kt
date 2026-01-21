@@ -23,6 +23,7 @@ import com.gasperpintar.smokingtracker.utils.Helper.getDisplayText
 import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
 import com.gasperpintar.smokingtracker.utils.Manager
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
@@ -326,11 +327,15 @@ object DialogManager {
             .setViewChained(dialogView)
             .showChained()
 
+        val receivedDate: TextView = dialogView.findViewById(R.id.achievement_received_date)
         val achievementImage: ImageView = dialogView.findViewById(R.id.achievement_image)
         val achievementTitle: TextView = dialogView.findViewById(R.id.achievement_title)
         val achievementMessage: TextView = dialogView.findViewById(R.id.achievement_message)
         val buttonClose: Button = dialogView.findViewById(R.id.button_close)
 
+        receivedDate.text = context.getString(R.string.achievement_received_date, LocalizationHelper.formatDate(
+            date = entry.unlockedAt?.toLocalDate() ?: LocalDateTime.now().toLocalDate()
+        ))
         achievementImage.setImageResource(entry.image)
         achievementTitle.text = entry.getDisplayText(context)
         achievementMessage.text = entry.message

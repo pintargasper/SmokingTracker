@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.gasperpintar.smokingtracker.adapter.pager.AchievementsPagerAdapter
+import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityAchievementsBinding
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -13,6 +14,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 class AchievementsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAchievementsBinding
+
+    lateinit var database: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +48,7 @@ class AchievementsActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(context: Context) {
+        database = Provider.getDatabase(context.applicationContext)
         super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, database = Provider.getDatabase(context.applicationContext)))
     }
 }

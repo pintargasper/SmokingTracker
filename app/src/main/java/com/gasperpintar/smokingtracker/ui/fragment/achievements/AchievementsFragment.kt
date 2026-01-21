@@ -5,22 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.adapter.achievements.AchievementsAdapter
+import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.ui.DialogManager
-import java.time.LocalDateTime
+import kotlinx.coroutines.launch
 
-class AchievementsFragment(private val achievementType: AchievementCategory) : Fragment() {
+class AchievementsFragment : Fragment() {
 
     private var _binding: FragmentAchievementsBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var database: Lazy<AppDatabase>
     private lateinit var achievementsAdapter: AchievementsAdapter
+    private lateinit var achievementType: AchievementCategory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val typeOrdinal = arguments?.getInt(ARG_ACHIEVEMENT_TYPE)
+        achievementType = typeOrdinal?.let { AchievementCategory.entries[it] } ?: AchievementCategory.SMOKE_FREE_TIME
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,47 +39,66 @@ class AchievementsFragment(private val achievementType: AchievementCategory) : F
         _binding = FragmentAchievementsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        setupRecyclerView()
-        loadAchievements(achievementEntries = getAchievementsForType(type = achievementType))
+        database = lazy { (requireActivity() as AchievementsActivity).database }
 
+        setupRecyclerView()
+
+        lifecycleScope.launch {
+            val achievementDao = database.value.achievementDao()
+            val achievements = achievementDao.getAllAchievements().map {
+                AchievementEntry(
+                    id = it.id,
+                    image = it.image,
+                    value = it.value,
+                    message = it.message,
+                    unlockedAt = it.unlockedAt,
+                    category = it.category,
+                    unit = it.unit
+                )
+            }.filter { it.category == achievementType }
+            loadAchievements(achievementEntries = achievements)
+        }
         return root
     }
 
-    private fun getAchievementsForType(type: AchievementCategory): List<AchievementEntry> {
-        return when (type) {
-            AchievementCategory.SMOKE_FREE_TIME -> listOf(
-                AchievementEntry(0, R.drawable.ic_edit, 1, "", LocalDateTime.now(), AchievementCategory.SMOKE_FREE_TIME, AchievementUnit.HOURS),
-                AchievementEntry(0, R.drawable.ic_edit, 5, "", LocalDateTime.now(), AchievementCategory.SMOKE_FREE_TIME, AchievementUnit.HOURS),
-                AchievementEntry(0, R.drawable.ic_edit, 2, "", LocalDateTime.now(), AchievementCategory.SMOKE_FREE_TIME, AchievementUnit.DAYS),
-                AchievementEntry(0, R.drawable.ic_edit, 1, "", LocalDateTime.now(), AchievementCategory.SMOKE_FREE_TIME, AchievementUnit.WEEKS),
-            )
-
-            AchievementCategory.CIGARETTES_AVOIDED -> listOf(
-                AchievementEntry(0, R.drawable.ic_edit, 10, "", LocalDateTime.now(), AchievementCategory.CIGARETTES_AVOIDED, AchievementUnit.HOURS),
-                AchievementEntry(0, R.drawable.ic_edit, 50, "", LocalDateTime.now(), AchievementCategory.CIGARETTES_AVOIDED, AchievementUnit.HOURS),
-                AchievementEntry(0, R.drawable.ic_edit, 200, "", LocalDateTime.now(), AchievementCategory.CIGARETTES_AVOIDED, AchievementUnit.DAYS),
-                AchievementEntry(0, R.drawable.ic_edit, 1000, "", LocalDateTime.now(), AchievementCategory.CIGARETTES_AVOIDED, AchievementUnit.WEEKS),
-            )
+    companion object {
+        private const val ARG_ACHIEVEMENT_TYPE = "achievement_type"
+        fun newInstance(type: AchievementCategory): AchievementsFragment {
+            return AchievementsFragment().apply {
+                arguments = Bundle().apply { putInt(ARG_ACHIEVEMENT_TYPE, type.ordinal) }
+            }
         }
     }
 
     private fun setupRecyclerView() {
-        achievementsAdapter = AchievementsAdapter(
-            onItemClick = { achievementEntry ->
-                DialogManager.showAchievementsDialog(
-                    context = requireActivity(),
-                    layoutInflater = layoutInflater,
-                    entry = achievementEntry
-                )
+        achievementsAdapter = AchievementsAdapter { achievementEntry ->
+            if (achievementEntry.unlockedAt == null) {
+                return@AchievementsAdapter
             }
-        )
-        binding.recyclerviewAchievements.layoutManager = GridLayoutManager(requireContext(), 2)
+            DialogManager.showAchievementsDialog(
+                context = requireActivity(),
+                layoutInflater = layoutInflater,
+                entry = achievementEntry
+            )
+        }
+        binding.recyclerviewAchievements.layoutManager = GridLayoutManager(requireContext(), calculateGridSpanCount())
         binding.recyclerviewAchievements.adapter = achievementsAdapter
     }
 
     private fun loadAchievements(achievementEntries: List<AchievementEntry>) {
         achievementsAdapter.submitList(achievementEntries) {
             binding.recyclerviewAchievements.scrollToPosition(0)
+        }
+    }
+
+    private fun calculateGridSpanCount(): Int {
+        val displayMetrics = resources.displayMetrics
+        val screenWidthDp: Float = displayMetrics.widthPixels / displayMetrics.density
+
+        return when {
+            screenWidthDp >= 900 -> 4
+            screenWidthDp >= 600 -> 3
+            else -> 2
         }
     }
 
