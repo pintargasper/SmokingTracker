@@ -26,8 +26,8 @@ interface HistoryDao {
     @Query(value = "DELETE FROM sqlite_sequence WHERE name = 'history'")
     suspend fun resetAutoIncrement()
 
-    @Query(value = "SELECT * FROM history WHERE createdAt <= :endOfToday AND lent = 0 ORDER BY createdAt DESC LIMIT 1")
-    suspend fun getLastHistoryEntry(endOfToday: LocalDateTime): HistoryEntity?
+    @Query(value = "SELECT * FROM history WHERE lent = 0 ORDER BY createdAt DESC LIMIT 1")
+    suspend fun getLastHistoryEntry(): HistoryEntity?
 
     @Query(value = "SELECT * FROM history WHERE createdAt BETWEEN :start AND :end ORDER BY createdAt DESC")
     suspend fun getHistoryBetween(start: LocalDateTime, end: LocalDateTime): List<HistoryEntity>

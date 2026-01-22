@@ -5,7 +5,6 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import java.time.LocalDateTime
 
 @Dao
 interface AchievementDao {
@@ -16,29 +15,21 @@ interface AchievementDao {
     @Query(value = """
         UPDATE achievements
         SET times = times + 1,
-            lastCompletedAt = :now
+            reset = 0,
+            lastCompletedAt = CURRENT_TIMESTAMP
         WHERE id = :achievementId
         AND reset = 1
     """)
     suspend fun incrementAchievementTimesSafe(
-        achievementId: Long,
-        now: LocalDateTime
+        achievementId: Long
     )
 
     @Query(value = """
         UPDATE achievements
-        SET reset = 0
-        WHERE id = :id
+        SET reset = :state
     """
     )
-    suspend fun updateReset(id: Long)
-
-    @Query(value = """
-        UPDATE achievements
-        SET reset = 1
-    """
-    )
-    suspend fun resetAllAchievements()
+    suspend fun resetAllAchievements(state: Boolean)
 
     @Insert
     suspend fun insertAll(entities: List<AchievementEntity>)

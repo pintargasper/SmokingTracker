@@ -8,11 +8,9 @@ import androidx.work.WorkerParameters
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.utils.Helper
 import com.gasperpintar.smokingtracker.utils.Helper.getDisplayText
 import com.gasperpintar.smokingtracker.utils.Helper.toAchievementEntry
 import java.time.Duration
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Locale
 
@@ -25,8 +23,7 @@ class Worker(
 
     @RequiresPermission(value = Manifest.permission.POST_NOTIFICATIONS)
     override suspend fun doWork(): Result {
-        val (_, endOfDay) = Helper.getDay(date = LocalDate.now())
-        val lastHistory = database.historyDao().getLastHistoryEntry(endOfToday = endOfDay)
+        val lastHistory = database.historyDao().getLastHistoryEntry()
         val achievements = database.achievementDao().getAllAchievements()
         val now = LocalDateTime.now()
         val totalSeconds = lastHistory?.let { Duration.between(it.createdAt, now).seconds } ?: 0

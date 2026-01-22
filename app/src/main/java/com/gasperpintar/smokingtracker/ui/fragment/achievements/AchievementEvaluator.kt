@@ -10,66 +10,72 @@ class AchievementEvaluator(
     private val achievementDao: AchievementDao
 ) {
 
-    private var cachedLastSmokeTime: LocalDateTime? = null
-    private val evaluatedAchievements: MutableSet<Long> = mutableSetOf()
+    private val cachedAchievements = mutableSetOf<AchievementEntity>()
 
     suspend fun evaluate(
         lastSmokeTime: LocalDateTime,
         now: LocalDateTime
     ) {
-        if (cachedLastSmokeTime != lastSmokeTime) {
-            cachedLastSmokeTime = lastSmokeTime
-            evaluatedAchievements.clear()
+
+        if (cachedAchievements.isEmpty()) {
+            val achievements: List<AchievementEntity> = achievementDao.getAllAchievements()
+            achievements.forEach { achievement ->
+                cachedAchievements.add(achievement)
+            }
+            return
         }
 
-        val secondsWithoutSmoking: Long = Duration.between(lastSmokeTime, now).seconds
-        val achievements: List<AchievementEntity> = achievementDao.getAllAchievements()
+        val secondsWithoutSmoking = Duration.between(lastSmokeTime, now).seconds
 
-        achievements.filter { it.category == AchievementCategory.SMOKE_FREE_TIME }.forEach { achievement ->
-            val requiredSeconds = achievement.unit.toSeconds(achievement.value) ?: return@forEach
-            val isConditionMet = secondsWithoutSmoking >= requiredSeconds
-            incrementAchievement(achievement, isConditionMet, now)
-        }
+        cachedAchievements.forEach { achievement ->
+            val isConditionMet = when (achievement.category) {
+                AchievementCategory.SMOKE_FREE_TIME -> {
+                    val requiredSeconds =
+                        achievement.unit.toSeconds(achievement.value) ?: return@forEach
+                    secondsWithoutSmoking >= requiredSeconds
+                }
 
-        achievements.filter { it.category == AchievementCategory.CIGARETTES_AVOIDED }.forEach { achievement ->
-            val intervalSeconds = 5400L
-            val sleepSecondsPerDay = 8 * 3600L
-            val duration = Duration.between(lastSmokeTime, now)
-            var totalSeconds = duration.seconds
-
-            if (totalSeconds <= 0) {
-                return@forEach
+                AchievementCategory.CIGARETTES_AVOIDED -> {
+                    cigarettesAvoided(lastSmokeTime, now) >= achievement.value
+                }
             }
 
-            val days = totalSeconds / 86400L
-            totalSeconds -= days * sleepSecondsPerDay
-            val remainingSeconds = totalSeconds % 86400L
-
-            if (remainingSeconds > 16 * 3600L) {
-                totalSeconds -= sleepSecondsPerDay
-            }
-            val cigarettesPassed = (totalSeconds / intervalSeconds).toInt()
-            val requiredCigs = achievement.value
-            val isConditionMet = cigarettesPassed >= requiredCigs
-            incrementAchievement(achievement, isConditionMet, now)
+            incrementAchievement(
+                achievement = achievement,
+                isConditionMet = isConditionMet
+            )
         }
     }
 
     fun reset() {
-        cachedLastSmokeTime = null
-        evaluatedAchievements.clear()
+        cachedAchievements.clear()
+    }
+
+    private fun cigarettesAvoided(lastSmokeTime: LocalDateTime, now: LocalDateTime): Int {
+        val intervalSeconds = 5400L
+        val sleepSecondsPerDay = 8 * 3600L
+        val duration = Duration.between(lastSmokeTime, now)
+
+        var totalSeconds = duration.seconds
+        if (totalSeconds <= 0) {
+            return 0
+        }
+
+        val days = totalSeconds / 86400L
+        totalSeconds -= days * sleepSecondsPerDay
+
+        val remainingSeconds = totalSeconds % 86400L
+        if (remainingSeconds > 16 * 3600L) {
+            totalSeconds -= sleepSecondsPerDay
+        }
+        return (totalSeconds / intervalSeconds).toInt()
     }
 
     private suspend fun incrementAchievement(
         achievement: AchievementEntity,
-        isConditionMet: Boolean,
-        now: LocalDateTime
+        isConditionMet: Boolean
     ) {
         if (!isConditionMet) {
-            return
-        }
-
-        if (evaluatedAchievements.contains(achievement.id)) {
             return
         }
 
@@ -78,10 +84,7 @@ class AchievementEvaluator(
         }
 
         achievementDao.incrementAchievementTimesSafe(
-            achievementId = achievement.id,
-            now = now,
+            achievementId = achievement.id
         )
-        achievementDao.updateReset(achievement.id)
-        evaluatedAchievements.add(achievement.id)
     }
 }

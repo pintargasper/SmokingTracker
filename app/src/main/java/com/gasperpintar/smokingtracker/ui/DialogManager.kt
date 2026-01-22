@@ -56,8 +56,90 @@ object DialogManager {
                 createdAt = LocalDateTime.now()
             )
             lifecycleScope.launch {
+                database.achievementDao().resetAllAchievements(state = true)
                 database.historyDao().insert(history = entry)
-                database.achievementDao().resetAllAchievements()
+                refreshUI()
+            }
+            dialog.dismiss()
+        }
+
+        buttonClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    fun showEditDialog(
+        context: FragmentActivity,
+        layoutInflater: LayoutInflater,
+        database: AppDatabase,
+        lifecycleScope: LifecycleCoroutineScope,
+        entry: HistoryEntry,
+        refreshUI: () -> Unit
+    ) {
+        val dialogView = layoutInflater.inflate(R.layout.edit_popup, null)
+        val dialog = RoundedAlertDialog(context = context)
+            .setViewChained(dialogView)
+            .showChained()
+
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
+        val datePicker: android.widget.DatePicker = dialogView.findViewById(R.id.date_picker)
+        val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
+
+        lentCheckbox.isChecked = entry.isLent
+        timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
+
+        entry.createdAt.let { dateTime ->
+            datePicker.updateDate(dateTime.year, dateTime.monthValue - 1, dateTime.dayOfMonth)
+            timePicker.hour = dateTime.hour
+            timePicker.minute = dateTime.minute
+        }
+
+        buttonConfirm.setOnClickListener {
+            val updatedEntry = entry.copy(
+                createdAt = entry.createdAt.withYear(datePicker.year)
+                    .withMonth(datePicker.month + 1)
+                    .withDayOfMonth(datePicker.dayOfMonth)
+                    .withHour(timePicker.hour)
+                    .withMinute(timePicker.minute),
+                isLent = lentCheckbox.isChecked
+            )
+            lifecycleScope.launch {
+                database.achievementDao().resetAllAchievements(state = false)
+                database.historyDao().update(history = updatedEntry.toHistoryEntity())
+                refreshUI()
+            }
+            dialog.dismiss()
+        }
+
+        buttonClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+    }
+
+    fun showDeleteDialog(
+        context: FragmentActivity,
+        layoutInflater: LayoutInflater,
+        database: AppDatabase,
+        lifecycleScope: LifecycleCoroutineScope,
+        entry: HistoryEntry,
+        refreshUI: () -> Unit
+    ) {
+        val dialogView = layoutInflater.inflate(R.layout.delete_popup, null)
+        val dialog = RoundedAlertDialog(context = context)
+            .setViewChained(dialogView)
+            .showChained()
+
+        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+
+        buttonConfirm.setOnClickListener {
+            lifecycleScope.launch {
+                database.achievementDao().resetAllAchievements(state = false)
+                database.historyDao().delete(history = entry.toHistoryEntity())
                 refreshUI()
             }
             dialog.dismiss()
@@ -235,86 +317,6 @@ object DialogManager {
             }
         }
         buttonClose.setOnClickListener { dialog.dismiss() }
-    }
-
-    fun showEditDialog(
-        context: FragmentActivity,
-        layoutInflater: LayoutInflater,
-        database: AppDatabase,
-        lifecycleScope: LifecycleCoroutineScope,
-        entry: HistoryEntry,
-        refreshUI: () -> Unit
-    ) {
-        val dialogView = layoutInflater.inflate(R.layout.edit_popup, null)
-        val dialog = RoundedAlertDialog(context = context)
-            .setViewChained(dialogView)
-            .showChained()
-
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
-        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
-        val datePicker: android.widget.DatePicker = dialogView.findViewById(R.id.date_picker)
-        val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
-
-        lentCheckbox.isChecked = entry.isLent
-        timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
-
-        entry.createdAt.let { dateTime ->
-            datePicker.updateDate(dateTime.year, dateTime.monthValue - 1, dateTime.dayOfMonth)
-            timePicker.hour = dateTime.hour
-            timePicker.minute = dateTime.minute
-        }
-
-        buttonConfirm.setOnClickListener {
-            val updatedEntry = entry.copy(
-                createdAt = entry.createdAt.withYear(datePicker.year)
-                    .withMonth(datePicker.month + 1)
-                    .withDayOfMonth(datePicker.dayOfMonth)
-                    .withHour(timePicker.hour)
-                    .withMinute(timePicker.minute),
-                isLent = lentCheckbox.isChecked
-            )
-            lifecycleScope.launch {
-                database.historyDao().update(history = updatedEntry.toHistoryEntity())
-                refreshUI()
-            }
-            dialog.dismiss()
-        }
-
-        buttonClose.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
-
-    fun showDeleteDialog(
-        context: FragmentActivity,
-        layoutInflater: LayoutInflater,
-        database: AppDatabase,
-        lifecycleScope: LifecycleCoroutineScope,
-        entry: HistoryEntry,
-        refreshUI: () -> Unit
-    ) {
-        val dialogView = layoutInflater.inflate(R.layout.delete_popup, null)
-        val dialog = RoundedAlertDialog(context = context)
-            .setViewChained(dialogView)
-            .showChained()
-
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
-
-        buttonConfirm.setOnClickListener {
-            lifecycleScope.launch {
-                database.historyDao().delete(history = entry.toHistoryEntity())
-                refreshUI()
-            }
-            dialog.dismiss()
-        }
-
-        buttonClose.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 
     fun showAchievementsDialog(

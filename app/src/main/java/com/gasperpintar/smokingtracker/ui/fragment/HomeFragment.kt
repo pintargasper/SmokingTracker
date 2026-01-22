@@ -138,13 +138,7 @@ class HomeFragment : Fragment() {
 
     private fun updateLastEntry() {
         lifecycleScope.launch {
-            val newEntry: HistoryEntity? = database.value.historyDao()
-                .getLastHistoryEntry(endOfToday = Helper.getEndOfDay(date = LocalDate.now()))
-
-            lastEntry = newEntry
-
-            homeViewModel.onLastEntryChanged(lastEntry)
-
+            lastEntry = database.value.historyDao().getLastHistoryEntry()
             updateTimerLabel()
         }
     }
@@ -196,6 +190,14 @@ class HomeFragment : Fragment() {
         } ?: "0${getString(R.string.home_timer_second)}"
 
         binding.timerLabel.text = text
+
+        if (lastEntry == null) {
+            return
+        }
+
+        lifecycleScope.launch {
+            homeViewModel.onLastEntryChanged(current = lastEntry?.toHistoryEntry())
+        }
     }
 
     private suspend fun updateStatistics(date: LocalDate) {
@@ -245,4 +247,3 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 }
-
