@@ -13,6 +13,8 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.time.DayOfWeek
+import java.time.Month
 
 @RunWith(value = AndroidJUnit4::class)
 class LocalizationHelperTest {
@@ -33,7 +35,7 @@ class LocalizationHelperTest {
 
     @Test
     fun getLocalizedContextReturnsSystemLocaleWhenLanguageIsSystem() = runBlocking {
-        database.settingsDao().insert(settingsEntity = createSettingsEntity(languageId = 0))
+        database.settingsDao().insert(entity = createSettingsEntity(languageId = 0))
 
         val localizedContext = LocalizationHelper.getLocalizedContext(context = context, database = database)
         val expectedLanguage = context.resources.configuration.locales[0].language
@@ -47,7 +49,7 @@ class LocalizationHelperTest {
         val supportedLanguages = context.resources.getStringArray(R.array.language_values)
         val index = supportedLanguages.indexOf("en")
 
-        database.settingsDao().insert(settingsEntity = createSettingsEntity(languageId = index))
+        database.settingsDao().insert(entity = createSettingsEntity(languageId = index))
 
         val localizedContext = LocalizationHelper.getLocalizedContext(context = context, database = database)
         val actualLanguage = localizedContext.resources.configuration.locales[0].language
@@ -57,13 +59,29 @@ class LocalizationHelperTest {
 
     @Test
     fun getLocalizedContextReturnsSystemLocaleWhenLanguageIdIsInvalid() = runBlocking {
-        database.settingsDao().insert(settingsEntity = createSettingsEntity(languageId = 999))
+        database.settingsDao().insert(entity = createSettingsEntity(languageId = 999))
 
         val localizedContext = LocalizationHelper.getLocalizedContext(context = context, database = database)
         val expectedLanguage = context.resources.configuration.locales[0].language
         val actualLanguage = localizedContext.resources.configuration.locales[0].language
 
         assertEquals(expectedLanguage, actualLanguage)
+    }
+
+    @Test
+    fun getDayOfWeekNameReturnsNonEmptyString() {
+        for (day in DayOfWeek.entries) {
+            val result = LocalizationHelper.getDayOfWeekName(context, dayOfWeek = day)
+            assert(result.isNotEmpty())
+        }
+    }
+
+    @Test
+    fun getMonthNameReturnsNonEmptyString() {
+        for(month in Month.entries) {
+            val result = LocalizationHelper.getMonthName(context, month = month)
+            assert(result.isNotEmpty())
+        }
     }
 
     private fun createSettingsEntity(languageId: Int): SettingsEntity {

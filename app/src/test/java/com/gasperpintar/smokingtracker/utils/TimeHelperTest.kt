@@ -1,9 +1,5 @@
 package com.gasperpintar.smokingtracker.utils
 
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.model.HistoryEntry
-import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
-import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntry
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -11,7 +7,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 
-class HelperTest {
+class TimeHelperTest {
 
     private lateinit var inputDate: LocalDate
     private lateinit var expectedStartOfDay: LocalDateTime
@@ -26,7 +22,7 @@ class HelperTest {
 
     @Test
     fun getDayReturnsCorrectStartAndEndOfDay() {
-        val result: Pair<LocalDateTime, LocalDateTime> = Helper.getDay(date = inputDate)
+        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getDay(date = inputDate)
         assertEquals(expectedStartOfDay, result.first)
         assertEquals(expectedEndOfDay, result.second)
     }
@@ -36,7 +32,7 @@ class HelperTest {
         val expectedStartOfWeek: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 29), LocalTime.MIDNIGHT)
         val expectedEndOfWeek: LocalDateTime = LocalDateTime.of(LocalDate.of(2026, 1, 4), LocalTime.MAX)
 
-        val result: Pair<LocalDateTime, LocalDateTime> = Helper.getWeek(date = inputDate)
+        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getWeek(date = inputDate)
 
         assertEquals(expectedStartOfWeek, result.first)
         assertEquals(expectedEndOfWeek, result.second)
@@ -47,7 +43,7 @@ class HelperTest {
         val expectedStartOfMonth: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 1), LocalTime.MIDNIGHT)
         val expectedEndOfMonth: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 31), LocalTime.MAX)
 
-        val result: Pair<LocalDateTime, LocalDateTime> = Helper.getMonth(date = inputDate)
+        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getMonth(date = inputDate)
 
         assertEquals(expectedStartOfMonth, result.first)
         assertEquals(expectedEndOfMonth, result.second)
@@ -58,7 +54,7 @@ class HelperTest {
         val expectedStartOfYear: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 1, 1), LocalTime.MIDNIGHT)
         val expectedEndOfYear: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 31), LocalTime.MAX)
 
-        val result: Pair<LocalDateTime, LocalDateTime> = Helper.getYear(date = inputDate)
+        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getYear(date = inputDate)
 
         assertEquals(expectedStartOfYear, result.first)
         assertEquals(expectedEndOfYear, result.second)
@@ -66,45 +62,7 @@ class HelperTest {
 
     @Test
     fun getEndOfDayReturnsCorrectEndOfDay() {
-        val result: LocalDateTime = Helper.getEndOfDay(date = inputDate)
+        val result: LocalDateTime = TimeHelper.getEndOfDay(date = inputDate)
         assertEquals(expectedEndOfDay, result)
-    }
-
-    @Test
-    fun historyEntityToHistoryEntryConversionIsCorrect() {
-        val historyEntity = HistoryEntity(
-            id = 1L,
-            createdAt = LocalDateTime.of(2025, 12, 31, 10, 30, 0),
-            lent = 1
-        )
-
-        val expectedHistoryEntry = HistoryEntry(
-            id = 1L,
-            isLent = true,
-            createdAt = LocalDateTime.of(2025, 12, 31, 10, 30, 0),
-            timerLabel = "10:30:00"
-        )
-
-        val result: HistoryEntry = historyEntity.toHistoryEntry()
-        assertEquals(expectedHistoryEntry, result)
-    }
-
-    @Test
-    fun historyEntryToHistoryEntityConversionIsCorrect() {
-        val historyEntry = HistoryEntry(
-            id = 1L,
-            isLent = true,
-            createdAt = LocalDateTime.of(2025, 12, 31, 10, 30, 0),
-            timerLabel = "10:30:00"
-        )
-
-        val expectedHistoryEntity = HistoryEntity(
-            id = 1L,
-            createdAt = LocalDateTime.of(2025, 12, 31, 10, 30, 0),
-            lent = 1
-        )
-
-        val result: HistoryEntity = historyEntry.toHistoryEntity()
-        assertEquals(expectedHistoryEntity, result)
     }
 }

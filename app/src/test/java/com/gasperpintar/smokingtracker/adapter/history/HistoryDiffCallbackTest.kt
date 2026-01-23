@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.adapter.history
 
+import com.gasperpintar.smokingtracker.adapter.DiffCallback
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -9,11 +10,11 @@ import java.time.LocalDateTime
 
 class HistoryDiffCallbackTest {
 
-    private lateinit var historyDiffCallback: HistoryDiffCallback
+    private lateinit var historyDiffCallback: DiffCallback<HistoryEntry>
 
     @Before
     fun setup() {
-        historyDiffCallback = HistoryDiffCallback()
+        historyDiffCallback = DiffCallback()
     }
 
     @Test
