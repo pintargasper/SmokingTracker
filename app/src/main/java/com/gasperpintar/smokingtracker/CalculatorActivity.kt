@@ -61,7 +61,7 @@ class CalculatorActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("DefaultLocale", "InflateParams")
+    @SuppressLint(value = ["DefaultLocale", "InflateParams"])
     private fun calculateResults(dailyCigarettes: Int, cigarettesPerPack: Int, packPrice: Double) {
         val dailyCost = (dailyCigarettes.toDouble() / cigarettesPerPack) * packPrice
         val timePerCigaretteMinutes = 5

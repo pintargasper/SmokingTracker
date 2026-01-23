@@ -1,6 +1,9 @@
 package com.gasperpintar.smokingtracker.model
 
+import android.content.Context
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import java.time.LocalDateTime
@@ -16,4 +19,80 @@ data class AchievementEntry(
     val notify: Boolean,
     val category: AchievementCategory,
     val unit: AchievementUnit
-): Identifiable
+): Identifiable {
+
+    fun toEntity(): AchievementEntity {
+        return AchievementEntity(
+            id = id,
+            image = image,
+            value = value,
+            message = message,
+            times = times,
+            lastAchieved = lastAchieved,
+            reset = reset,
+            notify = notify,
+            category = category,
+            unit = unit
+        )
+    }
+
+    fun getDisplayText(context: Context): String {
+        return when (unit) {
+            AchievementUnit.HOURS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_hours,
+                    value,
+                    value
+                )
+            AchievementUnit.DAYS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_days,
+                    value,
+                    value
+                )
+            AchievementUnit.WEEKS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_weeks,
+                    value,
+                    value
+                )
+            AchievementUnit.MONTHS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_months,
+                    value,
+                    value
+                )
+            AchievementUnit.YEARS ->
+                context.resources.getQuantityString(
+                    R.plurals.time_years,
+                    value,
+                    value
+                )
+            AchievementUnit.CIGARETTES ->
+                context.resources.getQuantityString(
+                    R.plurals.cigarettes_count,
+                    value,
+                    value
+                )
+        }
+    }
+
+    companion object {
+
+        fun fromEntity(entity: AchievementEntity): AchievementEntry {
+            return AchievementEntry(
+                id = entity.id,
+                image = entity.image,
+                value = entity.value,
+                message = entity.message,
+                times = entity.times,
+                lastAchieved = entity.lastAchieved,
+                reset = entity.reset,
+                notify = entity.notify,
+                category = entity.category,
+                unit = entity.unit
+            )
+        }
+    }
+}
+

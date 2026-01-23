@@ -9,7 +9,7 @@ import android.widget.RemoteViews
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.utils.Helper
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,9 +40,9 @@ class SmokingTrackerWidget : AppWidgetProvider() {
             val database = Provider.getDatabase(context = context)
 
             val today = LocalDate.now()
-            val (startOfDay, endOfDay) = Helper.getDay(date = today)
-            val (startOfWeek, endOfWeek) = Helper.getWeek(date = today)
-            val (startOfMonth, endOfMonth) = Helper.getMonth(date = today)
+            val (startOfDay, endOfDay) = TimeHelper.getDay(date = today)
+            val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date = today)
+            val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date = today)
 
             openActivity(context, views)
 

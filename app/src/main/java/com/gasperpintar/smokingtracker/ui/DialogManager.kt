@@ -19,14 +19,12 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
-import com.gasperpintar.smokingtracker.utils.Helper.getDisplayText
-import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntity
 import com.gasperpintar.smokingtracker.utils.Manager
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
-@SuppressLint("InflateParams")
+@SuppressLint(value = ["InflateParams"])
 object DialogManager {
 
     fun showInsertDialog(
@@ -57,7 +55,7 @@ object DialogManager {
             )
             lifecycleScope.launch {
                 database.achievementDao().resetAllAchievements(state = true)
-                database.historyDao().insert(history = entry)
+                database.historyDao().insert(entity = entry)
                 refreshUI()
             }
             dialog.dismiss()
@@ -68,6 +66,7 @@ object DialogManager {
         }
         dialog.show()
     }
+
 
     fun showEditDialog(
         context: FragmentActivity,
@@ -108,7 +107,7 @@ object DialogManager {
             )
             lifecycleScope.launch {
                 database.achievementDao().resetAllAchievements(state = false)
-                database.historyDao().update(history = updatedEntry.toHistoryEntity())
+                database.historyDao().update(entity = updatedEntry.toEntity())
                 refreshUI()
             }
             dialog.dismiss()
@@ -139,7 +138,7 @@ object DialogManager {
         buttonConfirm.setOnClickListener {
             lifecycleScope.launch {
                 database.achievementDao().resetAllAchievements(state = false)
-                database.historyDao().delete(history = entry.toHistoryEntity())
+                database.historyDao().delete(entity = entry.toEntity())
                 refreshUI()
             }
             dialog.dismiss()

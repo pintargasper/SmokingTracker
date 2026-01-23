@@ -13,11 +13,15 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gasperpintar.smokingtracker.adapter.pager.MainPagerAdapter
+import com.gasperpintar.smokingtracker.adapter.Pager
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
+import com.gasperpintar.smokingtracker.ui.fragment.AnalyticsFragment
+import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
+import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
+import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
@@ -25,6 +29,7 @@ import com.gasperpintar.smokingtracker.utils.JsonHelper
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
+import androidx.core.view.size
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,27 +44,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navigationView = binding.navView
-        val viewPager = binding.mainViewPager
-
-        viewPager.adapter = MainPagerAdapter(fragmentActivity = this)
-        viewPager.isUserInputEnabled = true
-
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                navigationView.menu[position].isChecked = true
-            }
-        })
-
-        navigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> viewPager.setCurrentItem(0, false)
-                R.id.navigation_graph -> viewPager.setCurrentItem(1, false)
-                R.id.navigation_analytics -> viewPager.setCurrentItem(2, false)
-                R.id.navigation_settings -> viewPager.setCurrentItem(3, false)
-            }
-            true
-        }
+        createPager()
 
         permissionsHelper = Permissions(activity = this@MainActivity)
 
@@ -95,6 +80,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun createPager() {
+        val navigationView = binding.navView
+        val viewPager = binding.mainViewPager
+
+        val fragments = listOf(
+            { HomeFragment() },
+            { GraphFragment() },
+            { AnalyticsFragment() },
+            { SettingsFragment() }
+        )
+
+        val tabMenuIds = listOf(
+            R.id.navigation_home,
+            R.id.navigation_graph,
+            R.id.navigation_analytics,
+            R.id.navigation_settings
+        )
+
+        viewPager.adapter = Pager(
+            fragmentActivity = this,
+            fragmentCreator = fragments
+        )
+        viewPager.isUserInputEnabled = true
+
+        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position in 0 until navigationView.menu.size) {
+                    navigationView.menu[position].isChecked = true
+                }
+            }
+        })
+
+        navigationView.setOnItemSelectedListener { item ->
+            val index = tabMenuIds.indexOf(item.itemId)
+            if (index >= 0) {
+                viewPager.setCurrentItem(index, false)
+            }
+            true
+        }
+    }
+
     private fun scheduleNotificationWorker() {
         val workManager: WorkManager = WorkManager.getInstance(context = this@MainActivity)
 
@@ -110,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    fun applyTheme(themeId: Int) {
+    private fun applyTheme(themeId: Int) {
         when (themeId) {
             0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

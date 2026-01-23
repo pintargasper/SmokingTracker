@@ -11,8 +11,7 @@ import androidx.core.graphics.withRotation
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.model.GraphEntry
 import com.gasperpintar.smokingtracker.type.GraphInterval
-import com.gasperpintar.smokingtracker.utils.Helper.getDayOfWeekName
-import com.gasperpintar.smokingtracker.utils.Helper.getMonthName
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -132,7 +131,7 @@ class GraphView @JvmOverloads constructor(
             if (visibleIndex % step == 0) {
                 val labelText: String = when (currentGraphInterval) {
                     GraphInterval.DAILY -> String.format(Locale.getDefault(), "%02d:00", originalIndex)
-                    GraphInterval.WEEKLY -> context.getDayOfWeekName(entry.date.dayOfWeek).take(3)
+                    GraphInterval.WEEKLY -> LocalizationHelper.getDayOfWeekName(context, entry.date.dayOfWeek).take(3)
                     GraphInterval.MONTHLY ->
                         String.format(
                             Locale.getDefault(),
@@ -140,7 +139,7 @@ class GraphView @JvmOverloads constructor(
                             entry.date.dayOfMonth,
                             entry.date.monthValue
                         )
-                    GraphInterval.YEARLY -> context.getMonthName(entry.date.month).take(3)
+                    GraphInterval.YEARLY -> LocalizationHelper.getMonthName(context, entry.date.month).take(3)
                 }
 
                 val textWidth: Float = textPaint.measureText(labelText)

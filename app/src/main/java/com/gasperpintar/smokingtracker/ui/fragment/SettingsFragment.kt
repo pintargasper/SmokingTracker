@@ -21,7 +21,7 @@ import com.gasperpintar.smokingtracker.database.dao.SettingsDao
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.ui.DialogManager
-import com.gasperpintar.smokingtracker.utils.Helper
+import com.gasperpintar.smokingtracker.utils.FileHelper
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -126,7 +126,7 @@ class SettingsFragment : Fragment() {
         val settingsDao = database.settingsDao()
         lifecycleScope.launch {
             settingsDao.getSettings()?.let { currentSettings ->
-                settingsDao.update(settingsEntity = updateBlock(currentSettings))
+                settingsDao.update(entity = updateBlock(currentSettings))
                 if (recreateActivity) {
                     requireActivity().recreate()
                 }
@@ -148,7 +148,7 @@ class SettingsFragment : Fragment() {
             } else {
                 0
             }
-        ).also { settingsDao.insert(settingsEntity = it) }
+        ).also { settingsDao.insert(entity = it) }
     }
 
     private fun setupFilePicker() {
@@ -159,14 +159,14 @@ class SettingsFragment : Fragment() {
                     selectedFile?.text = String.format(
                         $$"%1$s: %2$s",
                         getString(R.string.upload_popup_file),
-                        Helper.getFileName(context = requireActivity(), uri = uri)
+                        FileHelper.getFileName(context = requireActivity(), uri = uri)
                     )
                 }
             }
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint(value = ["SetTextI18n"])
     private fun setupAbout() {
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
         val versionName = packageInfo.versionName ?: getString(R.string.settings_category_data_version_unknown)

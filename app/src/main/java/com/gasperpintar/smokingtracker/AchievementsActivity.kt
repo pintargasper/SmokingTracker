@@ -4,10 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.gasperpintar.smokingtracker.adapter.pager.AchievementsPagerAdapter
+import com.gasperpintar.smokingtracker.adapter.Pager
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityAchievementsBinding
+import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementsFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -22,18 +24,35 @@ class AchievementsActivity : AppCompatActivity() {
         binding = ActivityAchievementsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        createPager()
+
+        binding.buttonBack.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun createPager() {
         val viewPager = binding.achievementsViewPager
         val tabLayout = binding.achievementsTabLayout
 
-        viewPager.adapter = AchievementsPagerAdapter(this)
+        val fragments = listOf(
+            { AchievementsFragment.newInstance(type = AchievementCategory.SMOKE_FREE_TIME) },
+            { AchievementsFragment.newInstance(type = AchievementCategory.CIGARETTES_AVOIDED) }
+        )
+
+        val tabTitles = listOf(
+            getString(R.string.achievements_smoke_free_time),
+            getString(R.string.achievements_cigarettes_avoided)
+        )
+
+        viewPager.adapter = Pager(
+            fragmentActivity = this,
+            fragmentCreator = fragments
+        )
         viewPager.isUserInputEnabled = true
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> getString(R.string.achievements_smoke_free_time)
-                1 -> getString(R.string.achievements_cigarettes_avoided)
-                else -> getString(R.string.achievements_smoke_free_time)
-            }
+            tab.text = tabTitles.getOrNull(position) ?: ""
         }.attach()
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -41,10 +60,6 @@ class AchievementsActivity : AppCompatActivity() {
                 tabLayout.getTabAt(position)?.select()
             }
         })
-
-        binding.buttonBack.setOnClickListener {
-            finish()
-        }
     }
 
     override fun attachBaseContext(context: Context) {

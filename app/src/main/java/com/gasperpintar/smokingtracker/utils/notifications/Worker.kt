@@ -10,8 +10,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.dao.AchievementDao
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
-import com.gasperpintar.smokingtracker.utils.Helper.getDisplayText
-import com.gasperpintar.smokingtracker.utils.Helper.toAchievementEntry
+import com.gasperpintar.smokingtracker.model.AchievementEntry
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.Locale
@@ -56,11 +55,11 @@ class Worker(
                     title = applicationContext.getString(R.string.notification_achievement_unlocked_title),
                     content = applicationContext.getString(
                         R.string.notification_achievement_unlocked_content,
-                        achievement.toAchievementEntry().getDisplayText(applicationContext)
+                        AchievementEntry.fromEntity(entity = achievement).getDisplayText(applicationContext)
                     ),
                     notificationId = notificationId
                 )
-                achievementsDao.update(achievementEntity = achievement.copy(notify = false))
+                achievementsDao.update(entity = achievement.copy(notify = false))
             }
         }
         return Result.success()

@@ -117,7 +117,7 @@ object Manager {
                 lent = lent,
                 createdAt = LocalDateTime.parse(createdAtString, dateFormatter)
             )
-            database.historyDao().insert(history = historyEntity)
+            database.historyDao().insert(entity = historyEntity)
         }
     }
 

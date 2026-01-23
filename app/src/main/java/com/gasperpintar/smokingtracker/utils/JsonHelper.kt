@@ -23,11 +23,12 @@ class JsonHelper(private val database: AppDatabase) {
         val existingSet = achievementsInDb.map {
             Triple(it.value, it.category, it.unit) to it.message
         }.toSet()
+
         val newAchievements = achievementsFromJson.filter {
-            val key = Triple(it.value, it.category, it.unit) to it.message
-            key !in existingSet
+            Triple(it.value, it.category, it.unit) to it.message !in existingSet
         }
-        val entities = newAchievements.map { Helper.run { it.toAchievementEntity() } }
+
+        val entities = newAchievements.map { TimeHelper.run { it.toEntity() } }
         if (entities.isNotEmpty()) {
             achievementDao.insertAll(entities)
         }

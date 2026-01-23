@@ -5,20 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.adapter.history.HistoryAdapter
+import com.gasperpintar.smokingtracker.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
+import com.gasperpintar.smokingtracker.model.HistoryEntry
 import com.gasperpintar.smokingtracker.model.HomeViewModel
 import com.gasperpintar.smokingtracker.ui.DialogManager
-import com.gasperpintar.smokingtracker.utils.Helper
-import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntry
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -31,11 +34,10 @@ import java.time.LocalDateTime
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private val binding: FragmentHomeBinding
-        get() = _binding!!
+    private val binding: FragmentHomeBinding get() = _binding!!
 
     private lateinit var database: Lazy<AppDatabase>
-    private lateinit var historyAdapter: HistoryAdapter
+    private lateinit var historyAdapter: Adapter<HistoryEntry>
     private lateinit var homeViewModel: HomeViewModel
 
     private var selectedDate: LocalDate = LocalDate.now()
@@ -52,7 +54,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         database = lazy { (requireActivity() as MainActivity).database }
-
         homeViewModel = HomeViewModel(database = database.value)
 
         setup()
@@ -89,37 +90,52 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        historyAdapter = HistoryAdapter(
-            onEditClick = { entry ->
-                DialogManager.showEditDialog(
-                    context = requireActivity(),
-                    layoutInflater = layoutInflater,
-                    database = database.value,
-                    lifecycleScope = lifecycleScope,
-                    entry = entry,
-                    refreshUI = {
-                        homeViewModel.resetAchievementsCache()
-                        updateLastEntry()
-                        refreshUI()
-                    }
-                )
+        historyAdapter = Adapter(
+            layoutId = R.layout.history_container,
+            onBind = { itemView, historyEntry ->
+                val timerLabel = itemView.findViewById<TextView>(R.id.timer_label)
+                val lentButton = itemView.findViewById<ImageButton>(R.id.lent)
+                val editButton = itemView.findViewById<ImageButton>(R.id.image_button_edit)
+                val deleteButton = itemView.findViewById<ImageButton>(R.id.delete)
+
+                timerLabel.text = historyEntry.timerLabel
+                lentButton.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
+
+                editButton.setOnClickListener {
+                    DialogManager.showEditDialog(
+                        context = requireActivity(),
+                        layoutInflater = layoutInflater,
+                        database = database.value,
+                        lifecycleScope = lifecycleScope,
+                        entry = historyEntry,
+                        refreshUI = {
+                            homeViewModel.resetAchievementsCache()
+                            updateLastEntry()
+                            refreshUI()
+                        }
+                    )
+                }
+
+                deleteButton.setOnClickListener {
+                    DialogManager.showDeleteDialog(
+                        context = requireActivity(),
+                        layoutInflater = layoutInflater,
+                        database = database.value,
+                        lifecycleScope = lifecycleScope,
+                        entry = historyEntry,
+                        refreshUI = {
+                            homeViewModel.resetAchievementsCache()
+                            updateLastEntry()
+                            refreshUI()
+                        }
+                    )
+                }
             },
-            onDeleteClick = { entry ->
-                DialogManager.showDeleteDialog(
-                    context = requireActivity(),
-                    layoutInflater = layoutInflater,
-                    database = database.value,
-                    lifecycleScope = lifecycleScope,
-                    entry = entry,
-                    refreshUI = {
-                        homeViewModel.resetAchievementsCache()
-                        updateLastEntry()
-                        refreshUI()
-                    }
-                )
+            diffCallback = object : DiffUtil.ItemCallback<HistoryEntry>() {
+                override fun areItemsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry) = oldItem.id == newItem.id
+                override fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry) = oldItem == newItem
             }
         )
-
         binding.recyclerviewHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerviewHistory.adapter = historyAdapter
     }
@@ -158,7 +174,7 @@ class HomeFragment : Fragment() {
         timerJob = null
     }
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint(value = ["DefaultLocale"])
     private fun updateTimerLabel() {
         val entry: HistoryEntity? = lastEntry
 
@@ -196,20 +212,22 @@ class HomeFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            homeViewModel.onLastEntryChanged(current = lastEntry?.toHistoryEntry())
+            homeViewModel.onLastEntryChanged(
+                current = lastEntry?.let { HistoryEntry.fromEntity(entity = it) }
+            )
         }
     }
 
     private suspend fun updateStatistics(date: LocalDate) {
-        val (startOfDay, endOfDay) = Helper.getDay(date)
+        val (startOfDay, endOfDay) = TimeHelper.getDay(date)
         val dailyCount: Int = database.value.historyDao()
             .getHistoryCountBetween(start = startOfDay, end = endOfDay)
 
-        val (startOfWeek, endOfWeek) = Helper.getWeek(date)
+        val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date)
         val weeklyCount: Int = database.value.historyDao()
             .getHistoryCountBetween(start = startOfWeek, end = endOfWeek)
 
-        val (startOfMonth, endOfMonth) = Helper.getMonth(date)
+        val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date)
         val monthlyCount: Int = database.value.historyDao()
             .getHistoryCountBetween(start = startOfMonth, end = endOfMonth)
 
@@ -219,12 +237,12 @@ class HomeFragment : Fragment() {
     }
 
     private suspend fun loadHistoryForDay(date: LocalDate) {
-        val (startOfDay, endOfDay) = Helper.getDay(date)
+        val (startOfDay, endOfDay) = TimeHelper.getDay(date)
 
         val entityList: List<HistoryEntity> =
             database.value.historyDao().getHistoryBetween(start = startOfDay, end = endOfDay)
 
-        val historyList = entityList.map { it.toHistoryEntry() }
+        val historyList: List<HistoryEntry> = entityList.map(transform = HistoryEntry::fromEntity)
 
         historyAdapter.submitList(historyList) {
             binding.recyclerviewHistory.scrollToPosition(0)

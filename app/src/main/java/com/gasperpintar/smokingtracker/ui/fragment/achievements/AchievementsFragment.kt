@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gasperpintar.smokingtracker.AchievementsActivity
-import com.gasperpintar.smokingtracker.adapter.achievements.AchievementsAdapter
+import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
@@ -22,7 +26,7 @@ class AchievementsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var database: Lazy<AppDatabase>
-    private lateinit var achievementsAdapter: AchievementsAdapter
+    private lateinit var adapter: Adapter<AchievementEntry>
     private lateinit var achievementType: AchievementCategory
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,19 +78,36 @@ class AchievementsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        achievementsAdapter = AchievementsAdapter { achievementEntry ->
-            DialogManager.showAchievementsDialog(
-                context = requireActivity(),
-                layoutInflater = layoutInflater,
-                entry = achievementEntry
-            )
-        }
+        val adapter = Adapter(
+            layoutId = R.layout.achievements_container,
+            onBind = { itemView, achievementEntry ->
+                val imageAchievement = itemView.findViewById<ImageView>(R.id.image_achievement)
+                val textAchievement = itemView.findViewById<TextView>(R.id.text_achievement)
+                val container = itemView.findViewById<View>(R.id.achievement_container)
+
+                imageAchievement.setImageResource(achievementEntry.image)
+                textAchievement.text = achievementEntry.getDisplayText(itemView.context)
+
+                container.setOnClickListener {
+                    DialogManager.showAchievementsDialog(
+                        context = requireActivity(),
+                        layoutInflater = layoutInflater,
+                        entry = achievementEntry
+                    )
+                }
+            },
+            diffCallback = object : DiffUtil.ItemCallback<AchievementEntry>() {
+                override fun areItemsTheSame(oldItem: AchievementEntry, newItem: AchievementEntry) = oldItem.id == newItem.id
+                override fun areContentsTheSame(oldItem: AchievementEntry, newItem: AchievementEntry) = oldItem == newItem
+            }
+        )
         binding.recyclerviewAchievements.layoutManager = GridLayoutManager(requireContext(), calculateGridSpanCount())
-        binding.recyclerviewAchievements.adapter = achievementsAdapter
+        binding.recyclerviewAchievements.adapter = adapter
+        this.adapter = adapter
     }
 
     private fun loadAchievements(achievementEntries: List<AchievementEntry>) {
-        achievementsAdapter.submitList(achievementEntries) {
+        adapter.submitList(achievementEntries) {
             binding.recyclerviewAchievements.scrollToPosition(0)
         }
     }
