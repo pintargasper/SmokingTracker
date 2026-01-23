@@ -52,8 +52,9 @@ class AchievementsFragment : Fragment() {
                     value = it.value,
                     message = it.message,
                     times = it.times,
-                    lastCompletedAt = it.lastCompletedAt,
+                    lastAchieved = it.lastAchieved,
                     reset = it.reset,
+                    notify = it.notify,
                     category = it.category,
                     unit = it.unit
                 )

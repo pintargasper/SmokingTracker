@@ -83,8 +83,9 @@ object Helper {
             value = value,
             message = message,
             times = times,
-            lastCompletedAt = lastCompletedAt,
+            lastAchieved = lastAchieved,
             reset = reset,
+            notify = notify,
             category = category,
             unit = unit
         )
@@ -97,8 +98,9 @@ object Helper {
             value = value,
             message = message,
             times = times,
-            lastCompletedAt = lastCompletedAt,
+            lastAchieved = lastAchieved,
             reset = reset,
+            notify = notify,
             category = category,
             unit = unit
         )

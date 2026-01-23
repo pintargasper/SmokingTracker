@@ -11,8 +11,9 @@ data class AchievementEntry(
     val value: Int,
     val message: String,
     val times: Long,
-    val lastCompletedAt: LocalDateTime?,
+    val lastAchieved: LocalDateTime?,
     val reset: Boolean,
+    val notify: Boolean,
     val category: AchievementCategory,
     val unit: AchievementUnit
 ): Identifiable

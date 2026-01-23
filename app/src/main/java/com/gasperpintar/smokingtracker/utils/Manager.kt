@@ -40,7 +40,7 @@ object Manager {
                     R.string.notification_download_content,
                     fileName
                 ),
-                notificationId = 1003,
+                notificationId = 1002,
                 database = database,
                 fileUri = fileUri
             )
@@ -60,7 +60,7 @@ object Manager {
                 context,
                 title = context.getString(R.string.notification_upload_title),
                 content = context.getString(R.string.notification_upload_content),
-                notificationId = 1004,
+                notificationId = 1002,
                 database = database
             )
         } catch (exception: Exception) {
@@ -69,7 +69,7 @@ object Manager {
                 context,
                 title = context.getString(R.string.notification_upload_failed_title),
                 content = context.getString(R.string.notification_upload_failed_content),
-                notificationId = 1005,
+                notificationId = 1002,
                 database = database
             )
         }

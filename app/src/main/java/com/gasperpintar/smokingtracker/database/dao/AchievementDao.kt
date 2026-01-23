@@ -16,17 +16,20 @@ interface AchievementDao {
         UPDATE achievements
         SET times = times + 1,
             reset = 0,
-            lastCompletedAt = CURRENT_TIMESTAMP
+            lastAchieved = CURRENT_TIMESTAMP
         WHERE id = :achievementId
         AND reset = 1
-    """)
+    """
+    )
     suspend fun incrementAchievementTimesSafe(
         achievementId: Long
     )
 
     @Query(value = """
         UPDATE achievements
-        SET reset = :state
+        SET 
+            reset = :state,
+            notify = :state
     """
     )
     suspend fun resetAllAchievements(state: Boolean)

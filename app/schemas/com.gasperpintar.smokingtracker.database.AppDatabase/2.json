@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "1072a83f8fd39695cf81c922a2e609b6",
+    "identityHash": "76c9537668bfa121a0acaaec24e370a5",
     "entities": [
       {
         "tableName": "achievements",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `image` INTEGER NOT NULL, `value` INTEGER NOT NULL, `message` TEXT NOT NULL, `times` INTEGER NOT NULL, `lastCompletedAt` TEXT, `reset` INTEGER NOT NULL, `category` TEXT NOT NULL, `unit` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `image` INTEGER NOT NULL, `value` INTEGER NOT NULL, `message` TEXT NOT NULL, `times` INTEGER NOT NULL, `lastAchieved` TEXT, `reset` INTEGER NOT NULL, `notify` INTEGER NOT NULL, `category` TEXT NOT NULL, `unit` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -39,13 +39,19 @@
             "notNull": true
           },
           {
-            "fieldPath": "lastCompletedAt",
-            "columnName": "lastCompletedAt",
+            "fieldPath": "lastAchieved",
+            "columnName": "lastAchieved",
             "affinity": "TEXT"
           },
           {
             "fieldPath": "reset",
             "columnName": "reset",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "notify",
+            "columnName": "notify",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -138,7 +144,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1072a83f8fd39695cf81c922a2e609b6')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '76c9537668bfa121a0acaaec24e370a5')"
     ]
   }
 }

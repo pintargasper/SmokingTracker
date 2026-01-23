@@ -37,7 +37,7 @@ object Notifications {
         context: Context,
         title: String,
         content: String,
-        notificationId: Int = 1,
+        notificationId: Int,
         fileUri: Uri? = null
     ) {
         val intent: Intent = if (fileUri != null) {
