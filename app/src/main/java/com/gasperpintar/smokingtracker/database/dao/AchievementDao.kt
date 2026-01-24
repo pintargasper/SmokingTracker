@@ -27,8 +27,8 @@ interface AchievementDao: Base<AchievementEntity> {
             notify = :state
     """
     )
-    suspend fun resetAllAchievements(state: Boolean)
+    suspend fun resetAll(state: Boolean)
 
     @Query(value = "SELECT * FROM achievements ORDER BY id ASC")
-    suspend fun getAllAchievements(): List<AchievementEntity>
+    suspend fun getAll(): List<AchievementEntity>
 }

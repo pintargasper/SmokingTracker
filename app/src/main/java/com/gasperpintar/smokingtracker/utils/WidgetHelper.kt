@@ -4,8 +4,8 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.provider.SmokingTrackerWidget
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 
 object WidgetHelper {
 
@@ -18,8 +18,8 @@ object WidgetHelper {
         context.sendBroadcast(intent)
     }
 
-    fun getString(context: Context, database: AppDatabase, resId: Int): String {
-        return LocalizationHelper.getLocalizedContext(context = context, database = database).getString(resId)
+    fun getString(context: Context, settingsRepository: SettingsRepository, resId: Int): String {
+        return LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository).getString(resId)
     }
 }
 

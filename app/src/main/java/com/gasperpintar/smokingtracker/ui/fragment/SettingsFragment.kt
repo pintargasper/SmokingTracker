@@ -17,9 +17,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.dao.SettingsDao
+import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
+import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.Manager
@@ -31,7 +33,10 @@ class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private val database by lazy { (requireActivity() as MainActivity).database }
+    private lateinit var database: AppDatabase
+    private lateinit var historyRepository: HistoryRepository
+    private lateinit var settingsRepository: SettingsRepository
+
     private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
     private var selectedFileUri: Uri? = null
     private var selectedFile: TextView? = null
@@ -43,6 +48,10 @@ class SettingsFragment : Fragment() {
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
+        database = (requireActivity() as MainActivity).database
+        historyRepository = HistoryRepository(historyDao = database.historyDao())
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+
         setupFilePicker()
         setup()
         setupAbout()
@@ -51,45 +60,44 @@ class SettingsFragment : Fragment() {
     }
 
     private fun setup() {
-        val settingsDao = database.settingsDao()
-
         lifecycleScope.launch {
-            val settings = settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
-
-            binding.languageServiceUrl.text = getLanguages()[settings.language]
-            binding.themeServiceUrl.text = getThemes()[settings.theme]
+            withSettings { settings ->
+                binding.languageServiceUrl.text = getLanguages()[settings.language]
+                binding.themeServiceUrl.text = getThemes()[settings.theme]
+            }
         }
 
         binding.themeLayout.setOnClickListener {
             lifecycleScope.launch {
-                val currentTheme = settingsDao.getSettings()?.theme ?: 0
-                DialogManager.showThemeDialog(
-                    context = requireActivity(),
-                    selectedTheme = currentTheme,
-                    onThemeSelected = { theme ->
-                        updateSettingsField(
-                            updateBlock = { it.copy(theme = theme) },
-                            recreateActivity = true
-                        )
-                    }
-                )
+                withSettings { settings ->
+                    DialogManager.showThemeDialog(
+                        context = requireActivity(),
+                        selectedTheme = settings.theme,
+                        onThemeSelected = { theme ->
+                            updateSettingsField(
+                                updateBlock = { it.copy(theme = theme) },
+                                recreateActivity = true
+                            )
+                        }
+                    )
+                }
             }
         }
 
         binding.languageLayout.setOnClickListener {
             lifecycleScope.launch {
-                val currentLanguage = settingsDao.getSettings()?.language ?: getDefaultLanguageIndex()
-
-                DialogManager.showLanguageDialog(
-                    context = requireActivity(),
-                    selectedLanguage = currentLanguage,
-                    onLanguageSelected = { language ->
-                        updateSettingsField(
-                            updateBlock = { it.copy(language = language) },
-                            recreateActivity = true
-                        )
-                    }
-                )
+                withSettings { settings ->
+                    DialogManager.showLanguageDialog(
+                        context = requireActivity(),
+                        selectedLanguage = settings.language,
+                        onLanguageSelected = { language ->
+                            updateSettingsField(
+                                updateBlock = { it.copy(language = language) },
+                                recreateActivity = true
+                            )
+                        }
+                    )
+                }
             }
         }
 
@@ -100,18 +108,23 @@ class SettingsFragment : Fragment() {
                     return@launch
                 }
 
-                val currentNotifications = settingsDao.getSettings()?.notifications ?: 0
-                DialogManager.showNotificationsDialog(
-                    context = requireActivity(),
-                    selectedNotificationOption = currentNotifications,
-                    onNotificationOptionSelected = { notification ->
-                        if (notification == 1 && !areNotificationsEnabled()) {
-                            openNotificationSettings()
-                            return@showNotificationsDialog
+                withSettings { settings ->
+                    DialogManager.showNotificationsDialog(
+                        context = requireActivity(),
+                        selectedNotificationOption = settings.notifications,
+                        onNotificationOptionSelected = { notification ->
+
+                            if (notification == 1 && !areNotificationsEnabled()) {
+                                openNotificationSettings()
+                                return@showNotificationsDialog
+                            }
+
+                            updateSettingsField(
+                                updateBlock = { it.copy(notifications = notification) }
+                            )
                         }
-                        updateSettingsField(updateBlock = { it.copy(notifications = notification) })
-                    }
-                )
+                    )
+                }
             }
         }
 
@@ -120,7 +133,8 @@ class SettingsFragment : Fragment() {
                 lifecycleScope.launch {
                     Manager.downloadFile(
                         context = requireActivity(),
-                        database = database
+                        historyRepository = historyRepository,
+                        settingsRepository = settingsRepository
                     )
                 }
             }
@@ -142,7 +156,8 @@ class SettingsFragment : Fragment() {
                             Manager.uploadFile(
                                 context = requireActivity(),
                                 fileUri = uri,
-                                database = database
+                                historyRepository = historyRepository,
+                                settingsRepository = settingsRepository
                             )
                             requireActivity().recreate()
                         }
@@ -159,12 +174,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun updateSettingsField(updateBlock: (SettingsEntity) -> SettingsEntity, recreateActivity: Boolean = false) {
-        val settingsDao = database.settingsDao()
         lifecycleScope.launch {
-            settingsDao.getSettings()?.let { currentSettings ->
-                settingsDao.update(entity = updateBlock(currentSettings))
-                if (recreateActivity) {
-                    requireActivity().recreate()
+            withSettings { currentSettings ->
+                val updatedSettings = updateBlock(currentSettings)
+                lifecycleScope.launch {
+                    settingsRepository.update(updatedSettings)
+                    if (recreateActivity) {
+                        requireActivity().recreate()
+                    }
                 }
             }
         }
@@ -174,17 +191,19 @@ class SettingsFragment : Fragment() {
         return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
     }
 
-    private suspend fun insertDefaultSettings(settingsDao: SettingsDao): SettingsEntity {
-        return SettingsEntity(
+    private suspend fun withSettings(block: (SettingsEntity) -> Unit) {
+        block(settingsRepository.get() ?: insertDefaultSettings())
+    }
+
+    private suspend fun insertDefaultSettings(): SettingsEntity {
+        val defaultSettings = SettingsEntity(
             id = 0L,
             theme = 0,
             language = getDefaultLanguageIndex(),
-            notifications = if (areNotificationsEnabled()) {
-                1
-            } else {
-                0
-            }
-        ).also { settingsDao.insert(entity = it) }
+            notifications = if (areNotificationsEnabled()) 1 else 0
+        )
+        settingsRepository.insert(defaultSettings)
+        return defaultSettings
     }
 
     private fun setupFilePicker() {

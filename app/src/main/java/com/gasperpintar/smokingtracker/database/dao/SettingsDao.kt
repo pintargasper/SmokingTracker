@@ -8,5 +8,5 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 interface SettingsDao: Base<SettingsEntity> {
 
     @Query(value = "SELECT * FROM settings LIMIT 1")
-    suspend fun getSettings(): SettingsEntity?
+    suspend fun get(): SettingsEntity?
 }

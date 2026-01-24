@@ -21,11 +21,10 @@ class AnalyticsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
         setup()
 
-        return root
+        return binding.root
     }
 
     private fun setup() {

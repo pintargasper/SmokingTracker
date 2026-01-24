@@ -16,6 +16,7 @@ import com.gasperpintar.smokingtracker.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import kotlinx.coroutines.launch
@@ -25,12 +26,16 @@ class AchievementsFragment : Fragment() {
     private var _binding: FragmentAchievementsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: Lazy<AppDatabase>
+    private lateinit var database: AppDatabase
+    private lateinit var achievementRepository: AchievementRepository
     private lateinit var adapter: Adapter<AchievementEntry>
     private lateinit var achievementType: AchievementCategory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        database = (requireActivity() as AchievementsActivity).database
+        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         val typeOrdinal = arguments?.getInt(ARG_ACHIEVEMENT_TYPE)
         achievementType = typeOrdinal?.let { AchievementCategory.entries[it] } ?: AchievementCategory.SMOKE_FREE_TIME
     }
@@ -43,13 +48,10 @@ class AchievementsFragment : Fragment() {
         _binding = FragmentAchievementsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        database = lazy { (requireActivity() as AchievementsActivity).database }
-
         setupRecyclerView()
 
         lifecycleScope.launch {
-            val achievementDao = database.value.achievementDao()
-            val achievements = achievementDao.getAllAchievements().map {
+            val achievements = achievementRepository.getAll().map {
                 AchievementEntry(
                     id = it.id,
                     image = it.image,

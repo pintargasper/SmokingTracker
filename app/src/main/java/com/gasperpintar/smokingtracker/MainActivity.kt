@@ -30,13 +30,18 @@ import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import androidx.core.view.size
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var permissionsHelper: Permissions
     lateinit var database: AppDatabase
+    private lateinit var achievementRepository: AchievementRepository
+    private lateinit var settingsRepository: SettingsRepository
+
+    lateinit var permissionsHelper: Permissions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         permissionsHelper = Permissions(activity = this@MainActivity)
 
         lifecycleScope.launch {
-            val settings: SettingsEntity? = database.settingsDao().getSettings()
+            val settings: SettingsEntity? = settingsRepository.get()
 
             val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
             val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
@@ -60,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             val lastVersionName = sharedPreferences.getString("last_version_name", null)
 
             if (versionName != lastVersionName) {
-                JsonHelper(database).initializeAchievementsIfNeeded(this@MainActivity)
+                JsonHelper(achievementRepository = achievementRepository).initializeAchievementsIfNeeded(context = this@MainActivity)
                 sharedPreferences.edit { putString("last_version_name", versionName) }
             }
 
@@ -145,7 +150,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(context: Context) {
-        database = Provider.getDatabase(context.applicationContext)
-        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, database = database))
+        database = Provider.getDatabase(context = context.applicationContext)
+        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository))
     }
 }

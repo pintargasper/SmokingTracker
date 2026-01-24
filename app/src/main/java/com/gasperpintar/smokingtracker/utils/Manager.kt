@@ -8,9 +8,10 @@ import android.os.Environment
 import android.provider.MediaStore
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -26,12 +27,13 @@ object Manager {
 
     suspend fun downloadFile(
         context: Context,
-        database: AppDatabase,
+        historyRepository: HistoryRepository,
+        settingsRepository: SettingsRepository,
         fileName: String = "st_data.xlsx"
     ): Uri? = withContext(context = Dispatchers.IO) {
         XSSFWorkbook().use { workbook ->
-            createHistorySheet(workbook, historyList = database.historyDao().getHistory())
-            createSettingsSheet(workbook, settings = database.settingsDao().getSettings())
+            createHistorySheet(workbook, historyList = historyRepository.getAll())
+            createSettingsSheet(workbook, settings = settingsRepository.get())
             val fileUri = saveWorkbookToFile(context, workbook, fileName)
             sendNotification(
                 context,
@@ -41,19 +43,23 @@ object Manager {
                     fileName
                 ),
                 notificationId = 1002,
-                database = database,
+                settingsRepository = settingsRepository,
                 fileUri = fileUri
             )
             return@withContext fileUri
         }
     }
 
-    suspend fun uploadFile(context: Context, fileUri: Uri, database: AppDatabase) = withContext(context = Dispatchers.IO) {
+    suspend fun uploadFile(context: Context, 
+                           fileUri: Uri, 
+                           historyRepository: HistoryRepository,
+                           settingsRepository: SettingsRepository
+    ) = withContext(context = Dispatchers.IO) {
         try {
             context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
                 XSSFWorkbook(inputStream).use { workbook ->
-                    importHistorySheet(workbook, database)
-                    importSettingsSheet(workbook, database)
+                    importHistorySheet(workbook, historyRepository = historyRepository)
+                    importSettingsSheet(workbook, settingsRepository = settingsRepository)
                 }
             }
             sendNotification(
@@ -61,7 +67,7 @@ object Manager {
                 title = context.getString(R.string.notification_upload_title),
                 content = context.getString(R.string.notification_upload_content),
                 notificationId = 1002,
-                database = database
+                settingsRepository = settingsRepository
             )
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -70,7 +76,7 @@ object Manager {
                 title = context.getString(R.string.notification_upload_failed_title),
                 content = context.getString(R.string.notification_upload_failed_content),
                 notificationId = 1002,
-                database = database
+                settingsRepository = settingsRepository
             )
         }
     }
@@ -103,9 +109,8 @@ object Manager {
         }
     }
 
-    private suspend fun importHistorySheet(workbook: XSSFWorkbook, database: AppDatabase) {
-        database.historyDao().deleteAll()
-        database.historyDao().resetAutoIncrement()
+    private suspend fun importHistorySheet(workbook: XSSFWorkbook, historyRepository: HistoryRepository) {
+        historyRepository.deleteAll()
         workbook.getSheet("History")?.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
@@ -117,11 +122,11 @@ object Manager {
                 lent = lent,
                 createdAt = LocalDateTime.parse(createdAtString, dateFormatter)
             )
-            database.historyDao().insert(entity = historyEntity)
+            historyRepository.insert(entry = historyEntity)
         }
     }
 
-    private suspend fun importSettingsSheet(workbook: XSSFWorkbook, database: AppDatabase) {
+    private suspend fun importSettingsSheet(workbook: XSSFWorkbook, settingsRepository: SettingsRepository) {
         workbook.getSheet("Settings")?.getRow(1)?.let { row ->
             val settingsEntity = SettingsEntity(
                 id = 0,
@@ -129,9 +134,7 @@ object Manager {
                 language = row.getCell(1)?.numericCellValue?.toInt() ?: 0,
                 notifications = row.getCell(2)?.numericCellValue?.toInt() ?: 0
             )
-            database.settingsDao().getSettings()?.let {
-                database.settingsDao().update(settingsEntity)
-            } ?: database.settingsDao().insert(settingsEntity)
+            settingsRepository.upsert(settingsEntity)
         }
     }
 
@@ -167,13 +170,13 @@ object Manager {
 
     private suspend fun sendNotification(
         context: Context,
-        database: AppDatabase,
+        settingsRepository: SettingsRepository,
         title: String,
         content: String,
         notificationId: Int,
         fileUri: Uri? = null
     ) {
-        if (context !is MainActivity || database.settingsDao().getSettings()?.notifications != 1) {
+        if (context !is MainActivity || settingsRepository.get()?.notifications != 1) {
             return
         }
 

@@ -2,9 +2,9 @@ package com.gasperpintar.smokingtracker.utils
 
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.AchievementJsonEntry
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementUnit
@@ -12,11 +12,10 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 
-class JsonHelper(private val database: AppDatabase) {
+class JsonHelper(private val achievementRepository: AchievementRepository) {
 
     suspend fun initializeAchievementsIfNeeded(context: Context) {
-        val achievementDao = database.achievementDao()
-        val achievementsInDb = achievementDao.getAllAchievements()
+        val achievementsInDb = achievementRepository.getAll()
         val achievementsFromJson = loadAchievementsFromJson(context, AchievementCategory.SMOKE_FREE_TIME) +
                 loadAchievementsFromJson(context, AchievementCategory.CIGARETTES_AVOIDED)
 
@@ -30,7 +29,7 @@ class JsonHelper(private val database: AppDatabase) {
 
         val entities = newAchievements.map { TimeHelper.run { it.toEntity() } }
         if (entities.isNotEmpty()) {
-            achievementDao.insertAll(entities)
+            achievementRepository.insert(entries = entities)
         }
     }
 

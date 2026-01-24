@@ -9,8 +9,10 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 import java.time.ZoneId
@@ -19,6 +21,9 @@ import java.util.Calendar
 class CalculatorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCalculatorBinding
+
+    private lateinit var database: AppDatabase
+    private lateinit var settingsRepository: SettingsRepository
 
     private var startDate: Calendar? = null
     private var endDate: Calendar? = null
@@ -170,6 +175,8 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(context: Context) {
-        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, database = Provider.getDatabase(context.applicationContext)))
+        database = Provider.getDatabase(context = context.applicationContext)
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository))
     }
 }

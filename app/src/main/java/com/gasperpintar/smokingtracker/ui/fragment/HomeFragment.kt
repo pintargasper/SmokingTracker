@@ -18,8 +18,10 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
 import com.gasperpintar.smokingtracker.model.HistoryEntry
-import com.gasperpintar.smokingtracker.model.HomeViewModel
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
+import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
@@ -36,9 +38,11 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding: FragmentHomeBinding get() = _binding!!
 
-    private lateinit var database: Lazy<AppDatabase>
+    private lateinit var database: AppDatabase
+    private lateinit var achievementRepository: AchievementRepository
+    private lateinit var historyRepository: HistoryRepository
+    private lateinit var achievementEvaluator: AchievementEvaluator
     private lateinit var historyAdapter: Adapter<HistoryEntry>
-    private lateinit var homeViewModel: HomeViewModel
 
     private var selectedDate: LocalDate = LocalDate.now()
     private var lastEntry: HistoryEntity? = null
@@ -53,8 +57,10 @@ class HomeFragment : Fragment() {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        database = lazy { (requireActivity() as MainActivity).database }
-        homeViewModel = HomeViewModel(database = database.value)
+        database = (requireActivity() as MainActivity).database
+        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
+        historyRepository = HistoryRepository(historyDao = database.historyDao())
+        achievementEvaluator = AchievementEvaluator(achievementRepository = achievementRepository)
 
         setup()
         setupRecyclerView()
@@ -73,10 +79,9 @@ class HomeFragment : Fragment() {
                         createdAt = LocalDateTime.now()
                     )
 
-                    database.value.achievementDao().resetAllAchievements(state = true)
-                    database.value.historyDao().insert(entity = entry)
-
-                    homeViewModel.resetAchievementsCache()
+                    achievementRepository.resetAll(state = true)
+                    historyRepository.insert(entry = entry)
+                    resetAchievementsCache()
                     updateLastEntry()
                     refreshUI()
                 }
@@ -117,9 +122,9 @@ class HomeFragment : Fragment() {
                                 createdAt = newDateTime,
                                 isLent = isLent
                             )
-                            database.value.achievementDao().resetAllAchievements(state = false)
-                            database.value.historyDao().update(entity = updatedEntry.toEntity())
-                            homeViewModel.resetAchievementsCache()
+                            achievementRepository.resetAll(state = false)
+                            historyRepository.update(entry = updatedEntry.toEntity())
+                            resetAchievementsCache()
                             updateLastEntry()
                             refreshUI()
                         }
@@ -129,9 +134,9 @@ class HomeFragment : Fragment() {
                 deleteButton.setOnClickListener {
                     DialogManager.showDeleteDialog(context = requireActivity()) {
                         lifecycleScope.launch {
-                            database.value.achievementDao().resetAllAchievements(state = false)
-                            database.value.historyDao().delete(entity = historyEntry.toEntity())
-                            homeViewModel.resetAchievementsCache()
+                            achievementRepository.resetAll(state = false)
+                            historyRepository.delete(entry = historyEntry.toEntity())
+                            resetAchievementsCache()
                             updateLastEntry()
                             refreshUI()
                         }
@@ -161,7 +166,7 @@ class HomeFragment : Fragment() {
 
     private fun updateLastEntry() {
         lifecycleScope.launch {
-            lastEntry = database.value.historyDao().getLastHistoryEntry()
+            lastEntry = historyRepository.getLast()
             updateTimerLabel()
         }
     }
@@ -219,7 +224,7 @@ class HomeFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            homeViewModel.onLastEntryChanged(
+            onLastEntryChanged(
                 current = lastEntry?.let { HistoryEntry.fromEntity(entity = it) }
             )
         }
@@ -227,16 +232,12 @@ class HomeFragment : Fragment() {
 
     private suspend fun updateStatistics(date: LocalDate) {
         val (startOfDay, endOfDay) = TimeHelper.getDay(date)
-        val dailyCount: Int = database.value.historyDao()
-            .getHistoryCountBetween(start = startOfDay, end = endOfDay)
-
+        val dailyCount: Int = historyRepository.getCountBetween(start = startOfDay, end = endOfDay)
         val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date)
-        val weeklyCount: Int = database.value.historyDao()
-            .getHistoryCountBetween(start = startOfWeek, end = endOfWeek)
+        val weeklyCount: Int = historyRepository.getCountBetween(start = startOfWeek, end = endOfWeek)
 
         val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date)
-        val monthlyCount: Int = database.value.historyDao()
-            .getHistoryCountBetween(start = startOfMonth, end = endOfMonth)
+        val monthlyCount: Int = historyRepository.getCountBetween(start = startOfMonth, end = endOfMonth)
 
         binding.dailyValue.text = dailyCount.toString()
         binding.weeklyValue.text = weeklyCount.toString()
@@ -246,14 +247,23 @@ class HomeFragment : Fragment() {
     private suspend fun loadHistoryForDay(date: LocalDate) {
         val (startOfDay, endOfDay) = TimeHelper.getDay(date)
 
-        val entityList: List<HistoryEntity> =
-            database.value.historyDao().getHistoryBetween(start = startOfDay, end = endOfDay)
-
+        val entityList: List<HistoryEntity> = historyRepository.getBetween(start = startOfDay, end = endOfDay)
         val historyList: List<HistoryEntry> = entityList.map(transform = HistoryEntry::fromEntity)
 
         historyAdapter.submitList(historyList) {
             binding.recyclerviewHistory.scrollToPosition(0)
         }
+    }
+
+    suspend fun onLastEntryChanged(current: HistoryEntry?) {
+        achievementEvaluator.evaluate(
+            lastSmokeTime = current!!.createdAt,
+            now = LocalDateTime.now()
+        )
+    }
+
+    fun resetAchievementsCache() {
+        achievementEvaluator.reset()
     }
 
     override fun onResume() {

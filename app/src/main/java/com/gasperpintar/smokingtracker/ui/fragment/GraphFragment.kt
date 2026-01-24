@@ -12,6 +12,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
 import com.gasperpintar.smokingtracker.model.GraphEntry
+import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -24,7 +25,9 @@ class GraphFragment : Fragment() {
     private var _binding: FragmentGraphBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: Lazy<AppDatabase>
+    private lateinit var database: AppDatabase
+    private lateinit var historyRepository: HistoryRepository
+
     private lateinit var selectedDate: LocalDate
 
     override fun onCreateView(
@@ -34,15 +37,16 @@ class GraphFragment : Fragment() {
     ): View {
 
         _binding = FragmentGraphBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        database = lazy { (requireActivity() as MainActivity).database }
+        database = (requireActivity() as MainActivity).database
+        historyRepository = HistoryRepository(historyDao = database.historyDao())
+
         selectedDate = LocalDate.now()
 
         setup()
         loadGraphs()
 
-        return root
+        return binding.root
     }
 
     private fun setup() {
@@ -169,7 +173,7 @@ class GraphFragment : Fragment() {
         }
         currentDateTextView.text = labelFormatter(startDate, endDate)
 
-        val historyList = database.value.historyDao().getHistoryBetween(startDateTime, endDateTime)
+        val historyList = historyRepository.getBetween(startDateTime, endDateTime)
 
         val entries: List<GraphEntry> = when (interval) {
 

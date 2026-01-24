@@ -1,24 +1,18 @@
 package com.gasperpintar.smokingtracker.ui.fragment.achievements
 
-import com.gasperpintar.smokingtracker.database.dao.AchievementDao
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import java.time.Duration
 import java.time.LocalDateTime
 
-class AchievementEvaluator(
-    private val achievementDao: AchievementDao
-) {
+class AchievementEvaluator(private val achievementRepository: AchievementRepository) {
 
     private val cachedAchievements = mutableSetOf<AchievementEntity>()
 
-    suspend fun evaluate(
-        lastSmokeTime: LocalDateTime,
-        now: LocalDateTime
-    ) {
-
+    suspend fun evaluate(lastSmokeTime: LocalDateTime, now: LocalDateTime) {
         if (cachedAchievements.isEmpty()) {
-            val achievements: List<AchievementEntity> = achievementDao.getAllAchievements()
+            val achievements: List<AchievementEntity> = achievementRepository.getAll()
             achievements.forEach { achievement ->
                 cachedAchievements.add(achievement)
             }
@@ -82,9 +76,6 @@ class AchievementEvaluator(
         if (!achievement.reset) {
             return
         }
-
-        achievementDao.incrementAchievementTimesSafe(
-            achievementId = achievement.id
-        )
+        achievementRepository.incrementAchievementTimes(achievementId = achievement.id)
     }
 }

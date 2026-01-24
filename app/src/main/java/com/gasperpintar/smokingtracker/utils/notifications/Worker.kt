@@ -27,8 +27,8 @@ class Worker(
         val historyDao: HistoryDao = database.historyDao()
         val achievementsDao: AchievementDao = database.achievementDao()
 
-        val lastHistory = historyDao.getLastHistoryEntry()
-        val achievements = achievementsDao.getAllAchievements()
+        val lastHistory = historyDao.getLast()
+        val achievements = achievementsDao.getAll()
 
         val totalSeconds = lastHistory?.let { Duration.between(it.createdAt, LocalDateTime.now()).seconds } ?: 0
 

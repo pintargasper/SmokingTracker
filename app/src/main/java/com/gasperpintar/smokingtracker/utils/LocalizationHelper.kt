@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.AppDatabase
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -14,8 +14,8 @@ import java.util.Locale
 
 object LocalizationHelper {
 
-    fun getLocalizedContext(context: Context, database: AppDatabase): Context {
-        val settings = runBlocking { database.settingsDao().getSettings() }
+    fun getLocalizedContext(context: Context, settingsRepository: SettingsRepository): Context {
+        val settings = runBlocking { settingsRepository.get() }
         val languageId = settings?.language ?: 0
         val supportedLanguages = context.resources.getStringArray(R.array.language_values)
         val selectedLanguage = supportedLanguages.getOrNull(index = languageId) ?: "system"
