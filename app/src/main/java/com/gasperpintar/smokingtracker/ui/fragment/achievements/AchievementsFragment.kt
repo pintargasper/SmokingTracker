@@ -17,7 +17,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.ui.DialogManager
+import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import kotlinx.coroutines.launch
 
 class AchievementsFragment : Fragment() {
@@ -91,7 +91,6 @@ class AchievementsFragment : Fragment() {
                 container.setOnClickListener {
                     DialogManager.showAchievementsDialog(
                         context = requireActivity(),
-                        layoutInflater = layoutInflater,
                         entry = achievementEntry
                     )
                 }

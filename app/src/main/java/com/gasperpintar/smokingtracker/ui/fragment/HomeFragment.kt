@@ -19,7 +19,7 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import com.gasperpintar.smokingtracker.model.HomeViewModel
-import com.gasperpintar.smokingtracker.ui.DialogManager
+import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
@@ -65,17 +65,22 @@ class HomeFragment : Fragment() {
 
     private fun setup() {
         binding.buttonAddEntry.setOnClickListener {
-            DialogManager.showInsertDialog(
-                context = requireActivity(),
-                layoutInflater = layoutInflater,
-                database = database.value,
-                lifecycleScope = lifecycleScope,
-                refreshUI = {
+            DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
+                lifecycleScope.launch {
+                    val entry = HistoryEntity(
+                        id = 0,
+                        lent = if (isLent) 1 else 0,
+                        createdAt = LocalDateTime.now()
+                    )
+
+                    database.value.achievementDao().resetAllAchievements(state = true)
+                    database.value.historyDao().insert(entity = entry)
+
                     homeViewModel.resetAchievementsCache()
                     updateLastEntry()
                     refreshUI()
                 }
-            )
+            }
         }
 
         binding.previousDay.setOnClickListener {
@@ -104,31 +109,33 @@ class HomeFragment : Fragment() {
                 editButton.setOnClickListener {
                     DialogManager.showEditDialog(
                         context = requireActivity(),
-                        layoutInflater = layoutInflater,
-                        database = database.value,
-                        lifecycleScope = lifecycleScope,
-                        entry = historyEntry,
-                        refreshUI = {
+                        entry = historyEntry
+                    ) { newDateTime, isLent ->
+
+                        lifecycleScope.launch {
+                            val updatedEntry = historyEntry.copy(
+                                createdAt = newDateTime,
+                                isLent = isLent
+                            )
+                            database.value.achievementDao().resetAllAchievements(state = false)
+                            database.value.historyDao().update(entity = updatedEntry.toEntity())
                             homeViewModel.resetAchievementsCache()
                             updateLastEntry()
                             refreshUI()
                         }
-                    )
+                    }
                 }
 
                 deleteButton.setOnClickListener {
-                    DialogManager.showDeleteDialog(
-                        context = requireActivity(),
-                        layoutInflater = layoutInflater,
-                        database = database.value,
-                        lifecycleScope = lifecycleScope,
-                        entry = historyEntry,
-                        refreshUI = {
+                    DialogManager.showDeleteDialog(context = requireActivity()) {
+                        lifecycleScope.launch {
+                            database.value.achievementDao().resetAllAchievements(state = false)
+                            database.value.historyDao().delete(entity = historyEntry.toEntity())
                             homeViewModel.resetAchievementsCache()
                             updateLastEntry()
                             refreshUI()
                         }
-                    )
+                    }
                 }
             },
             diffCallback = object : DiffUtil.ItemCallback<HistoryEntry>() {
