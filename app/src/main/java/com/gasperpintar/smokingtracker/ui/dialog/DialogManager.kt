@@ -49,6 +49,7 @@ object DialogManager {
                 val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
 
                 lentCheckbox.isChecked = entry.isLent
+
                 timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
 
                 entry.createdAt.let { dateTime ->
@@ -63,7 +64,8 @@ object DialogManager {
                         datePicker.month + 1,
                         datePicker.dayOfMonth,
                         timePicker.hour,
-                        timePicker.minute
+                        timePicker.minute,
+                        LocalDateTime.now().second
                     )
                     onConfirm(selectedDateTime, lentCheckbox.isChecked)
                     dialog.dismiss()

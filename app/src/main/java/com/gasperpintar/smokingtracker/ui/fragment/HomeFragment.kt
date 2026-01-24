@@ -202,47 +202,22 @@ class HomeFragment : Fragment() {
         timerJob = null
     }
 
-    @SuppressLint(value = ["DefaultLocale"])
+    @SuppressLint("DefaultLocale")
     private fun updateTimerLabel() {
         val entry: HistoryEntity? = lastEntry
 
-        val text: String = entry?.createdAt?.let { createdAt ->
-            val duration: Duration = Duration.between(createdAt, LocalDateTime.now())
-            val totalSeconds: Long = duration.seconds
-
-            val days: Long = totalSeconds / 86400
-            val hours: Long = (totalSeconds % 86400) / 3600
-            val minutes: Long = (totalSeconds % 3600) / 60
-            val seconds: Long = totalSeconds % 60
-
-            val parts: MutableList<String> = mutableListOf()
-
-            if (days > 0) {
-                parts.add("$days${getString(R.string.home_timer_day)}")
-            }
-
-            if (hours > 0) {
-                parts.add("$hours${getString(R.string.home_timer_hour)}")
-            }
-
-            if (minutes > 0) {
-                parts.add("$minutes${getString(R.string.home_timer_minute)}")
-            }
-
-            parts.add("$seconds${getString(R.string.home_timer_second)}")
-            parts.joinToString(" ")
-        } ?: "0${getString(R.string.home_timer_second)}"
-
-        binding.timerLabel.text = text
-
-        if (lastEntry == null) {
-            return
+        val duration = entry?.createdAt?.let { createdAt ->
+            Duration.between(createdAt, LocalDateTime.now())
         }
 
-        lifecycleScope.launch {
-            onLastEntryChanged(
-                current = lastEntry?.let { HistoryEntry.fromEntity(entity = it) }
-            )
+        binding.timerLabel.text = TimeHelper.formatDuration(resources = resources, duration = duration)
+
+        lastEntry?.let {
+            lifecycleScope.launch {
+                onLastEntryChanged(
+                    current = HistoryEntry.fromEntity(entity = it)
+                )
+            }
         }
     }
 

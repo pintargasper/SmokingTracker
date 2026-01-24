@@ -138,7 +138,7 @@
     <string name="month_november">November</string>
     <string name="month_december">December</string>
 
-    <string name="notification_title">Time for break</string>
+    <string name="notification_title">Your progress reminder</string>
     <string name="notification_content">It\'s been %1$s since your last cigarette</string>
     <string name="notification_download_title">Download completed</string>
     <string name="notification_download_content">File %1$s was successfully downloaded</string>

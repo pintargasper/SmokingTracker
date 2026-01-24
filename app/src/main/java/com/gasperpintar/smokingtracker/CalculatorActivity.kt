@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.ZoneId
 import java.util.Calendar
 
@@ -24,6 +25,7 @@ class CalculatorActivity : AppCompatActivity() {
     private var endDate: Calendar? = null
 
     companion object {
+
         private const val TIME_PER_CIGARETTE_MINUTES: Int = 5
         private const val MILLIS_IN_DAY: Long = 1000L * 60L * 60L * 24L
     }
@@ -136,7 +138,7 @@ class CalculatorActivity : AppCompatActivity() {
             totalTimeMinutes = totalTimeMinutes,
             totalCigarettes = totalCigarettes,
             currencyUnit = getString(R.string.calculator_result_valute_unit),
-            formatTime = { minutes -> formatTime(totalMinutes = minutes) }
+            formatTime = { minutes -> TimeHelper.formatTime(resources = resources, totalMinutes = minutes) }
         )
     }
 
@@ -171,29 +173,5 @@ class CalculatorActivity : AppCompatActivity() {
     private fun clearEndDate() {
         endDate = null
         binding.inputEndDate.setText("")
-    }
-
-    private fun formatTime(
-        totalMinutes: Int
-    ): String {
-        val hours: Int = totalMinutes / 60
-        val minutes: Int = totalMinutes % 60
-
-        return listOfNotNull(
-            if (hours > 0) {
-                resources.getQuantityString(
-                    R.plurals.time_hours,
-                    hours,
-                    hours
-                )
-            } else {
-                null
-            },
-            resources.getQuantityString(
-                R.plurals.time_minutes,
-                minutes,
-                minutes
-            )
-        ).joinToString(" ")
     }
 }
