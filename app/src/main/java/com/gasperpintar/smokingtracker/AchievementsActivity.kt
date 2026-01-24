@@ -21,7 +21,9 @@ class AchievementsActivity : AppCompatActivity() {
     lateinit var database: AppDatabase
     private lateinit var settingsRepository: SettingsRepository
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) {
         super.onCreate(savedInstanceState)
         binding = ActivityAchievementsBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -31,6 +33,14 @@ class AchievementsActivity : AppCompatActivity() {
         binding.buttonBack.setOnClickListener {
             finish()
         }
+    }
+
+    override fun attachBaseContext(
+        context: Context
+    ) {
+        database = Provider.getDatabase(context = context.applicationContext)
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository))
     }
 
     private fun createPager() {
@@ -62,11 +72,5 @@ class AchievementsActivity : AppCompatActivity() {
                 tabLayout.getTabAt(position)?.select()
             }
         })
-    }
-
-    override fun attachBaseContext(context: Context) {
-        database = Provider.getDatabase(context = context.applicationContext)
-        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository))
     }
 }

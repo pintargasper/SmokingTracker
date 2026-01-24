@@ -13,7 +13,9 @@ class Pager(
         return fragmentCreator.size
     }
 
-    override fun createFragment(position: Int): Fragment {
+    override fun createFragment(
+        position: Int
+    ): Fragment {
         return fragmentCreator.getOrElse(index = position) { fragmentCreator.first() }()
     }
 }

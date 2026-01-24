@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "history")
 data class HistoryEntity(
+
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val lent: Int,

@@ -30,7 +30,6 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
     AchievementEnumConverter::class
 ])
 abstract class AppDatabase : RoomDatabase() {
-
     abstract fun achievementDao(): AchievementDao
     abstract fun historyDao(): HistoryDao
     abstract fun settingsDao(): SettingsDao

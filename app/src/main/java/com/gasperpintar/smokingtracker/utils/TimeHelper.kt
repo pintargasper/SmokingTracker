@@ -7,23 +7,36 @@ import java.time.LocalTime
 
 object TimeHelper {
 
-    fun getDay(date: LocalDate): Pair<LocalDateTime, LocalDateTime> {
+    fun getDay(
+        date: LocalDate
+    ): Pair<LocalDateTime, LocalDateTime> {
         return date.atStartOfDay() to date.atTime(LocalTime.MAX)
     }
 
-    fun getWeek(date: LocalDate): Pair<LocalDateTime, LocalDateTime> {
-        return date.with(DayOfWeek.MONDAY).atStartOfDay() to date.with(DayOfWeek.MONDAY).plusDays(6).atTime(LocalTime.MAX)
+    fun getWeek(
+        date: LocalDate
+    ): Pair<LocalDateTime, LocalDateTime> {
+        return date.with(DayOfWeek.MONDAY).atStartOfDay() to
+                date.with(DayOfWeek.MONDAY).plusDays(6).atTime(LocalTime.MAX)
     }
 
-    fun getMonth(date: LocalDate): Pair<LocalDateTime, LocalDateTime> {
-        return date.withDayOfMonth(1).atStartOfDay() to date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX)
+    fun getMonth(
+        date: LocalDate
+    ): Pair<LocalDateTime, LocalDateTime> {
+        return date.withDayOfMonth(1).atStartOfDay() to
+                date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX)
     }
 
-    fun getYear(date: LocalDate): Pair<LocalDateTime, LocalDateTime> {
-        return date.withDayOfYear(1).atStartOfDay() to date.withDayOfYear(date.lengthOfYear()).atTime(LocalTime.MAX)
+    fun getYear(
+        date: LocalDate
+    ): Pair<LocalDateTime, LocalDateTime> {
+        return date.withDayOfYear(1).atStartOfDay() to
+                date.withDayOfYear(date.lengthOfYear()).atTime(LocalTime.MAX)
     }
 
-    fun getEndOfDay(date: LocalDate): LocalDateTime {
+    fun getEndOfDay(
+        date: LocalDate
+    ): LocalDateTime {
         return date.atTime(LocalTime.MAX)
     }
 

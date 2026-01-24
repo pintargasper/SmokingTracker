@@ -9,7 +9,9 @@ import com.gasperpintar.smokingtracker.repository.SettingsRepository
 
 object WidgetHelper {
 
-    fun updateWidget(context: Context) {
+    fun updateWidget(
+        context: Context
+    ) {
         val intent = Intent(context, SmokingTrackerWidget::class.java)
         intent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
         val ids = AppWidgetManager.getInstance(context)
@@ -18,8 +20,12 @@ object WidgetHelper {
         context.sendBroadcast(intent)
     }
 
-    fun getString(context: Context, settingsRepository: SettingsRepository, resId: Int): String {
-        return LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository).getString(resId)
+    fun getString(
+        context: Context,
+        settingsRepository: SettingsRepository,
+        resourceId: Int
+    ): String {
+        return LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository).getString(resourceId)
     }
 }
 

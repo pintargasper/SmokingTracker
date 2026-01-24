@@ -1,7 +1,9 @@
 package com.gasperpintar.smokingtracker.ui.dialog
 
+import android.annotation.SuppressLint
 import android.text.format.DateFormat
 import android.widget.Button
+import android.widget.CalendarView
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.ImageView
@@ -12,6 +14,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import java.time.LocalDateTime
+import java.util.Calendar
 
 object DialogManager {
 
@@ -102,7 +105,9 @@ object DialogManager {
                 checkboxLightTheme.isChecked = selectedTheme == 1
                 checkboxDarkTheme.isChecked = selectedTheme == 2
 
-                fun selectAndClose(theme: Int) {
+                fun selectAndClose(
+                    theme: Int
+                ) {
                     onThemeSelected(theme)
                     this.dialog.dismiss()
                 }
@@ -129,7 +134,9 @@ object DialogManager {
                 checkboxEnglish.isChecked = selectedLanguage == 1
                 checkboxSlovenian.isChecked = selectedLanguage == 2
 
-                fun selectAndClose(language: Int) {
+                fun selectAndClose(
+                    language: Int
+                ) {
                     onLanguageSelected(language)
                     this.dialog.dismiss()
                 }
@@ -234,6 +241,65 @@ object DialogManager {
                 achievementImage.setImageResource(entry.image)
                 achievementTitle.text = entry.getDisplayText(context)
                 achievementMessage.text = entry.message
+            }
+        }
+        dialogInstance.show()
+    }
+
+    fun showDatePickerDialog(
+        context: FragmentActivity,
+        onDateSelected: (Calendar) -> Unit
+    ) {
+        val selectedDate = Calendar.getInstance()
+        val dialogInstance = object : BaseDialog(context, R.layout.dialog_date_picker) {
+            override fun setup() {
+                val calendarView: CalendarView = dialogView.findViewById(R.id.customCalendarView)
+                val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
+
+                calendarView.date = selectedDate.timeInMillis
+
+                calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+                    selectedDate.set(year, month, dayOfMonth)
+                }
+
+                buttonConfirm.setOnClickListener {
+                    onDateSelected(selectedDate)
+                    dialog.dismiss()
+                }
+            }
+        }
+        dialogInstance.show()
+    }
+
+    @SuppressLint(value = ["DefaultLocale"])
+    fun showResultDialog(
+        context: FragmentActivity,
+        totalCost: Double,
+        totalTimeMinutes: Int,
+        totalCigarettes: Int,
+        currencyUnit: String,
+        formatTime: (Int) -> String
+    ) {
+        val dialogInstance = object : BaseDialog(context, R.layout.calculator_result_popup) {
+            override fun setup() {
+                val tvTotalCosts: TextView = dialogView.findViewById(R.id.popup_result_total_costs)
+                val tvCostPerCigarette: TextView = dialogView.findViewById(R.id.popup_result_cost_per_cigarette)
+                val tvAverageCostPerHour: TextView = dialogView.findViewById(R.id.popup_result_average_cost_per_hour)
+                val tvTimeSpent: TextView = dialogView.findViewById(R.id.popup_result_time_spent)
+                val btnClose: Button = dialogView.findViewById(R.id.button_close_result)
+
+                val averageCostPerCigarette = if (totalCigarettes > 0) totalCost / totalCigarettes else 0.0
+                val totalHours = totalTimeMinutes / 60.0
+                val averageCostPerHour = if (totalHours > 0) totalCost / totalHours else 0.0
+
+                tvTotalCosts.text = String.format("%.2f %s", totalCost, currencyUnit)
+                tvCostPerCigarette.text = String.format("%.3f %s", averageCostPerCigarette, currencyUnit)
+                tvAverageCostPerHour.text = String.format("%.2f %s", averageCostPerHour, currencyUnit)
+                tvTimeSpent.text = formatTime(totalTimeMinutes)
+
+                btnClose.setOnClickListener {
+                    dialog.dismiss()
+                }
             }
         }
         dialogInstance.show()

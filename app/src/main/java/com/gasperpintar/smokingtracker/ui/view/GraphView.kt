@@ -53,14 +53,9 @@ class GraphView @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
-    fun setData(data: List<GraphEntry>, graphInterval: GraphInterval, labels: Int = labelsNumber) {
-        dataList = data
-        currentGraphInterval = graphInterval
-        labelsNumber = labels
-        invalidate()
-    }
-
-    override fun onDraw(canvas: Canvas) {
+    override fun onDraw(
+        canvas: Canvas
+    ) {
         super.onDraw(canvas)
 
         if (dataList.isEmpty()) {
@@ -82,7 +77,21 @@ class GraphView @JvmOverloads constructor(
         drawDataPoints(canvas, graphHeight, maxDataValue)
     }
 
-    private fun drawAxes(canvas: Canvas, graphWidth: Float, graphHeight: Float) {
+    fun setData(
+        data: List<GraphEntry>,
+        graphInterval: GraphInterval,
+        labels: Int = labelsNumber
+    ) {
+        dataList = data
+        currentGraphInterval = graphInterval
+        labelsNumber = labels
+        invalidate()
+    }
+
+    private fun drawAxes(
+        canvas: Canvas,
+        graphWidth: Float,
+        graphHeight: Float) {
         canvas.drawLine(paddingLeft, paddingTop, paddingLeft, paddingTop + graphHeight, linePaint)
         canvas.drawLine(paddingLeft, paddingTop + graphHeight, paddingLeft + graphWidth, paddingTop + graphHeight, linePaint)
     }
@@ -115,7 +124,6 @@ class GraphView @JvmOverloads constructor(
         }
 
         validEntries.forEachIndexed { visibleIndex: Int, pair: Pair<Int, GraphEntry> ->
-
             val originalIndex: Int = pair.first
             val entry: GraphEntry = pair.second
 
@@ -157,7 +165,11 @@ class GraphView @JvmOverloads constructor(
         }
     }
 
-    private fun drawYAxisLabels(canvas: Canvas, graphHeight: Float, maxDataValue: Int) {
+    private fun drawYAxisLabels(
+        canvas: Canvas,
+        graphHeight: Float,
+        maxDataValue: Int
+    ) {
         if (maxDataValue == 0) {
             return
         }
@@ -180,7 +192,6 @@ class GraphView @JvmOverloads constructor(
             } else {
                 ((maxDataValue / yPositions.size.toFloat()) * index).roundToInt()
             }
-
             canvas.drawText(labelValue.toString(), paddingLeft - 80f, y + 15f, textPaint)
 
             index -= stepIncrement

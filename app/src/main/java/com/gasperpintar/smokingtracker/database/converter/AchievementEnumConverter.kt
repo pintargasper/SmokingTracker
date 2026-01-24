@@ -7,22 +7,34 @@ import com.gasperpintar.smokingtracker.type.AchievementUnit
 class AchievementEnumConverter {
 
     @TypeConverter
-    fun fromAchievementCategory(category: AchievementCategory?): String? {
+    fun fromAchievementCategory(
+        category: AchievementCategory?
+    ): String? {
         return category?.name
     }
 
     @TypeConverter
-    fun toAchievementCategory(value: String?): AchievementCategory? {
-        return value?.let { AchievementCategory.valueOf(it) }
+    fun toAchievementCategory(
+        value: String?
+    ): AchievementCategory? {
+        return value?.let {
+            AchievementCategory.valueOf(value = it)
+        }
     }
 
     @TypeConverter
-    fun fromAchievementUnit(unit: AchievementUnit?): String? {
+    fun fromAchievementUnit(
+        unit: AchievementUnit?
+    ): String? {
         return unit?.name
     }
 
     @TypeConverter
-    fun toAchievementUnit(value: String?): AchievementUnit? {
-        return value?.let { AchievementUnit.valueOf(it) }
+    fun toAchievementUnit(
+        value: String?
+    ): AchievementUnit? {
+        return value?.let {
+            AchievementUnit.valueOf(value = it)
+        }
     }
 }

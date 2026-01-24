@@ -10,7 +10,10 @@ class AchievementEvaluator(private val achievementRepository: AchievementReposit
 
     private val cachedAchievements = mutableSetOf<AchievementEntity>()
 
-    suspend fun evaluate(lastSmokeTime: LocalDateTime, now: LocalDateTime) {
+    suspend fun evaluate(
+        lastSmokeTime: LocalDateTime,
+        now: LocalDateTime
+    ) {
         if (cachedAchievements.isEmpty()) {
             val achievements: List<AchievementEntity> = achievementRepository.getAll()
             achievements.forEach { achievement ->
@@ -45,7 +48,10 @@ class AchievementEvaluator(private val achievementRepository: AchievementReposit
         cachedAchievements.clear()
     }
 
-    private fun cigarettesAvoided(lastSmokeTime: LocalDateTime, now: LocalDateTime): Int {
+    private fun cigarettesAvoided(
+        lastSmokeTime: LocalDateTime,
+        now: LocalDateTime
+    ): Int {
         val intervalSeconds = 5400L
         val sleepSecondsPerDay = 8 * 3600L
         val duration = Duration.between(lastSmokeTime, now)

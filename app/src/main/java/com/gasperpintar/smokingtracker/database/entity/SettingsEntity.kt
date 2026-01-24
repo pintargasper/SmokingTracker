@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "settings")
 data class SettingsEntity(
+
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val theme: Int,

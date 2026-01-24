@@ -54,7 +54,9 @@ object Manager {
                            fileUri: Uri, 
                            historyRepository: HistoryRepository,
                            settingsRepository: SettingsRepository
-    ) = withContext(context = Dispatchers.IO) {
+    ) = withContext(
+        context = Dispatchers.IO
+    ) {
         try {
             context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
                 XSSFWorkbook(inputStream).use { workbook ->
@@ -81,7 +83,10 @@ object Manager {
         }
     }
 
-    private fun createHistorySheet(workbook: XSSFWorkbook, historyList: List<HistoryEntity>) {
+    private fun createHistorySheet(
+        workbook: XSSFWorkbook,
+        historyList: List<HistoryEntity>
+    ) {
         val sheet = workbook.createSheet("History")
         val header = sheet.createRow(0)
         header.createCell(0, CellType.STRING).setCellValue("Lent")
@@ -94,7 +99,10 @@ object Manager {
         }
     }
 
-    private fun createSettingsSheet(workbook: XSSFWorkbook, settings: SettingsEntity?) {
+    private fun createSettingsSheet(
+        workbook: XSSFWorkbook,
+        settings: SettingsEntity?
+    ) {
         val sheet = workbook.createSheet("Settings")
         val header = sheet.createRow(0)
         header.createCell(0, CellType.STRING).setCellValue("Theme")
@@ -109,7 +117,10 @@ object Manager {
         }
     }
 
-    private suspend fun importHistorySheet(workbook: XSSFWorkbook, historyRepository: HistoryRepository) {
+    private suspend fun importHistorySheet(
+        workbook: XSSFWorkbook,
+        historyRepository: HistoryRepository
+    ) {
         historyRepository.deleteAll()
         workbook.getSheet("History")?.forEachIndexed { index, row ->
             if (index == 0) {
@@ -126,7 +137,10 @@ object Manager {
         }
     }
 
-    private suspend fun importSettingsSheet(workbook: XSSFWorkbook, settingsRepository: SettingsRepository) {
+    private suspend fun importSettingsSheet(
+        workbook: XSSFWorkbook,
+        settingsRepository: SettingsRepository
+    ) {
         workbook.getSheet("Settings")?.getRow(1)?.let { row ->
             val settingsEntity = SettingsEntity(
                 id = 0,
@@ -134,11 +148,15 @@ object Manager {
                 language = row.getCell(1)?.numericCellValue?.toInt() ?: 0,
                 notifications = row.getCell(2)?.numericCellValue?.toInt() ?: 0
             )
-            settingsRepository.upsert(settingsEntity)
+            settingsRepository.update(settingsEntity)
         }
     }
 
-    private fun saveWorkbookToFile(context: Context, workbook: XSSFWorkbook, fileName: String): Uri? {
+    private fun saveWorkbookToFile(
+        context: Context,
+        workbook: XSSFWorkbook,
+        fileName: String
+    ): Uri? {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             saveWorkbookToMediaStore(context, workbook, fileName)
         } else {
@@ -146,7 +164,11 @@ object Manager {
         }.also { workbook.close() }
     }
 
-    private fun saveWorkbookToMediaStore(context: Context, workbook: XSSFWorkbook, fileName: String): Uri? {
+    private fun saveWorkbookToMediaStore(
+        context: Context,
+        workbook: XSSFWorkbook,
+        fileName: String
+    ): Uri? {
         val contentValues = ContentValues().apply {
             put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
             put(MediaStore.MediaColumns.MIME_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
@@ -158,7 +180,10 @@ object Manager {
         }
     }
 
-    private fun saveWorkbookToLegacyStorage(workbook: XSSFWorkbook, fileName: String): Uri {
+    private fun saveWorkbookToLegacyStorage(
+        workbook: XSSFWorkbook,
+        fileName: String
+    ): Uri {
         val exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         if (!exportDir.exists()) {
             exportDir.mkdirs()

@@ -49,6 +49,16 @@ class GraphFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadGraphs()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun setup() {
         setupNavigation(
             previous = binding.previousDayDaily,
@@ -235,15 +245,5 @@ class GraphFragment : Fragment() {
             GraphInterval.YEARLY -> binding.graphViewYearly
         }
         currentGraphView.setData(data = entries, graphInterval = interval)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadGraphs()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

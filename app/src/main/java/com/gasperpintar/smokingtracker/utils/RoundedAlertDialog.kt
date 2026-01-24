@@ -16,7 +16,9 @@ class RoundedAlertDialog(context: Context) : AlertDialog(context) {
         return this
     }
 
-    fun setViewChained(view: View): RoundedAlertDialog {
+    fun setViewChained(
+        view: View
+    ): RoundedAlertDialog {
         super.setView(view)
         return this
     }

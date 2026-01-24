@@ -8,6 +8,7 @@ import java.time.LocalDateTime
 
 @Entity(tableName = "achievements")
 data class AchievementEntity(
+
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val image: Int,

@@ -14,7 +14,9 @@ import java.io.InputStreamReader
 
 class JsonHelper(private val achievementRepository: AchievementRepository) {
 
-    suspend fun initializeAchievementsIfNeeded(context: Context) {
+    suspend fun initializeAchievementsIfNeeded(
+        context: Context
+    ) {
         val achievementsInDb = achievementRepository.getAll()
         val achievementsFromJson = loadAchievementsFromJson(context, AchievementCategory.SMOKE_FREE_TIME) +
                 loadAchievementsFromJson(context, AchievementCategory.CIGARETTES_AVOIDED)
@@ -27,13 +29,20 @@ class JsonHelper(private val achievementRepository: AchievementRepository) {
             Triple(it.value, it.category, it.unit) to it.message !in existingSet
         }
 
-        val entities = newAchievements.map { TimeHelper.run { it.toEntity() } }
+        val entities = newAchievements.map {
+            TimeHelper.run {
+                it.toEntity()
+            }
+        }
         if (entities.isNotEmpty()) {
             achievementRepository.insert(entries = entities)
         }
     }
 
-    fun loadAchievementsFromJson(context: Context, type: AchievementCategory): List<AchievementEntry> {
+    fun loadAchievementsFromJson(
+        context: Context, type:
+        AchievementCategory
+    ): List<AchievementEntry> {
         val inputStream = context.resources.openRawResource(R.raw.achievements)
         val reader = InputStreamReader(inputStream)
         val gson = Gson()
@@ -44,7 +53,7 @@ class JsonHelper(private val achievementRepository: AchievementRepository) {
         val entries = jsonMap[type.name] ?: emptyList()
 
         return entries.map { jsonEntry ->
-            val iconEnum = AchievementIcon.valueOf(jsonEntry.icon.uppercase())
+            val iconEnum = AchievementIcon.valueOf(value = jsonEntry.icon.uppercase())
             val unit = if (type == AchievementCategory.CIGARETTES_AVOIDED) {
                 AchievementUnit.CIGARETTES
             } else {
@@ -52,7 +61,7 @@ class JsonHelper(private val achievementRepository: AchievementRepository) {
             }
             AchievementEntry(
                 id = jsonEntry.id,
-                image = iconEnum.drawableRes,
+                image = iconEnum.drawableResource,
                 value = jsonEntry.value,
                 message = jsonEntry.description,
                 times = 0L,

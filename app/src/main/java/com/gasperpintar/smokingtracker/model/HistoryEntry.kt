@@ -12,6 +12,20 @@ data class HistoryEntry (
     val timerLabel: String
 ): Identifiable {
 
+    companion object {
+
+        fun fromEntity(
+            entity: HistoryEntity
+        ): HistoryEntry {
+            return HistoryEntry(
+                id = entity.id,
+                isLent = entity.lent > 0,
+                createdAt = entity.createdAt,
+                timerLabel = entity.createdAt.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+            )
+        }
+    }
+
     fun toEntity(): HistoryEntity {
         return HistoryEntity(
             id = id,
@@ -22,17 +36,5 @@ data class HistoryEntry (
                 0
             }
         )
-    }
-
-    companion object {
-
-        fun fromEntity(entity: HistoryEntity): HistoryEntry {
-            return HistoryEntry(
-                id = entity.id,
-                isLent = entity.lent > 0,
-                createdAt = entity.createdAt,
-                timerLabel = entity.createdAt.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
-            )
-        }
     }
 }

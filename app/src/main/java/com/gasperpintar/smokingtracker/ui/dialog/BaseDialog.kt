@@ -7,9 +7,11 @@ import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 
-abstract class BaseDialog(context: FragmentActivity, layoutRes: Int) {
-
-    protected val dialogView: View = LayoutInflater.from(context).inflate(layoutRes, null)
+abstract class BaseDialog(
+    context: FragmentActivity,
+    layoutResource: Int
+) {
+    protected val dialogView: View = LayoutInflater.from(context).inflate(layoutResource, null)
     protected val dialog: RoundedAlertDialog = RoundedAlertDialog(context).setViewChained(dialogView)
     protected val buttonClose: Button? = dialogView.findViewById(R.id.button_close)
 

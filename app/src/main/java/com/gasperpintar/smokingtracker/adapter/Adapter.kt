@@ -15,12 +15,19 @@ class Adapter<T>(
 
     class GenericViewHolder(view: View) : RecyclerView.ViewHolder(view)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenericViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(layoutId, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): GenericViewHolder {
+        val view = LayoutInflater
+            .from(parent.context)
+            .inflate(layoutId, parent, false)
         return GenericViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: GenericViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: GenericViewHolder,
+        position: Int) {
         onBind(holder.itemView, getItem(position))
     }
 }

@@ -21,6 +21,26 @@ data class AchievementEntry(
     val unit: AchievementUnit
 ): Identifiable {
 
+    companion object {
+
+        fun fromEntity(
+            entity: AchievementEntity
+        ): AchievementEntry {
+            return AchievementEntry(
+                id = entity.id,
+                image = entity.image,
+                value = entity.value,
+                message = entity.message,
+                times = entity.times,
+                lastAchieved = entity.lastAchieved,
+                reset = entity.reset,
+                notify = entity.notify,
+                category = entity.category,
+                unit = entity.unit
+            )
+        }
+    }
+
     fun toEntity(): AchievementEntity {
         return AchievementEntity(
             id = id,
@@ -36,7 +56,9 @@ data class AchievementEntry(
         )
     }
 
-    fun getDisplayText(context: Context): String {
+    fun getDisplayText(
+        context: Context
+    ): String {
         return when (unit) {
             AchievementUnit.HOURS ->
                 context.resources.getQuantityString(
@@ -74,24 +96,6 @@ data class AchievementEntry(
                     value,
                     value
                 )
-        }
-    }
-
-    companion object {
-
-        fun fromEntity(entity: AchievementEntity): AchievementEntry {
-            return AchievementEntry(
-                id = entity.id,
-                image = entity.image,
-                value = entity.value,
-                message = entity.message,
-                times = entity.times,
-                lastAchieved = entity.lastAchieved,
-                reset = entity.reset,
-                notify = entity.notify,
-                category = entity.category,
-                unit = entity.unit
-            )
         }
     }
 }

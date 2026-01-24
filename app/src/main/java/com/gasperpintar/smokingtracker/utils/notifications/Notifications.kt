@@ -19,7 +19,9 @@ object Notifications {
     private const val CHANNEL_NAME = "Smoking Tracker Notifications"
     private const val CHANNEL_DESCRIPTION = "Smoking monitoring notifications"
 
-    fun createNotificationChannel(context: Context) {
+    fun createNotificationChannel(
+        context: Context
+    ) {
         val channel = NotificationChannel(
             CHANNEL_ID,
             CHANNEL_NAME,

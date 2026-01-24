@@ -14,7 +14,10 @@ import java.util.Locale
 
 object LocalizationHelper {
 
-    fun getLocalizedContext(context: Context, settingsRepository: SettingsRepository): Context {
+    fun getLocalizedContext(
+        context: Context,
+        settingsRepository: SettingsRepository
+    ): Context {
         val settings = runBlocking { settingsRepository.get() }
         val languageId = settings?.language ?: 0
         val supportedLanguages = context.resources.getStringArray(R.array.language_values)
@@ -35,7 +38,9 @@ object LocalizationHelper {
         return context.createConfigurationContext(configuration)
     }
 
-    fun formatDate(date: LocalDate): String {
+    fun formatDate(
+        date: LocalDate
+    ): String {
         val locale = Locale.getDefault()
         val pattern = when (locale.language) {
             "sl" -> "dd.MM.yyyy"
@@ -46,7 +51,10 @@ object LocalizationHelper {
     }
 
     @SuppressLint(value = ["DefaultLocale"])
-    fun formatWeekRange(start: LocalDate, end: LocalDate): String {
+    fun formatWeekRange(
+        start: LocalDate,
+        end: LocalDate
+    ): String {
         val locale = Locale.getDefault()
         return when (locale.language) {
             "sl" -> String.format("%02d.%02d/%02d.%02d", start.dayOfMonth, start.monthValue, end.dayOfMonth, end.monthValue)
@@ -54,7 +62,10 @@ object LocalizationHelper {
         }
     }
 
-    fun getDayOfWeekName(context: Context, dayOfWeek: DayOfWeek): String {
+    fun getDayOfWeekName(
+        context: Context,
+        dayOfWeek: DayOfWeek
+    ): String {
         return when(dayOfWeek) {
             DayOfWeek.MONDAY -> context.getString(R.string.day_monday)
             DayOfWeek.TUESDAY -> context.getString(R.string.day_tuesday)
@@ -66,7 +77,10 @@ object LocalizationHelper {
         }
     }
 
-    fun getMonthName(context: Context, month: Month): String {
+    fun getMonthName(
+        context: Context,
+        month: Month
+    ): String {
         return when(month) {
             Month.JANUARY -> context.getString(R.string.month_january)
             Month.FEBRUARY -> context.getString(R.string.month_february)

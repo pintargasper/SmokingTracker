@@ -6,12 +6,17 @@ import com.gasperpintar.smokingtracker._interface.Identifiable
 
 class DiffCallback<T : Identifiable> : DiffUtil.ItemCallback<T>() {
 
-    override fun areItemsTheSame(oldItem: T, newItem: T): Boolean {
+    override fun areItemsTheSame(
+        oldItem: T,
+        newItem: T
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
     @SuppressLint(value = ["DiffUtilEquals"])
-    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean {
+    override fun areContentsTheSame(
+        oldItem: T, newItem: T
+    ): Boolean {
         return oldItem == newItem
     }
 }

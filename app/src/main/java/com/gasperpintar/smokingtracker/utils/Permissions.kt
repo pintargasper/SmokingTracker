@@ -6,17 +6,26 @@ import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
-open class Permissions(private val activity: ComponentActivity) {
-
-    private val requestNotificationPermissionLauncher =
-        activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            isGranted: Boolean -> permissionCallback?.invoke(isGranted)
-        }
+open class Permissions(
+    private val activity: ComponentActivity
+) {
 
     private var permissionCallback: ((Boolean) -> Unit)? = null
 
-    open fun checkAndRequestNotificationPermission(callback: (Boolean) -> Unit) {
+    private val requestNotificationPermissionLauncher =
+        activity.registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            permissionCallback?.invoke(isGranted)
+            permissionCallback = null
+        }
+
+    open fun checkAndRequestNotificationPermission(
+        callback: (Boolean) -> Unit
+    ) {
         permissionCallback = callback
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -25,10 +34,27 @@ open class Permissions(private val activity: ComponentActivity) {
                     activity,
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> callback(true)
-                else -> requestNotificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+
+                else -> requestNotificationPermissionLauncher.launch(
+                    Manifest.permission.POST_NOTIFICATIONS
+                )
             }
         } else {
             callback(true)
+        }
+    }
+
+    suspend fun awaitNotificationPermission(): Boolean {
+        return suspendCancellableCoroutine { continuation ->
+            checkAndRequestNotificationPermission { isGranted ->
+                if (continuation.isActive) {
+                    continuation.resume(isGranted)
+                }
+            }
+
+            continuation.invokeOnCancellation {
+                permissionCallback = null
+            }
         }
     }
 }

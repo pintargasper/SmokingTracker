@@ -26,7 +26,6 @@ import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.Manager
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 class SettingsFragment : Fragment() {
 
@@ -92,7 +91,9 @@ class SettingsFragment : Fragment() {
                         selectedLanguage = settings.language,
                         onLanguageSelected = { language ->
                             updateSettingsField(
-                                updateBlock = { it.copy(language = language) },
+                                updateBlock = {
+                                    it.copy(language = language)
+                                },
                                 recreateActivity = true
                             )
                         }
@@ -120,7 +121,9 @@ class SettingsFragment : Fragment() {
                             }
 
                             updateSettingsField(
-                                updateBlock = { it.copy(notifications = notification) }
+                                updateBlock = {
+                                    it.copy(notifications = notification)
+                                }
                             )
                         }
                     )
@@ -173,7 +176,10 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun updateSettingsField(updateBlock: (SettingsEntity) -> SettingsEntity, recreateActivity: Boolean = false) {
+    private fun updateSettingsField(
+        updateBlock: (SettingsEntity) -> SettingsEntity,
+        recreateActivity: Boolean = false
+    ) {
         lifecycleScope.launch {
             withSettings { currentSettings ->
                 val updatedSettings = updateBlock(currentSettings)
@@ -191,19 +197,10 @@ class SettingsFragment : Fragment() {
         return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
     }
 
-    private suspend fun withSettings(block: (SettingsEntity) -> Unit) {
-        block(settingsRepository.get() ?: insertDefaultSettings())
-    }
-
-    private suspend fun insertDefaultSettings(): SettingsEntity {
-        val defaultSettings = SettingsEntity(
-            id = 0L,
-            theme = 0,
-            language = getDefaultLanguageIndex(),
-            notifications = if (areNotificationsEnabled()) 1 else 0
-        )
-        settingsRepository.insert(defaultSettings)
-        return defaultSettings
+    private suspend fun withSettings(
+        block: suspend (SettingsEntity) -> Unit
+    ) {
+        block(settingsRepository.get()!!)
     }
 
     private fun setupFilePicker() {
@@ -236,15 +233,22 @@ class SettingsFragment : Fragment() {
                 websiteUrl to "https://gasperpintar.com/smoking-tracker",
                 translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
                 privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy"
-            ).forEach { (view, url) -> setupLink(view, url) }
+            ).forEach {
+                (view, url) -> setupLink(view, url)
+            }
         }
     }
 
-    private fun setupLink(view: View, url: String) {
+    private fun setupLink(
+        view: View,
+        url: String
+    ) {
         view.setOnClickListener { openUrl(url) }
     }
 
-    private fun openUrl(url: String) {
+    private fun openUrl(
+        url: String
+    ) {
         startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
     }
 
@@ -262,14 +266,6 @@ class SettingsFragment : Fragment() {
             getString(R.string.theme_popup_check_box_light_theme),
             getString(R.string.theme_popup_check_box_dark_theme)
         )
-    }
-
-    private fun getDefaultLanguageIndex(): Int {
-        return when(Locale.getDefault().language) {
-            "en" -> 1
-            "sl" -> 2
-            else -> 0
-        }
     }
 
     private fun openNotificationSettings() {

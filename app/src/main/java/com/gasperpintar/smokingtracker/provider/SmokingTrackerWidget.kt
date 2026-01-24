@@ -58,9 +58,9 @@ class SmokingTrackerWidget : AppWidgetProvider() {
                     val monthly = historyRepository.getCountBetween(start = startOfMonth, end = endOfMonth)
 
                     withContext(context = Dispatchers.Main) {
-                        views.setTextViewText(R.id.widget_daily_label, WidgetHelper.getString(context = context, settingsRepository = settingsRepository, resId = R.string.home_daily_label))
-                        views.setTextViewText(R.id.widget_weekly_label, WidgetHelper.getString(context = context, settingsRepository = settingsRepository, resId = R.string.home_weekly_label))
-                        views.setTextViewText(R.id.widget_monthly_label, WidgetHelper.getString(context = context, settingsRepository = settingsRepository, resId = R.string.home_monthly_label))
+                        views.setTextViewText(R.id.widget_daily_label, WidgetHelper.getString(context = context, settingsRepository = settingsRepository, resourceId = R.string.home_daily_label))
+                        views.setTextViewText(R.id.widget_weekly_label, WidgetHelper.getString(context = context, settingsRepository = settingsRepository, resourceId = R.string.home_weekly_label))
+                        views.setTextViewText(R.id.widget_monthly_label, WidgetHelper.getString(context = context, settingsRepository = settingsRepository, resourceId = R.string.home_monthly_label))
                         views.setTextViewText(R.id.widget_daily_value, daily.toString())
                         views.setTextViewText(R.id.widget_weekly_value, weekly.toString())
                         views.setTextViewText(R.id.widget_monthly_value, monthly.toString())
@@ -70,7 +70,10 @@ class SmokingTrackerWidget : AppWidgetProvider() {
             }
         }
 
-        private fun openActivity(context: Context, views: RemoteViews) {
+        private fun openActivity(
+            context: Context,
+            views: RemoteViews
+        ) {
             val intent = Intent(context, MainActivity::class.java)
             val pendingIntent = PendingIntent.getActivity(
                 context,

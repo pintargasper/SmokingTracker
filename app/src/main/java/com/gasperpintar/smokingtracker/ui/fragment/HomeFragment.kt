@@ -69,6 +69,22 @@ class HomeFragment : Fragment() {
         return binding.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        startTimer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopTimer()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopTimer()
+        _binding = null
+    }
+
     private fun setup() {
         binding.buttonAddEntry.setOnClickListener {
             DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
@@ -230,7 +246,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private suspend fun updateStatistics(date: LocalDate) {
+    private suspend fun updateStatistics(
+        date: LocalDate
+    ) {
         val (startOfDay, endOfDay) = TimeHelper.getDay(date)
         val dailyCount: Int = historyRepository.getCountBetween(start = startOfDay, end = endOfDay)
         val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date)
@@ -244,7 +262,9 @@ class HomeFragment : Fragment() {
         binding.monthlyValue.text = monthlyCount.toString()
     }
 
-    private suspend fun loadHistoryForDay(date: LocalDate) {
+    private suspend fun loadHistoryForDay(
+        date: LocalDate
+    ) {
         val (startOfDay, endOfDay) = TimeHelper.getDay(date)
 
         val entityList: List<HistoryEntity> = historyRepository.getBetween(start = startOfDay, end = endOfDay)
@@ -255,7 +275,9 @@ class HomeFragment : Fragment() {
         }
     }
 
-    suspend fun onLastEntryChanged(current: HistoryEntry?) {
+    suspend fun onLastEntryChanged(
+        current: HistoryEntry?
+    ) {
         achievementEvaluator.evaluate(
             lastSmokeTime = current!!.createdAt,
             now = LocalDateTime.now()
@@ -264,21 +286,5 @@ class HomeFragment : Fragment() {
 
     fun resetAchievementsCache() {
         achievementEvaluator.reset()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        startTimer()
-    }
-
-    override fun onPause() {
-        super.onPause()
-        stopTimer()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stopTimer()
-        _binding = null
     }
 }

@@ -31,13 +31,29 @@ class AchievementsFragment : Fragment() {
     private lateinit var adapter: Adapter<AchievementEntry>
     private lateinit var achievementType: AchievementCategory
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    companion object {
+
+        private const val ARG_ACHIEVEMENT_TYPE = "achievement_type"
+        fun newInstance(type: AchievementCategory): AchievementsFragment {
+            return AchievementsFragment().apply {
+                arguments = Bundle().apply {
+                    putInt(ARG_ACHIEVEMENT_TYPE, type.ordinal)
+                }
+            }
+        }
+    }
+
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) {
         super.onCreate(savedInstanceState)
 
         database = (requireActivity() as AchievementsActivity).database
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         val typeOrdinal = arguments?.getInt(ARG_ACHIEVEMENT_TYPE)
-        achievementType = typeOrdinal?.let { AchievementCategory.entries[it] } ?: AchievementCategory.SMOKE_FREE_TIME
+        achievementType = typeOrdinal?.let {
+            AchievementCategory.entries[it]
+        } ?: AchievementCategory.SMOKE_FREE_TIME
     }
 
     override fun onCreateView(
@@ -70,13 +86,9 @@ class AchievementsFragment : Fragment() {
         return root
     }
 
-    companion object {
-        private const val ARG_ACHIEVEMENT_TYPE = "achievement_type"
-        fun newInstance(type: AchievementCategory): AchievementsFragment {
-            return AchievementsFragment().apply {
-                arguments = Bundle().apply { putInt(ARG_ACHIEVEMENT_TYPE, type.ordinal) }
-            }
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setupRecyclerView() {
@@ -107,7 +119,9 @@ class AchievementsFragment : Fragment() {
         this.adapter = adapter
     }
 
-    private fun loadAchievements(achievementEntries: List<AchievementEntry>) {
+    private fun loadAchievements(
+        achievementEntries: List<AchievementEntry>
+    ) {
         adapter.submitList(achievementEntries) {
             binding.recyclerviewAchievements.scrollToPosition(0)
         }
@@ -122,10 +136,5 @@ class AchievementsFragment : Fragment() {
             screenWidthDp >= 600 -> 3
             else -> 2
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

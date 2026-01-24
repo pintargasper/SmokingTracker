@@ -8,7 +8,9 @@ enum class AchievementUnit {
     DAYS,
     CIGARETTES;
 
-    fun toSeconds(value: Int): Long? = when (this) {
+    fun toSeconds(
+        value: Int
+    ): Long? = when (this) {
         HOURS -> value * 3600L
         DAYS -> value * 86400L
         WEEKS -> value * 604800L

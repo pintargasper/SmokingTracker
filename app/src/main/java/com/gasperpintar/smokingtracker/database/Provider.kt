@@ -6,6 +6,7 @@ import kotlin.jvm.java
 
 object Provider {
 
+    @Volatile
     private var databaseInstance: AppDatabase? = null
 
     fun getDatabase(context: Context): AppDatabase {

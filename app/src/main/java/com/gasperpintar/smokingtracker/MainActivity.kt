@@ -32,6 +32,7 @@ import java.util.concurrent.TimeUnit
 import androidx.core.view.size
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -43,52 +44,61 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var permissionsHelper: Permissions
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(
+        savedInstanceState: Bundle?
+    ) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        createPager()
-
-        permissionsHelper = Permissions(activity = this@MainActivity)
+        initViewBinding()
+        initPager()
+        initPermissions()
 
         lifecycleScope.launch {
-            val settings: SettingsEntity? = settingsRepository.get()
-
-            val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-            val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
-            val themeId: Int = settings?.theme ?: 0
-
-            val packageInfo = packageManager.getPackageInfo(packageName, 0)
-            val versionName = packageInfo.versionName
-            val lastVersionName = sharedPreferences.getString("last_version_name", null)
-
-            if (versionName != lastVersionName) {
-                JsonHelper(achievementRepository = achievementRepository).initializeAchievementsIfNeeded(context = this@MainActivity)
-                sharedPreferences.edit { putString("last_version_name", versionName) }
-            }
-
-            applyTheme(themeId = themeId)
-            if (isFirstRun || settings?.notifications == 1) {
-                permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
-                    if (isGranted) {
-                        Notifications.createNotificationChannel(context = this@MainActivity)
-                        scheduleNotificationWorker()
-                    }
-                }
-
-                if (isFirstRun) {
-                    sharedPreferences.edit { putBoolean("first_run", false) }
-                }
-            }
+            initializeApplication()
         }
     }
 
-    private fun createPager() {
-        val navigationView = binding.navView
-        val viewPager = binding.mainViewPager
+    override fun attachBaseContext(
+        context: Context
+    ) {
+        database = Provider.getDatabase(context = context.applicationContext)
+        achievementRepository = AchievementRepository(
+            achievementDao = database.achievementDao()
+        )
+        settingsRepository = SettingsRepository(
+            settingsDao = database.settingsDao()
+        )
 
+        super.attachBaseContext(
+            LocalizationHelper.getLocalizedContext(
+                context = context,
+                settingsRepository = settingsRepository
+            )
+        )
+    }
+
+    private fun initViewBinding() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
+    private fun initPermissions() {
+        permissionsHelper = Permissions(activity = this)
+    }
+
+    private suspend fun initializeApplication() {
+        val settings: SettingsEntity = getOrCreateDefaultSettings()
+        val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+
+        handleAppVersioning(sharedPreferences = sharedPreferences)
+        applyTheme(themeId = settings.theme)
+        handleNotifications(
+            settings = settings,
+            sharedPreferences = sharedPreferences
+        )
+    }
+
+    private fun initPager() {
         val fragments = listOf(
             { HomeFragment() },
             { GraphFragment() },
@@ -96,49 +106,103 @@ class MainActivity : AppCompatActivity() {
             { SettingsFragment() }
         )
 
-        val tabMenuIds = listOf(
+        val navigationIds = listOf(
             R.id.navigation_home,
             R.id.navigation_graph,
             R.id.navigation_analytics,
             R.id.navigation_settings
         )
 
-        viewPager.adapter = Pager(
+        binding.mainViewPager.adapter = Pager(
             fragmentActivity = this,
             fragmentCreator = fragments
         )
-        viewPager.isUserInputEnabled = true
 
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                if (position in 0 until navigationView.menu.size) {
-                    navigationView.menu[position].isChecked = true
+        binding.mainViewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    if (position in 0 until binding.navView.menu.size) {
+                        binding.navView.menu[position].isChecked = true
+                    }
                 }
             }
-        })
+        )
 
-        navigationView.setOnItemSelectedListener { item ->
-            val index = tabMenuIds.indexOf(item.itemId)
+        binding.navView.setOnItemSelectedListener { item ->
+            val index: Int = navigationIds.indexOf(item.itemId)
             if (index >= 0) {
-                viewPager.setCurrentItem(index, false)
+                binding.mainViewPager.setCurrentItem(index, false)
             }
             true
         }
     }
 
-    private fun scheduleNotificationWorker() {
-        val workManager: WorkManager = WorkManager.getInstance(context = this@MainActivity)
+    private suspend fun getOrCreateDefaultSettings(): SettingsEntity {
+        val existing: SettingsEntity? = settingsRepository.get()
+        if (existing != null) {
+            return existing
+        }
 
-        val workRequest: PeriodicWorkRequest = PeriodicWorkRequestBuilder<Worker>(
-            repeatInterval = 1,
-            repeatIntervalTimeUnit = TimeUnit.HOURS
-        ).build()
-
-        workManager.enqueueUniquePeriodicWork(
-            uniqueWorkName = "notification_and_achievement_work",
-            ExistingPeriodicWorkPolicy.KEEP,
-            workRequest
+        val defaultSettings = SettingsEntity(
+            id = 1,
+            notifications = if (permissionsHelper.awaitNotificationPermission()) 1 else 0,
+            theme = 0,
+            language = getDefaultLanguageIndex()
         )
+        settingsRepository.insert(settings = defaultSettings)
+        return defaultSettings
+    }
+
+    private suspend fun handleAppVersioning(
+        sharedPreferences: SharedPreferences
+    ) {
+        val versionName: String? = packageManager.getPackageInfo(packageName, 0).versionName
+        val lastVersionName: String? = sharedPreferences.getString("last_version_name", null)
+
+        if (versionName != lastVersionName) {
+            JsonHelper(achievementRepository = achievementRepository).initializeAchievementsIfNeeded(context = this)
+            sharedPreferences.edit {
+                putString("last_version_name", versionName)
+            }
+        }
+    }
+
+    private fun handleNotifications(
+        settings: SettingsEntity,
+        sharedPreferences: SharedPreferences
+    ) {
+        val isFirstRun: Boolean =
+            sharedPreferences.getBoolean("first_run", true)
+
+        if (!isFirstRun && settings.notifications != 1) return
+
+        permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
+            if (isGranted) {
+                Notifications.createNotificationChannel(context = this)
+                scheduleNotificationWorker()
+            }
+        }
+
+        if (isFirstRun) {
+            sharedPreferences.edit {
+                putBoolean("first_run", false)
+            }
+        }
+    }
+
+    private fun scheduleNotificationWorker() {
+        val workRequest: PeriodicWorkRequest =
+            PeriodicWorkRequestBuilder<Worker>(
+                repeatInterval = 1,
+                repeatIntervalTimeUnit = TimeUnit.HOURS
+            ).build()
+
+        WorkManager.getInstance(context = this)
+            .enqueueUniquePeriodicWork(
+                uniqueWorkName = "notification_and_achievement_work",
+                ExistingPeriodicWorkPolicy.KEEP,
+                workRequest
+            )
     }
 
     private fun applyTheme(themeId: Int) {
@@ -146,13 +210,15 @@ class MainActivity : AppCompatActivity() {
             0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            else -> Unit
         }
     }
 
-    override fun attachBaseContext(context: Context) {
-        database = Provider.getDatabase(context = context.applicationContext)
-        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
-        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository))
+    private fun getDefaultLanguageIndex(): Int {
+        return when (Locale.getDefault().language) {
+            "en" -> 1
+            "sl" -> 2
+            else -> 0
+        }
     }
 }

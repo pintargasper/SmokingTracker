@@ -18,7 +18,10 @@ import java.util.Locale
 class Worker(
     context: Context,
     workerParams: WorkerParameters
-) : CoroutineWorker(appContext = context, workerParams) {
+) : CoroutineWorker(
+    appContext = context,
+    workerParams
+) {
 
     private val database: AppDatabase by lazy { Provider.getDatabase(applicationContext) }
 
@@ -65,7 +68,9 @@ class Worker(
         return Result.success()
     }
 
-    private fun formatDuration(totalSeconds: Long): String {
+    private fun formatDuration(
+        totalSeconds: Long
+    ): String {
         val hours = totalSeconds / 3600
         val minutes = (totalSeconds % 3600) / 60
         val seconds = totalSeconds % 60

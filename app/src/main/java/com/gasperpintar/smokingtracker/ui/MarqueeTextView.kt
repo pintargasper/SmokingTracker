@@ -7,20 +7,31 @@ import androidx.appcompat.widget.AppCompatTextView
 
 class MarqueeTextView : AppCompatTextView {
 
-    constructor(context: Context) : super(context) {
+    constructor(
+        context: Context
+    ) : super(context) {
         initializeMarquee()
     }
 
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
+    constructor(
+        context: Context, attributeSet: AttributeSet
+    ) : super(context, attributeSet) {
         initializeMarquee()
     }
 
-    constructor(context: Context, attributeSet: AttributeSet, defaultStyleAttribute: Int) : super(
+    constructor(
+        context: Context,
+        attributeSet: AttributeSet,
+        defaultStyleAttribute: Int
+    ) : super(
         context,
         attributeSet,
-        defaultStyleAttribute
-    ) {
+        defaultStyleAttribute) {
         initializeMarquee()
+    }
+
+    override fun isFocused(): Boolean {
+        return true
     }
 
     private fun initializeMarquee() {
@@ -31,9 +42,5 @@ class MarqueeTextView : AppCompatTextView {
         this.isFocusableInTouchMode = false
         this.setHorizontallyScrolling(true)
         this.isSelected = true
-    }
-
-    override fun isFocused(): Boolean {
-        return true
     }
 }
