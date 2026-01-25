@@ -7,6 +7,7 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
 
 object TimeHelper {
 
@@ -51,6 +52,15 @@ object TimeHelper {
         return LocalDateTime.now().withHour(23)
             .withMinute(59).withSecond(59)
             .withNano(999_999_999)
+    }
+
+    fun getNextMidnightMillis(): Long {
+        return LocalDate
+            .now()
+            .plusDays(1)
+            .atStartOfDay(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
     }
 
     fun formatDuration(

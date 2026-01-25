@@ -1,11 +1,13 @@
 package com.gasperpintar.smokingtracker.provider
 
+import android.Manifest
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
+import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.Provider
@@ -21,6 +23,19 @@ import java.time.LocalDate
 
 class SmokingTrackerWidget : AppWidgetProvider() {
 
+    @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
+    override fun onReceive(
+        context: Context,
+        intent: Intent
+    ) {
+        super.onReceive(context, intent)
+        if (intent.action == WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE) {
+            WidgetHelper.updateWidget(context = context)
+            WidgetHelper.scheduleMidnightWidgetUpdate(context = context)
+        }
+    }
+
+    @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -29,6 +44,13 @@ class SmokingTrackerWidget : AppWidgetProvider() {
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
+        WidgetHelper.scheduleMidnightWidgetUpdate(context)
+    }
+
+    @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
+    override fun onEnabled(context: Context) {
+        super.onEnabled(context)
+        WidgetHelper.scheduleMidnightWidgetUpdate(context)
     }
 
     companion object {
