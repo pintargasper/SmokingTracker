@@ -138,7 +138,10 @@ class HomeFragment : Fragment() {
                                 createdAt = newDateTime,
                                 isLent = isLent
                             )
-                            achievementRepository.resetAll(state = false)
+
+                            if (lastEntry?.id == historyEntry.id) {
+                                achievementRepository.resetAll(state = false)
+                            }
                             historyRepository.update(entry = updatedEntry.toEntity())
                             resetAchievementsCache()
                             updateLastEntry()
@@ -150,7 +153,10 @@ class HomeFragment : Fragment() {
                 deleteButton.setOnClickListener {
                     DialogManager.showDeleteDialog(context = requireActivity()) {
                         lifecycleScope.launch {
-                            achievementRepository.resetAll(state = false)
+
+                            if (lastEntry?.id == historyEntry.id) {
+                                achievementRepository.resetAll(state = false)
+                            }
                             historyRepository.delete(entry = historyEntry.toEntity())
                             resetAchievementsCache()
                             updateLastEntry()

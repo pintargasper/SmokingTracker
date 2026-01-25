@@ -198,18 +198,14 @@ object Manager {
             return
         }
 
-        context.permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
-            if (isGranted) {
-                Notifications.createNotificationChannel(context)
-
-                Notifications.sendNotification(
-                    context = context,
-                    title = title,
-                    content = content,
-                    notificationId = notificationId,
-                    fileUri = fileUri
-                )
-            }
+        if (context.permissionsHelper.isNotificationPermissionGranted()) {
+            Notifications.sendNotification(
+                context = context,
+                title = title,
+                content = content,
+                notificationId = notificationId,
+                fileUri = fileUri
+            )
         }
     }
 }

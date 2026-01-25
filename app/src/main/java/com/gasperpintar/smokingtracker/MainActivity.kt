@@ -83,6 +83,14 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (permissionsHelper.isNotificationPermissionGranted()) {
+            Notifications.createNotificationChannel(context = this)
+            scheduleNotificationWorker()
+        }
+    }
+
     private fun initViewBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -178,9 +186,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleNotifications(
-        sharedPreferences: SharedPreferences
-    ) {
+    private fun handleNotifications(sharedPreferences: SharedPreferences) {
         val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
 
         if (isFirstRun) {
@@ -190,10 +196,12 @@ class MainActivity : AppCompatActivity() {
                     scheduleNotificationWorker()
                 }
             }
-
             sharedPreferences.edit {
                 putBoolean("first_run", false)
             }
+        } else if (permissionsHelper.isNotificationPermissionGranted()) {
+            Notifications.createNotificationChannel(context = this)
+            scheduleNotificationWorker()
         }
     }
 

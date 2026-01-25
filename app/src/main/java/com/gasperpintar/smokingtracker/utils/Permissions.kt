@@ -21,7 +21,7 @@ open class Permissions(
             permissionCallback = null
         }
 
-    open fun checkAndRequestNotificationPermission(
+    fun checkAndRequestNotificationPermission(
         callback: (Boolean) -> Unit
     ) {
         permissionCallback = callback
@@ -39,6 +39,17 @@ open class Permissions(
             }
         } else {
             callback(true)
+        }
+    }
+
+    fun isNotificationPermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            true
         }
     }
 }
