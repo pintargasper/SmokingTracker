@@ -6,11 +6,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.core.content.FileProvider
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +31,7 @@ object Manager {
         context: Context,
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
+        notificationsSettingsRepository: NotificationsSettingsRepository,
         fileName: String = "st_data.xlsx"
     ): Uri? = withContext(context = Dispatchers.IO) {
         XSSFWorkbook().use { workbook ->
@@ -43,7 +46,8 @@ object Manager {
                     fileName
                 ),
                 notificationId = 1002,
-                fileUri = fileUri
+                fileUri = fileUri,
+                notificationsEnabled = notificationsSettingsRepository.get()!!.system
             )
             return@withContext fileUri
         }
@@ -52,10 +56,12 @@ object Manager {
     suspend fun uploadFile(context: Context, 
                            fileUri: Uri, 
                            historyRepository: HistoryRepository,
-                           settingsRepository: SettingsRepository
+                           settingsRepository: SettingsRepository,
+                           notificationsSettingsRepository: NotificationsSettingsRepository
     ) = withContext(
         context = Dispatchers.IO
     ) {
+        val notificationsEnabled = notificationsSettingsRepository.get()!!.system
         try {
             context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
                 XSSFWorkbook(inputStream).use { workbook ->
@@ -68,6 +74,7 @@ object Manager {
                 title = context.getString(R.string.notification_upload_title),
                 content = context.getString(R.string.notification_upload_content),
                 notificationId = 1002,
+                notificationsEnabled = notificationsEnabled
             )
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -76,6 +83,7 @@ object Manager {
                 title = context.getString(R.string.notification_upload_failed_title),
                 content = context.getString(R.string.notification_upload_failed_content),
                 notificationId = 1002,
+                notificationsEnabled = notificationsEnabled
             )
         }
     }
@@ -154,7 +162,7 @@ object Manager {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             saveWorkbookToMediaStore(context, workbook, fileName)
         } else {
-            saveWorkbookToLegacyStorage(workbook, fileName)
+            saveWorkbookToLegacyStorage(context, workbook, fileName)
         }.also { workbook.close() }
     }
 
@@ -168,13 +176,15 @@ object Manager {
             put(MediaStore.MediaColumns.MIME_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
             put(MediaStore.MediaColumns.RELATIVE_PATH, "Download/SmokingTracker")
         }
-
         return context.contentResolver.insert(MediaStore.Files.getContentUri("external"), contentValues)?.also { uri ->
-            context.contentResolver.openOutputStream(uri)?.use { workbook.write(it) }
+            context.contentResolver.openOutputStream(uri)?.use {
+                workbook.write(it)
+            }
         }
     }
 
     private fun saveWorkbookToLegacyStorage(
+        context: Context,
         workbook: XSSFWorkbook,
         fileName: String
     ): Uri {
@@ -182,9 +192,17 @@ object Manager {
         if (!exportDir.exists()) {
             exportDir.mkdirs()
         }
+
         val file = File(exportDir, fileName)
-        file.outputStream().use { workbook.write(it) }
-        return Uri.fromFile(file)
+        file.outputStream().use {
+            workbook.write(it)
+        }
+
+        return FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.provider",
+            file
+        )
     }
 
     private fun sendNotification(
@@ -192,13 +210,14 @@ object Manager {
         title: String,
         content: String,
         notificationId: Int,
+        notificationsEnabled: Boolean,
         fileUri: Uri? = null
     ) {
         if (context !is MainActivity) {
             return
         }
 
-        if (context.permissionsHelper.isNotificationPermissionGranted()) {
+        if (context.permissionsHelper.isNotificationPermissionGranted() && notificationsEnabled) {
             Notifications.sendNotification(
                 context = context,
                 title = title,

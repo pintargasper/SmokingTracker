@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -115,7 +116,7 @@ class SettingsFragment : Fragment() {
                 DialogManager.showNotificationsDialog(
                     context = requireActivity(),
                     notificationsSettings = notificationsSettingsRepository.get()!!,
-                    onNotificationSettingsSelected  = { notification ->
+                    onNotificationSettingsSelected = { notification ->
                         lifecycleScope.launch {
                             notificationsSettingsRepository.update(settings = notification)
                         }
@@ -125,12 +126,18 @@ class SettingsFragment : Fragment() {
         }
 
         binding.downloadLayout.setOnClickListener {
+            if (!areStoragePermissionsEnabled()) {
+                openAppSettings()
+                return@setOnClickListener
+            }
+
             DialogManager.showDownloadDialog(context = requireActivity()) {
                 lifecycleScope.launch {
                     Manager.downloadFile(
                         context = requireActivity(),
                         historyRepository = historyRepository,
-                        settingsRepository = settingsRepository
+                        settingsRepository = settingsRepository,
+                        notificationsSettingsRepository = notificationsSettingsRepository
                     )
                 }
             }
@@ -153,7 +160,8 @@ class SettingsFragment : Fragment() {
                                 context = requireActivity(),
                                 fileUri = uri,
                                 historyRepository = historyRepository,
-                                settingsRepository = settingsRepository
+                                settingsRepository = settingsRepository,
+                                notificationsSettingsRepository = notificationsSettingsRepository
                             )
                             requireActivity().recreate()
                         }
@@ -181,10 +189,6 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun areNotificationsEnabled(): Boolean {
-        return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
     }
 
     private suspend fun withSettings(
@@ -258,10 +262,26 @@ class SettingsFragment : Fragment() {
         )
     }
 
+    private fun areNotificationsEnabled(): Boolean {
+        return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
+    }
+
     private fun openNotificationSettings() {
         val intent = Intent().apply {
             action = "android.settings.APP_NOTIFICATION_SETTINGS"
             putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+        }
+        startActivity(intent)
+    }
+
+    private fun areStoragePermissionsEnabled(): Boolean {
+        val mainActivity = requireActivity() as MainActivity
+        return mainActivity.permissionsHelper.isWriteExternalStoragePermissionGranted()
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", requireContext().packageName, null)
         }
         startActivity(intent)
     }

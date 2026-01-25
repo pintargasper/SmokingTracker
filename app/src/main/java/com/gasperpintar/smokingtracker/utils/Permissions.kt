@@ -13,7 +13,7 @@ open class Permissions(
 
     private var permissionCallback: ((Boolean) -> Unit)? = null
 
-    private val requestNotificationPermissionLauncher =
+    private val requestPermissionLauncher =
         activity.registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted: Boolean ->
@@ -33,7 +33,7 @@ open class Permissions(
                     Manifest.permission.POST_NOTIFICATIONS
                 ) == PackageManager.PERMISSION_GRANTED -> callback(true)
 
-                else -> requestNotificationPermissionLauncher.launch(
+                else -> requestPermissionLauncher.launch(
                     Manifest.permission.POST_NOTIFICATIONS
                 )
             }
@@ -50,6 +50,39 @@ open class Permissions(
             ) == PackageManager.PERMISSION_GRANTED
         } else {
             true
+        }
+    }
+
+    fun checkAndRequestWriteExternalStoragePermission(
+        callback: (Boolean) -> Unit
+    ) {
+        permissionCallback = callback
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            callback(true)
+            return
+        }
+
+        when {
+            ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED -> callback(true)
+
+            else -> requestPermissionLauncher.launch(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+        }
+    }
+
+    fun isWriteExternalStoragePermissionGranted(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            true
+        } else {
+            ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
         }
     }
 }
