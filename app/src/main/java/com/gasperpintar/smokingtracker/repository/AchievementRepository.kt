@@ -6,7 +6,6 @@ import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 class AchievementRepository(
     private val achievementDao: AchievementDao
 ) {
-
     suspend fun insert(
         entry: AchievementEntity
     ) {

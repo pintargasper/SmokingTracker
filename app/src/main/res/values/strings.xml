@@ -98,6 +98,7 @@
     <string name="notifications_popup_info">Choose your notification preference</string>
     <string name="notifications_popup_close">Close</string>
     <string name="notifications_popup_check_box_system">System</string>
+    <string name="notifications_popup_check_box_achievements">Achievements</string>
 
     <string name="download_popup">Download your data</string>
     <string name="download_popup_info">You will be notified of the data transfer via push notification</string>

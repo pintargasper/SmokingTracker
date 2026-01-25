@@ -43,7 +43,6 @@ object Manager {
                     fileName
                 ),
                 notificationId = 1002,
-                settingsRepository = settingsRepository,
                 fileUri = fileUri
             )
             return@withContext fileUri
@@ -69,7 +68,6 @@ object Manager {
                 title = context.getString(R.string.notification_upload_title),
                 content = context.getString(R.string.notification_upload_content),
                 notificationId = 1002,
-                settingsRepository = settingsRepository
             )
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -78,7 +76,6 @@ object Manager {
                 title = context.getString(R.string.notification_upload_failed_title),
                 content = context.getString(R.string.notification_upload_failed_content),
                 notificationId = 1002,
-                settingsRepository = settingsRepository
             )
         }
     }
@@ -107,13 +104,11 @@ object Manager {
         val header = sheet.createRow(0)
         header.createCell(0, CellType.STRING).setCellValue("Theme")
         header.createCell(1, CellType.STRING).setCellValue("Language")
-        header.createCell(2, CellType.STRING).setCellValue("Notifications")
 
         settings?.let {
             val row = sheet.createRow(1)
             row.createCell(0, CellType.NUMERIC).setCellValue(it.theme.toDouble())
             row.createCell(1, CellType.NUMERIC).setCellValue(it.language.toDouble())
-            row.createCell(2, CellType.NUMERIC).setCellValue(it.notifications.toDouble())
         }
     }
 
@@ -145,8 +140,7 @@ object Manager {
             val settingsEntity = SettingsEntity(
                 id = 0,
                 theme = row.getCell(0)?.numericCellValue?.toInt() ?: 0,
-                language = row.getCell(1)?.numericCellValue?.toInt() ?: 0,
-                notifications = row.getCell(2)?.numericCellValue?.toInt() ?: 0
+                language = row.getCell(1)?.numericCellValue?.toInt() ?: 0
             )
             settingsRepository.update(settingsEntity)
         }
@@ -193,15 +187,14 @@ object Manager {
         return Uri.fromFile(file)
     }
 
-    private suspend fun sendNotification(
+    private fun sendNotification(
         context: Context,
-        settingsRepository: SettingsRepository,
         title: String,
         content: String,
         notificationId: Int,
         fileUri: Uri? = null
     ) {
-        if (context !is MainActivity || settingsRepository.get()?.notifications != 1) {
+        if (context !is MainActivity) {
             return
         }
 

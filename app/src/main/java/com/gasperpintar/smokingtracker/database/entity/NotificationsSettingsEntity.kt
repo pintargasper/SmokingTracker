@@ -3,11 +3,11 @@ package com.gasperpintar.smokingtracker.database.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "settings")
-data class SettingsEntity(
+@Entity(tableName = "notifications_settings")
+data class NotificationsSettingsEntity(
 
     @PrimaryKey(autoGenerate = true)
     val id: Long,
-    val theme: Int,
-    val language: Int
+    val system: Boolean,
+    val achievements: Boolean,
 )

@@ -7,7 +7,6 @@ import java.time.LocalDateTime
 class HistoryRepository(
     private val historyDao: HistoryDao
 ) {
-
     suspend fun insert(
         entry: HistoryEntity
     ) {

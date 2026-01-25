@@ -21,6 +21,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
@@ -35,6 +36,7 @@ class SettingsFragment : Fragment() {
     private lateinit var database: AppDatabase
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
+    private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
 
     private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
     private var selectedFileUri: Uri? = null
@@ -50,6 +52,7 @@ class SettingsFragment : Fragment() {
         database = (requireActivity() as MainActivity).database
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+        notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
 
         setupFilePicker()
         setup()
@@ -74,8 +77,9 @@ class SettingsFragment : Fragment() {
                         selectedTheme = settings.theme,
                         onThemeSelected = { theme ->
                             updateSettingsField(
-                                updateBlock = { it.copy(theme = theme) },
-                                recreateActivity = true
+                                updateBlock = {
+                                    it.copy(theme = theme)
+                                }
                             )
                         }
                     )
@@ -93,8 +97,7 @@ class SettingsFragment : Fragment() {
                             updateSettingsField(
                                 updateBlock = {
                                     it.copy(language = language)
-                                },
-                                recreateActivity = true
+                                }
                             )
                         }
                     )
@@ -109,25 +112,15 @@ class SettingsFragment : Fragment() {
                     return@launch
                 }
 
-                withSettings { settings ->
-                    DialogManager.showNotificationsDialog(
-                        context = requireActivity(),
-                        selectedNotificationOption = settings.notifications,
-                        onNotificationOptionSelected = { notification ->
-
-                            if (notification == 1 && !areNotificationsEnabled()) {
-                                openNotificationSettings()
-                                return@showNotificationsDialog
-                            }
-
-                            updateSettingsField(
-                                updateBlock = {
-                                    it.copy(notifications = notification)
-                                }
-                            )
+                DialogManager.showNotificationsDialog(
+                    context = requireActivity(),
+                    notificationsSettings = notificationsSettingsRepository.get()!!,
+                    onNotificationSettingsSelected  = { notification ->
+                        lifecycleScope.launch {
+                            notificationsSettingsRepository.update(settings = notification)
                         }
-                    )
-                }
+                    }
+                )
             }
         }
 
@@ -177,17 +170,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun updateSettingsField(
-        updateBlock: (SettingsEntity) -> SettingsEntity,
-        recreateActivity: Boolean = false
+        updateBlock: (SettingsEntity) -> SettingsEntity
     ) {
         lifecycleScope.launch {
             withSettings { currentSettings ->
                 val updatedSettings = updateBlock(currentSettings)
                 lifecycleScope.launch {
                     settingsRepository.update(updatedSettings)
-                    if (recreateActivity) {
-                        requireActivity().recreate()
-                    }
+                    requireActivity().recreate()
                 }
             }
         }

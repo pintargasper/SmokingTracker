@@ -30,7 +30,9 @@ import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import androidx.core.view.size
+import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import java.util.Locale
 
@@ -41,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var database: AppDatabase
     private lateinit var achievementRepository: AchievementRepository
     private lateinit var settingsRepository: SettingsRepository
+    private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
 
     lateinit var permissionsHelper: Permissions
 
@@ -68,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         settingsRepository = SettingsRepository(
             settingsDao = database.settingsDao()
         )
+        notificationsSettingsRepository = NotificationsSettingsRepository(
+            notificationsSettingsDao = database.notificationsSettingsDao()
+        )
 
         super.attachBaseContext(
             LocalizationHelper.getLocalizedContext(
@@ -93,7 +99,6 @@ class MainActivity : AppCompatActivity() {
         handleAppVersioning(sharedPreferences = sharedPreferences)
         applyTheme(themeId = settings.theme)
         handleNotifications(
-            settings = settings,
             sharedPreferences = sharedPreferences
         )
     }
@@ -145,11 +150,17 @@ class MainActivity : AppCompatActivity() {
 
         val defaultSettings = SettingsEntity(
             id = 1,
-            notifications = if (permissionsHelper.awaitNotificationPermission()) 1 else 0,
             theme = 0,
             language = getDefaultLanguageIndex()
         )
+
+        val notificationsSettings = NotificationsSettingsEntity(
+            id = 1,
+            system = true,
+            achievements = true
+        )
         settingsRepository.insert(settings = defaultSettings)
+        notificationsSettingsRepository.insert(settings = notificationsSettings)
         return defaultSettings
     }
 
@@ -168,22 +179,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleNotifications(
-        settings: SettingsEntity,
         sharedPreferences: SharedPreferences
     ) {
-        val isFirstRun: Boolean =
-            sharedPreferences.getBoolean("first_run", true)
-
-        if (!isFirstRun && settings.notifications != 1) return
-
-        permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
-            if (isGranted) {
-                Notifications.createNotificationChannel(context = this)
-                scheduleNotificationWorker()
-            }
-        }
+        val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
 
         if (isFirstRun) {
+            permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
+                if (isGranted) {
+                    Notifications.createNotificationChannel(context = this)
+                    scheduleNotificationWorker()
+                }
+            }
+
             sharedPreferences.edit {
                 putBoolean("first_run", false)
             }
@@ -199,7 +206,7 @@ class MainActivity : AppCompatActivity() {
 
         WorkManager.getInstance(context = this)
             .enqueueUniquePeriodicWork(
-                uniqueWorkName = "notification_and_achievement_work",
+                uniqueWorkName = "smoking_notification_work",
                 ExistingPeriodicWorkPolicy.KEEP,
                 workRequest
             )

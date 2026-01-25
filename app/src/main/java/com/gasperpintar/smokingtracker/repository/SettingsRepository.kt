@@ -6,7 +6,6 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 class SettingsRepository(
     private val settingsDao: SettingsDao
 ) {
-
     suspend fun insert(
         settings: SettingsEntity
     ) {

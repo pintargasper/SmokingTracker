@@ -6,8 +6,6 @@ import android.os.Build
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlin.coroutines.resume
 
 open class Permissions(
     private val activity: ComponentActivity
@@ -41,20 +39,6 @@ open class Permissions(
             }
         } else {
             callback(true)
-        }
-    }
-
-    suspend fun awaitNotificationPermission(): Boolean {
-        return suspendCancellableCoroutine { continuation ->
-            checkAndRequestNotificationPermission { isGranted ->
-                if (continuation.isActive) {
-                    continuation.resume(isGranted)
-                }
-            }
-
-            continuation.invokeOnCancellation {
-                permissionCallback = null
-            }
         }
     }
 }

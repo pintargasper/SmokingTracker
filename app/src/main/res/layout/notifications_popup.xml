@@ -57,24 +57,52 @@
             tools:ignore="TextSizeCheck">
 
             <LinearLayout
-                android:id="@+id/notifications_options_container"
+                android:id="@+id/notifications_options_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp">
 
-                <CheckBox
-                    android:id="@+id/checkbox_system"
+                <LinearLayout
+                    android:id="@+id/notifications_options_container_system"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
-                    android:text="@string/notifications_popup_check_box_system"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
-                    android:maxWidth="300dp" />
+                    android:orientation="vertical"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
 
+                    <CheckBox
+                        android:id="@+id/checkbox_system"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:text="@string/notifications_popup_check_box_system"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp"
+                        android:maxWidth="300dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/notifications_options_container_achievements"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_achievements"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxWidth="300dp"
+                        android:singleLine="true"
+                        android:text="@string/notifications_popup_check_box_achievements"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

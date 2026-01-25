@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import java.time.LocalDateTime
@@ -152,20 +153,27 @@ object DialogManager {
 
     fun showNotificationsDialog(
         context: FragmentActivity,
-        selectedNotificationOption: Int,
-        onNotificationOptionSelected: (Int) -> Unit
+        notificationsSettings: NotificationsSettingsEntity,
+        onNotificationSettingsSelected: (NotificationsSettingsEntity) -> Unit
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.notifications_popup) {
             override fun setup() {
                 val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
+                val checkboxAchievements: CheckBox = dialogView.findViewById(R.id.checkbox_achievements)
 
-                checkboxSystem.isChecked = selectedNotificationOption == 1
+                var currentSettings = notificationsSettings.copy()
+
+                checkboxSystem.isChecked = currentSettings.system
+                checkboxAchievements.isChecked = currentSettings.achievements
+
                 checkboxSystem.setOnCheckedChangeListener { _, isChecked ->
-                    onNotificationOptionSelected(if (isChecked) {
-                        1
-                    } else {
-                        0
-                    })
+                    currentSettings = currentSettings.copy(system = isChecked)
+                    onNotificationSettingsSelected(currentSettings)
+                }
+
+                checkboxAchievements.setOnCheckedChangeListener { _, isChecked ->
+                    currentSettings = currentSettings.copy(achievements = isChecked)
+                    onNotificationSettingsSelected(currentSettings)
                 }
             }
         }
