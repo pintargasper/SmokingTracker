@@ -30,6 +30,11 @@ class AchievementRepository(
         achievementDao.delete(entity = entry)
     }
 
+    suspend fun deleteAll() {
+        achievementDao.deleteAll()
+        achievementDao.resetAutoIncrement()
+    }
+
     suspend fun getAll(): List<AchievementEntity> {
         return achievementDao.getAll()
     }

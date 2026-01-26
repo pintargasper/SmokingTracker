@@ -21,6 +21,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
@@ -35,6 +36,7 @@ class SettingsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var database: AppDatabase
+    private lateinit var achievementRepository: AchievementRepository
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
@@ -51,6 +53,7 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         database = (requireActivity() as MainActivity).database
+        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
@@ -135,6 +138,7 @@ class SettingsFragment : Fragment() {
                 lifecycleScope.launch {
                     Manager.downloadFile(
                         context = requireActivity(),
+                        achievementRepository = achievementRepository,
                         historyRepository = historyRepository,
                         settingsRepository = settingsRepository,
                         notificationsSettingsRepository = notificationsSettingsRepository
@@ -159,6 +163,7 @@ class SettingsFragment : Fragment() {
                             Manager.uploadFile(
                                 context = requireActivity(),
                                 fileUri = uri,
+                                achievementRepository = achievementRepository,
                                 historyRepository = historyRepository,
                                 settingsRepository = settingsRepository,
                                 notificationsSettingsRepository = notificationsSettingsRepository

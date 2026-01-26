@@ -7,6 +7,12 @@ import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 @Dao
 interface AchievementDao: Base<AchievementEntity> {
 
+    @Query(value = "DELETE FROM achievements")
+    suspend fun deleteAll()
+
+    @Query(value = "DELETE FROM sqlite_sequence WHERE name = 'achievements'")
+    suspend fun resetAutoIncrement()
+
     @Query(value = """
         UPDATE achievements
         SET times = times + 1,
