@@ -114,9 +114,23 @@
     <string name="upload_popup_file_none">None</string>
     <string name="upload_popup_file_unknown">Unknown</string>
 
-    <string name="achievement_popup_header">Achievement unlocked</string>
-    <string name="achievements_popup_icon">Achievement icon</string>
+    <string name="achievement_popup_header">Achievement</string>
+    <string name="achievement_popup_icon">Achievement icon</string>
     <string name="achievement_popup_close">Close</string>
+
+    <string name="achievement_message_congrats_hours_20">Well done! Keep pushing forward and stay consistent</string>
+    <string name="achievement_message_congrats_hours_30">Keep it up! Every step you take shows your dedication</string>
+    <string name="achievement_message_congrats_days_2">Great job! You are building momentum and staying strong</string>
+    <string name="achievement_message_congrats_hours_60">Awesome! Your persistence is showing impressive results</string>
+    <string name="achievement_message_congrats_days_5">Amazing! Keep following through and stay committed</string>
+    <string name="achievement_message_congrats_hours_150">Fantastic! Your effort is paying off, keep going</string>
+    <string name="achievement_message_congrats_weeks_1">Outstanding! You have reached a major milestone – stay motivated</string>
+    <string name="achievement_message_congrats_cigarettes_50">Nice work! You are making steady progress every day</string>
+    <string name="achievement_message_congrats_cigarettes_100">Impressive! Keep up your focus and determination</string>
+    <string name="achievement_message_congrats_cigarettes_150">Well played! Your consistency is remarkable</string>
+    <string name="achievement_message_congrats_cigarettes_200">Excellent! Keep building on your achievements</string>
+    <string name="achievement_message_congrats_cigarettes_250">Superb! Every step forward counts – stay strong</string>
+    <string name="achievement_message_congrats_cigarettes_300">Legendary! You have shown incredible dedication and focus</string>
 
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>
@@ -140,15 +154,16 @@
     <string name="month_december">December</string>
 
     <string name="notification_title">Your progress reminder</string>
-    <string name="notification_content">It\'s been %1$s since your last cigarette</string>
+    <string name="notification_content">It is been %1$s since your last cigarette</string>
     <string name="notification_download_title">Download completed</string>
     <string name="notification_download_content">File %1$s was successfully downloaded</string>
     <string name="notification_upload_title">Upload completed</string>
     <string name="notification_upload_content">Data successfully loaded</string>
     <string name="notification_upload_failed_title">Upload Failed</string>
     <string name="notification_upload_failed_content">Error loading file</string>
-    <string name="notification_achievement_unlocked_title">Achievement unlocked!</string>
-    <string name="notification_achievement_unlocked_content">Badge: %1$s without smoking</string>
+    <string name="notification_achievement_unlocked_title">Congratulations!</string>
+    <string name="notification_achievement_unlocked_content_time">Milestone achieved: %1$s without smoking</string>
+    <string name="notification_achievement_unlocked_content_cigarettes">You avoided %1$s</string>
 
     <string name="calculator_cigarettes_per_day">Cigarettes per day</string>
     <string name="calculator_cigarettes_per_pack">Cigarettes per pack</string>

@@ -250,7 +250,7 @@ object DialogManager {
                 )
                 achievementImage.setImageResource(entry.image)
                 achievementTitle.text = entry.getDisplayText(context)
-                achievementMessage.text = entry.message
+                achievementMessage.text = context.getString(entry.message)
             }
         }
         dialogInstance.show()

@@ -139,7 +139,7 @@ object Manager {
         val header = sheet.createRow(0)
         header.createCell(0, CellType.NUMERIC).setCellValue("Image")
         header.createCell(1, CellType.NUMERIC).setCellValue("Value")
-        header.createCell(2, CellType.STRING).setCellValue("Message")
+        header.createCell(2, CellType.NUMERIC).setCellValue("Message")
         header.createCell(3, CellType.NUMERIC).setCellValue("Times")
         header.createCell(4, CellType.STRING).setCellValue("LastAchieved")
         header.createCell(5, CellType.BOOLEAN).setCellValue("Reset")
@@ -150,7 +150,7 @@ object Manager {
             val row = sheet.createRow(index + 1)
             row.createCell(0, CellType.NUMERIC).setCellValue(achievement.image.toDouble())
             row.createCell(1, CellType.NUMERIC).setCellValue(achievement.value.toDouble())
-            row.createCell(2, CellType.STRING).setCellValue(achievement.message)
+            row.createCell(2, CellType.NUMERIC).setCellValue(achievement.message.toDouble())
             row.createCell(3, CellType.NUMERIC).setCellValue(achievement.times.toDouble())
             row.createCell(4, CellType.STRING).setCellValue(achievement.lastAchieved?.format(dateFormatter) ?: "")
             row.createCell(5, CellType.BOOLEAN).setCellValue(achievement.reset)
@@ -225,7 +225,7 @@ object Manager {
             }
             val image = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed
             val value = row.getCell(1)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val message = row.getCell(2)?.stringCellValue ?: return@forEachIndexed
+            val message = row.getCell(2)?.numericCellValue?.toInt() ?: return@forEachIndexed
             val times = row.getCell(3)?.numericCellValue?.toLong() ?: return@forEachIndexed
             val lastAchievedString = row.getCell(4)?.stringCellValue
             val lastAchieved = if (!lastAchievedString.isNullOrEmpty()) {

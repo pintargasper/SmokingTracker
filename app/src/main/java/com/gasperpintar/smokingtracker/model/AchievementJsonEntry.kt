@@ -4,6 +4,6 @@ data class AchievementJsonEntry(
         val id: Long,
         val icon: String,
         val value: Int,
-        val description: String,
+        val message: String,
         val unit: String
 )

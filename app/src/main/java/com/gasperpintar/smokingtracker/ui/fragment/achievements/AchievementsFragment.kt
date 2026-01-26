@@ -129,12 +129,8 @@ class AchievementsFragment : Fragment() {
 
     private fun calculateGridSpanCount(): Int {
         val displayMetrics = resources.displayMetrics
-        val screenWidthDp: Float = displayMetrics.widthPixels / displayMetrics.density
-
-        return when {
-            screenWidthDp >= 900 -> 4
-            screenWidthDp >= 600 -> 3
-            else -> 2
-        }
+        val screenWidthPx = displayMetrics.widthPixels
+        val itemWidthPx = (170 * displayMetrics.density).toInt()
+        return (screenWidthPx / itemWidthPx).coerceAtLeast(1)
     }
 }

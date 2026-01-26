@@ -1,16 +1,19 @@
 {
   "SMOKE_FREE_TIME": [
-    { "icon": "LENT", "value": 1, "description": "", "unit": "HOURS" },
-    { "icon": "LENT", "value": 5, "description": "", "unit": "HOURS" },
-    { "icon": "EDIT", "value": 2, "description": "", "unit": "DAYS" },
-    { "icon": "EDIT", "value": 1, "description": "", "unit": "WEEKS" },
-    { "icon": "EDIT", "value": 10, "description": "", "unit": "DAYS" },
-    { "icon": "LENT", "value": 10, "description": "", "unit": "DAYS" }
+    { "icon": "LENT", "value": 20, "message": "HOURS20", "unit": "HOURS" },
+    { "icon": "LENT", "value": 30, "message": "HOURS30", "unit": "HOURS" },
+    { "icon": "EDIT", "value": 2, "message": "DAYS2", "unit": "DAYS" },
+    { "icon": "EDIT", "value": 60, "message": "HOURS60", "unit": "HOURS" },
+    { "icon": "EDIT", "value": 5, "message": "DAYS5", "unit": "DAYS" },
+    { "icon": "LENT", "value": 150, "message": "HOURS150", "unit": "HOURS" },
+    { "icon": "LENT", "value": 1, "message": "WEEK1", "unit": "WEEKS" }
   ],
   "CIGARETTES_AVOIDED": [
-    { "icon": "LENT", "value": 10, "description": "" },
-    { "icon": "LENT", "value": 50, "description": "" },
-    { "icon": "EDIT", "value": 200, "description": "" },
-    { "icon": "LENT", "value": 1000, "description": "" }
+    { "icon": "LENT", "value": 50, "message": "CIGARETTES50" },
+    { "icon": "LENT", "value": 100, "message": "CIGARETTES100" },
+    { "icon": "EDIT", "value": 150, "message": "CIGARETTES150" },
+    { "icon": "LENT", "value": 200, "message": "CIGARETTES200" },
+    { "icon": "LENT", "value": 250, "message": "CIGARETTES250" },
+    { "icon": "LENT", "value": 300, "message": "CIGARETTES300" }
   ]
 }
