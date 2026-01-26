@@ -22,7 +22,6 @@ class HistoryEntryTest {
             createdAt = LocalDateTime.of(2025, 12, 31, 10, 30, 0),
             timerLabel = "10:30:00"
         )
-
         val result: HistoryEntry = HistoryEntry.fromEntity(entity = historyEntity)
         assertEquals(expectedHistoryEntry, result)
     }
@@ -41,7 +40,6 @@ class HistoryEntryTest {
             createdAt = LocalDateTime.of(2025, 12, 31, 10, 30, 0),
             lent = 1
         )
-
         val result: HistoryEntity = historyEntry.toEntity()
         assertEquals(expectedHistoryEntity, result)
     }

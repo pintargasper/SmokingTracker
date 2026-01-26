@@ -7,6 +7,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -21,11 +22,13 @@ class LocalizationHelperTest {
 
     private lateinit var context: Context
     private lateinit var database: AppDatabase
+    private lateinit var settingsRepository: SettingsRepository
 
     @Before
     fun setup() {
         context = ApplicationProvider.getApplicationContext()
         database = TestProvider.getInMemoryDatabase(context)
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
     }
 
     @After
@@ -35,9 +38,9 @@ class LocalizationHelperTest {
 
     @Test
     fun getLocalizedContextReturnsSystemLocaleWhenLanguageIsSystem() = runBlocking {
-        database.settingsDao().insert(entity = createSettingsEntity(languageId = 0))
+        settingsRepository.insert(settings = createSettingsEntity(languageId = 0))
 
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, database = database)
+        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
         val expectedLanguage = context.resources.configuration.locales[0].language
         val actualLanguage = localizedContext.resources.configuration.locales[0].language
 
@@ -51,7 +54,7 @@ class LocalizationHelperTest {
 
         database.settingsDao().insert(entity = createSettingsEntity(languageId = index))
 
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, database = database)
+        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
         val actualLanguage = localizedContext.resources.configuration.locales[0].language
 
         assertEquals("en", actualLanguage)
@@ -61,7 +64,7 @@ class LocalizationHelperTest {
     fun getLocalizedContextReturnsSystemLocaleWhenLanguageIdIsInvalid() = runBlocking {
         database.settingsDao().insert(entity = createSettingsEntity(languageId = 999))
 
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, database = database)
+        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
         val expectedLanguage = context.resources.configuration.locales[0].language
         val actualLanguage = localizedContext.resources.configuration.locales[0].language
 
