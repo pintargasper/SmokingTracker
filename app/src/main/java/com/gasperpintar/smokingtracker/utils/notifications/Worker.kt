@@ -10,6 +10,8 @@ import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.Duration
 import java.time.LocalDateTime
@@ -28,17 +30,26 @@ class Worker(
     private val notificationsSettingsRepository by lazy { NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao()) }
 
     override suspend fun doWork(): Result {
-
         val lastHistory = historyRepository.getLast()
-        val achievements = achievementRepository.getAll()
         val notifications = notificationsSettingsRepository.get()
+        var achievements = achievementRepository.getAll()
+
+        if (lastHistory != null) {
+            val achievementEvaluator = AchievementEvaluator(achievementRepository)
+            achievementEvaluator.evaluate(
+                lastSmokeTime = lastHistory.createdAt,
+                now = LocalDateTime.now()
+            )
+            achievements = achievementRepository.getAll()
+        }
 
         val duration: Duration? = lastHistory?.let {
             Duration.between(it.createdAt, LocalDateTime.now())
         }
 
+        Notifications.createNotificationChannel(applicationContext)
+
         if (duration != null && duration.toHours() >= 1 && notifications!!.system) {
-            Notifications.createNotificationChannel(applicationContext)
             Notifications.sendNotification(
                 context = applicationContext,
                 title = applicationContext.getString(R.string.notification_title),
@@ -53,23 +64,33 @@ class Worker(
             )
         }
 
-        val baseAchievementNotificationId = 1002
-        achievements.forEachIndexed { index, achievement ->
-            if (!achievement.reset && achievement.notify) {
-                if (notifications!!.achievements) {
-                    Notifications.createNotificationChannel(applicationContext)
-                    val notificationId = baseAchievementNotificationId + index + 1
+        achievements.forEach { achievement ->
+            if (achievement.notify && notifications!!.achievements) {
+                if (!achievement.reset) {
+
+                    val displayText = AchievementEntry
+                        .fromEntity(entity = achievement)
+                        .getDisplayText(applicationContext)
+
+                    val notificationContent = when (achievement.unit) {
+                        AchievementUnit.CIGARETTES -> applicationContext.getString(
+                            R.string.notification_achievement_unlocked_content_cigarettes,
+                            displayText
+                        )
+                        else -> applicationContext.getString(
+                            R.string.notification_achievement_unlocked_content_time,
+                            displayText
+                        )
+                    }
+
                     Notifications.sendNotification(
                         context = applicationContext,
                         title = applicationContext.getString(R.string.notification_achievement_unlocked_title),
-                        content = applicationContext.getString(
-                            R.string.notification_achievement_unlocked_content,
-                            AchievementEntry.fromEntity(entity = achievement).getDisplayText(applicationContext)
-                        ),
-                        notificationId = notificationId
+                        content = notificationContent,
+                        notificationId = 1002 + achievement.id.toInt()
                     )
+                    achievementRepository.update(entry = achievement.copy(notify = false))
                 }
-                achievementRepository.update(entry = achievement.copy(notify = false))
             }
         }
         return Result.success()

@@ -58,9 +58,8 @@
 
 ## 📝 Dependencies & Versions
 
-**Gradle Plugin & Kotlin**
-- Android Gradle Plugin: 8.13.2
-- Kotlin: 2.3.0
+**Gradle Plugin**
+- Android Gradle Plugin: 9.0.0
 
 **Libraries**
 > All libraries are configured in `libs.versions.toml`.

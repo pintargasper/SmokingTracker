@@ -19,7 +19,6 @@ class AchievementEvaluator(private val achievementRepository: AchievementReposit
             achievements.forEach { achievement ->
                 cachedAchievements.add(achievement)
             }
-            return
         }
 
         val secondsWithoutSmoking = Duration.between(lastSmokeTime, now).seconds
