@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.adapter.Adapter
@@ -18,7 +18,7 @@ import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 
 class AchievementsFragment : Fragment() {
@@ -72,6 +72,7 @@ class AchievementsFragment : Fragment() {
                     id = it.id,
                     image = it.image,
                     value = it.value,
+                    title = it.title,
                     message = it.message,
                     times = it.times,
                     lastAchieved = it.lastAchieved,
@@ -96,25 +97,27 @@ class AchievementsFragment : Fragment() {
             layoutId = R.layout.achievements_container,
             onBind = { itemView, achievementEntry ->
                 val imageAchievement = itemView.findViewById<ImageView>(R.id.image_achievement)
-                val textAchievement = itemView.findViewById<TextView>(R.id.text_achievement)
-                val container = itemView.findViewById<View>(R.id.achievement_container)
+                val textAchievementTitle = itemView.findViewById<TextView>(R.id.text_achievement_title)
+                val textAchievementMessage = itemView.findViewById<TextView>(R.id.text_achievement_message)
+                val textLastAchievedValue = itemView.findViewById<TextView>(R.id.text_last_achieved_value)
+                val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_value)
 
                 imageAchievement.setImageResource(achievementEntry.image)
-                textAchievement.text = achievementEntry.getDisplayText(itemView.context)
-
-                container.setOnClickListener {
-                    DialogManager.showAchievementsDialog(
-                        context = requireActivity(),
-                        entry = achievementEntry
-                    )
-                }
+                textAchievementTitle.text = getString(achievementEntry.title)
+                textAchievementMessage.text = getString(achievementEntry.message)
+                textLastAchievedValue.text = achievementEntry.lastAchieved?.toLocalDate()?.let { LocalizationHelper.formatDate(date = it) } ?: "-"
+                textLastAchievedCountValue.text = requireContext().resources.getQuantityString(
+                    R.plurals.achievement_achieved_times,
+                    achievementEntry.times.toInt(),
+                    achievementEntry.times
+                )
             },
             diffCallback = object : DiffUtil.ItemCallback<AchievementEntry>() {
                 override fun areItemsTheSame(oldItem: AchievementEntry, newItem: AchievementEntry) = oldItem.id == newItem.id
                 override fun areContentsTheSame(oldItem: AchievementEntry, newItem: AchievementEntry) = oldItem == newItem
             }
         )
-        binding.recyclerviewAchievements.layoutManager = GridLayoutManager(requireContext(), calculateGridSpanCount())
+        binding.recyclerviewAchievements.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerviewAchievements.adapter = adapter
         this.adapter = adapter
     }
@@ -125,12 +128,5 @@ class AchievementsFragment : Fragment() {
         adapter.submitList(achievementEntries) {
             binding.recyclerviewAchievements.scrollToPosition(0)
         }
-    }
-
-    private fun calculateGridSpanCount(): Int {
-        val displayMetrics = resources.displayMetrics
-        val screenWidthPx = displayMetrics.widthPixels
-        val itemWidthPx = (170 * displayMetrics.density).toInt()
-        return (screenWidthPx / itemWidthPx).coerceAtLeast(1)
     }
 }

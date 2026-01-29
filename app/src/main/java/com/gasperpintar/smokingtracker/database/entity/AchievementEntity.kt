@@ -13,6 +13,7 @@ data class AchievementEntity(
     val id: Long,
     val image: Int,
     val value: Int,
+    val title: Int,
     val message: Int,
     val times: Long,
     val lastAchieved: LocalDateTime?,

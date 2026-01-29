@@ -1,19 +1,19 @@
 {
   "SMOKE_FREE_TIME": [
-    { "icon": "LENT", "value": 20, "message": "HOURS20", "unit": "HOURS" },
-    { "icon": "LENT", "value": 30, "message": "HOURS30", "unit": "HOURS" },
-    { "icon": "EDIT", "value": 2, "message": "DAYS2", "unit": "DAYS" },
-    { "icon": "EDIT", "value": 60, "message": "HOURS60", "unit": "HOURS" },
-    { "icon": "EDIT", "value": 5, "message": "DAYS5", "unit": "DAYS" },
-    { "icon": "LENT", "value": 150, "message": "HOURS150", "unit": "HOURS" },
-    { "icon": "LENT", "value": 1, "message": "WEEK1", "unit": "WEEKS" }
+    { "icon": "LENT", "value": 20, "title": "HOURS20", "message": "HOURS20", "unit": "HOURS" },
+    { "icon": "LENT", "value": 30, "title": "HOURS30", "message": "HOURS30", "unit": "HOURS" },
+    { "icon": "EDIT", "value": 2, "title": "DAYS2", "message": "DAYS2", "unit": "DAYS" },
+    { "icon": "EDIT", "value": 60, "title": "HOURS60", "message": "HOURS60", "unit": "HOURS" },
+    { "icon": "EDIT", "value": 5, "title": "DAYS5", "message": "DAYS5", "unit": "DAYS" },
+    { "icon": "LENT", "value": 150, "title": "HOURS150", "message": "HOURS150", "unit": "HOURS" },
+    { "icon": "LENT", "value": 1, "title": "WEEK1", "message": "WEEK1", "unit": "WEEKS" }
   ],
   "CIGARETTES_AVOIDED": [
-    { "icon": "LENT", "value": 50, "message": "CIGARETTES50" },
-    { "icon": "LENT", "value": 100, "message": "CIGARETTES100" },
-    { "icon": "EDIT", "value": 150, "message": "CIGARETTES150" },
-    { "icon": "LENT", "value": 200, "message": "CIGARETTES200" },
-    { "icon": "LENT", "value": 250, "message": "CIGARETTES250" },
-    { "icon": "LENT", "value": 300, "message": "CIGARETTES300" }
+    { "icon": "LENT", "value": 50, "title": "CIGARETTES50", "message": "CIGARETTES50" },
+    { "icon": "LENT", "value": 100, "title": "CIGARETTES100", "message": "CIGARETTES100" },
+    { "icon": "EDIT", "value": 150, "title": "CIGARETTES150", "message": "CIGARETTES150" },
+    { "icon": "LENT", "value": 200, "title": "CIGARETTES200", "message": "CIGARETTES200" },
+    { "icon": "LENT", "value": 250, "title": "CIGARETTES250", "message": "CIGARETTES250" },
+    { "icon": "LENT", "value": 300, "title": "CIGARETTES300", "message": "CIGARETTES300" }
   ]
 }

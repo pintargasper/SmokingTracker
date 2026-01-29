@@ -8,12 +8,15 @@ import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
+import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.InputStreamReader
 
-class JsonHelper(private val achievementRepository: AchievementRepository) {
+class JsonHelper(
+    private val achievementRepository: AchievementRepository
+) {
 
     suspend fun initializeAchievementsIfNeeded(
         context: Context
@@ -55,6 +58,7 @@ class JsonHelper(private val achievementRepository: AchievementRepository) {
 
         return entries.map { jsonEntry ->
             val iconEnum = AchievementIcon.valueOf(value = jsonEntry.icon.uppercase())
+            val titleEnum = AchievementTitle.valueOf(value = jsonEntry.title.uppercase())
             val messageEnum = AchievementMessage.valueOf(value = jsonEntry.message.uppercase())
             val unit = if (type == AchievementCategory.CIGARETTES_AVOIDED) {
                 AchievementUnit.CIGARETTES
@@ -65,6 +69,7 @@ class JsonHelper(private val achievementRepository: AchievementRepository) {
                 id = jsonEntry.id,
                 image = iconEnum.drawableResource,
                 value = jsonEntry.value,
+                title = titleEnum.stringResource,
                 message = messageEnum.stringResource,
                 times = 0L,
                 lastAchieved = null,

@@ -114,10 +114,20 @@
     <string name="upload_popup_file_none">None</string>
     <string name="upload_popup_file_unknown">Unknown</string>
 
+    <string name="achievement_container_meta">Last achieved</string>
+    <string name="achievement_container_count">Achieved</string>
+
     <string name="achievement_popup_header">Achievement</string>
     <string name="achievement_popup_icon">Achievement icon</string>
     <string name="achievement_popup_close">Close</string>
 
+    <string name="achievement_title_congrats_hours_20">20 hour hero</string>
+    <string name="achievement_title_congrats_hours_30">30 hour warrior</string>
+    <string name="achievement_title_congrats_days_2">2 Day champion</string>
+    <string name="achievement_title_congrats_hours_60">60 hour master</string>
+    <string name="achievement_title_congrats_days_5">5 Day legend</string>
+    <string name="achievement_title_congrats_hours_150">150 hour master</string>
+    <string name="achievement_title_congrats_weeks_1">One week wonder</string>
     <string name="achievement_message_congrats_hours_20">Well done! Keep pushing forward and stay consistent</string>
     <string name="achievement_message_congrats_hours_30">Keep it up! Every step you take shows your dedication</string>
     <string name="achievement_message_congrats_days_2">Great job! You are building momentum and staying strong</string>
@@ -125,6 +135,12 @@
     <string name="achievement_message_congrats_days_5">Amazing! Keep following through and stay committed</string>
     <string name="achievement_message_congrats_hours_150">Fantastic! Your effort is paying off, keep going</string>
     <string name="achievement_message_congrats_weeks_1">Outstanding! You have reached a major milestone – stay motivated</string>
+    <string name="achievement_title_congrats_cigarettes_50">First victory pack</string>
+    <string name="achievement_title_congrats_cigarettes_100">Pack conqueror</string>
+    <string name="achievement_title_congrats_cigarettes_150">Smoke buster</string>
+    <string name="achievement_title_congrats_cigarettes_200">Carton crusher</string>
+    <string name="achievement_title_congrats_cigarettes_250">Freedom fighter</string>
+    <string name="achievement_title_congrats_cigarettes_300">Addiction destroyer</string>
     <string name="achievement_message_congrats_cigarettes_50">Nice work! You are making steady progress every day</string>
     <string name="achievement_message_congrats_cigarettes_100">Impressive! Keep up your focus and determination</string>
     <string name="achievement_message_congrats_cigarettes_150">Well played! Your consistency is remarkable</string>
@@ -235,7 +251,7 @@
     </plurals>
 
     <plurals name="achievement_achieved_times">
-        <item quantity="one">Achieved %d time</item>
-        <item quantity="other">Achieved %d times</item>
+        <item quantity="one">%d time</item>
+        <item quantity="other">%d times</item>
     </plurals>
 </resources>

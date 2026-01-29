@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "85bfa3a8c7a5e0f6555179b9f7dd5ca4",
+    "identityHash": "0399b952e4e64b71611a4c8b1cde55ed",
     "entities": [
       {
         "tableName": "achievements",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `image` INTEGER NOT NULL, `value` INTEGER NOT NULL, `message` INTEGER NOT NULL, `times` INTEGER NOT NULL, `lastAchieved` TEXT, `reset` INTEGER NOT NULL, `notify` INTEGER NOT NULL, `category` TEXT NOT NULL, `unit` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `image` INTEGER NOT NULL, `value` INTEGER NOT NULL, `title` INTEGER NOT NULL, `message` INTEGER NOT NULL, `times` INTEGER NOT NULL, `lastAchieved` TEXT, `reset` INTEGER NOT NULL, `notify` INTEGER NOT NULL, `category` TEXT NOT NULL, `unit` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -23,6 +23,12 @@
           {
             "fieldPath": "value",
             "columnName": "value",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -168,7 +174,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '85bfa3a8c7a5e0f6555179b9f7dd5ca4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0399b952e4e64b71611a4c8b1cde55ed')"
     ]
   }
 }

@@ -6,13 +6,11 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.CheckBox
 import android.widget.DatePicker
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import java.time.LocalDateTime
 import java.util.Calendar
@@ -227,30 +225,6 @@ object DialogManager {
                     dialog.dismiss()
                 }
                 dialog.setOnDismissListener { onDismiss() }
-            }
-        }
-        dialogInstance.show()
-    }
-
-    fun showAchievementsDialog(
-        context: FragmentActivity,
-        entry: AchievementEntry
-    ) {
-        val dialogInstance = object : BaseDialog(context, R.layout.achievement_popup) {
-            override fun setup() {
-                val receivedDate: TextView = dialogView.findViewById(R.id.achievement_achieved_times)
-                val achievementImage: ImageView = dialogView.findViewById(R.id.achievement_image)
-                val achievementTitle: TextView = dialogView.findViewById(R.id.achievement_title)
-                val achievementMessage: TextView = dialogView.findViewById(R.id.achievement_message)
-
-                receivedDate.text = context.resources.getQuantityString(
-                    R.plurals.achievement_achieved_times,
-                    entry.times.toInt(),
-                    entry.times
-                )
-                achievementImage.setImageResource(entry.image)
-                achievementTitle.text = entry.getDisplayText(context)
-                achievementMessage.text = context.getString(entry.message)
             }
         }
         dialogInstance.show()

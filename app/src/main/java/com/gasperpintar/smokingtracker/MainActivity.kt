@@ -30,8 +30,6 @@ import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
 import androidx.core.view.size
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
@@ -90,19 +88,8 @@ class MainActivity : AppCompatActivity() {
         if (permissionsHelper.isNotificationPermissionGranted()) {
             Notifications.createNotificationChannel(context = this)
             scheduleNotificationWorker()
-            runNotificationWorkerImmediately()
         }
     }
-
-    private fun runNotificationWorkerImmediately() {
-        val workRequest: OneTimeWorkRequest =
-            OneTimeWorkRequestBuilder<Worker>()
-                .build()
-
-        WorkManager.getInstance(context = this)
-            .enqueue(workRequest)
-    }
-
 
     private fun initViewBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)

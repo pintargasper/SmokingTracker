@@ -139,24 +139,26 @@ object Manager {
         val header = sheet.createRow(0)
         header.createCell(0, CellType.NUMERIC).setCellValue("Image")
         header.createCell(1, CellType.NUMERIC).setCellValue("Value")
-        header.createCell(2, CellType.NUMERIC).setCellValue("Message")
-        header.createCell(3, CellType.NUMERIC).setCellValue("Times")
-        header.createCell(4, CellType.STRING).setCellValue("LastAchieved")
-        header.createCell(5, CellType.BOOLEAN).setCellValue("Reset")
-        header.createCell(6, CellType.BOOLEAN).setCellValue("Notify")
-        header.createCell(7, CellType.STRING).setCellValue("Category")
-        header.createCell(8, CellType.STRING).setCellValue("Unit")
+        header.createCell(2, CellType.NUMERIC).setCellValue("Title")
+        header.createCell(3, CellType.NUMERIC).setCellValue("Message")
+        header.createCell(4, CellType.NUMERIC).setCellValue("Times")
+        header.createCell(5, CellType.STRING).setCellValue("LastAchieved")
+        header.createCell(6, CellType.BOOLEAN).setCellValue("Reset")
+        header.createCell(7, CellType.BOOLEAN).setCellValue("Notify")
+        header.createCell(8, CellType.STRING).setCellValue("Category")
+        header.createCell(9, CellType.STRING).setCellValue("Unit")
         achievementList.forEachIndexed { index, achievement ->
             val row = sheet.createRow(index + 1)
             row.createCell(0, CellType.NUMERIC).setCellValue(achievement.image.toDouble())
             row.createCell(1, CellType.NUMERIC).setCellValue(achievement.value.toDouble())
-            row.createCell(2, CellType.NUMERIC).setCellValue(achievement.message.toDouble())
-            row.createCell(3, CellType.NUMERIC).setCellValue(achievement.times.toDouble())
-            row.createCell(4, CellType.STRING).setCellValue(achievement.lastAchieved?.format(dateFormatter) ?: "")
-            row.createCell(5, CellType.BOOLEAN).setCellValue(achievement.reset)
-            row.createCell(6, CellType.BOOLEAN).setCellValue(achievement.notify)
-            row.createCell(7, CellType.STRING).setCellValue(achievement.category.name)
-            row.createCell(8, CellType.STRING).setCellValue(achievement.unit.name)
+            row.createCell(2, CellType.NUMERIC).setCellValue(achievement.title.toDouble())
+            row.createCell(3, CellType.NUMERIC).setCellValue(achievement.message.toDouble())
+            row.createCell(4, CellType.NUMERIC).setCellValue(achievement.times.toDouble())
+            row.createCell(5, CellType.STRING).setCellValue(achievement.lastAchieved?.format(dateFormatter) ?: "")
+            row.createCell(6, CellType.BOOLEAN).setCellValue(achievement.reset)
+            row.createCell(7, CellType.BOOLEAN).setCellValue(achievement.notify)
+            row.createCell(8, CellType.STRING).setCellValue(achievement.category.name)
+            row.createCell(9, CellType.STRING).setCellValue(achievement.unit.name)
         }
     }
 
@@ -225,21 +227,23 @@ object Manager {
             }
             val image = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed
             val value = row.getCell(1)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val message = row.getCell(2)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val times = row.getCell(3)?.numericCellValue?.toLong() ?: return@forEachIndexed
-            val lastAchievedString = row.getCell(4)?.stringCellValue
+            val title = row.getCell(2)?.numericCellValue?.toInt() ?: return@forEachIndexed
+            val message = row.getCell(3)?.numericCellValue?.toInt() ?: return@forEachIndexed
+            val times = row.getCell(4)?.numericCellValue?.toLong() ?: return@forEachIndexed
+            val lastAchievedString = row.getCell(5)?.stringCellValue
             val lastAchieved = if (!lastAchievedString.isNullOrEmpty()) {
                 LocalDateTime.parse(lastAchievedString, dateFormatter)
             } else null
-            val reset = row.getCell(5)?.booleanCellValue ?: false
-            val notify = row.getCell(6)?.booleanCellValue ?: false
-            val category = AchievementCategory.valueOf(row.getCell(7)?.stringCellValue ?: "SMOKE_FREE_TIME")
-            val unit = AchievementUnit.valueOf(row.getCell(8)?.stringCellValue ?: "DAYS")
+            val reset = row.getCell(6)?.booleanCellValue ?: false
+            val notify = row.getCell(7)?.booleanCellValue ?: false
+            val category = row.getCell(8)?.stringCellValue?.let { AchievementCategory.valueOf(it) } ?: AchievementCategory.SMOKE_FREE_TIME
+            val unit = row.getCell(9)?.stringCellValue?.let { AchievementUnit.valueOf(it) } ?: AchievementUnit.DAYS
             achievements.add(
                 AchievementEntity(
                     id = 0,
                     image = image,
                     value = value,
+                    title = title,
                     message = message,
                     times = times,
                     lastAchieved = lastAchieved,
