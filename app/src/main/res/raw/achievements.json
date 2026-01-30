@@ -1,19 +1,19 @@
 {
   "SMOKE_FREE_TIME": [
-    { "icon": "LENT", "value": 20, "title": "HOURS20", "message": "HOURS20", "unit": "HOURS" },
-    { "icon": "LENT", "value": 30, "title": "HOURS30", "message": "HOURS30", "unit": "HOURS" },
-    { "icon": "EDIT", "value": 2, "title": "DAYS2", "message": "DAYS2", "unit": "DAYS" },
-    { "icon": "EDIT", "value": 60, "title": "HOURS60", "message": "HOURS60", "unit": "HOURS" },
-    { "icon": "EDIT", "value": 5, "title": "DAYS5", "message": "DAYS5", "unit": "DAYS" },
-    { "icon": "LENT", "value": 150, "title": "HOURS150", "message": "HOURS150", "unit": "HOURS" },
-    { "icon": "LENT", "value": 1, "title": "WEEK1", "message": "WEEK1", "unit": "WEEKS" }
+    { "icon": "W20H", "value": 20, "title": "HOURS20", "message": "HOURS20", "unit": "HOURS" },
+    { "icon": "W30H", "value": 30, "title": "HOURS30", "message": "HOURS30", "unit": "HOURS" },
+    { "icon": "W2D", "value": 2, "title": "DAYS2", "message": "DAYS2", "unit": "DAYS" },
+    { "icon": "W60H", "value": 60, "title": "HOURS60", "message": "HOURS60", "unit": "HOURS" },
+    { "icon": "W5D", "value": 5, "title": "DAYS5", "message": "DAYS5", "unit": "DAYS" },
+    { "icon": "W150H", "value": 150, "title": "HOURS150", "message": "HOURS150", "unit": "HOURS" },
+    { "icon": "W1W", "value": 1, "title": "WEEK1", "message": "WEEK1", "unit": "WEEKS" }
   ],
   "CIGARETTES_AVOIDED": [
-    { "icon": "LENT", "value": 50, "title": "CIGARETTES50", "message": "CIGARETTES50" },
-    { "icon": "LENT", "value": 100, "title": "CIGARETTES100", "message": "CIGARETTES100" },
-    { "icon": "EDIT", "value": 150, "title": "CIGARETTES150", "message": "CIGARETTES150" },
-    { "icon": "LENT", "value": 200, "title": "CIGARETTES200", "message": "CIGARETTES200" },
-    { "icon": "LENT", "value": 250, "title": "CIGARETTES250", "message": "CIGARETTES250" },
-    { "icon": "LENT", "value": 300, "title": "CIGARETTES300", "message": "CIGARETTES300" }
+    { "icon": "C50", "value": 50, "title": "C50", "message": "C50" },
+    { "icon": "C100", "value": 100, "title": "C100", "message": "C100" },
+    { "icon": "C150", "value": 150, "title": "C150", "message": "C150" },
+    { "icon": "C200", "value": 200, "title": "C200", "message": "C200" },
+    { "icon": "C250", "value": 250, "title": "C250", "message": "C250" },
+    { "icon": "C300", "value": 300, "title": "C300", "message": "C300" }
   ]
 }
