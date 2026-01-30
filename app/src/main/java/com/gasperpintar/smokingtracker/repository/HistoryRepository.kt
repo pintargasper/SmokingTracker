@@ -49,4 +49,8 @@ class HistoryRepository(
     ): Int {
         return historyDao.getCountBetween(start = start, end = end)
     }
+
+    suspend fun getAverageCigarettesPerDay(): Double {
+        return historyDao.getAveragePerDay()
+    }
 }

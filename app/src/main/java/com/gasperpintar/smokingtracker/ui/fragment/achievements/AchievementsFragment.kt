@@ -1,5 +1,7 @@
 package com.gasperpintar.smokingtracker.ui.fragment.achievements
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -102,15 +104,29 @@ class AchievementsFragment : Fragment() {
                 val textLastAchievedValue = itemView.findViewById<TextView>(R.id.text_last_achieved_value)
                 val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_value)
 
-                imageAchievement.setImageResource(achievementEntry.image)
                 textAchievementTitle.text = getString(achievementEntry.title)
                 textAchievementMessage.text = getString(achievementEntry.message)
-                textLastAchievedValue.text = achievementEntry.lastAchieved?.toLocalDate()?.let { LocalizationHelper.formatDate(date = it) } ?: "-"
+                textLastAchievedValue.text = achievementEntry.lastAchieved?.toLocalDate()?.let {
+                    LocalizationHelper.formatDate(date = it)
+                } ?: "-"
                 textLastAchievedCountValue.text = requireContext().resources.getQuantityString(
                     R.plurals.achievement_achieved_times,
                     achievementEntry.times.toInt(),
                     achievementEntry.times
                 )
+
+                imageAchievement.setImageResource(achievementEntry.image)
+                if (achievementEntry.times == 0L) {
+                    imageAchievement.colorFilter = ColorMatrixColorFilter(
+                        ColorMatrix().apply {
+                            setSaturation(0f)
+                        }
+                    )
+                    imageAchievement.alpha = 0.4f
+                } else {
+                    imageAchievement.clearColorFilter()
+                    imageAchievement.alpha = 1f
+                }
             },
             diffCallback = object : DiffUtil.ItemCallback<AchievementEntry>() {
                 override fun areItemsTheSame(oldItem: AchievementEntry, newItem: AchievementEntry) = oldItem.id == newItem.id

@@ -35,7 +35,10 @@ class Worker(
         var achievements = achievementRepository.getAll()
 
         if (lastHistory != null) {
-            val achievementEvaluator = AchievementEvaluator(achievementRepository)
+            val achievementEvaluator = AchievementEvaluator(
+                historyRepository = historyRepository,
+                achievementRepository = achievementRepository
+            )
             achievementEvaluator.evaluate(
                 lastSmokeTime = lastHistory.createdAt,
                 now = LocalDateTime.now()

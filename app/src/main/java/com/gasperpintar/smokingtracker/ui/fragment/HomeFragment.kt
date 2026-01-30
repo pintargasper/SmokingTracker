@@ -60,7 +60,10 @@ class HomeFragment : Fragment() {
         database = (requireActivity() as MainActivity).database
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
-        achievementEvaluator = AchievementEvaluator(achievementRepository = achievementRepository)
+        achievementEvaluator = AchievementEvaluator(
+            historyRepository = historyRepository,
+            achievementRepository = achievementRepository
+        )
 
         setup()
         setupRecyclerView()
