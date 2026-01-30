@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityAchievementsBinding
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.ui.MarqueeTextView
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementsFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.google.android.material.tabs.TabLayoutMediator
@@ -64,7 +65,15 @@ class AchievementsActivity : AppCompatActivity() {
         viewPager.isUserInputEnabled = true
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabTitles.getOrNull(position) ?: ""
+            val customTabView = layoutInflater.inflate(
+                R.layout.view_tab,
+                tabLayout,
+                false
+            ) as MarqueeTextView
+
+            customTabView.text = tabTitles.getOrNull(position) ?: ""
+            customTabView.isSelected = true
+            tab.customView = customTabView
         }.attach()
 
         viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
