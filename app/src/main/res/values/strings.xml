@@ -99,7 +99,6 @@
     <string name="upload_popup_file_unknown">Unknown</string>
     <string name="achievement_container_meta">Last achieved</string>
     <string name="achievement_container_count">Achieved</string>
-    <string name="achievement_popup_close">Close</string>
     <string name="achievement_title_congrats_days_1">One day hero</string>
     <string name="achievement_title_congrats_days_2">Two day champion</string>
     <string name="achievement_title_congrats_days_3">Three day warrior</string>
