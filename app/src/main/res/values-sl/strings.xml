@@ -153,7 +153,6 @@
     <string name="achievements_title">Dosežki</string>
     <string name="achievements_cigarettes_avoided">Nepokajene cigarete</string>
     <string name="achievements_smoke_free_time">Čas brez kajenja</string>
-    <string name="achievements_container_icon">Ikona dosežka</string>
     <string name="notifications_popup_check_box_achievements">Dosežki</string>
     <string name="achievement_container_meta">Nazadnje doseženo</string>
     <string name="achievement_container_count">Doseženo</string>
