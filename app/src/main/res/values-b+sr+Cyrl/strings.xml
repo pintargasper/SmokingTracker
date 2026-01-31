@@ -20,4 +20,8 @@
     <string name="month_november">Новембар</string>
     <string name="month_december">Децембар</string>
     <string name="title_home">Дом</string>
+    <string name="home_timer_day">д</string>
+    <string name="home_timer_hour">ч</string>
+    <string name="home_timer_minute">м</string>
+    <string name="home_timer_second">с</string>
 </resources>
