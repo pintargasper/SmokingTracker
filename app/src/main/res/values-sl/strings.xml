@@ -156,4 +156,18 @@
     <string name="notifications_popup_check_box_achievements">Dosežki</string>
     <string name="achievement_container_meta">Nazadnje doseženo</string>
     <string name="achievement_container_count">Doseženo</string>
+    <string name="achievement_title_congrats_days_1">Enodnevni junak</string>
+    <string name="achievement_title_congrats_days_2">Dvodnevni prvak</string>
+    <string name="achievement_title_congrats_days_3">Tridnevni bojevnik</string>
+    <string name="achievement_title_congrats_days_4">Štiridnevni mojster</string>
+    <string name="achievement_title_congrats_days_5">Petdnevna legenda</string>
+    <string name="achievement_title_congrats_days_6">Šestdnevni osvajalec</string>
+    <string name="achievement_title_congrats_weeks_1">Čudež enega tedna</string>
+    <string name="achievement_title_congrats_weeks_2">Dvotedenski titan</string>
+    <string name="achievement_title_congrats_weeks_3">Tritedenski utiralec poti</string>
+    <string name="achievement_title_congrats_months_1">Mesečni raziskovalec</string>
+    <string name="achievement_title_congrats_months_3">Trimesečni iskalec poti</string>
+    <string name="achievement_title_congrats_months_6">Šestmesečni osvajalec</string>
+    <string name="achievement_title_congrats_months_9">Devetmesečni branilec</string>
+    <string name="achievement_title_congrats_years_1">Enoletni pionir</string>
 </resources>
