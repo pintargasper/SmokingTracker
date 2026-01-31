@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:clickable="true"
                     android:focusable="true"
-                    android:minHeight="?attr/actionBarSize"
+                    android:minHeight="55dp"
                     android:orientation="vertical">
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
@@ -58,7 +58,8 @@
                         android:singleLine="true"
                         android:text="@string/analytics_calculator_title"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface" />
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold" />
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/text_calculator_description"
@@ -69,6 +70,44 @@
                         android:focusable="false"
                         android:scrollHorizontally="false"
                         android:text="@string/analytics_calculator_description"
+                        android:singleLine="true"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/achievements_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="55dp"
+                    android:orientation="vertical">
+
+                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                        android:id="@+id/text_achievements_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:clickable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:singleLine="true"
+                        android:text="@string/analytics_achievements_title"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"/>
+
+                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                        android:id="@+id/text_achievements_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:scrollHorizontally="false"
+                        android:text="@string/analytics_achievements_description"
                         android:singleLine="true"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?attr/colorOnSurface"

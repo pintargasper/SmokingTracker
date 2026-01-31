@@ -7,7 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="?attr/colorSurface"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,6 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/insert_popup_message"
             android:textColor="?attr/colorOnSurface"
+            android:textStyle="bold"
             android:textSize="18sp"
             android:gravity="center"
             android:maxLines="2"
@@ -73,7 +75,7 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <Button
-                android:id="@+id/button_insert"
+                android:id="@+id/button_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

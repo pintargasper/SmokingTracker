@@ -11,8 +11,7 @@ import androidx.core.graphics.withRotation
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.model.GraphEntry
 import com.gasperpintar.smokingtracker.type.GraphInterval
-import com.gasperpintar.smokingtracker.utils.Helper.getDayOfWeekName
-import com.gasperpintar.smokingtracker.utils.Helper.getMonthName
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.util.Locale
 import kotlin.math.ceil
 import kotlin.math.roundToInt
@@ -54,14 +53,9 @@ class GraphView @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
-    fun setData(data: List<GraphEntry>, graphInterval: GraphInterval, labels: Int = labelsNumber) {
-        dataList = data
-        currentGraphInterval = graphInterval
-        labelsNumber = labels
-        invalidate()
-    }
-
-    override fun onDraw(canvas: Canvas) {
+    override fun onDraw(
+        canvas: Canvas
+    ) {
         super.onDraw(canvas)
 
         if (dataList.isEmpty()) {
@@ -83,7 +77,21 @@ class GraphView @JvmOverloads constructor(
         drawDataPoints(canvas, graphHeight, maxDataValue)
     }
 
-    private fun drawAxes(canvas: Canvas, graphWidth: Float, graphHeight: Float) {
+    fun setData(
+        data: List<GraphEntry>,
+        graphInterval: GraphInterval,
+        labels: Int = labelsNumber
+    ) {
+        dataList = data
+        currentGraphInterval = graphInterval
+        labelsNumber = labels
+        invalidate()
+    }
+
+    private fun drawAxes(
+        canvas: Canvas,
+        graphWidth: Float,
+        graphHeight: Float) {
         canvas.drawLine(paddingLeft, paddingTop, paddingLeft, paddingTop + graphHeight, linePaint)
         canvas.drawLine(paddingLeft, paddingTop + graphHeight, paddingLeft + graphWidth, paddingTop + graphHeight, linePaint)
     }
@@ -116,7 +124,6 @@ class GraphView @JvmOverloads constructor(
         }
 
         validEntries.forEachIndexed { visibleIndex: Int, pair: Pair<Int, GraphEntry> ->
-
             val originalIndex: Int = pair.first
             val entry: GraphEntry = pair.second
 
@@ -132,7 +139,7 @@ class GraphView @JvmOverloads constructor(
             if (visibleIndex % step == 0) {
                 val labelText: String = when (currentGraphInterval) {
                     GraphInterval.DAILY -> String.format(Locale.getDefault(), "%02d:00", originalIndex)
-                    GraphInterval.WEEKLY -> context.getDayOfWeekName(entry.date.dayOfWeek).take(3)
+                    GraphInterval.WEEKLY -> LocalizationHelper.getDayOfWeekName(context, entry.date.dayOfWeek).take(3)
                     GraphInterval.MONTHLY ->
                         String.format(
                             Locale.getDefault(),
@@ -140,7 +147,7 @@ class GraphView @JvmOverloads constructor(
                             entry.date.dayOfMonth,
                             entry.date.monthValue
                         )
-                    GraphInterval.YEARLY -> context.getMonthName(entry.date.month).take(3)
+                    GraphInterval.YEARLY -> LocalizationHelper.getMonthName(context, entry.date.month).take(3)
                 }
 
                 val textWidth: Float = textPaint.measureText(labelText)
@@ -158,7 +165,11 @@ class GraphView @JvmOverloads constructor(
         }
     }
 
-    private fun drawYAxisLabels(canvas: Canvas, graphHeight: Float, maxDataValue: Int) {
+    private fun drawYAxisLabels(
+        canvas: Canvas,
+        graphHeight: Float,
+        maxDataValue: Int
+    ) {
         if (maxDataValue == 0) {
             return
         }
@@ -181,11 +192,12 @@ class GraphView @JvmOverloads constructor(
             } else {
                 ((maxDataValue / yPositions.size.toFloat()) * index).roundToInt()
             }
-
             canvas.drawText(labelValue.toString(), paddingLeft - 80f, y + 15f, textPaint)
 
             index -= stepIncrement
-            if (index < 0) return@repeat
+            if (index < 0) {
+                return@repeat
+            }
         }
     }
 }

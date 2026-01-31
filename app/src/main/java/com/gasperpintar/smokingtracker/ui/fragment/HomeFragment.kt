@@ -5,18 +5,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.MainActivity
-import com.gasperpintar.smokingtracker.adapter.history.HistoryAdapter
+import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
-import com.gasperpintar.smokingtracker.ui.DialogManager
-import com.gasperpintar.smokingtracker.utils.Helper
-import com.gasperpintar.smokingtracker.utils.Helper.toHistoryEntry
+import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
+import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -29,42 +36,75 @@ import java.time.LocalDateTime
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+    private val binding: FragmentHomeBinding get() = _binding!!
 
-    private lateinit var database: Lazy<AppDatabase>
-    private lateinit var historyAdapter: HistoryAdapter
-    private lateinit var selectedDate: LocalDate
+    private lateinit var database: AppDatabase
+    private lateinit var achievementRepository: AchievementRepository
+    private lateinit var historyRepository: HistoryRepository
+    private lateinit var achievementEvaluator: AchievementEvaluator
+    private lateinit var historyAdapter: Adapter<HistoryEntry>
+
+    private var selectedDate: LocalDate = LocalDate.now()
     private var lastEntry: HistoryEntity? = null
-    private var timeDifference: Job? = null
+
+    private var timerJob: Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        database = lazy { (requireActivity() as MainActivity).database }
-        selectedDate = LocalDate.now()
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        database = (requireActivity() as MainActivity).database
+        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
+        historyRepository = HistoryRepository(historyDao = database.historyDao())
+        achievementEvaluator = AchievementEvaluator(
+            historyRepository = historyRepository,
+            achievementRepository = achievementRepository
+        )
 
         setup()
-        refreshUI()
-        timeDifference()
         setupRecyclerView()
+        refreshUI()
 
-        return root
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startTimer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stopTimer()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        stopTimer()
+        _binding = null
     }
 
     private fun setup() {
         binding.buttonAddEntry.setOnClickListener {
-            DialogManager.showInsertDialog(
-                context = requireActivity(),
-                layoutInflater = layoutInflater,
-                database = database.value,
-                lifecycleScope = lifecycleScope,
-                refreshUI = { refreshUI() }
-            )
+            DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
+                lifecycleScope.launch {
+                    val entry = HistoryEntity(
+                        id = 0,
+                        lent = if (isLent) 1 else 0,
+                        createdAt = LocalDateTime.now()
+                    )
+
+                    achievementRepository.resetAll(state = true)
+                    historyRepository.insert(entry = entry)
+                    resetAchievementsCache()
+                    updateLastEntry()
+                    refreshUI()
+                }
+            }
         }
 
         binding.previousDay.setOnClickListener {
@@ -79,119 +119,156 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        historyAdapter = HistoryAdapter(
-            onEditClick = { entry ->
-                DialogManager.showEditDialog(
-                    context = requireActivity(),
-                    layoutInflater = layoutInflater,
-                    database = database.value,
-                    lifecycleScope = lifecycleScope,
-                    entry = entry,
-                    refreshUI = { refreshUI() }
-                )
+        historyAdapter = Adapter(
+            layoutId = R.layout.history_container,
+            onBind = { itemView, historyEntry ->
+                val timerLabel = itemView.findViewById<TextView>(R.id.timer_label)
+                val lentButton = itemView.findViewById<ImageButton>(R.id.lent)
+                val editButton = itemView.findViewById<ImageButton>(R.id.image_button_edit)
+                val deleteButton = itemView.findViewById<ImageButton>(R.id.delete)
+
+                timerLabel.text = historyEntry.timerLabel
+                lentButton.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
+
+                editButton.setOnClickListener {
+                    DialogManager.showEditDialog(
+                        context = requireActivity(),
+                        entry = historyEntry
+                    ) { newDateTime, isLent ->
+
+                        lifecycleScope.launch {
+                            val updatedEntry = historyEntry.copy(
+                                createdAt = newDateTime,
+                                isLent = isLent
+                            )
+
+                            if (lastEntry?.id == historyEntry.id) {
+                                achievementRepository.resetAll(state = false)
+                            }
+                            historyRepository.update(entry = updatedEntry.toEntity())
+                            resetAchievementsCache()
+                            updateLastEntry()
+                            refreshUI()
+                        }
+                    }
+                }
+
+                deleteButton.setOnClickListener {
+                    DialogManager.showDeleteDialog(context = requireActivity()) {
+                        lifecycleScope.launch {
+
+                            if (lastEntry?.id == historyEntry.id) {
+                                achievementRepository.resetAll(state = false)
+                            }
+                            historyRepository.delete(entry = historyEntry.toEntity())
+                            resetAchievementsCache()
+                            updateLastEntry()
+                            refreshUI()
+                        }
+                    }
+                }
             },
-            onDeleteClick = { entry ->
-                DialogManager.showDeleteDialog(
-                    context = requireActivity(),
-                    layoutInflater = layoutInflater,
-                    database = database.value,
-                    lifecycleScope = lifecycleScope,
-                    entry = entry,
-                    refreshUI = { refreshUI() }
-                )
+            diffCallback = object : DiffUtil.ItemCallback<HistoryEntry>() {
+                override fun areItemsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry) = oldItem.id == newItem.id
+                override fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry) = oldItem == newItem
             }
         )
         binding.recyclerviewHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerviewHistory.adapter = historyAdapter
     }
 
-    @SuppressLint("DefaultLocale")
     private fun refreshUI() {
         binding.currentDate.text = LocalizationHelper.formatDate(selectedDate)
+
         lifecycleScope.launch {
             updateStatistics(selectedDate)
             loadHistoryForDay(selectedDate)
         }
+
         WidgetHelper.updateWidget(context = requireContext())
         updateLastEntry()
     }
 
     private fun updateLastEntry() {
         lifecycleScope.launch {
-            lastEntry = database.value.historyDao()
-                .getLastHistoryEntry(endOfToday = Helper.getEndOfDay(date = LocalDate.now()))
+            lastEntry = historyRepository.getLast()
             updateTimerLabel()
         }
     }
 
-    private fun timeDifference() {
-        timeDifference?.cancel()
-        timeDifference = lifecycleScope.launch {
+    private fun startTimer() {
+        timerJob?.cancel()
+        timerJob = lifecycleScope.launch {
             while (isActive) {
                 updateTimerLabel()
-                delay(timeMillis = 1000)
+                delay(1000)
             }
         }
     }
 
-    private fun stopTimeDifference() {
-        timeDifference?.cancel()
-        timeDifference = null
+    private fun stopTimer() {
+        timerJob?.cancel()
+        timerJob = null
     }
 
     @SuppressLint("DefaultLocale")
     private fun updateTimerLabel() {
-        val entry = lastEntry
+        val entry: HistoryEntity? = lastEntry
 
-        val timeDifference: String = if (entry?.createdAt != null) {
-            val duration: Duration = Duration.between(entry.createdAt, LocalDateTime.now())
-            String.format(
-                "%02d:%02d:%02d",
-                duration.toHours(),
-                duration.toMinutes() % 60,
-                duration.seconds % 60
-            )
-        } else "00:00:00"
-        binding.timerLabel.text = timeDifference
+        val duration = entry?.createdAt?.let { createdAt ->
+            Duration.between(createdAt, LocalDateTime.now())
+        }
+
+        binding.timerLabel.text = TimeHelper.formatDuration(resources = resources, duration = duration)
+
+        lastEntry?.let {
+            lifecycleScope.launch {
+                onLastEntryChanged(
+                    current = HistoryEntry.fromEntity(entity = it)
+                )
+            }
+        }
     }
 
-    private suspend fun updateStatistics(date: LocalDate) {
-        val (startOfDay, endOfDay) = Helper.getDay(date = date)
-        val dailyCount = database.value.historyDao().getHistoryCountBetween(start = startOfDay, end = endOfDay)
+    private suspend fun updateStatistics(
+        date: LocalDate
+    ) {
+        val (startOfDay, endOfDay) = TimeHelper.getDay(date)
+        val dailyCount: Int = historyRepository.getCountBetween(start = startOfDay, end = endOfDay)
+        val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date)
+        val weeklyCount: Int = historyRepository.getCountBetween(start = startOfWeek, end = endOfWeek)
 
-        val (startOfWeek, endOfWeek) = Helper.getWeek(date = date)
-        val weeklyCount = database.value.historyDao().getHistoryCountBetween(start = startOfWeek, end = endOfWeek)
-
-        val (startOfMonth, endOfMonth) = Helper.getMonth(date = date)
-        val monthlyCount = database.value.historyDao().getHistoryCountBetween(start = startOfMonth, end = endOfMonth)
+        val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date)
+        val monthlyCount: Int = historyRepository.getCountBetween(start = startOfMonth, end = endOfMonth)
 
         binding.dailyValue.text = dailyCount.toString()
         binding.weeklyValue.text = weeklyCount.toString()
         binding.monthlyValue.text = monthlyCount.toString()
     }
 
-    private suspend fun loadHistoryForDay(date: LocalDate) {
-        val (startOfDay, endOfDay) = Helper.getDay(date = date)
-        val entityList = database.value.historyDao().getHistoryBetween(start = startOfDay, end = endOfDay)
-        val historyList = entityList.map { it.toHistoryEntry() }
+    private suspend fun loadHistoryForDay(
+        date: LocalDate
+    ) {
+        val (startOfDay, endOfDay) = TimeHelper.getDay(date)
+
+        val entityList: List<HistoryEntity> = historyRepository.getBetween(start = startOfDay, end = endOfDay)
+        val historyList: List<HistoryEntry> = entityList.map(transform = HistoryEntry::fromEntity)
+
         historyAdapter.submitList(historyList) {
             binding.recyclerviewHistory.scrollToPosition(0)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        timeDifference()
+    suspend fun onLastEntryChanged(
+        current: HistoryEntry?
+    ) {
+        achievementEvaluator.evaluate(
+            lastSmokeTime = current!!.createdAt,
+            now = LocalDateTime.now()
+        )
     }
 
-    override fun onPause() {
-        super.onPause()
-        stopTimeDifference()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        stopTimeDifference()
-        _binding = null
+    fun resetAchievementsCache() {
+        achievementEvaluator.reset()
     }
 }

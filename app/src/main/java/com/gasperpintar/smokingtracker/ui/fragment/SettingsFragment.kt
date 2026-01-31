@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,20 +18,29 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.dao.SettingsDao
+import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
-import com.gasperpintar.smokingtracker.ui.DialogManager
-import com.gasperpintar.smokingtracker.utils.Helper
+import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
+import com.gasperpintar.smokingtracker.utils.FileHelper
+import com.gasperpintar.smokingtracker.utils.Manager
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 class SettingsFragment : Fragment() {
 
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
 
-    private val database by lazy { (requireActivity() as MainActivity).database }
+    private lateinit var database: AppDatabase
+    private lateinit var achievementRepository: AchievementRepository
+    private lateinit var historyRepository: HistoryRepository
+    private lateinit var settingsRepository: SettingsRepository
+    private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
+
     private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
     private var selectedFileUri: Uri? = null
     private var selectedFile: TextView? = null
@@ -42,42 +52,60 @@ class SettingsFragment : Fragment() {
     ): View {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
+        database = (requireActivity() as MainActivity).database
+        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
+        historyRepository = HistoryRepository(historyDao = database.historyDao())
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+        notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+
         setupFilePicker()
-        setupUI()
+        setup()
         setupAbout()
 
         return binding.root
     }
 
-    private fun setupUI() {
-        val settingsDao = database.settingsDao()
-
+    private fun setup() {
         lifecycleScope.launch {
-            val settings = settingsDao.getSettings() ?: insertDefaultSettings(settingsDao)
-
-            binding.languageServiceUrl.text = getLanguages()[settings.language]
-            binding.themeServiceUrl.text = getThemes()[settings.theme]
+            withSettings { settings ->
+                binding.languageServiceUrl.text = getLanguages()[settings.language]
+                binding.themeServiceUrl.text = getThemes()[settings.theme]
+            }
         }
 
         binding.themeLayout.setOnClickListener {
             lifecycleScope.launch {
-                val currentTheme = settingsDao.getSettings()?.theme ?: 0
-                DialogManager.showThemeDialog(
-                    activity = requireActivity(),
-                    selectedTheme = currentTheme,
-                    onThemeSelected = { theme -> updateSettingsField(updateBlock = { it.copy(theme = theme) }, recreateActivity = true) }
-                )
+                withSettings { settings ->
+                    DialogManager.showThemeDialog(
+                        context = requireActivity(),
+                        selectedTheme = settings.theme,
+                        onThemeSelected = { theme ->
+                            updateSettingsField(
+                                updateBlock = {
+                                    it.copy(theme = theme)
+                                }
+                            )
+                        }
+                    )
+                }
             }
         }
 
         binding.languageLayout.setOnClickListener {
             lifecycleScope.launch {
-                val currentLanguage = settingsDao.getSettings()?.language ?: getDefaultLanguageIndex()
-                DialogManager.showLanguageDialog(
-                    activity = requireActivity(),
-                    selectedLanguage = currentLanguage,
-                    onLanguageSelected = { language -> updateSettingsField(updateBlock = { it.copy(language = language) }, recreateActivity = true) }
-                )
+                withSettings { settings ->
+                    DialogManager.showLanguageDialog(
+                        context = requireActivity(),
+                        selectedLanguage = settings.language,
+                        onLanguageSelected = { language ->
+                            updateSettingsField(
+                                updateBlock = {
+                                    it.copy(language = language)
+                                }
+                            )
+                        }
+                    )
+                }
             }
         }
 
@@ -88,61 +116,90 @@ class SettingsFragment : Fragment() {
                     return@launch
                 }
 
-                val currentNotifications = settingsDao.getSettings()?.notifications ?: 0
                 DialogManager.showNotificationsDialog(
-                    activity = requireActivity(),
-                    selectedNotificationOption = currentNotifications,
-                    onNotificationOptionSelected = { notification ->
-                        if (notification == 1 && !areNotificationsEnabled()) {
-                            openNotificationSettings()
-                            return@showNotificationsDialog
+                    context = requireActivity(),
+                    notificationsSettings = notificationsSettingsRepository.get()!!,
+                    onNotificationSettingsSelected = { notification ->
+                        lifecycleScope.launch {
+                            notificationsSettingsRepository.update(settings = notification)
                         }
-                        updateSettingsField(updateBlock = { it.copy(notifications = notification) })
                     }
                 )
             }
         }
 
         binding.downloadLayout.setOnClickListener {
-            DialogManager.showDownloadDialog(
-                activity = requireActivity(),
-                database = database
-            )
+            if (!areStoragePermissionsEnabled()) {
+                openAppSettings()
+                return@setOnClickListener
+            }
+
+            DialogManager.showDownloadDialog(context = requireActivity()) {
+                lifecycleScope.launch {
+                    Manager.downloadFile(
+                        context = requireActivity(),
+                        achievementRepository = achievementRepository,
+                        historyRepository = historyRepository,
+                        settingsRepository = settingsRepository,
+                        notificationsSettingsRepository = notificationsSettingsRepository
+                    )
+                }
+            }
         }
 
         binding.uploadLayout.setOnClickListener {
             DialogManager.showUploadDialog(
-                activity = requireActivity(),
-                database = database,
-                filePickerLauncher = filePickerLauncher,
-                selectedFileSetter = { textView -> selectedFile = textView },
-                getSelectedFileUri = { selectedFileUri },
-                clearSelectedFile = { selectedFileUri = null }
+                context = requireActivity(),
+                onOpenFile = {
+                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                        addCategory(Intent.CATEGORY_OPENABLE)
+                        type = "*/*"
+                    }
+                    filePickerLauncher.launch(intent)
+                },
+                onConfirm = {
+                    selectedFileUri?.let { uri ->
+                        lifecycleScope.launch {
+                            Manager.uploadFile(
+                                context = requireActivity(),
+                                fileUri = uri,
+                                achievementRepository = achievementRepository,
+                                historyRepository = historyRepository,
+                                settingsRepository = settingsRepository,
+                                notificationsSettingsRepository = notificationsSettingsRepository
+                            )
+                            requireActivity().recreate()
+                        }
+                    }
+                },
+                onDismiss = {
+                    selectedFileUri = null
+                },
+                onViewCreated = { textView ->
+                    selectedFile = textView
+                }
             )
         }
     }
 
-    private fun updateSettingsField(updateBlock: (SettingsEntity) -> SettingsEntity, recreateActivity: Boolean = false) {
-        val settingsDao = database.settingsDao()
+    private fun updateSettingsField(
+        updateBlock: (SettingsEntity) -> SettingsEntity
+    ) {
         lifecycleScope.launch {
-            settingsDao.getSettings()?.let { currentSettings ->
-                settingsDao.update(settingsEntity = updateBlock(currentSettings))
-                if (recreateActivity) requireActivity().recreate()
+            withSettings { currentSettings ->
+                val updatedSettings = updateBlock(currentSettings)
+                lifecycleScope.launch {
+                    settingsRepository.update(updatedSettings)
+                    requireActivity().recreate()
+                }
             }
         }
     }
 
-    private fun areNotificationsEnabled(): Boolean {
-        return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
-    }
-
-    private suspend fun insertDefaultSettings(settingsDao: SettingsDao): SettingsEntity {
-        return SettingsEntity(
-            id = 0L,
-            theme = 0,
-            language = getDefaultLanguageIndex(),
-            notifications = if (areNotificationsEnabled()) 1 else 0
-        ).also { settingsDao.insert(settingsEntity = it) }
+    private suspend fun withSettings(
+        block: suspend (SettingsEntity) -> Unit
+    ) {
+        block(settingsRepository.get()!!)
     }
 
     private fun setupFilePicker() {
@@ -153,14 +210,14 @@ class SettingsFragment : Fragment() {
                     selectedFile?.text = String.format(
                         $$"%1$s: %2$s",
                         getString(R.string.upload_popup_file),
-                        Helper.getFileName(context = requireActivity(), uri = uri)
+                        FileHelper.getFileName(context = requireActivity(), uri = uri)
                     )
                 }
             }
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint(value = ["SetTextI18n"])
     private fun setupAbout() {
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
         val versionName = packageInfo.versionName ?: getString(R.string.settings_category_data_version_unknown)
@@ -175,15 +232,22 @@ class SettingsFragment : Fragment() {
                 websiteUrl to "https://gasperpintar.com/smoking-tracker",
                 translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
                 privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy"
-            ).forEach { (view, url) -> setupLink(view, url) }
+            ).forEach {
+                (view, url) -> setupLink(view, url)
+            }
         }
     }
 
-    private fun setupLink(view: View, url: String) {
+    private fun setupLink(
+        view: View,
+        url: String
+    ) {
         view.setOnClickListener { openUrl(url) }
     }
 
-    private fun openUrl(url: String) {
+    private fun openUrl(
+        url: String
+    ) {
         startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
     }
 
@@ -203,18 +267,26 @@ class SettingsFragment : Fragment() {
         )
     }
 
-    private fun getDefaultLanguageIndex(): Int {
-        return when(Locale.getDefault().language) {
-            "en" -> 1
-            "sl" -> 2
-            else -> 0
-        }
+    private fun areNotificationsEnabled(): Boolean {
+        return NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()
     }
 
     private fun openNotificationSettings() {
         val intent = Intent().apply {
             action = "android.settings.APP_NOTIFICATION_SETTINGS"
             putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
+        }
+        startActivity(intent)
+    }
+
+    private fun areStoragePermissionsEnabled(): Boolean {
+        val mainActivity = requireActivity() as MainActivity
+        return mainActivity.permissionsHelper.isWriteExternalStoragePermissionGranted()
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", requireContext().packageName, null)
         }
         startActivity(intent)
     }

@@ -1,0 +1,26 @@
+{
+  "SMOKE_FREE_TIME": [
+    { "icon": "W1D", "value": 1, "title": "DAYS1", "message": "DAYS1", "unit": "DAYS" },
+    { "icon": "W2D", "value": 2, "title": "DAYS2", "message": "DAYS2", "unit": "DAYS" },
+    { "icon": "W3D", "value": 3, "title": "DAYS3", "message": "DAYS3", "unit": "DAYS" },
+    { "icon": "W4D", "value": 4, "title": "DAYS4", "message": "DAYS4", "unit": "DAYS" },
+    { "icon": "W5D", "value": 5, "title": "DAYS5", "message": "DAYS5", "unit": "DAYS" },
+    { "icon": "W6D", "value": 6, "title": "DAYS6", "message": "DAYS6", "unit": "DAYS" },
+    { "icon": "W1W", "value": 1, "title": "WEEK1", "message": "WEEK1", "unit": "WEEKS" },
+    { "icon": "W2W", "value": 2, "title": "WEEK2", "message": "WEEK2", "unit": "WEEKS" },
+    { "icon": "W3W", "value": 3, "title": "WEEK3", "message": "WEEK3", "unit": "WEEKS" },
+    { "icon": "W1M", "value": 3, "title": "MONTH1", "message": "MONTH1", "unit": "MONTHS" },
+    { "icon": "W3M", "value": 3, "title": "MONTH3", "message": "MONTH3", "unit": "MONTHS" },
+    { "icon": "W6M", "value": 3, "title": "MONTH6", "message": "MONTH6", "unit": "MONTHS" },
+    { "icon": "W9M", "value": 3, "title": "MONTH9", "message": "MONTH9", "unit": "MONTHS" },
+    { "icon": "W1Y", "value": 1, "title": "YEAR1", "message": "YEAR1", "unit": "YEARS" }
+  ],
+  "CIGARETTES_AVOIDED": [
+    { "icon": "C20", "value": 20, "title": "C20", "message": "C20" },
+    { "icon": "C200", "value": 200, "title": "C200", "message": "C200" },
+    { "icon": "C400", "value": 400, "title": "C400", "message": "C400" },
+    { "icon": "C600", "value": 600, "title": "C600", "message": "C600" },
+    { "icon": "C800", "value": 800, "title": "C800", "message": "C800" },
+    { "icon": "C1000", "value": 1000, "title": "C1000", "message": "C1000" }
+  ]
+}

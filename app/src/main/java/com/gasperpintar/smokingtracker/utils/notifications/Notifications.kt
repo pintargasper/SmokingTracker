@@ -6,10 +6,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.annotation.RequiresPermission
+import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 
@@ -19,7 +21,9 @@ object Notifications {
     private const val CHANNEL_NAME = "Smoking Tracker Notifications"
     private const val CHANNEL_DESCRIPTION = "Smoking monitoring notifications"
 
-    fun createNotificationChannel(context: Context) {
+    fun createNotificationChannel(
+        context: Context
+    ) {
         val channel = NotificationChannel(
             CHANNEL_ID,
             CHANNEL_NAME,
@@ -32,14 +36,19 @@ object Notifications {
         notificationManager.createNotificationChannel(channel)
     }
 
-    @RequiresPermission(value = Manifest.permission.POST_NOTIFICATIONS)
     fun sendNotification(
         context: Context,
         title: String,
         content: String,
-        notificationId: Int = 1,
+        notificationId: Int,
         fileUri: Uri? = null
     ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+
         val intent: Intent = if (fileUri != null) {
             Intent(Intent.ACTION_VIEW).apply {
                 setDataAndType(fileUri, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")

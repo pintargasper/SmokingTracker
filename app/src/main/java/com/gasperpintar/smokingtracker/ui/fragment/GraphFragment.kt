@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,10 +12,10 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
 import com.gasperpintar.smokingtracker.model.GraphEntry
+import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
-import com.gasperpintar.smokingtracker.utils.Helper
-import com.gasperpintar.smokingtracker.utils.Helper.getMonthName
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -24,7 +25,9 @@ class GraphFragment : Fragment() {
     private var _binding: FragmentGraphBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: Lazy<AppDatabase>
+    private lateinit var database: AppDatabase
+    private lateinit var historyRepository: HistoryRepository
+
     private lateinit var selectedDate: LocalDate
 
     override fun onCreateView(
@@ -34,15 +37,26 @@ class GraphFragment : Fragment() {
     ): View {
 
         _binding = FragmentGraphBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        database = lazy { (requireActivity() as MainActivity).database }
+        database = (requireActivity() as MainActivity).database
+        historyRepository = HistoryRepository(historyDao = database.historyDao())
+
         selectedDate = LocalDate.now()
 
         setup()
         loadGraphs()
 
-        return root
+        return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadGraphs()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setup() {
@@ -108,7 +122,7 @@ class GraphFragment : Fragment() {
 
     private suspend fun loadDailyData() {
         loadGraph(
-            getDateRange = { Helper.getDay(date = selectedDate) },
+            getDateRange = { TimeHelper.getDay(date = selectedDate) },
             labelFormatter = { start, _ ->
                 LocalizationHelper.formatDate(date = start)
             },
@@ -118,7 +132,7 @@ class GraphFragment : Fragment() {
 
     private suspend fun loadWeeklyData() {
         loadGraph(
-            getDateRange = { Helper.getWeek(date = selectedDate) },
+            getDateRange = { TimeHelper.getWeek(date = selectedDate) },
             labelFormatter = { start, end ->
                 LocalizationHelper.formatWeekRange(start = start, end = end)
             },
@@ -126,13 +140,14 @@ class GraphFragment : Fragment() {
         )
     }
 
+    @SuppressLint(value = ["DefaultLocale"])
     private suspend fun loadMonthlyData() {
         loadGraph(
-            getDateRange = { Helper.getMonth(date = selectedDate) },
+            getDateRange = { TimeHelper.getMonth(date = selectedDate) },
             labelFormatter = { start, _ ->
                 String.format(
                     $$"%1$s %2$d",
-                    context?.getMonthName(start.month),
+                    LocalizationHelper.getMonthName(context = requireContext(), start.month),
                     start.year
                 )
             },
@@ -140,9 +155,10 @@ class GraphFragment : Fragment() {
         )
     }
 
+    @SuppressLint(value = ["DefaultLocale"])
     private suspend fun loadYearlyData() {
         loadGraph(
-            getDateRange = { Helper.getYear(date = selectedDate) },
+            getDateRange = { TimeHelper.getYear(date = selectedDate) },
             labelFormatter = { start, _ ->
                 String.format($$"%1$d", start.year)
             },
@@ -167,7 +183,7 @@ class GraphFragment : Fragment() {
         }
         currentDateTextView.text = labelFormatter(startDate, endDate)
 
-        val historyList = database.value.historyDao().getHistoryBetween(startDateTime, endDateTime)
+        val historyList = historyRepository.getBetween(startDateTime, endDateTime)
 
         val entries: List<GraphEntry> = when (interval) {
 
@@ -197,7 +213,11 @@ class GraphFragment : Fragment() {
             else -> {
                 generateSequence(seed = startDate) { day ->
                     val nextDay = day.plusDays(1)
-                    if (nextDay <= endDate) nextDay else null
+                    if (nextDay <= endDate) {
+                        nextDay
+                    } else {
+                        null
+                    }
                 }.map { day ->
                     GraphEntry(
                         quantity = historyList.count {
@@ -225,15 +245,5 @@ class GraphFragment : Fragment() {
             GraphInterval.YEARLY -> binding.graphViewYearly
         }
         currentGraphView.setData(data = entries, graphInterval = interval)
-    }
-
-    override fun onResume() {
-        super.onResume()
-        loadGraphs()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
