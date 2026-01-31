@@ -109,7 +109,7 @@
     <string name="achievement_title_congrats_weeks_2">Two week titan</string>
     <string name="achievement_title_congrats_weeks_3">Three week trailblazer</string>
     <string name="achievement_title_congrats_months_1">One month explorer</string>
-    <string name="achievement_title_congrats_months_3">Three month Pathfinder</string>
+    <string name="achievement_title_congrats_months_3">Three month pathfinder</string>
     <string name="achievement_title_congrats_months_6">Six month conqueror</string>
     <string name="achievement_title_congrats_months_9">Nine month defender</string>
     <string name="achievement_title_congrats_years_1">One year pioneer</string>
@@ -158,7 +158,7 @@
     <string name="month_october">October</string>
     <string name="month_november">November</string>
     <string name="month_december">December</string>
-    <string name="notification_title">Your progress reminder</string>
+    <string name="notification_title">Progress reminder</string>
     <string name="notification_content">It is been %1$s since your last cigarette</string>
     <string name="notification_download_title">Download completed</string>
     <string name="notification_download_content">File %1$s was successfully downloaded</string>
