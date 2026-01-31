@@ -19,4 +19,8 @@
     <string name="month_october">Październik</string>
     <string name="month_november">Listopad</string>
     <string name="month_december">Grudzień</string>
+    <string name="home_timer_day">d.</string>
+    <string name="home_timer_hour">h</string>
+    <string name="home_timer_minute">min</string>
+    <string name="home_timer_second">s</string>
 </resources>
