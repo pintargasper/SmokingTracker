@@ -70,6 +70,7 @@
     <string name="notification_upload_content">Podatki so bili uspešno naloženi</string>
     <string name="notification_upload_failed_title">Nalaganje ni uspelo</string>
     <string name="notification_upload_failed_content">Napaka pri nalaganju datoteke</string>
+    <string name="achievements_container_icon">Ikona dosežka</string>
     <string name="settings_category_notifications_url">Bodite obveščeni z obvestili in opozorili</string>
     <string name="settings_category_data_download">Prenesi</string>
     <string name="settings_category_data_download_url">Prenesite svoje podatke v napravo</string>
