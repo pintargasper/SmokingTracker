@@ -19,4 +19,8 @@
     <string name="month_october">Október</string>
     <string name="month_november">November</string>
     <string name="month_december">December</string>
+    <string name="home_timer_day">nap</string>
+    <string name="home_timer_hour">ó</string>
+    <string name="home_timer_minute">p</string>
+    <string name="home_timer_second">mp</string>
 </resources>
