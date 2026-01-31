@@ -218,8 +218,8 @@ object Manager {
         workbook: XSSFWorkbook,
         achievementRepository: AchievementRepository
     ) {
-        achievementRepository.deleteAll()
         val sheet = workbook.getSheet("Achievements") ?: return
+        achievementRepository.deleteAll()
         val achievements = mutableListOf<AchievementEntity>()
         sheet.forEachIndexed { index, row ->
             if (index == 0) {

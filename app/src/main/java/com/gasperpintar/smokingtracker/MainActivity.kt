@@ -151,24 +151,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private suspend fun getOrCreateDefaultSettings(): SettingsEntity {
-        val existing: SettingsEntity? = settingsRepository.get()
-        if (existing != null) {
-            return existing
-        }
-
-        val defaultSettings = SettingsEntity(
+        val defaultSettings = settingsRepository.get() ?: SettingsEntity(
             id = 1,
             theme = 0,
             language = getDefaultLanguageIndex()
-        )
+        ).also {
+            settingsRepository.insert(settings = it)
+        }
 
-        val notificationsSettings = NotificationsSettingsEntity(
+        notificationsSettingsRepository.get() ?: NotificationsSettingsEntity(
             id = 1,
             system = true,
             achievements = true
-        )
-        settingsRepository.insert(settings = defaultSettings)
-        notificationsSettingsRepository.insert(settings = notificationsSettings)
+        ).also {
+            notificationsSettingsRepository.insert(settings = it)
+        }
         return defaultSettings
     }
 
