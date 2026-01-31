@@ -62,8 +62,8 @@
     <string name="month_october">Oktober</string>
     <string name="month_november">November</string>
     <string name="month_december">December</string>
-    <string name="notification_title">Čas za odmor</string>
-    <string name="notification_content">Minilo je že %1$s od tvoje zadnje cigarete</string>
+    <string name="notification_title">Opomnik napredka</string>
+    <string name="notification_content">Od tvoje zadnje cigarete je minilo %1$s</string>
     <string name="notification_download_title">Prenos je končan</string>
     <string name="notification_download_content">Datoteka %1$s je bila uspešno prenesena</string>
     <string name="notification_upload_title">Nalaganje končano</string>
@@ -170,4 +170,69 @@
     <string name="achievement_title_congrats_months_6">Šestmesečni osvajalec</string>
     <string name="achievement_title_congrats_months_9">Devetmesečni branilec</string>
     <string name="achievement_title_congrats_years_1">Enoletni pionir</string>
+    <string name="achievement_message_congrats_days_1">Bravo! Kar tako naprej in ostani dosleden</string>
+    <string name="achievement_message_congrats_days_2">Odlično delo! Gradiš zagon in ostajaš močan</string>
+    <string name="achievement_message_congrats_days_3">Kar tako naprej! Vsak korak, ki ga narediš, kaže na tvojo predanost</string>
+    <string name="achievement_message_congrats_days_4">Neverjetno! Vztrajaj in ostani predan</string>
+    <string name="achievement_message_congrats_days_5">Super! Tvoja vztrajnost kaže impresivne rezultate</string>
+    <string name="achievement_message_congrats_days_6">Fantastično! Tvoj trud se obrestuje, kar tako naprej</string>
+    <string name="achievement_message_congrats_weeks_1">Izjemno! Dosegel si pomemben mejnik</string>
+    <string name="achievement_message_congrats_weeks_2">Odlično! Dva tedna predanosti nista majhen podvig</string>
+    <string name="achievement_message_congrats_weeks_3">Neverjetno! Trije tedni doslednosti kažejo na tvojo odločnost</string>
+    <string name="achievement_message_congrats_months_1">Fantastično! En mesec predanosti kaže na resnično predanost</string>
+    <string name="achievement_message_congrats_months_3">Vaša doslednost in trud gradita neustavljiv zagon</string>
+    <string name="achievement_message_congrats_months_6">Pol leta vztrajnosti dokazuje, da sta tvoja odločnost in odpornost neprekosljivi</string>
+    <string name="achievement_message_congrats_months_9">Tvoja neusmiljena osredotočenost vas oblikuje v pravega mojstra vaše poti</string>
+    <string name="achievement_message_congrats_years_1">Celoletna predanost vas označuje za legendarnega dosežkarja</string>
+    <string name="achievement_title_congrats_c_20">Prvi zmagovalni paket</string>
+    <string name="achievement_title_congrats_c_200">Osvajalec paketov</string>
+    <string name="achievement_title_congrats_c_400">Premagalec kajenja</string>
+    <string name="achievement_title_congrats_c_600">Drobilnik škatel</string>
+    <string name="achievement_title_congrats_c_800">Bojevnik za svobodo</string>
+    <string name="achievement_title_congrats_c_1000">Uničevalec odvisnosti</string>
+    <string name="achievement_message_congrats_c_20">Odličen začetek! Vsak trud tlakuje pot do zmage</string>
+    <string name="achievement_message_congrats_c_200">Močan napredek! Vaš cilj je graditi neustavljiv zagon</string>
+    <string name="achievement_message_congrats_c_400">Izjemno! Vaša vztrajnost se resnično obrestuje</string>
+    <string name="achievement_message_congrats_c_600">Izjemno delo! Pot obvladujete korak za korakom</string>
+    <string name="achievement_message_congrats_c_800">Neverjetno! Tvoja odločnost resnično spreminja stvari</string>
+    <string name="achievement_message_congrats_c_1000">Legendarni dosežek! Vaša predanost in odpornost sta neprekosljivi</string>
+    <string name="notification_achievement_unlocked_title">Čestitke!</string>
+    <string name="notification_achievement_unlocked_content_time">Dosežen mejnik: %1$s brez kajenja</string>
+    <string name="notification_achievement_unlocked_content_cigarettes">Izognili ste se %1$s</string>
+    <plurals name="time_years">
+        <item quantity="one">%d leto</item>
+        <item quantity="two">%d leti</item>
+        <item quantity="few">%d leta</item>
+        <item quantity="other">%d let</item>
+    </plurals>
+    <plurals name="time_months">
+        <item quantity="one">%d mesec</item>
+        <item quantity="two">%d meseca</item>
+        <item quantity="few">%d meseci</item>
+        <item quantity="other">%d mesecov</item>
+    </plurals>
+    <plurals name="time_weeks">
+        <item quantity="one">%d teden</item>
+        <item quantity="two">%d tedna</item>
+        <item quantity="few">%d tedni</item>
+        <item quantity="other">%d tednov</item>
+    </plurals>
+    <plurals name="time_days">
+        <item quantity="one">%d dan</item>
+        <item quantity="two">%d dneva</item>
+        <item quantity="few">%d dni</item>
+        <item quantity="other">%d dni</item>
+    </plurals>
+    <plurals name="cigarettes_count">
+        <item quantity="one">%d cigareta</item>
+        <item quantity="two">%d cigareti</item>
+        <item quantity="few">%d cigarete</item>
+        <item quantity="other">%d cigaret</item>
+    </plurals>
+    <plurals name="achievement_achieved_times">
+        <item quantity="one">%d krat</item>
+        <item quantity="two">%d krat</item>
+        <item quantity="few">%d krat</item>
+        <item quantity="other">%d krat</item>
+    </plurals>
 </resources>
