@@ -144,4 +144,17 @@
     <string name="graph_daily">Dnevni pregled (%1$d)</string>
     <string name="graph_previous_day_daily">Prejšnji dan (Dnevno)</string>
     <string name="graph_next_day_daily">Naslednji dan (Dnevno)</string>
+    <string name="home_timer_day">d</string>
+    <string name="home_timer_hour">h</string>
+    <string name="home_timer_minute">min</string>
+    <string name="home_timer_second">s</string>
+    <string name="analytics_achievements_title">Dosežki</string>
+    <string name="analytics_achievements_description">Spremljajte svoje mejnike in slavite svoj napredek</string>
+    <string name="achievements_title">Dosežki</string>
+    <string name="achievements_cigarettes_avoided">Nepokajene cigarete</string>
+    <string name="achievements_smoke_free_time">Čas brez kajenja</string>
+    <string name="achievements_container_icon">Ikona dosežka</string>
+    <string name="notifications_popup_check_box_achievements">Dosežki</string>
+    <string name="achievement_container_meta">Nazadnje doseženo</string>
+    <string name="achievement_container_count">Doseženo</string>
 </resources>
