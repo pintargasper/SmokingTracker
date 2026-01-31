@@ -19,4 +19,8 @@
     <string name="month_october">Listopad</string>
     <string name="month_november">Studeni</string>
     <string name="month_december">Prosinac</string>
+    <string name="home_timer_day">d.</string>
+    <string name="home_timer_hour">h</string>
+    <string name="home_timer_minute">m</string>
+    <string name="home_timer_second">s</string>
 </resources>
