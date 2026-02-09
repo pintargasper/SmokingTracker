@@ -1,0 +1,28 @@
+## Achievement systems, notification redesign, and architecture improvements
+
+- Introduced a complete Achievements system to motivate long term progress
+- Added achievement notifications for real time milestone feedback
+- Updated home screen widget
+- Fully revamped notifications system
+- Improved reminder reliability and behavior
+- Better compatibility across older Android versions
+- Implemented Repository pattern
+- Connected achievements directly with database layer
+- Added achievement counter logic
+- Refactored import/export manager
+- Dialog box optimizations and cleaner structure
+- Updated achievement visualization
+- Improved title styling and layout bolding
+- Fixed rounded popup behavior on older Android versions
+- Multiple small UI consistency improvements
+- Large scale code refactoring and class cleanup
+- General optimization and performance improvements
+- Build process enhancements
+- Security updates
+- Plugin and dependency updates
+- Improved internal timer formatting logic
+- Updated and fixed Android tests
+- Expanded test coverage
+- Increased overall reliability and maintainability
+- Fixed download issues on older Android versions
+- Various minor fixes and stability improvements

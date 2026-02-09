@@ -45,10 +45,10 @@
 - **Simple and intuitive** user interface
 
 ## 🌐 Supported Languages
-| Language | Status | Progress |
-| :--- | :--- | :--- |
-| 🇺🇸 English | Supported | ![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg) |
-| 🇸🇮 Slovenian | Supported | ![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg) |
+| Language       | Status    | Translated                                                                                                                                                               |
+|:---------------|:----------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🇺🇸 English   | Supported | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
+| 🇸🇮 Slovenian | Supported | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
 
 > Additional languages will be added in future releases
 

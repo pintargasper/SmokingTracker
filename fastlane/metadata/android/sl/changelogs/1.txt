@@ -1,0 +1,7 @@
+## Začetna javna izdaja
+
+- Spremljanje dnevne porabe cigaret
+- Statistika in grafi
+- Lokalno shranjevanje podatkov
+- Podpora za varnostno kopiranje podatkov, odvisno od naprave
+- Angleški in slovenski jezik

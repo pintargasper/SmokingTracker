@@ -45,10 +45,10 @@
 - **Preprost in intuitiven** uporabniški vmesnik
 
 ## 🌐 Podprti jeziki
-| Jezik | Status | Napredek |
-| :--- | :--- | :--- |
-| 🇺🇸 Angleščina | Podprto | ![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg) |
-| 🇸🇮 Slovenščina | Podprto | ![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg) |
+| Jezik            | Status    | Prevedeno                                                                                                                                                                |
+|:-----------------|:----------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 🇺🇸 Angleščina  | Supported | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
+| 🇸🇮 Slovenščina | Supported | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
 
 > Dodatni jeziki bodo dodani v prihodnjih izdajah
 

@@ -1,0 +1,10 @@
+## Strukturna posodobitev in dodana funkcionalnost kalkulatorja
+
+- Dodan nov zaslon za analitiko s komponento kalkulatorja
+- Izboljšan slog teme za jasnejšo in bolj vizualno navigacijo
+- Omogočena navigacija s potegom med zavihki za hitrejšo in bolj naravno uporabniško izkušnjo
+- Odpravljena napaka, ki je vplivala na prekrivno plast sistemske vrstice v temnem načinu, kar zagotavlja pravilno vidljivost in doslednost
+- Posodobljeni prevodi
+- Popravljene manjše napake v prikazu in logiki
+- Izboljšana zmogljivost navigacije in animacije
+- Splošne prilagoditve za bolj dosledno upodabljanje na različnih napravah

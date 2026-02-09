@@ -1,0 +1,6 @@
+## Popravki napak in izboljšave
+
+- Popravljena dovoljenja in vedenje preklopnikov obvestil
+- Izboljšano zaznavanje sistemskega jezika za boljšo lokalizacijo
+- Manjše prilagoditve uporabniškega vmesnika za boljšo uporabniško izkušnjo
+- Izboljšave stabilnosti in delovanja

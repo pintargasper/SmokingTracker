@@ -1,0 +1,21 @@
+## Analytics expansion, widgets
+
+- Added daily graph visualization for clearer insight into smoking patterns over time
+- Introduced a home screen widget, enabling quick access and at a glance tracking directly from the phone screen
+- Enhanced calculator activity
+- Enabled opening exported Excel files directly from notifications using external applications
+- Improved date handling logic for more accurate daily calculations
+- Improved date localization to ensure correct formatting across different locales
+- Structural refinements to analytics foundations for future extensibility
+- Major refactor of LocalizationHelper and related components
+- Improved localization logic and consistency across the application
+- Updated and expanded Slovenian translations via Weblate
+- Added comprehensive localization related test coverage
+- Added new tests
+- Overall improvement of code quality, structure, and maintainability
+- Refactored dialogs for cleaner architecture and better reusability
+- Multiple code improvements and refactoring
+- Updated library versions for increased stability, security, and compatibility
+- Fixed minor logic and UI inconsistencies
+- Improved navigation reliability and internal code clarity
+- General optimizations for smoother performance
