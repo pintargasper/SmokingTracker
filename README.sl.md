@@ -8,21 +8,21 @@
   <a href="README.md">English</a> | <strong>Slovenščina</strong> 
 </p>
 
----
-
-![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey)
-[![Downloads](https://img.shields.io/github/downloads/pintargasper/smokingtracker/total?style=flat-square)](https://github.com/pintargasper/SmokingTracker/releases)
-[![Translation status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
-
 </div>
 
----
 <div align="center">
+
+Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
 [![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Spletna%20stran-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
 
 [![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Prenesi-lightgray?style=for-the-badge&logo=download&logoColor=white)](https://github.com/pintargasper/SmokingTracker/releases/latest)
 [![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Google%20play-lightgray?style=for-the-badge&logo=download&logoColor=white)](https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker)
+
+[![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey)](https://apilevels.com)
+[![Preview release](https://img.shields.io/github/release/pintargasper/SmokingTracker.svg?maxAge=3600&include_prereleases&label=preview)](https://github.com/pintargasper/SmokingTracker/releases) 
+[![Downloads](https://img.shields.io/github/downloads/pintargasper/smokingtracker/total?style=flat-square)](https://github.com/pintargasper/SmokingTracker/releases)
+[![Translation status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
 
 </div>
 

@@ -42,7 +42,7 @@ body:
       label: Example(s)
       description: Post screenshots/drawings/links/etc of the feature request, or proof of concept images about the feature
       placeholder: |
-        feature_mockup.png
+        feature_mockup.jpg
         ui_preview.jpg
     validations:
       required: false
