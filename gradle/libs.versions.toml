@@ -10,11 +10,11 @@ material = "1.13.0"
 constraintlayout = "2.2.1"
 lifecycleLivedataKtx = "2.10.0"
 lifecycleViewmodelKtx = "2.10.0"
-navigationFragmentKtx = "2.9.6"
-navigationUiKtx = "2.9.6"
+navigationFragmentKtx = "2.9.7"
+navigationUiKtx = "2.9.7"
 poi = "5.5.1"
 roomRuntime = "2.8.4"
-workRuntimeKtx = "2.11.0"
+workRuntimeKtx = "2.11.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

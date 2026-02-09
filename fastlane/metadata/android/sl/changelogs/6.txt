@@ -1,0 +1,28 @@
+## Sistemi dosežkov, prenova obvestil in izboljšave arhitekture
+
+- Uveden celoten sistem dosežkov za spodbujanje dolgoročnega napredka
+- Dodana obvestila o dosežkih za povratne informacije o mejnikih v realnem času
+- Posodobljen pripomoček za začetni zaslon
+- Popolnoma prenovljen sistem obvestil
+- Izboljšana zanesljivost in delovanje opomnikov
+- Boljša združljivost med starejšimi različicami Androida
+- Implementiran vzorec repozitorija
+- Dosežki neposredno povezani s plastjo baze podatkov
+- Dodana logika števca dosežkov
+- Prenovljen upravitelj uvoza/izvoza
+- Optimizacije pogovornih oken in čistejša struktura
+- Posodobljena vizualizacija dosežkov
+- Izboljšano oblikovanje naslovov in krepka postavitev
+- Odpravljeno vedenje zaobljenih pojavnih oken v starejših različicah Androida
+- Več manjših izboljšav skladnosti uporabniškega vmesnika
+- Obsežno preoblikovanje kode in čiščenje razredov
+- Splošne izboljšave optimizacije in delovanja
+- Izboljšave procesa gradnje
+- Varnostne posodobitve
+- Posodobitve vtičnikov in odvisnosti
+- Izboljšana logika oblikovanja notranjega časovnika
+- Posodobljeni in popravljeni testi za Android
+- Razširjena pokritost testov
+- Povečana splošna zanesljivost in vzdrževanje
+- Odpravljene težave s prenosom v starejših različicah Androida
+- Različni manjši popravki in izboljšave stabilnosti

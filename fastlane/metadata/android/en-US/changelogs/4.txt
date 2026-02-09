@@ -1,0 +1,10 @@
+## Structural update and added calculator functionality
+
+- Added new analytics screen with calculator component
+- Improved theme style for clearer and more visual navigation
+- Enabled swipe navigation between tabs for a faster and more natural user experience
+- Fixed a bug affecting the system tray overlay in dark mode, ensuring correct visibility and consistency
+- Updated translations
+- Corrected minor display and logic bugs
+- Improved navigation performance and animations
+- General adjustments for more consistent rendering across different devices

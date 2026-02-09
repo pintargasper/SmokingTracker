@@ -1,0 +1,58 @@
+name: Feature request
+description: Suggest features you want to add or suggest to modify existing features
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: ⠀
+      options:
+        - label: This feature is not duplicated with any other open or closed features
+          required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to make the Smoking Tracker application better!
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the feature
+      description: A clear and concise description of what the feature is
+      placeholder: |
+        Easy and fast data download from the application
+    validations:
+      required: true
+
+  - type: textarea
+    id: reasons
+    attributes:
+      label: Reason for adding
+      description: Explain why this feature should be useful
+      placeholder: |
+        In case there is a lot of data, it does not take much time to download the data to Excel
+    validations:
+      required: true
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example(s)
+      description: Post screenshots/drawings/links/etc of the feature request, or proof of concept images about the feature
+      placeholder: |
+        feature_mockup.jpg
+        ui_preview.jpg
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add any other context about the feature here
+      placeholder: |
+        Existing solutions (code or repositories)
+    validations:
+      required: false

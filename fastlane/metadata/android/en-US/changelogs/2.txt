@@ -1,0 +1,6 @@
+## Bug Fix and Improvements
+
+- Fixed notification toggle permissions and behavior
+- Improved system language detection for better localization
+- Minor UI adjustments for better user experience
+- Stability and performance improvements

@@ -1,0 +1,7 @@
+## Initial public release
+
+- Track daily cigarette consumption
+- Statistics and graphs
+- Local data storage
+- Device dependent support for data backup
+- English and Slovenian languages
