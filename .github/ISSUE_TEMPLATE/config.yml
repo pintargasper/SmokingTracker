@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Email
+    url: https://gasperpintar.com
+    about: Find my email address on my website
+  - name: Signal
+    url: https://signal.me/#eu/HJyeLq4yyhgpjZcg1a8yfwNw9pVj9s3FnX7MQqYL6IS052VbvqhFJocQ9cW76Tqk
+    about: Message me on Signal
+  - name: LinkedIn
+    url: https://www.linkedin.com/in/gasperpintar
+    about: Connect with me professionally on LinkedIn
