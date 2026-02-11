@@ -49,6 +49,11 @@ configure<ApplicationExtension> {
     buildFeatures {
         viewBinding = true
     }
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
 }
 
 ksp {

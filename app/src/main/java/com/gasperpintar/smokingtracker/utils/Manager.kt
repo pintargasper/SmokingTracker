@@ -1,12 +1,7 @@
 package com.gasperpintar.smokingtracker.utils
 
-import android.content.ContentValues
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import android.os.Environment
-import android.provider.MediaStore
-import androidx.core.content.FileProvider
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
@@ -24,7 +19,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -34,63 +28,63 @@ object Manager {
 
     suspend fun downloadFile(
         context: Context,
+        fileUri: Uri,
         achievementRepository: AchievementRepository,
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
-        notificationsSettingsRepository: NotificationsSettingsRepository,
-        fileName: String = "st_data.xlsx"
-    ): Uri? = withContext(context = Dispatchers.IO) {
+        notificationsSettingsRepository: NotificationsSettingsRepository
+    ): Uri = withContext(Dispatchers.IO) {
         XSSFWorkbook().use { workbook ->
             createAchievementSheet(workbook, achievementList = achievementRepository.getAll())
             createHistorySheet(workbook, historyList = historyRepository.getAll())
-            createSettingsSheet(workbook, settings = settingsRepository.get())
-            createNotificationsSettingsSheet(workbook, notificationsSettings = notificationsSettingsRepository.get())
-            val fileUri = saveWorkbookToFile(context, workbook, fileName)
-            sendNotification(
-                context,
-                title = context.getString(R.string.notification_download_title),
-                content = context.getString(
-                    R.string.notification_download_content,
-                    fileName
-                ),
-                notificationId = 1002,
-                fileUri = fileUri,
-                notificationsEnabled = notificationsSettingsRepository.get()!!.system
-            )
-            return@withContext fileUri
+            createSettingsSheet(workbook, settingsRepository.get())
+            createNotificationsSettingsSheet(workbook, notificationsSettingsRepository.get())
+
+            context.contentResolver.openOutputStream(fileUri)?.use { outputStream ->
+                workbook.write(outputStream)
+            }
         }
+        sendNotification(
+            context = context,
+            title = context.getString(R.string.notification_download_title),
+            content = context.getString(R.string.notification_download_content, FileHelper.getFileName(context, fileUri)),
+            notificationId = 1002,
+            fileUri = fileUri,
+            notificationsEnabled = notificationsSettingsRepository.get()!!.system
+        )
+        return@withContext fileUri
     }
 
-    suspend fun uploadFile(context: Context, 
-                           fileUri: Uri,
-                           achievementRepository: AchievementRepository,
-                           historyRepository: HistoryRepository,
-                           settingsRepository: SettingsRepository,
-                           notificationsSettingsRepository: NotificationsSettingsRepository
-    ) = withContext(
-        context = Dispatchers.IO
-    ) {
-        val notificationsEnabled = notificationsSettingsRepository.get()!!.system
+    suspend fun uploadFile(
+        context: Context,
+        fileUri: Uri,
+        achievementRepository: AchievementRepository,
+        historyRepository: HistoryRepository,
+        settingsRepository: SettingsRepository,
+        notificationsSettingsRepository: NotificationsSettingsRepository
+    ): Unit = withContext(Dispatchers.IO) {
+        val notificationsEnabled: Boolean = notificationsSettingsRepository.get()!!.system
         try {
             context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
                 XSSFWorkbook(inputStream).use { workbook ->
-                    importHistorySheet(workbook, historyRepository = historyRepository)
-                    importSettingsSheet(workbook, settingsRepository = settingsRepository)
-                    importAchievementSheet(workbook, achievementRepository = achievementRepository)
-                    importNotificationsSettingsSheet(workbook, notificationsSettingsRepository = notificationsSettingsRepository)
+
+                    importHistorySheet(workbook, historyRepository)
+                    importSettingsSheet(workbook, settingsRepository)
+                    importAchievementSheet(workbook, achievementRepository)
+                    importNotificationsSettingsSheet(workbook, notificationsSettingsRepository)
                 }
             }
+
             sendNotification(
-                context,
+                context = context,
                 title = context.getString(R.string.notification_upload_title),
                 content = context.getString(R.string.notification_upload_content),
                 notificationId = 1002,
                 notificationsEnabled = notificationsEnabled
             )
-        } catch (exception: Exception) {
-            exception.printStackTrace()
+        } catch (_: Exception) {
             sendNotification(
-                context,
+                context = context,
                 title = context.getString(R.string.notification_upload_failed_title),
                 content = context.getString(R.string.notification_upload_failed_content),
                 notificationId = 1002,
@@ -99,12 +93,10 @@ object Manager {
         }
     }
 
-    private fun createHistorySheet(
-        workbook: XSSFWorkbook,
-        historyList: List<HistoryEntity>
-    ) {
+    private fun createHistorySheet(workbook: XSSFWorkbook, historyList: List<HistoryEntity>) {
         val sheet = workbook.createSheet("History")
         val header = sheet.createRow(0)
+
         header.createCell(0, CellType.STRING).setCellValue("Lent")
         header.createCell(1, CellType.STRING).setCellValue("CreatedAt")
 
@@ -115,12 +107,10 @@ object Manager {
         }
     }
 
-    private fun createSettingsSheet(
-        workbook: XSSFWorkbook,
-        settings: SettingsEntity?
-    ) {
+    private fun createSettingsSheet(workbook: XSSFWorkbook, settings: SettingsEntity?) {
         val sheet = workbook.createSheet("Settings")
         val header = sheet.createRow(0)
+
         header.createCell(0, CellType.STRING).setCellValue("Theme")
         header.createCell(1, CellType.STRING).setCellValue("Language")
 
@@ -131,22 +121,19 @@ object Manager {
         }
     }
 
-    private fun createAchievementSheet(
-        workbook: XSSFWorkbook,
-        achievementList: List<AchievementEntity>
-    ) {
+    private fun createAchievementSheet(workbook: XSSFWorkbook, achievementList: List<AchievementEntity>) {
         val sheet = workbook.createSheet("Achievements")
         val header = sheet.createRow(0)
-        header.createCell(0, CellType.NUMERIC).setCellValue("Image")
-        header.createCell(1, CellType.NUMERIC).setCellValue("Value")
-        header.createCell(2, CellType.NUMERIC).setCellValue("Title")
-        header.createCell(3, CellType.NUMERIC).setCellValue("Message")
-        header.createCell(4, CellType.NUMERIC).setCellValue("Times")
-        header.createCell(5, CellType.STRING).setCellValue("LastAchieved")
-        header.createCell(6, CellType.BOOLEAN).setCellValue("Reset")
-        header.createCell(7, CellType.BOOLEAN).setCellValue("Notify")
-        header.createCell(8, CellType.STRING).setCellValue("Category")
-        header.createCell(9, CellType.STRING).setCellValue("Unit")
+
+        val headers: List<String> = listOf(
+            "Image","Value","Title","Message","Times",
+            "LastAchieved","Reset","Notify","Category","Unit"
+        )
+
+        headers.forEachIndexed { index, title ->
+            header.createCell(index, CellType.STRING).setCellValue(title)
+        }
+
         achievementList.forEachIndexed { index, achievement ->
             val row = sheet.createRow(index + 1)
             row.createCell(0, CellType.NUMERIC).setCellValue(achievement.image.toDouble())
@@ -168,8 +155,10 @@ object Manager {
     ) {
         val sheet = workbook.createSheet("NotificationsSettings")
         val header = sheet.createRow(0)
-        header.createCell(0, CellType.BOOLEAN).setCellValue("System")
-        header.createCell(1, CellType.BOOLEAN).setCellValue("Achievements")
+
+        header.createCell(0, CellType.STRING).setCellValue("System")
+        header.createCell(1, CellType.STRING).setCellValue("Achievements")
+
         notificationsSettings?.let {
             val row = sheet.createRow(1)
             row.createCell(0, CellType.BOOLEAN).setCellValue(it.system)
@@ -177,154 +166,83 @@ object Manager {
         }
     }
 
-    private suspend fun importHistorySheet(
-        workbook: XSSFWorkbook,
-        historyRepository: HistoryRepository
-    ) {
-        historyRepository.deleteAll()
+    private suspend fun importHistorySheet(workbook: XSSFWorkbook, repository: HistoryRepository) {
+        repository.deleteAll()
         workbook.getSheet("History")?.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
             }
             val lent = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val createdAtString = row.getCell(1)?.stringCellValue ?: return@forEachIndexed
-            val historyEntity = HistoryEntity(
-                id = 0,
-                lent = lent,
-                createdAt = LocalDateTime.parse(createdAtString, dateFormatter)
-            )
-            historyRepository.insert(entry = historyEntity)
+            val createdAt = LocalDateTime.parse(row.getCell(1).stringCellValue, dateFormatter)
+            repository.insert(entry = HistoryEntity(0, lent, createdAt))
         }
     }
 
-    private suspend fun importSettingsSheet(
-        workbook: XSSFWorkbook,
-        settingsRepository: SettingsRepository
-    ) {
+    private suspend fun importSettingsSheet(workbook: XSSFWorkbook, repository: SettingsRepository) {
         workbook.getSheet("Settings")?.getRow(1)?.let { row ->
-            val settingsEntity = SettingsEntity(
-                id = 0,
-                theme = row.getCell(0)?.numericCellValue?.toInt() ?: 0,
-                language = row.getCell(1)?.numericCellValue?.toInt() ?: 0
-            )
-            settingsRepository.get()?.let {
-                settingsRepository.delete(settings = it)
+            repository.get()?.let {
+                repository.delete(settings = it)
             }
-            settingsRepository.insert(settingsEntity)
+
+            repository.insert(
+                SettingsEntity(
+                    id = 0,
+                    theme = row.getCell(0).numericCellValue.toInt(),
+                    language = row.getCell(1).numericCellValue.toInt()
+                )
+            )
         }
     }
 
-    private suspend fun importAchievementSheet(
-        workbook: XSSFWorkbook,
-        achievementRepository: AchievementRepository
-    ) {
+    private suspend fun importAchievementSheet(workbook: XSSFWorkbook, repository: AchievementRepository) {
         val sheet = workbook.getSheet("Achievements") ?: return
-        achievementRepository.deleteAll()
-        val achievements = mutableListOf<AchievementEntity>()
+        repository.deleteAll()
+
+        val entities: MutableList<AchievementEntity> = mutableListOf()
+
         sheet.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
             }
-            val image = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val value = row.getCell(1)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val title = row.getCell(2)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val message = row.getCell(3)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val times = row.getCell(4)?.numericCellValue?.toLong() ?: return@forEachIndexed
-            val lastAchievedString = row.getCell(5)?.stringCellValue
-            val lastAchieved = if (!lastAchievedString.isNullOrEmpty()) {
-                LocalDateTime.parse(lastAchievedString, dateFormatter)
-            } else null
-            val reset = row.getCell(6)?.booleanCellValue ?: false
-            val notify = row.getCell(7)?.booleanCellValue ?: false
-            val category = row.getCell(8)?.stringCellValue?.let { AchievementCategory.valueOf(it) } ?: AchievementCategory.SMOKE_FREE_TIME
-            val unit = row.getCell(9)?.stringCellValue?.let { AchievementUnit.valueOf(it) } ?: AchievementUnit.DAYS
-            achievements.add(
+            entities.add(
                 AchievementEntity(
                     id = 0,
-                    image = image,
-                    value = value,
-                    title = title,
-                    message = message,
-                    times = times,
-                    lastAchieved = lastAchieved,
-                    reset = reset,
-                    notify = notify,
-                    category = category,
-                    unit = unit
+                    image = row.getCell(0).numericCellValue.toInt(),
+                    value = row.getCell(1).numericCellValue.toInt(),
+                    title = row.getCell(2).numericCellValue.toInt(),
+                    message = row.getCell(3).numericCellValue.toInt(),
+                    times = row.getCell(4).numericCellValue.toLong(),
+                    lastAchieved = row.getCell(5).stringCellValue.takeIf {
+                        it.isNotEmpty()
+                    }?.let {
+                        LocalDateTime.parse(it, dateFormatter)
+                    },
+                    reset = row.getCell(6).booleanCellValue,
+                    notify = row.getCell(7).booleanCellValue,
+                    category = AchievementCategory.valueOf(row.getCell(8).stringCellValue),
+                    unit = AchievementUnit.valueOf(row.getCell(9).stringCellValue)
                 )
             )
         }
-        achievementRepository.insert(entries = achievements)
+        repository.insert(entries = entities)
     }
 
     private suspend fun importNotificationsSettingsSheet(
         workbook: XSSFWorkbook,
-        notificationsSettingsRepository: NotificationsSettingsRepository
+        repository: NotificationsSettingsRepository
     ) {
-        val sheet = workbook.getSheet("NotificationsSettings") ?: return
-        sheet.getRow(1)?.let { row ->
-            val system = row.getCell(0)?.booleanCellValue ?: true
-            val achievements = row.getCell(1)?.booleanCellValue ?: true
-            val entity = NotificationsSettingsEntity(
+        val row = workbook.getSheet("NotificationsSettings")?.getRow(1) ?: return
+
+        repository.get()?.let {
+            repository.delete(settings = it)
+        }
+
+        repository.insert(
+            settings = NotificationsSettingsEntity(
                 id = 0,
-                system = system,
-                achievements = achievements
+                system = row.getCell(0).booleanCellValue,
+                achievements = row.getCell(1).booleanCellValue
             )
-            notificationsSettingsRepository.get()?.let {
-                notificationsSettingsRepository.delete(settings = it)
-            }
-            notificationsSettingsRepository.insert(settings = entity)
-        }
-    }
-
-    private fun saveWorkbookToFile(
-        context: Context,
-        workbook: XSSFWorkbook,
-        fileName: String
-    ): Uri? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            saveWorkbookToMediaStore(context, workbook, fileName)
-        } else {
-            saveWorkbookToLegacyStorage(context, workbook, fileName)
-        }.also { workbook.close() }
-    }
-
-    private fun saveWorkbookToMediaStore(
-        context: Context,
-        workbook: XSSFWorkbook,
-        fileName: String
-    ): Uri? {
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, fileName)
-            put(MediaStore.MediaColumns.MIME_TYPE, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-            put(MediaStore.MediaColumns.RELATIVE_PATH, "Download/SmokingTracker")
-        }
-        return context.contentResolver.insert(MediaStore.Files.getContentUri("external"), contentValues)?.also { uri ->
-            context.contentResolver.openOutputStream(uri)?.use {
-                workbook.write(it)
-            }
-        }
-    }
-
-    private fun saveWorkbookToLegacyStorage(
-        context: Context,
-        workbook: XSSFWorkbook,
-        fileName: String
-    ): Uri {
-        val exportDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        if (!exportDir.exists()) {
-            exportDir.mkdirs()
-        }
-
-        val file = File(exportDir, fileName)
-        file.outputStream().use {
-            workbook.write(it)
-        }
-
-        return FileProvider.getUriForFile(
-            context,
-            "${context.packageName}.provider",
-            file
         )
     }
 
@@ -341,13 +259,7 @@ object Manager {
         }
 
         if (context.permissionsHelper.isNotificationPermissionGranted() && notificationsEnabled) {
-            Notifications.sendNotification(
-                context = context,
-                title = title,
-                content = content,
-                notificationId = notificationId,
-                fileUri = fileUri
-            )
+            Notifications.sendNotification(context, title, content, notificationId, fileUri)
         }
     }
 }

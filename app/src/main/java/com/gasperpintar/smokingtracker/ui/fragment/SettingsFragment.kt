@@ -1,11 +1,9 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +39,10 @@ class SettingsFragment : Fragment() {
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
 
-    private lateinit var filePickerLauncher: ActivityResultLauncher<Intent>
-    private var selectedFileUri: Uri? = null
-    private var selectedFile: TextView? = null
+    private lateinit var exportDocumentLauncher: ActivityResultLauncher<String>
+    private lateinit var importDocumentLauncher: ActivityResultLauncher<Array<String>>
+
+    private lateinit var selectedFile: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,7 +57,8 @@ class SettingsFragment : Fragment() {
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
 
-        setupFilePicker()
+        setupImportLauncher()
+        setupExportLauncher()
         setup()
         setupAbout()
 
@@ -129,21 +129,8 @@ class SettingsFragment : Fragment() {
         }
 
         binding.downloadLayout.setOnClickListener {
-            if (!areStoragePermissionsEnabled()) {
-                openAppSettings()
-                return@setOnClickListener
-            }
-
             DialogManager.showDownloadDialog(context = requireActivity()) {
-                lifecycleScope.launch {
-                    Manager.downloadFile(
-                        context = requireActivity(),
-                        achievementRepository = achievementRepository,
-                        historyRepository = historyRepository,
-                        settingsRepository = settingsRepository,
-                        notificationsSettingsRepository = notificationsSettingsRepository
-                    )
-                }
+                exportDocumentLauncher.launch("st_data")
             }
         }
 
@@ -151,32 +138,37 @@ class SettingsFragment : Fragment() {
             DialogManager.showUploadDialog(
                 context = requireActivity(),
                 onOpenFile = {
-                    val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-                        addCategory(Intent.CATEGORY_OPENABLE)
-                        type = "*/*"
-                    }
-                    filePickerLauncher.launch(intent)
+                    importDocumentLauncher.launch(arrayOf(
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    ))
                 },
                 onConfirm = {
-                    selectedFileUri?.let { uri ->
-                        lifecycleScope.launch {
-                            Manager.uploadFile(
-                                context = requireActivity(),
-                                fileUri = uri,
-                                achievementRepository = achievementRepository,
-                                historyRepository = historyRepository,
-                                settingsRepository = settingsRepository,
-                                notificationsSettingsRepository = notificationsSettingsRepository
-                            )
-                            requireActivity().recreate()
+                    if (::selectedFile.isInitialized) {
+                        val uri = selectedFile.tag as? Uri
+                        uri?.let {
+                            lifecycleScope.launch {
+                                Manager.uploadFile(
+                                    context = requireActivity(),
+                                    fileUri = it,
+                                    achievementRepository = achievementRepository,
+                                    historyRepository = historyRepository,
+                                    settingsRepository = settingsRepository,
+                                    notificationsSettingsRepository = notificationsSettingsRepository
+                                )
+                                requireActivity().recreate()
+                            }
                         }
                     }
                 },
                 onDismiss = {
-                    selectedFileUri = null
+                    if (::selectedFile.isInitialized) {
+                        selectedFile.text = getString(R.string.upload_popup_file_none)
+                        selectedFile.tag = null
+                    }
                 },
                 onViewCreated = { textView ->
                     selectedFile = textView
+                    selectedFile.text = getString(R.string.upload_popup_file_none)
                 }
             )
         }
@@ -202,27 +194,12 @@ class SettingsFragment : Fragment() {
         block(settingsRepository.get()!!)
     }
 
-    private fun setupFilePicker() {
-        filePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.data?.let { uri ->
-                    selectedFileUri = uri
-                    selectedFile?.text = String.format(
-                        $$"%1$s: %2$s",
-                        getString(R.string.upload_popup_file),
-                        FileHelper.getFileName(context = requireActivity(), uri = uri)
-                    )
-                }
-            }
-        }
-    }
-
     @SuppressLint(value = ["SetTextI18n"])
     private fun setupAbout() {
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
         val versionName = packageInfo.versionName ?: getString(R.string.settings_category_data_version_unknown)
 
-        with(binding) {
+        with(receiver = binding) {
             appVersion.text = getString(R.string.settings_category_data_version, versionName)
             appVersionUrl.text = "https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker"
             websiteServiceUrl.text = "https://gasperpintar.com/smoking-tracker"
@@ -242,7 +219,9 @@ class SettingsFragment : Fragment() {
         view: View,
         url: String
     ) {
-        view.setOnClickListener { openUrl(url) }
+        view.setOnClickListener {
+            openUrl(url)
+        }
     }
 
     private fun openUrl(
@@ -279,16 +258,40 @@ class SettingsFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun areStoragePermissionsEnabled(): Boolean {
-        val mainActivity = requireActivity() as MainActivity
-        return mainActivity.permissionsHelper.isWriteExternalStoragePermissionGranted()
+    private fun setupImportLauncher() {
+        importDocumentLauncher =
+            registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri: Uri? ->
+                uri ?: return@registerForActivityResult
+                if (::selectedFile.isInitialized) {
+                    selectedFile.text = String.format(
+                        $$"%1$s: %2$s",
+                        getString(R.string.upload_popup_file),
+                        FileHelper.getFileName(context = requireActivity(), uri = uri)
+                    )
+                    selectedFile.tag = uri
+                }
+            }
     }
 
-    private fun openAppSettings() {
-        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-            data = Uri.fromParts("package", requireContext().packageName, null)
-        }
-        startActivity(intent)
+    private fun setupExportLauncher() {
+        exportDocumentLauncher =
+            registerForActivityResult(
+                ActivityResultContracts.CreateDocument(
+                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+            ) { uri: Uri? ->
+                uri ?: return@registerForActivityResult
+                lifecycleScope.launch {
+                    Manager.downloadFile(
+                        context = requireActivity(),
+                        fileUri = uri,
+                        achievementRepository = achievementRepository,
+                        historyRepository = historyRepository,
+                        settingsRepository = settingsRepository,
+                        notificationsSettingsRepository = notificationsSettingsRepository
+                    )
+                }
+            }
     }
 
     override fun onDestroyView() {
