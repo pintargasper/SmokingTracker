@@ -193,7 +193,6 @@ class MainActivity : AppCompatActivity() {
                     scheduleNotificationWorker()
                 }
             }
-            permissionsHelper.checkAndRequestWriteExternalStoragePermission { _ ->}
             sharedPreferences.edit {
                 putBoolean("first_run", false)
             }

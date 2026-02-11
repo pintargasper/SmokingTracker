@@ -52,37 +52,4 @@ open class Permissions(
             true
         }
     }
-
-    fun checkAndRequestWriteExternalStoragePermission(
-        callback: (Boolean) -> Unit
-    ) {
-        permissionCallback = callback
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            callback(true)
-            return
-        }
-
-        when {
-            ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED -> callback(true)
-
-            else -> requestPermissionLauncher.launch(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        }
-    }
-
-    fun isWriteExternalStoragePermissionGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            true
-        } else {
-            ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        }
-    }
 }
