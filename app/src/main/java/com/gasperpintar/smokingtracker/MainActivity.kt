@@ -154,7 +154,8 @@ class MainActivity : AppCompatActivity() {
         val defaultSettings = settingsRepository.get() ?: SettingsEntity(
             id = 1,
             theme = 0,
-            language = getDefaultLanguageIndex()
+            language = getDefaultLanguageIndex(),
+            frequency = 0
         ).also {
             settingsRepository.insert(settings = it)
         }
@@ -162,7 +163,8 @@ class MainActivity : AppCompatActivity() {
         notificationsSettingsRepository.get() ?: NotificationsSettingsEntity(
             id = 1,
             system = true,
-            achievements = true
+            achievements = true,
+            progress = true
         ).also {
             notificationsSettingsRepository.insert(settings = it)
         }

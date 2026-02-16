@@ -118,7 +118,13 @@ class SettingsFragment : Fragment() {
 
                 DialogManager.showNotificationsDialog(
                     context = requireActivity(),
+                    settings = settingsRepository.get()!!,
                     notificationsSettings = notificationsSettingsRepository.get()!!,
+                    onSettingsSelected = { settings ->
+                        lifecycleScope.launch {
+                            settingsRepository.update(settings = settings)
+                        }
+                    },
                     onNotificationSettingsSelected = { notification ->
                         lifecycleScope.launch {
                             notificationsSettingsRepository.update(settings = notification)
@@ -129,13 +135,13 @@ class SettingsFragment : Fragment() {
         }
 
         binding.downloadLayout.setOnClickListener {
-            DialogManager.showDownloadDialog(context = requireActivity()) {
+            DialogManager.showBackupDialog(context = requireActivity()) {
                 exportDocumentLauncher.launch("st_data")
             }
         }
 
         binding.uploadLayout.setOnClickListener {
-            DialogManager.showUploadDialog(
+            DialogManager.showRestoreDialog(
                 context = requireActivity(),
                 onOpenFile = {
                     importDocumentLauncher.launch(arrayOf(
@@ -172,6 +178,15 @@ class SettingsFragment : Fragment() {
                 }
             )
         }
+
+        binding.versionLayout.setOnClickListener {
+            DialogManager.showVersionDialog(
+                context = requireActivity(),
+                onLinkClicked = { view, url ->
+                    setupLink(view, url)
+                }
+            )
+        }
     }
 
     private fun updateSettingsField(
@@ -201,11 +216,9 @@ class SettingsFragment : Fragment() {
 
         with(receiver = binding) {
             appVersion.text = getString(R.string.settings_category_data_version, versionName)
-            appVersionUrl.text = "https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker"
             websiteServiceUrl.text = "https://gasperpintar.com/smoking-tracker"
 
             listOf(
-                versionUrl to "https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker",
                 websiteUrl to "https://gasperpintar.com/smoking-tracker",
                 translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
                 privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy"

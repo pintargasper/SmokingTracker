@@ -9,5 +9,6 @@ data class SettingsEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val theme: Int,
-    val language: Int
+    val language: Int,
+    val frequency: Int
 )

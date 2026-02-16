@@ -21,8 +21,8 @@ configure<ApplicationExtension> {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
         targetSdk = 36
-        versionCode = 7
-        versionName = "1.4.1-rc.1"
+        versionCode = 8
+        versionName = "1.4.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

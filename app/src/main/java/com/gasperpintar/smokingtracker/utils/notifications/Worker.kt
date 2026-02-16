@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -28,9 +29,11 @@ class Worker(
     private val historyRepository by lazy { HistoryRepository(historyDao = database.historyDao()) }
     private val achievementRepository by lazy { AchievementRepository(achievementDao = database.achievementDao()) }
     private val notificationsSettingsRepository by lazy { NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao()) }
+    private val settingsRepository by lazy { SettingsRepository(settingsDao = database.settingsDao()) }
 
     override suspend fun doWork(): Result {
         val lastHistory = historyRepository.getLast()
+        val settings = settingsRepository.get()
         val notifications = notificationsSettingsRepository.get()
         var achievements = achievementRepository.getAll()
 
@@ -52,7 +55,14 @@ class Worker(
 
         Notifications.createNotificationChannel(applicationContext)
 
-        if (duration != null && duration.toHours() >= 1 && notifications!!.system) {
+        val frequency: Long = when (settings?.frequency) {
+            0 -> 1L
+            1 -> 24L
+            2 -> 24L * 7
+            else -> 1L
+        }
+
+        if (duration != null && duration.toHours() >= frequency && notifications!!.progress) {
             Notifications.sendNotification(
                 context = applicationContext,
                 title = applicationContext.getString(R.string.notification_title),

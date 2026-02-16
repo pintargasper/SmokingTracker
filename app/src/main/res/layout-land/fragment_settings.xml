@@ -295,7 +295,7 @@
                     android:layout_marginBottom="8dp"/>
 
                 <LinearLayout
-                    android:id="@+id/version_url"
+                    android:id="@+id/version_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -321,6 +321,7 @@
                         android:id="@+id/app_version_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/settings_category_data_version_view"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textSize="14sp"
                         android:textColor="?attr/colorOnSurface"

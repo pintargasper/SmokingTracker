@@ -1,0 +1,6 @@
+## v1.4.1-rc.1
+
+- Shranjevanje: Preneseno v ogrodje za dostop do shrambe (SAF), odstranjena starejša dovoljenja
+- Podpisovanje in gradnja: Odpravljene težave s podpisovanjem APK/AAB, izboljšana pravila R8/ProGuard
+- Dokumentacija in predloge: Dodana licenca GPL v3, posodobljena datoteka README, dodane predloge za napake/funkcije/konfiguracije
+- Infrastruktura: Integriran Fastlane, združena veja F-Droid

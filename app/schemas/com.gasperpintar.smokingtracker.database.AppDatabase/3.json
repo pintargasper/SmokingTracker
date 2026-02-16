@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 2,
-    "identityHash": "0cbcc65093e40cda449fbbb23b39419c",
+    "version": 3,
+    "identityHash": "3312decbf2f4bc8d1ddcffb83a99d95e",
     "entities": [
       {
         "tableName": "achievements",
@@ -113,7 +113,7 @@
       },
       {
         "tableName": "settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` INTEGER NOT NULL, `frequency` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -132,6 +132,12 @@
             "columnName": "language",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "frequency",
+            "columnName": "frequency",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -143,7 +149,7 @@
       },
       {
         "tableName": "notifications_settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `system` INTEGER NOT NULL, `progress` INTEGER NOT NULL, `achievements` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `system` INTEGER NOT NULL, `achievements` INTEGER NOT NULL, `progress` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -158,14 +164,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "progress",
-            "columnName": "progress",
+            "fieldPath": "achievements",
+            "columnName": "achievements",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
-            "fieldPath": "achievements",
-            "columnName": "achievements",
+            "fieldPath": "progress",
+            "columnName": "progress",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -180,7 +186,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0cbcc65093e40cda449fbbb23b39419c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3312decbf2f4bc8d1ddcffb83a99d95e')"
     ]
   }
 }

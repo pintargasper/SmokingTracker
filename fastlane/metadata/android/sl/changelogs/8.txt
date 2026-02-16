@@ -1,0 +1,10 @@
+## Selitev shrambe, popravki gradnje in izboljšave dokumentacije
+
+- Shramba: Migrirana v SAF, odstranjena starejša dovoljenja
+- Podpisovanje in gradnja: Odpravljene težave s podpisovanjem APK/AAB, izboljšana pravila R8/ProGuard za boljšo optimizacijo in varnost
+- Dokumentacija in predloge: Dodana licenca GPLv3, dodane predloge za poročanje o napakah, funkcijah in konfiguraciji
+- Infrastruktura: Integriran Fastlane za avtomatizirane gradnje in izdaje
+- Optimizirana struktura kode in obvestila
+- Dodana možnost za opomnike o napredku
+- Dodane neposredne povezave za lažji dostop do aplikacij
+- Odpravljena združljivost z Excelom v starejših različicah pri obnavljanju podatkov

@@ -4,8 +4,6 @@ import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.gasperpintar.smokingtracker.database.converter.AchievementEnumConverter
-import com.gasperpintar.smokingtracker.database.converter.LocalDateTimeConverter
 import com.gasperpintar.smokingtracker.database.dao.AchievementDao
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.dao.NotificationsSettingsDao
@@ -23,20 +21,14 @@ import com.gasperpintar.smokingtracker.database.specifications.SettingsDeleteCol
         SettingsEntity::class,
         NotificationsSettingsEntity::class
     ],
-    version = 2,
+    version = 3,
     autoMigrations = [
-        AutoMigration(
-            from = 1,
-            to = 2,
-            spec = SettingsDeleteColumn::class
-        )
+        AutoMigration(from = 1, to = 2, spec = SettingsDeleteColumn::class)
+        // AutoMigration (from = 2, to = 3) MANUALLY HANDLED
     ],
     exportSchema = true
 )
-@TypeConverters(value = [
-    LocalDateTimeConverter::class,
-    AchievementEnumConverter::class
-])
+@TypeConverters(value = [Converters::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun achievementDao(): AchievementDao
     abstract fun historyDao(): HistoryDao

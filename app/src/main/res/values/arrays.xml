@@ -4,4 +4,10 @@
         <item>en</item>
         <item>sl</item>
     </string-array>
+
+    <string-array name="frequency_options">
+        <item>@string/notifications_popup_progress_frequency_default</item>
+        <item>@string/notifications_popup_progress_frequency_daily</item>
+        <item>@string/notifications_popup_progress_frequency_weekly</item>
+    </string-array>
 </resources>

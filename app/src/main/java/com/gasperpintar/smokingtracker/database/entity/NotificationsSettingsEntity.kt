@@ -10,4 +10,5 @@ data class NotificationsSettingsEntity(
     val id: Long,
     val system: Boolean,
     val achievements: Boolean,
+    val progress: Boolean
 )
