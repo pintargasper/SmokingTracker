@@ -67,7 +67,7 @@
     <string name="notification_download_title">Varnostno kopiranje končano</string>
     <string name="notification_download_content">Varnostna kopija je bila uspešno ustvarjena v datoteki %1$s</string>
     <string name="notification_upload_title">Obnovitev končana</string>
-    <string name="notification_upload_content">Podatki so bili uspešno naloženi</string>
+    <string name="notification_upload_content">Podatki so bili uspešno obnovljeni</string>
     <string name="notification_upload_failed_title">Obnovitev podatkov ni uspela</string>
     <string name="notification_upload_failed_content">Napaka pri nalaganju datoteke</string>
     <string name="achievements_container_icon">Ikona dosežka</string>
@@ -236,4 +236,12 @@
         <item quantity="few">%d krat</item>
         <item quantity="other">%d krat</item>
     </plurals>
+    <string name="settings_category_data_version_view">Oglejte si na IzzyOnDroid ali Google Play</string>
+    <string name="notifications_popup_check_box_progress">Opomnik o napredku</string>
+    <string name="notifications_popup_progress_frequency_label">Pogostost</string>
+    <string name="notifications_popup_progress_frequency_default">Privzeto</string>
+    <string name="notifications_popup_progress_frequency_daily">Dnevno</string>
+    <string name="notifications_popup_progress_frequency_weekly">Tedensko</string>
+    <string name="version_popup_title">Ogled na</string>
+    <string name="version_popup_close">Zapri</string>
 </resources>
