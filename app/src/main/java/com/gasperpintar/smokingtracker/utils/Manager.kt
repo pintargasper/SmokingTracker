@@ -113,11 +113,13 @@ object Manager {
 
         header.createCell(0, CellType.STRING).setCellValue("Theme")
         header.createCell(1, CellType.STRING).setCellValue("Language")
+        header.createCell(2, CellType.STRING).setCellValue("Frequency")
 
         settings?.let {
             val row = sheet.createRow(1)
             row.createCell(0, CellType.NUMERIC).setCellValue(it.theme.toDouble())
             row.createCell(1, CellType.NUMERIC).setCellValue(it.language.toDouble())
+            row.createCell(2, CellType.NUMERIC).setCellValue(it.frequency.toDouble())
         }
     }
 
@@ -158,11 +160,13 @@ object Manager {
 
         header.createCell(0, CellType.STRING).setCellValue("System")
         header.createCell(1, CellType.STRING).setCellValue("Achievements")
+        header.createCell(2, CellType.STRING).setCellValue("Progress")
 
         notificationsSettings?.let {
             val row = sheet.createRow(1)
             row.createCell(0, CellType.BOOLEAN).setCellValue(it.system)
             row.createCell(1, CellType.BOOLEAN).setCellValue(it.achievements)
+            row.createCell(2, CellType.BOOLEAN).setCellValue(it.progress)
         }
     }
 
@@ -174,7 +178,13 @@ object Manager {
             }
             val lent = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed
             val createdAt = LocalDateTime.parse(row.getCell(1).stringCellValue, dateFormatter)
-            repository.insert(entry = HistoryEntity(0, lent, createdAt))
+            repository.insert(
+                entry = HistoryEntity(
+                    id = 0,
+                    lent = lent,
+                    createdAt = createdAt
+                )
+            )
         }
     }
 
@@ -188,7 +198,8 @@ object Manager {
                 SettingsEntity(
                     id = 0,
                     theme = row.getCell(0).numericCellValue.toInt(),
-                    language = row.getCell(1).numericCellValue.toInt()
+                    language = row.getCell(1).numericCellValue.toInt(),
+                    frequency = row.getCell(2)?.numericCellValue?.toInt() ?: 0,
                 )
             )
         }
@@ -241,7 +252,8 @@ object Manager {
             settings = NotificationsSettingsEntity(
                 id = 0,
                 system = row.getCell(0).booleanCellValue,
-                achievements = row.getCell(1).booleanCellValue
+                achievements = row.getCell(1).booleanCellValue,
+                progress = row.getCell(2)?.booleanCellValue ?: true
             )
         )
     }

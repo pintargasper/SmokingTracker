@@ -2,15 +2,18 @@ package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.annotation.SuppressLint
 import android.text.format.DateFormat
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.CheckBox
 import android.widget.DatePicker
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
+import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import java.time.LocalDateTime
 import java.util.Calendar
@@ -151,34 +154,55 @@ object DialogManager {
 
     fun showNotificationsDialog(
         context: FragmentActivity,
+        settings: SettingsEntity,
         notificationsSettings: NotificationsSettingsEntity,
+        onSettingsSelected: (SettingsEntity) -> Unit,
         onNotificationSettingsSelected: (NotificationsSettingsEntity) -> Unit
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.notifications_popup) {
             override fun setup() {
                 val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
+                val checkboxProgress: CheckBox = dialogView.findViewById(R.id.checkbox_progress)
                 val checkboxAchievements: CheckBox = dialogView.findViewById(R.id.checkbox_achievements)
+                val frequency: AutoCompleteTextView = dialogView.findViewById(R.id.spinner_progress_frequency)
 
-                var currentSettings = notificationsSettings.copy()
+                var currentNotificationSettings = notificationsSettings.copy()
+                var currentSettings = settings.copy()
 
-                checkboxSystem.isChecked = currentSettings.system
-                checkboxAchievements.isChecked = currentSettings.achievements
+                checkboxSystem.isChecked = currentNotificationSettings.system
+                checkboxProgress.isChecked = currentNotificationSettings.progress
+                checkboxAchievements.isChecked = currentNotificationSettings.achievements
+
+                frequency.setText(
+                    context.resources.getStringArray(R.array.frequency_options)[currentSettings.frequency],
+                    false
+                )
 
                 checkboxSystem.setOnCheckedChangeListener { _, isChecked ->
-                    currentSettings = currentSettings.copy(system = isChecked)
-                    onNotificationSettingsSelected(currentSettings)
+                    currentNotificationSettings = currentNotificationSettings.copy(system = isChecked)
+                    onNotificationSettingsSelected(currentNotificationSettings)
+                }
+
+                checkboxProgress.setOnCheckedChangeListener { _, isChecked ->
+                    currentNotificationSettings = currentNotificationSettings.copy(progress = isChecked)
+                    onNotificationSettingsSelected(currentNotificationSettings)
                 }
 
                 checkboxAchievements.setOnCheckedChangeListener { _, isChecked ->
-                    currentSettings = currentSettings.copy(achievements = isChecked)
-                    onNotificationSettingsSelected(currentSettings)
+                    currentNotificationSettings = currentNotificationSettings.copy(achievements = isChecked)
+                    onNotificationSettingsSelected(currentNotificationSettings)
+                }
+
+                frequency.setOnItemClickListener { _, _, position, _ ->
+                    currentSettings = currentSettings.copy(frequency = position)
+                    onSettingsSelected(currentSettings)
                 }
             }
         }
         dialogInstance.show()
     }
 
-    fun showDownloadDialog(
+    fun showBackupDialog(
         context: FragmentActivity,
         onDownload: () -> Unit
     ) {
@@ -195,7 +219,7 @@ object DialogManager {
         dialogInstance.show()
     }
 
-    fun showUploadDialog(
+    fun showRestoreDialog(
         context: FragmentActivity,
         onOpenFile: () -> Unit,
         onConfirm: () -> Unit,
@@ -249,6 +273,35 @@ object DialogManager {
                 buttonConfirm.setOnClickListener {
                     onDateSelected(selectedDate)
                     dialog.dismiss()
+                }
+            }
+        }
+        dialogInstance.show()
+    }
+
+    fun showVersionDialog(
+        context: FragmentActivity,
+        onLinkClicked: (LinearLayout, String) -> Unit
+    ) {
+        val dialogInstance = object : BaseDialog(context, R.layout.version_popup) {
+            override fun setup() {
+                val izzyOnDroidLayout: LinearLayout = dialogView.findViewById(R.id.izzy_on_droid_website_layout)
+                val googlePlayLayout: LinearLayout = dialogView.findViewById(R.id.google_play_website_layout)
+                val textViewIzzyOnDroidUrl: TextView = dialogView.findViewById(R.id.izzy_on_droid_website_service_url)
+                val textViewGooglePlayUrl: TextView = dialogView.findViewById(R.id.google_play_website_service_url)
+
+                val izzyUrl = "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
+                val googlePlayUrl = "https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker"
+
+                textViewIzzyOnDroidUrl.text = izzyUrl
+                textViewGooglePlayUrl.text = googlePlayUrl
+
+                izzyOnDroidLayout.setOnClickListener {
+                    onLinkClicked(izzyOnDroidLayout, izzyUrl)
+                }
+
+                googlePlayLayout.setOnClickListener {
+                    onLinkClicked(googlePlayLayout, googlePlayUrl)
                 }
             }
         }

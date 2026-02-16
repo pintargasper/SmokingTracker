@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.database
 
 import android.content.Context
 import androidx.room.Room
+import com.gasperpintar.smokingtracker.database.specifications.Migrations
 import kotlin.jvm.java
 
 object Provider {
@@ -15,7 +16,10 @@ object Provider {
                         context = context.applicationContext,
                         klass = AppDatabase::class.java,
                         name = "smoking_tracker"
-                    ).build()
+                    )
+                .addTypeConverter(Converters())
+                .addMigrations(*Migrations.migrationList)
+                .build()
             databaseInstance = instance
             instance
         }
