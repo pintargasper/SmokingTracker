@@ -1,15 +1,11 @@
 ## Feature and UI Improvements Update
 
-- Optimization based on device text size
-- Updated overall text sizes for better readability
-- Updated and improved UI components
-- Popups now include rounded edges for a more modern appearance
-- Improved sizing of buttons and various UI components
-- General theme fixes and styling improvements
-- Improved permissions handling for notifications
-- Worker reliability update
-- Notification popup behavior improved
-- Theme selection popup improvement
-- Language selection popup improvement
-- Fixed bugs related to the upload popup
-- Added popup for data download
+- Optimized for device text size
+- Improved readability with updated font scaling
+- Enhanced and modernized UI components (rounded popups)
+- Better button and element sizing
+- Theme and styling refinements
+- Improved notification permissions and reliability
+- More stable worker and notification behavior
+- Enhanced popups (theme, language, upload, data download)
+- Bug fixes and performance improvements

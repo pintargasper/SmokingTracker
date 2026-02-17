@@ -6,5 +6,3 @@
 - Fixed a bug affecting the system tray overlay in dark mode, ensuring correct visibility and consistency
 - Updated translations
 - Corrected minor display and logic bugs
-- Improved navigation performance and animations
-- General adjustments for more consistent rendering across different devices

@@ -1,15 +1,8 @@
 ## Posodobitev funkcionalnosti in izboljšav uporabniškega vmesnika
 
-- Optimizacija glede na velikost besedila naprave
-- Posodobljene splošne velikosti besedila za boljšo berljivost
-- Posodobljene in izboljšane komponente uporabniškega vmesnika
-- Pojavna okna zdaj vključujejo zaobljene robove za sodobnejši videz
-- Izboljšana velikost gumbov in različnih komponent uporabniškega vmesnika
-- Splošni popravki tem in izboljšave oblikovanja
-- Izboljšano upravljanje dovoljenj za obvestila
-- Posodobitev zanesljivosti delavcev
-- Izboljšano delovanje pojavnih oken z obvestili
-- Izboljšano pojavno okno za izbiro teme
-- Izboljšano pojavno okno za izbiro jezika
-- Odpravljene napake, povezane s pojavnim oknom za nalaganje
-- Dodano pojavno okno za prenos podatkov
+- Optimizirano za velikost besedila
+- Izboljšana berljivost in UI (zaobljena okna, večje gumbe)
+- Popravki teme, slogov in napak
+- Boljša dovoljenja in zanesljivost obvestil
+- Stabilnejše delovanje delavcev
+- Izboljšani pojavna okna (tema, jezik, nalaganje, prenos podatkov)

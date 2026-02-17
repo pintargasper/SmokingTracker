@@ -1,21 +1,9 @@
 ## Razširitev analitike, pripomočki
 
-- Dodana dnevna vizualizacija grafov za jasnejši vpogled v vzorce kajenja skozi čas
-- Uveden pripomoček na začetnem zaslonu, ki omogoča hiter dostop in sledenje neposredno z zaslona telefona
-- Izboljšana dejavnost kalkulatorja
-- Omogočeno odpiranje izvoženih datotek Excel neposredno iz obvestil z uporabo zunanjih aplikacij
-- Izboljšana logika obravnavanja datumov za natančnejše dnevne izračune
-- Izboljšana lokalizacija datumov za zagotovitev pravilnega oblikovanja v različnih jezikih
-- Strukturne izboljšave analitičnih osnov za prihodnjo razširljivost
-- Večja prenova razreda LocalizationHelper in sorodnih komponent
-- Izboljšana logika lokalizacije in doslednost v celotni aplikaciji
-- Posodobljeni in razširjeni slovenski prevodi preko Weblate
-- Dodana obsežna pokritost testov, povezanih z lokalizacijo
-- Dodani novi testi
-- Splošna izboljšava kakovosti, strukture in vzdrževanja kode
-- Prenovljena pogovorna okna za čistejšo arhitekturo in boljšo ponovno uporabnost
-- Več izboljšav in prenove kode
-- Posodobljene različice knjižnic za večjo stabilnost, varnost in združljivost
-- Odpravljene manjše logike in nedoslednosti uporabniškega vmesnika
-- Izboljšana zanesljivost navigacije in jasnost notranje kode
-- Splošne optimizacije za bolj gladko delovanje
+- Dodana dnevna vizualizacija grafov in začetni zaslonski pripomoček
+- Izboljšan kalkulator in odpiranje Excel datotek iz obvestil
+- Natančnejša obravnava datumov in lokalizacija
+- Strukturne izboljšave analitike in koda za lažjo razširljivost
+- Prenovljeni LocalizationHelper, dosledna lokalizacija, posodobljeni prevodi
+- Več testov, optimizacija kode, stabilnejše knjižnice in UI
+- Izboljšana navigacija, zanesljivost in gladko delovanje

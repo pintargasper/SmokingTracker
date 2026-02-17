@@ -1,10 +1,9 @@
 ## Storage Migration, Build Fixes, and Documentation Improvements
 
-- Storage: Migrated to SAF, removed legacy permissions
-- Signing & Build: Fixed APK/AAB signing issues, improved R8/ProGuard rules for better optimization and security
-- Documentation & Templates: Added GPL v3 license, added templates for bug, feature, and configuration reporting
-- Infrastructure: Integrated Fastlane for automated builds and releases
-- Optimized code structure and notifications
-- Added option for progress reminders
-- Added direct links for easier app access
-- Fixed compatibility with Excel in older versions when restoring data
+- Storage migration to SAF, removal of old permissions
+- APK/AAB signing fixes, improved R8/ProGuard rules
+- Added GPLv3 license and bug/feature reporting templates
+- Integrated Fastlane for automated builds and releases
+- Optimized code, notifications and progress reminders
+- Direct links for easier access to apps
+- Fixed Excel compatibility issues in older versions

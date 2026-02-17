@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="social-preview.png" width="200px" alt="Social Preview">
+<img src="assets/social-preview.png" width="200px" alt="Social Preview">
 <br>
 <h1>Sledilnik Kajenja</h1>
 
@@ -16,8 +16,31 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
 [![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Spletna%20stran-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
 
-[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Prenesi-lightgray?style=for-the-badge&logo=download&logoColor=white)](https://github.com/pintargasper/SmokingTracker/releases/latest)
-[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Google%20play-lightgray?style=for-the-badge&logo=download&logoColor=white)](https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker)
+<div style="display:flex; justify-content:center; align-items:center; gap:2px;">
+  <a href="https://github.com/pintargasper/SmokingTracker/releases/latest" target="_blank">
+    <img
+      src="assets/badges/en-US/github.png"
+      width="140px"
+      alt="Prenesite APK iz GitHuba"
+    />
+  </a>
+
+  <a href="https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker" target="_blank">
+    <img
+      src="assets/badges/en-US/izzyondroid.png"
+      width="140px"
+      alt="Prenesite APK iz IzzyOnDroid"
+    />
+  </a>
+
+  <a href="https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker" target="_blank">
+    <img
+      src="assets/badges/en-US/google_play.png"
+      width="140px"
+      alt="Pridobite v trgovini Google Play"
+    />
+  </a>
+</div>
 
 [![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey)](https://apilevels.com)
 [![Preview release](https://img.shields.io/github/release/pintargasper/SmokingTracker.svg?maxAge=3600&include_prereleases&label=preview)](https://github.com/pintargasper/SmokingTracker/releases) 
@@ -45,10 +68,11 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 - **Preprost in intuitiven** uporabniški vmesnik
 
 ## 🌐 Podprti jeziki
-| Jezik            | Status    | Prevedeno                                                                                                                                                                |
-|:-----------------|:----------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 🇺🇸 Angleščina  | Supported | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
-| 🇸🇮 Slovenščina | Supported | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
+
+| Jezik            | Prevedeno |
+|:-----------------|:----------|
+| 🇺🇸 Angleščina  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
+| 🇸🇮 Slovenščina | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
 
 > Dodatni jeziki bodo dodani v prihodnjih izdajah
 
@@ -67,7 +91,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 ## 📝 Odvisnosti in različice
 
 **Vtičnik za Gradle**
-- Vtičnik za Android Gradle: 9.0.0
+- Vtičnik za Android Gradle: 9.0.1
 
 **Knjižnice**
 > Vse knjižnice so konfigurirane v [`libs.versions.toml`](gradle/libs.versions.toml)

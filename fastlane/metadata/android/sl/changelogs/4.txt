@@ -6,5 +6,3 @@
 - Odpravljena napaka, ki je vplivala na prekrivno plast sistemske vrstice v temnem načinu, kar zagotavlja pravilno vidljivost in doslednost
 - Posodobljeni prevodi
 - Popravljene manjše napake v prikazu in logiki
-- Izboljšana zmogljivost navigacije in animacije
-- Splošne prilagoditve za bolj dosledno upodabljanje na različnih napravah
