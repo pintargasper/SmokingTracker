@@ -92,6 +92,7 @@ class LocalizationHelperTest {
             id = 0,
             theme = 0,
             language = languageId,
+            frequency = 0
         )
     }
 }
