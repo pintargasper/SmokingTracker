@@ -34,8 +34,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:minHeight="55dp"
-            android:clickable="true"
-            android:focusable="true"
             app:layout_constraintTop_toBottomOf="@id/version_popup_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
@@ -74,8 +72,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:minHeight="55dp"
-            android:clickable="true"
-            android:focusable="true"
             app:layout_constraintTop_toBottomOf="@id/izzy_on_droid_website_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

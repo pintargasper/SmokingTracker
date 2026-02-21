@@ -182,8 +182,8 @@ class SettingsFragment : Fragment() {
         binding.versionLayout.setOnClickListener {
             DialogManager.showVersionDialog(
                 context = requireActivity(),
-                onLinkClicked = { view, url ->
-                    setupLink(view, url)
+                onLinkClicked = { _, url ->
+                    openUrl(url)
                 }
             )
         }
