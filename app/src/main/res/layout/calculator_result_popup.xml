@@ -220,7 +220,7 @@
                 android:id="@+id/button_close_result"
                 android:layout_width="wrap_content"
                 android:layout_height="55dp"
-                android:text="@string/calculator_result_popup_button"
+                android:text="@string/popup_close"
                 android:textAppearance="?attr/textAppearanceSubtitle1"
                 android:textColor="?attr/colorOnSurface"
                 android:singleLine="true"

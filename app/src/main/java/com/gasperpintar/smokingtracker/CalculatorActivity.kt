@@ -138,7 +138,9 @@ class CalculatorActivity : AppCompatActivity() {
             totalTimeMinutes = totalTimeMinutes,
             totalCigarettes = totalCigarettes,
             currencyUnit = getString(R.string.calculator_result_valute_unit),
-            formatTime = { minutes -> TimeHelper.formatTime(resources = resources, totalMinutes = minutes) }
+            formatTime = { minutes ->
+                TimeHelper.formatTime(resources = resources, totalMinutes = minutes)
+            }
         )
     }
 

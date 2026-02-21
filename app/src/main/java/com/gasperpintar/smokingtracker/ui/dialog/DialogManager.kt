@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
 import java.time.LocalDateTime
 import java.util.Calendar
@@ -337,6 +338,21 @@ object DialogManager {
                 btnClose.setOnClickListener {
                     dialog.dismiss()
                 }
+            }
+        }
+        dialogInstance.show()
+    }
+
+    fun showAchievementDetailsDialog(
+        context: FragmentActivity,
+        achievementEntry: AchievementEntry
+    ) {
+        val dialogInstance = object : BaseDialog(context, R.layout.achievement_details_popup) {
+            override fun setup() {
+                val textTitle: TextView = dialogView.findViewById(R.id.text_title)
+                val textMessage: TextView = dialogView.findViewById(R.id.text_message)
+                textTitle.text = context.getString(achievementEntry.title)
+                textMessage.text = context.getString(achievementEntry.message)
             }
         }
         dialogInstance.show()
