@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.utils
 
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.AchievementJsonEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
@@ -18,29 +19,15 @@ class JsonHelper(
     private val achievementRepository: AchievementRepository
 ) {
 
-    suspend fun initializeAchievementsIfNeeded(
-        context: Context
-    ) {
-        val achievementsInDb = achievementRepository.getAll()
-        val achievementsFromJson = loadAchievementsFromJson(context, AchievementCategory.SMOKE_FREE_TIME) +
-                loadAchievementsFromJson(context, AchievementCategory.CIGARETTES_AVOIDED)
+    suspend fun initializeAchievementsIfNeeded(context: Context) {
+        val achievementsFromJson: List<AchievementEntry> =
+            loadAchievementsFromJson(context, AchievementCategory.SMOKE_FREE_TIME) +
+                    loadAchievementsFromJson(context, AchievementCategory.CIGARETTES_AVOIDED)
 
-        val existingSet = achievementsInDb.map {
-            Triple(it.value, it.category, it.unit) to it.message
-        }.toSet()
-
-        val newAchievements = achievementsFromJson.filter {
-            Triple(it.value, it.category, it.unit) to it.message !in existingSet
+        val entities: List<AchievementEntity> = achievementsFromJson.map {
+            it.toEntity()
         }
-
-        val entities = newAchievements.map {
-            TimeHelper.run {
-                it.toEntity()
-            }
-        }
-        if (entities.isNotEmpty()) {
-            achievementRepository.insert(entries = entities)
-        }
+        achievementRepository.upsertAll(entries = entities)
     }
 
     fun loadAchievementsFromJson(
