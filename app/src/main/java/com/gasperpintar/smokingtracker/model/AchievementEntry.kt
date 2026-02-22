@@ -43,19 +43,19 @@ data class AchievementEntry(
         }
     }
 
-    fun toEntity(): AchievementEntity {
+    fun toEntity(existing: AchievementEntity? = null): AchievementEntity {
         return AchievementEntity(
             id = id,
             image = image,
             value = value,
             title = title,
             message = message,
-            times = times,
-            lastAchieved = lastAchieved,
-            reset = reset,
-            notify = notify,
             category = category,
-            unit = unit
+            unit = unit,
+            times = existing?.times ?: times,
+            lastAchieved = existing?.lastAchieved ?: lastAchieved,
+            reset = existing?.reset ?: reset,
+            notify = existing?.notify ?: notify
         )
     }
 
@@ -102,4 +102,3 @@ data class AchievementEntry(
         }
     }
 }
-

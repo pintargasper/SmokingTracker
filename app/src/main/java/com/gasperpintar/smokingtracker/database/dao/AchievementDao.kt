@@ -2,14 +2,10 @@ package com.gasperpintar.smokingtracker.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import androidx.room.Upsert
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 
 @Dao
 interface AchievementDao: Base<AchievementEntity> {
-
-    @Upsert
-    suspend fun upsertAll(entities: List<AchievementEntity>)
 
     @Query(value = "DELETE FROM achievements")
     suspend fun deleteAll()

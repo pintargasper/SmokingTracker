@@ -82,4 +82,3 @@ object WidgetHelper {
             .getString(resourceId)
     }
 }
-

@@ -180,6 +180,7 @@ class MainActivity : AppCompatActivity() {
             sharedPreferences.edit {
                 putString("last_version_name", versionName)
             }
+            recreate()
         }
     }
 
