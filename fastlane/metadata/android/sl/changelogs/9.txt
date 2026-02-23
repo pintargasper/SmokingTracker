@@ -1,0 +1,8 @@
+## Posodobitev dosežkov in stabilnosti
+
+- Prenovljen sistem dosežkov (stabilnost + zanesljivost)
+- Izboljšana postavitev dosežkov
+- Izboljšan pripomoček začetnega zaslona
+- Posodobljeni prevodi
+- Odpravljene manjše napake in stabilnost
+- Odpravljeni podvojeni dosežki
