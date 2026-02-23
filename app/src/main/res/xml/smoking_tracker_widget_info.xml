@@ -5,5 +5,5 @@
     android:updatePeriodMillis="0"
     android:initialLayout="@layout/widget_smoking_tracker"
     android:resizeMode="horizontal|vertical"
-    android:widgetCategory="home_screen" />
+    android:widgetCategory="keyguard|home_screen" />
 
