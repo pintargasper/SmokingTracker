@@ -244,4 +244,6 @@
     <string name="notifications_popup_progress_frequency_weekly">Tedensko</string>
     <string name="version_popup_title">Ogled na</string>
     <string name="version_popup_close">Zapri</string>
+    <string name="popup_close">Zapri</string>
+    <string name="popup_confirm">Potrdi</string>
 </resources>
