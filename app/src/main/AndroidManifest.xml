@@ -26,6 +26,8 @@
         <activity android:name=".CalculatorActivity" />
         <activity android:name=".AchievementsActivity" />
         <receiver
+            android:icon="@mipmap/ic_launcher"
+            android:label="A widget to view the number of cigarettes smoked"
             android:name=".provider.SmokingTrackerWidget"
             android:exported="true">
             <intent-filter>

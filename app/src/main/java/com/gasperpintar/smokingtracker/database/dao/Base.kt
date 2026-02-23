@@ -3,8 +3,12 @@ package com.gasperpintar.smokingtracker.database.dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Update
+import androidx.room.Upsert
 
 interface Base<T> {
+
+    @Upsert
+    suspend fun upsertAll(entities: List<T>)
 
     @Insert
     suspend fun insert(entity: T)

@@ -64,27 +64,21 @@
     <string name="insert_popup_message">Add record</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
     <string name="insert_popup_insert">Add</string>
-    <string name="insert_popup_close">Close</string>
+    <string name="popup_close">Close</string>
+    <string name="popup_confirm">Confirm</string>
     <string name="edit_popup_message">Date and time</string>
     <string name="edit_popup_lent">A lent cigarette?</string>
-    <string name="edit_popup_confirm">Confirm</string>
-    <string name="edit_popup_close">Close</string>
     <string name="delete_popup_message">Are you sure to delete this record?</string>
-    <string name="delete_popup_confirm">Confirm</string>
-    <string name="delete_popup_close">Close</string>
     <string name="language_popup">Select language</string>
     <string name="language_popup_info">Choose your preferred language</string>
-    <string name="language_popup_close">Close</string>
     <string name="language_popup_check_box_system">System</string>
     <string name="theme_popup">Select theme</string>
     <string name="theme_popup_info">Choose your preferred theme</string>
-    <string name="theme_popup_close">Close</string>
     <string name="theme_popup_check_box_system">System</string>
     <string name="theme_popup_check_box_light_theme">Light theme</string>
     <string name="theme_popup_check_box_dark_theme">Dark theme</string>
     <string name="notifications_popup">Notifications</string>
     <string name="notifications_popup_info">Choose your notification preference</string>
-    <string name="notifications_popup_close">Close</string>
     <string name="notifications_popup_check_box_system">System</string>
     <string name="notifications_popup_check_box_progress">Progress reminder</string>
     <string name="notifications_popup_check_box_achievements">Achievements</string>
@@ -95,19 +89,15 @@
     <string name="download_popup">Backup your data</string>
     <string name="download_popup_info">You will be notified of the data backup via push notification</string>
     <string name="download_popup_download">Backup</string>
-    <string name="download_popup_close">Close</string>
     <string name="upload_popup_select">Select</string>
     <string name="upload_popup_upload">Restore your data</string>
     <string name="upload_popup_info">You will be notified of the data restore via push notification</string>
-    <string name="upload_popup_confirm">Confirm</string>
-    <string name="upload_popup_close">Close</string>
     <string name="upload_popup_file">File</string>
     <string name="upload_popup_file_none">None</string>
     <string name="upload_popup_file_unknown">Unknown</string>
     <string name="version_popup_title">View on</string>
     <string name="version_popup_get_it_on_izzy_on_droid" translatable="false">IzzyOnDroid</string>
     <string name="version_popup_get_it_on_google_play" translatable="false">Google Play</string>
-    <string name="version_popup_close">Close</string>
     <string name="achievement_container_meta">Last achieved</string>
     <string name="achievement_container_count">Achieved</string>
     <string name="achievement_title_congrats_days_1">One day hero</string>
@@ -190,7 +180,6 @@
     <string name="calculator_end_date_hint">End date</string>
     <string name="calculator_button_calculate">Calculate</string>
     <string name="calculator_result_title">Calculation result</string>
-    <string name="calculator_result_popup_button">Close</string>
     <string name="calculator_result_total_costs_label">Total costs</string>
     <string name="calculator_result_time_spent_label">Time spent</string>
     <string name="calculator_result_average_cost_per_hour">Average cost per hour</string>

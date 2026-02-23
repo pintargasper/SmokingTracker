@@ -7,12 +7,6 @@ class AchievementRepository(
     private val achievementDao: AchievementDao
 ) {
     suspend fun insert(
-        entry: AchievementEntity
-    ) {
-        achievementDao.insert(entity = entry)
-    }
-
-    suspend fun insert(
         entries: List<AchievementEntity>
     ) {
         achievementDao.insertAll(entities = entries)
@@ -22,6 +16,10 @@ class AchievementRepository(
         entry: AchievementEntity
     ) {
         achievementDao.update(entity = entry)
+    }
+
+    suspend fun upsertAll(entries: List<AchievementEntity>) {
+        achievementDao.upsertAll(entities = entries)
     }
 
     suspend fun delete(

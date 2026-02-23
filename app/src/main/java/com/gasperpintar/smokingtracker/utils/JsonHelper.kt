@@ -17,30 +17,19 @@ import java.io.InputStreamReader
 class JsonHelper(
     private val achievementRepository: AchievementRepository
 ) {
-
-    suspend fun initializeAchievementsIfNeeded(
-        context: Context
-    ) {
-        val achievementsInDb = achievementRepository.getAll()
-        val achievementsFromJson = loadAchievementsFromJson(context, AchievementCategory.SMOKE_FREE_TIME) +
-                loadAchievementsFromJson(context, AchievementCategory.CIGARETTES_AVOIDED)
-
-        val existingSet = achievementsInDb.map {
-            Triple(it.value, it.category, it.unit) to it.message
-        }.toSet()
-
-        val newAchievements = achievementsFromJson.filter {
-            Triple(it.value, it.category, it.unit) to it.message !in existingSet
+    suspend fun initializeAchievementsIfNeeded(context: Context) {
+        val existing = achievementRepository.getAll().associateBy {
+            it.id
         }
-
-        val entities = newAchievements.map {
-            TimeHelper.run {
-                it.toEntity()
-            }
+        val achievements = listOf(
+            AchievementCategory.SMOKE_FREE_TIME,
+            AchievementCategory.CIGARETTES_AVOIDED
+        ).flatMap {
+            loadAchievementsFromJson(context, type = it)
+        }.map { entry ->
+            entry.toEntity(existing[entry.id])
         }
-        if (entities.isNotEmpty()) {
-            achievementRepository.insert(entries = entities)
-        }
+        achievementRepository.upsertAll(entries = achievements)
     }
 
     fun loadAchievementsFromJson(

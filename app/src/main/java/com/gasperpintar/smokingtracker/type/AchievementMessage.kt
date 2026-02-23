@@ -5,12 +5,12 @@ import com.gasperpintar.smokingtracker.R
 enum class AchievementMessage(
     val stringResource: Int
 ) {
-    DAYS1(R.string.achievement_message_congrats_days_2),
+    DAYS1(R.string.achievement_message_congrats_days_1),
     DAYS2(R.string.achievement_message_congrats_days_2),
-    DAYS3(R.string.achievement_message_congrats_days_2),
-    DAYS4(R.string.achievement_message_congrats_days_2),
+    DAYS3(R.string.achievement_message_congrats_days_3),
+    DAYS4(R.string.achievement_message_congrats_days_4),
     DAYS5(R.string.achievement_message_congrats_days_5),
-    DAYS6(R.string.achievement_message_congrats_days_5),
+    DAYS6(R.string.achievement_message_congrats_days_6),
     WEEK1(R.string.achievement_message_congrats_weeks_1),
     WEEK2(R.string.achievement_message_congrats_weeks_2),
     WEEK3(R.string.achievement_message_congrats_weeks_3),

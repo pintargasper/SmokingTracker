@@ -20,6 +20,7 @@ import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 
@@ -98,6 +99,7 @@ class AchievementsFragment : Fragment() {
         val adapter = Adapter(
             layoutId = R.layout.achievements_container,
             onBind = { itemView, achievementEntry ->
+                val container = itemView.findViewById<View>(R.id.achievement_container)
                 val imageAchievement = itemView.findViewById<ImageView>(R.id.image_achievement)
                 val textAchievementTitle = itemView.findViewById<TextView>(R.id.text_achievement_title)
                 val textAchievementMessage = itemView.findViewById<TextView>(R.id.text_achievement_message)
@@ -126,6 +128,13 @@ class AchievementsFragment : Fragment() {
                 } else {
                     imageAchievement.clearColorFilter()
                     imageAchievement.alpha = 1f
+                }
+
+                container.setOnClickListener {
+                    DialogManager.showAchievementDetailsDialog(
+                        context = requireActivity(),
+                        achievementEntry = achievementEntry
+                    )
                 }
             },
             diffCallback = object : DiffUtil.ItemCallback<AchievementEntry>() {

@@ -21,10 +21,11 @@ import com.gasperpintar.smokingtracker.database.specifications.SettingsDeleteCol
         SettingsEntity::class,
         NotificationsSettingsEntity::class
     ],
-    version = 3,
+    version = 4,
     autoMigrations = [
         AutoMigration(from = 1, to = 2, spec = SettingsDeleteColumn::class)
         // AutoMigration (from = 2, to = 3) MANUALLY HANDLED
+        // AutoMigration (from = 3, to = 4) MANUALLY HANDLED
     ],
     exportSchema = true
 )

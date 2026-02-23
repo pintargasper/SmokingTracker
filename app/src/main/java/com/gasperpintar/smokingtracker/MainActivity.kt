@@ -106,9 +106,7 @@ class MainActivity : AppCompatActivity() {
 
         handleAppVersioning(sharedPreferences = sharedPreferences)
         applyTheme(themeId = settings.theme)
-        handleNotifications(
-            sharedPreferences = sharedPreferences
-        )
+        handleNotifications(sharedPreferences = sharedPreferences)
     }
 
     private fun initPager() {
@@ -182,6 +180,7 @@ class MainActivity : AppCompatActivity() {
             sharedPreferences.edit {
                 putString("last_version_name", versionName)
             }
+            recreate()
         }
     }
 
