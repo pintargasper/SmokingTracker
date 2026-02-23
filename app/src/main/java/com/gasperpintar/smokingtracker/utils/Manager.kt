@@ -67,7 +67,6 @@ object Manager {
         try {
             context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
                 XSSFWorkbook(inputStream).use { workbook ->
-
                     importHistorySheet(workbook, historyRepository)
                     importSettingsSheet(workbook, settingsRepository)
                     importAchievementSheet(workbook, achievementRepository)
@@ -128,8 +127,8 @@ object Manager {
         val header = sheet.createRow(0)
 
         val headers: List<String> = listOf(
-            "Image","Value","Title","Message","Times",
-            "LastAchieved","Reset","Notify","Category","Unit"
+            "Image", "Value", "Title", "Message", "Times",
+            "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id",
         )
 
         headers.forEachIndexed { index, title ->
@@ -148,6 +147,7 @@ object Manager {
             row.createCell(7, CellType.BOOLEAN).setCellValue(achievement.notify)
             row.createCell(8, CellType.STRING).setCellValue(achievement.category.name)
             row.createCell(9, CellType.STRING).setCellValue(achievement.unit.name)
+            row.createCell(10, CellType.NUMERIC).setCellValue(achievement.id.toDouble())
         }
     }
 
@@ -211,13 +211,29 @@ object Manager {
 
         val entities: MutableList<AchievementEntity> = mutableListOf()
 
+        val headerRow = sheet.getRow(0)
+
+        var idIndex = -1
+        for (cellIndex in 0 until headerRow.physicalNumberOfCells) {
+            val cell = headerRow.getCell(cellIndex)
+            if (cell != null && cell.cellType == CellType.STRING && cell.stringCellValue == "Id") {
+                idIndex = cellIndex
+                break
+            }
+        }
+
         sheet.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
             }
+
             entities.add(
                 AchievementEntity(
-                    id = 0,
+                    id = if (idIndex != -1) {
+                        row.getCell(idIndex).numericCellValue.toLong()
+                    } else {
+                        index.toLong()
+                    },
                     image = row.getCell(0).numericCellValue.toInt(),
                     value = row.getCell(1).numericCellValue.toInt(),
                     title = row.getCell(2).numericCellValue.toInt(),

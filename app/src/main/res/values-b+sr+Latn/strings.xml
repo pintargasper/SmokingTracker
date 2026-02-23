@@ -37,9 +37,6 @@
     <string name="insert_popup_message">Dodaj zapis</string>
     <string name="insert_popup_lent">Pozajmljena cigareta?</string>
     <string name="insert_popup_insert">Dodaj</string>
-    <string name="insert_popup_close">Zatvori</string>
     <string name="edit_popup_message">Datum i vreme</string>
     <string name="edit_popup_lent">Pozajmljena cigareta?</string>
-    <string name="edit_popup_confirm">Odobreno</string>
-    <string name="edit_popup_close">Zatvoreno</string>
 </resources>
