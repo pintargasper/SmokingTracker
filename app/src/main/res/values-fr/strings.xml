@@ -23,4 +23,21 @@
     <string name="home_timer_hour">h</string>
     <string name="home_timer_minute">min</string>
     <string name="home_timer_second">s</string>
+    <string name="app_name">Suivi de ce que vous fumez</string>
+    <string name="title_home">Principal</string>
+    <string name="title_graph">Graphique</string>
+    <string name="title_analytics">Statistiques</string>
+    <string name="title_notifications">Paramètres</string>
+    <string name="home_timer_message">Temps depuis la dernière cigarette</string>
+    <string name="notifications_popup_progress_frequency_daily">Journalière</string>
+    <string name="notifications_popup_progress_frequency_weekly">Hebdomadaire</string>
+    <string name="download_popup">Sauvegarder vos données</string>
+    <string name="download_popup_info">Vous recevrez une notification push de la sauvegarde de vos données</string>
+    <string name="download_popup_download">Sauvegarde</string>
+    <string name="upload_popup_select">Sélectionner</string>
+    <string name="upload_popup_upload">Restaurer vos données</string>
+    <string name="upload_popup_info">Vous recevrez une notification push de la restauration de vos données</string>
+    <string name="upload_popup_file">Fichier</string>
+    <string name="upload_popup_file_none">Aucun</string>
+    <string name="upload_popup_file_unknown">Inconnu</string>
 </resources>
