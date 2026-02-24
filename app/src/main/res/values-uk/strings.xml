@@ -113,4 +113,25 @@
     <string name="achievement_message_congrats_days_1">Гарна робота. Не зупиняйся й тримай темп</string>
     <string name="achievement_message_congrats_days_2">Вогонь! Ти вже на розгоні й тримаєшся жорстко</string>
     <string name="achievement_message_congrats_days_3">Продовжуй у тому ж дусі! Кожен крок свідчить про твою наполегливість</string>
+    <string name="popup_close">Закрити</string>
+    <string name="popup_confirm">Підтвердити</string>
+    <string name="achievement_message_congrats_days_4">Вражаюче! Тримай темп і не відступай</string>
+    <string name="achievement_message_congrats_days_5">Чудово! Твоя наполегливість уже дає вражаючі результати</string>
+    <string name="achievement_message_congrats_days_6">Фантастично! Твої зусилля вже приносять результат, не зупиняйся</string>
+    <string name="achievement_message_congrats_weeks_1">Супер! Перший тиждень закрито, і це реально крутий етап</string>
+    <string name="achievement_message_congrats_weeks_2">Ого! Два тижні на дисципліні - повага</string>
+    <string name="achievement_message_congrats_weeks_3">Ти просто машина! Три тижні тримаєш курс - це сила</string>
+    <string name="achievement_message_congrats_months_1">Місяць - це крутий результат. Просто пам’ятай: саме зараз з’являється оце відчуття «я вже точно не закурю», і воно підводить багатьох</string>
+    <string name="achievement_message_congrats_months_3">Нічого собі, ти тут? Чесно, мало хто доходить до трьох місяців</string>
+    <string name="achievement_message_congrats_months_6">Пів року? Слухай, а я тобі взагалі ще потрібен? Ти й без мене справляєшся як бог</string>
+    <string name="achievement_message_congrats_months_9">Дев’ять місяців без куріння… Слухай, та ти вже як новонароджений. Твоя зосередженість реально творить нового тебе</string>
+    <string name="achievement_message_congrats_years_1">Рік відданості - це вже рівень легенди. Схоже, ти й без мене справляєшся краще, ніж більшість із тренером</string>
+    <string name="achievement_title_congrats_c_20">Перший крок до перемог</string>
+    <string name="achievement_title_congrats_c_200">Пак‑хантер</string>
+    <string name="achievement_title_congrats_c_400">Антицигарковий герой</string>
+    <string name="achievement_title_congrats_c_600">Руйнівних Сигаретних Пачок</string>
+    <string name="achievement_title_congrats_c_800">Антизалежний боєць</string>
+    <string name="achievement_title_congrats_c_1000">Найгірший кошмар тютюнових корпорацій</string>
+    <string name="achievement_message_congrats_c_20">Крутий старт! Ще трохи - і пачки самі почнуть тебе боятися</string>
+    <string name="achievement_message_congrats_c_200">Серйозний прогрес! Ти так розігнався, що тебе вже й нікотин не доганяє</string>
 </resources>
