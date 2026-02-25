@@ -134,4 +134,103 @@
     <string name="achievement_title_congrats_c_1000">Найгірший кошмар тютюнових корпорацій</string>
     <string name="achievement_message_congrats_c_20">Крутий старт! Ще трохи - і пачки самі почнуть тебе боятися</string>
     <string name="achievement_message_congrats_c_200">Серйозний прогрес! Ти так розігнався, що тебе вже й нікотин не доганяє</string>
+    <string name="achievement_message_congrats_c_400">Твоя наполегливість настільки ефективна, що фізика вже хоче назвати закон на твою честь</string>
+    <string name="achievement_message_congrats_c_600">Ти настільки добре опановуєш цей шлях, що GPS попросив у тебе оновлення</string>
+    <string name="achievement_message_congrats_c_800">Твоя рішучість настільки потужна, що Всесвіт уже вніс правки в сценарій</string>
+    <string name="achievement_message_congrats_c_1000">1000 сигарет не викурено. Всесвіт оновив статистику й додав тебе в список природних катастроф для тютюнової індустрії</string>
+    <string name="day_monday">Понеділок</string>
+    <string name="day_tuesday">Вівторок</string>
+    <string name="day_wednesday">Середа</string>
+    <string name="day_thursday">Четвер</string>
+    <string name="day_friday">П\'ятниця</string>
+    <string name="day_saturday">Субота</string>
+    <string name="day_sunday">Неділя</string>
+    <string name="month_january">Січень</string>
+    <string name="month_february">Лютий</string>
+    <string name="month_march">Березень</string>
+    <string name="month_april">Квітень</string>
+    <string name="month_may">Травень</string>
+    <string name="month_june">Червень</string>
+    <string name="month_july">Липень</string>
+    <string name="month_august">Серпень</string>
+    <string name="month_september">Вересень</string>
+    <string name="month_october">Жовтень</string>
+    <string name="month_november">Листопад</string>
+    <string name="month_december">Грудень</string>
+    <string name="notification_title">Поточний стан прогресу</string>
+    <string name="notification_content">Минуло %1$s від твоєї останньої сигарети</string>
+    <string name="notification_download_title">Бекап готовий</string>
+    <string name="notification_download_content">Резервну копію даних успішно збережено у файлі %1$s</string>
+    <string name="notification_upload_title">Рестор успішно завершено</string>
+    <string name="notification_upload_content">Дані успішно відновлено</string>
+    <plurals name="achievement_achieved_times">
+        <item quantity="one">%d раз</item>
+        <item quantity="few">%d рази</item>
+        <item quantity="many">%d разів</item>
+        <item quantity="other">%d разів</item>
+    </plurals>
+    <string name="notification_upload_failed_title">Помилка відновлення даних</string>
+    <string name="notification_upload_failed_content">Не вдалося прочитати файл</string>
+    <string name="notification_achievement_unlocked_title">Топчик!</string>
+    <string name="notification_achievement_unlocked_content_time">Залік! Уже %1$s без куріння</string>
+    <string name="notification_achievement_unlocked_content_cigarettes">Уникнуто %1$s</string>
+    <string name="calculator_cigarettes_per_day">Цигарок на день</string>
+    <string name="calculator_cigarettes_per_pack">Цигарок у пачці</string>
+    <string name="calculator_price_per_pack">Вартість пачки</string>
+    <string name="calculator_period">Виберіть період</string>
+    <string name="calculator_start_date">З:</string>
+    <string name="calculator_start_date_hint">Дата початку</string>
+    <string name="calculator_end_date">До:</string>
+    <string name="calculator_end_date_hint">Кінцева дата</string>
+    <string name="calculator_button_calculate">Розрахувати</string>
+    <string name="calculator_result_title">Підсумок розрахунку</string>
+    <string name="calculator_result_total_costs_label">Загальна вартість</string>
+    <string name="calculator_result_time_spent_label">Тривалість</string>
+    <string name="calculator_result_average_cost_per_hour">У середньому за годину</string>
+    <string name="calculator_result_cost_per_cigarette">Вартість однієї цигарки</string>
+    <string name="calculator_result_average_time_per_cigarette_label">Середній час на викурення 1 цигарки</string>
+    <string name="calculator_result_average_time_per_cigarette_description">Приблизно 5 хвилин</string>
+    <string name="calculator_result_valute_unit">одиниці</string>
+    <plurals name="time_years">
+        <item quantity="one">%d рік</item>
+        <item quantity="few">%d роки</item>
+        <item quantity="many">%d років</item>
+        <item quantity="other">%d років</item>
+    </plurals>
+    <plurals name="time_months">
+        <item quantity="one">%d місяць</item>
+        <item quantity="few">%d місяці</item>
+        <item quantity="many">%d місяців</item>
+        <item quantity="other">%d місяців</item>
+    </plurals>
+    <plurals name="time_weeks">
+        <item quantity="one">%d тиждень</item>
+        <item quantity="few">%d тижні</item>
+        <item quantity="many">%d тижнів</item>
+        <item quantity="other">%d тижнів</item>
+    </plurals>
+    <plurals name="time_days">
+        <item quantity="one">%d день</item>
+        <item quantity="few">%d дні</item>
+        <item quantity="many">%d днів</item>
+        <item quantity="other">%d днів</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%d година</item>
+        <item quantity="few">%d години</item>
+        <item quantity="many">%d годин</item>
+        <item quantity="other">%d годин</item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="one">%d хвилина</item>
+        <item quantity="few">%d хвилини</item>
+        <item quantity="many">%d хвилин</item>
+        <item quantity="other">%d хвилин</item>
+    </plurals>
+    <plurals name="cigarettes_count">
+        <item quantity="one">%d цигарка</item>
+        <item quantity="few">%d цигарки</item>
+        <item quantity="many">%d цигарок</item>
+        <item quantity="other">%d цигарок</item>
+    </plurals>
 </resources>
