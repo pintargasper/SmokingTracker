@@ -244,19 +244,11 @@ class SettingsFragment : Fragment() {
     }
 
     private fun getLanguages(): List<String> {
-        return listOf(
-            getString(R.string.language_popup_check_box_system),
-            "English",
-            "Slovenščina"
-        )
+        return resources.getStringArray(R.array.language_names).toList()
     }
 
     private fun getThemes(): List<String> {
-        return listOf(
-            getString(R.string.theme_popup_check_box_system),
-            getString(R.string.theme_popup_check_box_light_theme),
-            getString(R.string.theme_popup_check_box_dark_theme)
-        )
+        return resources.getStringArray(R.array.theme_names).toList()
     }
 
     private fun areNotificationsEnabled(): Boolean {

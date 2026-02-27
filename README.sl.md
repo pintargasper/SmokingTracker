@@ -71,8 +71,9 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
 | Jezik            | Prevedeno |
 |:-----------------|:----------|
-| 🇺🇸 Angleščina  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
-| 🇸🇮 Slovenščina | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
+| 🇺🇸 Angleščina    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
+| 🇸🇮 Slovenščina   | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
+| 🇺🇦 Ukrajinščina  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/uk/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/uk) |
 
 > Dodatni jeziki bodo dodani v prihodnjih izdajah
 

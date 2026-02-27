@@ -3,6 +3,20 @@
         <item>system</item>
         <item>en</item>
         <item>sl</item>
+        <item>uk</item>
+    </string-array>
+
+    <string-array name="language_names">
+        <item>@string/language_popup_check_box_system</item>
+        <item>English</item>
+        <item>Slovenščina</item>
+        <item>Українська</item>
+    </string-array>
+
+    <string-array name="theme_names">
+        <item>@string/theme_popup_check_box_system</item>
+        <item>@string/theme_popup_check_box_light_theme</item>
+        <item>@string/theme_popup_check_box_dark_theme</item>
     </string-array>
 
     <string-array name="frequency_options">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Трекер куріння</string>
+    <string name="app_name">Трекер Куріння</string>
     <string name="title_home">Головна</string>
     <string name="title_graph">Діаграма</string>
     <string name="title_analytics">Аналітика</string>
@@ -53,7 +53,8 @@
     <string name="settings_category_data_upload_url">Відновити дані з пристрою</string>
     <string name="settings_category_data_about">Про</string>
     <string name="settings_category_data_version">Версія %1$s</string>
-    <string name="settings_category_data_version_view">Дивись у IzzyOnDroid чи Google Play</string>
+    <string name="settings_category_data_version_view">Дивись у F-droid чи IzzyOnDroid</string>
+    <string name="settings_category_data_version_view_alternative">Дивись у F-droid, IzzyOnDroid чи Google Play</string>
     <string name="settings_category_data_website">Сайт</string>
     <string name="settings_category_data_translations_website">Допомогти з перекладом</string>
     <string name="settings_category_data_translations_website_url">Допоможи перекласти застосунок своєю мовою у Weblate</string>

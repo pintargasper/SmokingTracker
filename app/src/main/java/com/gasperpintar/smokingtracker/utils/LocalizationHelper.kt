@@ -43,7 +43,7 @@ object LocalizationHelper {
     ): String {
         val locale = Locale.getDefault()
         val pattern = when (locale.language) {
-            "sl" -> "dd.MM.yyyy"
+            "sl", "uk" -> "dd.MM.yyyy"
             else -> "yyyy-MM-dd"
         }
         val formatter = DateTimeFormatter.ofPattern(pattern, locale)
@@ -57,7 +57,7 @@ object LocalizationHelper {
     ): String {
         val locale = Locale.getDefault()
         return when (locale.language) {
-            "sl" -> String.format("%02d.%02d/%02d.%02d", start.dayOfMonth, start.monthValue, end.dayOfMonth, end.monthValue)
+            "sl", "uk" -> String.format("%02d.%02d/%02d.%02d", start.dayOfMonth, start.monthValue, end.dayOfMonth, end.monthValue)
             else -> String.format("%02d/%02d-%02d/%02d", start.monthValue, start.dayOfMonth, end.monthValue, end.dayOfMonth)
         }
     }

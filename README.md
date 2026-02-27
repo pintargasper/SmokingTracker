@@ -71,8 +71,9 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 
 | Language       | Translated |
 |:---------------|:-----------|
-| 🇺🇸 English   | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
-| 🇸🇮 Slovenian | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
+| 🇺🇸 English    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
+| 🇸🇮 Slovenian  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
+| 🇺🇦 Ukrainian | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/uk/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/uk) |
 
 > Additional languages will be added in future releases
 

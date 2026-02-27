@@ -100,6 +100,18 @@
                     android:maxWidth="300dp"
                     tools:ignore="HardcodedText,VisualLintButtonSize" />
 
+                <CheckBox
+                    android:id="@+id/checkbox_ukrainian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:text="Українська"
+                    android:textColor="?attr/colorOnSurface"
+                    android:textSize="14sp"
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
+
             </LinearLayout>
         </ScrollView>
 

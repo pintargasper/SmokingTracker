@@ -224,7 +224,8 @@
         <item quantity="few">%d krat</item>
         <item quantity="other">%d krat</item>
     </plurals>
-    <string name="settings_category_data_version_view">Oglejte si na IzzyOnDroid ali Google Play</string>
+    <string name="settings_category_data_version_view">Oglejte si na F-droid ali IzzyOnDroid</string>
+    <string name="settings_category_data_version_view_alternative">Oglejte si na F-droid, IzzyOnDroid ali Google Play</string>
     <string name="notifications_popup_check_box_progress">Opomnik o napredku</string>
     <string name="notifications_popup_progress_frequency_label">Pogostost</string>
     <string name="notifications_popup_progress_frequency_default">Privzeto</string>

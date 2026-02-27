@@ -134,10 +134,12 @@ object DialogManager {
                 val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
                 val checkboxEnglish: CheckBox = dialogView.findViewById(R.id.checkbox_english)
                 val checkboxSlovenian: CheckBox = dialogView.findViewById(R.id.checkbox_slovenian)
+                val checkboxUkrainian: CheckBox = dialogView.findViewById(R.id.checkbox_ukrainian)
 
                 checkboxSystem.isChecked = selectedLanguage == 0
                 checkboxEnglish.isChecked = selectedLanguage == 1
                 checkboxSlovenian.isChecked = selectedLanguage == 2
+                checkboxUkrainian.isChecked = selectedLanguage == 3
 
                 fun selectAndClose(
                     language: Int
@@ -145,9 +147,21 @@ object DialogManager {
                     onLanguageSelected(language)
                     this.dialog.dismiss()
                 }
-                checkboxSystem.setOnClickListener { selectAndClose(0) }
-                checkboxEnglish.setOnClickListener { selectAndClose(1) }
-                checkboxSlovenian.setOnClickListener { selectAndClose(2) }
+                checkboxSystem.setOnClickListener {
+                    selectAndClose(0)
+                }
+
+                checkboxEnglish.setOnClickListener {
+                    selectAndClose(1)
+                }
+
+                checkboxSlovenian.setOnClickListener {
+                    selectAndClose(2)
+                }
+
+                checkboxUkrainian.setOnClickListener {
+                    selectAndClose(3)
+                }
             }
         }
         dialogInstance.show()
@@ -286,24 +300,32 @@ object DialogManager {
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.version_popup) {
             override fun setup() {
+                val fDroidLayout: LinearLayout = dialogView.findViewById(R.id.f_droid_website_layout)
                 val izzyOnDroidLayout: LinearLayout = dialogView.findViewById(R.id.izzy_on_droid_website_layout)
-                val googlePlayLayout: LinearLayout = dialogView.findViewById(R.id.google_play_website_layout)
+                // val googlePlayLayout: LinearLayout = dialogView.findViewById(R.id.google_play_website_layout)
+                val textViewFDroidUrl: TextView = dialogView.findViewById(R.id.f_droid_website_service_url)
                 val textViewIzzyOnDroidUrl: TextView = dialogView.findViewById(R.id.izzy_on_droid_website_service_url)
-                val textViewGooglePlayUrl: TextView = dialogView.findViewById(R.id.google_play_website_service_url)
+                // val textViewGooglePlayUrl: TextView = dialogView.findViewById(R.id.google_play_website_service_url)
 
+                val fDroidUrl = "https://f-droid.org/packages/com.gasperpintar.smokingtracker"
                 val izzyUrl = "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
-                val googlePlayUrl = "https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker"
+                //val googlePlayUrl = ""
 
+                textViewFDroidUrl.text = fDroidUrl
                 textViewIzzyOnDroidUrl.text = izzyUrl
-                textViewGooglePlayUrl.text = googlePlayUrl
+                //textViewGooglePlayUrl.text = googlePlayUrl
+
+                fDroidLayout.setOnClickListener {
+                    onLinkClicked(fDroidLayout, fDroidUrl)
+                }
 
                 izzyOnDroidLayout.setOnClickListener {
                     onLinkClicked(izzyOnDroidLayout, izzyUrl)
                 }
 
-                googlePlayLayout.setOnClickListener {
+                /*googlePlayLayout.setOnClickListener {
                     onLinkClicked(googlePlayLayout, googlePlayUrl)
-                }
+                }*/
             }
         }
         dialogInstance.show()

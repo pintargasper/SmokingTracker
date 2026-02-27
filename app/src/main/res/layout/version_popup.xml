@@ -29,12 +29,50 @@
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <LinearLayout
-            android:id="@+id/izzy_on_droid_website_layout"
+            android:id="@+id/f_droid_website_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:minHeight="55dp"
             app:layout_constraintTop_toBottomOf="@id/version_popup_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/f_droid_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/version_popup_get_it_on_f_droid"
+                android:textAppearance="?attr/textAppearanceSubtitle1"
+                android:textColor="?attr/colorOnSurface"
+                android:textStyle="bold"
+                android:clickable="false"
+                android:focusable="false"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_marginBottom="2dp"/>
+
+            <TextView
+                android:id="@+id/f_droid_website_service_url"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBody2"
+                android:textSize="14sp"
+                android:textColor="?attr/colorOnSurface"
+                android:clickable="false"
+                android:focusable="false"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:scrollHorizontally="false"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/izzy_on_droid_website_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:minHeight="55dp"
+            app:layout_constraintTop_toBottomOf="@id/f_droid_website_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -66,6 +104,7 @@
                 android:scrollHorizontally="false"/>
         </LinearLayout>
 
+        <!--
         <LinearLayout
             android:id="@+id/google_play_website_layout"
             android:layout_width="match_parent"
@@ -104,6 +143,7 @@
                 android:singleLine="true"
                 android:scrollHorizontally="false"/>
         </LinearLayout>
+        -->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_close_version_button"
@@ -116,7 +156,7 @@
             android:padding="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/google_play_website_layout"
+            app:layout_constraintTop_toBottomOf="@id/izzy_on_droid_website_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
