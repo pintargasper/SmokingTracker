@@ -1,0 +1,6 @@
+## Posodobitev jezika in skladnosti
+
+- Dodana podpora za ukrajinščino
+- Izboljšani in posodobljeni prevodi
+- Odpravljene manjše težave s skladnostjo F-Droid
+- Popravki manjših napak

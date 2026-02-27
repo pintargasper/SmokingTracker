@@ -1,0 +1,6 @@
+## Language and compliance update
+
+- Added Ukrainian language support
+- Improved and updated translations
+- Fixed minor F-Droid compliance issues
+- Minor bug fixes

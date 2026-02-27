@@ -231,6 +231,7 @@ class MainActivity : AppCompatActivity() {
         return when (Locale.getDefault().language) {
             "en" -> 1
             "sl" -> 2
+            "uk" -> 3
             else -> 0
         }
     }
