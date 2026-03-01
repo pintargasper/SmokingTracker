@@ -189,6 +189,12 @@
     <string name="calculator_result_average_time_per_cigarette_label">Average time to smoke 1 cigarette</string>
     <string name="calculator_result_average_time_per_cigarette_description">Estimated at 5 minutes</string>
     <string name="calculator_result_valute_unit">units</string>
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_basic">Basic</string>
+    <string name="statistics_forecast">Forecast</string>
+    <string name="analytics_statistics_title">Statistics</string>
+    <string name="statistics_achievements_description">Detailed insights and trends of your usage over time</string>
+
     <plurals name="time_years">
         <item quantity="one">%d year</item>
         <item quantity="two">%d years</item>

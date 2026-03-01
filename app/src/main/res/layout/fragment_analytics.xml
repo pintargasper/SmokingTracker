@@ -114,6 +114,44 @@
                         android:textSize="14sp" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/statistics_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="55dp"
+                    android:orientation="vertical">
+
+                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                        android:id="@+id/text_statistics_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:clickable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:singleLine="true"
+                        android:text="@string/analytics_statistics_title"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textStyle="bold"/>
+
+                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                        android:id="@+id/text_statistics_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:ellipsize="end"
+                        android:focusable="false"
+                        android:scrollHorizontally="false"
+                        android:text="@string/statistics_achievements_description"
+                        android:singleLine="true"
+                        android:textAppearance="?attr/textAppearanceBody2"
+                        android:textColor="?attr/colorOnSurface"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".CalculatorActivity" />
         <activity android:name=".AchievementsActivity" />
+        <activity android:name=".StatisticsActivity" />
         <receiver
             android:icon="@mipmap/ic_launcher"
             android:label="A widget to view the number of cigarettes smoked"

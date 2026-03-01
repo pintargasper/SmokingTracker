@@ -9,7 +9,7 @@
     android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/toolbar_achievements"
+        android:id="@+id/toolbar_statistics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -30,7 +30,7 @@
             tools:ignore="HardcodedText" />
 
         <com.gasperpintar.smokingtracker.ui.MarqueeTextView
-            android:id="@+id/text_achievements_title"
+            android:id="@+id/text_statistics_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ellipsize="marquee"
@@ -39,14 +39,14 @@
             android:gravity="center_vertical"
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"
-            android:text="@string/achievements_title"
+            android:text="@string/statistics_title"
             android:textAppearance="?attr/textAppearanceSubtitle1"
             android:textColor="?attr/colorOnSurface" />
 
     </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/achievements_tab_layout"
+        android:id="@+id/statistics_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="fixed"
@@ -56,19 +56,19 @@
         app:tabTextColor="?attr/colorOnSurface">
 
         <com.google.android.material.tabs.TabItem
-            android:text="@string/achievements_smoke_free_time"
+            android:text="@string/statistics_basic"
             android:layout_height="match_parent"
             android:layout_width="match_parent"/>
 
         <com.google.android.material.tabs.TabItem
-            android:text="@string/achievements_cigarettes_avoided"
+            android:text="@string/statistics_forecast"
             android:layout_height="match_parent"
             android:layout_width="match_parent"/>
 
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/achievements_view_pager"
+        android:id="@+id/statistics_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
