@@ -194,6 +194,12 @@
     <string name="statistics_forecast">Forecast</string>
     <string name="analytics_statistics_title">Statistics</string>
     <string name="statistics_achievements_description">Detailed insights and trends of your usage over time</string>
+    <string name="statistics_max_cigarettes">Maximum cigarettes smoked in a day</string>
+    <string name="statistics_min_cigarettes">Minimum cigarettes smoked in a day</string>
+    <string name="statistics_avg_cigarettes">Average cigarettes per day</string>
+    <string name="statistics_total_cigarettes">Total cigarettes smoked</string>
+    <string name="statistics_longest_streak">Longest smoke-free streak (days)</string>
+    <string name="statistics_date">Date</string>
 
     <plurals name="time_years">
         <item quantity="one">%d year</item>

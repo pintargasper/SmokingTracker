@@ -10,7 +10,8 @@ import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityStatisticsBinding
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.MarqueeTextView
-import com.gasperpintar.smokingtracker.ui.fragment.statistics.StatisticsFragment
+import com.gasperpintar.smokingtracker.ui.fragment.statistics.BasicFragment
+import com.gasperpintar.smokingtracker.ui.fragment.statistics.ForecastFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -48,8 +49,8 @@ class StatisticsActivity : AppCompatActivity() {
         val tabLayout = binding.statisticsTabLayout
 
         val fragments = listOf(
-            { StatisticsFragment.newInstance(type = 0) },
-            { StatisticsFragment.newInstance(type = 1) }
+            { BasicFragment() },
+            { ForecastFragment() }
         )
 
         val tabTitles = listOf(
