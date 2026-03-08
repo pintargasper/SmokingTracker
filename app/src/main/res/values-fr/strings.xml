@@ -90,12 +90,12 @@
     <string name="settings_category_data_privacy_policy">Sécurité</string>
     <string name="settings_category_data_privacy_policy_url">Smoking Tracker : Politique de Confidentialité</string>
     <string name="insert_popup_message">Rajouter un record</string>
-    <string name="insert_popup_lent">Une cigarette prêtés?</string>
+    <string name="insert_popup_lent">Une cigarette prêtés ?</string>
     <string name="insert_popup_insert">Rajouter</string>
     <string name="popup_close">Fermer</string>
     <string name="popup_confirm">Comfirmer</string>
     <string name="edit_popup_message">Date et heure</string>
-    <string name="edit_popup_lent">Une cigarette prêtée ?</string>
+    <string name="edit_popup_lent">Une cigarette prêtée ?</string>
     <string name="delete_popup_message">Êtes vous sûr de vouloir supprimer ce record ?</string>
     <string name="language_popup">Selectionner une langue</string>
     <string name="language_popup_info">Choisisez votre langue préféré</string>
@@ -126,8 +126,8 @@
     <string name="achievement_title_congrats_months_6">Conquerant des six mois</string>
     <string name="achievement_title_congrats_months_9">Defensseur des neuf mois</string>
     <string name="achievement_title_congrats_years_1">Pionnier d\'une année</string>
-    <string name="achievement_message_congrats_days_1">Félicitation! Continue à avancer et reste consistent</string>
-    <string name="achievement_message_congrats_days_2">Bon travail ! Tu accumule de l\'élan et reste solide</string>
+    <string name="achievement_message_congrats_days_1">Félicitation ! Continue à avancer et reste consistent</string>
+    <string name="achievement_message_congrats_days_2">Bon travail ! Tu accumule de l\'élan et reste solide</string>
     <string name="achievement_message_congrats_days_3">Garde le cap ! Chaque étapes que tu entreprends est preuve de ton engagement</string>
     <string name="achievement_message_congrats_days_4">Incroyable ! Continue a persévérer et reste impliquer</string>
     <string name="notification_download_title">Sauvegarde finie</string>
@@ -135,7 +135,7 @@
     <string name="calculator_cigarettes_per_pack">Cigarette par paquet</string>
     <string name="calculator_price_per_pack">Prix par paquet</string>
     <string name="calculator_period">Selextionner une période</string>
-    <string name="calculator_start_date">Depuis :</string>
+    <string name="calculator_start_date">Depuis :</string>
     <string name="calculator_end_date">Jusqu\'à :</string>
     <string name="calculator_end_date_hint">Date de fin</string>
     <string name="calculator_button_calculate">Calculer</string>
@@ -150,36 +150,36 @@
     <plurals name="time_years">
         <item quantity="one">%d année</item>
         <item quantity="many">%d années</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="time_weeks">
-        <item quantity="one">"%d  semaine"</item>
-        <item quantity="many">"%d  semaines"</item>
-        <item quantity="other">"%d  semaines"</item>
+        <item quantity="one">%d semaine</item>
+        <item quantity="many">%d semaines</item>
+        <item quantity="other">%d semaines</item>
     </plurals>
     <plurals name="time_days">
         <item quantity="one">%d jour</item>
-        <item quantity="many">"%d  jours"</item>
-        <item quantity="other">"%d  jours"</item>
+        <item quantity="many">%d jours</item>
+        <item quantity="other">%d jours</item>
     </plurals>
     <plurals name="time_hours">
-        <item quantity="one">"%d  heure"</item>
-        <item quantity="many">"%d  heures"</item>
+        <item quantity="one">%d heure</item>
+        <item quantity="many">%d heures</item>
         <item quantity="other"></item>
     </plurals>
     <plurals name="time_minutes">
-        <item quantity="one">"%d  minute"</item>
-        <item quantity="many">"%d  minutes"</item>
-        <item quantity="other">"%d  minutes"</item>
+        <item quantity="one">%d minute</item>
+        <item quantity="many">%d minutes</item>
+        <item quantity="other">%d minutes</item>
     </plurals>
     <plurals name="cigarettes_count">
-        <item quantity="one">"%d  cigarette"</item>
-        <item quantity="many">"%d  cigarette"</item>
-        <item quantity="other">"%d  cigarettes"</item>
+        <item quantity="one">%d cigarette</item>
+        <item quantity="many">%d cigarette</item>
+        <item quantity="other">%d cigarettes</item>
     </plurals>
     <plurals name="achievement_achieved_times">
-        <item quantity="one">"%d  fois"</item>
-        <item quantity="many">"%d  fois"</item>
-        <item quantity="other">"%d  fois"</item>
+        <item quantity="one">%d fois</item>
+        <item quantity="many">%d fois</item>
+        <item quantity="other">%d fois</item>
     </plurals>
 </resources>
