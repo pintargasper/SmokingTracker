@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.repository
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.model.HistoryEntry
 import java.time.LocalDateTime
 
 class HistoryRepository(
@@ -69,5 +70,9 @@ class HistoryRepository(
 
     suspend fun getMinCigarettesPerDay(): CigarettesPerDay? {
         return historyDao.getMinCigarettesPerDay()
+    }
+
+    suspend fun getEntries(date: LocalDateTime): List<HistoryEntry> {
+        return getBetween(start = date.minusMonths(12), end = date).map(transform = HistoryEntry.Companion::fromEntity)
     }
 }

@@ -35,7 +35,6 @@ class GraphFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentGraphBinding.inflate(inflater, container, false)
 
         database = (requireActivity() as MainActivity).database

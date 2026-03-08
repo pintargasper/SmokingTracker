@@ -42,7 +42,7 @@
                     android:layout_marginBottom="8dp"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
-                    android:id="@+id/graph_view_daily"
+                    android:id="@+id/forecast_graph_view"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"/>
 

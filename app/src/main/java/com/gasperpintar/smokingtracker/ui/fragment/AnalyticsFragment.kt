@@ -30,16 +30,16 @@ class AnalyticsFragment : Fragment() {
     }
 
     private fun setup() {
+        binding.statisticsLayout.setOnClickListener {
+            startActivity(clazz = StatisticsActivity::class)
+        }
+
         binding.calculatorLayout.setOnClickListener {
-            startActivity(CalculatorActivity::class)
+            startActivity(clazz = CalculatorActivity::class)
         }
 
         binding.achievementsLayout.setOnClickListener {
-            startActivity(AchievementsActivity::class)
-        }
-
-        binding.statisticsLayout.setOnClickListener {
-            startActivity(StatisticsActivity::class)
+            startActivity(clazz = AchievementsActivity::class)
         }
     }
 
