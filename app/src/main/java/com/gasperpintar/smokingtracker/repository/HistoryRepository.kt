@@ -1,6 +1,7 @@
 package com.gasperpintar.smokingtracker.repository
 
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
+import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import java.time.LocalDateTime
 
@@ -52,5 +53,21 @@ class HistoryRepository(
 
     suspend fun getAverageCigarettesPerDay(): Double {
         return historyDao.getAveragePerDay()
+    }
+
+    suspend fun getTotalCigarettes(): Int {
+        return historyDao.getTotalCount()
+    }
+
+    suspend fun getFirstRecordDate(): LocalDateTime? {
+        return historyDao.getFirstRecordDate()
+    }
+
+    suspend fun getMaxCigarettesPerDay(): CigarettesPerDay? {
+        return historyDao.getMaxCigarettesPerDay()
+    }
+
+    suspend fun getMinCigarettesPerDay(): CigarettesPerDay? {
+        return historyDao.getMinCigarettesPerDay()
     }
 }

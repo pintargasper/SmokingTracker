@@ -65,7 +65,6 @@ class AchievementsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAchievementsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
         setupRecyclerView()
 
@@ -87,7 +86,7 @@ class AchievementsFragment : Fragment() {
             }.filter { it.category == achievementType }
             loadAchievements(achievementEntries = achievements)
         }
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {

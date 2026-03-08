@@ -62,7 +62,7 @@
     <string name="settings_category_data_translations_website_url">Translate this app on your language using Weblate</string>
     <string name="settings_category_data_privacy_policy">Security</string>
     <string name="settings_category_data_privacy_policy_url">Smoking Tracker - Privacy Policy</string>
-    <string name="insert_popup_message">Add record</string>
+    <string name="insert_popup_message">Add entry</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
     <string name="insert_popup_insert">Add</string>
     <string name="popup_close">Close</string>
@@ -198,7 +198,8 @@
     <string name="statistics_min_cigarettes">Minimum cigarettes smoked in a day</string>
     <string name="statistics_avg_cigarettes">Average cigarettes per day</string>
     <string name="statistics_total_cigarettes">Total cigarettes smoked</string>
-    <string name="statistics_longest_streak">Longest smoke-free streak (days)</string>
+    <string name="statistics_first_entry">Since first entry</string>
+    <string name="statistics_longest_streak">Longest time without smoking (days)</string>
     <string name="statistics_date">Date</string>
 
     <plurals name="time_years">

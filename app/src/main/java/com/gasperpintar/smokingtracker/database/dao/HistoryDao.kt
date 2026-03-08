@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import java.time.LocalDateTime
 
@@ -38,4 +39,42 @@ interface HistoryDao: Base<HistoryEntity> {
 
     @Query(value = "SELECT * FROM history")
     suspend fun getAll(): List<HistoryEntity>
+
+    @Query(value = "SELECT COUNT(*) FROM history")
+    suspend fun getTotalCount(): Int
+
+    @Query("SELECT MIN(createdAt) FROM history")
+    suspend fun getFirstRecordDate(): LocalDateTime?
+
+    @Query(
+        value = """
+            SELECT dailySum, day
+            FROM (
+                SELECT DATE(createdAt) as day, SUM(CASE WHEN lent = 0 THEN 1 ELSE 0 END) as dailySum
+                FROM history
+                GROUP BY DATE(createdAt)
+                HAVING dailySum > 0
+            )
+            ORDER BY dailySum DESC
+            LIMIT 1
+        """
+    )
+    suspend fun getMaxCigarettesPerDay(): CigarettesPerDay?
+
+    @Query(
+        value = """
+            SELECT dailySum, day
+            FROM (
+                SELECT DATE(createdAt) as day, SUM(CASE WHEN lent = 0 THEN 1 ELSE 0 END) as dailySum
+                FROM history
+                GROUP BY DATE(createdAt)
+                HAVING dailySum > 0
+            )
+            ORDER BY dailySum ASC
+            LIMIT 1
+        """
+    )
+    suspend fun getMinCigarettesPerDay(): CigarettesPerDay?
 }
+
+
