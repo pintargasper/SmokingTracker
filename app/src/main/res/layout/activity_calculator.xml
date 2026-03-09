@@ -45,10 +45,8 @@
                 android:focusableInTouchMode="true"
                 android:gravity="center_vertical"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true"
                 android:text="@string/analytics_calculator_title"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface" />
+                style="@style/MainTitleTextView"/>
 
         </LinearLayout>
 
@@ -74,9 +72,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/calculator_cigarettes_per_day"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorOnSurface"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="4dp"
+                    style="@style/SubtitleTextView"/>
 
                 <EditText
                     android:id="@+id/input_daily_cigarettes"
@@ -86,19 +83,17 @@
                     android:autofillHints="0"
                     android:inputType="number"
                     android:hint="0"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textAppearance="?attr/textAppearanceBody1"
                     android:layout_marginBottom="16dp"
-                    tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                    tools:ignore="HardcodedText,VisualLintTextFieldSize"
+                    style="@style/EditText"/>
 
                 <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                     android:id="@+id/text_cigarettes_per_pack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/calculator_cigarettes_per_pack"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorOnSurface"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="4dp"
+                    style="@style/SubtitleTextView"/>
 
                 <EditText
                     android:id="@+id/input_cigarettes_per_pack"
@@ -107,19 +102,17 @@
                     android:autofillHints="20"
                     android:inputType="number"
                     android:hint="20"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textAppearance="?attr/textAppearanceBody1"
                     android:layout_marginBottom="16dp"
-                    tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                    tools:ignore="HardcodedText,VisualLintTextFieldSize"
+                    style="@style/EditText"/>
 
                 <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                     android:id="@+id/text_pack_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/calculator_price_per_pack"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorOnSurface"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="4dp"
+                    style="@style/SubtitleTextView"/>
 
                 <EditText
                     android:id="@+id/input_pack_price"
@@ -128,19 +121,17 @@
                     android:autofillHints="0.00"
                     android:inputType="numberDecimal"
                     android:hint="0.00"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textAppearance="?attr/textAppearanceBody1"
                     android:layout_marginBottom="16dp"
-                    tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                    tools:ignore="HardcodedText,VisualLintTextFieldSize"
+                    style="@style/EditText"/>
 
                 <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                     android:id="@+id/text_period"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/calculator_period"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorOnSurface"
-                    android:layout_marginBottom="4dp"/>
+                    android:layout_marginBottom="4dp"
+                    style="@style/SubtitleTextView"/>
 
                 <LinearLayout
                     android:id="@+id/layout_date_range_picker"
@@ -155,9 +146,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/calculator_start_date"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?attr/colorOnSurface"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_marginEnd="8dp"
+                        style="@style/BodyTextView"/>
 
                     <EditText
                         android:id="@+id/input_start_date"
@@ -169,19 +159,17 @@
                         android:clickable="true"
                         android:hint="@string/calculator_start_date_hint"
                         android:inputType="date"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textAppearance="?attr/textAppearanceBody1"
                         android:layout_marginEnd="8dp"
-                        tools:ignore="VisualLintTextFieldSize" />
+                        tools:ignore="VisualLintTextFieldSize"
+                        style="@style/EditText"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/text_end_date_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/calculator_end_date"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?attr/colorOnSurface"
-                        android:layout_marginEnd="8dp"/>
+                        android:layout_marginEnd="8dp"
+                        style="@style/BodyTextView"/>
 
                     <EditText
                         android:id="@+id/input_end_date"
@@ -194,9 +182,8 @@
                         android:clickable="true"
                         android:hint="@string/calculator_end_date_hint"
                         android:inputType="date"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        tools:ignore="VisualLintTextFieldSize" />
+                        tools:ignore="VisualLintTextFieldSize"
+                        style="@style/EditText"/>
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
@@ -213,11 +200,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="55dp"
                         android:text="@string/calculator_button_calculate"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:singleLine="true"
-                        android:ellipsize="end"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                        style="@style/Button"/>
                 </androidx.cardview.widget.CardView>
 
             </LinearLayout>

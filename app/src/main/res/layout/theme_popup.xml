@@ -21,29 +21,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/theme_popup"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
-            android:textSize="18sp"
             android:gravity="center"
-            android:singleLine="true"
-            android:ellipsize="end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/MainTitleCenterTextView"/>
 
         <TextView
             android:id="@+id/popup_theme_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/theme_popup_info"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="14sp"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/popup_theme_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/BodyTextView"/>
 
         <ScrollView
             android:id="@+id/theme_inner_options_container"
@@ -68,35 +63,26 @@
                     android:id="@+id/checkbox_system"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:text="@string/theme_popup_check_box_system"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
-                    android:maxWidth="300dp" />
+                    android:maxWidth="300dp"
+                    style="@style/CheckBox"/>
 
 
                 <CheckBox
                     android:id="@+id/checkbox_light_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:text="@string/theme_popup_check_box_light_theme"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
-                    android:maxWidth="300dp" />
+                    android:maxWidth="300dp"
+                    style="@style/CheckBox"/>
 
                 <CheckBox
                     android:id="@+id/checkbox_dark_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:text="@string/theme_popup_check_box_dark_theme"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
-                    android:maxWidth="300dp" />
+                    android:maxWidth="300dp"
+                    style="@style/CheckBox"/>
 
             </LinearLayout>
         </ScrollView>
@@ -122,13 +108,8 @@
                 android:id="@+id/button_close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/popup_close"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

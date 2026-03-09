@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.gasperpintar.smokingtracker.adapter.Pager
@@ -10,7 +11,6 @@ import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityAchievementsBinding
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.ui.MarqueeTextView
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementsFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.google.android.material.tabs.TabLayoutMediator
@@ -69,7 +69,7 @@ class AchievementsActivity : AppCompatActivity() {
                 R.layout.view_tab,
                 tabLayout,
                 false
-            ) as MarqueeTextView
+            ) as TextView
 
             customTabView.text = tabTitles.getOrNull(position) ?: ""
             customTabView.isSelected = true

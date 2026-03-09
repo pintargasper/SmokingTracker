@@ -21,29 +21,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/language_popup"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:singleLine="true"
-            android:ellipsize="end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/MainTitleCenterTextView"/>
 
         <TextView
             android:id="@+id/popup_language_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/language_popup_info"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="14sp"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/popup_language_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/BodyTextView"/>
 
         <ScrollView
             android:id="@+id/language_inner_options_container"
@@ -68,49 +62,37 @@
                     android:id="@+id/checkbox_system"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:text="@string/language_popup_check_box_system"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
                     android:maxWidth="300dp"
-                    tools:ignore="VisualLintButtonSize" />
+                    tools:ignore="VisualLintButtonSize"
+                    style="@style/CheckBox"/>
 
                 <CheckBox
                     android:id="@+id/checkbox_english"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:text="English"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize" />
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
 
                 <CheckBox
                     android:id="@+id/checkbox_slovenian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:text="Slovenščina"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize" />
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
 
                 <CheckBox
                     android:id="@+id/checkbox_ukrainian"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:ellipsize="end"
                     android:text="Українська"
-                    android:textColor="?attr/colorOnSurface"
-                    android:textSize="14sp"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize" />
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
 
             </LinearLayout>
         </ScrollView>
@@ -136,13 +118,8 @@
                 android:id="@+id/button_close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/popup_close"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

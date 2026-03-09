@@ -21,17 +21,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="00:00:00"
-            android:textSize="16sp"
-            android:textColor="?attr/colorOnSurface"
-            android:ellipsize="end"
-            android:singleLine="true"
             android:gravity="center_vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/lent"
             app:layout_constraintHorizontal_chainStyle="packed"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"
+            style="@style/SubtitleTextView"/>
 
         <ImageButton
             android:id="@+id/lent"

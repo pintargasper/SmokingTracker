@@ -30,9 +30,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_max_cigarettes"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface" />
+                    style="@style/SubtitleTextView"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -46,19 +44,17 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="0"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnSurface"
-                        tools:ignore="HardcodedText" />
+                        style="@style/BodyTextView"
+                        tools:ignore="HardcodedText"/>
 
                     <TextView
                         android:id="@+id/textMaxCigarettesDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/statistics_logged"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
                         android:gravity="end"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        style="@style/SubBodyTextView"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -81,9 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_min_cigarettes"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface" />
+                    style="@style/SubtitleTextView"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -97,19 +91,17 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="0"
-                        android:textSize="16sp"
-                        android:textColor="?attr/colorOnSurface"
-                        tools:ignore="HardcodedText" />
+                        style="@style/BodyTextView"
+                        tools:ignore="HardcodedText"/>
 
                     <TextView
                         android:id="@+id/textMinCigarettesDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/statistics_logged"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
                         android:gravity="end"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        style="@style/SubBodyTextView"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -132,19 +124,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_avg_cigarettes"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface" />
+                    style="@style/SubtitleTextView"/>
 
                 <TextView
                     android:id="@+id/textAverageCigarettes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp"
-                    tools:ignore="HardcodedText" />
+                    style="@style/BodyTextView"
+                    tools:ignore="HardcodedText"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -167,19 +156,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_cigarettes"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface" />
+                    style="@style/SubtitleTextView"/>
 
                 <TextView
                     android:id="@+id/textTotalCigarettes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp"
-                    tools:ignore="HardcodedText" />
+                    style="@style/BodyTextView"
+                    tools:ignore="HardcodedText"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -202,19 +188,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_first_entry"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface" />
+                    style="@style/SubtitleTextView"/>
 
                 <TextView
                     android:id="@+id/text_since_first_entry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp"
-                    tools:ignore="HardcodedText" />
+                    style="@style/BodyTextView"
+                    tools:ignore="HardcodedText"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -237,19 +220,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_longest_streak"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface" />
+                    style="@style/SubtitleTextView"/>
 
                 <TextView
                     android:id="@+id/textLongestStreak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
-                    android:textSize="16sp"
-                    android:textColor="?attr/colorOnSurface"
                     android:layout_marginTop="4dp"
-                    tools:ignore="HardcodedText" />
+                    style="@style/BodyTextView"
+                    tools:ignore="HardcodedText"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -208,7 +208,7 @@
     </plurals>
     <plurals name="time_days">
         <item quantity="one">%d dan</item>
-        <item quantity="two">%d dneva</item>
+        <item quantity="two">%d dni</item>
         <item quantity="few">%d dni</item>
         <item quantity="other">%d dni</item>
     </plurals>

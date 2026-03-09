@@ -27,7 +27,7 @@
             android:src="@drawable/ic_thin_outline_arrow_back"
             android:background="@android:color/transparent"
             app:tint="?attr/colorOnSurface"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText"/>
 
         <com.gasperpintar.smokingtracker.ui.MarqueeTextView
             android:id="@+id/text_statistics_title"
@@ -38,10 +38,8 @@
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
             android:text="@string/statistics_title"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSurface" />
+            style="@style/MainTitleTextView"/>
 
     </LinearLayout>
 

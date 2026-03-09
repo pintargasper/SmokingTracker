@@ -33,9 +33,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_category_general"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnSurface"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp"
+                    style="@style/MainTitleTextView"/>
 
                 <LinearLayout
                     android:id="@+id/theme_layout"
@@ -51,26 +50,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_theme"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
                         android:layout_marginBottom="2dp"
-                        android:textStyle="bold"/>
+                        style="@style/SubtitleTextView"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/theme_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
+                        style="@style/BodyTextView"
                         android:scrollHorizontally="false"/>
                 </LinearLayout>
 
@@ -88,27 +75,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_language"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp" />
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/language_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -125,28 +100,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_notifications"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/notifications_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_notifications_url"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -175,11 +138,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_category_data"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnSurface"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    style="@style/MainTitleTextView"/>
 
                 <LinearLayout
                     android:id="@+id/download_layout"
@@ -195,28 +157,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_download"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/download_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_download_url"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -233,28 +183,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_upload"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/upload_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_upload_url"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -285,11 +223,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/settings_category_data_about"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:textColor="?attr/colorOnSurface"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    style="@style/MainTitleTextView"/>
 
                 <LinearLayout
                     android:id="@+id/version_layout"
@@ -305,28 +242,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_version"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <TextView
                         android:id="@+id/app_version_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_version_view"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -343,27 +268,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_website"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <TextView
                         android:id="@+id/website_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -380,28 +293,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_translations_website"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/translations_website_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_translations_website_url"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -418,31 +319,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_privacy_policy"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textStyle="bold"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:layout_marginBottom="2dp"/>
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
 
                     <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                         android:id="@+id/privacy_policy_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_category_data_privacy_policy_url"
-                        android:textAppearance="?attr/textAppearanceBody2"
-                        android:textSize="14sp"
-                        android:textColor="?attr/colorOnSurface"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:scrollHorizontally="false"/>
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView" />
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

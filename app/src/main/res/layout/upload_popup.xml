@@ -20,29 +20,26 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/upload_popup_upload"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
-            android:textSize="18sp"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/MainTitleCenterTextView"/>
 
         <TextView
             android:id="@+id/popup_notification_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/upload_popup_info"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="14sp"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/popup_message"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/BodyTextView"/>
 
         <LinearLayout
             android:id="@+id/open_file_layout"
@@ -64,11 +61,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0.7"
                 android:text="@string/upload_popup_file"
-                android:textSize="14sp"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
                 android:ellipsize="end"
-                android:singleLine="true"/>
+                android:singleLine="true"
+                style="@style/BodyTextView"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_open_file_button"
@@ -85,11 +80,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/upload_popup_select"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorOnSurface"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                    style="@style/Button"/>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
 
@@ -112,13 +103,8 @@
                 android:id="@+id/button_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/popup_confirm"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -142,13 +128,8 @@
                 android:id="@+id/button_close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/popup_close"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

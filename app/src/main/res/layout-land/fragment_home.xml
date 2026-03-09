@@ -34,19 +34,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="%1$02d:%2$02d:%3$02d"
-                    android:textAppearance="?attr/textAppearanceHeadline5"
-                    android:textColor="?attr/colorOnSurface"
-                    android:gravity="center"
+                    style="@style/MainTitleCenterTextView"
                     tools:ignore="HardcodedText" />
 
-                <TextView
+                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                     android:id="@+id/timer_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_timer_message"
-                    android:textAppearance="?attr/textAppearanceBody2"
-                    android:textColor="?attr/colorOnSurface"
-                    android:gravity="center"/>
+                    style="@style/BodyTextView"
+                    android:gravity="center" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -83,8 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/home_daily_label"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
+                        style="@style/SubtitleTextView"
                         android:singleLine="true"
                         android:ellipsize="end" />
 
@@ -98,8 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="?attr/colorOnSurface"
+                        style="@style/BodyTextView"
                         android:singleLine="true"
                         android:ellipsize="end"
                         tools:ignore="HardcodedText" />
@@ -127,8 +122,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/home_weekly_label"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
+                        style="@style/SubtitleTextView"
                         android:singleLine="true"
                         android:ellipsize="end" />
 
@@ -142,8 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="?attr/colorOnSurface"
+                        style="@style/BodyTextView"
                         android:singleLine="true"
                         android:ellipsize="end"
                         tools:ignore="HardcodedText" />
@@ -171,8 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/home_monthly_label"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorOnSurface"
+                        style="@style/SubtitleTextView"
                         android:singleLine="true"
                         android:ellipsize="end" />
 
@@ -186,8 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textAppearance="?attr/textAppearanceBody1"
-                        android:textColor="?attr/colorOnSurface"
+                        style="@style/BodyTextView"
                         android:singleLine="true"
                         android:ellipsize="end"
                         tools:ignore="HardcodedText" />
@@ -228,12 +219,15 @@
 
                 <com.gasperpintar.smokingtracker.ui.MarqueeTextView
                     android:id="@+id/current_date"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="%1$02d.%2$02d.%3$d"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    style="@style/MainTitleCenterTextView"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
+                    android:maxWidth="150dp"
+                    android:singleLine="true"
+                    android:ellipsize="end"
                     android:gravity="center"
                     tools:ignore="HardcodedText" />
 
@@ -288,9 +282,7 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/home_next_day"
                 android:text="@string/home_add_entry"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
