@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.StatisticsActivity
-import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsBasicBinding
 import com.gasperpintar.smokingtracker.model.CigarettesPerDay
@@ -18,6 +17,7 @@ import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Period
@@ -27,7 +27,6 @@ class BasicFragment : Fragment() {
     private var _binding: FragmentStatisticsBasicBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: AppDatabase
     private lateinit var historyRepository: HistoryRepository
 
     override fun onCreateView(
@@ -37,7 +36,7 @@ class BasicFragment : Fragment() {
     ): View {
         _binding = FragmentStatisticsBasicBinding.inflate(inflater, container, false)
 
-        database = (requireActivity() as StatisticsActivity).database
+        val database = (requireActivity() as StatisticsActivity).database
         historyRepository = HistoryRepository(historyDao = database.historyDao())
 
         setup()
@@ -55,11 +54,15 @@ class BasicFragment : Fragment() {
         lifecycleScope.launch {
             val maxResult: CigarettesPerDay? = historyRepository.getMaxCigarettesPerDay()
             binding.textMaxCigarettes.text = maxResult?.dailySum?.toString() ?: "0"
-            binding.textMaxCigarettesDate.text = getLocalizedDate(maxResult?.day)
+            binding.textMaxCigarettesDate.text = maxResult?.day?.let { date ->
+                getString(R.string.statistics_logged, getLocalizedDate(day = date))
+            } ?: ""
 
             val minResult: CigarettesPerDay? = historyRepository.getMinCigarettesPerDay()
             binding.textMinCigarettes.text = minResult?.dailySum?.toString() ?: "0"
-            binding.textMinCigarettesDate.text = getLocalizedDate(minResult?.day)
+            binding.textMinCigarettesDate.text = minResult?.day?.let { date ->
+                getString(R.string.statistics_logged, getLocalizedDate(day = date))
+            } ?: ""
 
             binding.textAverageCigarettes.text = String.format("%.2f", historyRepository.getAverageCigarettesPerDay())
             binding.textTotalCigarettes.text = historyRepository.getTotalCigarettes().toString()
@@ -78,7 +81,7 @@ class BasicFragment : Fragment() {
             val allHistory = withContext(Dispatchers.IO) {
                 historyRepository.getAll()
             }
-            binding.textLongestStreak.text = getLongestTime(allHistory).toString()
+            binding.textLongestStreak.text = getLongestTime(allHistory)
         }
     }
 
@@ -94,55 +97,98 @@ class BasicFragment : Fragment() {
         start: LocalDateTime
     ): String {
         val period = Period.between(start.toLocalDate(), LocalDateTime.now().toLocalDate())
-        val parts = listOfNotNull(period.years.takeIf {
-            it > 0
-        } ?.let {
-            resources.getQuantityString(R.plurals.time_years, it, it)
-                },
+        val startWithPeriodAdded = start.plusYears(period.years.toLong())
+            .plusMonths(period.months.toLong())
+            .plusDays(period.days.toLong())
+        val duration = Duration.between(startWithPeriodAdded, LocalDateTime.now())
+        val hours = duration.toHours()
+
+        val parts = listOfNotNull(
+            period.years.takeIf {
+                it > 0
+            }?.let {
+                resources.getQuantityString(R.plurals.time_years, it, it)
+            },
             period.months.takeIf {
                 it > 0
-            } ?.let {
+            }?.let {
                 resources.getQuantityString(R.plurals.time_months, it, it)
-                    }, (period.days.takeIf { it > 0 || (period.years == 0 && period.months == 0) }) ?.let {
-                resources.getQuantityString(
-                    R.plurals.time_days,
-                    it,
-                    it
-                )
+            },
+            (period.days.takeIf {
+                it > 0 || (period.years == 0 && period.months == 0)
+            })?.let {
+                resources.getQuantityString(R.plurals.time_days, it, it)
+            },
+            hours.takeIf {
+                it > 0
+            }?.let {
+                resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
             }
         )
         return parts.joinToString(" ")
     }
 
-    private fun getLongestTime(allHistory: List<HistoryEntity>): Int {
+    private fun getLongestTime(
+        allHistory: List<HistoryEntity>
+    ): String {
         if (allHistory.isEmpty()) {
-            return 0
+            return resources.getQuantityString(R.plurals.time_days, 0, 0)
         }
 
-        val firstDate = allHistory.minByOrNull {
-            it.createdAt
-        }?.createdAt?.toLocalDate() ?: return 0
+        val sortedHistory = allHistory.sortedBy { it.createdAt }
+        var longestStart: LocalDateTime = sortedHistory[0].createdAt
+        var longestEnd: LocalDateTime = sortedHistory[0].createdAt
+        var longestDuration: Duration = Duration.ZERO
 
-        val smokedDays = allHistory
-            .filter { it.lent == 0 }
-            .map { it.createdAt.toLocalDate() }
-            .toSet()
+        for (i in 1 until sortedHistory.size) {
+            val previousEntry = sortedHistory[i - 1]
+            val currentEntry = sortedHistory[i]
 
-        var maxStreak = 0
-        var currentStreak = 0
-        var date = firstDate
-
-        while (!date.isAfter(LocalDateTime.now().toLocalDate().minusDays(1))) {
-            if (!smokedDays.contains(date)) {
-                currentStreak++
-                if (currentStreak > maxStreak) {
-                    maxStreak = currentStreak
-                }
-            } else {
-                currentStreak = 0
+            val gapDuration = Duration.between(previousEntry.createdAt, currentEntry.createdAt)
+            if (gapDuration > longestDuration) {
+                longestDuration = gapDuration
+                longestStart = previousEntry.createdAt
+                longestEnd = currentEntry.createdAt
             }
-            date = date.plusDays(1)
         }
-        return maxStreak
+
+        val gapToNow = Duration.between(sortedHistory.last().createdAt, LocalDateTime.now())
+        if (gapToNow > longestDuration) {
+            longestStart = sortedHistory.last().createdAt
+            longestEnd = LocalDateTime.now()
+        }
+
+        val period = Period.between(longestStart.toLocalDate(), longestEnd.toLocalDate())
+
+        val startWithPeriodAdded = longestStart
+            .plusYears(period.years.toLong())
+            .plusMonths(period.months.toLong())
+            .plusDays(period.days.toLong())
+        val remainingDuration = Duration.between(startWithPeriodAdded, longestEnd)
+        val hours = remainingDuration.toHours()
+
+        val parts = listOfNotNull(
+            period.years.takeIf {
+                it > 0
+            }?.let {
+                resources.getQuantityString(R.plurals.time_years, it, it)
+                   },
+            period.months.takeIf {
+                it > 0
+            }?.let {
+                resources.getQuantityString(R.plurals.time_months, it, it)
+                   },
+            (period.days.takeIf {
+                it > 0 || (period.years == 0 && period.months == 0)
+            })?.let {
+                    resources.getQuantityString(R.plurals.time_days, it, it)
+                    },
+            hours.takeIf {
+                it > 0
+            }?.let {
+                resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
+            }
+        )
+        return parts.joinToString(" ")
     }
 }

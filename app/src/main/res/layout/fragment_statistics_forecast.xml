@@ -46,6 +46,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="240dp"/>
 
+                <TextView
+                    android:id="@+id/forecast_info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_forecast_info"
+                    android:textAppearance="?attr/textAppearanceBody2"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:padding="4dp"/>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

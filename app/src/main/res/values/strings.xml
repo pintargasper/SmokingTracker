@@ -199,8 +199,10 @@
     <string name="statistics_avg_cigarettes">Average cigarettes per day</string>
     <string name="statistics_total_cigarettes">Total cigarettes smoked</string>
     <string name="statistics_first_entry">Since first entry</string>
-    <string name="statistics_longest_streak">Longest time without smoking (days)</string>
-    <string name="statistics_date">Date</string>
+    <string name="statistics_longest_streak">Longest time without smoking</string>
+    <string name="statistics_logged">Logged: %1$s</string>
+    <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>
+
 
     <plurals name="time_years">
         <item quantity="one">%d year</item>

@@ -16,6 +16,7 @@ import java.time.LocalDateTime
 import kotlin.math.roundToInt
 
 class ForecastFragment : Fragment() {
+
     private var _binding: FragmentStatisticsForecastBinding? = null
     private val binding get() = _binding!!
 
@@ -44,8 +45,8 @@ class ForecastFragment : Fragment() {
         lifecycleScope.launch {
             val historyList = historyRepository.getEntries(date = current)
 
-            val mainRaw = (0 until mainCount).map { i ->
-                val date = current.minusMonths(i.toLong())
+            val mainRaw = (0 until mainCount).map { index ->
+                val date = current.minusMonths(index.toLong())
                 val quantity = historyList.count {
                     it.createdAt.monthValue == date.monthValue && it.createdAt.year == date.year
                 }
@@ -57,13 +58,14 @@ class ForecastFragment : Fragment() {
             binding.forecastGraphView.setData(
                 data = mainRaw,
                 forecast = forecast,
-                graphInterval = interval,
-                labels = 5
+                graphInterval = interval
             )
         }
     }
 
-    private fun calculateForecast(data: List<GraphEntry>): List<GraphEntry> {
+    private fun calculateForecast(
+        data: List<GraphEntry>
+    ): List<GraphEntry> {
         if (data.isEmpty()) {
             return emptyList()
         }
@@ -76,28 +78,31 @@ class ForecastFragment : Fragment() {
             it.quantity.toDouble()
         }
 
-        val n = knownX.size.toDouble()
         val averageX = knownX.average()
-        val avgY = knownY.average()
+        val averageY = knownY.average()
 
         var numerator = 0.0
         var denominator = 0.0
         for (i in data.indices) {
-            numerator += (knownX[i] - averageX) * (knownY[i] - avgY)
+            numerator += (knownX[i] - averageX) * (knownY[i] - averageY)
             denominator += (knownX[i] - averageX) * (knownX[i] - averageX)
         }
 
-        val b = if (denominator != 0.0) numerator / denominator else 0.0
-        val a = avgY - b * averageX
+        val b = if (denominator != 0.0) {
+            numerator / denominator
+        } else {
+            0.0
+        }
+        val a = averageY - b * averageX
 
         val forecastSteps = 12
         val lastDate = data.last().date
 
-        return (1..forecastSteps).map { i ->
-            val targetX = n + i
+        return (1..forecastSteps).map { index ->
+            val targetX = knownX.size.toDouble() + index
             val forecastY = a + b * targetX
             val finalQuantity = forecastY.roundToInt().coerceAtLeast(0)
-            val forecastDate = lastDate.plusMonths(i.toLong()).withDayOfMonth(1)
+            val forecastDate = lastDate.plusMonths(index.toLong()).withDayOfMonth(1)
             GraphEntry(quantity = finalQuantity, date = forecastDate)
         }
     }
