@@ -20,6 +20,9 @@ import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.type.AchievementIcon
+import com.gasperpintar.smokingtracker.type.AchievementMessage
+import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -104,8 +107,8 @@ class AchievementsFragment : Fragment() {
                 val textLastAchieved = itemView.findViewById<TextView>(R.id.text_last_achieved_label)
                 val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_label)
 
-                textAchievementTitle.text = getString(achievementEntry.title)
-                textAchievementMessage.text = getString(achievementEntry.message)
+                textAchievementTitle.text = getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
+                textAchievementMessage.text = getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)
 
                 textLastAchieved.text = achievementEntry.lastAchieved
                     ?.toLocalDate()
@@ -130,7 +133,9 @@ class AchievementsFragment : Fragment() {
                     achievedTimesText
                 )
 
-                imageAchievement.setImageResource(achievementEntry.image)
+                imageAchievement.setImageResource(
+                    AchievementIcon.valueOf(achievementEntry.image).drawableResource
+                )
                 if (achievementEntry.times == 0L) {
                     imageAchievement.colorFilter = ColorMatrixColorFilter(
                         ColorMatrix().apply {

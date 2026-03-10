@@ -11,10 +11,10 @@ data class AchievementEntity(
 
     @PrimaryKey
     val id: Long,
-    val image: Int,
+    val image: String,
     val value: Int,
-    val title: Int,
-    val message: Int,
+    val title: String,
+    val message: String,
     val times: Long,
     val lastAchieved: LocalDateTime?,
     val reset: Boolean,

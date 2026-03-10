@@ -56,10 +56,10 @@ class JsonHelper(
             }
             AchievementEntry(
                 id = jsonEntry.id,
-                image = iconEnum.drawableResource,
+                image = iconEnum.name,
                 value = jsonEntry.value,
-                title = titleEnum.stringResource,
-                message = messageEnum.stringResource,
+                title = titleEnum.name,
+                message = messageEnum.name,
                 times = 0L,
                 lastAchieved = null,
                 reset = true,
