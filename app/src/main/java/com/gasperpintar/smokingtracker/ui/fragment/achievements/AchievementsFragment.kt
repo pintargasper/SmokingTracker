@@ -22,6 +22,7 @@ import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class AchievementsFragment : Fragment() {
 
@@ -100,18 +101,33 @@ class AchievementsFragment : Fragment() {
                 val imageAchievement = itemView.findViewById<ImageView>(R.id.image_achievement)
                 val textAchievementTitle = itemView.findViewById<TextView>(R.id.text_achievement_title)
                 val textAchievementMessage = itemView.findViewById<TextView>(R.id.text_achievement_message)
-                val textLastAchievedValue = itemView.findViewById<TextView>(R.id.text_last_achieved_value)
-                val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_value)
+                val textLastAchieved = itemView.findViewById<TextView>(R.id.text_last_achieved_label)
+                val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_label)
 
                 textAchievementTitle.text = getString(achievementEntry.title)
                 textAchievementMessage.text = getString(achievementEntry.message)
-                textLastAchievedValue.text = achievementEntry.lastAchieved?.toLocalDate()?.let {
-                    LocalizationHelper.formatDate(date = it)
-                } ?: "-"
-                textLastAchievedCountValue.text = requireContext().resources.getQuantityString(
+
+                textLastAchieved.text = achievementEntry.lastAchieved
+                    ?.toLocalDate()
+                    ?.let { localDate: LocalDate ->
+                        getString(
+                            R.string.achievement_container_meta,
+                            LocalizationHelper.formatDate(date = localDate)
+                        )
+                    } ?: getString(
+                    R.string.achievement_container_meta,
+                        getString(R.string.achievement_container_never_achieved)
+                    )
+
+                val achievedTimesText: String = requireContext().resources.getQuantityString(
                     R.plurals.achievement_achieved_times,
                     achievementEntry.times.toInt(),
                     achievementEntry.times
+                )
+
+                textLastAchievedCountValue.text = getString(
+                    R.string.achievement_container_count,
+                    achievedTimesText
                 )
 
                 imageAchievement.setImageResource(achievementEntry.image)

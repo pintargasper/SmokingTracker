@@ -95,8 +95,8 @@
     <string name="upload_popup_file_none">Пусто</string>
     <string name="upload_popup_file_unknown">Невизначено</string>
     <string name="version_popup_title">Переглянути на</string>
-    <string name="achievement_container_meta">Остання ачивка</string>
-    <string name="achievement_container_count">Здобуто</string>
+    <string name="achievement_container_meta">Остання ачивка: %1$s</string>
+    <string name="achievement_container_count">Здобуто: %1$s</string>
     <string name="achievement_title_congrats_days_1">Герой дня</string>
     <string name="achievement_title_congrats_days_2">Дотягнув два дні та не здався</string>
     <string name="achievement_title_congrats_days_3">Боєць, який вистояв три дні</string>

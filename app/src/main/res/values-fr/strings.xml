@@ -112,8 +112,8 @@
     <string name="notifications_popup_progress_frequency_label">Fréquence</string>
     <string name="notifications_popup_progress_frequency_default">Par default</string>
     <string name="version_popup_title">Voir sur</string>
-    <string name="achievement_container_meta">Dernier accomplissement</string>
-    <string name="achievement_container_count">Accomplit</string>
+    <string name="achievement_container_meta">Dernier accomplissement: %1$s</string>
+    <string name="achievement_container_count">Accomplit: %1$s</string>
     <string name="achievement_title_congrats_days_1">Hero d\'un jour</string>
     <string name="achievement_title_congrats_days_2">Champion de deux jours</string>
     <string name="achievement_title_congrats_days_3">Guerrier de trois jour</string>

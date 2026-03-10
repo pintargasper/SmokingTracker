@@ -52,8 +52,6 @@
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 android:focusable="false"
-                android:ellipsize="end"
-                android:singleLine="true"
                 android:scrollHorizontally="false"
                 style="@style/BodyTextView"/>
         </LinearLayout>
@@ -84,8 +82,6 @@
                 android:layout_height="wrap_content"
                 android:clickable="false"
                 android:focusable="false"
-                android:ellipsize="end"
-                android:singleLine="true"
                 android:scrollHorizontally="false"
                 style="@style/BodyTextView"/>
         </LinearLayout>

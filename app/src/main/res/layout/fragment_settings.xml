@@ -28,7 +28,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/text_category_general"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/text_theme_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                         android:layout_marginBottom="2dp"
                         style="@style/SubtitleTextView"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/theme_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/text_language_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                         android:layout_marginBottom="2dp"
                         style="@style/SubtitleTextView"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/language_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/text_notifications_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                         android:layout_marginBottom="2dp"
                         style="@style/SubtitleTextView"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/notifications_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/text_category_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -152,7 +152,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/download_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,7 +160,7 @@
                         android:layout_marginBottom="2dp"
                         style="@style/SubtitleTextView"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/download_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -178,7 +178,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/upload_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
                         android:layout_marginBottom="2dp"
                         style="@style/SubtitleTextView"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/upload_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -218,7 +218,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/text_category_about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -237,7 +237,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/app_version"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/website"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -288,7 +288,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/translations_website"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -296,7 +296,7 @@
                         android:layout_marginBottom="2dp"
                         style="@style/SubtitleTextView"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/translations_website_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -314,7 +314,7 @@
                     android:focusable="true"
                     android:minHeight="55dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/privacy_policy"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -322,7 +322,7 @@
                         android:layout_marginBottom="2dp"
                         style="@style/SubtitleTextView"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/privacy_policy_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

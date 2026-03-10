@@ -36,7 +36,7 @@
                 app:tint="?attr/colorOnSurface"
                 tools:ignore="HardcodedText" />
 
-            <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+            <TextView
                 android:id="@+id/text_calculator_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -46,7 +46,7 @@
                 android:gravity="center_vertical"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:text="@string/analytics_calculator_title"
-                style="@style/MainTitleTextView"/>
+                style="@style/SpecialTitleTextView"/>
 
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/text_daily_cigarettes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                     tools:ignore="HardcodedText,VisualLintTextFieldSize"
                     style="@style/EditText"/>
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/text_cigarettes_per_pack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                     tools:ignore="HardcodedText,VisualLintTextFieldSize"
                     style="@style/EditText"/>
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/text_pack_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                     tools:ignore="HardcodedText,VisualLintTextFieldSize"
                     style="@style/EditText"/>
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/text_period"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                     android:gravity="center_vertical"
                     android:layout_marginBottom="16dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/text_start_date_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -163,7 +163,7 @@
                         tools:ignore="VisualLintTextFieldSize"
                         style="@style/EditText"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/text_end_date_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

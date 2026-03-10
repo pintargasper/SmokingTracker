@@ -30,10 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="%1$02d:%2$02d:%3$02d"
-                style="@style/MainTitleCenterTextView"
+                style="@style/SpecialTitleTextView"
                 tools:ignore="HardcodedText" />
 
-            <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+            <TextView
                 android:id="@+id/timer_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                     android:layout_height="1dp"
                     android:background="?attr/colorOnSurface"/>
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/daily_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -118,16 +118,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_weekly_label"
-                    style="@style/SubtitleTextView"
-                    android:singleLine="true"
-                    android:ellipsize="end" />
+                    style="@style/SubtitleTextView" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="?attr/colorOnSurface" />
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/weekly_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -169,7 +167,7 @@
                     android:layout_height="1dp"
                     android:background="?attr/colorOnSurface"/>
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/monthly_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -212,7 +210,7 @@
                 app:tint="?attr/colorOnSurface"
                 style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
-            <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+            <TextView
                 android:id="@+id/current_date"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
