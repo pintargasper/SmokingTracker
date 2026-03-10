@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 @Entity(tableName = "achievements")
 data class AchievementEntity(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Long,
     val image: String,
     val value: Int,

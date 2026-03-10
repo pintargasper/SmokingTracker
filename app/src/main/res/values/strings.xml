@@ -102,7 +102,6 @@
     <string name="version_popup_get_it_on_google_play" translatable="false">Google Play</string>
     <string name="achievement_container_meta">Last achieved: %1$s</string>
     <string name="achievement_container_count">Achieved: %1$s</string>
-    <string name="achievement_container_never_achieved">never</string>
     <string name="achievement_title_congrats_days_1">One day hero</string>
     <string name="achievement_title_congrats_days_2">Two day champion</string>
     <string name="achievement_title_congrats_days_3">Three day warrior</string>

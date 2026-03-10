@@ -55,7 +55,7 @@ class JsonHelper(
                 AchievementUnit.valueOf(jsonEntry.unit)
             }
             AchievementEntry(
-                id = jsonEntry.id,
+                id = 0,
                 image = iconEnum.name,
                 value = jsonEntry.value,
                 title = titleEnum.name,

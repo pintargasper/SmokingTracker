@@ -13,6 +13,9 @@ import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.type.AchievementIcon
+import com.gasperpintar.smokingtracker.type.AchievementMessage
+import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import kotlinx.coroutines.Dispatchers
@@ -127,8 +130,7 @@ object Manager {
         val header = sheet.createRow(0)
 
         val headers: List<String> = listOf(
-            "Image", "Value", "Title", "Message", "Times",
-            "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id",
+            "Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id"
         )
 
         headers.forEachIndexed { index, title ->
@@ -137,17 +139,14 @@ object Manager {
 
         achievementList.forEachIndexed { index, achievement ->
             val row = sheet.createRow(index + 1)
-            row.createCell(0, CellType.NUMERIC).setCellValue(achievement.image.toDouble())
-            row.createCell(1, CellType.NUMERIC).setCellValue(achievement.value.toDouble())
-            row.createCell(2, CellType.NUMERIC).setCellValue(achievement.title.toDouble())
-            row.createCell(3, CellType.NUMERIC).setCellValue(achievement.message.toDouble())
-            row.createCell(4, CellType.NUMERIC).setCellValue(achievement.times.toDouble())
-            row.createCell(5, CellType.STRING).setCellValue(achievement.lastAchieved?.format(dateFormatter) ?: "")
-            row.createCell(6, CellType.BOOLEAN).setCellValue(achievement.reset)
-            row.createCell(7, CellType.BOOLEAN).setCellValue(achievement.notify)
-            row.createCell(8, CellType.STRING).setCellValue(achievement.category.name)
-            row.createCell(9, CellType.STRING).setCellValue(achievement.unit.name)
-            row.createCell(10, CellType.NUMERIC).setCellValue(achievement.id.toDouble())
+            row.createCell(0, CellType.NUMERIC).setCellValue(achievement.value.toDouble())
+            row.createCell(1, CellType.NUMERIC).setCellValue(achievement.times.toDouble())
+            row.createCell(2, CellType.STRING).setCellValue(achievement.lastAchieved?.format(dateFormatter) ?: "")
+            row.createCell(3, CellType.BOOLEAN).setCellValue(achievement.reset)
+            row.createCell(4, CellType.BOOLEAN).setCellValue(achievement.notify)
+            row.createCell(5, CellType.STRING).setCellValue(achievement.category.name)
+            row.createCell(6, CellType.STRING).setCellValue(achievement.unit.name)
+            row.createCell(7, CellType.NUMERIC).setCellValue(achievement.id.toDouble())
         }
     }
 
@@ -172,12 +171,34 @@ object Manager {
 
     private suspend fun importHistorySheet(workbook: XSSFWorkbook, repository: HistoryRepository) {
         repository.deleteAll()
-        workbook.getSheet("History")?.forEachIndexed { index, row ->
+
+        val sheet = workbook.getSheet("History") ?: return
+        val headerRow = sheet.getRow(0) ?: return
+        val columnIndexMap: Map<String, Int> = (0 until headerRow.physicalNumberOfCells)
+            .mapNotNull { index ->
+                headerRow.getCell(index)?.stringCellValue?.let {
+                    it.trim() to index
+                }
+            }.toMap()
+
+        val requiredColumns = listOf(
+            "Lent", "CreatedAt"
+        )
+        if (!requiredColumns.all {
+            columnIndexMap.containsKey(it)
+        }) return
+
+        sheet.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
             }
-            val lent = row.getCell(0)?.numericCellValue?.toInt() ?: return@forEachIndexed
-            val createdAt = LocalDateTime.parse(row.getCell(1).stringCellValue, dateFormatter)
+
+            val lentCell = row.getCell(columnIndexMap["Lent"]!!)
+            val createdAtCell = row.getCell(columnIndexMap["CreatedAt"]!!)
+            val lent = lentCell?.numericCellValue?.toInt() ?: return@forEachIndexed
+            val createdAt = createdAtCell?.stringCellValue?.let {
+                LocalDateTime.parse(it, dateFormatter)
+            } ?: return@forEachIndexed
             repository.insert(
                 entry = HistoryEntity(
                     id = 0,
@@ -189,65 +210,86 @@ object Manager {
     }
 
     private suspend fun importSettingsSheet(workbook: XSSFWorkbook, repository: SettingsRepository) {
-        workbook.getSheet("Settings")?.getRow(1)?.let { row ->
-            repository.get()?.let {
-                repository.delete(settings = it)
-            }
+        val sheet = workbook.getSheet("Settings") ?: return
+        val headerRow = sheet.getRow(0) ?: return
 
-            repository.insert(
-                SettingsEntity(
-                    id = 0,
-                    theme = row.getCell(0).numericCellValue.toInt(),
-                    language = row.getCell(1).numericCellValue.toInt(),
-                    frequency = row.getCell(2)?.numericCellValue?.toInt() ?: 0,
-                )
-            )
+        val columnIndexMap: Map<String, Int> = (0 until headerRow.physicalNumberOfCells)
+            .mapNotNull { index ->
+                headerRow.getCell(index)?.stringCellValue?.let { it.trim() to index }
+            }.toMap()
+
+        val requiredColumns = listOf(
+            "Theme", "Language", "Frequency"
+        )
+        if (!requiredColumns.all {
+            columnIndexMap.containsKey(it)
+        }) return
+
+        val row = sheet.getRow(1) ?: return
+        repository.get()?.let {
+            repository.delete(settings = it)
         }
+        repository.insert(
+            SettingsEntity(
+                id = 0,
+                theme = row.getCell(columnIndexMap["Theme"]!!)?.numericCellValue?.toInt() ?: 0,
+                language = row.getCell(columnIndexMap["Language"]!!)?.numericCellValue?.toInt() ?: 0,
+                frequency = row.getCell(columnIndexMap["Frequency"]!!)?.numericCellValue?.toInt() ?: 0,
+            )
+        )
     }
 
-    private suspend fun importAchievementSheet(workbook: XSSFWorkbook, repository: AchievementRepository) {
+    private suspend fun importAchievementSheet(
+        workbook: XSSFWorkbook,
+        repository: AchievementRepository
+    ) {
         val sheet = workbook.getSheet("Achievements") ?: return
         repository.deleteAll()
 
+        val headerRow = sheet.getRow(0) ?: return
+
+        val columnIndexMap: Map<String, Int> = (0 until headerRow.physicalNumberOfCells)
+            .mapNotNull { index ->
+                headerRow.getCell(index)?.stringCellValue?.let {
+                    it.trim() to index
+                }
+            }.toMap()
+
+        val requiredColumns = listOf(
+            "Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit"
+        )
+        if (!requiredColumns.all {
+                columnIndexMap.containsKey(it)
+            }) return
+
         val entities: MutableList<AchievementEntity> = mutableListOf()
-
-        val headerRow = sheet.getRow(0)
-
-        var idIndex = -1
-        for (cellIndex in 0 until headerRow.physicalNumberOfCells) {
-            val cell = headerRow.getCell(cellIndex)
-            if (cell != null && cell.cellType == CellType.STRING && cell.stringCellValue == "Id") {
-                idIndex = cellIndex
-                break
-            }
-        }
 
         sheet.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
             }
 
+            val enumIndex: Int = (index - 1).coerceIn(0, AchievementIcon.entries.size - 1)
+            val lastAchievedCell = row.getCell(columnIndexMap["LastAchieved"]!!)
+            val lastAchieved: LocalDateTime? = lastAchievedCell?.stringCellValue?.takeIf {
+                it.isNotEmpty()
+            }?.let {
+                LocalDateTime.parse(it, dateFormatter)
+            }
+
             entities.add(
                 AchievementEntity(
-                    id = if (idIndex != -1) {
-                        row.getCell(idIndex).numericCellValue.toLong()
-                    } else {
-                        index.toLong()
-                    },
-                    image = row.getCell(0).numericCellValue.toInt(),
-                    value = row.getCell(1).numericCellValue.toInt(),
-                    title = row.getCell(2).numericCellValue.toInt(),
-                    message = row.getCell(3).numericCellValue.toInt(),
-                    times = row.getCell(4).numericCellValue.toLong(),
-                    lastAchieved = row.getCell(5).stringCellValue.takeIf {
-                        it.isNotEmpty()
-                    }?.let {
-                        LocalDateTime.parse(it, dateFormatter)
-                    },
-                    reset = row.getCell(6).booleanCellValue,
-                    notify = row.getCell(7).booleanCellValue,
-                    category = AchievementCategory.valueOf(row.getCell(8).stringCellValue),
-                    unit = AchievementUnit.valueOf(row.getCell(9).stringCellValue)
+                    id = 0,
+                    image = AchievementIcon.entries[enumIndex].name,
+                    value = row.getCell(columnIndexMap["Value"]!!).numericCellValue.toInt(),
+                    title = AchievementTitle.entries[enumIndex].name,
+                    message = AchievementMessage.entries[enumIndex].name,
+                    times = row.getCell(columnIndexMap["Times"]!!).numericCellValue.toLong(),
+                    lastAchieved = lastAchieved,
+                    reset = row.getCell(columnIndexMap["Reset"]!!).booleanCellValue,
+                    notify = row.getCell(columnIndexMap["Notify"]!!).booleanCellValue,
+                    category = AchievementCategory.valueOf(row.getCell(columnIndexMap["Category"]!!).stringCellValue),
+                    unit = AchievementUnit.valueOf(row.getCell(columnIndexMap["Unit"]!!).stringCellValue)
                 )
             )
         }
@@ -258,18 +300,30 @@ object Manager {
         workbook: XSSFWorkbook,
         repository: NotificationsSettingsRepository
     ) {
-        val row = workbook.getSheet("NotificationsSettings")?.getRow(1) ?: return
+        val sheet = workbook.getSheet("NotificationsSettings") ?: return
+        val headerRow = sheet.getRow(0) ?: return
+        val columnIndexMap: Map<String, Int> = (0 until headerRow.physicalNumberOfCells)
+            .mapNotNull { index ->
+                headerRow.getCell(index)?.stringCellValue?.let { it.trim() to index }
+            }.toMap()
 
+        val requiredColumns = listOf(
+            "System", "Achievements", "Progress"
+        )
+        if (!requiredColumns.all {
+            columnIndexMap.containsKey(it)
+        }) return
+
+        val row = sheet.getRow(1) ?: return
         repository.get()?.let {
             repository.delete(settings = it)
         }
-
         repository.insert(
             settings = NotificationsSettingsEntity(
                 id = 0,
-                system = row.getCell(0).booleanCellValue,
-                achievements = row.getCell(1).booleanCellValue,
-                progress = row.getCell(2)?.booleanCellValue ?: true
+                system = row.getCell(columnIndexMap["System"]!!)?.booleanCellValue ?: true,
+                achievements = row.getCell(columnIndexMap["Achievements"]!!)?.booleanCellValue ?: true,
+                progress = row.getCell(columnIndexMap["Progress"]!!)?.booleanCellValue ?: true
             )
         )
     }

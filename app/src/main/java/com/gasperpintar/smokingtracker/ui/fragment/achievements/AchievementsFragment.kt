@@ -117,10 +117,7 @@ class AchievementsFragment : Fragment() {
                             R.string.achievement_container_meta,
                             LocalizationHelper.formatDate(date = localDate)
                         )
-                    } ?: getString(
-                    R.string.achievement_container_meta,
-                        getString(R.string.achievement_container_never_achieved)
-                    )
+                    } ?: getString(R.string.achievement_container_meta, "/")
 
                 val achievedTimesText: String = requireContext().resources.getQuantityString(
                     R.plurals.achievement_achieved_times,
