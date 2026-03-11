@@ -24,5 +24,5 @@ enum class AchievementIcon(
     C400(R.drawable.ic_400c),
     C600(R.drawable.ic_600c),
     C800(R.drawable.ic_800c),
-    C1000(R.drawable.ic_1000c)
+    C1000(R.drawable.ic_1000c);
 }

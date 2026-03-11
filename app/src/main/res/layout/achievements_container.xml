@@ -56,7 +56,6 @@
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     style="@style/BodyTextView"/>
-
             </LinearLayout>
         </LinearLayout>
 

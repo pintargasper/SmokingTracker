@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.utils
 
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.AchievementJsonEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
@@ -21,6 +22,12 @@ class JsonHelper(
         val existing = achievementRepository.getAll().associateBy {
             it.id
         }
+
+        if (existing.isNotEmpty()) {
+            migrate(achievementRepository)
+            return
+        }
+
         val achievements = listOf(
             AchievementCategory.SMOKE_FREE_TIME,
             AchievementCategory.CIGARETTES_AVOIDED
@@ -68,5 +75,30 @@ class JsonHelper(
                 unit = unit
             )
         }
+    }
+
+    suspend fun migrate(achievementRepository: AchievementRepository) {
+        val achievements = achievementRepository.getAll()
+
+        achievementRepository.deleteAll()
+
+        val iconEntries = AchievementIcon.entries.toTypedArray()
+        val titleEntries = AchievementTitle.entries.toTypedArray()
+        val messageEntries = AchievementMessage.entries.toTypedArray()
+
+        val achievementsList = mutableListOf<AchievementEntity>()
+        achievements.forEachIndexed { index, achievement ->
+            val newImage = iconEntries.getOrNull(index % iconEntries.size)?.name ?: AchievementIcon.entries.first().name
+            val newTitle = titleEntries.getOrNull(index % titleEntries.size)?.name ?: AchievementTitle.entries.first().name
+            val newMessage = messageEntries.getOrNull(index % messageEntries.size)?.name ?: AchievementMessage.entries.first().name
+            val updated = achievement.copy(
+                image = newImage,
+                title = newTitle,
+                message = newMessage,
+                id = achievement.id
+            )
+            achievementsList.add(updated)
+        }
+        achievementRepository.insert(entries = achievementsList)
     }
 }

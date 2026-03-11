@@ -132,7 +132,7 @@ class BasicFragment : Fragment() {
         allHistory: List<HistoryEntity>
     ): String {
         if (allHistory.isEmpty()) {
-            return resources.getQuantityString(R.plurals.time_days, 0, 0)
+            return resources.getQuantityString(R.plurals.time_hours, 0, 0)
         }
 
         val sortedHistory = allHistory.sortedBy { it.createdAt }
@@ -158,37 +158,24 @@ class BasicFragment : Fragment() {
             longestEnd = LocalDateTime.now()
         }
 
-        val period = Period.between(longestStart.toLocalDate(), longestEnd.toLocalDate())
+        val duration = Duration.between(longestStart, longestEnd)
+        val totalMinutes = duration.toMinutes()
+        val days = totalMinutes / (24 * 60)
+        val hours = (totalMinutes % (24 * 60)) / 60
+        val minutes = totalMinutes % 60
 
-        val startWithPeriodAdded = longestStart
-            .plusYears(period.years.toLong())
-            .plusMonths(period.months.toLong())
-            .plusDays(period.days.toLong())
-        val remainingDuration = Duration.between(startWithPeriodAdded, longestEnd)
-        val hours = remainingDuration.toHours()
+        val parts = mutableListOf<String>()
+        if (days > 0) {
+            parts.add(resources.getQuantityString(R.plurals.time_days, days.toInt(), days))
+        }
 
-        val parts = listOfNotNull(
-            period.years.takeIf {
-                it > 0
-            }?.let {
-                resources.getQuantityString(R.plurals.time_years, it, it)
-                   },
-            period.months.takeIf {
-                it > 0
-            }?.let {
-                resources.getQuantityString(R.plurals.time_months, it, it)
-                   },
-            (period.days.takeIf {
-                it > 0 || (period.years == 0 && period.months == 0)
-            })?.let {
-                    resources.getQuantityString(R.plurals.time_days, it, it)
-                    },
-            hours.takeIf {
-                it > 0
-            }?.let {
-                resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
-            }
-        )
+        if (hours > 0 || days == 0L) {
+            parts.add(resources.getQuantityString(R.plurals.time_hours, hours.toInt(), hours))
+        }
+
+        if (minutes > 0 || (hours == 0L && days == 0L)) {
+            parts.add(resources.getQuantityString(R.plurals.time_minutes, minutes.toInt(), minutes))
+        }
         return parts.joinToString(" ")
     }
 }

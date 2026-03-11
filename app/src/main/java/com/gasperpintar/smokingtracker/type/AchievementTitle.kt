@@ -24,5 +24,5 @@ enum class AchievementTitle(
     C400(R.string.achievement_title_congrats_c_400),
     C600(R.string.achievement_title_congrats_c_600),
     C800(R.string.achievement_title_congrats_c_800),
-    C1000(R.string.achievement_title_congrats_c_1000),
+    C1000(R.string.achievement_title_congrats_c_1000);
 }
