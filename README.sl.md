@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/social-preview.png" width="200px" alt="Social Preview">
+<img src="fastlane/metadata/android/sl/images/featureGraphic.png" width="600px" alt="Social Preview">
 <br>
 <h1>Sledilnik Kajenja</h1>
 
@@ -92,7 +92,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 ## 📝 Odvisnosti in različice
 
 **Vtičnik za Gradle**
-- Vtičnik za Android Gradle: 9.0.1
+- Vtičnik za Android Gradle: 9.1.0
 
 **Knjižnice**
 > Vse knjižnice so konfigurirane v [`libs.versions.toml`](gradle/libs.versions.toml)

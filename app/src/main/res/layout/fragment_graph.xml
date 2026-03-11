@@ -31,16 +31,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/graph_daily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_daily"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:gravity="center"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    style="@style/SpecialTitleTextView"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_daily"
@@ -66,15 +63,13 @@
                         android:src="@drawable/ic_outline_arrow_back"
                         app:tint="?attr/colorOnSurface"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/current_date_daily"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
-                        android:gravity="center"
                         android:text="%02d.%02d.%04d"
-                        android:textAlignment="center"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        tools:ignore="HardcodedText,TextSizeCheck" />
+                        tools:ignore="HardcodedText,TextSizeCheck"
+                        style="@style/MainTitleCenterTextView"/>
 
                     <ImageButton
                         android:id="@+id/next_day_daily"
@@ -108,16 +103,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/graph_weekly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_weekly"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:gravity="center"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    style="@style/SpecialTitleTextView"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_weekly"
@@ -143,15 +135,13 @@
                         android:src="@drawable/ic_outline_arrow_back"
                         app:tint="?attr/colorOnSurface"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/current_date_weekly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
-                        android:gravity="center"
                         android:text="%1$d.%2$d/%3$d.%4$d %5$d"
-                        android:textAlignment="center"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        tools:ignore="HardcodedText,TextSizeCheck" />
+                        tools:ignore="HardcodedText,TextSizeCheck"
+                        style="@style/MainTitleCenterTextView"/>
 
                     <ImageButton
                         android:id="@+id/next_day_weekly"
@@ -185,16 +175,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/graph_monthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_monthly"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:gravity="center"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    style="@style/SpecialTitleTextView"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_monthly"
@@ -220,15 +207,13 @@
                         android:src="@drawable/ic_outline_arrow_back"
                         app:tint="?attr/colorOnSurface"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/current_date_monthly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
-                        android:gravity="center"
                         android:text="%1$s %2$d"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textAlignment="center"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="HardcodedText"
+                        style="@style/MainTitleCenterTextView"/>
 
                     <ImageButton
                         android:id="@+id/next_day_monthly"
@@ -264,16 +249,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                <TextView
                     android:id="@+id/graph_yearly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_yearly"
-                    android:textAppearance="?attr/textAppearanceHeadline6"
-                    android:gravity="center"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:layout_marginBottom="8dp"/>
+                    android:layout_marginBottom="8dp"
+                    style="@style/SpecialTitleTextView"/>
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_yearly"
@@ -299,15 +281,13 @@
                         android:src="@drawable/ic_outline_arrow_back"
                         app:tint="?attr/colorOnSurface"/>
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <TextView
                         android:id="@+id/current_date_yearly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
-                        android:gravity="center"
                         android:text="%1$d"
-                        android:textAppearance="?attr/textAppearanceHeadline6"
-                        android:textAlignment="center"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="HardcodedText"
+                        style="@style/MainTitleCenterTextView"/>
 
                     <ImageButton
                         android:id="@+id/next_day_yearly"

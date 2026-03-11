@@ -20,9 +20,12 @@ import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
+import com.gasperpintar.smokingtracker.type.AchievementIcon
+import com.gasperpintar.smokingtracker.type.AchievementMessage
+import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class AchievementsFragment : Fragment() {
 
@@ -65,7 +68,6 @@ class AchievementsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAchievementsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
         setupRecyclerView()
 
@@ -87,7 +89,7 @@ class AchievementsFragment : Fragment() {
             }.filter { it.category == achievementType }
             loadAchievements(achievementEntries = achievements)
         }
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
@@ -99,25 +101,38 @@ class AchievementsFragment : Fragment() {
         val adapter = Adapter(
             layoutId = R.layout.achievements_container,
             onBind = { itemView, achievementEntry ->
-                val container = itemView.findViewById<View>(R.id.achievement_container)
                 val imageAchievement = itemView.findViewById<ImageView>(R.id.image_achievement)
                 val textAchievementTitle = itemView.findViewById<TextView>(R.id.text_achievement_title)
                 val textAchievementMessage = itemView.findViewById<TextView>(R.id.text_achievement_message)
-                val textLastAchievedValue = itemView.findViewById<TextView>(R.id.text_last_achieved_value)
-                val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_value)
+                val textLastAchieved = itemView.findViewById<TextView>(R.id.text_last_achieved_label)
+                val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_label)
 
-                textAchievementTitle.text = getString(achievementEntry.title)
-                textAchievementMessage.text = getString(achievementEntry.message)
-                textLastAchievedValue.text = achievementEntry.lastAchieved?.toLocalDate()?.let {
-                    LocalizationHelper.formatDate(date = it)
-                } ?: "-"
-                textLastAchievedCountValue.text = requireContext().resources.getQuantityString(
+                textAchievementTitle.text = getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
+                textAchievementMessage.text = getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)
+
+                textLastAchieved.text = achievementEntry.lastAchieved
+                    ?.toLocalDate()
+                    ?.let { localDate: LocalDate ->
+                        getString(
+                            R.string.achievement_container_meta,
+                            LocalizationHelper.formatDate(date = localDate)
+                        )
+                    } ?: getString(R.string.achievement_container_meta, "/")
+
+                val achievedTimesText: String = requireContext().resources.getQuantityString(
                     R.plurals.achievement_achieved_times,
                     achievementEntry.times.toInt(),
                     achievementEntry.times
                 )
 
-                imageAchievement.setImageResource(achievementEntry.image)
+                textLastAchievedCountValue.text = getString(
+                    R.string.achievement_container_count,
+                    achievedTimesText
+                )
+
+                imageAchievement.setImageResource(
+                    AchievementIcon.valueOf(achievementEntry.image).drawableResource
+                )
                 if (achievementEntry.times == 0L) {
                     imageAchievement.colorFilter = ColorMatrixColorFilter(
                         ColorMatrix().apply {
@@ -128,13 +143,6 @@ class AchievementsFragment : Fragment() {
                 } else {
                     imageAchievement.clearColorFilter()
                     imageAchievement.alpha = 1f
-                }
-
-                container.setOnClickListener {
-                    DialogManager.showAchievementDetailsDialog(
-                        context = requireActivity(),
-                        achievementEntry = achievementEntry
-                    )
                 }
             },
             diffCallback = object : DiffUtil.ItemCallback<AchievementEntry>() {

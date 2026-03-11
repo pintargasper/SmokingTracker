@@ -62,7 +62,7 @@
     <string name="settings_category_data_translations_website_url">Translate this app on your language using Weblate</string>
     <string name="settings_category_data_privacy_policy">Security</string>
     <string name="settings_category_data_privacy_policy_url">Smoking Tracker - Privacy Policy</string>
-    <string name="insert_popup_message">Add record</string>
+    <string name="insert_popup_message">Add entry</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
     <string name="insert_popup_insert">Add</string>
     <string name="popup_close">Close</string>
@@ -100,8 +100,8 @@
     <string name="version_popup_get_it_on_f_droid" translatable="false">F-droid</string>
     <string name="version_popup_get_it_on_izzy_on_droid" translatable="false">IzzyOnDroid</string>
     <string name="version_popup_get_it_on_google_play" translatable="false">Google Play</string>
-    <string name="achievement_container_meta">Last achieved</string>
-    <string name="achievement_container_count">Achieved</string>
+    <string name="achievement_container_meta">Last achieved: %1$s</string>
+    <string name="achievement_container_count">Achieved: %1$s</string>
     <string name="achievement_title_congrats_days_1">One day hero</string>
     <string name="achievement_title_congrats_days_2">Two day champion</string>
     <string name="achievement_title_congrats_days_3">Three day warrior</string>
@@ -162,7 +162,7 @@
     <string name="month_november">November</string>
     <string name="month_december">December</string>
     <string name="notification_title">Progress reminder</string>
-    <string name="notification_content">It is been %1$s since your last cigarette</string>
+    <string name="notification_content">It has been %1$s since your last cigarette</string>
     <string name="notification_download_title">Backup completed</string>
     <string name="notification_download_content">Backup was successfully created in file %1$s</string>
     <string name="notification_upload_title">Restore completed</string>
@@ -189,6 +189,21 @@
     <string name="calculator_result_average_time_per_cigarette_label">Average time to smoke 1 cigarette</string>
     <string name="calculator_result_average_time_per_cigarette_description">Estimated at 5 minutes</string>
     <string name="calculator_result_valute_unit">units</string>
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_basic">Basic</string>
+    <string name="statistics_forecast">Forecast</string>
+    <string name="analytics_statistics_title">Statistics</string>
+    <string name="statistics_achievements_description">Detailed insights and trends of your usage over time</string>
+    <string name="statistics_max_cigarettes">Maximum cigarettes smoked in a day</string>
+    <string name="statistics_min_cigarettes">Minimum cigarettes smoked in a day</string>
+    <string name="statistics_avg_cigarettes">Average cigarettes per day</string>
+    <string name="statistics_total_cigarettes">Total cigarettes smoked</string>
+    <string name="statistics_first_entry">Since first entry</string>
+    <string name="statistics_longest_streak">Longest time without smoking</string>
+    <string name="statistics_logged">Logged: %1$s</string>
+    <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>
+
+
     <plurals name="time_years">
         <item quantity="one">%d year</item>
         <item quantity="two">%d years</item>

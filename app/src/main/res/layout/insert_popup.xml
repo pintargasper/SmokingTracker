@@ -20,15 +20,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/insert_popup_message"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
-            android:textSize="18sp"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/MainTitleCenterTextView"/>
 
         <LinearLayout
             android:id="@+id/lent_cigarette_layout"
@@ -50,8 +48,7 @@
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:text="@string/insert_popup_lent"
-                android:textColor="?attr/colorOnSurface"
-                android:textSize="14sp" />
+                style="@style/BodyTextView"/>
 
             <CheckBox
                 android:id="@+id/lent_checkbox"
@@ -78,14 +75,8 @@
                 android:id="@+id/button_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="@string/insert_popup_insert"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -108,14 +99,8 @@
                 android:id="@+id/button_close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
                 android:text="@string/popup_close"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

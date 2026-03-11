@@ -35,7 +35,6 @@ class GraphFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentGraphBinding.inflate(inflater, container, false)
 
         database = (requireActivity() as MainActivity).database
@@ -189,14 +188,18 @@ class GraphFragment : Fragment() {
 
             GraphInterval.DAILY -> {
                 val hourlyCountMap: Map<Int, Int> =
-                    historyList.groupingBy { it.createdAt.hour }.eachCount()
+                    historyList.groupingBy {
+                        it.createdAt.hour
+                    }.eachCount()
 
                 (0..23).map { hour: Int ->
                     GraphEntry(
                         quantity = hourlyCountMap[hour] ?: 0,
                         date = startDate.atTime(hour, 0).toLocalDate()
                     )
-                }.dropLastWhile { it.quantity == 0 }
+                }.dropLastWhile {
+                    it.quantity == 0
+                }
             }
 
             GraphInterval.YEARLY -> {
@@ -225,7 +228,9 @@ class GraphFragment : Fragment() {
                         },
                         date = day
                     )
-                }.toList().dropLastWhile { it.quantity == 0 }
+                }.toList().dropLastWhile {
+                    it.quantity == 0
+                }
             }
         }
 

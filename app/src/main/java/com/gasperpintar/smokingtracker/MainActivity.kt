@@ -91,6 +91,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        val navView = binding.navView
+        for (i in 0 until navView.menu.size) {
+            val itemView = navView.findViewById<android.view.View>(navView.menu[i].itemId)
+            itemView?.setOnLongClickListener {
+                true
+            }
+        }
+    }
+
     private fun initViewBinding() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

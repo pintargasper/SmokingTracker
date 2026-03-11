@@ -21,29 +21,23 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/notifications_popup"
-            android:textColor="?attr/colorOnSurface"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:singleLine="true"
-            android:ellipsize="end"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/MainTitleCenterTextView"/>
 
         <TextView
             android:id="@+id/popup_notifications_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/notifications_popup_info"
-            android:textColor="?attr/colorOnSurface"
-            android:textSize="14sp"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/popup_notifications_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/BodyTextView"/>
 
         <ScrollView
             android:id="@+id/notifications_inner_options_container"
@@ -76,12 +70,9 @@
                         android:id="@+id/checkbox_system"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:ellipsize="end"
                         android:text="@string/notifications_popup_check_box_system"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textSize="14sp"
-                        android:maxWidth="300dp" />
+                        android:maxWidth="300dp"
+                        style="@style/CheckBox"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,11 +89,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:singleLine="true"
-                        android:ellipsize="end"
                         android:text="@string/notifications_popup_check_box_progress"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textSize="14sp" />
+                        style="@style/CheckBox"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -116,7 +104,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/notifications_popup_progress_frequency_label"
-                            android:labelFor="@+id/spinner_progress_frequency" />
+                            android:labelFor="@+id/spinner_progress_frequency"
+                            style="@style/BodyTextView"/>
 
                         <com.google.android.material.textfield.TextInputLayout
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -135,7 +124,8 @@
                                 android:cursorVisible="false"
                                 android:inputType="none"
                                 app:simpleItems="@array/frequency_options"
-                                tools:ignore="LabelFor" />
+                                tools:ignore="LabelFor"
+                                style="@style/BodyTextView"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
@@ -154,12 +144,9 @@
                         android:id="@+id/checkbox_achievements"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:ellipsize="end"
                         android:maxWidth="300dp"
-                        android:singleLine="true"
                         android:text="@string/notifications_popup_check_box_achievements"
-                        android:textColor="?attr/colorOnSurface"
-                        android:textSize="14sp" />
+                        style="@style/CheckBox"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -188,11 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/popup_close"
-                android:textAppearance="?attr/textAppearanceSubtitle1"
-                android:textColor="?attr/colorOnSurface"
-                android:ellipsize="end"
-                android:singleLine="true"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

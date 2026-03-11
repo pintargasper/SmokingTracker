@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="history_card_min_height">350dp</dimen>
+</resources>

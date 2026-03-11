@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/social-preview.png" width="200px" alt="Social Preview">
+<img src="fastlane/metadata/android/en-US/images/featureGraphic.png" width="600px" alt="Social Preview">
 <br>
 <h1>Smoking Tracker</h1>
 
@@ -92,7 +92,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 ## 📝 Dependencies & Versions
 
 **Gradle Plugin**
-- Android Gradle Plugin: 9.0.1
+- Android Gradle Plugin: 9.1.0
 
 **Libraries**
 > All libraries are configured in [`libs.versions.toml`](gradle/libs.versions.toml)

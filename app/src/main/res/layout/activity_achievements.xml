@@ -9,7 +9,7 @@
     android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/toolbar_calculator"
+        android:id="@+id/toolbar_achievements"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -38,10 +38,8 @@
             android:focusableInTouchMode="true"
             android:gravity="center_vertical"
             android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
             android:text="@string/achievements_title"
-            android:textAppearance="?attr/textAppearanceSubtitle1"
-            android:textColor="?attr/colorOnSurface" />
+            style="@style/MainTitleCenterTextView"/>
 
     </LinearLayout>
 

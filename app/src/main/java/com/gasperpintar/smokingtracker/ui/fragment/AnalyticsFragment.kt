@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.CalculatorActivity
+import com.gasperpintar.smokingtracker.StatisticsActivity
 import com.gasperpintar.smokingtracker.databinding.FragmentAnalyticsBinding
+import kotlin.reflect.KClass
 
 class AnalyticsFragment : Fragment() {
 
@@ -28,14 +30,21 @@ class AnalyticsFragment : Fragment() {
     }
 
     private fun setup() {
+        binding.statisticsLayout.setOnClickListener {
+            startActivity(clazz = StatisticsActivity::class)
+        }
+
         binding.calculatorLayout.setOnClickListener {
-            val intent = Intent(binding.root.context, CalculatorActivity::class.java)
-            binding.root.context.startActivity(intent)
+            startActivity(clazz = CalculatorActivity::class)
         }
 
         binding.achievementsLayout.setOnClickListener {
-            val intent = Intent(binding.root.context, AchievementsActivity::class.java)
-            binding.root.context.startActivity(intent)
+            startActivity(clazz = AchievementsActivity::class)
         }
+    }
+
+    private fun startActivity(clazz: KClass<*>) {
+        val intent = Intent(binding.root.context, clazz.java)
+        binding.root.context.startActivity(intent)
     }
 }
