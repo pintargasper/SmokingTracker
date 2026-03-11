@@ -1,0 +1,7 @@
+## New statistics and improvements
+
+- Added basic and forecast statistics
+- Improved the user interface
+- Improved data import from your device
+- Fixed achievements issues after updating the app
+- General bug fixes and stability improvements
