@@ -54,8 +54,7 @@
     <string name="settings_category_data_action">Open</string>
     <string name="settings_category_data_about">About</string>
     <string name="settings_category_data_version">Version %1$s</string>
-    <string name="settings_category_data_version_view">View on F-droid or IzzyOnDroid</string>
-    <string name="settings_category_data_version_view_alternative">View on F-droid, IzzyOnDroid or Google Play</string>
+    <string name="settings_category_data_version_view">View on available platforms</string>
     <string name="settings_category_data_version_unknown">Unknown</string>
     <string name="settings_category_data_website">Website</string>
     <string name="settings_category_data_translations_website">Help Translate</string>
@@ -99,6 +98,7 @@
     <string name="version_popup_title">View on</string>
     <string name="version_popup_get_it_on_f_droid" translatable="false">F-droid</string>
     <string name="version_popup_get_it_on_izzy_on_droid" translatable="false">IzzyOnDroid</string>
+    <string name="version_popup_get_it_on_open_apk" translatable="false">OpenApk</string>
     <string name="version_popup_get_it_on_google_play" translatable="false">Google Play</string>
     <string name="achievement_container_meta">Last achieved: %1$s</string>
     <string name="achievement_container_count">Achieved: %1$s</string>

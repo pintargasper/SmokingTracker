@@ -69,6 +69,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:minHeight="55dp"
+                    android:layout_marginTop="1dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -94,6 +95,7 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:minHeight="55dp"
+                    android:layout_marginTop="1dp"
                     android:orientation="vertical">
 
                     <TextView

@@ -301,17 +301,22 @@ object DialogManager {
             override fun setup() {
                 val fDroidLayout: LinearLayout = dialogView.findViewById(R.id.f_droid_website_layout)
                 val izzyOnDroidLayout: LinearLayout = dialogView.findViewById(R.id.izzy_on_droid_website_layout)
+                val openApkLayout: LinearLayout = dialogView.findViewById(R.id.open_apk_website_layout)
                 // val googlePlayLayout: LinearLayout = dialogView.findViewById(R.id.google_play_website_layout)
+
                 val textViewFDroidUrl: TextView = dialogView.findViewById(R.id.f_droid_website_service_url)
                 val textViewIzzyOnDroidUrl: TextView = dialogView.findViewById(R.id.izzy_on_droid_website_service_url)
+                val textViewOpenApkUrl: TextView = dialogView.findViewById(R.id.open_apk_website_service_url)
                 // val textViewGooglePlayUrl: TextView = dialogView.findViewById(R.id.google_play_website_service_url)
 
                 val fDroidUrl = "https://f-droid.org/packages/com.gasperpintar.smokingtracker"
                 val izzyUrl = "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
+                val openApkUrl = "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/"
                 //val googlePlayUrl = ""
 
                 textViewFDroidUrl.text = fDroidUrl
                 textViewIzzyOnDroidUrl.text = izzyUrl
+                textViewOpenApkUrl.text = openApkUrl
                 //textViewGooglePlayUrl.text = googlePlayUrl
 
                 fDroidLayout.setOnClickListener {
@@ -320,6 +325,10 @@ object DialogManager {
 
                 izzyOnDroidLayout.setOnClickListener {
                     onLinkClicked(izzyOnDroidLayout, izzyUrl)
+                }
+
+                openApkLayout.setOnClickListener {
+                    onLinkClicked(openApkLayout, openApkUrl)
                 }
 
                 /*googlePlayLayout.setOnClickListener {
