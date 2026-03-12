@@ -25,6 +25,14 @@ Created by [Gašper Pintar](https://gasperpintar.com)
     />
   </a>
 
+  <a href="https://f-droid.org/en/packages/com.gasperpintar.smokingtracker/" target="_blank">
+    <img
+      src="assets/badges/en-US/f_droid.png"
+      height="40px"
+      alt="Download APK from F-droid"
+    />
+  </a>
+
   <a href="https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker" target="_blank">
     <img
       src="assets/badges/en-US/izzyondroid.png"
@@ -40,6 +48,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
       alt="Get it on OpenAPK"
     />
   </a>
+
   <a href="https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker" target="_blank">
     <img
       src="assets/badges/en-US/google_play.png"

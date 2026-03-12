@@ -21,7 +21,15 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
     <img
       src="assets/badges/en-US/github.png"
       height="40px"
-      alt="Download APK from GitHub"
+      alt="Prenesi APK iz GitHub-a"
+    />
+  </a>
+
+  <a href="https://f-droid.org/en/packages/com.gasperpintar.smokingtracker/" target="_blank">
+    <img
+      src="assets/badges/en-US/f_droid.png"
+      height="40px"
+      alt="Prenesi APK iz F-droid-a"
     />
   </a>
 
@@ -29,7 +37,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
     <img
       src="assets/badges/en-US/izzyondroid.png"
       height="40px"
-      alt="Download APK from IzzyOnDroid"
+      alt="Prenesi APK iz IzzyOnDroid-a"
     />
   </a>
 
@@ -37,14 +45,15 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
     <img
       src="assets/badges/en-US/open_apk.png"
       height="40px"
-      alt="Get it on OpenAPK"
+      alt="Pridobite ga na OpenApk"
     />
   </a>
+
   <a href="https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker" target="_blank">
     <img
       src="assets/badges/en-US/google_play.png"
       height="40px"
-      alt="Get it on Google Play"
+      alt="Pridobite ga na Google Play"
     />
   </a>
 </div>
