@@ -29,7 +29,7 @@
     <string name="graph_next_day_monthly">Наступний період (за місяць)</string>
     <string name="graph_next_day_yearly">Наступний період (за рік)</string>
     <string name="graph_view_info">Немає даних для відображення графіка</string>
-    <string name="analytics_title">Статистика</string>
+    <string name="analytics_title">Аналітика</string>
     <string name="analytics_calculator_title">Калькулятор</string>
     <string name="analytics_calculator_description">Огляд загального використання, витрат і часу</string>
     <string name="analytics_achievements_title">Ачівки</string>
@@ -233,4 +233,7 @@
         <item quantity="many">%d цигарок</item>
         <item quantity="other">%d цигарок</item>
     </plurals>
+    <string name="statistics_title">Статистика</string>
+    <string name="statistics_basic">Базова</string>
+    <string name="statistics_forecast">Прогнозована</string>
 </resources>
