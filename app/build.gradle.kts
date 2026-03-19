@@ -7,7 +7,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(17)
     compilerOptions {
         freeCompilerArgs.addAll(listOf("-Xjvm-default=all"))
     }
@@ -43,8 +43,8 @@ configure<ApplicationExtension> {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     buildFeatures {
