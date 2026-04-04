@@ -34,7 +34,7 @@
     <string name="settings_category_data_translations_website_url">Prevedite ovu aplikaciju na svoj jezik koristeći veb-sajt</string>
     <string name="settings_category_data_privacy_policy">Obezbeđenje</string>
     <string name="settings_category_data_privacy_policy_url">Praćenje pušenja-politika privatnosti</string>
-    <string name="insert_popup_message">Dodaj zapis</string>
+    <string name="insert_popup_message">Dodaj unos</string>
     <string name="insert_popup_lent">Pozajmljena cigareta?</string>
     <string name="insert_popup_insert">Dodaj</string>
     <string name="edit_popup_message">Datum i vreme</string>
