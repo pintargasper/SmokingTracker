@@ -81,14 +81,14 @@
     <string name="settings_category_data_action">Ouvrir</string>
     <string name="settings_category_data_about">À propos</string>
     <string name="settings_category_data_version">Version %1$s</string>
-    <string name="settings_category_data_version_view">Voir sur F-droid ou IzzyOnDroid</string>
+    <string name="settings_category_data_version_view">Voir sur les plateformes disponibles</string>
     <string name="settings_category_data_version_unknown">Inconnue</string>
     <string name="settings_category_data_website">Site internet</string>
     <string name="settings_category_data_translations_website">Aider à la traduction</string>
     <string name="settings_category_data_translations_website_url">Traduisez cette application dans votre langue à l\'aide de Weblate</string>
     <string name="settings_category_data_privacy_policy">Sécurité</string>
     <string name="settings_category_data_privacy_policy_url">Smoking Tracker : Politique de Confidentialité</string>
-    <string name="insert_popup_message">Rajouter un record</string>
+    <string name="insert_popup_message">Ajouter une entrée</string>
     <string name="insert_popup_lent">Une cigarette prêtée ?</string>
     <string name="insert_popup_insert">Ajouter</string>
     <string name="popup_close">Fermer</string>
@@ -149,7 +149,7 @@
     <plurals name="time_years">
         <item quantity="one">%d année</item>
         <item quantity="many">%d années</item>
-        <item quantity="other"/>
+        <item quantity="other">%d années</item>
     </plurals>
     <plurals name="time_weeks">
         <item quantity="one">%d semaine</item>
@@ -164,7 +164,7 @@
     <plurals name="time_hours">
         <item quantity="one">%d heure</item>
         <item quantity="many">%d heures</item>
-        <item quantity="other"/>
+        <item quantity="other">%d heures</item>
     </plurals>
     <plurals name="time_minutes">
         <item quantity="one">%d minute</item>
