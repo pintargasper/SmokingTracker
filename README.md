@@ -65,6 +65,9 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 
 </div>
 
+Available on other platforms
+ - [Android Freeware](https://www.androidfreeware.net/download-smoking-tracker-apk.html)
+
 ## Table of Contents
 - [About](#-about)
 - [Supported Languages](#-supported-languages)
@@ -82,6 +85,58 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 - **Automatic backups** (depending on device)
 - **Multi language support**: English and Slovenian
 - **Simple and intuitive** user interface
+
+<details>
+  <summary>View application images</summary>
+
+  <div style="display: flex; gap: 12px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png"
+      height="600px"
+      alt="Home"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/2.png"
+      height="600px"
+      alt="Graphs"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/3.png"
+      height="600px"
+      alt="Analytics"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/4.png"
+      height="600px"
+      alt="Settings"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/5.png"
+      height="600px"
+      alt="Calculator"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/6.png"
+      height="600px"
+      alt="Smoke free time"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/7.png"
+      height="600px"
+      alt="Cigarettes avoided"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/8.png"
+      height="600px"
+      alt="Basic"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/9.png"
+      height="600px"
+      alt="Forecast"
+    />
+  </div>
+</details>
 
 ## 🌐 Supported Languages
 

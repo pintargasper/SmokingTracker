@@ -123,7 +123,7 @@ class GraphFragment : Fragment() {
         loadGraph(
             getDateRange = { TimeHelper.getDay(date = selectedDate) },
             labelFormatter = { start, _ ->
-                LocalizationHelper.formatDate(date = start)
+                LocalizationHelper.formatDate(date = start.toLocalDate())
             },
             interval = GraphInterval.DAILY
         )
@@ -133,7 +133,7 @@ class GraphFragment : Fragment() {
         loadGraph(
             getDateRange = { TimeHelper.getWeek(date = selectedDate) },
             labelFormatter = { start, end ->
-                LocalizationHelper.formatWeekRange(start = start, end = end)
+                LocalizationHelper.formatWeekRange(start = start.toLocalDate(), end = end.toLocalDate())
             },
             interval = GraphInterval.WEEKLY
         )
@@ -144,8 +144,7 @@ class GraphFragment : Fragment() {
         loadGraph(
             getDateRange = { TimeHelper.getMonth(date = selectedDate) },
             labelFormatter = { start, _ ->
-                String.format(
-                    $$"%1$s %2$d",
+                String.format("%s %d",
                     LocalizationHelper.getMonthName(context = requireContext(), start.month),
                     start.year
                 )
@@ -159,7 +158,7 @@ class GraphFragment : Fragment() {
         loadGraph(
             getDateRange = { TimeHelper.getYear(date = selectedDate) },
             labelFormatter = { start, _ ->
-                String.format($$"%1$d", start.year)
+                start.year.toString()
             },
             interval = GraphInterval.YEARLY
         )
@@ -167,12 +166,10 @@ class GraphFragment : Fragment() {
 
     private suspend fun loadGraph(
         getDateRange: () -> Pair<LocalDateTime, LocalDateTime>,
-        labelFormatter: (LocalDate, LocalDate) -> String,
+        labelFormatter: (LocalDateTime, LocalDateTime) -> String,
         interval: GraphInterval
     ) {
         val (startDateTime, endDateTime) = getDateRange()
-        val startDate = startDateTime.toLocalDate()
-        val endDate = endDateTime.toLocalDate()
 
         val currentDateTextView = when (interval) {
             GraphInterval.DAILY -> binding.currentDateDaily
@@ -180,40 +177,38 @@ class GraphFragment : Fragment() {
             GraphInterval.MONTHLY -> binding.currentDateMonthly
             GraphInterval.YEARLY -> binding.currentDateYearly
         }
-        currentDateTextView.text = labelFormatter(startDate, endDate)
+        currentDateTextView.text = labelFormatter(startDateTime, endDateTime)
 
         val historyList = historyRepository.getBetween(startDateTime, endDateTime)
 
         val entries: List<GraphEntry> = when (interval) {
-
             GraphInterval.DAILY -> {
                 val hourlyCountMap: Map<Int, Int> =
                     historyList.groupingBy {
                         it.createdAt.hour
                     }.eachCount()
-
                 (0..23).map { hour: Int ->
                     GraphEntry(
                         quantity = hourlyCountMap[hour] ?: 0,
-                        date = startDate.atTime(hour, 0).toLocalDate()
+                        date = startDateTime.withHour(hour).withMinute(0).withSecond(0).withNano(0)
                     )
                 }.dropLastWhile {
                     it.quantity == 0
                 }
             }
-
             GraphInterval.YEARLY -> {
                 val monthCountMap = historyList.groupingBy { it.createdAt.monthValue }.eachCount()
                 (1..12).map { monthNumber ->
                     val count = monthCountMap[monthNumber] ?: 0
                     GraphEntry(
                         quantity = count,
-                        date = startDate.withMonth(monthNumber).withDayOfMonth(1)
+                        date = startDateTime.withMonth(monthNumber).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0)
                     )
                 }.dropLastWhile { it.quantity == 0 }
             }
-
             else -> {
+                val startDate = startDateTime.toLocalDate()
+                val endDate = endDateTime.toLocalDate()
                 generateSequence(seed = startDate) { day ->
                     val nextDay = day.plusDays(1)
                     if (nextDay <= endDate) {
@@ -226,7 +221,7 @@ class GraphFragment : Fragment() {
                         quantity = historyList.count {
                             it.createdAt.toLocalDate() == day
                         },
-                        date = day
+                        date = day.atStartOfDay()
                     )
                 }.toList().dropLastWhile {
                     it.quantity == 0

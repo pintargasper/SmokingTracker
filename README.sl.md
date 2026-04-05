@@ -65,6 +65,9 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
 </div>
 
+Na voljo na drugih platformah
+ - [Android Freeware](https://www.androidfreeware.net/download-smoking-tracker-apk.html)
+
 ## Kazalo vsebine
 - [O aplikaciji](#-o-aplikaciji)
 - [Podprti jeziki](#-podprti-jeziki)
@@ -82,6 +85,58 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 - **Samodejne varnostne kopije** (odvisno od naprave)
 - **Večjezična podpora**: angleščina in slovenščina
 - **Preprost in intuitiven** uporabniški vmesnik
+
+<details>
+  <summary>View application images</summary>
+
+  <div style="display: flex; gap: 12px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/1.png"
+      height="600px"
+      alt="Dom"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/2.png"
+      height="600px"
+      alt="Grafi"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/3.png"
+      height="600px"
+      alt="Analitika"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/4.png"
+      height="600px"
+      alt="Nastavitve"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/5.png"
+      height="600px"
+      alt="Kalkulator"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/6.png"
+      height="600px"
+      alt="Čas brez kajenja"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/7.png"
+      height="600px"
+      alt="Nepokajene cigarete"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/8.png"
+      height="600px"
+      alt="Osnovno"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/9.png"
+      height="600px"
+      alt="Napoved"
+    />
+  </div>
+</details>
 
 ## 🌐 Podprti jeziki
 

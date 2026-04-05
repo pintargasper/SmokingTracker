@@ -163,7 +163,7 @@ class GraphView @JvmOverloads constructor(
         }
 
         val labelText: String = when (currentGraphInterval) {
-            GraphInterval.DAILY -> String.format(Locale.getDefault(), "%02d:00", index)
+            GraphInterval.DAILY -> String.format(Locale.getDefault(), "%02d:00", entry.date.hour)
             GraphInterval.WEEKLY -> LocalizationHelper.getDayOfWeekName(context, entry.date.dayOfWeek).take(3)
             GraphInterval.MONTHLY -> String.format(Locale.getDefault(), "%02d.%02d", entry.date.dayOfMonth, entry.date.monthValue)
             GraphInterval.YEARLY -> LocalizationHelper.getMonthName(context, entry.date.month).take(3)

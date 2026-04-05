@@ -1,8 +1,8 @@
 package com.gasperpintar.smokingtracker.model
 
-import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class GraphEntry(
     val quantity: Int,
-    val date: LocalDate
+    val date: LocalDateTime
 )
