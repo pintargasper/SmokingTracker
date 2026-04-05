@@ -58,7 +58,7 @@
     <string name="month_november">November</string>
     <string name="month_december">December</string>
     <string name="notification_title">Opomnik napredka</string>
-    <string name="notification_content">Od tvoje zadnje cigarete je minilo %1$s</string>
+    <string name="notification_content">Od tvoje zadnje cigarete je minilo že %1$s</string>
     <string name="notification_download_title">Varnostno kopiranje končano</string>
     <string name="notification_download_content">Varnostna kopija je bila uspešno ustvarjena v datoteki %1$s</string>
     <string name="notification_upload_title">Obnovitev končana</string>
@@ -224,7 +224,7 @@
         <item quantity="few">%d krat</item>
         <item quantity="other">%d krat</item>
     </plurals>
-    <string name="settings_category_data_version_view">Oglejte si na F-droid ali IzzyOnDroid</string>
+    <string name="settings_category_data_version_view">Oglejte si na razpoložljivih platformah</string>
     <string name="notifications_popup_check_box_progress">Opomnik o napredku</string>
     <string name="notifications_popup_progress_frequency_label">Pogostost</string>
     <string name="notifications_popup_progress_frequency_default">Privzeto</string>
@@ -233,4 +233,17 @@
     <string name="version_popup_title">Ogled na</string>
     <string name="popup_close">Zapri</string>
     <string name="popup_confirm">Potrdi</string>
+    <string name="statistics_title">Statistika</string>
+    <string name="statistics_basic">Osnovno</string>
+    <string name="statistics_forecast">Napoved</string>
+    <string name="analytics_statistics_title">Statistika</string>
+    <string name="statistics_achievements_description">Podrobni vpogledi in trendi vaše uporabe skozi čas</string>
+    <string name="statistics_max_cigarettes">Največje število pokajenih cigaret na dan</string>
+    <string name="statistics_min_cigarettes">Najmanjše število pokajenih cigaret na dan</string>
+    <string name="statistics_avg_cigarettes">Povprečno število cigaret na dan</string>
+    <string name="statistics_total_cigarettes">Skupaj pokajenih cigaret</string>
+    <string name="statistics_first_entry">Od prvega vnosa</string>
+    <string name="statistics_longest_streak">Najdaljši čas brez kajenja</string>
+    <string name="statistics_logged">Zabeleženo: %1$s</string>
+    <string name="statistics_forecast_info">Več podatkov kot je, bolj natančna bo napoved</string>
 </resources>

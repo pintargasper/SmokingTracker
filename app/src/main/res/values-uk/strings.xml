@@ -29,7 +29,7 @@
     <string name="graph_next_day_monthly">Наступний період (за місяць)</string>
     <string name="graph_next_day_yearly">Наступний період (за рік)</string>
     <string name="graph_view_info">Немає даних для відображення графіка</string>
-    <string name="analytics_title">Статистика</string>
+    <string name="analytics_title">Аналітика</string>
     <string name="analytics_calculator_title">Калькулятор</string>
     <string name="analytics_calculator_description">Огляд загального використання, витрат і часу</string>
     <string name="analytics_achievements_title">Ачівки</string>
@@ -53,7 +53,7 @@
     <string name="settings_category_data_upload_url">Відновити дані з пристрою</string>
     <string name="settings_category_data_about">Про</string>
     <string name="settings_category_data_version">Версія %1$s</string>
-    <string name="settings_category_data_version_view">Дивись у F-droid чи IzzyOnDroid</string>
+    <string name="settings_category_data_version_view">Переглянути на доступних платформах</string>
     <string name="settings_category_data_website">Сайт</string>
     <string name="settings_category_data_translations_website">Допомогти з перекладом</string>
     <string name="settings_category_data_translations_website_url">Допоможи перекласти застосунок своєю мовою у Weblate</string>
@@ -158,7 +158,7 @@
     <string name="month_november">Листопад</string>
     <string name="month_december">Грудень</string>
     <string name="notification_title">Поточний стан прогресу</string>
-    <string name="notification_content">Минуло %1$s від твоєї останньої сигарети</string>
+    <string name="notification_content">Минуло %1$s з часу вашої останньої сигарети</string>
     <string name="notification_download_title">Бекап готовий</string>
     <string name="notification_download_content">Резервну копію даних успішно збережено у файлі %1$s</string>
     <string name="notification_upload_title">Рестор успішно завершено</string>
@@ -233,4 +233,17 @@
         <item quantity="many">%d цигарок</item>
         <item quantity="other">%d цигарок</item>
     </plurals>
+    <string name="statistics_title">Статистика</string>
+    <string name="statistics_basic">Базова</string>
+    <string name="statistics_forecast">Прогнозована</string>
+    <string name="analytics_statistics_title">Статистика</string>
+    <string name="statistics_achievements_description">Детальний аналіз та тенденції щодо вашого використання з плином часу</string>
+    <string name="statistics_max_cigarettes">Максимальна кількість сигарет, викурених за день</string>
+    <string name="statistics_min_cigarettes">Мінімальна кількість сигарет, викурених за день</string>
+    <string name="statistics_avg_cigarettes">Середня кількість сигарет на день</string>
+    <string name="statistics_total_cigarettes">Загальна кількість викурених сигарет</string>
+    <string name="statistics_first_entry">З моменту першого запису</string>
+    <string name="statistics_longest_streak">Найдовший час без куріння</string>
+    <string name="statistics_logged">Записано: %1$s</string>
+    <string name="statistics_forecast_info">Чим більше даних, тим точнішим буде прогноз</string>
 </resources>

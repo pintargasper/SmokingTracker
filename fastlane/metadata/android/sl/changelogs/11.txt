@@ -1,0 +1,7 @@
+## Nova statistika in izboljšave
+
+- Dodana osnovna in napovedovalna statistika
+- Izboljšan uporabniški vmesnik
+- Izboljšan uvoz podatkov iz vaše naprave
+- Odpravljene težave z dosežki po posodobitvi aplikacije
+- Splošni popravki napak in izboljšave stabilnosti
