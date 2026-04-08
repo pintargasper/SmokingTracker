@@ -168,4 +168,23 @@
     <string name="notification_achievement_unlocked_title">Čestitamo!</string>
     <string name="notification_achievement_unlocked_content_time">Veliki uspeh! %1$s bez cigareta</string>
     <string name="notification_achievement_unlocked_content_cigarettes">Izbegao si %1$s</string>
+    <string name="calculator_cigarettes_per_day">Broj cigareta dnevno</string>
+    <string name="calculator_cigarettes_per_pack">Broj cigareta u paklici</string>
+    <string name="calculator_price_per_pack">Cena paklice</string>
+    <string name="calculator_period">Izaberi period</string>
+    <string name="calculator_start_date">Od:</string>
+    <string name="calculator_start_date_hint">Datum početka</string>
+    <string name="calculator_end_date">Do:</string>
+    <string name="calculator_end_date_hint">Datum završetka</string>
+    <string name="calculator_button_calculate">Izračunaj</string>
+    <string name="calculator_result_title">Rezultat</string>
+    <string name="calculator_result_total_costs_label">Ukupni troškovi</string>
+    <string name="calculator_result_time_spent_label">Utrošeno vreme</string>
+    <string name="calculator_result_average_cost_per_hour">Prosečan trošak po satu</string>
+    <string name="calculator_result_cost_per_cigarette">Trošak po cigareti</string>
+    <string name="calculator_result_average_time_per_cigarette_label">Prosečno vreme za 1 cigaretu</string>
+    <string name="calculator_result_average_time_per_cigarette_description">Procena 5 minuta</string>
+    <string name="calculator_result_valute_unit">Valuta</string>
+    <string name="statistics_title">Statistika</string>
+    <string name="statistics_basic">Osnovno</string>
 </resources>
