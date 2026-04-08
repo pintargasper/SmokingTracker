@@ -187,4 +187,55 @@
     <string name="calculator_result_valute_unit">valuta</string>
     <string name="statistics_title">Statistika</string>
     <string name="statistics_basic">Osnovno</string>
+    <string name="statistics_forecast">Procena</string>
+    <string name="analytics_statistics_title">Statistika</string>
+    <string name="statistics_achievements_description">Detaljni uvid i trend korišćenja</string>
+    <string name="statistics_max_cigarettes">Maksimalan broj cigareta po danu</string>
+    <string name="statistics_min_cigarettes">Maksimalan broj popušenih cigareta po danu</string>
+    <string name="statistics_avg_cigarettes">Prosečan broj cigareta po danu</string>
+    <string name="statistics_total_cigarettes">Ukupan broj popušenih cigareta</string>
+    <string name="statistics_first_entry">Od prvog unosa</string>
+    <string name="statistics_longest_streak">Najduži period bez pušenja</string>
+    <string name="statistics_logged">Zabeleženo: %1$s</string>
+    <string name="statistics_forecast_info">Što je više podataka, procena će biti tačnija</string>
+    <plurals name="time_years">
+        <item quantity="one">%d godina</item>
+        <item quantity="few">%d godine</item>
+        <item quantity="other">%d godina</item>
+    </plurals>
+    <plurals name="time_months">
+        <item quantity="one">%d mesec</item>
+        <item quantity="few">%d meseca</item>
+        <item quantity="other">%d meseci</item>
+    </plurals>
+    <plurals name="time_weeks">
+        <item quantity="one">%d nedelja</item>
+        <item quantity="few">%d nedelje</item>
+        <item quantity="other">%d nedelja</item>
+    </plurals>
+    <plurals name="time_days">
+        <item quantity="one">%d dan</item>
+        <item quantity="few">%d dana</item>
+        <item quantity="other">%d dana</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one">%d sat</item>
+        <item quantity="few">%d sata</item>
+        <item quantity="other">%d sati</item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="one">%d minut</item>
+        <item quantity="few">%d minuta</item>
+        <item quantity="other">%d minuta</item>
+    </plurals>
+    <plurals name="cigarettes_count">
+        <item quantity="one">%d cigareta</item>
+        <item quantity="few">%d cigarete</item>
+        <item quantity="other">%d cigareta</item>
+    </plurals>
+    <plurals name="achievement_achieved_times">
+        <item quantity="one">%d put</item>
+        <item quantity="few">%d puta</item>
+        <item quantity="other">%d puta</item>
+    </plurals>
 </resources>
