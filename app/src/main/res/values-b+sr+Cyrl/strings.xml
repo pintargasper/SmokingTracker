@@ -24,4 +24,5 @@
     <string name="home_timer_hour">ч</string>
     <string name="home_timer_minute">м</string>
     <string name="home_timer_second">с</string>
+    <string name="app_name">Праћење Пушења</string>
 </resources>
