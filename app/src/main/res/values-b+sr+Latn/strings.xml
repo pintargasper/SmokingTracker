@@ -39,7 +39,7 @@
     <string name="insert_popup_insert">Dodaj</string>
     <string name="edit_popup_message">Datum i vreme</string>
     <string name="edit_popup_lent">Pozajmljena cigareta?</string>
-    <string name="app_name">Praćenje pušenja</string>
+    <string name="app_name">Praćenje Pušenja</string>
     <string name="title_graph">Statistika</string>
     <string name="title_analytics">Analitika</string>
     <string name="home_timer_day"># Duration – Units (sr)\n\n## Sekunda\nnarrow-one-nominative: {0}s\nshort-one-nominative: {0} sekunda\nshort-other-nominative: {0} sekunde / {0} sekundi\n\n## Minut\nnarrow-one-nominative: {0}m\nshort-one-nominative: {0} minut\nshort-other-nominative: {0} minuta\n\n## Sat\nnarrow-one-nominative: {0}h\nshort-one-nominative: {0} sat\nshort-other-nominative: {0} sata / {0} sati\n\n## Dan\nnarrow-one-nominative: {0}d\nshort-one-nominative: {0} dan\nshort-other-nominative: {0} dana\n\n## Nedelja\nnarrow-one-nominative: {0}n\nshort-one-nominative: {0} nedelja\nshort-other-nominative: {0} nedelje / {0} nedelja\n\n## Mesec\nnarrow-one-nominative: {0}m.\nshort-one-nominative: {0} mesec\nshort-other-nominative: {0} meseca / {0} meseci\n\n## Godina\nnarrow-one-nominative: {0}god.\nshort-one-nominative: {0} godina\nshort-other-nominative: {0} godine / {0} godina</string>
