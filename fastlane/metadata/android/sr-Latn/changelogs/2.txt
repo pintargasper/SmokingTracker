@@ -1,0 +1,6 @@
+Ispravke grešaka i poboljšanja
+
+- Ispravljene dozvole i ponašanje prekidača za obaveštenja
+- Poboljšano prepoznavanje jezika sistema radi bolje lokalizacije
+- Manje prilagođavanje interfejsa radi boljeg korisničkog iskustva
+- Poboljšanja stabilnosti i performansi
