@@ -56,9 +56,9 @@
     <string name="achievements_title">Достигнућа</string>
     <string name="achievements_cigarettes_avoided">Избегнуте цигарете</string>
     <string name="achievements_smoke_free_time">Време без пушења</string>
-    <string name="history_container_lent">Рекорд позајмице</string>
-    <string name="history_container_edit">Уреди рекорд</string>
-    <string name="history_container_delete">Обриши рекорд</string>
+    <string name="history_container_lent">Евиденција позајмица</string>
+    <string name="history_container_edit">Уреди запис</string>
+    <string name="history_container_delete">Обриши запис</string>
     <string name="achievements_container_icon">Икона достигнућа</string>
     <string name="settings_category_general">Опште</string>
     <string name="settings_category_theme">Тема</string>
