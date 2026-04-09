@@ -14,7 +14,7 @@
     <string name="graph_yearly">Pregled godine (%1$d)</string>
     <string name="graph_previous_day_weakly">Prethodni dan (Nedeljno)</string>
     <string name="graph_view_info">Ovde nema podataka za prikaz grafikona</string>
-    <string name="history_container_lent">Evidencija posta</string>
+    <string name="history_container_lent">Evidencija pozajmica</string>
     <string name="history_container_edit">Uredi zapis</string>
     <string name="history_container_delete">Obriši zapis</string>
     <string name="settings_category_general">Opšte</string>
@@ -61,7 +61,7 @@
     <string name="analytics_achievements_description">Prati svoje prekretnice i proslavi svoj napredak</string>
     <string name="achievements_title">Dostignuća</string>
     <string name="achievements_cigarettes_avoided">Nezapaljene cigarete</string>
-    <string name="achievements_smoke_free_time">Vreme bez duvanskog dima</string>
+    <string name="achievements_smoke_free_time">Vreme bez pušenja</string>
     <string name="achievements_container_icon">Značka dostignuća</string>
     <string name="settings_category_data_upload">Vraćanje podataka</string>
     <string name="settings_category_data_upload_url">Vrati svoje podatke sa uređaja</string>
