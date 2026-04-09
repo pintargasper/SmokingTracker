@@ -96,7 +96,7 @@
     <string name="upload_popup_file_none">Ništa</string>
     <string name="upload_popup_file_unknown">Nepoznato</string>
     <string name="version_popup_title">Pogledaj na</string>
-    <string name="achievement_container_meta">Poslednje dostignuće: %1$s</string>
+    <string name="achievement_container_meta">Poslednje dostignuće:%1$s</string>
     <string name="achievement_container_count">Postignuto: %1$s</string>
     <string name="achievement_title_congrats_days_1">Heroj dana</string>
     <string name="achievement_title_congrats_days_2">Dvodnevni šampion</string>
