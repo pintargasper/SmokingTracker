@@ -35,10 +35,10 @@
     <string name="home_previous_day">Претходни дан</string>
     <string name="home_next_day">Следећи дан</string>
     <string name="home_add_entry">Додај нови унос</string>
-    <string name="graph_daily">Дневни преглед (%1$d)</string>
-    <string name="graph_weekly">Недељни преглед (%1$d)</string>
-    <string name="graph_monthly">Месечни преглед (%1$d)</string>
-    <string name="graph_yearly">Годишњи преглед (%1$d)</string>
+    <string name="graph_daily">Преглед дана (%1$d)</string>
+    <string name="graph_weekly">Преглед недеље (%1$d)</string>
+    <string name="graph_monthly">Преглед месеца (%1$d)</string>
+    <string name="graph_yearly">Преглед године (%1$d)</string>
     <string name="graph_previous_day_daily">Претходни дан (Дневно)</string>
     <string name="graph_previous_day_weakly">Претходни дан (Недељно)</string>
     <string name="graph_previous_day_monthly">Претходни дан (Месечно)</string>
