@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_home">Dom</string>
+    <string name="title_home">Početna</string>
     <string name="title_notifications">Podešavanja</string>
     <string name="home_timer_message">Vreme koje je prošlo nakon poslednje cigarete</string>
     <string name="home_daily_label">Dnevno</string>
@@ -14,7 +14,7 @@
     <string name="graph_yearly">Pregled godine (%1$d)</string>
     <string name="graph_previous_day_weakly">Prethodni dan (Nedeljno)</string>
     <string name="graph_view_info">Ovde nema podataka za prikaz grafikona</string>
-    <string name="history_container_lent">Evidenca pozajmljenja</string>
+    <string name="history_container_lent">Evidencija posta</string>
     <string name="history_container_edit">Uredi zapis</string>
     <string name="history_container_delete">Obriši zapis</string>
     <string name="settings_category_general">Opšte</string>
@@ -26,13 +26,13 @@
     <string name="settings_category_data_download">Rezervna kopija</string>
     <string name="settings_category_data_download_url">Napravi rezervnu kopiju svojih podataka na uređaj</string>
     <string name="settings_category_data_action">Otvori</string>
-    <string name="settings_category_data_about">O</string>
+    <string name="settings_category_data_about">O aplikaciji</string>
     <string name="settings_category_data_version">Verzija %1$s</string>
     <string name="settings_category_data_version_unknown">Nepoznato</string>
     <string name="settings_category_data_website">Veb-sajt</string>
     <string name="settings_category_data_translations_website">Pomoć pri prevođenju</string>
     <string name="settings_category_data_translations_website_url">Prevedite ovu aplikaciju na svoj jezik koristeći veb-sajt</string>
-    <string name="settings_category_data_privacy_policy">Obezbeđenje</string>
+    <string name="settings_category_data_privacy_policy">Bezbednost</string>
     <string name="settings_category_data_privacy_policy_url">Praćenje Pušenja-politika privatnosti</string>
     <string name="insert_popup_message">Dodaj unos</string>
     <string name="insert_popup_lent">Pozajmljena cigareta?</string>
@@ -57,7 +57,7 @@
     <string name="analytics_title">Analitika</string>
     <string name="analytics_calculator_title">Kalkulator</string>
     <string name="analytics_calculator_description">Brzi pregled ukupne upotrebe, troškova i vremena</string>
-    <string name="analytics_achievements_title">Dostignuća/Postignuća</string>
+    <string name="analytics_achievements_title">Dostignuća</string>
     <string name="analytics_achievements_description">Prati svoje prekretnice i proslavi svoj napredak</string>
     <string name="achievements_title">Dostignuća</string>
     <string name="achievements_cigarettes_avoided">Nezapaljene cigarete</string>
@@ -68,7 +68,7 @@
     <string name="settings_category_data_version_view">Pogledaj na dostupnim platformama</string>
     <string name="popup_close">Zatvori</string>
     <string name="popup_confirm">Potvrdi</string>
-    <string name="delete_popup_message">Da li ste sigurni da želite da obrišete obaj zapis?</string>
+    <string name="delete_popup_message">Da li ste sigurni da želite da obrišete ovaj zapis?</string>
     <string name="language_popup">Odaberi jezik</string>
     <string name="language_popup_info">Odabir željenog jezika</string>
     <string name="language_popup_check_box_system">Sistem</string>
@@ -190,8 +190,8 @@
     <string name="statistics_forecast">Procena</string>
     <string name="analytics_statistics_title">Statistika</string>
     <string name="statistics_achievements_description">Detaljni uvid i trend korišćenja</string>
-    <string name="statistics_max_cigarettes">Maksimalan broj cigareta po danu</string>
-    <string name="statistics_min_cigarettes">Maksimalan broj popušenih cigareta po danu</string>
+    <string name="statistics_max_cigarettes">Maksimalan broj cigareta popušenih tokom dana</string>
+    <string name="statistics_min_cigarettes">Minimalan broj cigareta popušenih tokom dana</string>
     <string name="statistics_avg_cigarettes">Prosečan broj cigareta po danu</string>
     <string name="statistics_total_cigarettes">Ukupan broj popušenih cigareta</string>
     <string name="statistics_first_entry">Od prvog unosa</string>
