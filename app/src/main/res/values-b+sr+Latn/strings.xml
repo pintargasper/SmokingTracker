@@ -22,7 +22,7 @@
     <string name="settings_category_language">Jezik</string>
     <string name="settings_category_notifications">Obaveštenja</string>
     <string name="settings_category_notifications_url">Ostanite informisani putem obaveštenja i upozorenja</string>
-    <string name="settings_category_data">Datum</string>
+    <string name="settings_category_data">Podaci</string>
     <string name="settings_category_data_download">Rezervna kopija</string>
     <string name="settings_category_data_download_url">Napravi rezervnu kopiju svojih podataka na uređaj</string>
     <string name="settings_category_data_action">Otvori</string>
@@ -30,7 +30,7 @@
     <string name="settings_category_data_version">Verzija %1$s</string>
     <string name="settings_category_data_version_unknown">Nepoznato</string>
     <string name="settings_category_data_website">Veb-sajt</string>
-    <string name="settings_category_data_translations_website">Pomoć pri prevođenju</string>
+    <string name="settings_category_data_translations_website">Pomozite u prevođenju</string>
     <string name="settings_category_data_translations_website_url">Prevedite ovu aplikaciju na svoj jezik koristeći veb-sajt</string>
     <string name="settings_category_data_privacy_policy">Bezbednost</string>
     <string name="settings_category_data_privacy_policy_url">Praćenje Pušenja-politika privatnosti</string>
@@ -60,9 +60,9 @@
     <string name="analytics_achievements_title">Dostignuća</string>
     <string name="analytics_achievements_description">Prati svoje prekretnice i proslavi svoj napredak</string>
     <string name="achievements_title">Dostignuća</string>
-    <string name="achievements_cigarettes_avoided">Nezapaljene cigarete</string>
+    <string name="achievements_cigarettes_avoided">Izbegnute cigarete</string>
     <string name="achievements_smoke_free_time">Vreme bez pušenja</string>
-    <string name="achievements_container_icon">Značka dostignuća</string>
+    <string name="achievements_container_icon">Ikona dostignuća</string>
     <string name="settings_category_data_upload">Vraćanje podataka</string>
     <string name="settings_category_data_upload_url">Vrati svoje podatke sa uređaja</string>
     <string name="settings_category_data_version_view">Pogledaj na dostupnim platformama</string>
