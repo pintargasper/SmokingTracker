@@ -6,7 +6,7 @@
     <string name="home_daily_label">Dnevno</string>
     <string name="home_weekly_label">Nedeljno</string>
     <string name="home_monthly_label">Mesečno</string>
-    <string name="home_previous_day">Predhodni dan</string>
+    <string name="home_previous_day">Prethodni dan</string>
     <string name="home_next_day">Sledeći dan</string>
     <string name="home_add_entry">Dodaj novi unos</string>
     <string name="graph_weekly">Pregled nedelje (%1$d)</string>
@@ -46,7 +46,7 @@
     <string name="home_timer_hour">č</string>
     <string name="home_timer_minute">m</string>
     <string name="home_timer_second">s</string>
-    <string name="graph_daily">Dnevni pregled (%1$d)</string>
+    <string name="graph_daily">Pregled dana (%1$d)</string>
     <string name="graph_previous_day_daily">Prethodni dan (Dnevno)</string>
     <string name="graph_previous_day_monthly">Prethodni dan (Mesečno)</string>
     <string name="graph_previous_day_yearly">Prethodni dan (Godišnje)</string>
