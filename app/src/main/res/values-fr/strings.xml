@@ -23,10 +23,10 @@
     <string name="home_timer_hour">h</string>
     <string name="home_timer_minute">min</string>
     <string name="home_timer_second">s</string>
-    <string name="app_name">Suivi de ce que vous fumez</string>
+    <string name="app_name">Traqueur de tabagisme</string>
     <string name="title_home">Principal</string>
     <string name="title_graph">Graphique</string>
-    <string name="title_analytics">Statistiques</string>
+    <string name="title_analytics">Analytique</string>
     <string name="title_notifications">Paramètres</string>
     <string name="home_timer_message">Temps depuis la dernière cigarette</string>
     <string name="notifications_popup_progress_frequency_daily">Journalière</string>
@@ -59,7 +59,7 @@
     <string name="graph_next_day_monthly">Jour suivant (Mensuel)</string>
     <string name="graph_next_day_yearly">Jour suivant (Annuel)</string>
     <string name="graph_view_info">Il n\'y a aucune information à afficher sur ce diagramme</string>
-    <string name="analytics_title">Analyses de données</string>
+    <string name="analytics_title">Analytique</string>
     <string name="analytics_calculator_title">Calculatrice</string>
     <string name="analytics_calculator_description">Un rapide résumé de l\'usage total, du côut et de la durée</string>
     <string name="analytics_achievements_title">Accomplissements</string>
@@ -76,8 +76,8 @@
     <string name="settings_category_data">Données</string>
     <string name="settings_category_data_download">Sauvegarde</string>
     <string name="settings_category_data_download_url">Sauvegardez vos données sur votre appareil</string>
-    <string name="settings_category_data_upload">Restorer</string>
-    <string name="settings_category_data_upload_url">Restorez vos données depuis votre appareil</string>
+    <string name="settings_category_data_upload">Restaurer</string>
+    <string name="settings_category_data_upload_url">Restaurer vos données depuis votre appareil</string>
     <string name="settings_category_data_action">Ouvrir</string>
     <string name="settings_category_data_about">À propos</string>
     <string name="settings_category_data_version">Version %1$s</string>
@@ -216,7 +216,7 @@
     <string name="notification_upload_content">Données restaurées avec succès</string>
     <string name="notification_upload_failed_title">La récupération des données a échoué</string>
     <string name="notification_upload_failed_content">Erreur de chargement de fichier</string>
-    <string name="notification_achievement_unlocked_title">Félicitations!</string>
+    <string name="notification_achievement_unlocked_title">Félicitations !</string>
     <string name="notification_achievement_unlocked_content_time">Étape franchie : %1$s sans fumer</string>
     <string name="notification_achievement_unlocked_content_cigarettes">Vous avez évité %1$s</string>
     <string name="calculator_start_date_hint">Date de début</string>
@@ -236,6 +236,6 @@
     <plurals name="time_months">
         <item quantity="one">%d mois</item>
         <item quantity="many">%d mois</item>
-        <item quantity="other"></item>
+        <item quantity="other">%d mois</item>
     </plurals>
 </resources>
