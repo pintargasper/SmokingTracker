@@ -1,0 +1,8 @@
+Sistem dostignuća, redizajn obaveštenja i poboljšanja arhitekture
+
+- Uveden sistem dostignuća sa obaveštenjima o prekretnicama
+- Ažuriran vidžet ekrana i redizajniran sistem obaveštenja
+- Poboljšana pouzdanost podsetnika i kompatibilnost sa starijim Android verzijama
+- Implementiran repository obrazac, logika brojanja dostignuća i baza podataka
+- Redizajnirani uvoz/izvoz, optimizovani iskačući prozori i vizualizacije dostignuća
+- Čistija struktura, poboljšan dizajn naslova i doslednost UI

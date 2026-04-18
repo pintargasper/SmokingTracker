@@ -1,0 +1,9 @@
+Migracija skladišta, ispravke build-a i poboljšanja dokumentacije
+
+- Migracija skladišta na SAF, uklonjene stare dozvole
+- Ispravke potpisivanja APK/AAB, poboljšana R8/ProGuard pravila
+- Dodata GPLv3 licenca i šabloni za prijavu bagova/funkcionalnosti/konfiguracije
+- Integrisan Fastlane za automatizovane build-ove i izdanja
+- Optimizovan kod, obaveštenja i podsetnici o napretku
+- Direktni linkovi za lakši pristup aplikacijama
+- Ispravljena Excel kompatibilnost u starijim verzijama
