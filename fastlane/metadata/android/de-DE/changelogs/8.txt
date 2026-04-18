@@ -1,0 +1,9 @@
+##Storage-Migration, Build Fixes und Dokumentationsverbesserungen
+
+-Storage-Migration zu SAF, alte Berechtigungen entfernt
+-APK/AAB signing gefixed, verbesserte R8/ProGuard-Regeln
+-GPLv3 -Lizenz und bug/feature Benachrichtigungsmasken hinzugefügt
+-Fastlane integriert für automatische Builds und Releases
+-Optimierter Code, Benachrichtigungen und Fortschritterinnerungen
+-Direkte Links für verbesserten Zugang zu Apps
+-Excel-Kompatibilitätsproblem in älteren Versionen gefixed

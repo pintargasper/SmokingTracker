@@ -1,0 +1,9 @@
+##Analyseexpansion, Kacheln
+
+-Visualisierung eines täglichen Graphen u. Startbildschirm-Kacheln hinzugefügt
+-Verbesserter Rechner u. Öffnen von Exceldateien durch Benachrichtigungen
+-Besser Datenhandhabung u. -lokalisierung
+-Strukturelle Verbesserungen für Analysen und Code für einfache Skalierung
+-Neuentworfener LocalizationHelper, konsistente Lokalisation, aktualisierte Übersetzungen
+-Mehr Tests, Code-Optimierung, stabilere Libraries u. UI
+-Verbesserte Navigation, Verlässlichkeit, Flüssigkeit

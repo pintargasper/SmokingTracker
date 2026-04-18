@@ -1,0 +1,6 @@
+##v1.4.1-rc.1
+
+-Lagerung: Migriert zu Storage Acess Framework (SAF), Erluabnisgenehmigung entfernt
+-Signing & Build: APK/AAB signing Probleme gefixed, verbesserte R8/ProGuard-Regeln
+-Docs & Templates: GPL v3 Lizenz hinzugefügt, aktualisierte README, /bug/feature/config templates hinzugefügt
+-Infrastruktur: Fastlane integriert, merged F-Droid Zweig

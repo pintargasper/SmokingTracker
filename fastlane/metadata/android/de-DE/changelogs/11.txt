@@ -1,0 +1,7 @@
+##Neue Statistiken und Verbesserungen
+
+-Grundlagen- und Vorhersagenstatistiken hinzugefügt
+-Benutzeroberfläche verbessert
+-Datenimport aus deinem Gerät verbessert
+-Errungenschaftenproblem nach Appupdate gefixt
+-allgemeine Bugfixes und Stabilitätsverbesserungen

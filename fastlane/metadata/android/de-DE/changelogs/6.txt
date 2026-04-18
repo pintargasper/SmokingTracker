@@ -1,0 +1,8 @@
+##Errungenschaften-System, neues Benachrichtigungsdesign und Strukturverbesserungen
+
+-Einführung von Errungenschaften mit Meilenstein-Benachrichtigungen
+-Aktualisierter Startbildschirm und neuentworfenes Benachrichtigungssystem
+-Verbesserte Erinnerungsverlässlichkeit und Kompatibilität mit älteren Androids
+-Einführung Repositorymuster, Errungschaftzähler, Datenbasis
+-Neues Design Import/Export, Pop-Ups und Errungenschaftensymbolen
+-Sauberere Struktur, verbessertes Titeldesign und UI-Kontinuität

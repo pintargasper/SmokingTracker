@@ -1,0 +1,6 @@
+##Bugfixes und Verbesserungen
+
+-Benachrichtigungssteuerung und -verhalten verbessert
+-Erkennung der Systemsprache zur besseren Lokalisation verbessert
+-Kleine UI-Anpassungen für bessere Nutzererfahrung
+-Stabilitäts- und Performancevebresserungen
