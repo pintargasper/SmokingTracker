@@ -1,0 +1,6 @@
+##Sprachen- und Konformitätsupdate
+
+-Ukrainischer Sprachsupport hinzugefügt
+-Verbesserte und aktualisierte Übersetzungen
+-Verbesserung von kleinen F-Droid-Konformitätsproblemen
+-Kleine Verbesserungen

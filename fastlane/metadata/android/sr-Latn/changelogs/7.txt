@@ -1,0 +1,6 @@
+v1.4.1-rc.1
+
+- Skladištenje: Migracija na Storage Access Framework (SAF), uklonjene zastarele dozvole  
+- Potpisivanje i build: Ispravljeni problemi sa potpisivanjem APK/AAB, poboljšana R8/ProGuard pravila  
+- Dokumentacija i šabloni: Dodata GPL v3 licenca, ažuriran README, dodati šabloni za bag/feature/config  
+- Infrastruktura: Integrisan Fastlane, spojen F-Droid ogranak

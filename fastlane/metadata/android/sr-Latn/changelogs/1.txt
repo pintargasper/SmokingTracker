@@ -1,0 +1,7 @@
+Prvo javno izdanje
+
+- Praćenje dnevne potrošnje cigareta
+- Statistike i grafikoni
+- Lokalno skladištenje podataka
+- Podrška za bekap podataka u zavisnosti od uređaja
+- Engleski i slovenački jezici

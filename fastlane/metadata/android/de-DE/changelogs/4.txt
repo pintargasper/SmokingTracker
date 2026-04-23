@@ -1,0 +1,8 @@
+##Strukturupdate und Berechnungsfunktion
+
+-Neue Analyseoberfläche mit Rechnerkomponente hinzugefügt
+-Verbesserung von Design für klarere und mehr visuelle Navigation
+-Wisch-Navigation zwischen Oberflächen für schnellere und natürlichere Benutzererfahrung
+-Bugfix betreffend der System-Tray-Oberfläche im dunklen Modus, um bessere Sichtbarkeit und Kontinuität zu gewährleisten
+-Übersetzungen aktualisiert
+-Verbesserungen von Oberflächen- und Logikbugs

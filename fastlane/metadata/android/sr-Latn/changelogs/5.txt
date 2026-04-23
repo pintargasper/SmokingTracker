@@ -1,0 +1,9 @@
+Proširenje analitike i vidžeti
+
+- Dodata vizualizacija dnevnog grafikona i vidžet za početni ekran
+- Poboljšan kalkulator i otvaranje Excel fajlova iz obaveštenja
+- Preciznije rukovanje datumima i lokalizacija
+- Strukturna poboljšanja analitike i koda radi lakše skalabilnosti
+- Redizajniran LocalizationHelper, dosledna lokalizacija, ažurirani prevodi
+- Više testova, optimizacija koda, stabilnije biblioteke i UI
+- Poboljšana navigacija, pouzdanost i glatko korišćenje

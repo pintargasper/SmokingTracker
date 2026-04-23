@@ -1,0 +1,1 @@
+SmokingTracker je jednostavna aplikacija za praćenje pušenja koja ti pomaže da razumeš svoje navike i napredak ka prestanku. Svaka cigareta koju popušiš jasno se beleži, dajući ti detaljan uvid u tvoje dnevne, nedeljne i mesečne obrasce

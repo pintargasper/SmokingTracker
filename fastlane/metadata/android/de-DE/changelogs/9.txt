@@ -1,0 +1,8 @@
+##Errungenschafts- und Stabilitätsupdate
+
+-Überarbeitung von Errungenschaften (Stabilität+Verlässlichkeit)
+-Verbesserte Errungenschaftsübersicht
+-Verbesserte Startbildschirm-Kacheln
+-Aktualisierte Übersetzungen
+-Kleine Bugs & Stabilität gefixed
+-Dopplungen von Errungenschaften gefixed

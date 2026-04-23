@@ -1,0 +1,8 @@
+Strukturno ažuriranje i dodata funkcionalnost kalkulatora
+
+- Dodata nova analitička stranica sa komponentom kalkulatora
+- Poboljšan stil teme radi jasnije i vizuelnije navigacije
+- Omogućena navigacija prevlačenjem između kartica za brže i prirodnije korišćenje
+- Ispravljen bag koji je uticao na prikaz sistemske trake u tamnom režimu, obezbeđujući pravilnu vidljivost i konzistentnost
+- Ažurirani prevodi
+- Ispravljene manje greške u prikazu i logici

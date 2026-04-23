@@ -1,0 +1,11 @@
+##Funktions-u. UI-Verbesserungsupdate
+
+-Optimiert für Textgröße des Geräts
+-Verbesserte Leserlichkeit mit Schriftartskalierung
+-Verbesserte u. modernisierte UI-Komponenten(abgerundete Pop-Up)
+-Bessere Größe von Schaltflächen u. Elementen
+-Verfeinerung Designs u. Aussehen
+-Verbesserte Verlässlichkeit u. Berechtigungen für Benachrichtigungen
+-Stabileres Verhalten bei Hintergrundausführung u. Benachrichtigungen
+-verbesserte Pop-Ups(Design,Sprache,Upload,Download)
+-Bugfixes/Performanceverbesserungen

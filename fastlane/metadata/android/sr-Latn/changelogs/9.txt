@@ -1,0 +1,8 @@
+Ažuriranje dostignuća i stabilnosti
+
+- Ponovo urađen sistem dostignuća (stabilnost + pouzdanost)
+- Poboljšan raspored dostignuća
+- Unapređen vidžet početnog ekrana
+- Ažurirani prevodi
+- Ispravljene manje greške i stabilnost
+- Ispravljena duplirana dostignuća

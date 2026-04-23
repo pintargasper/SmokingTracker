@@ -1,0 +1,11 @@
+Ažuriranje funkcionalnosti i korisničkog interfejsa
+
+- Optimizovano za veličinu teksta uređaja
+- Poboljšana čitljivost uz ažurirano skaliranje fonta
+- Unapređene i modernizovane UI komponente (zaobljeni iskačući prozori)
+- Bolje dimenzioniranje dugmadi i elemenata
+- Dorade teme i stila
+- Poboljšane dozvole i pouzdanost obaveštenja
+- Stabilnije ponašanje procesa i obaveštenja
+- Unapređeni iskačući prozori (tema, jezik, otpremanje, preuzimanje podataka)
+- Ispravke grešaka i poboljšanja performansi

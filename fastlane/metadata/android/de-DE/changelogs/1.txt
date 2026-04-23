@@ -1,0 +1,7 @@
+##Ursprüngliche öffentliche Version
+
+-Tracke deinen täglichen Zigarettenverbrauch
+-Statistiken und Graphen
+-lokale Datenspeicherung
+-Geräteabhängiger Support zur Datensicherung 
+-Englisch und Slowenisch
