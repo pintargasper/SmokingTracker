@@ -10,6 +10,7 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.Month
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.Locale
 
 object LocalizationHelper {
@@ -38,15 +39,10 @@ object LocalizationHelper {
         return context.createConfigurationContext(configuration)
     }
 
-    fun formatDate(
-        date: LocalDate
-    ): String {
-        val locale = Locale.getDefault()
-        val pattern = when (locale.language) {
-            "sl", "uk" -> "dd.MM.yyyy"
-            else -> "yyyy-MM-dd"
-        }
-        val formatter = DateTimeFormatter.ofPattern(pattern, locale)
+    fun formatDate(date: LocalDate): String {
+        val formatter = DateTimeFormatter
+            .ofLocalizedDate(FormatStyle.LONG)
+            .withLocale(Locale.getDefault())
         return date.format(formatter)
     }
 

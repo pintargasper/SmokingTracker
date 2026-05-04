@@ -94,6 +94,42 @@
                     tools:ignore="HardcodedText,VisualLintButtonSize"
                     style="@style/CheckBox"/>
 
+                <CheckBox
+                    android:id="@+id/checkbox_german"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Deutsch"
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
+
+                <CheckBox
+                    android:id="@+id/checkbox_french"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Français"
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
+
+                <CheckBox
+                    android:id="@+id/checkbox_serbian_cyrillic_script"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Српски"
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
+
+                <CheckBox
+                    android:id="@+id/checkbox_serbian_latin_script"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Srpski"
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
+
             </LinearLayout>
         </ScrollView>
 

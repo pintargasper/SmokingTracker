@@ -83,13 +83,14 @@ Available on other platforms
 - **Daily, monthly and yearly** statistics with graphs
 -  **Simple analytics** to help you understand your habits
 - **Automatic backups** (depending on device)
-- **Multi language support**: English and Slovenian
+- **Multi language support**: English, Slovenian, Ukrainian, German, French and Serbian
 - **Simple and intuitive** user interface
 
+### Application images
 <details>
   <summary>View application images</summary>
 
-  <div style="display: flex; gap: 12px; justify-content: center; align-items: flex-start; flex-wrap: wrap;">
+  <div align="center">
     <img
       src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png"
       height="600px"
@@ -140,11 +141,15 @@ Available on other platforms
 
 ## 🌐 Supported Languages
 
-| Language       | Translated |
-|:---------------|:-----------|
-| 🇺🇸 English    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
-| 🇸🇮 Slovenian  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
-| 🇺🇦 Ukrainian | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/uk/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/uk) |
+| Language                         | Translated |
+|:--------------------------------|:-----------|
+| 🇺🇸 English                     | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
+| 🇸🇮 Slovenian                  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
+| 🇺🇦 Ukrainian                 | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/uk/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/uk) |
+| 🇩🇪 German                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/de/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/de) |
+| 🇫🇷 French                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/fr/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/fr) |
+| 🇷🇸 Serbian (Cyrillic script) | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-cyrl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-cyrl) |
+| 🇷🇸 Serbian (Latin script)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-latn/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-latn) |
 
 > Additional languages will be added in future releases
 
@@ -163,7 +168,7 @@ Available on other platforms
 ## 📝 Dependencies & Versions
 
 **Gradle Plugin**
-- Android Gradle Plugin: 9.1.0
+- Android Gradle Plugin: 9.2.0
 
 **Libraries**
 > All libraries are configured in [`libs.versions.toml`](gradle/libs.versions.toml)

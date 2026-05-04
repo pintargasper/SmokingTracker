@@ -4,6 +4,10 @@
         <item>en</item>
         <item>sl</item>
         <item>uk</item>
+        <item>de</item>
+        <item>fr</item>
+        <item>sr</item>
+        <item>sr-Latn</item>
     </string-array>
 
     <string-array name="language_names">
@@ -11,6 +15,10 @@
         <item>English</item>
         <item>Slovenščina</item>
         <item>Українська</item>
+        <item>Deutsch</item>
+        <item>Français</item>
+        <item>Српски</item>
+        <item>Srpski</item>
     </string-array>
 
     <string-array name="theme_names">

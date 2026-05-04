@@ -130,36 +130,28 @@ object DialogManager {
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.language_popup) {
             override fun setup() {
-                val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
-                val checkboxEnglish: CheckBox = dialogView.findViewById(R.id.checkbox_english)
-                val checkboxSlovenian: CheckBox = dialogView.findViewById(R.id.checkbox_slovenian)
-                val checkboxUkrainian: CheckBox = dialogView.findViewById(R.id.checkbox_ukrainian)
+                val languageCheckboxes = listOf(
+                    0 to R.id.checkbox_system,
+                    1 to R.id.checkbox_english,
+                    2 to R.id.checkbox_slovenian,
+                    3 to R.id.checkbox_ukrainian,
+                    4 to R.id.checkbox_german,
+                    5 to R.id.checkbox_french,
+                    6 to R.id.checkbox_serbian_cyrillic_script,
+                    7 to R.id.checkbox_serbian_latin_script
+                )
 
-                checkboxSystem.isChecked = selectedLanguage == 0
-                checkboxEnglish.isChecked = selectedLanguage == 1
-                checkboxSlovenian.isChecked = selectedLanguage == 2
-                checkboxUkrainian.isChecked = selectedLanguage == 3
-
-                fun selectAndClose(
-                    language: Int
-                ) {
+                fun selectAndClose(language: Int) {
                     onLanguageSelected(language)
                     this.dialog.dismiss()
                 }
-                checkboxSystem.setOnClickListener {
-                    selectAndClose(0)
-                }
 
-                checkboxEnglish.setOnClickListener {
-                    selectAndClose(1)
-                }
-
-                checkboxSlovenian.setOnClickListener {
-                    selectAndClose(2)
-                }
-
-                checkboxUkrainian.setOnClickListener {
-                    selectAndClose(3)
+                for ((index, checkboxId) in languageCheckboxes) {
+                    val checkbox: CheckBox = dialogView.findViewById(checkboxId)
+                    checkbox.isChecked = selectedLanguage == index
+                    checkbox.setOnClickListener {
+                        selectAndClose(language = index)
+                    }
                 }
             }
         }
