@@ -291,41 +291,21 @@ object DialogManager {
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.version_popup) {
             override fun setup() {
-                val fDroidLayout: LinearLayout = dialogView.findViewById(R.id.f_droid_website_layout)
-                val izzyOnDroidLayout: LinearLayout = dialogView.findViewById(R.id.izzy_on_droid_website_layout)
-                val openApkLayout: LinearLayout = dialogView.findViewById(R.id.open_apk_website_layout)
-                // val googlePlayLayout: LinearLayout = dialogView.findViewById(R.id.google_play_website_layout)
+                val links = listOf(
+                    Triple(R.id.github_website_layout, R.id.github_website_service_url, "https://github.com/pintargasper/SmokingTracker/releases/latest"),
+                    Triple(R.id.f_droid_website_layout, R.id.f_droid_website_service_url, "https://f-droid.org/packages/com.gasperpintar.smokingtracker"),
+                    Triple(R.id.izzy_on_droid_website_layout, R.id.izzy_on_droid_website_service_url, "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"),
+                    Triple(R.id.open_apk_website_layout, R.id.open_apk_website_service_url, "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/")
+                )
 
-                val textViewFDroidUrl: TextView = dialogView.findViewById(R.id.f_droid_website_service_url)
-                val textViewIzzyOnDroidUrl: TextView = dialogView.findViewById(R.id.izzy_on_droid_website_service_url)
-                val textViewOpenApkUrl: TextView = dialogView.findViewById(R.id.open_apk_website_service_url)
-                // val textViewGooglePlayUrl: TextView = dialogView.findViewById(R.id.google_play_website_service_url)
-
-                val fDroidUrl = "https://f-droid.org/packages/com.gasperpintar.smokingtracker"
-                val izzyUrl = "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
-                val openApkUrl = "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/"
-                //val googlePlayUrl = ""
-
-                textViewFDroidUrl.text = fDroidUrl
-                textViewIzzyOnDroidUrl.text = izzyUrl
-                textViewOpenApkUrl.text = openApkUrl
-                //textViewGooglePlayUrl.text = googlePlayUrl
-
-                fDroidLayout.setOnClickListener {
-                    onLinkClicked(fDroidLayout, fDroidUrl)
+                for ((layoutId, textViewId, url) in links) {
+                    val layout: LinearLayout = dialogView.findViewById(layoutId)
+                    val textView: TextView = dialogView.findViewById(textViewId)
+                    textView.text = url
+                    layout.setOnClickListener {
+                        onLinkClicked(layout, url)
+                    }
                 }
-
-                izzyOnDroidLayout.setOnClickListener {
-                    onLinkClicked(izzyOnDroidLayout, izzyUrl)
-                }
-
-                openApkLayout.setOnClickListener {
-                    onLinkClicked(openApkLayout, openApkUrl)
-                }
-
-                /*googlePlayLayout.setOnClickListener {
-                    onLinkClicked(googlePlayLayout, googlePlayUrl)
-                }*/
             }
         }
         dialogInstance.show()
