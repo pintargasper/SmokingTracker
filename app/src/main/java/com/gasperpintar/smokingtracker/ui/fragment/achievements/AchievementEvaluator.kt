@@ -4,87 +4,76 @@ import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
-import java.time.Duration
 import java.time.LocalDateTime
 
 class AchievementEvaluator(
     private val historyRepository: HistoryRepository,
     private val achievementRepository: AchievementRepository
 ) {
-
-    private val cachedAchievements = mutableSetOf<AchievementEntity>()
+    private val cachedAchievements = mutableMapOf<Long, AchievementEntity>()
     private var cachedAverageCigarettesPerDay: Double? = null
 
     suspend fun evaluate(
-        lastSmokeTime: LocalDateTime,
-        now: LocalDateTime
+        lastSmokeTime: LocalDateTime, now: LocalDateTime
     ) {
         if (cachedAchievements.isEmpty()) {
-            val achievements: List<AchievementEntity> = achievementRepository.getAll()
-            achievements.forEach { achievement ->
-                cachedAchievements.add(achievement)
+            achievementRepository.getAll().forEach {
+                cachedAchievements[it.id] = it
             }
         }
 
-        val secondsWithoutSmoking = Duration.between(lastSmokeTime, now).seconds
-
-        val averageCigarettesPerDay: Double = cachedAverageCigarettesPerDay
+        val averageCigarettesPerDay = cachedAverageCigarettesPerDay
             ?: historyRepository.getAverageCigarettesPerDay().also {
                 cachedAverageCigarettesPerDay = it
             }
 
-        cachedAchievements.forEach { achievement ->
-            val isConditionMet = when (achievement.category) {
+        for (achievement in cachedAchievements.values.toList()) {
+            val calculatedUnlockDate: LocalDateTime? = when (achievement.category) {
                 AchievementCategory.SMOKE_FREE_TIME -> {
-                    val requiredSeconds =
-                        achievement.unit.toSeconds(achievement.value) ?: return@forEach
-                    secondsWithoutSmoking >= requiredSeconds
+                    val requiredSeconds = achievement.unit.toSeconds(achievement.value) ?: continue
+                    val exactTime = lastSmokeTime.plusSeconds(requiredSeconds)
+                    if (!now.isBefore(exactTime)) {
+                        exactTime
+                    } else {
+                        null
+                    }
                 }
 
                 AchievementCategory.CIGARETTES_AVOIDED -> {
-                    cigarettesAvoided(lastSmokeTime, now, averageCigarettesPerDay) >= achievement.value
+                    if (averageCigarettesPerDay <= 0.0) {
+                        continue
+                    }
+
+                    val neededSeconds = (achievement.value / averageCigarettesPerDay * 86400).toLong()
+                    val exactTime = lastSmokeTime.plusSeconds(neededSeconds)
+                    if (!now.isBefore(exactTime)) {
+                        exactTime
+                    } else {
+                        null
+                    }
                 }
             }
 
-            incrementAchievement(
-                achievement = achievement,
-                isConditionMet = isConditionMet
-            )
+            if (calculatedUnlockDate != null) {
+                val isNewAchievement = achievement.lastAchieved == null && achievement.reset
+                val isIncorrectDate = achievement.lastAchieved != null && !achievement.lastAchieved.isEqual(calculatedUnlockDate)
+
+                if (isNewAchievement || isIncorrectDate) {
+                    val updatedAchievement = achievement.copy(
+                        times = if (isNewAchievement) achievement.times + 1 else achievement.times,
+                        lastAchieved = calculatedUnlockDate,
+                        reset = false,
+                        notify = isNewAchievement
+                    )
+                    achievementRepository.update(entry = updatedAchievement)
+                    cachedAchievements[updatedAchievement.id] = updatedAchievement
+                }
+            }
         }
     }
 
     fun reset() {
         cachedAchievements.clear()
         cachedAverageCigarettesPerDay = null
-    }
-
-    private fun cigarettesAvoided(
-        lastSmokeTime: LocalDateTime,
-        now: LocalDateTime,
-        averageCigarettesPerDay: Double
-    ): Int {
-        if (averageCigarettesPerDay <= 0.0) {
-            return 0
-        }
-
-        val secondsWithoutSmoking: Double = Duration.between(lastSmokeTime, now).seconds.toDouble()
-        val secondsPerDay = 86_400.0
-
-        val avoidedCigarettes: Double = (secondsWithoutSmoking / secondsPerDay) * averageCigarettesPerDay
-        return avoidedCigarettes.toInt()
-    }
-
-    private suspend fun incrementAchievement(
-        achievement: AchievementEntity,
-        isConditionMet: Boolean
-    ) {
-        if (!isConditionMet) {
-            return
-        }
-
-        if (!achievement.reset) {
-            return
-        }
-        achievementRepository.incrementAchievementTimes(achievementId = achievement.id)
     }
 }
