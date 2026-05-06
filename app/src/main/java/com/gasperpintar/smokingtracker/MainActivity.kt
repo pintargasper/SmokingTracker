@@ -188,6 +188,9 @@ class MainActivity : AppCompatActivity() {
 
         if (versionName != lastVersionName) {
             JsonHelper(achievementRepository = achievementRepository).initializeAchievementsIfNeeded(context = this)
+
+            WorkManager.getInstance(context = this).cancelUniqueWork(uniqueWorkName = "smoking_notification_work")
+
             sharedPreferences.edit {
                 putString("last_version_name", versionName)
             }
