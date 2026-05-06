@@ -168,7 +168,7 @@ Available on other platforms
 ## 📝 Dependencies & Versions
 
 **Gradle Plugin**
-- Android Gradle Plugin: 9.2.0
+- Android Gradle Plugin: 9.2.1
 
 **Libraries**
 > All libraries are configured in [`libs.versions.toml`](gradle/libs.versions.toml)

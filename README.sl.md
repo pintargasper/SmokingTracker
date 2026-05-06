@@ -168,7 +168,7 @@ Na voljo na drugih platformah
 ## 📝 Odvisnosti in različice
 
 **Vtičnik za Gradle**
-- Vtičnik za Android Gradle: 9.2.0
+- Vtičnik za Android Gradle: 9.2.1
 
 **Knjižnice**
 > Vse knjižnice so konfigurirane v [`libs.versions.toml`](gradle/libs.versions.toml)
