@@ -198,7 +198,14 @@
     <string name="statistics_longest_streak">Longest time without smoking</string>
     <string name="statistics_logged">Logged: %1$s</string>
     <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>
-
+    <string name="loading_bar_message_backup">Backing up…</string>
+    <string name="loading_bar_message_restore">Restoring…</string>
+    <string name="loading_bar_progress_percentage">Progress: %1$d%%</string>
+    <string name="loading_bar_encourage_0">Starting up…</string>
+    <string name="loading_bar_encourage_15">Good progress…</string>
+    <string name="loading_bar_encourage_50">Halfway done…</string>
+    <string name="loading_bar_encourage_70">Almost finished…</string>
+    <string name="loading_bar_encourage_100">Completed successfully</string>
 
     <plurals name="time_years">
         <item quantity="one">%d year</item>

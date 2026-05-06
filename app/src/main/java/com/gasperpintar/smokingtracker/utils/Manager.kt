@@ -17,6 +17,8 @@ import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.ui.bar.DataSyncPipeline
+import com.gasperpintar.smokingtracker.ui.bar.SyncedStep
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -35,18 +37,39 @@ object Manager {
         achievementRepository: AchievementRepository,
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
-        notificationsSettingsRepository: NotificationsSettingsRepository
+        notificationsSettingsRepository: NotificationsSettingsRepository,
+        onProgress: (Int) -> Unit
     ): Uri = withContext(Dispatchers.IO) {
         XSSFWorkbook().use { workbook ->
-            createAchievementSheet(workbook, achievementList = achievementRepository.getAll())
-            createHistorySheet(workbook, historyList = historyRepository.getAll())
-            createSettingsSheet(workbook, settingsRepository.get())
-            createNotificationsSettingsSheet(workbook, notificationsSettingsRepository.get())
-
-            context.contentResolver.openOutputStream(fileUri)?.use { outputStream ->
-                workbook.write(outputStream)
-            }
+            val pipeline = DataSyncPipeline(
+                steps = listOf(
+                    SyncedStep(weight = 55) { onStepProgress ->
+                        createHistorySheet(workbook, historyList = historyRepository.getAll(), onStepProgress)
+                    },
+                    SyncedStep(weight = 5) { onStepProgress ->
+                        createSettingsSheet(workbook, settingsRepository.get(), onStepProgress)
+                    },
+                    SyncedStep(weight = 30) { onStepProgress ->
+                        createAchievementSheet(workbook, achievementList = achievementRepository.getAll(), onStepProgress)
+                    },
+                    SyncedStep(weight = 5) { onStepProgress ->
+                        createNotificationsSettingsSheet(
+                            workbook,
+                            notificationsSettingsRepository.get(),
+                            onStepProgress = onStepProgress
+                        )
+                    },
+                    SyncedStep(weight = 5) { onStepProgress ->
+                        context.contentResolver.openOutputStream(fileUri)?.use {
+                            workbook.write(it)
+                        }
+                        onStepProgress(100)
+                    }
+                )
+            )
+            pipeline.run(onProgress)
         }
+
         sendNotification(
             context = context,
             title = context.getString(R.string.notification_download_title),
@@ -64,16 +87,30 @@ object Manager {
         achievementRepository: AchievementRepository,
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
-        notificationsSettingsRepository: NotificationsSettingsRepository
+        notificationsSettingsRepository: NotificationsSettingsRepository,
+        onProgress: (Int) -> Unit
     ): Unit = withContext(Dispatchers.IO) {
         val notificationsEnabled: Boolean = notificationsSettingsRepository.get()!!.system
         try {
             context.contentResolver.openInputStream(fileUri)?.use { inputStream ->
                 XSSFWorkbook(inputStream).use { workbook ->
-                    importHistorySheet(workbook, historyRepository)
-                    importSettingsSheet(workbook, settingsRepository)
-                    importAchievementSheet(workbook, achievementRepository)
-                    importNotificationsSettingsSheet(workbook, notificationsSettingsRepository)
+                    val pipeline = DataSyncPipeline(
+                        steps = listOf(
+                            SyncedStep(weight = 50) { onStepProgress ->
+                                importHistorySheet(workbook, historyRepository, onStepProgress)
+                            },
+                            SyncedStep(weight = 10) { onStepProgress ->
+                                importSettingsSheet(workbook, settingsRepository, onStepProgress)
+                            },
+                            SyncedStep(weight = 30) { onStepProgress ->
+                                importAchievementSheet(workbook, achievementRepository, onStepProgress)
+                            },
+                            SyncedStep(weight = 10) { onStepProgress ->
+                                importNotificationsSettingsSheet(workbook, notificationsSettingsRepository, onStepProgress)
+                            }
+                        )
+                    )
+                    pipeline.run(onProgress)
                 }
             }
 
@@ -95,21 +132,70 @@ object Manager {
         }
     }
 
-    private fun createHistorySheet(workbook: XSSFWorkbook, historyList: List<HistoryEntity>) {
+    private fun createAchievementSheet(
+        workbook: XSSFWorkbook,
+        achievementList: List<AchievementEntity>,
+        onStepProgress: (Int) -> Unit = {}
+    ) {
+        val sheet = workbook.createSheet("Achievements")
+        val header = sheet.createRow(0)
+
+        val headers: List<String> = listOf(
+            "Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id"
+        )
+
+        headers.forEachIndexed { index, title ->
+            header.createCell(index, CellType.STRING).setCellValue(title)
+        }
+
+        val total = achievementList.size.coerceAtLeast(1)
+        achievementList.forEachIndexed { index, achievement ->
+            val row = sheet.createRow(index + 1)
+            row.createCell(0, CellType.NUMERIC).setCellValue(achievement.value.toDouble())
+            row.createCell(1, CellType.NUMERIC).setCellValue(achievement.times.toDouble())
+            row.createCell(2, CellType.STRING).setCellValue(achievement.lastAchieved?.format(dateFormatter) ?: "")
+            row.createCell(3, CellType.BOOLEAN).setCellValue(achievement.reset)
+            row.createCell(4, CellType.BOOLEAN).setCellValue(achievement.notify)
+            row.createCell(5, CellType.STRING).setCellValue(achievement.category.name)
+            row.createCell(6, CellType.STRING).setCellValue(achievement.unit.name)
+            row.createCell(7, CellType.NUMERIC).setCellValue(achievement.id.toDouble())
+            onStepProgress(((index + 1) * 100) / total)
+        }
+
+        if (achievementList.isEmpty()) {
+            onStepProgress(100)
+        }
+    }
+
+    private fun createHistorySheet(
+        workbook: XSSFWorkbook,
+        historyList: List<HistoryEntity>,
+        onStepProgress: (Int) -> Unit = {}
+    ) {
         val sheet = workbook.createSheet("History")
         val header = sheet.createRow(0)
 
         header.createCell(0, CellType.STRING).setCellValue("Lent")
         header.createCell(1, CellType.STRING).setCellValue("CreatedAt")
 
+        val total = historyList.size.coerceAtLeast(1)
         historyList.forEachIndexed { index, history ->
             val row = sheet.createRow(index + 1)
             row.createCell(0, CellType.NUMERIC).setCellValue(history.lent.toDouble())
             row.createCell(1, CellType.STRING).setCellValue(history.createdAt.format(dateFormatter))
+            onStepProgress(((index + 1) * 100) / total)
+        }
+
+        if (historyList.isEmpty()) {
+            onStepProgress(100)
         }
     }
 
-    private fun createSettingsSheet(workbook: XSSFWorkbook, settings: SettingsEntity?) {
+    private fun createSettingsSheet(
+        workbook: XSSFWorkbook,
+        settings: SettingsEntity?,
+        onStepProgress: (Int) -> Unit = {}
+    ) {
         val sheet = workbook.createSheet("Settings")
         val header = sheet.createRow(0)
 
@@ -123,36 +209,13 @@ object Manager {
             row.createCell(1, CellType.NUMERIC).setCellValue(it.language.toDouble())
             row.createCell(2, CellType.NUMERIC).setCellValue(it.frequency.toDouble())
         }
-    }
-
-    private fun createAchievementSheet(workbook: XSSFWorkbook, achievementList: List<AchievementEntity>) {
-        val sheet = workbook.createSheet("Achievements")
-        val header = sheet.createRow(0)
-
-        val headers: List<String> = listOf(
-            "Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id"
-        )
-
-        headers.forEachIndexed { index, title ->
-            header.createCell(index, CellType.STRING).setCellValue(title)
-        }
-
-        achievementList.forEachIndexed { index, achievement ->
-            val row = sheet.createRow(index + 1)
-            row.createCell(0, CellType.NUMERIC).setCellValue(achievement.value.toDouble())
-            row.createCell(1, CellType.NUMERIC).setCellValue(achievement.times.toDouble())
-            row.createCell(2, CellType.STRING).setCellValue(achievement.lastAchieved?.format(dateFormatter) ?: "")
-            row.createCell(3, CellType.BOOLEAN).setCellValue(achievement.reset)
-            row.createCell(4, CellType.BOOLEAN).setCellValue(achievement.notify)
-            row.createCell(5, CellType.STRING).setCellValue(achievement.category.name)
-            row.createCell(6, CellType.STRING).setCellValue(achievement.unit.name)
-            row.createCell(7, CellType.NUMERIC).setCellValue(achievement.id.toDouble())
-        }
+        onStepProgress(100)
     }
 
     private fun createNotificationsSettingsSheet(
         workbook: XSSFWorkbook,
-        notificationsSettings: NotificationsSettingsEntity?
+        notificationsSettings: NotificationsSettingsEntity?,
+        onStepProgress: (Int) -> Unit = {}
     ) {
         val sheet = workbook.createSheet("NotificationsSettings")
         val header = sheet.createRow(0)
@@ -167,9 +230,14 @@ object Manager {
             row.createCell(1, CellType.BOOLEAN).setCellValue(it.achievements)
             row.createCell(2, CellType.BOOLEAN).setCellValue(it.progress)
         }
+        onStepProgress(100)
     }
 
-    private suspend fun importHistorySheet(workbook: XSSFWorkbook, repository: HistoryRepository) {
+    private suspend fun importHistorySheet(
+        workbook: XSSFWorkbook,
+        repository: HistoryRepository,
+        onStepProgress: (Int) -> Unit = {}
+    ) {
         repository.deleteAll()
 
         val sheet = workbook.getSheet("History") ?: return
@@ -184,10 +252,12 @@ object Manager {
         val requiredColumns = listOf(
             "Lent", "CreatedAt"
         )
+
         if (!requiredColumns.all {
             columnIndexMap.containsKey(it)
         }) return
 
+        val total = (sheet.physicalNumberOfRows - 1).coerceAtLeast(minimumValue = 1)
         sheet.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
@@ -206,42 +276,18 @@ object Manager {
                     createdAt = createdAt
                 )
             )
+            onStepProgress(((index) * 100) / total)
         }
-    }
 
-    private suspend fun importSettingsSheet(workbook: XSSFWorkbook, repository: SettingsRepository) {
-        val sheet = workbook.getSheet("Settings") ?: return
-        val headerRow = sheet.getRow(0) ?: return
-
-        val columnIndexMap: Map<String, Int> = (0 until headerRow.physicalNumberOfCells)
-            .mapNotNull { index ->
-                headerRow.getCell(index)?.stringCellValue?.let { it.trim() to index }
-            }.toMap()
-
-        val requiredColumns = listOf(
-            "Theme", "Language", "Frequency"
-        )
-        if (!requiredColumns.all {
-            columnIndexMap.containsKey(it)
-        }) return
-
-        val row = sheet.getRow(1) ?: return
-        repository.get()?.let {
-            repository.delete(settings = it)
+        if (sheet.physicalNumberOfRows <= 1) {
+            onStepProgress(100)
         }
-        repository.insert(
-            SettingsEntity(
-                id = 0,
-                theme = row.getCell(columnIndexMap["Theme"]!!)?.numericCellValue?.toInt() ?: 0,
-                language = row.getCell(columnIndexMap["Language"]!!)?.numericCellValue?.toInt() ?: 0,
-                frequency = row.getCell(columnIndexMap["Frequency"]!!)?.numericCellValue?.toInt() ?: 0,
-            )
-        )
     }
 
     private suspend fun importAchievementSheet(
         workbook: XSSFWorkbook,
-        repository: AchievementRepository
+        repository: AchievementRepository,
+        onStepProgress: (Int) -> Unit = {}
     ) {
         val sheet = workbook.getSheet("Achievements") ?: return
         repository.deleteAll()
@@ -258,12 +304,13 @@ object Manager {
         val requiredColumns = listOf(
             "Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit"
         )
+
         if (!requiredColumns.all {
-                columnIndexMap.containsKey(it)
-            }) return
+            columnIndexMap.containsKey(it)
+        }) return
 
         val entities: MutableList<AchievementEntity> = mutableListOf()
-
+        val total = (sheet.physicalNumberOfRows - 1).coerceAtLeast(1)
         sheet.forEachIndexed { index, row ->
             if (index == 0) {
                 return@forEachIndexed
@@ -292,13 +339,56 @@ object Manager {
                     unit = AchievementUnit.valueOf(row.getCell(columnIndexMap["Unit"]!!).stringCellValue)
                 )
             )
+            onStepProgress(((index) * 100) / total)
         }
         repository.insert(entries = entities)
+
+        if (sheet.physicalNumberOfRows <= 1) {
+            onStepProgress(100)
+        }
+    }
+
+    private suspend fun importSettingsSheet(
+        workbook: XSSFWorkbook,
+        repository: SettingsRepository,
+        onStepProgress: (Int) -> Unit = {}
+    ) {
+        val sheet = workbook.getSheet("Settings") ?: return
+        val headerRow = sheet.getRow(0) ?: return
+
+        val columnIndexMap: Map<String, Int> = (0 until headerRow.physicalNumberOfCells)
+            .mapNotNull { index ->
+                headerRow.getCell(index)?.stringCellValue?.let { it.trim() to index }
+            }.toMap()
+
+        val requiredColumns = listOf(
+            "Theme", "Language", "Frequency"
+        )
+
+        if (!requiredColumns.all {
+            columnIndexMap.containsKey(it)
+        }) return
+
+        val row = sheet.getRow(1) ?: return
+        repository.get()?.let {
+            repository.delete(settings = it)
+        }
+
+        repository.insert(
+            SettingsEntity(
+                id = 0,
+                theme = row.getCell(columnIndexMap["Theme"]!!)?.numericCellValue?.toInt() ?: 0,
+                language = row.getCell(columnIndexMap["Language"]!!)?.numericCellValue?.toInt() ?: 0,
+                frequency = row.getCell(columnIndexMap["Frequency"]!!)?.numericCellValue?.toInt() ?: 0,
+            )
+        )
+        onStepProgress(100)
     }
 
     private suspend fun importNotificationsSettingsSheet(
         workbook: XSSFWorkbook,
-        repository: NotificationsSettingsRepository
+        repository: NotificationsSettingsRepository,
+        onStepProgress: (Int) -> Unit = {}
     ) {
         val sheet = workbook.getSheet("NotificationsSettings") ?: return
         val headerRow = sheet.getRow(0) ?: return
@@ -318,6 +408,7 @@ object Manager {
         repository.get()?.let {
             repository.delete(settings = it)
         }
+
         repository.insert(
             settings = NotificationsSettingsEntity(
                 id = 0,
@@ -326,6 +417,7 @@ object Manager {
                 progress = row.getCell(columnIndexMap["Progress"]!!)?.booleanCellValue ?: true
             )
         )
+        onStepProgress(100)
     }
 
     private fun sendNotification(

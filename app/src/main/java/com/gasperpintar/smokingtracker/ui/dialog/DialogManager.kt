@@ -15,6 +15,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import java.time.LocalDateTime
 import java.util.Calendar
 
@@ -115,9 +116,18 @@ object DialogManager {
                     onThemeSelected(theme)
                     this.dialog.dismiss()
                 }
-                checkboxSystem.setOnClickListener { selectAndClose(0) }
-                checkboxLightTheme.setOnClickListener { selectAndClose(1) }
-                checkboxDarkTheme.setOnClickListener { selectAndClose(2) }
+
+                checkboxSystem.setOnClickListener {
+                    selectAndClose(0)
+                }
+
+                checkboxLightTheme.setOnClickListener {
+                    selectAndClose(1)
+                }
+
+                checkboxDarkTheme.setOnClickListener {
+                    selectAndClose(2)
+                }
             }
         }
         dialogInstance.show()
@@ -143,7 +153,7 @@ object DialogManager {
 
                 fun selectAndClose(language: Int) {
                     onLanguageSelected(language)
-                    this.dialog.dismiss()
+                    dialog.dismiss()
                 }
 
                 for ((index, checkboxId) in languageCheckboxes) {
@@ -254,7 +264,10 @@ object DialogManager {
                     onConfirm()
                     dialog.dismiss()
                 }
-                dialog.setOnDismissListener { onDismiss() }
+
+                dialog.setOnDismissListener {
+                    onDismiss()
+                }
             }
         }
         dialogInstance.show()
@@ -343,5 +356,11 @@ object DialogManager {
             }
         }
         dialogInstance.show()
+    }
+
+    fun showLoadingDialog(context: FragmentActivity): LoadingDialog {
+        val dialog = LoadingDialog(context)
+        dialog.show()
+        return dialog
     }
 }

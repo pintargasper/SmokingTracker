@@ -8,15 +8,17 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.utils.RoundedAlertDialog
 
 abstract class BaseDialog(
-    context: FragmentActivity,
+    protected val activity: FragmentActivity,
     layoutResource: Int
 ) {
-    protected val dialogView: View = LayoutInflater.from(context).inflate(layoutResource, null)
-    protected val dialog: RoundedAlertDialog = RoundedAlertDialog(context).setViewChained(dialogView)
+    protected val dialogView: View = LayoutInflater.from(activity).inflate(layoutResource, null)
+    protected val dialog: RoundedAlertDialog = RoundedAlertDialog(activity).setViewChained(dialogView)
     protected val buttonClose: Button? = dialogView.findViewById(R.id.button_close)
 
     init {
-        buttonClose?.setOnClickListener { dialog.dismiss() }
+        buttonClose?.setOnClickListener {
+            dialog.dismiss()
+        }
     }
 
     abstract fun setup()
@@ -24,5 +26,14 @@ abstract class BaseDialog(
     fun show() {
         setup()
         dialog.showChained()
+    }
+
+    fun dismiss() {
+        dialog.dismiss()
+    }
+
+    fun setCancelable(cancelable: Boolean) {
+        dialog.setCancelable(cancelable)
+        dialog.setCanceledOnTouchOutside(cancelable)
     }
 }
