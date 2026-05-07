@@ -23,6 +23,7 @@ import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.Manager
@@ -149,19 +150,26 @@ class SettingsFragment : Fragment() {
                     ))
                 },
                 onConfirm = {
-                    if (::selectedFile.isInitialized) {
-                        val uri = selectedFile.tag as? Uri
-                        uri?.let {
-                            lifecycleScope.launch {
-                                Manager.uploadFile(
-                                    context = requireActivity(),
-                                    fileUri = it,
-                                    achievementRepository = achievementRepository,
-                                    historyRepository = historyRepository,
-                                    settingsRepository = settingsRepository,
-                                    notificationsSettingsRepository = notificationsSettingsRepository
-                                )
-                                requireActivity().recreate()
+                    val dialog = DialogManager.showLoadingDialog(context = requireActivity())
+                    dialog.setProgressType(ProgressType.RESTORE)
+                    lifecycleScope.launch {
+                        if (::selectedFile.isInitialized) {
+                            val uri = selectedFile.tag as? Uri
+                            uri?.let {
+                                lifecycleScope.launch {
+                                    Manager.uploadFile(
+                                        context = requireActivity(),
+                                        fileUri = it,
+                                        achievementRepository = achievementRepository,
+                                        historyRepository = historyRepository,
+                                        settingsRepository = settingsRepository,
+                                        notificationsSettingsRepository = notificationsSettingsRepository,
+                                        onProgress = { progress ->
+                                            dialog.updateProgress(progress)
+                                        }
+                                    )
+                                    requireActivity().recreate()
+                                }
                             }
                         }
                     }
@@ -286,6 +294,8 @@ class SettingsFragment : Fragment() {
                 )
             ) { uri: Uri? ->
                 uri ?: return@registerForActivityResult
+                val dialog = DialogManager.showLoadingDialog(context = requireActivity())
+                dialog.setProgressType(ProgressType.BACKUP)
                 lifecycleScope.launch {
                     Manager.downloadFile(
                         context = requireActivity(),
@@ -293,8 +303,12 @@ class SettingsFragment : Fragment() {
                         achievementRepository = achievementRepository,
                         historyRepository = historyRepository,
                         settingsRepository = settingsRepository,
-                        notificationsSettingsRepository = notificationsSettingsRepository
+                        notificationsSettingsRepository = notificationsSettingsRepository,
+                        onProgress = { progress ->
+                            dialog.updateProgress(progress)
+                        }
                     )
+                    dialog.dismiss()
                 }
             }
     }

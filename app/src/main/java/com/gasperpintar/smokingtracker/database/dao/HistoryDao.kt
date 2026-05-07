@@ -43,7 +43,7 @@ interface HistoryDao: Base<HistoryEntity> {
     @Query(value = "SELECT COUNT(*) FROM history")
     suspend fun getTotalCount(): Int
 
-    @Query("SELECT MIN(createdAt) FROM history")
+    @Query(value = "SELECT MIN(createdAt) FROM history")
     suspend fun getFirstRecordDate(): LocalDateTime?
 
     @Query(
@@ -55,7 +55,7 @@ interface HistoryDao: Base<HistoryEntity> {
                 GROUP BY DATE(createdAt)
                 HAVING dailySum > 0
             )
-            ORDER BY dailySum DESC
+            ORDER BY dailySum DESC, day DESC
             LIMIT 1
         """
     )
@@ -67,6 +67,7 @@ interface HistoryDao: Base<HistoryEntity> {
             FROM (
                 SELECT DATE(createdAt) as day, SUM(CASE WHEN lent = 0 THEN 1 ELSE 0 END) as dailySum
                 FROM history
+                WHERE DATE(createdAt) < DATE('now')
                 GROUP BY DATE(createdAt)
                 HAVING dailySum > 0
             )

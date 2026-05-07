@@ -15,6 +15,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import java.time.LocalDateTime
 import java.util.Calendar
 
@@ -115,9 +116,18 @@ object DialogManager {
                     onThemeSelected(theme)
                     this.dialog.dismiss()
                 }
-                checkboxSystem.setOnClickListener { selectAndClose(0) }
-                checkboxLightTheme.setOnClickListener { selectAndClose(1) }
-                checkboxDarkTheme.setOnClickListener { selectAndClose(2) }
+
+                checkboxSystem.setOnClickListener {
+                    selectAndClose(0)
+                }
+
+                checkboxLightTheme.setOnClickListener {
+                    selectAndClose(1)
+                }
+
+                checkboxDarkTheme.setOnClickListener {
+                    selectAndClose(2)
+                }
             }
         }
         dialogInstance.show()
@@ -130,36 +140,28 @@ object DialogManager {
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.language_popup) {
             override fun setup() {
-                val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
-                val checkboxEnglish: CheckBox = dialogView.findViewById(R.id.checkbox_english)
-                val checkboxSlovenian: CheckBox = dialogView.findViewById(R.id.checkbox_slovenian)
-                val checkboxUkrainian: CheckBox = dialogView.findViewById(R.id.checkbox_ukrainian)
+                val languageCheckboxes = listOf(
+                    0 to R.id.checkbox_system,
+                    1 to R.id.checkbox_english,
+                    2 to R.id.checkbox_slovenian,
+                    3 to R.id.checkbox_ukrainian,
+                    4 to R.id.checkbox_german,
+                    5 to R.id.checkbox_french,
+                    6 to R.id.checkbox_serbian_cyrillic_script,
+                    7 to R.id.checkbox_serbian_latin_script
+                )
 
-                checkboxSystem.isChecked = selectedLanguage == 0
-                checkboxEnglish.isChecked = selectedLanguage == 1
-                checkboxSlovenian.isChecked = selectedLanguage == 2
-                checkboxUkrainian.isChecked = selectedLanguage == 3
-
-                fun selectAndClose(
-                    language: Int
-                ) {
+                fun selectAndClose(language: Int) {
                     onLanguageSelected(language)
-                    this.dialog.dismiss()
-                }
-                checkboxSystem.setOnClickListener {
-                    selectAndClose(0)
+                    dialog.dismiss()
                 }
 
-                checkboxEnglish.setOnClickListener {
-                    selectAndClose(1)
-                }
-
-                checkboxSlovenian.setOnClickListener {
-                    selectAndClose(2)
-                }
-
-                checkboxUkrainian.setOnClickListener {
-                    selectAndClose(3)
+                for ((index, checkboxId) in languageCheckboxes) {
+                    val checkbox: CheckBox = dialogView.findViewById(checkboxId)
+                    checkbox.isChecked = selectedLanguage == index
+                    checkbox.setOnClickListener {
+                        selectAndClose(language = index)
+                    }
                 }
             }
         }
@@ -262,7 +264,10 @@ object DialogManager {
                     onConfirm()
                     dialog.dismiss()
                 }
-                dialog.setOnDismissListener { onDismiss() }
+
+                dialog.setOnDismissListener {
+                    onDismiss()
+                }
             }
         }
         dialogInstance.show()
@@ -299,41 +304,21 @@ object DialogManager {
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.version_popup) {
             override fun setup() {
-                val fDroidLayout: LinearLayout = dialogView.findViewById(R.id.f_droid_website_layout)
-                val izzyOnDroidLayout: LinearLayout = dialogView.findViewById(R.id.izzy_on_droid_website_layout)
-                val openApkLayout: LinearLayout = dialogView.findViewById(R.id.open_apk_website_layout)
-                // val googlePlayLayout: LinearLayout = dialogView.findViewById(R.id.google_play_website_layout)
+                val links = listOf(
+                    Triple(R.id.github_website_layout, R.id.github_website_service_url, "https://github.com/pintargasper/SmokingTracker/releases/latest"),
+                    Triple(R.id.f_droid_website_layout, R.id.f_droid_website_service_url, "https://f-droid.org/packages/com.gasperpintar.smokingtracker"),
+                    Triple(R.id.izzy_on_droid_website_layout, R.id.izzy_on_droid_website_service_url, "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"),
+                    Triple(R.id.open_apk_website_layout, R.id.open_apk_website_service_url, "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/")
+                )
 
-                val textViewFDroidUrl: TextView = dialogView.findViewById(R.id.f_droid_website_service_url)
-                val textViewIzzyOnDroidUrl: TextView = dialogView.findViewById(R.id.izzy_on_droid_website_service_url)
-                val textViewOpenApkUrl: TextView = dialogView.findViewById(R.id.open_apk_website_service_url)
-                // val textViewGooglePlayUrl: TextView = dialogView.findViewById(R.id.google_play_website_service_url)
-
-                val fDroidUrl = "https://f-droid.org/packages/com.gasperpintar.smokingtracker"
-                val izzyUrl = "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
-                val openApkUrl = "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/"
-                //val googlePlayUrl = ""
-
-                textViewFDroidUrl.text = fDroidUrl
-                textViewIzzyOnDroidUrl.text = izzyUrl
-                textViewOpenApkUrl.text = openApkUrl
-                //textViewGooglePlayUrl.text = googlePlayUrl
-
-                fDroidLayout.setOnClickListener {
-                    onLinkClicked(fDroidLayout, fDroidUrl)
+                for ((layoutId, textViewId, url) in links) {
+                    val layout: LinearLayout = dialogView.findViewById(layoutId)
+                    val textView: TextView = dialogView.findViewById(textViewId)
+                    textView.text = url
+                    layout.setOnClickListener {
+                        onLinkClicked(layout, url)
+                    }
                 }
-
-                izzyOnDroidLayout.setOnClickListener {
-                    onLinkClicked(izzyOnDroidLayout, izzyUrl)
-                }
-
-                openApkLayout.setOnClickListener {
-                    onLinkClicked(openApkLayout, openApkUrl)
-                }
-
-                /*googlePlayLayout.setOnClickListener {
-                    onLinkClicked(googlePlayLayout, googlePlayUrl)
-                }*/
             }
         }
         dialogInstance.show()
@@ -371,5 +356,11 @@ object DialogManager {
             }
         }
         dialogInstance.show()
+    }
+
+    fun showLoadingDialog(context: FragmentActivity): LoadingDialog {
+        val dialog = LoadingDialog(context)
+        dialog.show()
+        return dialog
     }
 }

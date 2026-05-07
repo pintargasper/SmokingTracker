@@ -1,4 +1,4 @@
-## Feature and UI Improvements Update
+Feature and UI Improvements Update
 
 - Optimized for device text size
 - Improved readability with updated font scaling

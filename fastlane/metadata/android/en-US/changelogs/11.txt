@@ -1,4 +1,4 @@
-## New statistics and improvements
+New statistics and improvements
 
 - Added basic and forecast statistics
 - Improved the user interface

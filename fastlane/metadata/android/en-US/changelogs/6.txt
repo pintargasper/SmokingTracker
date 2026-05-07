@@ -1,4 +1,4 @@
-## Achievement systems, notification redesign, and architecture improvements
+Achievement systems, notification redesign, and architecture improvements
 
 - Introduced achievement system with milestone notifications
 - Updated home screen widget and revamped notification system

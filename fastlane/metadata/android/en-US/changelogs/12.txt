@@ -1,0 +1,8 @@
+Improvements
+
+- Improved notification and achievements functionality
+- Optimized backup/restore functionality
+- Added German, French and Serbian languages
+- Fixed prediction logic
+- Fixed calculations of minimum/maximum daily cigarette intake
+- General bug fixes and stability improvements

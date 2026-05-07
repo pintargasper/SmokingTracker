@@ -1,4 +1,4 @@
-## Achievements and stability update
+Achievements and stability update
 
 - Reworked achievements system (stability + reliability)
 - Improved achievements layout

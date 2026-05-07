@@ -72,7 +72,7 @@ class BasicFragment : Fragment() {
             }
 
             val sinceFirstEntryString = if (firstRecordDate != null) {
-                getDurationString(firstRecordDate)
+                getDurationString(start = firstRecordDate)
             } else {
                 resources.getQuantityString(R.plurals.time_days, 0, 0)
             }

@@ -45,7 +45,7 @@ class ForecastFragment : Fragment() {
         lifecycleScope.launch {
             val historyList = historyRepository.getEntries(date = current)
 
-            val mainRaw = (0 until mainCount).map { index ->
+            val mainRaw = (1 until mainCount).map { index ->
                 val date = current.minusMonths(index.toLong())
                 val quantity = historyList.count {
                     it.createdAt.monthValue == date.monthValue && it.createdAt.year == date.year

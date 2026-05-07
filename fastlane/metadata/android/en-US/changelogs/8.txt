@@ -1,4 +1,4 @@
-## Storage Migration, Build Fixes, and Documentation Improvements
+Storage Migration, Build Fixes, and Documentation Improvements
 
 - Storage migration to SAF, removal of old permissions
 - APK/AAB signing fixes, improved R8/ProGuard rules
