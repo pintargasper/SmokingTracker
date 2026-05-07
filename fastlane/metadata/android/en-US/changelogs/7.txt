@@ -1,4 +1,4 @@
-## v1.4.1-rc.1
+v1.4.1-rc.1
 
 - Storage: Migrated to Storage Access Framework (SAF), removed legacy permissions  
 - Signing & Build: Fixed APK/AAB signing issues, improved R8/ProGuard rules  

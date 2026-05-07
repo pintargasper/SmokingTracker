@@ -1,4 +1,4 @@
-## Initial public release
+Initial public release
 
 - Track daily cigarette consumption
 - Statistics and graphs

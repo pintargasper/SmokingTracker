@@ -1,4 +1,4 @@
-## Analytics expansion, widgets
+Analytics expansion, widgets
 
 - Added daily graph visualization and home screen widget
 - Improved calculator and opening Excel files from notifications

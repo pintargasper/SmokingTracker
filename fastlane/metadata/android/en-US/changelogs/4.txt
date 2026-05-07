@@ -1,4 +1,4 @@
-## Structural update and added calculator functionality
+Structural update and added calculator functionality
 
 - Added new analytics screen with calculator component
 - Improved theme style for clearer and more visual navigation

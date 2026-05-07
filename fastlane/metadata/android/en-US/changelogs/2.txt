@@ -1,4 +1,4 @@
-## Bug Fix and Improvements
+Bug Fix and Improvements
 
 - Fixed notification toggle permissions and behavior
 - Improved system language detection for better localization
