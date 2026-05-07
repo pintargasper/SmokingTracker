@@ -31,16 +31,18 @@ class LoadingDialog(
     }
 
     fun updateProgress(progress: Int) {
-        progressBar.progress = progress
-        progressTextPercentage.text = activity.getString(R.string.loading_bar_progress_percentage, progress)
+        activity.runOnUiThread {
+            progressBar.progress = progress
+            progressTextPercentage.text = activity.getString(R.string.loading_bar_progress_percentage, progress)
 
-        progressTextInfo.text = when {
-            progress >= 100 -> activity.getString(R.string.loading_bar_encourage_100)
-            progress >= 70 -> activity.getString(R.string.loading_bar_encourage_70)
-            progress >= 50 -> activity.getString(R.string.loading_bar_encourage_50)
-            progress >= 15 -> activity.getString(R.string.loading_bar_encourage_15)
-            progress >= 0 -> activity.getString(R.string.loading_bar_encourage_0)
-            else -> null
+            progressTextInfo.text = when {
+                progress >= 100 -> activity.getString(R.string.loading_bar_encourage_100)
+                progress >= 70 -> activity.getString(R.string.loading_bar_encourage_70)
+                progress >= 50 -> activity.getString(R.string.loading_bar_encourage_50)
+                progress >= 15 -> activity.getString(R.string.loading_bar_encourage_15)
+                progress >= 0 -> activity.getString(R.string.loading_bar_encourage_0)
+                else -> null
+            }
         }
     }
 
