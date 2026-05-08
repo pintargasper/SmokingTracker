@@ -1,4 +1,4 @@
-## Nova statistika in izboljšave
+Nova statistika in izboljšave
 
 - Dodana osnovna in napovedovalna statistika
 - Izboljšan uporabniški vmesnik

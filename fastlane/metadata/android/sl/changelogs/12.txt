@@ -1,0 +1,8 @@
+Izboljšave
+
+- Izboljšana funkcionalnost obveščanja in dosežkov
+- Optimizirana funkcionalnost varnostnega kopiranja/obnovitve
+- Dodani nemški, francoski in srbski jezik
+- Popravljena logika napovedovanja
+- Popravljeni izračuni minimalnega/največjega dnevnega vnosa cigaret
+- Splošni popravki napak in izboljšave stabilnosti

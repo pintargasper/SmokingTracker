@@ -1,4 +1,4 @@
-## Posodobitev funkcionalnosti in izboljšav uporabniškega vmesnika
+Posodobitev funkcionalnosti in izboljšav uporabniškega vmesnika
 
 - Optimizirano za velikost besedila
 - Izboljšana berljivost in UI (zaobljena okna, večje gumbe)

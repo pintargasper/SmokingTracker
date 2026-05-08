@@ -1,4 +1,4 @@
-## Posodobitev jezika in skladnosti
+Posodobitev jezika in skladnosti
 
 - Dodana podpora za ukrajinščino
 - Izboljšani in posodobljeni prevodi

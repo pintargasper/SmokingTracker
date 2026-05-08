@@ -1,4 +1,4 @@
-## Selitev shrambe, popravki gradnje in izboljšave dokumentacije
+Selitev shrambe, popravki gradnje in izboljšave dokumentacije
 
 - Migracija shrambe v SAF, odstranitev starih dovoljenj
 - Popravki podpisovanja APK/AAB, izboljšana pravila R8/ProGuard
