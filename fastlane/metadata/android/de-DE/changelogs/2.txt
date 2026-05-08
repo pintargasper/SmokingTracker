@@ -1,4 +1,4 @@
-##Bugfixes und Verbesserungen
+Bugfixes und Verbesserungen
 
 -Benachrichtigungssteuerung und -verhalten verbessert
 -Erkennung der Systemsprache zur besseren Lokalisation verbessert

@@ -1,4 +1,4 @@
-##Analyseexpansion, Kacheln
+Analyseexpansion, Kacheln
 
 -Visualisierung eines täglichen Graphen u. Startbildschirm-Kacheln hinzugefügt
 -Verbesserter Rechner u. Öffnen von Exceldateien durch Benachrichtigungen

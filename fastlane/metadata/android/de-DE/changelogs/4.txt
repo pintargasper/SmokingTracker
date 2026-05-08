@@ -1,4 +1,4 @@
-##Strukturupdate und Berechnungsfunktion
+Strukturupdate und Berechnungsfunktion
 
 -Neue Analyseoberfläche mit Rechnerkomponente hinzugefügt
 -Verbesserung von Design für klarere und mehr visuelle Navigation

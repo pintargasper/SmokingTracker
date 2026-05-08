@@ -1,4 +1,4 @@
-##Funktions-u. UI-Verbesserungsupdate
+Funktions-u. UI-Verbesserungsupdate
 
 -Optimiert für Textgröße des Geräts
 -Verbesserte Leserlichkeit mit Schriftartskalierung

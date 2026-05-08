@@ -1,4 +1,4 @@
-##Errungenschaften-System, neues Benachrichtigungsdesign und Strukturverbesserungen
+Errungenschaften-System, neues Benachrichtigungsdesign und Strukturverbesserungen
 
 -Einführung von Errungenschaften mit Meilenstein-Benachrichtigungen
 -Aktualisierter Startbildschirm und neuentworfenes Benachrichtigungssystem
