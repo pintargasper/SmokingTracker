@@ -1,4 +1,4 @@
-## Strukturna posodobitev in dodana funkcionalnost kalkulatorja
+Strukturna posodobitev in dodana funkcionalnost kalkulatorja
 
 - Dodan nov zaslon za analitiko s komponento kalkulatorja
 - Izboljšan slog teme za jasnejšo in bolj vizualno navigacijo

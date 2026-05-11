@@ -1,4 +1,4 @@
-## Razširitev analitike, pripomočki
+Razširitev analitike, pripomočki
 
 - Dodana dnevna vizualizacija grafov in začetni zaslonski pripomoček
 - Izboljšan kalkulator in odpiranje Excel datotek iz obvestil

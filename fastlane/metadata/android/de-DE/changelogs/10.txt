@@ -1,4 +1,4 @@
-##Sprachen- und Konformitätsupdate
+Sprachen- und Konformitätsupdate
 
 -Ukrainischer Sprachsupport hinzugefügt
 -Verbesserte und aktualisierte Übersetzungen

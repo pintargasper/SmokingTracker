@@ -1,4 +1,4 @@
-## Popravki napak in izboljšave
+Popravki napak in izboljšave
 
 - Popravljena dovoljenja in vedenje preklopnikov obvestil
 - Izboljšano zaznavanje sistemskega jezika za boljšo lokalizacijo

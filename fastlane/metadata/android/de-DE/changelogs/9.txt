@@ -1,4 +1,4 @@
-##Errungenschafts- und Stabilitätsupdate
+Errungenschafts- und Stabilitätsupdate
 
 -Überarbeitung von Errungenschaften (Stabilität+Verlässlichkeit)
 -Verbesserte Errungenschaftsübersicht

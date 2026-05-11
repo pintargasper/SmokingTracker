@@ -1,4 +1,4 @@
-## Začetna javna izdaja
+Začetna javna izdaja
 
 - Spremljanje dnevne porabe cigaret
 - Statistika in grafi

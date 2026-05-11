@@ -230,4 +230,12 @@
         <item quantity="one">%d Mal</item>
         <item quantity="other">%d Mal</item>
     </plurals>
+    <string name="loading_bar_message_backup">Sicherung wird erstellt…</string>
+    <string name="loading_bar_message_restore">Wiederherstellung läuft…</string>
+    <string name="loading_bar_progress_percentage">Fortschritt: %1$d %%</string>
+    <string name="loading_bar_encourage_0">Startvorgang…</string>
+    <string name="loading_bar_encourage_15">Guter Fortschritte…</string>
+    <string name="loading_bar_encourage_50">Zur Hälfte abgeschlossen…</string>
+    <string name="loading_bar_encourage_70">Fast fertig…</string>
+    <string name="loading_bar_encourage_100">Erfolgreich abgeschlossen</string>
 </resources>

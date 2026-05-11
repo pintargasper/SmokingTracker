@@ -1,4 +1,4 @@
-## v1.4.1-rc.1
+v1.4.1-rc.1
 
 - Shranjevanje: Preneseno v ogrodje za dostop do shrambe (SAF), odstranjena starejša dovoljenja
 - Podpisovanje in gradnja: Odpravljene težave s podpisovanjem APK/AAB, izboljšana pravila R8/ProGuard

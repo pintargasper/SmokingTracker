@@ -1,4 +1,4 @@
-## Posodobitev dosežkov in stabilnosti
+Posodobitev dosežkov in stabilnosti
 
 - Prenovljen sistem dosežkov (stabilnost + zanesljivost)
 - Izboljšana postavitev dosežkov

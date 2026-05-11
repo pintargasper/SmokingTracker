@@ -238,4 +238,12 @@
         <item quantity="few">%d puta</item>
         <item quantity="other">%d puta</item>
     </plurals>
+    <string name="loading_bar_message_backup">Pravljenje rezervne kopije…</string>
+    <string name="loading_bar_message_restore">Враћање…</string>
+    <string name="loading_bar_progress_percentage">Napredak: %1$d%%</string>
+    <string name="loading_bar_encourage_0">Pokretanje…</string>
+    <string name="loading_bar_encourage_15">Dobar napredak…</string>
+    <string name="loading_bar_encourage_50">Na pola puta završeno…</string>
+    <string name="loading_bar_encourage_70">Skoro završeno…</string>
+    <string name="loading_bar_encourage_100">Uspešno završeno</string>
 </resources>

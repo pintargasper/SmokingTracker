@@ -1,4 +1,4 @@
-## Sistemi dosežkov, prenova obvestil in izboljšave arhitekture
+Sistemi dosežkov, prenova obvestil in izboljšave arhitekture
 
 - Uveden sistem dosežkov z obvestili o mejnikih
 - Posodobljen začetni zaslonski pripomoček in prenovljen sistem obvestil

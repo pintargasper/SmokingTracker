@@ -1,4 +1,4 @@
-##Neue Statistiken und Verbesserungen
+Neue Statistiken und Verbesserungen
 
 -Grundlagen- und Vorhersagenstatistiken hinzugefügt
 -Benutzeroberfläche verbessert

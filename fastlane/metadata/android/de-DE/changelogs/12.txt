@@ -1,0 +1,8 @@
+Verbesserungen
+
+- Benachrichtigungs- und Erfolgsfunktionen verbessert
+- Backup-/Wiederherstellungsfunktion optimiert
+- Deutsche, französische und serbische Sprachen hinzugefügt
+- Vorhersagelogik korrigiert
+- Berechnung der minimalen/maximalen täglichen Zigarettenanzahl korrigiert
+- Allgemeine Fehlerbehebungen und Stabilitätsverbesserungen

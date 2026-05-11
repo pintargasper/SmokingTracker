@@ -246,4 +246,12 @@
     <string name="statistics_longest_streak">Najdaljši čas brez kajenja</string>
     <string name="statistics_logged">Zabeleženo: %1$s</string>
     <string name="statistics_forecast_info">Več podatkov kot je, bolj natančna bo napoved</string>
+    <string name="loading_bar_message_backup">Varnostno kopiranje…</string>
+    <string name="loading_bar_message_restore">Obnavljanje…</string>
+    <string name="loading_bar_progress_percentage">Napredek: %1$d%%</string>
+    <string name="loading_bar_encourage_0">Zaganjanje…</string>
+    <string name="loading_bar_encourage_15">Dober napredek…</string>
+    <string name="loading_bar_encourage_50">Na pol poti…</string>
+    <string name="loading_bar_encourage_70">Skoraj končano…</string>
+    <string name="loading_bar_encourage_100">Uspešno zaključeno</string>
 </resources>
