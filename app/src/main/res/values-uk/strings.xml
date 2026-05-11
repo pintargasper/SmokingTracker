@@ -246,4 +246,12 @@
     <string name="statistics_longest_streak">Найдовший час без куріння</string>
     <string name="statistics_logged">Записано: %1$s</string>
     <string name="statistics_forecast_info">Чим більше даних, тим точнішим буде прогноз</string>
+    <string name="loading_bar_message_backup">Резервне копіювання…</string>
+    <string name="loading_bar_message_restore">Відновлення…</string>
+    <string name="loading_bar_progress_percentage">Прогрес: %1$d%%</string>
+    <string name="loading_bar_encourage_0">Запуск…</string>
+    <string name="loading_bar_encourage_15">Добрий прогрес…</string>
+    <string name="loading_bar_encourage_50">Виконано наполовину…</string>
+    <string name="loading_bar_encourage_70">Майже закінчено…</string>
+    <string name="loading_bar_encourage_100">Успішно завершено</string>
 </resources>
