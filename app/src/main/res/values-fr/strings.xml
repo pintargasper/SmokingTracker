@@ -238,4 +238,12 @@
         <item quantity="many">%d mois</item>
         <item quantity="other">%d mois</item>
     </plurals>
+    <string name="loading_bar_message_backup">Sauvegarde en cours…</string>
+    <string name="loading_bar_message_restore">Restauration en cours…</string>
+    <string name="loading_bar_progress_percentage">Progression : %1$d%%</string>
+    <string name="loading_bar_encourage_0">Démarrage en cours…</string>
+    <string name="loading_bar_encourage_15">Bonne progression…</string>
+    <string name="loading_bar_encourage_50">À moitié terminé…</string>
+    <string name="loading_bar_encourage_70">Presque terminé…</string>
+    <string name="loading_bar_encourage_100">Terminé avec succès</string>
 </resources>
