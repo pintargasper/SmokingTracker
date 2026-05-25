@@ -178,4 +178,64 @@
     <string name="edit_popup_lent"></string>
     <string name="language_popup"></string>
     <string name="calculator_result_cost_per_cigarette"></string>
+    <plurals name="achievement_achieved_times">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_months">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="graph_previous_day_monthly"></string>
+    <string name="download_popup"></string>
+    <string name="download_popup_info"></string>
+    <string name="app_name"></string>
+    <string name="achievement_title_congrats_months_3"></string>
+    <string name="achievement_message_congrats_days_4"></string>
+    <string name="home_next_day"></string>
+    <string name="graph_previous_day_yearly"></string>
+    <string name="notification_title"></string>
+    <string name="notification_download_title"></string>
+    <string name="notification_download_content"></string>
+    <plurals name="time_years">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="cigarettes_count">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="settings_category_data_upload"></string>
+    <string name="insert_popup_message"></string>
+    <string name="notification_upload_title"></string>
+    <string name="notification_upload_failed_title"></string>
+    <string name="settings_category_data_upload_url"></string>
+    <string name="download_popup_download"></string>
+    <string name="upload_popup_upload"></string>
+    <plurals name="time_days">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="settings_category_data_download"></string>
+    <string name="graph_previous_day_weakly"></string>
+    <plurals name="time_weeks">
+        <item quantity="one"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="home_previous_day"></string>
+    <string name="home_add_entry"></string>
+    <string name="graph_next_day_weakly"></string>
+    <string name="graph_next_day_monthly"></string>
+    <string name="graph_next_day_yearly"></string>
+    <string name="graph_view_info"></string>
+    <string name="settings_category_data_download_url"></string>
+    <string name="upload_popup_info"></string>
 </resources>
