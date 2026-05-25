@@ -206,7 +206,6 @@
     <string name="loading_bar_encourage_50">Halfway done…</string>
     <string name="loading_bar_encourage_70">Almost finished…</string>
     <string name="loading_bar_encourage_100">Completed successfully</string>
-
     <plurals name="time_years">
         <item quantity="one">%d year</item>
         <item quantity="two">%d years</item>
