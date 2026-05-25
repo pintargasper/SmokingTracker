@@ -94,7 +94,7 @@
     <string name="popup_close">Fermer</string>
     <string name="popup_confirm">Confirmer</string>
     <string name="edit_popup_message">Date et heure</string>
-    <string name="edit_popup_lent">Une cigarette prêtée ?</string>
+    <string name="edit_popup_lent">Une cigarette prêtée ?</string>
     <string name="delete_popup_message">Êtes-vous sûr de vouloir supprimer cet enregistrement ?</string>
     <string name="language_popup">Sélectionner une langue</string>
     <string name="language_popup_info">Choisissez votre langue préférée</string>
@@ -134,7 +134,7 @@
     <string name="calculator_cigarettes_per_pack">Cigarettes par paquet</string>
     <string name="calculator_price_per_pack">Prix par paquet</string>
     <string name="calculator_period">Sélectionner une période</string>
-    <string name="calculator_start_date">Depuis :</string>
+    <string name="calculator_start_date">Depuis :</string>
     <string name="calculator_end_date">Jusqu\'à :</string>
     <string name="calculator_end_date_hint">Date de fin</string>
     <string name="calculator_button_calculate">Calculer</string>
