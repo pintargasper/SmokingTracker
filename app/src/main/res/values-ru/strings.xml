@@ -99,4 +99,5 @@
     <string name="title_analytics">Аналитика</string>
     <string name="graph_yearly">Обзор за год (%1$d)</string>
     <string name="popup_close">Закрыть</string>
+    <string name="graph_daily">Обзор за день (%1$d)</string>
 </resources>
