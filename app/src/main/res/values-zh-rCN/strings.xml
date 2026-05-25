@@ -222,12 +222,4 @@
     <plurals name="achievement_achieved_times">
         <item quantity="other">%d 次</item>
     </plurals>
-    <string name="loading_bar_message_backup"></string>
-    <string name="loading_bar_message_restore"></string>
-    <string name="loading_bar_progress_percentage"></string>
-    <string name="loading_bar_encourage_0"></string>
-    <string name="loading_bar_encourage_15"></string>
-    <string name="loading_bar_encourage_50"></string>
-    <string name="loading_bar_encourage_70"></string>
-    <string name="loading_bar_encourage_100"></string>
 </resources>
