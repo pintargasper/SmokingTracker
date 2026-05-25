@@ -192,4 +192,66 @@
     <string name="achievement_title_congrats_days_6"></string>
     <string name="achievement_title_congrats_weeks_1"></string>
     <string name="calculator_result_valute_unit"></string>
+    <string name="graph_next_day_yearly"></string>
+    <string name="notification_upload_title"></string>
+    <plurals name="time_weeks">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="graph_previous_day_yearly"></string>
+    <string name="graph_next_day_weakly"></string>
+    <string name="graph_next_day_monthly"></string>
+    <string name="notification_upload_failed_title"></string>
+    <string name="achievement_message_congrats_days_4"></string>
+    <string name="graph_previous_day_weakly"></string>
+    <string name="graph_previous_day_monthly"></string>
+    <plurals name="time_days">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="achievement_achieved_times">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_years">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="time_months">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="upload_popup_info"></string>
+    <plurals name="time_hours">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="achievement_title_congrats_months_3"></string>
+    <string name="notification_title"></string>
+    <string name="notification_download_title"></string>
+    <string name="notification_download_content"></string>
+    <plurals name="cigarettes_count">
+        <item quantity="one"></item>
+        <item quantity="few"></item>
+        <item quantity="many"></item>
+        <item quantity="other"></item>
+    </plurals>
 </resources>
