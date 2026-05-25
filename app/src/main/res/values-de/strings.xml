@@ -26,7 +26,7 @@
     <string name="app_name">Zigarettentracker</string>
     <string name="title_home">Übersicht</string>
     <string name="title_graph">Graphen</string>
-    <string name="title_analytics">Analyse</string>
+    <string name="title_analytics">Analytik</string>
     <string name="title_notifications">Einstellungen</string>
     <string name="home_timer_message">Zeit seit letzter Zigarette</string>
     <string name="home_daily_label">Täglich</string>
