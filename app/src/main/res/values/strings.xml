@@ -208,44 +208,30 @@
     <string name="loading_bar_encourage_100">Completed successfully</string>
     <plurals name="time_years">
         <item quantity="one">%d year</item>
-        <item quantity="two">%d years</item>
-        <item quantity="few">%d years</item>
         <item quantity="other">%d years</item>
     </plurals>
     <plurals name="time_months">
         <item quantity="one">%d month</item>
-        <item quantity="two">%d months</item>
-        <item quantity="few">%d months</item>
         <item quantity="other">%d months</item>
     </plurals>
     <plurals name="time_weeks">
         <item quantity="one">%d week</item>
-        <item quantity="two">%d weeks</item>
-        <item quantity="few">%d weeks</item>
         <item quantity="other">%d weeks</item>
     </plurals>
     <plurals name="time_days">
         <item quantity="one">%d day</item>
-        <item quantity="two">%d days</item>
-        <item quantity="few">%d days</item>
         <item quantity="other">%d days</item>
     </plurals>
     <plurals name="time_hours">
         <item quantity="one">%d hour</item>
-        <item quantity="two">%d hours</item>
-        <item quantity="few">%d hours</item>
         <item quantity="other">%d hours</item>
     </plurals>
     <plurals name="time_minutes">
         <item quantity="one">%d minute</item>
-        <item quantity="two">%d minutes</item>
-        <item quantity="few">%d minutes</item>
         <item quantity="other">%d minutes</item>
     </plurals>
     <plurals name="cigarettes_count">
         <item quantity="one">%d cigarette</item>
-        <item quantity="two">%d cigarettes</item>
-        <item quantity="few">%d cigarettes</item>
         <item quantity="other">%d cigarettes</item>
     </plurals>
     <plurals name="achievement_achieved_times">
