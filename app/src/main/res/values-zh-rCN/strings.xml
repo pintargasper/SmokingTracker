@@ -222,4 +222,12 @@
     <plurals name="achievement_achieved_times">
         <item quantity="other">%d 次</item>
     </plurals>
+    <string name="loading_bar_message_backup">正在倒车…</string>
+    <string name="loading_bar_message_restore">恢复中…</string>
+    <string name="loading_bar_progress_percentage">进度: %1$d%%</string>
+    <string name="loading_bar_encourage_0">启动中…</string>
+    <string name="loading_bar_encourage_15">进展顺利…</string>
+    <string name="loading_bar_encourage_50">完成一半了…</string>
+    <string name="loading_bar_encourage_70">快完成了…</string>
+    <string name="loading_bar_encourage_100">已成功完成</string>
 </resources>
