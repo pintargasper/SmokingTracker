@@ -248,7 +248,8 @@ class SettingsFragment : Fragment() {
             listOf(
                 websiteUrl to "https://gasperpintar.com/smoking-tracker",
                 translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
-                privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy"
+                privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy",
+                changelogUrl to "https://github.com/pintargasper/SmokingTracker/releases"
             ).forEach {
                 (view, url) -> setupLink(view, url)
             }

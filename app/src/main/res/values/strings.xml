@@ -63,8 +63,10 @@
     <string name="settings_category_data_website">Website</string>
     <string name="settings_category_data_translations_website">Help Translate</string>
     <string name="settings_category_data_translations_website_url">Translate this app on your language using Weblate</string>
+    <string name="settings_category_data_changelog">Changelog</string>
+    <string name="settings_category_data_changelog_url">View changelog</string>
     <string name="settings_category_data_privacy_policy">Security</string>
-    <string name="settings_category_data_privacy_policy_url">Smoking Tracker - Privacy Policy</string>
+    <string name="settings_category_data_privacy_policy_url">Privacy Policy</string>
     <string name="settings_category_about_contributors">Contributors</string>
     <string name="settings_category_about_contributors_url">View all contributors</string>
     <string name="insert_popup_message">Add entry</string>
