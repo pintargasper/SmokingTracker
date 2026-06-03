@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.CalculatorActivity
+import com.gasperpintar.smokingtracker.NotesActivity
 import com.gasperpintar.smokingtracker.StatisticsActivity
 import com.gasperpintar.smokingtracker.databinding.FragmentAnalyticsBinding
 import kotlin.reflect.KClass
@@ -40,6 +41,10 @@ class AnalyticsFragment : Fragment() {
 
         binding.achievementsLayout.setOnClickListener {
             startActivity(clazz = AchievementsActivity::class)
+        }
+
+        binding.notesLayout.setOnClickListener {
+            startActivity(clazz = NotesActivity::class)
         }
     }
 
