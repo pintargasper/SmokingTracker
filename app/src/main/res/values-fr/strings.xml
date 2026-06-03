@@ -89,12 +89,12 @@
     <string name="settings_category_data_privacy_policy">Sécurité</string>
     <string name="settings_category_data_privacy_policy_url">Smoking Tracker : Politique de Confidentialité</string>
     <string name="insert_popup_message">Ajouter une entrée</string>
-    <string name="insert_popup_lent">Une cigarette prêtée ?</string>
+    <string name="insert_popup_lent">Une cigarette prêtée ?</string>
     <string name="insert_popup_insert">Ajouter</string>
     <string name="popup_close">Fermer</string>
     <string name="popup_confirm">Confirmer</string>
     <string name="edit_popup_message">Date et heure</string>
-    <string name="edit_popup_lent">Une cigarette prêtée ?</string>
+    <string name="edit_popup_lent">Une cigarette prêtée ?</string>
     <string name="delete_popup_message">Êtes-vous sûr de vouloir supprimer cet enregistrement ?</string>
     <string name="language_popup">Sélectionner une langue</string>
     <string name="language_popup_info">Choisissez votre langue préférée</string>
@@ -111,8 +111,8 @@
     <string name="notifications_popup_progress_frequency_label">Fréquence</string>
     <string name="notifications_popup_progress_frequency_default">Par défault</string>
     <string name="version_popup_title">Voir sur</string>
-    <string name="achievement_container_meta">Dernier accomplissement : %1$s</string>
-    <string name="achievement_container_count">Accompli : %1$s</string>
+    <string name="achievement_container_meta">Dernier accomplissement : %1$s</string>
+    <string name="achievement_container_count">Accompli : %1$s</string>
     <string name="achievement_title_congrats_days_1">Héro d\'un jour</string>
     <string name="achievement_title_congrats_days_2">Champion de deux jours</string>
     <string name="achievement_title_congrats_days_3">Guerrier de trois jours</string>
@@ -134,7 +134,7 @@
     <string name="calculator_cigarettes_per_pack">Cigarettes par paquet</string>
     <string name="calculator_price_per_pack">Prix par paquet</string>
     <string name="calculator_period">Sélectionner une période</string>
-    <string name="calculator_start_date">Depuis :</string>
+    <string name="calculator_start_date">Depuis :</string>
     <string name="calculator_end_date">Jusqu\'à :</string>
     <string name="calculator_end_date_hint">Date de fin</string>
     <string name="calculator_button_calculate">Calculer</string>
@@ -216,7 +216,7 @@
     <string name="notification_upload_content">Données restaurées avec succès</string>
     <string name="notification_upload_failed_title">La récupération des données a échoué</string>
     <string name="notification_upload_failed_content">Erreur de chargement de fichier</string>
-    <string name="notification_achievement_unlocked_title">Félicitations !</string>
+    <string name="notification_achievement_unlocked_title">Félicitations !</string>
     <string name="notification_achievement_unlocked_content_time">Étape franchie : %1$s sans fumer</string>
     <string name="notification_achievement_unlocked_content_cigarettes">Vous avez évité %1$s</string>
     <string name="calculator_start_date_hint">Date de début</string>

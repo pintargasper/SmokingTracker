@@ -198,7 +198,6 @@
     <string name="statistics_longest_streak">最长未吸烟时长</string>
     <string name="statistics_logged">已记录：%1$s</string>
     <string name="statistics_forecast_info">数据越多，预测越准确</string>
-
     <plurals name="time_years">
         <item quantity="other">%d 年</item>
     </plurals>
@@ -223,4 +222,12 @@
     <plurals name="achievement_achieved_times">
         <item quantity="other">%d 次</item>
     </plurals>
+    <string name="loading_bar_message_backup">正在倒车…</string>
+    <string name="loading_bar_message_restore">恢复中…</string>
+    <string name="loading_bar_progress_percentage">进度: %1$d%%</string>
+    <string name="loading_bar_encourage_0">启动中…</string>
+    <string name="loading_bar_encourage_15">进展顺利…</string>
+    <string name="loading_bar_encourage_50">完成一半了…</string>
+    <string name="loading_bar_encourage_70">快完成了…</string>
+    <string name="loading_bar_encourage_100">已成功完成</string>
 </resources>
