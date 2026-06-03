@@ -135,6 +135,16 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        binding.currencyLayout.setOnClickListener {
+            DialogManager.showCurrencyDialog(
+                context = requireActivity(),
+                selectedCurrency = 0,
+                onCurrencySelected = { _ ->
+
+                }
+            )
+        }
+
         binding.downloadLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
                 exportDocumentLauncher.launch("st_data")
@@ -189,6 +199,15 @@ class SettingsFragment : Fragment() {
 
         binding.versionLayout.setOnClickListener {
             DialogManager.showVersionDialog(
+                context = requireActivity(),
+                onLinkClicked = { _, url ->
+                    openUrl(url)
+                }
+            )
+        }
+
+        binding.contributorsLayout.setOnClickListener {
+            DialogManager.showContributorsDialog(
                 context = requireActivity(),
                 onLinkClicked = { _, url ->
                     openUrl(url)

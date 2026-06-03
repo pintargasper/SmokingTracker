@@ -218,6 +218,36 @@ object DialogManager {
         dialogInstance.show()
     }
 
+    fun showCurrencyDialog(
+        context: FragmentActivity,
+        selectedCurrency: Int,
+        onCurrencySelected: (Int) -> Unit
+    ) {
+        val dialogInstance = object : BaseDialog(context, R.layout.currency_popup) {
+            override fun setup() {
+                val languageCheckboxes = listOf(
+                    0 to R.id.checkbox_euro,
+                    1 to R.id.checkbox_dollar,
+                    2 to R.id.checkbox_pound
+                )
+
+                fun selectAndClose(currency: Int) {
+                    onCurrencySelected(currency)
+                    dialog.dismiss()
+                }
+
+                for ((index, checkboxId) in languageCheckboxes) {
+                    val checkbox: CheckBox = dialogView.findViewById(checkboxId)
+                    checkbox.isChecked = selectedCurrency == index
+                    checkbox.setOnClickListener {
+                        selectAndClose(currency = index)
+                    }
+                }
+            }
+        }
+        dialogInstance.show()
+    }
+
     fun showBackupDialog(
         context: FragmentActivity,
         onDownload: () -> Unit
@@ -315,6 +345,31 @@ object DialogManager {
                     val layout: LinearLayout = dialogView.findViewById(layoutId)
                     val textView: TextView = dialogView.findViewById(textViewId)
                     textView.text = url
+                    layout.setOnClickListener {
+                        onLinkClicked(layout, url)
+                    }
+                }
+            }
+        }
+        dialogInstance.show()
+    }
+
+    fun showContributorsDialog(
+        context: FragmentActivity,
+        onLinkClicked: (LinearLayout, String) -> Unit
+    ) {
+        val dialogInstance = object : BaseDialog(context, R.layout.contributors_popup) {
+            override fun setup() {
+                val links = listOf(
+                    Pair(R.id.contributor_1_layout, "https://github.com/pintargasper"),
+                    Pair(R.id.contributor_2_layout, "https://github.com/mrtaxi"),
+                    Pair(R.id.contributor_3_layout, "https://github.com/jocixlinux-sys"),
+                    Pair(R.id.contributor_4_layout, "https://github.com/iaanneed"),
+                    Pair(R.id.contributor_5_layout, "https://github.com/ywnzzl")
+                )
+
+                for ((layoutId, url) in links) {
+                    val layout: LinearLayout = dialogView.findViewById(layoutId)
                     layout.setOnClickListener {
                         onLinkClicked(layout, url)
                     }

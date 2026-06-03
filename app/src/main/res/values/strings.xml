@@ -48,6 +48,8 @@
     <string name="settings_category_language">Language</string>
     <string name="settings_category_notifications">Notifications</string>
     <string name="settings_category_notifications_url">Stay informed with notifications and alerts</string>
+    <string name="settings_category_statistics">Statistics</string>
+    <string name="settings_category_statistics_currency">Currency</string>
     <string name="settings_category_data">Data</string>
     <string name="settings_category_data_download">Backup</string>
     <string name="settings_category_data_download_url">Backup your data to your device</string>
@@ -63,6 +65,8 @@
     <string name="settings_category_data_translations_website_url">Translate this app on your language using Weblate</string>
     <string name="settings_category_data_privacy_policy">Security</string>
     <string name="settings_category_data_privacy_policy_url">Smoking Tracker - Privacy Policy</string>
+    <string name="settings_category_about_contributors">Contributors</string>
+    <string name="settings_category_about_contributors_url">View all contributors</string>
     <string name="insert_popup_message">Add entry</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
     <string name="insert_popup_insert">Add</string>
@@ -88,6 +92,11 @@
     <string name="notifications_popup_progress_frequency_default">Default</string>
     <string name="notifications_popup_progress_frequency_daily">Daily</string>
     <string name="notifications_popup_progress_frequency_weekly">Weekly</string>
+    <string name="currency_popup">Select currency</string>
+    <string name="currency_popup_info">Choose your preferred currency</string>
+    <string name="currency_check_box_euro">Euro (€)</string>
+    <string name="currency_check_box_dollar">Dollar ($)</string>
+    <string name="currency_check_box_pound">Pound (£)</string>
     <string name="download_popup">Backup your data</string>
     <string name="download_popup_info">You will be notified of the data backup via push notification</string>
     <string name="download_popup_download">Backup</string>
@@ -98,6 +107,12 @@
     <string name="upload_popup_file_none">None</string>
     <string name="upload_popup_file_unknown">Unknown</string>
     <string name="version_popup_title">View on</string>
+    <string name="contributors_popup_info">GitHub profiles</string>
+    <string name="contributors_popup_slovenian">Slovenian translation</string>
+    <string name="contributors_popup_ukrainian">Ukrainian translation</string>
+    <string name="contributors_popup_russian">Russian translation</string>
+    <string name="contributors_popup_serbian">Serbian translation</string>
+    <string name="contributors_popup_chinese_simplified">Chinese (simplified) translation</string>
     <string name="achievement_container_meta">Last achieved: %1$s</string>
     <string name="achievement_container_count">Achieved: %1$s</string>
     <string name="achievement_title_congrats_days_1">One day hero</string>
