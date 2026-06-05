@@ -1,12 +1,16 @@
 package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.annotation.SuppressLint
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.format.DateFormat
+import android.view.View
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.CheckBox
 import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
@@ -220,27 +224,73 @@ object DialogManager {
 
     fun showCurrencyDialog(
         context: FragmentActivity,
-        selectedCurrency: Int,
-        onCurrencySelected: (Int) -> Unit
+        settings: SettingsEntity,
+        onCurrencySelected: (String, String) -> Unit
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.currency_popup) {
             override fun setup() {
                 val languageCheckboxes = listOf(
                     0 to R.id.checkbox_euro,
                     1 to R.id.checkbox_dollar,
-                    2 to R.id.checkbox_pound
+                    2 to R.id.checkbox_pound,
+                    3 to R.id.checkbox_custom
                 )
 
-                fun selectAndClose(currency: Int) {
-                    onCurrencySelected(currency)
+                val currencyValues: Map<Int, String> = mapOf(
+                    0 to "€",
+                    1 to "$",
+                    2 to "£"
+                )
+
+                val customInput: EditText = dialogView.findViewById(R.id.input_custom_currency)
+                val errorTextView: TextView = dialogView.findViewById(R.id.edit_text_error)
+
+                fun selectAndClose(currencyValue: String) {
+                    onCurrencySelected(currencyValue, customInput.text.toString())
                     dialog.dismiss()
+                }
+
+                val currencyToIndex: Map<String, Int> = currencyValues.entries.associate {
+                    it.value to it.key
                 }
 
                 for ((index, checkboxId) in languageCheckboxes) {
                     val checkbox: CheckBox = dialogView.findViewById(checkboxId)
-                    checkbox.isChecked = selectedCurrency == index
+                    checkbox.isChecked = index == (currencyToIndex[settings.currency] ?: 3)
+                    customInput.setText(settings.customCurrency)
+
                     checkbox.setOnClickListener {
-                        selectAndClose(currency = index)
+                        errorTextView.visibility = View.GONE
+                        if (index == 3) {
+                            val customValue = customInput.text.toString().trim()
+                            if (customValue.isNotEmpty()) {
+                                selectAndClose(currencyValue = customValue)
+                            } else {
+                                checkbox.isChecked = false
+                                errorTextView.visibility = View.VISIBLE
+                                customInput.requestFocus()
+                            }
+                        } else {
+                            selectAndClose(currencyValue = currencyValues[index] ?: "€")
+                        }
+                    }
+                }
+
+                customInput.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(editable: Editable?) {
+                        if (!editable.isNullOrBlank()) {
+                            errorTextView.visibility = View.GONE
+                        }
+                    }
+                    override fun beforeTextChanged(sequence: CharSequence?, start: Int, count: Int, after: Int) {}
+                    override fun onTextChanged(sequence: CharSequence?, start: Int, before: Int, count: Int) {}
+                })
+
+                val customCheckbox: CheckBox = dialogView.findViewById(R.id.checkbox_custom)
+                customInput.setOnFocusChangeListener { _, _ ->
+                    if (customInput.text.toString().trim().isNotEmpty()) {
+                        customCheckbox.isChecked = true
+                        errorTextView.visibility = View.GONE
                     }
                 }
             }

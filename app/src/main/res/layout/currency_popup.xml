@@ -82,8 +82,46 @@
                     android:layout_height="wrap_content"
                     android:text="@string/currency_check_box_pound"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+                <TextView
+                    android:id="@+id/edit_text_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/currency_check_box_edit_text_error"
+                    android:scrollHorizontally="false"
+                    android:visibility="gone"
+                    style="@style/BodyTextView"/>
+
+                <LinearLayout
+                    android:id="@+id/custom_currency_input_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/checkbox_custom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/currency_check_box_custom"
+                        android:maxWidth="300dp"
+                        style="@style/CheckBox"
+                        tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+                    <EditText
+                        android:id="@+id/input_custom_currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:autofillHints="none"
+                        android:gravity="center_vertical"
+                        android:hint="@string/currency_check_box_edit_text"
+                        android:inputType="text"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"/>
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>

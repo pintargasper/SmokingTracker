@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 5,
-    "identityHash": "b1f59dd1e8a5c7e09883b0390cf9b90b",
+    "identityHash": "222d05c5305667bf7192d0795f2697b0",
     "entities": [
       {
         "tableName": "achievements",
@@ -113,7 +113,7 @@
       },
       {
         "tableName": "settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` INTEGER NOT NULL, `frequency` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` INTEGER NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -137,6 +137,12 @@
             "fieldPath": "frequency",
             "columnName": "frequency",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -186,7 +192,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'b1f59dd1e8a5c7e09883b0390cf9b90b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '222d05c5305667bf7192d0795f2697b0')"
     ]
   }
 }

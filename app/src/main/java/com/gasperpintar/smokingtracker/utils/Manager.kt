@@ -22,6 +22,7 @@ import com.gasperpintar.smokingtracker.ui.bar.SyncedStep
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -188,7 +189,7 @@ object Manager {
         val sheet = workbook.createSheet("Settings")
         val header = sheet.createRow(0)
 
-        listOf("Theme", "Language", "Frequency").forEachIndexed {
+        listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency").forEachIndexed {
             index, h -> header.createCell(index, CellType.STRING).setCellValue(h)
         }
 
@@ -197,6 +198,8 @@ object Manager {
             row.createCell(0, CellType.NUMERIC).setCellValue(it.theme.toDouble())
             row.createCell(1, CellType.NUMERIC).setCellValue(it.language.toDouble())
             row.createCell(2, CellType.NUMERIC).setCellValue(it.frequency.toDouble())
+            row.createCell(3, CellType.STRING).setCellValue(it.currency)
+            row.createCell(4, CellType.STRING).setCellValue(it.customCurrency)
         }
         onStepProgress(100)
     }
@@ -330,10 +333,6 @@ object Manager {
         val headerRow = sheet.getRow(0) ?: return
         val column = getColumnIndexMap(headerRow)
 
-        if (!listOf("Theme", "Language", "Frequency").all {
-            column.containsKey(it)
-        }) return
-
         val row = sheet.getRow(1) ?: return
         repository.get()?.let {
             repository.delete(settings = it)
@@ -342,9 +341,11 @@ object Manager {
         repository.insert(
             SettingsEntity(
                 id = 0,
-                theme = row.getCell(column["Theme"]!!)?.numericCellValue?.toInt() ?: 0,
-                language = row.getCell(column["Language"]!!)?.numericCellValue?.toInt() ?: 0,
-                frequency = row.getCell(column["Frequency"]!!)?.numericCellValue?.toInt() ?: 0
+                theme = getCellValue(column["Theme"], row)?.numericCellValue?.toInt() ?: 0,
+                language = getCellValue(column["Language"], row)?.numericCellValue?.toInt() ?: 0,
+                frequency = getCellValue(column["Frequency"], row)?.numericCellValue?.toInt() ?: 0,
+                currency = getCellValue(column["Currency"], row)?.stringCellValue ?: "€",
+                customCurrency = getCellValue(column["CustomCurrency"], row)?.stringCellValue ?: ""
             )
         )
         onStepProgress(100)
@@ -377,6 +378,14 @@ object Manager {
             )
         )
         onStepProgress(100)
+    }
+
+    private fun getCellValue(columnIndex: Int?, row: Row): Cell? {
+        return columnIndex?.takeIf {
+            it >= 0
+        }?.let {
+            row.getCell(it)
+        }
     }
 
     private fun sendNotification(

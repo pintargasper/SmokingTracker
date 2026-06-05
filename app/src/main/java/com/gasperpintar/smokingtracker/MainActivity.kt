@@ -164,7 +164,9 @@ class MainActivity : AppCompatActivity() {
             id = 1,
             theme = 0,
             language = getDefaultLanguageIndex(),
-            frequency = 0
+            frequency = 0,
+            currency = "€",
+            customCurrency = ""
         ).also {
             settingsRepository.insert(settings = it)
         }

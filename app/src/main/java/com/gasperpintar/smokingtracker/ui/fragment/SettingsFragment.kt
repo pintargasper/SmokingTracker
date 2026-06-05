@@ -136,13 +136,24 @@ class SettingsFragment : Fragment() {
         }
 
         binding.currencyLayout.setOnClickListener {
-            DialogManager.showCurrencyDialog(
-                context = requireActivity(),
-                selectedCurrency = 0,
-                onCurrencySelected = { _ ->
-
+            lifecycleScope.launch {
+                withSettings { settings ->
+                    DialogManager.showCurrencyDialog(
+                        context = requireActivity(),
+                        settings = settings,
+                        onCurrencySelected = { currency, custom ->
+                            updateSettingsField(
+                                updateBlock = {
+                                    it.copy(
+                                        currency = currency,
+                                        customCurrency = custom
+                                    )
+                                }
+                            )
+                        }
+                    )
                 }
-            )
+            }
         }
 
         binding.downloadLayout.setOnClickListener {
