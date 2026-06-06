@@ -1,9 +1,9 @@
 package com.gasperpintar.smokingtracker
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
@@ -11,6 +11,7 @@ import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
+import kotlinx.coroutines.launch
 import java.time.ZoneId
 import java.util.Calendar
 
@@ -126,22 +127,23 @@ class CalculatorActivity : AppCompatActivity() {
         return (diffMillis / MILLIS_IN_DAY).toInt() + 1
     }
 
-    @SuppressLint(value = ["InflateParams"])
     private fun showResultDialog(
         totalCost: Double,
         totalTimeMinutes: Int,
         totalCigarettes: Int
     ) {
-        DialogManager.showResultDialog(
-            context = this,
-            totalCost = totalCost,
-            totalTimeMinutes = totalTimeMinutes,
-            totalCigarettes = totalCigarettes,
-            currencyUnit = getString(R.string.calculator_result_valute_unit),
-            formatTime = { minutes ->
-                TimeHelper.formatTime(resources = resources, totalMinutes = minutes)
-            }
-        )
+        lifecycleScope.launch {
+            DialogManager.showResultDialog(
+                context = this@CalculatorActivity,
+                totalCost = totalCost,
+                totalTimeMinutes = totalTimeMinutes,
+                totalCigarettes = totalCigarettes,
+                currencyUnit = settingsRepository.get()?.currency ?: "€",
+                formatTime = { minutes ->
+                    TimeHelper.formatTime(resources = resources, totalMinutes = minutes)
+                }
+            )
+        }
     }
 
     private fun applySelectedDate(

@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="@string/currency_check_box_edit_text_error"
+                    android:text="@string/currency_text_error"
                     android:scrollHorizontally="false"
                     android:visibility="gone"
                     style="@style/BodyTextView"/>
@@ -115,9 +115,9 @@
                         android:id="@+id/input_custom_currency"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:autofillHints="none"
                         android:gravity="center_vertical"
                         android:hint="@string/currency_check_box_edit_text"
+                        android:autofillHints="none"
                         android:inputType="text"
                         android:paddingStart="8dp"
                         android:paddingEnd="8dp"/>
@@ -127,7 +127,7 @@
         </ScrollView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_close_currency_button"
+            android:id="@+id/card_close_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -140,8 +140,7 @@
             app:layout_constraintTop_toBottomOf="@id/currency_inner_options_container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_max="320dp">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
                 android:id="@+id/button_close"

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/popup_period_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/costs_popup"
+            android:gravity="center"
+            style="@style/MainTitleCenterTextView" />
+
+        <TextView
+            android:id="@+id/popup_period_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/costs_popup_info"
+            android:gravity="center"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginTop="4dp"
+            style="@style/BodyTextView" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_history"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginTop="12dp"
+            android:padding="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layout_date_range_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/text_start_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calculator_start_date"
+                style="@style/BodyTextView" />
+
+            <EditText
+                android:id="@+id/input_start_date"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:clickable="true"
+                android:hint="@string/calculator_start_date_hint"
+                android:autofillHints="@string/calculator_start_date_hint"
+                android:inputType="date"
+                android:layout_marginHorizontal="8dp"
+                style="@style/EditText" />
+
+            <TextView
+                android:id="@+id/text_end_date_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/calculator_end_date"
+                android:layout_marginEnd="8dp"
+                style="@style/BodyTextView" />
+
+            <EditText
+                android:id="@+id/input_end_date"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:clickable="true"
+                android:hint="@string/calculator_end_date_hint"
+                android:autofillHints="@string/calculator_end_date_hint"
+                android:inputType="date"
+                style="@style/EditText" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/costs_popup"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="4dp"
+            style="@style/SubtitleTextView" />
+
+        <EditText
+            android:id="@+id/input_pack_price"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:inputType="numberDecimal"
+            android:hint="0.00"
+            android:autofillHints="0.00"
+            android:layout_marginBottom="16dp"
+            tools:ignore="HardcodedText,VisualLintTextFieldSize"
+            style="@style/EditText" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_confirm_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <Button
+                android:id="@+id/button_add_period"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/popup_confirm"
+                style="@style/Button" />
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_close_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:padding="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <Button
+                android:id="@+id/button_close"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/popup_close"
+                style="@style/Button" />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

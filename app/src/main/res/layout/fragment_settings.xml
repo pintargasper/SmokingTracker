@@ -166,6 +166,34 @@
                         android:id="@+id/currency_service_url"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/settings_category_statistics_currency_url"
+                        android:scrollHorizontally="false"
+                        style="@style/BodyTextView"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/costs_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:layout_marginTop="1dp"
+                    android:minHeight="55dp">
+
+                    <TextView
+                        android:id="@+id/costs_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_category_statistics_costs"
+                        android:layout_marginBottom="2dp"
+                        style="@style/SubtitleTextView"/>
+
+                    <TextView
+                        android:id="@+id/costs_service_url"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_category_statistics_costs_url"
                         android:scrollHorizontally="false"
                         style="@style/BodyTextView"/>
                 </LinearLayout>

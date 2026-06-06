@@ -156,6 +156,12 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        binding.costsLayout.setOnClickListener {
+            DialogManager.showCostsDialog(
+                context = requireActivity()
+            )
+        }
+
         binding.downloadLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
                 exportDocumentLauncher.launch("st_data")

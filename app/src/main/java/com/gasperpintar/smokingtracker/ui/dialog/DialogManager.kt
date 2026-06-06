@@ -298,6 +298,31 @@ object DialogManager {
         dialogInstance.show()
     }
 
+    fun showCostsDialog(
+        context: FragmentActivity
+    ) {
+        val dialogInstance = object : BaseDialog(context, R.layout.costs_popup) {
+            override fun setup() {
+                /*inputStartDate.setOnClickListener {
+                    showDatePickerDialog(
+                        context = context,
+                    ) { date ->
+                        applySelectedDate(selectedDate = date, isStartDate = true)
+                    }
+                }
+
+                inputEndDate.setOnClickListener {
+                    showDatePickerDialog(
+                        context = context,
+                    ) { date ->
+                        applySelectedDate(selectedDate = date, isStartDate = false)
+                    }
+                }*/
+            }
+        }
+        dialogInstance.show()
+    }
+
     fun showBackupDialog(
         context: FragmentActivity,
         onDownload: () -> Unit
