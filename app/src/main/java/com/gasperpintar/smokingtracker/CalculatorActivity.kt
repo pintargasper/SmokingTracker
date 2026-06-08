@@ -12,7 +12,6 @@ import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
-import java.time.ZoneId
 import java.util.Calendar
 
 class CalculatorActivity : AppCompatActivity() {
@@ -66,7 +65,10 @@ class CalculatorActivity : AppCompatActivity() {
             DialogManager.showDatePickerDialog(
                 context = this@CalculatorActivity,
             ) { date ->
-                applySelectedDate(selectedDate = date, isStartDate = true)
+                val (start, end, text) = TimeHelper.applySelectedDate(startDate = startDate, endDate = endDate, selectedDate = date, isStartDate = true)
+                startDate = start
+                endDate = end
+                inputStartDate.setText(text)
             }
         }
 
@@ -74,18 +76,11 @@ class CalculatorActivity : AppCompatActivity() {
             DialogManager.showDatePickerDialog(
                 context = this@CalculatorActivity,
             ) { date ->
-                applySelectedDate(selectedDate = date, isStartDate = false)
+                val (start, end, text) = TimeHelper.applySelectedDate(startDate = startDate, endDate = endDate, selectedDate = date, isStartDate = false)
+                startDate = start
+                endDate = end
+                inputEndDate.setText(text)
             }
-        }
-
-        inputStartDate.setOnLongClickListener {
-            clearStartDate()
-            true
-        }
-
-        inputEndDate.setOnLongClickListener {
-            clearEndDate()
-            true
         }
 
         buttonBack.setOnClickListener {
@@ -144,38 +139,5 @@ class CalculatorActivity : AppCompatActivity() {
                 }
             )
         }
-    }
-
-    private fun applySelectedDate(
-        selectedDate: Calendar,
-        isStartDate: Boolean
-    ) {
-        val localDate = selectedDate.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-
-        if (isStartDate) {
-            startDate = selectedDate.clone() as Calendar
-            binding.inputStartDate.setText(LocalizationHelper.formatDate(localDate))
-
-            if (endDate != null && endDate!!.before(startDate)) {
-                clearEndDate()
-            }
-        } else {
-            endDate = selectedDate.clone() as Calendar
-            binding.inputEndDate.setText(LocalizationHelper.formatDate(localDate))
-
-            if (startDate != null && startDate!!.after(endDate)) {
-                clearStartDate()
-            }
-        }
-    }
-
-    private fun clearStartDate() {
-        startDate = null
-        binding.inputStartDate.setText("")
-    }
-
-    private fun clearEndDate() {
-        endDate = null
-        binding.inputEndDate.setText("")
     }
 }
