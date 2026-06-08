@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.gasperpintar.smokingtracker.database.dao.AchievementDao
+import com.gasperpintar.smokingtracker.database.dao.CostsDao
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.dao.NotificationsSettingsDao
 import com.gasperpintar.smokingtracker.database.dao.SettingsDao
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
+import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
@@ -19,7 +21,8 @@ import com.gasperpintar.smokingtracker.database.specifications.SettingsDeleteCol
         AchievementEntity::class,
         HistoryEntity::class,
         SettingsEntity::class,
-        NotificationsSettingsEntity::class
+        NotificationsSettingsEntity::class,
+        CostEntity::class
     ],
     version = 6,
     autoMigrations = [
@@ -37,4 +40,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun historyDao(): HistoryDao
     abstract fun settingsDao(): SettingsDao
     abstract fun notificationsSettingsDao(): NotificationsSettingsDao
+    abstract fun costsDao(): CostsDao
 }

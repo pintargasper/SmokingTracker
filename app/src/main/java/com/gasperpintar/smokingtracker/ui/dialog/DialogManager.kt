@@ -11,15 +11,27 @@ import android.widget.CalendarView
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.adapter.Adapter
+import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.model.CostEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.repository.CostRepository
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.TimeHelper
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.util.Calendar
 
@@ -299,25 +311,99 @@ object DialogManager {
     }
 
     fun showCostsDialog(
-        context: FragmentActivity
+        context: FragmentActivity,
+        costRepository: CostRepository,
+        currency: String
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.costs_popup) {
             override fun setup() {
-                /*inputStartDate.setOnClickListener {
-                    showDatePickerDialog(
-                        context = context,
-                    ) { date ->
-                        applySelectedDate(selectedDate = date, isStartDate = true)
+                val packPrice: EditText = dialogView.findViewById(R.id.input_pack_price)
+                val inputStartDate: EditText = dialogView.findViewById(R.id.input_start_date)
+                val inputEndDate: EditText = dialogView.findViewById(R.id.input_end_date)
+                val buttonAddPeriod: Button = dialogView.findViewById(R.id.button_add_period)
+                val costPeriods: RecyclerView = dialogView.findViewById(R.id.recyclerview_cost_periods)
+
+                var startDate: Calendar? = null
+                var endDate: Calendar? = null
+
+                lateinit var adapter: Adapter<CostEntry>
+
+                suspend fun loadData() {
+                    val refreshed = costRepository.getAll().map(transform = CostEntry::fromEntity)
+                    adapter.submitList(refreshed)
+                }
+
+                adapter = Adapter(
+                    layoutId = R.layout.cost_container,
+                    onBind = { itemView, costEntry ->
+                        val textPeriod: TextView = itemView.findViewById(R.id.date_label)
+                        val price: TextView = itemView.findViewById(R.id.price_label)
+                        val delete: ImageButton = itemView.findViewById(R.id.delete)
+
+                        textPeriod.text = buildString {
+                            append(LocalizationHelper.formatDate(costEntry.startDate.toLocalDate()))
+                            append(" - ")
+                            append(LocalizationHelper.formatDate(costEntry.endDate.toLocalDate()))
+                        }
+
+                        price.text = itemView.context.getString(
+                            R.string.cost_container_price,
+                            "${costEntry.price} $currency"
+                        )
+
+                        delete.setOnClickListener {
+                            context.lifecycleScope.launch {
+                                costRepository.delete(entry = costEntry.toEntity())
+                                loadData()
+                            }
+                        }
+                    },
+                    diffCallback = object : DiffUtil.ItemCallback<CostEntry>() {
+                        override fun areItemsTheSame(oldItem: CostEntry, newItem: CostEntry) = oldItem.id == newItem.id
+                        override fun areContentsTheSame(oldItem: CostEntry, newItem: CostEntry) = oldItem == newItem
+                    }
+                )
+
+                costPeriods.layoutManager = LinearLayoutManager(context)
+                costPeriods.adapter = adapter
+                context.lifecycleScope.launch {
+                    loadData()
+                }
+
+                inputStartDate.setOnClickListener {
+                    showDatePickerDialog(context) { date ->
+                        val (start, end, text) = TimeHelper.applySelectedDate(startDate, endDate, date, true)
+                        startDate = start
+                        endDate = end
+                        inputStartDate.setText(text)
                     }
                 }
 
                 inputEndDate.setOnClickListener {
-                    showDatePickerDialog(
-                        context = context,
-                    ) { date ->
-                        applySelectedDate(selectedDate = date, isStartDate = false)
+                    showDatePickerDialog(context) { date ->
+                        val (start, end, text) = TimeHelper.applySelectedDate(startDate, endDate, date, false)
+                        startDate = start
+                        endDate = end
+                        inputEndDate.setText(text)
                     }
-                }*/
+                }
+
+                buttonAddPeriod.setOnClickListener {
+                    context.lifecycleScope.launch {
+                        val safeStart = startDate ?: Calendar.getInstance()
+                        val safeEnd = endDate ?: Calendar.getInstance()
+
+                        costRepository.insert(
+                            entry = CostEntity(
+                                id = 0,
+                                startDate = TimeHelper.toLocalDateTime(calendar = safeStart),
+                                endDate = TimeHelper.toLocalDateTime(calendar = safeEnd),
+                                price = packPrice.text.toString().toDoubleOrNull() ?: 0.0
+                            )
+                        )
+                        loadData()
+                    }
+                }
             }
         }
         dialogInstance.show()

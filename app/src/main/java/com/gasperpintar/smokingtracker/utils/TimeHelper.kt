@@ -100,6 +100,12 @@ object TimeHelper {
         }.joinToString(" ")
     }
 
+    fun toLocalDateTime(calendar: Calendar): LocalDateTime {
+        return calendar.time.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
+    }
+
     fun applySelectedDate(
         startDate: Calendar?,
         endDate: Calendar?,

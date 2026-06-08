@@ -43,6 +43,8 @@
     <string name="history_container_edit">Edit record</string>
     <string name="history_container_delete">Delete record</string>
     <string name="achievements_container_icon">Achievement icon</string>
+    <string name="cost_container_price">Cost: %1$s</string>
+    <string name="cost_container_delete">Delete record</string>
     <string name="settings_category_general">General</string>
     <string name="settings_category_theme">Theme</string>
     <string name="settings_category_language">Language</string>

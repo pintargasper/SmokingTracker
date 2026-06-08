@@ -20,6 +20,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.CostRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
@@ -39,6 +40,7 @@ class SettingsFragment : Fragment() {
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
+    private lateinit var costRepository: CostRepository
 
     private lateinit var exportDocumentLauncher: ActivityResultLauncher<String>
     private lateinit var importDocumentLauncher: ActivityResultLauncher<Array<String>>
@@ -57,6 +59,7 @@ class SettingsFragment : Fragment() {
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        costRepository = CostRepository(costDao = database.costsDao())
 
         setupImportLauncher()
         setupExportLauncher()
@@ -157,9 +160,13 @@ class SettingsFragment : Fragment() {
         }
 
         binding.costsLayout.setOnClickListener {
-            DialogManager.showCostsDialog(
-                context = requireActivity()
-            )
+            lifecycleScope.launch {
+                DialogManager.showCostsDialog(
+                    context = requireActivity(),
+                    costRepository = costRepository,
+                    currency = settingsRepository.get()?.currency ?: "€",
+                )
+            }
         }
 
         binding.downloadLayout.setOnClickListener {

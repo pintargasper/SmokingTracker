@@ -1,0 +1,24 @@
+package com.gasperpintar.smokingtracker.repository
+
+import com.gasperpintar.smokingtracker.database.dao.CostsDao
+import com.gasperpintar.smokingtracker.database.entity.CostEntity
+
+class CostRepository(
+    private val costDao: CostsDao
+) {
+    suspend fun insert(
+        entry: CostEntity
+    ) {
+        costDao.insert(entity = entry)
+    }
+
+    suspend fun delete(
+        entry: CostEntity
+    ) {
+        costDao.delete(entity = entry)
+    }
+
+    suspend fun getAll(): List<CostEntity> {
+        return costDao.getAll()
+    }
+}
