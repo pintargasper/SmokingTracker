@@ -340,15 +340,15 @@ object DialogManager {
                         val price: TextView = itemView.findViewById(R.id.price_label)
                         val delete: ImageButton = itemView.findViewById(R.id.delete)
 
-                        textPeriod.text = buildString {
-                            append(LocalizationHelper.formatDate(costEntry.startDate.toLocalDate()))
-                            append(" - ")
-                            append(LocalizationHelper.formatDate(costEntry.endDate.toLocalDate()))
-                        }
+                        textPeriod.text = String.format(
+                            "%s - %s",
+                            LocalizationHelper.formatDate(costEntry.startDate.toLocalDate()),
+                            LocalizationHelper.formatDate(costEntry.endDate.toLocalDate())
+                        )
 
                         price.text = itemView.context.getString(
                             R.string.cost_container_price,
-                            "${costEntry.price} $currency"
+                            String.format("%s %s", costEntry.price, currency)
                         )
 
                         delete.setOnClickListener {
@@ -395,7 +395,7 @@ object DialogManager {
 
                         costRepository.insert(
                             entry = CostEntity(
-                                id = 0,
+                                id = 0L,
                                 startDate = TimeHelper.toLocalDateTime(calendar = safeStart),
                                 endDate = TimeHelper.toLocalDateTime(calendar = safeEnd),
                                 price = packPrice.text.toString().toDoubleOrNull() ?: 0.0

@@ -198,6 +198,7 @@ class SettingsFragment : Fragment() {
                                         historyRepository = historyRepository,
                                         settingsRepository = settingsRepository,
                                         notificationsSettingsRepository = notificationsSettingsRepository,
+                                        costRepository = costRepository,
                                         onProgress = { progress ->
                                             dialog.updateProgress(progress)
                                         }
@@ -348,6 +349,7 @@ class SettingsFragment : Fragment() {
                         historyRepository = historyRepository,
                         settingsRepository = settingsRepository,
                         notificationsSettingsRepository = notificationsSettingsRepository,
+                        costRepository = costRepository,
                         onProgress = { progress ->
                             dialog.updateProgress(progress)
                         }

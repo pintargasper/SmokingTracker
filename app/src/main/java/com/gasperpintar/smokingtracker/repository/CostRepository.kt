@@ -12,10 +12,21 @@ class CostRepository(
         costDao.insert(entity = entry)
     }
 
+    suspend fun insertAll(
+        entries: List<CostEntity>
+    ) {
+        costDao.insertAll(entities = entries)
+    }
+
     suspend fun delete(
         entry: CostEntity
     ) {
         costDao.delete(entity = entry)
+    }
+
+    suspend fun deleteAll() {
+        costDao.deleteAll()
+        costDao.resetAutoIncrement()
     }
 
     suspend fun getAll(): List<CostEntity> {
