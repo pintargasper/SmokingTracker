@@ -9,8 +9,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_title_cigarettes_section"
+            android:gravity="start"
+            style="@style/SubtitleTextView"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -39,7 +45,7 @@
                     android:layout_marginTop="4dp">
 
                     <TextView
-                        android:id="@+id/textMaxCigarettes"
+                        android:id="@+id/text_max_cigarettes"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -48,7 +54,7 @@
                         tools:ignore="HardcodedText"/>
 
                     <TextView
-                        android:id="@+id/textMaxCigarettesDate"
+                        android:id="@+id/text_max_cigarettes_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/statistics_logged"
@@ -86,7 +92,7 @@
                     android:layout_marginTop="4dp">
 
                     <TextView
-                        android:id="@+id/textMinCigarettes"
+                        android:id="@+id/text_min_cigarettes"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -95,7 +101,7 @@
                         tools:ignore="HardcodedText"/>
 
                     <TextView
-                        android:id="@+id/textMinCigarettesDate"
+                        android:id="@+id/text_min_cigarettes_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/statistics_logged"
@@ -127,7 +133,7 @@
                     style="@style/SubtitleTextView"/>
 
                 <TextView
-                    android:id="@+id/textAverageCigarettes"
+                    android:id="@+id/text_average_cigarettes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -159,7 +165,7 @@
                     style="@style/SubtitleTextView"/>
 
                 <TextView
-                    android:id="@+id/textTotalCigarettes"
+                    android:id="@+id/text_total_cigarettes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
@@ -223,13 +229,160 @@
                     style="@style/SubtitleTextView"/>
 
                 <TextView
-                    android:id="@+id/textLongestStreak"
+                    android:id="@+id/text_longest_streak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:layout_marginTop="4dp"
                     style="@style/BodyTextView"
                     tools:ignore="HardcodedText"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_title_money_section"
+            android:gravity="start"
+            style="@style/SubtitleTextView"/>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="?attr/colorSurface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_total_spent"
+                    style="@style/SubtitleTextView"/>
+
+                <TextView
+                    android:id="@+id/text_total_spent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 €"
+                    android:layout_marginTop="4dp"
+                    style="@style/BodyTextView"
+                    tools:ignore="HardcodedText"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="?attr/colorSurface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_avg_per_day"
+                    style="@style/SubtitleTextView"/>
+
+                <TextView
+                    android:id="@+id/text_average_per_day"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 €"
+                    android:layout_marginTop="4dp"
+                    style="@style/BodyTextView"
+                    tools:ignore="HardcodedText"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="?attr/colorSurface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_avg_per_month"
+                    style="@style/SubtitleTextView"/>
+
+                <TextView
+                    android:id="@+id/text_average_per_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 €"
+                    android:layout_marginTop="4dp"
+                    style="@style/BodyTextView"
+                    tools:ignore="HardcodedText"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:background="?attr/colorSurface"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statistics_most_expensive"
+                    style="@style/SubtitleTextView"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:id="@+id/text_most_expensive_day"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="0 €"
+                        style="@style/BodyTextView"
+                        tools:ignore="HardcodedText"/>
+
+                    <TextView
+                        android:id="@+id/text_most_expensive_day_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/statistics_logged"
+                        android:gravity="end"
+                        android:layout_gravity="center_vertical"
+                        style="@style/SubBodyTextView"/>
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
