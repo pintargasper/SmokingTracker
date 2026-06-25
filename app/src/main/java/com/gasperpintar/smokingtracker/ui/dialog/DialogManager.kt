@@ -32,6 +32,7 @@ import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.time.LocalDateTime
 import java.util.Calendar
 
@@ -310,6 +311,7 @@ object DialogManager {
         dialogInstance.show()
     }
 
+    @SuppressLint(value = ["DefaultLocale"])
     fun showCostsDialog(
         context: FragmentActivity,
         costRepository: CostRepository,
@@ -325,6 +327,8 @@ object DialogManager {
 
                 var startDate: Calendar? = null
                 var endDate: Calendar? = null
+
+                val decimalFormat = DecimalFormat("0.00#")
 
                 lateinit var adapter: Adapter<CostEntry>
 
@@ -348,7 +352,8 @@ object DialogManager {
 
                         price.text = itemView.context.getString(
                             R.string.cost_container_price,
-                            String.format("%s %s", costEntry.price, currency)
+                            decimalFormat.format(costEntry.price),
+                            currency
                         )
 
                         delete.setOnClickListener {

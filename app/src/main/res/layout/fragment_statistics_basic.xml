@@ -246,6 +246,15 @@
             android:gravity="start"
             style="@style/SubtitleTextView"/>
 
+        <TextView
+            android:id="@+id/statistics_title_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics_title_money_section_instructions"
+            android:gravity="start"
+            android:visibility="gone"
+            style="@style/SubBodyTextView"/>
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -294,11 +303,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/statistics_avg_per_day"
+                    android:text="@string/statistics_total_spent_today"
                     style="@style/SubtitleTextView"/>
 
                 <TextView
-                    android:id="@+id/text_average_per_day"
+                    android:id="@+id/today_spent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 €"
@@ -325,11 +334,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/statistics_avg_per_month"
+                    android:text="@string/statistics_total_spent_month"
                     style="@style/SubtitleTextView"/>
 
                 <TextView
-                    android:id="@+id/text_average_per_month"
+                    android:id="@+id/month_spent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0 €"
@@ -366,7 +375,7 @@
                     android:layout_marginTop="4dp">
 
                     <TextView
-                        android:id="@+id/text_most_expensive_day"
+                        android:id="@+id/most_expensive_day"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -375,7 +384,7 @@
                         tools:ignore="HardcodedText"/>
 
                     <TextView
-                        android:id="@+id/text_most_expensive_day_date"
+                        android:id="@+id/most_expensive_day_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/statistics_logged"

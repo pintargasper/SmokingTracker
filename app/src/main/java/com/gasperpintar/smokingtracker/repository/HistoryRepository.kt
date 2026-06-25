@@ -72,6 +72,10 @@ class HistoryRepository(
         return historyDao.getMinCigarettesPerDay()
     }
 
+    suspend fun countBetween(start: LocalDateTime, end: LocalDateTime): Int {
+        return historyDao.countBetween(start = start, end = end)
+    }
+
     suspend fun getEntries(date: LocalDateTime): List<HistoryEntry> {
         return getBetween(start = date.minusMonths(12), end = date).map(transform = HistoryEntry.Companion::fromEntity)
     }

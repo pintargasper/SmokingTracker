@@ -43,7 +43,7 @@
     <string name="history_container_edit">Edit record</string>
     <string name="history_container_delete">Delete record</string>
     <string name="achievements_container_icon">Achievement icon</string>
-    <string name="cost_container_price">Cost: %1$s</string>
+    <string name="cost_container_price">Cost: %1$s %2$s</string>
     <string name="cost_container_delete">Delete record</string>
     <string name="settings_category_general">General</string>
     <string name="settings_category_theme">Theme</string>
@@ -221,6 +221,7 @@
     <string name="statistics_achievements_description">Detailed insights and trends of your usage over time</string>
     <string name="statistics_title_cigarettes_section">Overview</string>
     <string name="statistics_title_money_section">Financial impact</string>
+    <string name="statistics_title_money_section_instructions">Set cigarette price in settings to see financial impact</string>
     <string name="statistics_max_cigarettes">Maximum cigarettes smoked in a day</string>
     <string name="statistics_min_cigarettes">Minimum cigarettes smoked in a day</string>
     <string name="statistics_avg_cigarettes">Average cigarettes per day</string>
@@ -228,8 +229,8 @@
     <string name="statistics_first_entry">Since first entry</string>
     <string name="statistics_longest_streak">Longest time without smoking</string>
     <string name="statistics_total_spent">Total spent</string>
-    <string name="statistics_avg_per_day">Average per day</string>
-    <string name="statistics_avg_per_month">Average per month</string>
+    <string name="statistics_total_spent_today">Total spent today</string>
+    <string name="statistics_total_spent_month">Total spent this month</string>
     <string name="statistics_most_expensive">Most expensive day</string>
     <string name="statistics_logged">Logged: %1$s</string>
     <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>

@@ -24,6 +24,9 @@ interface HistoryDao: Base<HistoryEntity> {
     @Query(value = "SELECT COUNT(*) FROM history WHERE createdAt BETWEEN :start AND :end")
     suspend fun getCountBetween(start: LocalDateTime, end: LocalDateTime): Int
 
+    @Query(value = "SELECT COUNT(*) FROM history WHERE DATE(createdAt) BETWEEN DATE(:start) AND DATE(:end)")
+    suspend fun countBetween(start: LocalDateTime, end: LocalDateTime): Int
+
     @Query(
         value = """
             SELECT AVG(daily_sum)
