@@ -3,10 +3,12 @@ package com.gasperpintar.smokingtracker
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityNotesBinding
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.ui.fragment.NoteFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 
 class NotesActivity : AppCompatActivity() {
@@ -20,11 +22,19 @@ class NotesActivity : AppCompatActivity() {
         savedInstanceState: Bundle?
     ) {
         super.onCreate(savedInstanceState)
-
-        initViewBinding()
+        binding = ActivityNotesBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         binding.buttonBack.setOnClickListener {
             finish()
+        }
+
+        binding.buttonAddNote.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .add(R.id.fragment_container, NoteFragment())
+                .addToBackStack("AddNote")
+                .commit()
         }
     }
 
@@ -42,10 +52,5 @@ class NotesActivity : AppCompatActivity() {
                 settingsRepository = settingsRepository
             )
         )
-    }
-
-    private fun initViewBinding() {
-        binding = ActivityNotesBinding.inflate(layoutInflater)
-        setContentView(binding.root)
     }
 }

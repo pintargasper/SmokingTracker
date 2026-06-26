@@ -36,6 +36,15 @@
     <string name="analytics_achievements_description">Track your milestones and celebrate your progress</string>
     <string name="analytics_notes_title">Notes</string>
     <string name="analytics_notes_description">Save your thoughts and personal notes</string>
+    <string name="analytics_notes_add_title">Add Note</string>
+    <string name="analytics_notes_add_message">Mood</string>
+    <string name="analytics_notes_add_title_hint">Note Title</string>
+    <string name="analytics_notes_add_content_hint">Note Content</string>
+    <string name="analytics_notes_add_content_emotions_very_bad">Very bad</string>
+    <string name="analytics_notes_add_content_emotions_bad">Bad</string>
+    <string name="analytics_notes_add_content_emotions_neutral">Neutral</string>
+    <string name="analytics_notes_add_content_emotions_good">Good</string>
+    <string name="analytics_notes_add_content_emotions_very_good">Very good</string>
     <string name="achievements_title">Achievements</string>
     <string name="achievements_cigarettes_avoided">Cigarettes avoided</string>
     <string name="achievements_smoke_free_time">Smoke free time</string>
@@ -79,6 +88,7 @@
     <string name="insert_popup_insert">Add</string>
     <string name="popup_close">Close</string>
     <string name="popup_confirm">Confirm</string>
+    <string name="popup_save">Save</string>
     <string name="edit_popup_message">Date and time</string>
     <string name="edit_popup_lent">A lent cigarette?</string>
     <string name="delete_popup_message">Are you sure to delete this record?</string>
