@@ -33,6 +33,7 @@ import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Calendar
 
@@ -346,8 +347,14 @@ object DialogManager {
 
                         textPeriod.text = String.format(
                             "%s - %s",
-                            LocalizationHelper.formatDate(costEntry.startDate.toLocalDate()),
-                            LocalizationHelper.formatDate(costEntry.endDate.toLocalDate())
+                            when (val startDate = costEntry.startDate.toLocalDate()) {
+                                LocalDate.now() -> itemView.context.getString(R.string.day_today)
+                                else -> LocalizationHelper.formatDate(startDate)
+                            },
+                            when (val endDate = costEntry.endDate.toLocalDate()) {
+                                LocalDate.now() -> itemView.context.getString(R.string.day_today)
+                                else -> LocalizationHelper.formatDate(endDate)
+                            }
                         )
 
                         price.text = itemView.context.getString(

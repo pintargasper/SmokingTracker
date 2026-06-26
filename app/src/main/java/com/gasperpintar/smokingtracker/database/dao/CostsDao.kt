@@ -15,4 +15,7 @@ interface CostsDao: Base<CostEntity> {
 
     @Query(value = "SELECT * FROM costs ORDER BY startDate DESC, endDate DESC")
     suspend fun getAll(): List<CostEntity>
+
+    @Query(value = "SELECT * FROM costs ORDER BY endDate DESC LIMIT 1")
+    suspend fun getLast(): CostEntity?
 }

@@ -167,6 +167,7 @@
     <string name="achievement_message_congrats_c_600">Exceptional work! You are mastering the journey step by step</string>
     <string name="achievement_message_congrats_c_800">Incredible! Your determination is making a real difference</string>
     <string name="achievement_message_congrats_c_1000">Legendary achievement! Your dedication and resilience are unmatched</string>
+    <string name="day_today">Today</string>
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>
     <string name="day_wednesday">Wednesday</string>

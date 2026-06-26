@@ -18,6 +18,12 @@ class CostRepository(
         costDao.insertAll(entities = entries)
     }
 
+    suspend fun update(
+        entry: CostEntity
+    ) {
+        costDao.update(entity = entry)
+    }
+
     suspend fun delete(
         entry: CostEntity
     ) {
@@ -31,5 +37,9 @@ class CostRepository(
 
     suspend fun getAll(): List<CostEntity> {
         return costDao.getAll()
+    }
+
+    suspend fun getLast(): CostEntity? {
+        return costDao.getLast()
     }
 }
