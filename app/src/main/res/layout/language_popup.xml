@@ -130,6 +130,15 @@
                     tools:ignore="HardcodedText,VisualLintButtonSize"
                     style="@style/CheckBox"/>
 
+                <CheckBox
+                    android:id="@+id/checkbox_chinese_simplified"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="中文（简体）"
+                    android:maxWidth="300dp"
+                    tools:ignore="HardcodedText,VisualLintButtonSize"
+                    style="@style/CheckBox"/>
+
             </LinearLayout>
         </ScrollView>
 

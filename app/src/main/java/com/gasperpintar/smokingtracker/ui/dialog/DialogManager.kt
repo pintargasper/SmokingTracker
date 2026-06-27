@@ -166,7 +166,8 @@ object DialogManager {
                     4 to R.id.checkbox_german,
                     5 to R.id.checkbox_french,
                     6 to R.id.checkbox_serbian_cyrillic_script,
-                    7 to R.id.checkbox_serbian_latin_script
+                    7 to R.id.checkbox_serbian_latin_script,
+                    8 to R.id.checkbox_chinese_simplified
                 )
 
                 fun selectAndClose(language: Int) {

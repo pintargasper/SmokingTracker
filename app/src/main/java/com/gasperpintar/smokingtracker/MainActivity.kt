@@ -273,6 +273,7 @@ class MainActivity : AppCompatActivity() {
             "fr" -> 5
             "sr" -> 6
             "sr-Latn" -> 7
+            "zh-CN" -> 8
             else -> 0
         }
     }
