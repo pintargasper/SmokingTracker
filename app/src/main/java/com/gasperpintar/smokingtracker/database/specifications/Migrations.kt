@@ -37,10 +37,6 @@ object Migrations {
             """)
             database.execSQL("DROP TABLE achievements")
             database.execSQL("ALTER TABLE achievements_new RENAME TO achievements")
-        },
-        Migration(startVersion = 5, endVersion = 6) { database ->
-            database.execSQL("ALTER TABLE settings ADD COLUMN currency TEXT NOT NULL DEFAULT '€'")
-            database.execSQL("ALTER TABLE settings ADD COLUMN customCurrency TEXT NOT NULL DEFAULT ''")
         }
     )
 }

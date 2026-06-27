@@ -119,7 +119,9 @@ class NotesActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val notes: List<NoteEntity> = database.notesDao().getAll()
             val notesList: List<NoteEntry> = notes.map(transform = NoteEntry::fromEntity)
-            adapter.submitList(notesList)
+            adapter.submitList(notesList) {
+                binding.recyclerviewNotes.scrollToPosition(0)
+            }
         }
     }
 }

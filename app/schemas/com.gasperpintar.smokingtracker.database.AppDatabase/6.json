@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 6,
-    "identityHash": "bf6eb4f924f32d56c1be5c19fb1d8203",
+    "identityHash": "0d0e22f4d41a74c8ae2c5907a09d25e3",
     "entities": [
       {
         "tableName": "achievements",
@@ -113,7 +113,7 @@
       },
       {
         "tableName": "settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` INTEGER NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL, `customCurrency` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` INTEGER NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL DEFAULT '€', `customCurrency` TEXT NOT NULL DEFAULT '')",
         "fields": [
           {
             "fieldPath": "id",
@@ -143,13 +143,15 @@
             "fieldPath": "currency",
             "columnName": "currency",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "'€'"
           },
           {
             "fieldPath": "customCurrency",
             "columnName": "customCurrency",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "''"
           }
         ],
         "primaryKey": {
@@ -282,7 +284,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bf6eb4f924f32d56c1be5c19fb1d8203')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0d0e22f4d41a74c8ae2c5907a09d25e3')"
     ]
   }
 }

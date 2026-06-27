@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.database.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -11,6 +12,10 @@ data class SettingsEntity(
     val theme: Int,
     val language: Int,
     val frequency: Int,
+
+    @ColumnInfo(defaultValue = "€")
     val currency: String,
+
+    @ColumnInfo(defaultValue = "")
     val customCurrency: String
 )
