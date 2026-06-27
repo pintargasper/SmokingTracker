@@ -7,7 +7,12 @@ object Migrations {
     val migrationList = arrayOf(
         Migration(startVersion = 2, endVersion = 3) { database ->
             database.execSQL("ALTER TABLE `settings` ADD COLUMN `frequency` INTEGER NOT NULL DEFAULT 0")
-            database.execSQL("ALTER TABLE `notifications_settings` ADD COLUMN `progress` INTEGER NOT NULL DEFAULT 1")
+            if (!database.query("PRAGMA table_info(notifications_settings)")
+                .use { cursor -> (0 until cursor.count).any {
+                    cursor.moveToPosition(it) && cursor.getString(1) == "progress" }
+                }) {
+                database.execSQL("ALTER TABLE notifications_settings ADD COLUMN progress INTEGER NOT NULL DEFAULT 1")
+            }
         },
         Migration(startVersion = 3, endVersion = 4) { _ -> },
         Migration(startVersion = 4, endVersion = 5) { database ->

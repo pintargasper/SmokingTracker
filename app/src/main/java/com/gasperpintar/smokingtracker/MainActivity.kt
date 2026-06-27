@@ -32,8 +32,11 @@ import java.util.concurrent.TimeUnit
 import androidx.core.view.size
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import java.time.LocalDate
+import java.time.LocalTime
 import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
@@ -44,6 +47,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var achievementRepository: AchievementRepository
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
+    private lateinit var costsRepository: CostsRepository
 
     lateinit var permissionsHelper: Permissions
 
@@ -73,6 +77,9 @@ class MainActivity : AppCompatActivity() {
         )
         notificationsSettingsRepository = NotificationsSettingsRepository(
             notificationsSettingsDao = database.notificationsSettingsDao()
+        )
+        costsRepository = CostsRepository(
+            costDao = database.costsDao()
         )
 
         super.attachBaseContext(
@@ -118,6 +125,7 @@ class MainActivity : AppCompatActivity() {
         handleAppVersioning(sharedPreferences = sharedPreferences)
         applyTheme(themeId = settings.theme)
         handleNotifications(sharedPreferences = sharedPreferences)
+        updateLastCostPeriod(costsRepository = costsRepository)
     }
 
     private fun initPager() {
@@ -164,7 +172,9 @@ class MainActivity : AppCompatActivity() {
             id = 1,
             theme = 0,
             language = getDefaultLanguageIndex(),
-            frequency = 0
+            frequency = 0,
+            currency = "€",
+            customCurrency = ""
         ).also {
             settingsRepository.insert(settings = it)
         }
@@ -195,6 +205,19 @@ class MainActivity : AppCompatActivity() {
                 putString("last_version_name", versionName)
             }
             recreate()
+        }
+    }
+
+    suspend fun updateLastCostPeriod(costsRepository: CostsRepository) {
+        val lastEntry = costsRepository.getLast() ?: return
+        val today = LocalDate.now()
+        val lastEndDate = lastEntry.endDate.toLocalDate()
+        if (lastEndDate.isEqual(today.minusDays(1))) {
+            costsRepository.update(
+                entry = lastEntry.copy(
+                    endDate = today.atTime(LocalTime.MAX)
+                )
+            )
         }
     }
 
@@ -250,6 +273,7 @@ class MainActivity : AppCompatActivity() {
             "fr" -> 5
             "sr" -> 6
             "sr-Latn" -> 7
+            "zh-CN" -> 8
             else -> 0
         }
     }

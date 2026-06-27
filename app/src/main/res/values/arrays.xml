@@ -8,6 +8,7 @@
         <item>fr</item>
         <item>sr</item>
         <item>sr-Latn</item>
+        <item>zh-CN</item>
     </string-array>
 
     <string-array name="language_names">
@@ -19,6 +20,7 @@
         <item>Français</item>
         <item>Српски</item>
         <item>Srpski</item>
+        <item>中文（简体）</item>
     </string-array>
 
     <string-array name="theme_names">

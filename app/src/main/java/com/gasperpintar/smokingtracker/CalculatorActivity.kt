@@ -1,9 +1,9 @@
 package com.gasperpintar.smokingtracker
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
@@ -11,7 +11,7 @@ import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
-import java.time.ZoneId
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class CalculatorActivity : AppCompatActivity() {
@@ -65,7 +65,10 @@ class CalculatorActivity : AppCompatActivity() {
             DialogManager.showDatePickerDialog(
                 context = this@CalculatorActivity,
             ) { date ->
-                applySelectedDate(selectedDate = date, isStartDate = true)
+                val (start, end, text) = TimeHelper.applySelectedDate(startDate = startDate, endDate = endDate, selectedDate = date, isStartDate = true)
+                startDate = start
+                endDate = end
+                inputStartDate.setText(text)
             }
         }
 
@@ -73,18 +76,11 @@ class CalculatorActivity : AppCompatActivity() {
             DialogManager.showDatePickerDialog(
                 context = this@CalculatorActivity,
             ) { date ->
-                applySelectedDate(selectedDate = date, isStartDate = false)
+                val (start, end, text) = TimeHelper.applySelectedDate(startDate = startDate, endDate = endDate, selectedDate = date, isStartDate = false)
+                startDate = start
+                endDate = end
+                inputEndDate.setText(text)
             }
-        }
-
-        inputStartDate.setOnLongClickListener {
-            clearStartDate()
-            true
-        }
-
-        inputEndDate.setOnLongClickListener {
-            clearEndDate()
-            true
         }
 
         buttonBack.setOnClickListener {
@@ -126,54 +122,22 @@ class CalculatorActivity : AppCompatActivity() {
         return (diffMillis / MILLIS_IN_DAY).toInt() + 1
     }
 
-    @SuppressLint(value = ["InflateParams"])
     private fun showResultDialog(
         totalCost: Double,
         totalTimeMinutes: Int,
         totalCigarettes: Int
     ) {
-        DialogManager.showResultDialog(
-            context = this,
-            totalCost = totalCost,
-            totalTimeMinutes = totalTimeMinutes,
-            totalCigarettes = totalCigarettes,
-            currencyUnit = getString(R.string.calculator_result_valute_unit),
-            formatTime = { minutes ->
-                TimeHelper.formatTime(resources = resources, totalMinutes = minutes)
-            }
-        )
-    }
-
-    private fun applySelectedDate(
-        selectedDate: Calendar,
-        isStartDate: Boolean
-    ) {
-        val localDate = selectedDate.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-
-        if (isStartDate) {
-            startDate = selectedDate.clone() as Calendar
-            binding.inputStartDate.setText(LocalizationHelper.formatDate(localDate))
-
-            if (endDate != null && endDate!!.before(startDate)) {
-                clearEndDate()
-            }
-        } else {
-            endDate = selectedDate.clone() as Calendar
-            binding.inputEndDate.setText(LocalizationHelper.formatDate(localDate))
-
-            if (startDate != null && startDate!!.after(endDate)) {
-                clearStartDate()
-            }
+        lifecycleScope.launch {
+            DialogManager.showResultDialog(
+                context = this@CalculatorActivity,
+                totalCost = totalCost,
+                totalTimeMinutes = totalTimeMinutes,
+                totalCigarettes = totalCigarettes,
+                currencyUnit = settingsRepository.get()?.currency ?: "€",
+                formatTime = { minutes ->
+                    TimeHelper.formatTime(resources = resources, totalMinutes = minutes)
+                }
+            )
         }
-    }
-
-    private fun clearStartDate() {
-        startDate = null
-        binding.inputStartDate.setText("")
-    }
-
-    private fun clearEndDate() {
-        endDate = null
-        binding.inputEndDate.setText("")
     }
 }

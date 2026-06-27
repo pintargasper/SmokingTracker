@@ -8,6 +8,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
+import java.util.Calendar
 
 object TimeHelper {
 
@@ -42,16 +43,6 @@ object TimeHelper {
         date: LocalDate
     ): LocalDateTime {
         return date.atTime(LocalTime.MAX)
-    }
-
-    @Deprecated(
-        message = "Since version 1.3.0. Use getEndOfDay(date: LocalDate) instead",
-        replaceWith = ReplaceWith(expression = "getEndOfDay(date)")
-    )
-    fun getEndOfDay(): LocalDateTime {
-        return LocalDateTime.now().withHour(23)
-            .withMinute(59).withSecond(59)
-            .withNano(999_999_999)
     }
 
     fun getNextMidnightMillis(): Long {
@@ -107,5 +98,45 @@ object TimeHelper {
             }
             add(resources.getQuantityString(R.plurals.time_minutes, minutes, minutes))
         }.joinToString(" ")
+    }
+
+    fun toLocalDateTime(calendar: Calendar): LocalDateTime {
+        return calendar.time.toInstant()
+            .atZone(ZoneId.systemDefault())
+            .toLocalDateTime()
+    }
+
+    fun applySelectedDate(
+        startDate: Calendar?,
+        endDate: Calendar?,
+        selectedDate: Calendar,
+        isStartDate: Boolean
+    ): Triple<Calendar?, Calendar?, String> {
+        var updatedStartDate: Calendar? = startDate
+        var updatedEndDate: Calendar? = endDate
+
+        val selectedDateCopy: Calendar = selectedDate.clone() as Calendar
+        if (isStartDate) {
+            updatedStartDate = selectedDateCopy
+            if (updatedEndDate != null && updatedEndDate.before(updatedStartDate)) {
+                updatedEndDate = updatedStartDate.clone() as Calendar
+            }
+        } else {
+            updatedEndDate = selectedDateCopy
+            if (updatedStartDate != null && updatedStartDate.after(updatedEndDate)) {
+                updatedEndDate = updatedStartDate.clone() as Calendar
+            }
+        }
+
+        val calendarForDisplay: Calendar = when {
+            isStartDate -> updatedStartDate
+            else -> updatedEndDate
+        } ?: selectedDateCopy
+
+        return Triple(
+            updatedStartDate,
+            updatedEndDate,
+            LocalizationHelper.formatDate(calendarForDisplay.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+        )
     }
 }

@@ -20,7 +20,9 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.NotesRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
@@ -39,6 +41,8 @@ class SettingsFragment : Fragment() {
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
+    private lateinit var costsRepository: CostsRepository
+    private lateinit var notesRepository: NotesRepository
 
     private lateinit var exportDocumentLauncher: ActivityResultLauncher<String>
     private lateinit var importDocumentLauncher: ActivityResultLauncher<Array<String>>
@@ -57,6 +61,8 @@ class SettingsFragment : Fragment() {
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        costsRepository = CostsRepository(costDao = database.costsDao())
+        notesRepository = NotesRepository(notesDao = database.notesDao())
 
         setupImportLauncher()
         setupExportLauncher()
@@ -64,6 +70,11 @@ class SettingsFragment : Fragment() {
         setupAbout()
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setup() {
@@ -135,6 +146,37 @@ class SettingsFragment : Fragment() {
             }
         }
 
+        binding.currencyLayout.setOnClickListener {
+            lifecycleScope.launch {
+                withSettings { settings ->
+                    DialogManager.showCurrencyDialog(
+                        context = requireActivity(),
+                        settings = settings,
+                        onCurrencySelected = { currency, custom ->
+                            updateSettingsField(
+                                updateBlock = {
+                                    it.copy(
+                                        currency = currency,
+                                        customCurrency = custom
+                                    )
+                                }
+                            )
+                        }
+                    )
+                }
+            }
+        }
+
+        binding.costsLayout.setOnClickListener {
+            lifecycleScope.launch {
+                DialogManager.showCostsDialog(
+                    context = requireActivity(),
+                    costsRepository = costsRepository,
+                    currency = settingsRepository.get()?.currency ?: "€",
+                )
+            }
+        }
+
         binding.downloadLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
                 exportDocumentLauncher.launch("st_data")
@@ -164,6 +206,8 @@ class SettingsFragment : Fragment() {
                                         historyRepository = historyRepository,
                                         settingsRepository = settingsRepository,
                                         notificationsSettingsRepository = notificationsSettingsRepository,
+                                        costsRepository = costsRepository,
+                                        notesRepository = notesRepository,
                                         onProgress = { progress ->
                                             dialog.updateProgress(progress)
                                         }
@@ -189,6 +233,15 @@ class SettingsFragment : Fragment() {
 
         binding.versionLayout.setOnClickListener {
             DialogManager.showVersionDialog(
+                context = requireActivity(),
+                onLinkClicked = { _, url ->
+                    openUrl(url)
+                }
+            )
+        }
+
+        binding.contributorsLayout.setOnClickListener {
+            DialogManager.showContributorsDialog(
                 context = requireActivity(),
                 onLinkClicked = { _, url ->
                     openUrl(url)
@@ -229,7 +282,8 @@ class SettingsFragment : Fragment() {
             listOf(
                 websiteUrl to "https://gasperpintar.com/smoking-tracker",
                 translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
-                privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy"
+                privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy",
+                changelogUrl to "https://github.com/pintargasper/SmokingTracker/releases"
             ).forEach {
                 (view, url) -> setupLink(view, url)
             }
@@ -304,6 +358,8 @@ class SettingsFragment : Fragment() {
                         historyRepository = historyRepository,
                         settingsRepository = settingsRepository,
                         notificationsSettingsRepository = notificationsSettingsRepository,
+                        costsRepository = costsRepository,
+                        notesRepository = notesRepository,
                         onProgress = { progress ->
                             dialog.updateProgress(progress)
                         }
@@ -311,10 +367,5 @@ class SettingsFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

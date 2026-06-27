@@ -32,6 +32,7 @@ import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.time.Duration.Companion.milliseconds
 
 class HomeFragment : Fragment() {
 
@@ -54,7 +55,6 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         database = (requireActivity() as MainActivity).database
@@ -201,7 +201,7 @@ class HomeFragment : Fragment() {
         timerJob = lifecycleScope.launch {
             while (isActive) {
                 updateTimerLabel()
-                delay(1000)
+                delay(duration = 1000.milliseconds)
             }
         }
     }

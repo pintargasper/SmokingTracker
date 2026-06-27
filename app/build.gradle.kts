@@ -2,7 +2,7 @@ import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     alias(libs.plugins.android.application)
-    id("com.github.jk1.dependency-license-report") version "3.1.2"
+    id("com.github.jk1.dependency-license-report") version "3.1.4"
     id("com.google.devtools.ksp") version "2.3.4"
 }
 
@@ -21,8 +21,8 @@ configure<ApplicationExtension> {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
         targetSdk = 36
-        versionCode = 12
-        versionName = "1.6.0"
+        versionCode = 13
+        versionName = "1.7.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

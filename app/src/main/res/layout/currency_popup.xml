@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_language_popup_container"
+    android:id="@+id/card_currency_popup_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -17,41 +17,41 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/popup_language_title"
+            android:id="@+id/popup_currency_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/language_popup"
+            android:text="@string/currency_popup"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/MainTitleCenterTextView"/>
 
         <TextView
-            android:id="@+id/popup_language_info"
+            android:id="@+id/popup_currency_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/language_popup_info"
+            android:text="@string/currency_popup_info"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
-            app:layout_constraintTop_toBottomOf="@id/popup_language_title"
+            app:layout_constraintTop_toBottomOf="@id/popup_currency_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/BodyTextView"/>
 
         <ScrollView
-            android:id="@+id/language_inner_options_container"
+            android:id="@+id/currency_inner_options_container"
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginTop="16dp"
             android:fillViewport="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/popup_language_info"
+            app:layout_constraintTop_toBottomOf="@id/popup_currency_info"
             tools:ignore="TextSizeCheck">
 
             <LinearLayout
-                android:id="@+id/language_options_container"
+                android:id="@+id/currency_options_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -59,91 +59,75 @@
                 android:paddingBottom="4dp">
 
                 <CheckBox
-                    android:id="@+id/checkbox_system"
+                    android:id="@+id/checkbox_euro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/language_popup_check_box_system"
+                    android:text="@string/currency_check_box_euro"
                     android:maxWidth="300dp"
                     tools:ignore="VisualLintButtonSize"
                     style="@style/CheckBox"/>
 
                 <CheckBox
-                    android:id="@+id/checkbox_english"
+                    android:id="@+id/checkbox_dollar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="English"
+                    android:text="@string/currency_check_box_dollar"
                     android:maxWidth="300dp"
                     tools:ignore="HardcodedText,VisualLintButtonSize"
                     style="@style/CheckBox"/>
 
                 <CheckBox
-                    android:id="@+id/checkbox_slovenian"
+                    android:id="@+id/checkbox_pound"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Slovenščina"
+                    android:text="@string/currency_check_box_pound"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-                <CheckBox
-                    android:id="@+id/checkbox_ukrainian"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/edit_text_error"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Українська"
-                    android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:text="@string/currency_text_error"
+                    android:scrollHorizontally="false"
+                    android:visibility="gone"
+                    style="@style/BodyTextView"/>
 
-                <CheckBox
-                    android:id="@+id/checkbox_german"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/custom_currency_input_container"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Deutsch"
-                    android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    android:orientation="horizontal">
 
-                <CheckBox
-                    android:id="@+id/checkbox_french"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Français"
-                    android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    <CheckBox
+                        android:id="@+id/checkbox_custom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/currency_check_box_custom"
+                        android:maxWidth="300dp"
+                        style="@style/CheckBox"
+                        tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-                <CheckBox
-                    android:id="@+id/checkbox_serbian_cyrillic_script"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Српски"
-                    android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
-
-                <CheckBox
-                    android:id="@+id/checkbox_serbian_latin_script"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Srpski"
-                    android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
-
-                <CheckBox
-                    android:id="@+id/checkbox_chinese_simplified"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="中文（简体）"
-                    android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    <EditText
+                        android:id="@+id/input_custom_currency"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/currency_check_box_edit_text"
+                        android:autofillHints="none"
+                        android:inputType="text"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"/>
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_close_language_button"
+            android:id="@+id/card_close_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -153,11 +137,10 @@
             android:padding="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/language_inner_options_container"
+            app:layout_constraintTop_toBottomOf="@id/currency_inner_options_container"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_max="320dp">
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
                 android:id="@+id/button_close"

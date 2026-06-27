@@ -10,6 +10,9 @@ interface Base<T> {
     @Upsert
     suspend fun upsertAll(entities: List<T>)
 
+    @Upsert
+    suspend fun upsert(entity: T)
+
     @Insert
     suspend fun insert(entity: T)
 

@@ -114,6 +114,32 @@
                         style="@style/BodyTextView"/>
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/notes_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="55dp"
+                    android:layout_marginTop="1dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/text_notes_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/analytics_notes_title"
+                        style="@style/SubtitleTextView"/>
+
+                    <TextView
+                        android:id="@+id/text_notes_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/analytics_notes_description"
+                        style="@style/BodyTextView"/>
+                </LinearLayout>
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
