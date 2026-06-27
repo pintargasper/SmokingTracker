@@ -27,7 +27,7 @@ import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEnti
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.model.CostEntry
 import com.gasperpintar.smokingtracker.model.HistoryEntry
-import com.gasperpintar.smokingtracker.repository.CostRepository
+import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -315,7 +315,7 @@ object DialogManager {
     @SuppressLint(value = ["DefaultLocale"])
     fun showCostsDialog(
         context: FragmentActivity,
-        costRepository: CostRepository,
+        costsRepository: CostsRepository,
         currency: String
     ) {
         val dialogInstance = object : BaseDialog(context, R.layout.costs_popup) {
@@ -334,7 +334,7 @@ object DialogManager {
                 lateinit var adapter: Adapter<CostEntry>
 
                 suspend fun loadData() {
-                    val refreshed = costRepository.getAll().map(transform = CostEntry::fromEntity)
+                    val refreshed = costsRepository.getAll().map(transform = CostEntry::fromEntity)
                     adapter.submitList(refreshed)
                 }
 
@@ -365,7 +365,7 @@ object DialogManager {
 
                         delete.setOnClickListener {
                             context.lifecycleScope.launch {
-                                costRepository.delete(entry = costEntry.toEntity())
+                                costsRepository.delete(entry = costEntry.toEntity())
                                 loadData()
                             }
                         }
@@ -405,7 +405,7 @@ object DialogManager {
                         val safeStart = startDate ?: Calendar.getInstance()
                         val safeEnd = endDate ?: Calendar.getInstance()
 
-                        costRepository.insert(
+                        costsRepository.insert(
                             entry = CostEntity(
                                 id = 0L,
                                 startDate = TimeHelper.toLocalDateTime(calendar = safeStart),
@@ -567,7 +567,6 @@ object DialogManager {
                 val tvCostPerCigarette: TextView = dialogView.findViewById(R.id.popup_result_cost_per_cigarette)
                 val tvAverageCostPerHour: TextView = dialogView.findViewById(R.id.popup_result_average_cost_per_hour)
                 val tvTimeSpent: TextView = dialogView.findViewById(R.id.popup_result_time_spent)
-                val btnClose: Button = dialogView.findViewById(R.id.button_close_result)
 
                 val averageCostPerCigarette = if (totalCigarettes > 0) totalCost / totalCigarettes else 0.0
                 val totalHours = totalTimeMinutes / 60.0
@@ -577,18 +576,40 @@ object DialogManager {
                 tvCostPerCigarette.text = String.format("%.3f %s", averageCostPerCigarette, currencyUnit)
                 tvAverageCostPerHour.text = String.format("%.2f %s", averageCostPerHour, currencyUnit)
                 tvTimeSpent.text = formatTime(totalTimeMinutes)
-
-                btnClose.setOnClickListener {
-                    dialog.dismiss()
-                }
             }
         }
         dialogInstance.show()
     }
 
-    fun showLoadingDialog(context: FragmentActivity): LoadingDialog {
+    fun showLoadingDialog(
+        context: FragmentActivity
+    ): LoadingDialog {
         val dialog = LoadingDialog(context)
         dialog.show()
         return dialog
+    }
+
+    fun showSaveNoteDialog(
+        context: FragmentActivity,
+        onSave: () -> Unit,
+        onClose: () -> Unit = {}
+    ) {
+        val dialogInstance = object : BaseDialog(context, R.layout.save_note_popup) {
+            override fun setup() {
+                val buttonConfirm: Button = dialogView.findViewById(R.id.button_save)
+                val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+
+                buttonConfirm.setOnClickListener {
+                    dialog.dismiss()
+                    onSave()
+                }
+
+                buttonClose.setOnClickListener {
+                    dialog.dismiss()
+                    onClose()
+                }
+            }
+        }
+        dialogInstance.show()
     }
 }

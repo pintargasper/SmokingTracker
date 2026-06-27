@@ -10,7 +10,7 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostRepository
+import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
@@ -42,7 +42,7 @@ object Manager {
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
         notificationsSettingsRepository: NotificationsSettingsRepository,
-        costRepository: CostRepository,
+        costsRepository: CostsRepository,
         onProgress: (Int) -> Unit
     ): Uri = withContext(Dispatchers.IO) {
         XSSFWorkbook().use { workbook ->
@@ -50,7 +50,7 @@ object Manager {
                 steps = listOf(
                     SyncedStep(weight = 45) { progress -> createHistorySheet(workbook, historyList = historyRepository.getAll(), onStepProgress = progress) },
                     SyncedStep(weight = 30) { progress -> createAchievementSheet(workbook, achievementList = achievementRepository.getAll(), onStepProgress = progress) },
-                    SyncedStep(weight = 10) { progress -> createCostsSheet(workbook, costs = costRepository.getAll(), onStepProgress = progress) },
+                    SyncedStep(weight = 10) { progress -> createCostsSheet(workbook, costs = costsRepository.getAll(), onStepProgress = progress) },
                     SyncedStep(weight = 5) { progress -> createSettingsSheet(workbook, settingsRepository.get(), onStepProgress = progress) },
                     SyncedStep(weight = 5) { progress -> createNotificationsSettingsSheet(workbook, notificationsSettingsRepository.get(), onStepProgress = progress) },
                     SyncedStep(weight = 5) {
@@ -80,7 +80,7 @@ object Manager {
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
         notificationsSettingsRepository: NotificationsSettingsRepository,
-        costRepository: CostRepository,
+        costsRepository: CostsRepository,
         onProgress: (Int) -> Unit
     ) = withContext(Dispatchers.IO) {
         val notificationsEnabled = notificationsSettingsRepository.get()?.system ?: true
@@ -91,7 +91,7 @@ object Manager {
                         steps = listOf(
                             SyncedStep(weight = 45) { progress -> importHistorySheet(workbook, historyRepository, onStepProgress = progress) },
                             SyncedStep(weight = 30) { progress -> importAchievementSheet(workbook, achievementRepository, onStepProgress = progress) },
-                            SyncedStep(weight = 10) { progress -> importCostsSheet(workbook, costRepository, onStepProgress = progress) },
+                            SyncedStep(weight = 10) { progress -> importCostsSheet(workbook, costsRepository, onStepProgress = progress) },
                             SyncedStep(weight = 10) { progress -> importSettingsSheet(workbook, settingsRepository, onStepProgress = progress) },
                             SyncedStep(weight = 5) { progress -> importNotificationsSettingsSheet(workbook, notificationsSettingsRepository, onStepProgress = progress) }
                         )
@@ -375,7 +375,7 @@ object Manager {
 
     private suspend fun importCostsSheet(
         workbook: XSSFWorkbook,
-        repository: CostRepository,
+        repository: CostsRepository,
         onStepProgress: (Int) -> Unit = {}
     ) {
         val sheet = workbook.getSheet("Costs") ?: return

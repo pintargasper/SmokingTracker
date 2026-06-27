@@ -20,7 +20,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostRepository
+import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
@@ -40,7 +40,7 @@ class SettingsFragment : Fragment() {
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
-    private lateinit var costRepository: CostRepository
+    private lateinit var costsRepository: CostsRepository
 
     private lateinit var exportDocumentLauncher: ActivityResultLauncher<String>
     private lateinit var importDocumentLauncher: ActivityResultLauncher<Array<String>>
@@ -59,7 +59,7 @@ class SettingsFragment : Fragment() {
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
-        costRepository = CostRepository(costDao = database.costsDao())
+        costsRepository = CostsRepository(costDao = database.costsDao())
 
         setupImportLauncher()
         setupExportLauncher()
@@ -67,6 +67,11 @@ class SettingsFragment : Fragment() {
         setupAbout()
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setup() {
@@ -163,7 +168,7 @@ class SettingsFragment : Fragment() {
             lifecycleScope.launch {
                 DialogManager.showCostsDialog(
                     context = requireActivity(),
-                    costRepository = costRepository,
+                    costsRepository = costsRepository,
                     currency = settingsRepository.get()?.currency ?: "€",
                 )
             }
@@ -198,7 +203,7 @@ class SettingsFragment : Fragment() {
                                         historyRepository = historyRepository,
                                         settingsRepository = settingsRepository,
                                         notificationsSettingsRepository = notificationsSettingsRepository,
-                                        costRepository = costRepository,
+                                        costsRepository = costsRepository,
                                         onProgress = { progress ->
                                             dialog.updateProgress(progress)
                                         }
@@ -349,7 +354,7 @@ class SettingsFragment : Fragment() {
                         historyRepository = historyRepository,
                         settingsRepository = settingsRepository,
                         notificationsSettingsRepository = notificationsSettingsRepository,
-                        costRepository = costRepository,
+                        costsRepository = costsRepository,
                         onProgress = { progress ->
                             dialog.updateProgress(progress)
                         }
@@ -357,10 +362,5 @@ class SettingsFragment : Fragment() {
                     dialog.dismiss()
                 }
             }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

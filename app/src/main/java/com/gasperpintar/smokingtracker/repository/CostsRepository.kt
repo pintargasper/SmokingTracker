@@ -3,7 +3,7 @@ package com.gasperpintar.smokingtracker.repository
 import com.gasperpintar.smokingtracker.database.dao.CostsDao
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 
-class CostRepository(
+class CostsRepository(
     private val costDao: CostsDao
 ) {
     suspend fun insert(

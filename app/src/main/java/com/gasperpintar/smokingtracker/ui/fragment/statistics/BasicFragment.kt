@@ -14,7 +14,7 @@ import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsBasicBinding
 import com.gasperpintar.smokingtracker.model.CigarettesPerDay
-import com.gasperpintar.smokingtracker.repository.CostRepository
+import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -33,7 +33,7 @@ class BasicFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var historyRepository: HistoryRepository
-    private lateinit var costRepository: CostRepository
+    private lateinit var costsRepository: CostsRepository
     private lateinit var settingsRepository: SettingsRepository
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class BasicFragment : Fragment() {
 
         val database = (requireActivity() as StatisticsActivity).database
         historyRepository = HistoryRepository(historyDao = database.historyDao())
-        costRepository = CostRepository(costDao = database.costsDao())
+        costsRepository = CostsRepository(costDao = database.costsDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
 
         setup()
@@ -88,7 +88,7 @@ class BasicFragment : Fragment() {
             binding.textLongestStreak.text = getLongestTime(allHistory)
 
             val allCosts = withContext(Dispatchers.IO) {
-                costRepository.getAll()
+                costsRepository.getAll()
             }
 
             binding.statisticsTitleInstructions.isVisible = allCosts.isEmpty()

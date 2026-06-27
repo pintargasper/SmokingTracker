@@ -2,7 +2,7 @@ import com.android.build.api.dsl.ApplicationExtension
 
 plugins {
     alias(libs.plugins.android.application)
-    id("com.github.jk1.dependency-license-report") version "3.1.2"
+    id("com.github.jk1.dependency-license-report") version "3.1.4"
     id("com.google.devtools.ksp") version "2.3.4"
 }
 

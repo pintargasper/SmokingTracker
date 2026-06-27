@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit
 import androidx.core.view.size
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostRepository
+import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import java.time.LocalDate
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var achievementRepository: AchievementRepository
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
-    private lateinit var costRepository: CostRepository
+    private lateinit var costsRepository: CostsRepository
 
     lateinit var permissionsHelper: Permissions
 
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         notificationsSettingsRepository = NotificationsSettingsRepository(
             notificationsSettingsDao = database.notificationsSettingsDao()
         )
-        costRepository = CostRepository(
+        costsRepository = CostsRepository(
             costDao = database.costsDao()
         )
 
@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity() {
         handleAppVersioning(sharedPreferences = sharedPreferences)
         applyTheme(themeId = settings.theme)
         handleNotifications(sharedPreferences = sharedPreferences)
-        updateLastCostPeriod(costRepository = costRepository)
+        updateLastCostPeriod(costsRepository = costsRepository)
     }
 
     private fun initPager() {
@@ -208,12 +208,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    suspend fun updateLastCostPeriod(costRepository: CostRepository) {
-        val lastEntry = costRepository.getLast() ?: return
+    suspend fun updateLastCostPeriod(costsRepository: CostsRepository) {
+        val lastEntry = costsRepository.getLast() ?: return
         val today = LocalDate.now()
         val lastEndDate = lastEntry.endDate.toLocalDate()
         if (lastEndDate.isEqual(today.minusDays(1))) {
-            costRepository.update(
+            costsRepository.update(
                 entry = lastEntry.copy(
                     endDate = today.atTime(LocalTime.MAX)
                 )
