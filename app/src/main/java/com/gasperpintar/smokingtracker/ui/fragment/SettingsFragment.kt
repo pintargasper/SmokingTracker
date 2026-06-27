@@ -22,6 +22,7 @@ import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.NotesRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
@@ -41,6 +42,7 @@ class SettingsFragment : Fragment() {
     private lateinit var settingsRepository: SettingsRepository
     private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
     private lateinit var costsRepository: CostsRepository
+    private lateinit var notesRepository: NotesRepository
 
     private lateinit var exportDocumentLauncher: ActivityResultLauncher<String>
     private lateinit var importDocumentLauncher: ActivityResultLauncher<Array<String>>
@@ -60,6 +62,7 @@ class SettingsFragment : Fragment() {
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
         costsRepository = CostsRepository(costDao = database.costsDao())
+        notesRepository = NotesRepository(notesDao = database.notesDao())
 
         setupImportLauncher()
         setupExportLauncher()
@@ -204,6 +207,7 @@ class SettingsFragment : Fragment() {
                                         settingsRepository = settingsRepository,
                                         notificationsSettingsRepository = notificationsSettingsRepository,
                                         costsRepository = costsRepository,
+                                        notesRepository = notesRepository,
                                         onProgress = { progress ->
                                             dialog.updateProgress(progress)
                                         }
@@ -355,6 +359,7 @@ class SettingsFragment : Fragment() {
                         settingsRepository = settingsRepository,
                         notificationsSettingsRepository = notificationsSettingsRepository,
                         costsRepository = costsRepository,
+                        notesRepository = notesRepository,
                         onProgress = { progress ->
                             dialog.updateProgress(progress)
                         }

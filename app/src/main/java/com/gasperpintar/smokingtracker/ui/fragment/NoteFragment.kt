@@ -63,7 +63,9 @@ class NoteFragment : Fragment() {
             saveNote(close = true)
         }
 
+        binding.textTitleHeader.text = getString(R.string.analytics_notes_add_title)
         if (noteId != -1L) {
+            binding.textTitleHeader.text = getString(R.string.analytics_notes_edit_title)
             lifecycleScope.launch {
                 existingNote = database.notesDao().getById(noteId)
                 existingNote?.let { note ->

@@ -7,11 +7,13 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.repository.NotesRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
@@ -43,6 +45,7 @@ object Manager {
         settingsRepository: SettingsRepository,
         notificationsSettingsRepository: NotificationsSettingsRepository,
         costsRepository: CostsRepository,
+        notesRepository: NotesRepository,
         onProgress: (Int) -> Unit
     ): Uri = withContext(Dispatchers.IO) {
         XSSFWorkbook().use { workbook ->
@@ -50,7 +53,8 @@ object Manager {
                 steps = listOf(
                     SyncedStep(weight = 45) { progress -> createHistorySheet(workbook, historyList = historyRepository.getAll(), onStepProgress = progress) },
                     SyncedStep(weight = 30) { progress -> createAchievementSheet(workbook, achievementList = achievementRepository.getAll(), onStepProgress = progress) },
-                    SyncedStep(weight = 10) { progress -> createCostsSheet(workbook, costs = costsRepository.getAll(), onStepProgress = progress) },
+                    SyncedStep(weight = 5) { progress -> createCostsSheet(workbook, costs = costsRepository.getAll(), onStepProgress = progress) },
+                    SyncedStep(weight = 5) { progress -> createNotesSheet(workbook, notes = notesRepository.getAll(), onStepProgress = progress) },
                     SyncedStep(weight = 5) { progress -> createSettingsSheet(workbook, settingsRepository.get(), onStepProgress = progress) },
                     SyncedStep(weight = 5) { progress -> createNotificationsSettingsSheet(workbook, notificationsSettingsRepository.get(), onStepProgress = progress) },
                     SyncedStep(weight = 5) {
@@ -81,6 +85,7 @@ object Manager {
         settingsRepository: SettingsRepository,
         notificationsSettingsRepository: NotificationsSettingsRepository,
         costsRepository: CostsRepository,
+        notesRepository: NotesRepository,
         onProgress: (Int) -> Unit
     ) = withContext(Dispatchers.IO) {
         val notificationsEnabled = notificationsSettingsRepository.get()?.system ?: true
@@ -92,7 +97,8 @@ object Manager {
                             SyncedStep(weight = 45) { progress -> importHistorySheet(workbook, historyRepository, onStepProgress = progress) },
                             SyncedStep(weight = 30) { progress -> importAchievementSheet(workbook, achievementRepository, onStepProgress = progress) },
                             SyncedStep(weight = 10) { progress -> importCostsSheet(workbook, costsRepository, onStepProgress = progress) },
-                            SyncedStep(weight = 10) { progress -> importSettingsSheet(workbook, settingsRepository, onStepProgress = progress) },
+                            SyncedStep(weight = 5) { progress -> importNotesSheet(workbook, notesRepository, onStepProgress = progress) },
+                            SyncedStep(weight = 5) { progress -> importSettingsSheet(workbook, settingsRepository, onStepProgress = progress) },
                             SyncedStep(weight = 5) { progress -> importNotificationsSettingsSheet(workbook, notificationsSettingsRepository, onStepProgress = progress) }
                         )
                     ).run(onProgress)
@@ -213,6 +219,27 @@ object Manager {
                 row.createCell(0, CellType.NUMERIC).setCellValue(cost.price)
                 row.createCell(1, CellType.STRING).setCellValue(cost.startDate.format(dateFormatter))
                 row.createCell(2, CellType.STRING).setCellValue(cost.endDate.format(dateFormatter))
+            },
+            onStepProgress = onStepProgress
+        )
+    }
+
+    private fun createNotesSheet(
+        workbook: XSSFWorkbook,
+        notes: List<NoteEntity>,
+        onStepProgress: (Int) -> Unit = {}
+    ) {
+        createSheet(
+            workbook = workbook,
+            name = "Notes",
+            headers = listOf("Title", "Content", "Mood", "CreatedAt", "UpdatedAt"),
+            data = notes,
+            rowMapper = { row, note ->
+                row.createCell(0, CellType.STRING).setCellValue(note.title)
+                row.createCell(1, CellType.STRING).setCellValue(note.content)
+                row.createCell(2, CellType.NUMERIC).setCellValue(note.mood.toDouble())
+                row.createCell(3, CellType.STRING).setCellValue(note.createdAt.format(dateFormatter))
+                row.createCell(4, CellType.STRING).setCellValue(note.updatedAt.format(dateFormatter))
             },
             onStepProgress = onStepProgress
         )
@@ -392,14 +419,14 @@ object Manager {
         val total = (sheet.physicalNumberOfRows - 1).coerceAtLeast(minimumValue = 1)
 
         sheet.forEachIndexed { index, row ->
-            if (index == 0) return@forEachIndexed
+            if (index == 0) {
+                return@forEachIndexed
+            }
 
             val price = row.getCell(column["Price"]!!)?.numericCellValue ?: return@forEachIndexed
-
             val startDate = row.getCell(column["StartDate"]!!)?.stringCellValue?.let {
                 LocalDateTime.parse(it, dateFormatter)
             } ?: return@forEachIndexed
-
             val endDate = row.getCell(column["EndDate"]!!)?.stringCellValue?.let {
                 LocalDateTime.parse(it, dateFormatter)
             } ?: return@forEachIndexed
@@ -415,6 +442,55 @@ object Manager {
             onStepProgress((index * 100) / total)
         }
         repository.insertAll(entries = entities)
+        if (sheet.physicalNumberOfRows <= 1) {
+            onStepProgress(100)
+        }
+    }
+
+    private suspend fun importNotesSheet(
+        workbook: XSSFWorkbook,
+        repository: NotesRepository,
+        onStepProgress: (Int) -> Unit = {}
+    ) {
+        val sheet = workbook.getSheet("Notes") ?: return
+        val headerRow = sheet.getRow(0) ?: return
+        val column = getColumnIndexMap(headerRow)
+
+        if (!listOf("Title", "Content", "Mood", "CreatedAt", "UpdatedAt").all {
+            column.containsKey(it)
+        }) return
+
+        repository.deleteAll()
+
+        val total = (sheet.physicalNumberOfRows - 1).coerceAtLeast(minimumValue = 1)
+        sheet.forEachIndexed { index, row ->
+            if (index == 0) {
+                return@forEachIndexed
+            }
+
+            val title = row.getCell(column["Title"]!!)?.stringCellValue ?: return@forEachIndexed
+            val content = row.getCell(column["Content"]!!)?.stringCellValue ?: return@forEachIndexed
+            val mood = row.getCell(column["Mood"]!!)?.numericCellValue?.toInt() ?: return@forEachIndexed
+            val createdAt = row.getCell(column["CreatedAt"]!!)?.stringCellValue?.let {
+                LocalDateTime.parse(it, dateFormatter)
+            } ?: return@forEachIndexed
+            val updatedAt = row.getCell(column["UpdatedAt"]!!)?.stringCellValue?.let {
+                LocalDateTime.parse(it, dateFormatter)
+            } ?: return@forEachIndexed
+
+            repository.insert(
+                entry = NoteEntity(
+                    id = 0,
+                    title = title,
+                    content = content,
+                    mood = mood,
+                    createdAt = createdAt,
+                    updatedAt = updatedAt
+                )
+            )
+            onStepProgress((index * 100) / total)
+        }
+
         if (sheet.physicalNumberOfRows <= 1) {
             onStepProgress(100)
         }

@@ -36,7 +36,8 @@
     <string name="analytics_achievements_description">Track your milestones and celebrate your progress</string>
     <string name="analytics_notes_title">Notes</string>
     <string name="analytics_notes_description">Save your thoughts and personal notes</string>
-    <string name="analytics_notes_add_title">Add Note</string>
+    <string name="analytics_notes_add_title">Add note</string>
+    <string name="analytics_notes_edit_title">Edit note</string>
     <string name="analytics_notes_add_message">Mood</string>
     <string name="analytics_notes_add_title_hint">Note Title</string>
     <string name="analytics_notes_add_content_hint">Note Content</string>
