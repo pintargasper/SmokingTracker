@@ -150,6 +150,7 @@ Available on other platforms
 | 🇫🇷 French                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/fr/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/fr) |
 | 🇷🇸 Serbian (Cyrillic script) | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-cyrl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-cyrl) |
 | 🇷🇸 Serbian (Latin script)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-latn/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-latn) |
+| 🇨🇳 Chinese (Simplified Han Script)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/zh_Hans/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/zh_Hans) |
 
 > Additional languages will be added in future releases
 

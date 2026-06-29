@@ -55,6 +55,10 @@ configure<ApplicationExtension> {
         includeInApk = false
         includeInBundle = false
     }
+
+    lint {
+        disable.add("MissingTranslation")
+    }
 }
 
 ksp {

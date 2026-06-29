@@ -150,6 +150,7 @@ Na voljo na drugih platformah
 | 🇫🇷 Francoščina                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/fr/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/fr) |
 | 🇷🇸 Srbščina (cirilica) | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-cyrl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-cyrl) |
 | 🇷🇸 Srbščina (latinica)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-latn/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-latn) |
+| 🇨🇳 Kitajščina (poenostavljena)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/zh_Hans/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/zh_Hans) |
 
 > Dodatni jeziki bodo dodani v prihodnjih izdajah
 
