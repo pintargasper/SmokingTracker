@@ -1,0 +1,8 @@
+Updated statistics, features and improvements
+
+- Added notes system with visualization
+- Expanded cost management and tracking
+- Introduced financial statistics
+- Added support for currencies and dynamic management
+- Added localization to Simplified Chinese
+- Stabilized database migrations and improved reliability
