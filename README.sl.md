@@ -136,6 +136,16 @@ Na voljo na drugih platformah
       height="600px"
       alt="Napoved"
     />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/10.png"
+      height="600px"
+      alt="Zapiski"
+    />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/11.png"
+      height="600px"
+      alt="Zapisek"
+    />
   </div>
 </details>
 

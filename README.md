@@ -136,6 +136,16 @@ Available on other platforms
       height="600px"
       alt="Forecast"
     />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/10.png"
+      height="600px"
+      alt="Notes"
+    />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/11.png"
+      height="600px"
+      alt="Note"
+    />
   </div>
 </details>
 
