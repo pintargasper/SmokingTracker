@@ -228,39 +228,32 @@ class BasicFragment : Fragment() {
     }
 
     private suspend fun getTotalSpent(allCosts: List<CostEntity>): String {
-        val totalSpent: Double = allCosts.sumOf { cost ->
-            val cigarettesCount: Int = historyRepository.countBetween(start = cost.startDate, end = cost.endDate)
-            cigarettesCount * cost.price
+        val totalSpent: Double = historyRepository.getAll().sumOf {
+            resolveCostAtTime(it.createdAt, allCosts)
         }
-        return formatMoney(value = totalSpent)
+        return formatMoney(totalSpent)
     }
 
     private suspend fun getTodaySpent(allCosts: List<CostEntity>): String {
         val today: LocalDate = LocalDate.now()
         val dayStart: LocalDateTime = today.atStartOfDay()
         val dayEnd: LocalDateTime = today.plusDays(1).atStartOfDay()
-        val cigarettesCount: Int = historyRepository.countBetween(start = dayStart, end = dayEnd)
 
-        val totalSpent: Double = allCosts.sumOf { cost ->
-            cigarettesCount * cost.price
+        val totalSpent: Double = historyRepository.getBetween(start = dayStart, end = dayEnd).sumOf {
+            resolveCostAtTime(it.createdAt, allCosts)
         }
-        return formatMoney(value = totalSpent)
+        return formatMoney(totalSpent)
     }
 
     private suspend fun getThisMonthSpent(allCosts: List<CostEntity>): String {
         val today: LocalDate = LocalDate.now()
-        val monthStartDate: LocalDate = today.withDayOfMonth(1)
-        val nextMonthStartDate: LocalDate = monthStartDate.plusMonths(1)
+        val monthStart: LocalDateTime = today.withDayOfMonth(1).atStartOfDay()
+        val monthEnd: LocalDateTime = today.withDayOfMonth(1).plusMonths(1).atStartOfDay()
 
-        val monthStart: LocalDateTime = monthStartDate.atStartOfDay()
-        val monthEnd: LocalDateTime = nextMonthStartDate.atStartOfDay()
-
-        val cigarettesCount: Int = historyRepository.countBetween(start = monthStart, end = monthEnd)
-
-        val totalSpent: Double = allCosts.sumOf { cost ->
-            cigarettesCount * cost.price
+        val totalSpent: Double = historyRepository.getBetween(start = monthStart, end = monthEnd).sumOf {
+            resolveCostAtTime(it.createdAt, allCosts)
         }
-        return formatMoney(value = totalSpent)
+        return formatMoney(totalSpent)
     }
 
     private suspend fun getMostExpensiveDay(allCosts: List<CostEntity>, history: List<HistoryEntity>): Pair<String, String> {
@@ -304,6 +297,15 @@ class BasicFragment : Fragment() {
             formatMoney(value = maxSpent),
             maxSpentDate.toString()
         )
+    }
+
+    private fun resolveCostAtTime(
+        time: LocalDateTime,
+        allCosts: List<CostEntity>
+    ): Double {
+        return allCosts.firstOrNull { cost ->
+            !time.isBefore(cost.startDate) && time.isBefore(cost.endDate)
+        } ?.price ?: 0.0
     }
 
     private suspend fun formatMoney(value: Double): String {

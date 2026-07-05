@@ -403,14 +403,22 @@ object DialogManager {
 
                 buttonAddPeriod.setOnClickListener {
                     context.lifecycleScope.launch {
-                        val safeStart = startDate ?: Calendar.getInstance()
-                        val safeEnd = endDate ?: Calendar.getInstance()
+                        val startCalendar: Calendar = startDate ?: Calendar.getInstance()
+                        val endCalendar: Calendar = endDate ?: Calendar.getInstance()
+
+                        val startLocalDateTime = TimeHelper.toLocalDateTime(startCalendar)
+                        val endLocalDateTime = TimeHelper.toLocalDateTime(endCalendar)
+
+                        val adjustedEndLocalDateTime =
+                            endLocalDateTime.takeIf {
+                                it.toLocalDate() != LocalDate.now()
+                            } ?: endLocalDateTime.toLocalDate().atTime(23, 59, 59)
 
                         costsRepository.insert(
                             entry = CostEntity(
                                 id = 0L,
-                                startDate = TimeHelper.toLocalDateTime(calendar = safeStart),
-                                endDate = TimeHelper.toLocalDateTime(calendar = safeEnd),
+                                startDate = startLocalDateTime,
+                                endDate = adjustedEndLocalDateTime,
                                 price = packPrice.text.toString().toDoubleOrNull() ?: 0.0
                             )
                         )
