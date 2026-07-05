@@ -1,0 +1,8 @@
+Posodobljena statistika, funkcije in izboljšave
+
+- Dodan sistem zapiskov z vizualizacijo
+- Razširjeno upravljanje in sledenje stroškov
+- Uvedena finančna statistika
+- Dodana podpora za valute in dinamično upravljanje
+- Dodana lokalizacija v poenostavljeno kitajščino
+- Stabilizirane migracije baze podatkov in izboljšana zanesljivost
