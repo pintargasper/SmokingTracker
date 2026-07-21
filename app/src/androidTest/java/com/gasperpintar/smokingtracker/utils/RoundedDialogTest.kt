@@ -14,7 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(value = AndroidJUnit4::class)
 class RoundedDialogTest {
 
     private lateinit var context: Context
@@ -41,7 +41,7 @@ class RoundedDialogTest {
             val roundedDialog = RoundedDialog(activity)
             val returnedDialog = roundedDialog.showChained()
             assertSame(
-                "showChained should return the same instance",
+                "ShowChained should return the same instance",
                 roundedDialog,
                 returnedDialog
             )
