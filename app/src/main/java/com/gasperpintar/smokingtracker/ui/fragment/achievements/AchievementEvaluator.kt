@@ -60,7 +60,7 @@ class AchievementEvaluator(
 
                 if (isNewAchievement || isIncorrectDate) {
                     val updatedAchievement = achievement.copy(
-                        times = if (isNewAchievement) achievement.times + 1 else achievement.times,
+                        times = achievement.times + 1,
                         lastAchieved = calculatedUnlockDate,
                         reset = false,
                         notify = isNewAchievement
