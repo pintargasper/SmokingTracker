@@ -15,19 +15,6 @@ interface AchievementDao: Base<AchievementEntity> {
 
     @Query(value = """
         UPDATE achievements
-        SET times = times + 1,
-            reset = 0,
-            lastAchieved = CURRENT_TIMESTAMP
-        WHERE id = :achievementId
-        AND reset = 1
-    """
-    )
-    suspend fun incrementAchievementTimesSafe(
-        achievementId: Long
-    )
-
-    @Query(value = """
-        UPDATE achievements
         SET 
             reset = :state,
             notify = :state

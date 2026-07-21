@@ -77,5 +77,3 @@ interface HistoryDao: Base<HistoryEntity> {
     )
     suspend fun getMinCigarettesPerDay(): CigarettesPerDay?
 }
-
-

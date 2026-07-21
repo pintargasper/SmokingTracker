@@ -19,6 +19,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
+import com.gasperpintar.smokingtracker.model.CostEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
@@ -168,11 +169,26 @@ class SettingsFragment : Fragment() {
         }
 
         binding.costsLayout.setOnClickListener {
+
             lifecycleScope.launch {
+                val costs = costsRepository.getAll().map(transform = CostEntry::fromEntity)
                 DialogManager.showCostsDialog(
                     context = requireActivity(),
-                    costsRepository = costsRepository,
+                    costs = costs,
                     currency = settingsRepository.get()?.currency ?: "€",
+                    onDelete = { costEntry ->
+                        costsRepository.delete(
+                            entry = costEntry.toEntity()
+                        )
+                    },
+                    onCostAdded = { costEntity ->
+                        costsRepository.insert(
+                            entry = costEntity
+                        )
+                    },
+                    onRefresh = {
+                        costsRepository.getAll().map(transform = CostEntry::fromEntity)
+                    }
                 )
             }
         }
