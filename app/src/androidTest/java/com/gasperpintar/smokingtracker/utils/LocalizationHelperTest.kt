@@ -41,10 +41,10 @@ class LocalizationHelperTest {
         settingsRepository.insert(settings = createSettingsEntity(languageId = 0))
 
         val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
-        val expectedLanguage = context.resources.configuration.locales[0].language
-        val actualLanguage = localizedContext.resources.configuration.locales[0].language
+        val expected = context.resources.configuration.locales[0].language
+        val actual = localizedContext.resources.configuration.locales[0].language
 
-        assertEquals(expectedLanguage, actualLanguage)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -65,10 +65,10 @@ class LocalizationHelperTest {
         database.settingsDao().insert(entity = createSettingsEntity(languageId = 999))
 
         val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
-        val expectedLanguage = context.resources.configuration.locales[0].language
-        val actualLanguage = localizedContext.resources.configuration.locales[0].language
+        val expected = context.resources.configuration.locales[0].language
+        val actual = localizedContext.resources.configuration.locales[0].language
 
-        assertEquals(expectedLanguage, actualLanguage)
+        assertEquals(expected, actual)
     }
 
     @Test

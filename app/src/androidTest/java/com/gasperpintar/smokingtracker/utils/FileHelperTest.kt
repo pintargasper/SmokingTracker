@@ -30,9 +30,16 @@ class FileHelperTest {
         val temporaryFile = File.createTempFile("test_data", ".xlsx")
 
         try {
-            val uri = FileProvider.getUriForFile(context, context.packageName + ".provider", temporaryFile)
-            val result = FileHelper.getFileName(context, uri)
-            assertEquals(temporaryFile.name, result)
+            val expected = temporaryFile.name
+            val actual = FileHelper.getFileName(
+                context,
+                FileProvider.getUriForFile(
+                    context,
+                    "${context.packageName}.provider",
+                    temporaryFile
+                )
+            )
+            assertEquals(expected, actual)
         } finally {
             temporaryFile.delete()
         }
@@ -40,7 +47,8 @@ class FileHelperTest {
 
     @Test
     fun getFileNameReturnsUnknownWhenUriIsNull() {
-        val result = FileHelper.getFileName(context, null)
-        assertEquals(context.getString(R.string.upload_popup_file_unknown), result)
+        val expected = context.getString(R.string.upload_popup_file_unknown)
+        val actual = FileHelper.getFileName(context, null)
+        assertEquals(expected, actual)
     }
 }

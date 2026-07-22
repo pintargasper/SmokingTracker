@@ -23,13 +23,12 @@ class TimeHelperTest {
     @Test
     fun formatDurationReturnsZeroSecondsWhenDurationIsNull() {
         val expected = "0${context.getString(R.string.home_timer_second)}"
-
-        val result = TimeHelper.formatDuration(
+        val actual = TimeHelper.formatDuration(
             resources = context.resources,
             duration = null
         )
 
-        assertEquals(expected, result)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -41,12 +40,12 @@ class TimeHelperTest {
                 "3${context.getString(R.string.home_timer_minute)} " +
                 "4${context.getString(R.string.home_timer_second)}"
 
-        val result = TimeHelper.formatDuration(
+        val actual = TimeHelper.formatDuration(
             resources = context.resources,
             duration = duration
         )
 
-        assertEquals(expected, result)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -60,13 +59,12 @@ class TimeHelperTest {
             5,
             5
         )
-
-        val result = TimeHelper.formatTime(
+        val actual = TimeHelper.formatTime(
             resources = context.resources,
             totalMinutes = 125
         )
 
-        assertEquals(expected, result)
+        assertEquals(expected, actual)
     }
 
     @Test
@@ -76,12 +74,11 @@ class TimeHelperTest {
             15,
             15
             )
-
-        val result = TimeHelper.formatTime(
+        val actual = TimeHelper.formatTime(
             resources = context.resources,
             totalMinutes = 15
         )
 
-        assertEquals(expected, result)
+        assertEquals(expected, actual)
     }
 }

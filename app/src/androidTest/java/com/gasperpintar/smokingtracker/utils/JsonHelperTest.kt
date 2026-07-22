@@ -1,6 +1,7 @@
 package com.gasperpintar.smokingtracker.utils
 
 import android.content.Context
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
@@ -25,7 +26,7 @@ class JsonHelperTest {
 
     @Before
     fun setup() {
-        context = androidx.test.core.app.ApplicationProvider.getApplicationContext()
+        context = ApplicationProvider.getApplicationContext()
         database = TestProvider.getInMemoryDatabase(context)
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         jsonHelper = JsonHelper(achievementRepository = achievementRepository)

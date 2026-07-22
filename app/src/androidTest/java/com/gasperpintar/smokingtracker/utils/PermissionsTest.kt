@@ -35,7 +35,9 @@ class PermissionsTest {
                 true
             }
 
-            assertEquals(expected, permissions.isNotificationPermissionGranted())
+            val actual = permissions.isNotificationPermissionGranted()
+
+            assertEquals(expected, actual)
         }
     }
 
@@ -77,13 +79,13 @@ class PermissionsTest {
         activityScenarioRule.scenario.onActivity { activity ->
             val permissions = Permissions(activity)
 
-            assertEquals(
-                PackageManager.PERMISSION_GRANTED,
-                ContextCompat.checkSelfPermission(
-                    activity,
-                    Manifest.permission.POST_NOTIFICATIONS
-                )
+            val expected = PackageManager.PERMISSION_GRANTED
+            val actual = ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.POST_NOTIFICATIONS
             )
+
+            assertEquals(expected, actual)
 
             permissions.checkAndRequestNotificationPermission {
                 callbackResult = it

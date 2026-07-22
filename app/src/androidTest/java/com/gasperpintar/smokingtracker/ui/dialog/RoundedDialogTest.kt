@@ -1,14 +1,12 @@
-package com.gasperpintar.smokingtracker.utils
+package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.content.Context
 import android.view.View
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.MainActivity
-import com.gasperpintar.smokingtracker.ui.dialog.RoundedDialog
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertSame
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -31,7 +29,7 @@ class RoundedDialogTest {
     fun creationOnUiThread() {
         activityScenarioRule.scenario.onActivity { activity ->
             val roundedDialog = RoundedDialog(context = activity)
-            assertNotNull("Dialog should be instantiated", roundedDialog)
+            Assert.assertNotNull("Dialog should be instantiated", roundedDialog)
         }
     }
 
@@ -40,7 +38,7 @@ class RoundedDialogTest {
         activityScenarioRule.scenario.onActivity { activity ->
             val roundedDialog = RoundedDialog(activity)
             val returnedDialog = roundedDialog.showChained()
-            assertSame(
+            Assert.assertSame(
                 "ShowChained should return the same instance",
                 roundedDialog,
                 returnedDialog
@@ -54,8 +52,8 @@ class RoundedDialogTest {
             val roundedDialog = RoundedDialog(context = activity)
             val dummyView = View(activity)
             val returnedDialog = roundedDialog.setViewChained(dummyView)
-            assertSame(
-                "setViewChained should return the same instance",
+            Assert.assertSame(
+                "SetViewChained should return the same instance",
                 roundedDialog,
                 returnedDialog
             )

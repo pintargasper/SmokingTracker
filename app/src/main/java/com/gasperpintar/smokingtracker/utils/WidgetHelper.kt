@@ -39,8 +39,7 @@ object WidgetHelper {
     fun scheduleMidnightWidgetUpdate(
         context: Context
     ) {
-        val alarmManager: AlarmManager =
-            context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmManager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent: Intent = Intent(context, SmokingTrackerWidget::class.java).apply {
             action = ACTION_MIDNIGHT_WIDGET_UPDATE
