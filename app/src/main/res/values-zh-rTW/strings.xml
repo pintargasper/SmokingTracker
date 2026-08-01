@@ -1,3 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_previous_day">前一天</string>
+    <string name="home_next_day">後一天</string>
+    <string name="home_add_entry">新增項目</string>
+    <string name="graph_daily">每日概覽 (%1$d)</string>
 </resources>
