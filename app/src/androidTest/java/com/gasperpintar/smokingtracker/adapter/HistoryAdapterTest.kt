@@ -20,7 +20,7 @@ import java.time.LocalDateTime
 import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(value = AndroidJUnit4::class)
-class AdapterTest {
+class HistoryAdapterTest {
 
     @get:Rule
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
@@ -35,19 +35,17 @@ class AdapterTest {
             val adapter = Adapter(
                 layoutId = R.layout.history_container,
                 onBind = { itemView, historyEntry ->
-
-                    val timerLabel =
-                        itemView.findViewById<TextView>(R.id.timer_label)
-                    val lentButton =
-                        itemView.findViewById<ImageButton>(R.id.lent)
-                    val editButton =
-                        itemView.findViewById<ImageButton>(R.id.image_button_edit)
-                    val deleteButton =
-                        itemView.findViewById<ImageButton>(R.id.delete)
+                    val timerLabel: TextView = itemView.findViewById(R.id.timer_label)
+                    val lentButton: ImageButton = itemView.findViewById(R.id.lent)
+                    val editButton: ImageButton = itemView.findViewById(R.id.image_button_edit)
+                    val deleteButton: ImageButton = itemView.findViewById(R.id.delete)
 
                     timerLabel.text = historyEntry.timerLabel
-                    lentButton.visibility =
-                        if (historyEntry.isLent) View.VISIBLE else View.GONE
+                    lentButton.visibility = if (historyEntry.isLent) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
+                    }
 
                     editButton.setOnClickListener {
                         clickedEditEntry.set(historyEntry)
@@ -58,15 +56,8 @@ class AdapterTest {
                     }
                 },
                 diffCallback = object : DiffUtil.ItemCallback<HistoryEntry>() {
-                    override fun areItemsTheSame(
-                        oldItem: HistoryEntry,
-                        newItem: HistoryEntry
-                    ): Boolean = oldItem.id == newItem.id
-
-                    override fun areContentsTheSame(
-                        oldItem: HistoryEntry,
-                        newItem: HistoryEntry
-                    ): Boolean = oldItem == newItem
+                    override fun areItemsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem.id == newItem.id
+                    override fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem == newItem
                 }
             )
 
@@ -84,17 +75,16 @@ class AdapterTest {
 
             adapter.submitList(listOf(historyEntry))
 
-            val viewHolder =
-                adapter.createViewHolder(recyclerView, 0).also {
-                    adapter.bindViewHolder(it, 0)
-                }
+            val viewHolder = adapter.createViewHolder(recyclerView, 0).also {
+                adapter.bindViewHolder(it, 0)
+            }
 
             val itemView = viewHolder.itemView
 
-            val timerLabel = itemView.findViewById<TextView>(R.id.timer_label)
-            val lentButton = itemView.findViewById<ImageButton>(R.id.lent)
-            val editButton = itemView.findViewById<ImageButton>(R.id.image_button_edit)
-            val deleteButton = itemView.findViewById<ImageButton>(R.id.delete)
+            val timerLabel: TextView = itemView.findViewById(R.id.timer_label)
+            val lentButton: ImageButton = itemView.findViewById(R.id.lent)
+            val editButton: ImageButton = itemView.findViewById(R.id.image_button_edit)
+            val deleteButton: ImageButton = itemView.findViewById(R.id.delete)
 
             assertEquals("00:10:00", timerLabel.text.toString())
             assertEquals(View.VISIBLE, lentButton.visibility)

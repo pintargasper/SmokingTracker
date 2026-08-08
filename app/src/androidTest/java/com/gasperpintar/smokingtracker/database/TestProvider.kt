@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.database
 
 import android.content.Context
 import androidx.room.Room
+import com.gasperpintar.smokingtracker.database.specifications.Migrations
 
 object TestProvider {
 
@@ -12,7 +13,9 @@ object TestProvider {
             val instance = Room.inMemoryDatabaseBuilder(
                 context = context.applicationContext,
                 klass = AppDatabase::class.java
-            ).build()
+            ).addMigrations(*Migrations.migrationList)
+                .addTypeConverter(Converters())
+                .build()
             databaseInstance = instance
             instance
         }
