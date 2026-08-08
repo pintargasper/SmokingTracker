@@ -60,7 +60,7 @@ class SmokingTrackerWidget : AppWidgetProvider() {
             appWidgetManager: AppWidgetManager,
             appWidgetId: Int
         ) {
-            val views = RemoteViews(context.packageName, R.layout.widget_smoking_tracker)
+            val views = RemoteViews(context.packageName, R.layout.widget_stats)
 
             val database = Provider.getDatabase(context)
             val historyRepository = HistoryRepository(historyDao = database.historyDao())
