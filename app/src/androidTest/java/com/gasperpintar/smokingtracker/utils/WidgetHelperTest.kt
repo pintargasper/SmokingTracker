@@ -9,7 +9,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.provider.SmokingTrackerWidget
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.After

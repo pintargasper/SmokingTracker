@@ -256,6 +256,9 @@
     <string name="loading_bar_encourage_50">Halfway done…</string>
     <string name="loading_bar_encourage_70">Almost finished…</string>
     <string name="loading_bar_encourage_100">Completed successfully</string>
+    <string name="widget_stats">Statistics Widget</string>
+    <string name="widget_stats_quick_add">Statistics &amp; Quick Add Widget</string>
+    <string name="widget_quick_add">Quick Add Widget</string>
     <plurals name="time_years">
         <item quantity="one">%d year</item>
         <item quantity="other">%d years</item>

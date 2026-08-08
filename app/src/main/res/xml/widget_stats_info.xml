@@ -4,6 +4,6 @@
     android:minHeight="60dp"
     android:updatePeriodMillis="0"
     android:initialLayout="@layout/widget_stats"
+    android:previewImage="@drawable/stats_widget"
     android:resizeMode="horizontal|vertical"
     android:widgetCategory="keyguard|home_screen" />
-

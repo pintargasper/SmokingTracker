@@ -28,16 +28,37 @@
         <activity android:name=".AchievementsActivity" />
         <activity android:name=".NotesActivity" />
         <receiver
-            android:icon="@mipmap/ic_launcher"
-            android:label="A widget to view the number of cigarettes smoked"
-            android:name=".provider.SmokingTrackerWidget"
+            android:label="@string/widget_stats"
+            android:name=".provider.StatsWidget"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/smoking_tracker_widget_info" />
+                android:resource="@xml/widget_stats_info" />
+        </receiver>
+        <receiver
+            android:label="@string/widget_stats_quick_add"
+            android:name=".provider.StatsQuickAddWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_stats_quick_add_info" />
+        </receiver>
+        <receiver
+            android:label="@string/widget_quick_add"
+            android:name=".provider.QuickAddWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_quick_add_info" />
         </receiver>
         <provider
             android:name="androidx.core.content.FileProvider"
