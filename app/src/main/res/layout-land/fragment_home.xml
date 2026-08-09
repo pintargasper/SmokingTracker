@@ -217,17 +217,35 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:tint="?attr/colorOnSurface"/>
 
-                <TextView
-                    android:id="@+id/current_date"
+                <LinearLayout
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:text="%1$02d.%2$02d.%3$d"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:maxWidth="150dp"
-                    android:gravity="center"
-                    style="@style/MainTitleCenterTextView"
-                    tools:ignore="HardcodedText" />
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/current_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Day"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        style="@style/SubtitleTextView"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:id="@+id/current_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="%1$02d.%2$02d.%3$d"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        style="@style/MainTitleCenterTextView"
+                        tools:ignore="HardcodedText" />
+
+                </LinearLayout>
 
                 <ImageButton
                     android:id="@+id/next_day"

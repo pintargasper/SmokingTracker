@@ -178,6 +178,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun refreshUI() {
+        binding.currentDay.text = LocalizationHelper.getDayOfWeekName(context = requireContext(), dayOfWeek = selectedDate.dayOfWeek)
         binding.currentDate.text = LocalizationHelper.formatDate(selectedDate)
 
         lifecycleScope.launch {
