@@ -16,6 +16,7 @@
     <string name="home_previous_day">Previous day</string>
     <string name="home_next_day">Next day</string>
     <string name="home_add_entry">Add new entry</string>
+    <string name="home_add">Add entry</string>
     <string name="graph_daily">Daily Overview (%1$d)</string>
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
     <string name="graph_monthly">Monthly Overview (%1$d)</string>
@@ -255,6 +256,9 @@
     <string name="loading_bar_encourage_50">Halfway done…</string>
     <string name="loading_bar_encourage_70">Almost finished…</string>
     <string name="loading_bar_encourage_100">Completed successfully</string>
+    <string name="widget_stats">Statistics Widget</string>
+    <string name="widget_stats_quick_add">Statistics &amp; Quick Add Widget</string>
+    <string name="widget_quick_add">Quick Add Widget</string>
     <plurals name="time_years">
         <item quantity="one">%d year</item>
         <item quantity="other">%d years</item>

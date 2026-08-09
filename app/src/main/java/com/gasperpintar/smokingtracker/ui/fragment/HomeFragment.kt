@@ -185,7 +185,7 @@ class HomeFragment : Fragment() {
             loadHistoryForDay(selectedDate)
         }
 
-        WidgetHelper.updateWidget(context = requireContext())
+        WidgetHelper.updateAllWidgets(context = requireContext())
         updateLastEntry()
     }
 
@@ -211,7 +211,7 @@ class HomeFragment : Fragment() {
         timerJob = null
     }
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint(value = ["DefaultLocale"])
     private fun updateTimerLabel() {
         val entry: HistoryEntity? = lastEntry
 
