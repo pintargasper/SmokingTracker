@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
+import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -13,6 +14,7 @@ import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.Provider
+import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
@@ -21,12 +23,15 @@ import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 object WidgetHelper {
 
     const val ACTION_MIDNIGHT_WIDGET_UPDATE = "com.gasperpintar.smokingtracker.ACTION_MIDNIGHT_WIDGET_UPDATE"
+    const val ACTION_ADD_NEW_ENTRY = "com.gasperpintar.smokingtracker.ACTION_ADD_NEW_ENTRY"
+
+    private var lastEntryTime = 0L
 
     private val widgetClasses = listOf(
         StatsWidget::class.java,
@@ -39,6 +44,39 @@ object WidgetHelper {
         val weekly: Int? = null,
         val monthly: Int? = null
     )
+
+    @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
+    fun scheduleMidnightWidgetUpdate(context: Context) {
+        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(context, StatsWidget::class.java).apply {
+            action = ACTION_MIDNIGHT_WIDGET_UPDATE
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            ACTION_MIDNIGHT_WIDGET_UPDATE.hashCode(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val triggerAtMillis = TimeHelper.getNextMidnightMillis()
+        val canUseExactAlarm = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms()
+
+        when {
+            canUseExactAlarm -> alarmManager.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                triggerAtMillis,
+                pendingIntent
+            )
+
+            else -> alarmManager.setAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                triggerAtMillis,
+                pendingIntent
+            )
+        }
+    }
 
     fun updateWidget(
         context: Context,
@@ -97,52 +135,50 @@ object WidgetHelper {
                     }
                 )
 
-                withContext(Dispatchers.Main) {
-                    appWidgetIds.forEach { appWidgetId ->
-                        val views = RemoteViews(context.packageName, layoutId)
+                appWidgetIds.forEach { appWidgetId ->
+                    val views = RemoteViews(context.packageName, layoutId)
 
-                        setStats(
-                            context = context,
-                            views = views,
-                            settingsRepository = settingsRepository,
-                            stats = stats
-                        )
+                    setStats(
+                        context = context,
+                        views = views,
+                        settingsRepository = settingsRepository,
+                        stats = stats
+                    )
 
-                        openActivity(context = context, views = views)
-                        appWidgetManager.updateAppWidget(appWidgetId, views)
-                    }
+                    newEntryClick(context = context, views = views)
+                    openActivity(context = context, views = views)
+                    appWidgetManager.updateAppWidget(appWidgetId, views)
                 }
             } catch (_: Exception) {
             }
         }
     }
 
-    @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
-    fun scheduleMidnightWidgetUpdate(context: Context) {
-        val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+    fun addNewEntry(context: Context, pendingResult: BroadcastReceiver.PendingResult) {
+        val database = Provider.getDatabase(context)
+        val historyRepository = HistoryRepository(historyDao = database.historyDao())
 
-        val intent = Intent(context, StatsWidget::class.java).apply {
-            action = ACTION_MIDNIGHT_WIDGET_UPDATE
-        }
+        CoroutineScope(context = Dispatchers.IO).launch {
+            try {
 
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            ACTION_MIDNIGHT_WIDGET_UPDATE.hashCode(),
-            intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+                val currentTime = System.currentTimeMillis()
+                if (currentTime - lastEntryTime < 1000) {
+                    return@launch
+                }
+                lastEntryTime = currentTime
 
-        val triggerAtMillis = TimeHelper.getNextMidnightMillis()
-        val canUseExactAlarm = Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms()
-
-        if (canUseExactAlarm) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
-        } else {
-            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent)
+                historyRepository.insert(
+                    entry = HistoryEntity(id = 0L, lent = 0, createdAt = LocalDateTime.now())
+                )
+                updateAllWidgets(context)
+            } catch (_: Exception) {
+            } finally {
+                pendingResult.finish()
+            }
         }
     }
 
-    fun getString(
+    private fun getString(
         context: Context,
         settingsRepository: SettingsRepository,
         resourceId: Int
@@ -193,6 +229,27 @@ object WidgetHelper {
             )
             views.setTextViewText(R.id.widget_monthly_value, monthly.toString())
         }
+    }
+
+    private fun newEntryClick(
+        context: Context,
+        views: RemoteViews
+    ) {
+        val intent = Intent(context, StatsWidget::class.java).apply {
+            action = ACTION_ADD_NEW_ENTRY
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            context,
+            ACTION_ADD_NEW_ENTRY.hashCode(),
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        views.setOnClickPendingIntent(
+            R.id.widget_add_new_entry,
+            pendingIntent
+        )
     }
 
     private fun openActivity(

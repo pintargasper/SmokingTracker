@@ -17,9 +17,15 @@ class StatsWidget : AppWidgetProvider() {
         intent: Intent
     ) {
         super.onReceive(context, intent)
-        if (intent.action == WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE) {
-            WidgetHelper.updateAllWidgets(context)
-            WidgetHelper.scheduleMidnightWidgetUpdate(context)
+        when (intent.action) {
+            WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE -> {
+                WidgetHelper.scheduleMidnightWidgetUpdate(context)
+                WidgetHelper.updateAllWidgets(context)
+            }
+
+            WidgetHelper.ACTION_ADD_NEW_ENTRY -> {
+                WidgetHelper.addNewEntry(context, pendingResult = goAsync())
+            }
         }
     }
 
@@ -29,6 +35,7 @@ class StatsWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
         WidgetHelper.updateStatsWidget(
             context = context,
             appWidgetManager = appWidgetManager,

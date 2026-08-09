@@ -16,6 +16,7 @@ class StatsQuickAddWidget : AppWidgetProvider() {
         appWidgetManager: AppWidgetManager,
         appWidgetIds: IntArray
     ) {
+        super.onUpdate(context, appWidgetManager, appWidgetIds)
         WidgetHelper.updateStatsWidget(
             context = context,
             appWidgetManager = appWidgetManager,
