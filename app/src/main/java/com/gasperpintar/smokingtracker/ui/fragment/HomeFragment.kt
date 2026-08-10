@@ -21,7 +21,6 @@ import com.gasperpintar.smokingtracker.model.HistoryEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
-import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
@@ -42,7 +41,6 @@ class HomeFragment : Fragment() {
     private lateinit var database: AppDatabase
     private lateinit var achievementRepository: AchievementRepository
     private lateinit var historyRepository: HistoryRepository
-    private lateinit var achievementEvaluator: AchievementEvaluator
     private lateinit var historyAdapter: Adapter<HistoryEntry>
 
     private var selectedDate: LocalDate = LocalDate.now()
@@ -60,10 +58,6 @@ class HomeFragment : Fragment() {
         database = (requireActivity() as MainActivity).database
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
-        achievementEvaluator = AchievementEvaluator(
-            historyRepository = historyRepository,
-            achievementRepository = achievementRepository
-        )
 
         setup()
         setupRecyclerView()
@@ -100,7 +94,6 @@ class HomeFragment : Fragment() {
 
                     achievementRepository.resetAll(state = true)
                     historyRepository.insert(entry = entry)
-                    resetAchievementsCache()
                     updateLastEntry()
                     refreshUI()
                 }
@@ -146,7 +139,6 @@ class HomeFragment : Fragment() {
                                 achievementRepository.resetAll(state = false)
                             }
                             historyRepository.update(entry = updatedEntry.toEntity())
-                            resetAchievementsCache()
                             updateLastEntry()
                             refreshUI()
                         }
@@ -161,7 +153,6 @@ class HomeFragment : Fragment() {
                                 achievementRepository.resetAll(state = false)
                             }
                             historyRepository.delete(entry = historyEntry.toEntity())
-                            resetAchievementsCache()
                             updateLastEntry()
                             refreshUI()
                         }
@@ -221,14 +212,6 @@ class HomeFragment : Fragment() {
         }
 
         binding.timerLabel.text = TimeHelper.formatDuration(resources = resources, duration = duration)
-
-        lastEntry?.let {
-            lifecycleScope.launch {
-                onLastEntryChanged(
-                    current = HistoryEntry.fromEntity(entity = it)
-                )
-            }
-        }
     }
 
     private suspend fun updateStatistics(
@@ -258,18 +241,5 @@ class HomeFragment : Fragment() {
         historyAdapter.submitList(historyList) {
             binding.recyclerviewHistory.scrollToPosition(0)
         }
-    }
-
-    suspend fun onLastEntryChanged(
-        current: HistoryEntry?
-    ) {
-        achievementEvaluator.evaluate(
-            lastSmokeTime = current!!.createdAt,
-            now = LocalDateTime.now()
-        )
-    }
-
-    fun resetAchievementsCache() {
-        achievementEvaluator.reset()
     }
 }
