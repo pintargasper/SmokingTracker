@@ -137,6 +137,7 @@
     <string name="contributors_popup_russian">Russian translation</string>
     <string name="contributors_popup_serbian">Serbian translation</string>
     <string name="contributors_popup_chinese_simplified">Chinese (simplified) translation</string>
+    <string name="contributors_popup_chinese_traditional">Chinese (traditional) translation</string>
     <string name="note_popup_save">Save note?</string>
     <string name="achievement_container_meta">Last achieved: %1$s</string>
     <string name="achievement_container_count">Achieved: %1$s</string>

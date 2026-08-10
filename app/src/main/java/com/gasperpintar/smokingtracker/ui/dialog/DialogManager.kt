@@ -534,7 +534,8 @@ object DialogManager {
             R.id.contributor_2_layout to "https://github.com/mrtaxi",
             R.id.contributor_3_layout to "https://github.com/jocixlinux-sys",
             R.id.contributor_4_layout to "https://github.com/iaanneed",
-            R.id.contributor_5_layout to "https://github.com/ywnzzl"
+            R.id.contributor_5_layout to "https://github.com/ywnzzl",
+            R.id.contributor_6_layout to "https://github.com/acidefluorhydrique"
         )
 
         links.forEach { (layoutId, url) ->
