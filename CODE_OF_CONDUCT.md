@@ -53,19 +53,19 @@ Project maintainers may take appropriate action when this Code of Conduct is vio
 
 For minor or first time violations, maintainers may issue a private or public warning and explain what behavior needs to change.
 
-### 2. Temporary Restriction
-
-For repeated or more serious violations, maintainers may temporarily restrict a person's ability to participate in the project, including commenting, opening issues, or submitting contributions.
-
-### 3. Permanent Ban
-
-For serious or repeated violations, maintainers may permanently restrict a person's participation in the project and its community.
-
-### 4. Removal of Content
+### 2. Removal of Content
 
 Maintainers may remove comments, issues, pull requests, or other contributions that violate this Code of Conduct.
 
 All enforcement decisions will be made at the discretion of the project maintainers and will take the circumstances and severity of the violation into account.
+
+### 3. Temporary Restriction
+
+For repeated or more serious violations, maintainers may temporarily restrict a person's ability to participate in the project, including commenting, opening issues, or submitting contributions.
+
+### 4. Permanent Ban
+
+For serious or repeated violations, maintainers may permanently restrict a person's participation in the project and its community.
 
 ## Attribution
 
