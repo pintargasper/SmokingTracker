@@ -1,0 +1,6 @@
+New widgets and notification improvements
+
+- Added new widgets for better overview
+- Added days of the week alongside dates on the home screen
+- Improved achievement and progress reminder notifications
+- Improved overall application stability and performance
