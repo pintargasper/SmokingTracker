@@ -78,7 +78,7 @@ class BasicFragment : Fragment() {
             val sinceFirstEntryString = if (firstRecordDate != null) {
                 getDurationString(start = firstRecordDate)
             } else {
-                resources.getQuantityString(R.plurals.time_days, 0, 0)
+                resources.getQuantityString(R.plurals.time_hours, 0, 0)
             }
             binding.textSinceFirstEntry.text = sinceFirstEntryString
 
@@ -142,89 +142,60 @@ class BasicFragment : Fragment() {
     }
 
     private fun getDurationString(
-        start: LocalDateTime
+        start: LocalDateTime,
+        end: LocalDateTime = LocalDateTime.now()
     ): String {
-        val period = Period.between(start.toLocalDate(), LocalDateTime.now().toLocalDate())
-        val startWithPeriodAdded = start.plusYears(period.years.toLong())
-            .plusMonths(period.months.toLong())
-            .plusDays(period.days.toLong())
-        val duration = Duration.between(startWithPeriodAdded, LocalDateTime.now())
-        val hours = duration.toHours()
+        val period = Period.between(start.toLocalDate(), end.toLocalDate())
+        val duration = Duration.between(start.plusYears(period.years.toLong()).plusMonths(period.months.toLong()).plusDays(period.days.toLong()), end)
 
-        val parts = listOfNotNull(
-            period.years.takeIf {
-                it > 0
-            }?.let {
+        val hours = duration.toHours()
+        val minutes = duration.toMinutes() % 60
+
+        return listOfNotNull(
+            period.years.takeIf { it > 0 }?.let {
                 resources.getQuantityString(R.plurals.time_years, it, it)
             },
-            period.months.takeIf {
-                it > 0
-            }?.let {
+            period.months.takeIf { it > 0 }?.let {
                 resources.getQuantityString(R.plurals.time_months, it, it)
             },
-            (period.days.takeIf {
-                it > 0 || (period.years == 0 && period.months == 0)
-            })?.let {
+            period.days.takeIf { it > 0 }?.let {
                 resources.getQuantityString(R.plurals.time_days, it, it)
             },
-            hours.takeIf {
-                it > 0
-            }?.let {
+            hours.takeIf { it > 0 }?.let {
                 resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
+            },
+            minutes.takeIf { it > 0 }?.let {
+                resources.getQuantityString(
+                    R.plurals.time_minutes,
+                    it.toInt(),
+                    it
+                )
             }
-        )
-        return parts.joinToString(" ")
+        ).joinToString(" ")
     }
 
-    private fun getLongestTime(
-        allHistory: List<HistoryEntity>
-    ): String {
+    private fun getLongestTime(allHistory: List<HistoryEntity>): String {
         if (allHistory.isEmpty()) {
             return resources.getQuantityString(R.plurals.time_hours, 0, 0)
         }
 
+        val now = LocalDateTime.now()
         val sortedHistory = allHistory.sortedBy { it.createdAt }
-        var longestStart: LocalDateTime = sortedHistory[0].createdAt
-        var longestEnd: LocalDateTime = sortedHistory[0].createdAt
-        var longestDuration: Duration = Duration.ZERO
 
-        for (i in 1 until sortedHistory.size) {
-            val previousEntry = sortedHistory[i - 1]
-            val currentEntry = sortedHistory[i]
-
-            val gapDuration = Duration.between(previousEntry.createdAt, currentEntry.createdAt)
-            if (gapDuration > longestDuration) {
-                longestDuration = gapDuration
-                longestStart = previousEntry.createdAt
-                longestEnd = currentEntry.createdAt
-            }
+        val longestInterval = sortedHistory.zipWithNext().maxByOrNull { (previous, current) ->
+            Duration.between(previous.createdAt, current.createdAt)
         }
 
-        val gapToNow = Duration.between(sortedHistory.last().createdAt, LocalDateTime.now())
-        if (gapToNow > longestDuration) {
-            longestStart = sortedHistory.last().createdAt
-            longestEnd = LocalDateTime.now()
-        }
+        val lastStart = sortedHistory.last().createdAt
+        val lastDuration = Duration.between(lastStart, now)
 
-        val duration = Duration.between(longestStart, longestEnd)
-        val totalMinutes = duration.toMinutes()
-        val days = totalMinutes / (24 * 60)
-        val hours = (totalMinutes % (24 * 60)) / 60
-        val minutes = totalMinutes % 60
-
-        val parts = mutableListOf<String>()
-        if (days > 0) {
-            parts.add(resources.getQuantityString(R.plurals.time_days, days.toInt(), days))
+        return if (
+            longestInterval != null &&
+            Duration.between(longestInterval.first.createdAt, longestInterval.second.createdAt) > lastDuration) {
+            getDurationString(start = longestInterval.first.createdAt, end = longestInterval.second.createdAt)
+        } else {
+            getDurationString(start = lastStart, end = now)
         }
-
-        if (hours > 0 || days == 0L) {
-            parts.add(resources.getQuantityString(R.plurals.time_hours, hours.toInt(), hours))
-        }
-
-        if (minutes > 0 || (hours == 0L && days == 0L)) {
-            parts.add(resources.getQuantityString(R.plurals.time_minutes, minutes.toInt(), minutes))
-        }
-        return parts.joinToString(separator = " ")
     }
 
     private suspend fun getTotalSpent(allCosts: List<CostEntity>): String {
