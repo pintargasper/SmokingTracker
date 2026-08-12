@@ -31,7 +31,7 @@
             android:id="@+id/widget_daily_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="9"
             android:textColor="@color/primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
@@ -58,7 +58,7 @@
             android:id="@+id/widget_weekly_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="114"
             android:textColor="@color/primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
@@ -85,7 +85,7 @@
             android:id="@+id/widget_monthly_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="145"
             android:textColor="@color/primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
