@@ -29,8 +29,10 @@ import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Manager
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 class SettingsFragment : Fragment() {
 
@@ -195,7 +197,8 @@ class SettingsFragment : Fragment() {
 
         binding.downloadLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
-                exportDocumentLauncher.launch("st_data")
+                val fileName = "st_data_${LocalizationHelper.formatDateTime(LocalDateTime.now())}"
+                exportDocumentLauncher.launch(fileName)
             }
         }
 

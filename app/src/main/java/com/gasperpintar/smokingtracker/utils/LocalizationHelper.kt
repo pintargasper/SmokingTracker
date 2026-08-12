@@ -8,6 +8,7 @@ import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import java.time.DayOfWeek
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.Month
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -44,6 +45,16 @@ object LocalizationHelper {
             .ofLocalizedDate(FormatStyle.LONG)
             .withLocale(Locale.getDefault())
         return date.format(formatter)
+    }
+
+    fun formatDateTime(dateTime: LocalDateTime): String {
+        val formatter = DateTimeFormatter
+            .ofLocalizedDateTime(FormatStyle.SHORT)
+            .withLocale(Locale.getDefault())
+
+        return dateTime.format(formatter)
+            .replace(Regex("[^a-zA-Z0-9]+"), "_")
+            .trim('_')
     }
 
     @SuppressLint(value = ["DefaultLocale"])

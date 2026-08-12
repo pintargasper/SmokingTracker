@@ -15,7 +15,9 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.DayOfWeek
+import java.time.LocalDateTime
 import java.time.Month
+import java.util.Locale
 
 @RunWith(value = AndroidJUnit4::class)
 class LocalizationHelperTest {
@@ -69,6 +71,61 @@ class LocalizationHelperTest {
         val actual = localizedContext.resources.configuration.locales[0].language
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatDateTimeReturnsFormattedDateTimeForSlovenianLocale() {
+        val originalLocale = Locale.getDefault()
+
+        try {
+            Locale.setDefault(Locale.forLanguageTag("sl-SI"))
+
+            val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
+            val result = LocalizationHelper.formatDateTime(dateTime)
+
+            assert(result.isNotEmpty())
+            assert(result.contains("12"))
+            assert(result.contains("8"))
+            assert(result.contains("18"))
+            assert(result.contains("36"))
+        } finally {
+            Locale.setDefault(originalLocale)
+        }
+    }
+
+    @Test
+    fun formatDateTimeReturnsFormattedDateTimeForEnglishLocale() {
+        val originalLocale = Locale.getDefault()
+
+        try {
+            Locale.setDefault(Locale.forLanguageTag("en-US"))
+
+            val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
+            val result = LocalizationHelper.formatDateTime(dateTime)
+
+            assertEquals("8_12_26_6_36_PM", result)
+        } finally {
+            Locale.setDefault(originalLocale)
+        }
+    }
+
+    @Test
+    fun formatDateTimeDoesNotContainInvalidFileNameCharacters() {
+        val originalLocale = Locale.getDefault()
+
+        try {
+            Locale.setDefault(Locale.forLanguageTag("en-US"))
+
+            val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
+            val result = LocalizationHelper.formatDateTime(dateTime)
+
+            assert(result.isNotEmpty())
+            assert(result.none {
+                it in "/:\\*?\"<>|"
+            })
+        } finally {
+            Locale.setDefault(originalLocale)
+        }
     }
 
     @Test
