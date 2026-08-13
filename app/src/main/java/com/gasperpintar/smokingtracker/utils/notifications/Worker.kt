@@ -87,7 +87,7 @@ class Worker(
 
             val shouldSend: Boolean = lastSentMillis == 0L || (nowMillis - lastSentMillis >= intervalMillis)
 
-            if (shouldSend && duration.toMinutes() >= 1) {
+            if (shouldSend && duration.toHours() > 1) {
                 Notifications.sendNotification(
                     context = applicationContext,
                     title = applicationContext.getString(R.string.notification_title),
