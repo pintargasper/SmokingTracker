@@ -18,14 +18,13 @@ import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DecimalFormat
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.Period
 
 class BasicFragment : Fragment() {
 
@@ -62,11 +61,11 @@ class BasicFragment : Fragment() {
         lifecycleScope.launch {
             val maxResult: CigarettesPerDay? = historyRepository.getMaxCigarettesPerDay()
             binding.textMaxCigarettes.text = maxResult?.dailySum?.toString() ?: "0"
-            binding.textMaxCigarettesDate.text = getLocalizedDate(day = maxResult?.day)
+            binding.textMaxCigarettesDate.text = LocalizationHelper.formatLoggedDate(resources, day = maxResult?.day)
 
             val minResult: CigarettesPerDay? = historyRepository.getMinCigarettesPerDay()
             binding.textMinCigarettes.text = minResult?.dailySum?.toString() ?: "0"
-            binding.textMinCigarettesDate.text = getLocalizedDate(day = minResult?.day)
+            binding.textMinCigarettesDate.text = LocalizationHelper.formatLoggedDate(resources, day = minResult?.day)
 
             binding.textAverageCigarettes.text = String.format("%.2f", historyRepository.getAverageCigarettesPerDay())
             binding.textTotalCigarettes.text = historyRepository.getTotalCigarettes().toString()
@@ -75,11 +74,9 @@ class BasicFragment : Fragment() {
                 historyRepository.getFirstRecordDate()
             }
 
-            val sinceFirstEntryString = if (firstRecordDate != null) {
-                getDurationString(start = firstRecordDate)
-            } else {
-                resources.getQuantityString(R.plurals.time_hours, 0, 0)
-            }
+            val sinceFirstEntryString = firstRecordDate?.let {
+                TimeHelper.getDurationString(resources, start = it)
+            } ?: resources.getQuantityString(R.plurals.time_minutes, 0, 0)
             binding.textSinceFirstEntry.text = sinceFirstEntryString
 
             val allHistory = withContext(Dispatchers.IO) {
@@ -103,7 +100,7 @@ class BasicFragment : Fragment() {
                     it.isNotEmpty()
                 } ?.let {
                     getTodaySpent(allCosts = it)
-                } ?: formatMoney(value = 0.0)
+                } ?: LocalizationHelper.formatMoney(settingsRepository, value = 0.0)
             }
             binding.todaySpent.text = todaySpent
 
@@ -112,7 +109,7 @@ class BasicFragment : Fragment() {
                     it.isNotEmpty()
                 } ?.let {
                     getThisMonthSpent(allCosts = it)
-                } ?: formatMoney(value = 0.0)
+                } ?: LocalizationHelper.formatMoney(settingsRepository, value = 0.0)
             }
             binding.monthSpent.text = averagePerMonth
 
@@ -124,59 +121,17 @@ class BasicFragment : Fragment() {
                         it.isNotEmpty()
                     } ?.let { history ->
                         getMostExpensiveDay(allCosts = costs, history = history)
-                    } ?: Pair(formatMoney(value = 0.0), null)
-                } ?: Pair(formatMoney(value = 0.0), null)
+                    } ?: Pair(LocalizationHelper.formatMoney(settingsRepository, value = 0.0), null)
+                } ?: Pair(LocalizationHelper.formatMoney(settingsRepository, value = 0.0), null)
             }
             binding.mostExpensiveDay.text = mostExpensiveDay.first
-            binding.mostExpensiveDayDate.text = getLocalizedDate(day = mostExpensiveDay.second)
+            binding.mostExpensiveDayDate.text = LocalizationHelper.formatLoggedDate(resources, day = mostExpensiveDay.second)
         }
-    }
-
-    private fun getLocalizedDate(
-        day: String?
-    ): String {
-        return day?.let {
-            val formattedDate: String = LocalizationHelper.formatDate(LocalDate.parse(it))
-            getString(R.string.statistics_logged, formattedDate)
-        } ?: ""
-    }
-
-    private fun getDurationString(
-        start: LocalDateTime,
-        end: LocalDateTime = LocalDateTime.now()
-    ): String {
-        val period = Period.between(start.toLocalDate(), end.toLocalDate())
-        val duration = Duration.between(start.plusYears(period.years.toLong()).plusMonths(period.months.toLong()).plusDays(period.days.toLong()), end)
-
-        val hours = duration.toHours()
-        val minutes = duration.toMinutes() % 60
-
-        return listOfNotNull(
-            period.years.takeIf { it > 0 }?.let {
-                resources.getQuantityString(R.plurals.time_years, it, it)
-            },
-            period.months.takeIf { it > 0 }?.let {
-                resources.getQuantityString(R.plurals.time_months, it, it)
-            },
-            period.days.takeIf { it > 0 }?.let {
-                resources.getQuantityString(R.plurals.time_days, it, it)
-            },
-            hours.takeIf { it > 0 }?.let {
-                resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
-            },
-            minutes.takeIf { it > 0 }?.let {
-                resources.getQuantityString(
-                    R.plurals.time_minutes,
-                    it.toInt(),
-                    it
-                )
-            }
-        ).joinToString(" ")
     }
 
     private fun getLongestTime(allHistory: List<HistoryEntity>): String {
         if (allHistory.isEmpty()) {
-            return resources.getQuantityString(R.plurals.time_hours, 0, 0)
+            return resources.getQuantityString(R.plurals.time_minutes, 0, 0)
         }
 
         val now = LocalDateTime.now()
@@ -192,9 +147,9 @@ class BasicFragment : Fragment() {
         return if (
             longestInterval != null &&
             Duration.between(longestInterval.first.createdAt, longestInterval.second.createdAt) > lastDuration) {
-            getDurationString(start = longestInterval.first.createdAt, end = longestInterval.second.createdAt)
+            TimeHelper.getDurationString(resources, start = longestInterval.first.createdAt, end = longestInterval.second.createdAt)
         } else {
-            getDurationString(start = lastStart, end = now)
+            TimeHelper.getDurationString(resources, start = lastStart, end = now)
         }
     }
 
@@ -202,7 +157,7 @@ class BasicFragment : Fragment() {
         val totalSpent: Double = historyRepository.getAll().sumOf {
             resolveCostAtTime(it.createdAt, allCosts)
         }
-        return formatMoney(totalSpent)
+        return LocalizationHelper.formatMoney(settingsRepository, value = totalSpent)
     }
 
     private suspend fun getTodaySpent(allCosts: List<CostEntity>): String {
@@ -213,7 +168,7 @@ class BasicFragment : Fragment() {
         val totalSpent: Double = historyRepository.getBetween(start = dayStart, end = dayEnd).sumOf {
             resolveCostAtTime(it.createdAt, allCosts)
         }
-        return formatMoney(totalSpent)
+        return LocalizationHelper.formatMoney(settingsRepository, value = totalSpent)
     }
 
     private suspend fun getThisMonthSpent(allCosts: List<CostEntity>): String {
@@ -224,7 +179,7 @@ class BasicFragment : Fragment() {
         val totalSpent: Double = historyRepository.getBetween(start = monthStart, end = monthEnd).sumOf {
             resolveCostAtTime(it.createdAt, allCosts)
         }
-        return formatMoney(totalSpent)
+        return LocalizationHelper.formatMoney(settingsRepository, value = totalSpent)
     }
 
     private suspend fun getMostExpensiveDay(allCosts: List<CostEntity>, history: List<HistoryEntity>): Pair<String, String> {
@@ -265,7 +220,7 @@ class BasicFragment : Fragment() {
             currentDate = currentDate.plusDays(1)
         }
         return Pair(
-            formatMoney(value = maxSpent),
+            LocalizationHelper.formatMoney(settingsRepository, value = maxSpent),
             maxSpentDate.toString()
         )
     }
@@ -277,10 +232,5 @@ class BasicFragment : Fragment() {
         return allCosts.firstOrNull { cost ->
             !time.isBefore(cost.startDate) && time.isBefore(cost.endDate)
         } ?.price ?: 0.0
-    }
-
-    private suspend fun formatMoney(value: Double): String {
-        val currency: String = settingsRepository.get()?.currency ?: "€"
-        return "${DecimalFormat("0.00#").format(value)} $currency"
     }
 }

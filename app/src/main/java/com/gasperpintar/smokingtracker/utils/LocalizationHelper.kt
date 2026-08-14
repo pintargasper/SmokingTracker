@@ -3,9 +3,11 @@ package com.gasperpintar.smokingtracker.utils
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
+import android.content.res.Resources
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
+import java.text.DecimalFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -57,6 +59,15 @@ object LocalizationHelper {
             .trim('_')
     }
 
+    fun formatLoggedDate(
+        resources: Resources,
+        day: String?
+    ): String {
+        return day?.let {
+            resources.getString(R.string.statistics_logged, formatDate(LocalDate.parse(it)))
+        } ?: ""
+    }
+
     @SuppressLint(value = ["DefaultLocale"])
     fun formatWeekRange(
         start: LocalDate,
@@ -67,6 +78,14 @@ object LocalizationHelper {
             "sl", "uk" -> String.format("%02d.%02d/%02d.%02d", start.dayOfMonth, start.monthValue, end.dayOfMonth, end.monthValue)
             else -> String.format("%02d/%02d-%02d/%02d", start.monthValue, start.dayOfMonth, end.monthValue, end.dayOfMonth)
         }
+    }
+
+    suspend fun formatMoney(
+        settingsRepository: SettingsRepository,
+        value: Double
+    ): String {
+        val currency: String = settingsRepository.get()?.currency ?: "€"
+        return "${DecimalFormat("0.00#").format(value)} $currency"
     }
 
     fun getDayOfWeekName(

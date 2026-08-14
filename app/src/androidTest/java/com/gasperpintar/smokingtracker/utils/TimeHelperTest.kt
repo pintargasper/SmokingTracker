@@ -9,6 +9,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.Duration
+import java.time.LocalDateTime
 
 @RunWith(value = AndroidJUnit4::class)
 class TimeHelperTest {
@@ -77,6 +78,27 @@ class TimeHelperTest {
         val actual = TimeHelper.formatTime(
             resources = context.resources,
             totalMinutes = 15
+        )
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun getDurationStringFormatsYearsMonthsDaysHoursAndMinutes() {
+        val start = LocalDateTime.of(2020, 1, 1, 10, 30)
+        val end = LocalDateTime.of(2022, 3, 4, 13, 45)
+
+        val expected =
+            context.resources.getQuantityString(R.plurals.time_years, 2, 2) + " " +
+                    context.resources.getQuantityString(R.plurals.time_months, 2, 2) + " " +
+                    context.resources.getQuantityString(R.plurals.time_days, 3, 3) + " " +
+                    context.resources.getQuantityString(R.plurals.time_hours, 3, 3) + " " +
+                    context.resources.getQuantityString(R.plurals.time_minutes, 15, 15)
+
+        val actual = TimeHelper.getDurationString(
+            resources = context.resources,
+            start = start,
+            end = end
         )
 
         assertEquals(expected, actual)

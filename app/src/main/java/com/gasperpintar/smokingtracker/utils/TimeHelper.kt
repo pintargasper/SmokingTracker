@@ -7,6 +7,7 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.Period
 import java.time.ZoneId
 import java.util.Calendar
 
@@ -83,6 +84,43 @@ object TimeHelper {
 
         parts.add("$seconds${resources.getString(R.string.home_timer_second)}")
         return parts.joinToString(" ")
+    }
+
+    fun getDurationString(
+        resources: Resources,
+        start: LocalDateTime,
+        end: LocalDateTime = LocalDateTime.now()
+    ): String {
+        val period = Period.between(start.toLocalDate(), end.toLocalDate())
+        val duration = Duration.between(start.plusYears(period.years.toLong()).plusMonths(period.months.toLong()).plusDays(period.days.toLong()), end)
+
+        val hours = duration.toHours()
+        val minutes = duration.toMinutes() % 60
+
+        return listOfNotNull(
+            period.years.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_years, it, it)
+            },
+            period.months.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_months, it, it)
+            },
+            period.days.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_days, it, it)
+            },
+            hours.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
+            },
+            minutes.takeIf { it > 0 }?.let {
+                resources.getQuantityString(
+                    R.plurals.time_minutes,
+                    it.toInt(),
+                    it
+                )
+            },
+            duration.toMinutes().takeIf { it == 0L }?.let {
+                resources.getQuantityString(R.plurals.time_minutes, 0, 0)
+            }
+        ).joinToString(" ")
     }
 
     fun formatTime(

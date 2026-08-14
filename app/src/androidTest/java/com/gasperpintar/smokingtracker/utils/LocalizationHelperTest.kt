@@ -14,7 +14,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.text.DecimalFormat
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
 import java.util.Locale
@@ -142,6 +144,55 @@ class LocalizationHelperTest {
             val result = LocalizationHelper.getMonthName(context, month = month)
             assert(result.isNotEmpty())
         }
+    }
+
+    @Test
+    fun formatLoggedDateReturnsFormattedDateWhenDayIsProvided() {
+        val day = "2026-08-12"
+
+        val formattedDate = LocalizationHelper.formatDate(LocalDate.parse(day))
+
+        val expected = context.resources.getString(R.string.statistics_logged, formattedDate)
+        val actual = LocalizationHelper.formatLoggedDate(resources = context.resources, day = day)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatLoggedDateReturnsEmptyStringWhenDayIsNull() {
+        val actual = LocalizationHelper.formatLoggedDate(resources = context.resources, day = null)
+
+        assertEquals("", actual)
+    }
+
+    @Test
+    fun formatMoneyFormatsValueWithConfiguredCurrency() = runBlocking {
+        settingsRepository.insert(
+            settings = createSettingsEntity(languageId = 0).copy(currency = "$")
+        )
+
+        val expected = "${DecimalFormat("0.00#").format(12.5)} $"
+        val actual = LocalizationHelper.formatMoney(settingsRepository = settingsRepository, value = 12.5)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatMoneyFormatsValueWithThreeDecimalPlaces() = runBlocking {
+        settingsRepository.insert(settings = createSettingsEntity(languageId = 0).copy(currency = "€"))
+
+        val expected = "${DecimalFormat("0.00#").format(12.30)} €"
+        val actual = LocalizationHelper.formatMoney(settingsRepository = settingsRepository, value = 12.30)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatMoneyReturnsEuroWhenSettingsAreMissing() = runBlocking {
+        val actual = LocalizationHelper.formatMoney(settingsRepository = settingsRepository, value = 10.0)
+        val expected = "${DecimalFormat("0.00#").format(10.0)} €"
+
+        assertEquals(expected, actual)
     }
 
     private fun createSettingsEntity(languageId: Int): SettingsEntity {
