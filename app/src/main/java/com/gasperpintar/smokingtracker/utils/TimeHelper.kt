@@ -91,33 +91,42 @@ object TimeHelper {
         start: LocalDateTime,
         end: LocalDateTime = LocalDateTime.now()
     ): String {
-        val period = Period.between(start.toLocalDate(), end.toLocalDate())
-        val duration = Duration.between(start.plusYears(period.years.toLong()).plusMonths(period.months.toLong()).plusDays(period.days.toLong()), end)
+        if (start.isAfter(end)) {
+            return ""
+        }
 
-        val hours = duration.toHours()
-        val minutes = duration.toMinutes() % 60
+        var current = start
+
+        val years = Period.between(current.toLocalDate(), end.toLocalDate()).years
+        current = current.plusYears(years.toLong())
+
+        val months = Period.between(current.toLocalDate(), end.toLocalDate()).months
+        current = current.plusMonths(months.toLong())
+
+        val remainingDuration = Duration.between(current, end)
+
+        val totalMinutes = remainingDuration.toMinutes()
+        val days = totalMinutes / (24 * 60)
+        val hours = (totalMinutes / 60) % 24
+        val minutes = totalMinutes % 60
 
         return listOfNotNull(
-            period.years.takeIf { it > 0 }?.let {
+            years.takeIf { it > 0 }?.let {
                 resources.getQuantityString(R.plurals.time_years, it, it)
             },
-            period.months.takeIf { it > 0 }?.let {
+            months.takeIf { it > 0 }?.let {
                 resources.getQuantityString(R.plurals.time_months, it, it)
             },
-            period.days.takeIf { it > 0 }?.let {
-                resources.getQuantityString(R.plurals.time_days, it, it)
+            days.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_days, it.toInt(), it)
             },
             hours.takeIf { it > 0 }?.let {
                 resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
             },
             minutes.takeIf { it > 0 }?.let {
-                resources.getQuantityString(
-                    R.plurals.time_minutes,
-                    it.toInt(),
-                    it
-                )
+                resources.getQuantityString(R.plurals.time_minutes, it.toInt(), it)
             },
-            duration.toMinutes().takeIf { it == 0L }?.let {
+            (years == 0 && months == 0 && days == 0L && hours == 0L && minutes == 0L).takeIf { it }?.let {
                 resources.getQuantityString(R.plurals.time_minutes, 0, 0)
             }
         ).joinToString(" ")
