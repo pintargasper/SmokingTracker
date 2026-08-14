@@ -1,6 +1,7 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -32,6 +34,7 @@ import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Manager
 import kotlinx.coroutines.launch
+import java.io.File
 import java.time.LocalDateTime
 
 class SettingsFragment : Fragment() {
@@ -51,6 +54,8 @@ class SettingsFragment : Fragment() {
     private lateinit var importDocumentLauncher: ActivityResultLauncher<Array<String>>
 
     private lateinit var selectedFile: TextView
+
+    private val mimeExcel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -198,7 +203,12 @@ class SettingsFragment : Fragment() {
         binding.downloadLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
                 val fileName = "st_data_${LocalizationHelper.formatDateTime(LocalDateTime.now())}"
-                exportDocumentLauncher.launch(fileName)
+
+                try {
+                    exportDocumentLauncher.launch(fileName)
+                } catch (_: ActivityNotFoundException) {
+                    exportViaShareIntent(fileName)
+                }
             }
         }
 
@@ -206,9 +216,7 @@ class SettingsFragment : Fragment() {
             DialogManager.showRestoreDialog(
                 context = requireActivity(),
                 onOpenFile = {
-                    importDocumentLauncher.launch(arrayOf(
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    ))
+                    importDocumentLauncher.launch(arrayOf(mimeExcel))
                 },
                 onConfirm = {
                     val dialog = DialogManager.showLoadingDialog(context = requireActivity())
@@ -362,29 +370,66 @@ class SettingsFragment : Fragment() {
     private fun setupExportLauncher() {
         exportDocumentLauncher =
             registerForActivityResult(
-                ActivityResultContracts.CreateDocument(
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
+                ActivityResultContracts.CreateDocument(mimeExcel)
             ) { uri: Uri? ->
                 uri ?: return@registerForActivityResult
-                val dialog = DialogManager.showLoadingDialog(context = requireActivity())
-                dialog.setProgressType(ProgressType.BACKUP)
-                lifecycleScope.launch {
-                    Manager.downloadFile(
-                        context = requireActivity(),
-                        fileUri = uri,
-                        achievementRepository = achievementRepository,
-                        historyRepository = historyRepository,
-                        settingsRepository = settingsRepository,
-                        notificationsSettingsRepository = notificationsSettingsRepository,
-                        costsRepository = costsRepository,
-                        notesRepository = notesRepository,
-                        onProgress = { progress ->
-                            dialog.updateProgress(progress)
-                        }
-                    )
-                    dialog.dismiss()
-                }
+                exportFile(fileUri = uri)
             }
+    }
+
+    private fun exportViaShareIntent(fileName: String) {
+        val context = requireContext()
+        val cacheFile = File(context.cacheDir, "$fileName.xlsx")
+
+        if (cacheFile.exists()) {
+            cacheFile.delete()
+        }
+
+        exportFile(fileUri = Uri.fromFile(cacheFile)) {
+            val contentUri = FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.provider",
+                cacheFile
+            )
+
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = mimeExcel
+                putExtra(Intent.EXTRA_STREAM, contentUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.download_popup)))
+        }
+    }
+
+    private fun exportFile(
+        fileUri: Uri,
+        onFinished: () -> Unit = {}
+    ) {
+        val dialog = DialogManager.showLoadingDialog(context = requireActivity())
+        dialog.setProgressType(ProgressType.BACKUP)
+
+        lifecycleScope.launch {
+            try {
+                Manager.downloadFile(
+                    context = requireActivity(),
+                    fileUri = fileUri,
+                    achievementRepository = achievementRepository,
+                    historyRepository = historyRepository,
+                    settingsRepository = settingsRepository,
+                    notificationsSettingsRepository = notificationsSettingsRepository,
+                    costsRepository = costsRepository,
+                    notesRepository = notesRepository,
+                    onProgress = { progress ->
+                        dialog.updateProgress(progress)
+                    }
+                )
+
+                dialog.dismiss()
+                onFinished()
+            } catch (_: Exception) {
+                dialog.dismiss()
+            }
+        }
     }
 }

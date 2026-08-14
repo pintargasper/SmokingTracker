@@ -12,8 +12,13 @@ object FileHelper {
         uri: Uri?
     ): String {
         var name = context.getString(R.string.upload_popup_file_unknown)
+
         if (uri == null) {
             return name
+        }
+
+        if (uri.scheme == "file") {
+            return uri.lastPathSegment ?: name
         }
 
         context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->

@@ -539,7 +539,10 @@ object Manager {
         fileUri: Uri? = null
     ) {
         if (context is MainActivity && context.permissionsHelper.isNotificationPermissionGranted() && notificationsEnabled) {
-            Notifications.sendNotification(context, title, content, notificationId, fileUri)
+            val safeUri = fileUri?.takeIf {
+                it.scheme == "content"
+            }
+            Notifications.sendNotification(context, title, content, notificationId, fileUri = safeUri)
         }
     }
 }
