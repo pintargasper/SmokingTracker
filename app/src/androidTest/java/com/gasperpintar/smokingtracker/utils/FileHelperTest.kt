@@ -47,7 +47,7 @@ class FileHelperTest {
 
     @Test
     fun getFileNameReturnsUnknownWhenUriIsNull() {
-        val expected = context.getString(R.string.upload_popup_file_unknown)
+        val expected = context.getString(R.string.restore_popup_file_unknown)
         val actual = FileHelper.getFileName(context, null)
         assertEquals(expected, actual)
     }

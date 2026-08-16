@@ -19,7 +19,7 @@
             android:id="@+id/popup_message"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/insert_popup_message"
+            android:text="@string/insert_popup"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
@@ -76,7 +76,7 @@
                 android:id="@+id/button_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/insert_popup_insert"
+                android:text="@string/insert_popup_add"
                 style="@style/Button"/>
         </androidx.cardview.widget.CardView>
 

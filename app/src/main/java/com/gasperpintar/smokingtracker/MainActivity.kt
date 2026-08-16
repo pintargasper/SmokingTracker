@@ -18,7 +18,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
-import com.gasperpintar.smokingtracker.ui.fragment.AnalyticsFragment
+import com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
 import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
@@ -69,18 +69,10 @@ class MainActivity : AppCompatActivity() {
         context: Context
     ) {
         database = Provider.getDatabase(context = context.applicationContext)
-        achievementRepository = AchievementRepository(
-            achievementDao = database.achievementDao()
-        )
-        settingsRepository = SettingsRepository(
-            settingsDao = database.settingsDao()
-        )
-        notificationsSettingsRepository = NotificationsSettingsRepository(
-            notificationsSettingsDao = database.notificationsSettingsDao()
-        )
-        costsRepository = CostsRepository(
-            costDao = database.costsDao()
-        )
+        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+        notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        costsRepository = CostsRepository(costDao = database.costsDao())
 
         super.attachBaseContext(
             LocalizationHelper.getLocalizedContext(
@@ -132,7 +124,7 @@ class MainActivity : AppCompatActivity() {
         val fragments = listOf(
             { HomeFragment() },
             { GraphFragment() },
-            { AnalyticsFragment() },
+            { ProgressFragment() },
             { SettingsFragment() }
         )
 

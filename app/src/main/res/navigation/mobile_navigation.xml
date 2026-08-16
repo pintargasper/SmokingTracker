@@ -8,24 +8,24 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.gasperpintar.smokingtracker.ui.fragment.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/navigation_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_graph"
         android:name="com.gasperpintar.smokingtracker.ui.fragment.GraphFragment"
-        android:label="@string/title_graph"
+        android:label="@string/navigation_graph"
         tools:layout="@layout/fragment_graph" />
 
     <fragment
         android:id="@+id/navigation_analytics"
-        android:name="com.gasperpintar.smokingtracker.ui.fragment.AnalyticsFragment"
-        android:label="@string/title_analytics"
+        android:name="com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment"
+        android:label="@string/navigation_more"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/navigation_settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

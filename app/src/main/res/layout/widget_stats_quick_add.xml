@@ -29,7 +29,7 @@
                 android:id="@+id/widget_daily_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_daily_label"
+                android:text="@string/home_daily"
                 android:textColor="@color/primary"
                 android:singleLine="true" />
 
@@ -56,7 +56,7 @@
                 android:id="@+id/widget_weekly_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_weekly_label"
+                android:text="@string/home_weekly"
                 android:textColor="@color/primary"
                 android:singleLine="true" />
 
@@ -83,7 +83,7 @@
                 android:id="@+id/widget_monthly_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home_monthly_label"
+                android:text="@string/home_monthly"
                 android:textColor="@color/primary"
                 android:singleLine="true" />
 
@@ -111,7 +111,7 @@
                 android:layout_height="48dp"
                 android:textAlignment="center"
                 android:gravity="center"
-                android:text="@string/home_add"
+                android:text="@string/insert_popup"
                 android:textColor="@color/primary"
                 android:textSize="18sp"
                 android:clickable="true" />

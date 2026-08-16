@@ -10,12 +10,12 @@ import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.CalculatorActivity
 import com.gasperpintar.smokingtracker.NotesActivity
 import com.gasperpintar.smokingtracker.StatisticsActivity
-import com.gasperpintar.smokingtracker.databinding.FragmentAnalyticsBinding
+import com.gasperpintar.smokingtracker.databinding.FragmentProgressBinding
 import kotlin.reflect.KClass
 
-class AnalyticsFragment : Fragment() {
+class ProgressFragment : Fragment() {
 
-    private var _binding: FragmentAnalyticsBinding? = null
+    private var _binding: FragmentProgressBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -23,7 +23,7 @@ class AnalyticsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAnalyticsBinding.inflate(inflater, container, false)
+        _binding = FragmentProgressBinding.inflate(inflater, container, false)
 
         setup()
 

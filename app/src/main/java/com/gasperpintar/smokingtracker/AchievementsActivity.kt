@@ -54,8 +54,8 @@ class AchievementsActivity : AppCompatActivity() {
         )
 
         val tabTitles = listOf(
-            getString(R.string.achievements_smoke_free_time),
-            getString(R.string.achievements_cigarettes_avoided)
+            getString(R.string.achievements_time),
+            getString(R.string.achievements_avoided)
         )
 
         viewPager.adapter = Pager(

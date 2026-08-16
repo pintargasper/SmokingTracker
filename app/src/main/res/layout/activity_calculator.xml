@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,71 +7,64 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/colorSurface"
-    android:fitsSystemWindows="true"
-    android:fillViewport="true">
+    android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/toolbar_calculator"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_height="56dp">
 
         <ImageButton
             android:id="@+id/button_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@android:color/transparent"
             android:contentDescription="Back to previous screen"
             android:src="@drawable/ic_thin_outline_arrow_back"
-            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorOnSurface"
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/text_calculator_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
-            android:text="@string/analytics_calculator_title"
-            style="@style/SpecialTitleTextView"/>
+            android:text="@string/more_tools_calculator"
+            style="@style/MainTitleCenterTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="?attr/colorSurface"
-        android:fitsSystemWindows="true"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_calculator"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:clipToPadding="false">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorSurface">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_calculator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_margin="8dp"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="4dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -83,119 +76,118 @@
                         android:id="@+id/text_daily_cigarettes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/calculator_cigarettes_per_day"
                         android:layout_marginBottom="4dp"
-                        style="@style/SubtitleTextView"/>
+                        android:text="@string/calculator_per_day"
+                        style="@style/SubtitleTextView" />
 
                     <EditText
                         android:id="@+id/input_daily_cigarettes"
                         android:layout_width="match_parent"
-                        android:maxWidth="300dp"
                         android:layout_height="48dp"
-                        android:autofillHints="0"
-                        android:inputType="number"
-                        android:hint="0"
                         android:layout_marginBottom="16dp"
-                        tools:ignore="HardcodedText,VisualLintTextFieldSize"
-                        style="@style/EditText"/>
+                        android:autofillHints="0"
+                        android:hint="0"
+                        android:inputType="number"
+                        style="@style/EditText"
+                        tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                     <TextView
                         android:id="@+id/text_cigarettes_per_pack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/calculator_cigarettes_per_pack"
                         android:layout_marginBottom="4dp"
-                        style="@style/SubtitleTextView"/>
+                        android:text="@string/calculator_per_pack"
+                        style="@style/SubtitleTextView" />
 
                     <EditText
                         android:id="@+id/input_cigarettes_per_pack"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:autofillHints="20"
-                        android:inputType="number"
-                        android:hint="20"
                         android:layout_marginBottom="16dp"
-                        tools:ignore="HardcodedText,VisualLintTextFieldSize"
-                        style="@style/EditText"/>
+                        android:autofillHints="20"
+                        android:hint="20"
+                        android:inputType="number"
+                        style="@style/EditText"
+                        tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                     <TextView
                         android:id="@+id/text_pack_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/calculator_price_per_pack"
                         android:layout_marginBottom="4dp"
-                        style="@style/SubtitleTextView"/>
+                        android:text="@string/calculator_price"
+                        style="@style/SubtitleTextView" />
 
                     <EditText
                         android:id="@+id/input_pack_price"
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
-                        android:inputType="numberDecimal"
-                        android:hint="0.00"
-                        android:autofillHints="0.00"
                         android:layout_marginBottom="16dp"
-                        tools:ignore="HardcodedText,VisualLintTextFieldSize"
-                        style="@style/EditText"/>
+                        android:autofillHints="0.00"
+                        android:hint="0.00"
+                        android:inputType="numberDecimal"
+                        style="@style/EditText"
+                        tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                     <TextView
                         android:id="@+id/text_period"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/calculator_period"
                         android:layout_marginBottom="4dp"
-                        style="@style/SubtitleTextView"/>
+                        android:text="@string/calculator_period"
+                        style="@style/SubtitleTextView" />
 
                     <LinearLayout
                         android:id="@+id/layout_date_range_picker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
+                        android:layout_marginBottom="16dp"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="16dp">
+                        android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/text_start_date_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/calculator_start_date"
                             android:layout_marginEnd="8dp"
-                            style="@style/BodyTextView"/>
+                            android:text="@string/calculator_from"
+                            style="@style/BodyTextView" />
 
                         <EditText
                             android:id="@+id/input_start_date"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="48dp"
                             android:layout_weight="1"
-                            android:focusable="false"
                             android:clickable="true"
-                            android:hint="@string/calculator_start_date_hint"
-                            android:autofillHints="@string/calculator_start_date_hint"
+                            android:focusable="false"
+                            android:hint="@string/calculator_start_date"
+                            android:autofillHints="@string/calculator_start_date"
                             android:inputType="date"
-                            android:layout_marginEnd="8dp"
-                            tools:ignore="VisualLintTextFieldSize"
-                            style="@style/EditText"/>
+                            style="@style/EditText"
+                            tools:ignore="VisualLintTextFieldSize" />
 
                         <TextView
                             android:id="@+id/text_end_date_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/calculator_end_date"
+                            android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
-                            style="@style/BodyTextView"/>
+                            android:text="@string/calculator_to"
+                            style="@style/BodyTextView" />
 
                         <EditText
                             android:id="@+id/input_end_date"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="48dp"
-                            android:maxWidth="433dp"
                             android:layout_weight="1"
-                            android:focusable="false"
                             android:clickable="true"
-                            android:hint="@string/calculator_end_date_hint"
-                            android:autofillHints="@string/calculator_end_date_hint"
+                            android:focusable="false"
+                            android:hint="@string/calculator_end_date"
+                            android:autofillHints="@string/calculator_end_date"
                             android:inputType="date"
-                            tools:ignore="VisualLintTextFieldSize"
-                            style="@style/EditText"/>
+                            style="@style/EditText"
+                            tools:ignore="VisualLintTextFieldSize" />
+
                     </LinearLayout>
 
                     <androidx.cardview.widget.CardView
@@ -203,7 +195,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="4dp"
                         app:cardCornerRadius="12dp"
                         app:cardElevation="4dp">
 
@@ -211,14 +203,17 @@
                             android:id="@+id/button_calculate"
                             android:layout_width="wrap_content"
                             android:layout_height="55dp"
-                            android:text="@string/calculator_button_calculate"
-                            style="@style/Button"/>
+                            android:text="@string/calculator_calculate"
+                            style="@style/Button" />
+
                     </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

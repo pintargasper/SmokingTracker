@@ -200,7 +200,7 @@ object WidgetHelper {
             getString(
                 context = context,
                 settingsRepository = settingsRepository,
-                resourceId = R.string.home_daily_label
+                resourceId = R.string.home_daily
             )
         )
 
@@ -212,7 +212,7 @@ object WidgetHelper {
                 getString(
                     context = context,
                     settingsRepository = settingsRepository,
-                    resourceId = R.string.home_weekly_label
+                    resourceId = R.string.home_weekly
                 )
             )
             views.setTextViewText(R.id.widget_weekly_value, weekly.toString())
@@ -224,7 +224,7 @@ object WidgetHelper {
                 getString(
                     context = context,
                     settingsRepository = settingsRepository,
-                    resourceId = R.string.home_monthly_label
+                    resourceId = R.string.home_monthly
                 )
             )
             views.setTextViewText(R.id.widget_monthly_value, monthly.toString())

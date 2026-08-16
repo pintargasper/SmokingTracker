@@ -13,7 +13,6 @@ import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
@@ -350,7 +349,7 @@ object DialogManager {
                 }
 
                 price.text = itemView.context.getString(
-                    R.string.cost_container_price,
+                    R.string.cost_price,
                     decimalFormat.format(costEntry.price),
                     currency
                 )
@@ -459,8 +458,8 @@ object DialogManager {
 
         textViewSelectedFile.text = String.format(
             $$"%1$s: %2$s",
-            context.getString(R.string.upload_popup_file),
-            context.getString(R.string.upload_popup_file_none)
+            context.getString(R.string.restore_popup_file),
+            context.getString(R.string.restore_popup_file_none)
         )
 
         buttonOpenFile.setOnClickListener {
@@ -497,52 +496,6 @@ object DialogManager {
         buttonConfirm.setOnClickListener {
             onDateSelected(selectedDate)
             dismiss()
-        }
-    }
-
-    fun showVersionDialog(
-        context: FragmentActivity,
-        onLinkClicked: (LinearLayout, String) -> Unit
-    ) = showDialog(context, layout = R.layout.version_popup) {
-
-        val links = listOf(
-            Triple(R.id.github_website_layout, R.id.github_website_service_url, "https://github.com/pintargasper/SmokingTracker/releases/latest"),
-            Triple(R.id.f_droid_website_layout, R.id.f_droid_website_service_url, "https://f-droid.org/packages/com.gasperpintar.smokingtracker"),
-            Triple(R.id.izzy_on_droid_website_layout, R.id.izzy_on_droid_website_service_url, "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"),
-            Triple(R.id.open_apk_website_layout, R.id.open_apk_website_service_url, "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/")
-        )
-
-        links.forEach { (layoutId, textViewId, url) ->
-            val layout: LinearLayout = dialogView.findViewById(layoutId)
-            val textView: TextView = dialogView.findViewById(textViewId)
-
-            textView.text = url
-
-            layout.setOnClickListener {
-                onLinkClicked(layout, url)
-            }
-        }
-    }
-
-    fun showContributorsDialog(
-        context: FragmentActivity,
-        onLinkClicked: (LinearLayout, String) -> Unit
-    ) = showDialog(context, layout = R.layout.contributors_popup) {
-
-        val links = listOf(
-            R.id.contributor_1_layout to "https://github.com/pintargasper",
-            R.id.contributor_2_layout to "https://github.com/mrtaxi",
-            R.id.contributor_3_layout to "https://github.com/jocixlinux-sys",
-            R.id.contributor_4_layout to "https://github.com/iaanneed",
-            R.id.contributor_5_layout to "https://github.com/ywnzzl",
-            R.id.contributor_6_layout to "https://github.com/acidefluorhydrique"
-        )
-
-        links.forEach { (layoutId, url) ->
-            val layout: LinearLayout = dialogView.findViewById(layoutId)
-            layout.setOnClickListener {
-                onLinkClicked(layout, url)
-            }
         }
     }
 

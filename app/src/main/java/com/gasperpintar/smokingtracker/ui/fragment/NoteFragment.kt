@@ -63,9 +63,9 @@ class NoteFragment : Fragment() {
             saveNote(close = true)
         }
 
-        binding.textTitleHeader.text = getString(R.string.analytics_notes_add_title)
+        binding.textTitleHeader.text = getString(R.string.notes_add)
         if (noteId != -1L) {
-            binding.textTitleHeader.text = getString(R.string.analytics_notes_edit_title)
+            binding.textTitleHeader.text = getString(R.string.notes_edit)
             lifecycleScope.launch {
                 existingNote = database.notesDao().getById(noteId)
                 existingNote?.let { note ->
@@ -78,11 +78,11 @@ class NoteFragment : Fragment() {
 
         binding.sliderEmotion.setLabelFormatter { value ->
             when (value.toInt()) {
-                1 -> getString(R.string.analytics_notes_add_content_emotions_very_bad)
-                2 -> getString(R.string.analytics_notes_add_content_emotions_bad)
-                3 -> getString(R.string.analytics_notes_add_content_emotions_neutral)
-                4 -> getString(R.string.analytics_notes_add_content_emotions_good)
-                5 -> getString(R.string.analytics_notes_add_content_emotions_very_good)
+                1 -> getString(R.string.notes_emotions_very_bad)
+                2 -> getString(R.string.notes_emotions_bad)
+                3 -> getString(R.string.notes_emotions_neutral)
+                4 -> getString(R.string.notes_emotions_good)
+                5 -> getString(R.string.notes_emotions_very_good)
                 else -> ""
             }
         }

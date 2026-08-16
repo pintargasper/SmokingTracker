@@ -75,7 +75,7 @@
                     android:id="@+id/daily_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_daily_label"
+                    android:text="@string/home_daily"
                     style="@style/SubtitleTextView"
                     android:singleLine="true"
                     android:ellipsize="end" />
@@ -117,7 +117,7 @@
                     android:id="@+id/weekly_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_weekly_label"
+                    android:text="@string/home_weekly"
                     style="@style/SubtitleTextView" />
 
                 <View
@@ -157,7 +157,7 @@
                     android:id="@+id/monthly_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/home_monthly_label"
+                    android:text="@string/home_monthly"
                     style="@style/SubtitleTextView"
                     android:singleLine="true"
                     android:ellipsize="end" />

@@ -10,7 +10,7 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/application_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmokingTracker"
@@ -27,6 +27,7 @@
         <activity android:name=".CalculatorActivity" />
         <activity android:name=".AchievementsActivity" />
         <activity android:name=".NotesActivity" />
+        <activity android:name=".AboutActivity" />
         <receiver
             android:label="@string/widget_stats"
             android:name=".provider.StatsWidget"
