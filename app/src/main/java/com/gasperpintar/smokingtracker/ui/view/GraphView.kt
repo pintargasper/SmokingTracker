@@ -33,6 +33,8 @@ class GraphView @JvmOverloads constructor(
     private val paddingBottom: Float = 120f
     private val pointRadius: Float = 12f
 
+    private var isForecastGraph = false
+
     private val textPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         val typedValue = TypedValue()
         context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
@@ -93,12 +95,14 @@ class GraphView @JvmOverloads constructor(
         data: List<GraphEntry>,
         forecast: List<GraphEntry> = emptyList(),
         graphInterval: GraphInterval,
-        labels: Int = labelsNumber
+        labels: Int = labelsNumber,
+        isForecast: Boolean = false
     ) {
         dataList = data
         forecastList = forecast
         currentGraphInterval = graphInterval
         labelsNumber = labels
+        isForecastGraph = isForecast
         invalidate()
     }
 
@@ -120,10 +124,11 @@ class GraphView @JvmOverloads constructor(
         val validForecast = forecastList.filter { it.quantity > 0 }
         val combinedList = validMain + validForecast
 
-        if (combinedList.isEmpty()) return
+        if (combinedList.isEmpty()) {
+            return
+        }
 
-        val stretchedStepX: Float = (width - paddingLeft - paddingRight) /
-                (combinedList.size - 1).coerceAtLeast(1)
+        val stretchedStepX: Float = (width - paddingLeft - paddingRight) / (combinedList.size - 1).coerceAtLeast(minimumValue = 1)
 
         var previousX: Float? = null
         var previousY: Float? = null
@@ -134,8 +139,13 @@ class GraphView @JvmOverloads constructor(
 
             val isForecast = index >= validMain.size
 
-            val currentLinePaint = if (isForecast) forecastLinePaint else linePaint
-            val currentPointPaint = if (isForecast) forecastPointPaint else pointPaint
+            val currentLinePaint = isForecast.takeIf { it }?.let {
+                forecastLinePaint
+            } ?: linePaint
+
+            val currentPointPaint = isForecast.takeIf { it }?.let {
+                forecastPointPaint
+            } ?: pointPaint
 
             if (previousX != null && previousY != null) {
                 canvas.drawLine(previousX, previousY, x, y, currentLinePaint)
@@ -157,16 +167,20 @@ class GraphView @JvmOverloads constructor(
         index: Int,
         totalSize: Int
     ) {
-        val step = if (totalSize > 10) 2 else 1
+        val step = (totalSize > 10).takeIf { it }?.let { 2 } ?: 1
         if (index % step != 0) {
             return
         }
 
         val labelText: String = when (currentGraphInterval) {
-            GraphInterval.DAILY -> String.format(Locale.getDefault(), "%02d:00", entry.date.hour)
-            GraphInterval.WEEKLY -> LocalizationHelper.getDayOfWeekName(context, entry.date.dayOfWeek).take(3)
-            GraphInterval.MONTHLY -> String.format(Locale.getDefault(), "%02d.%02d", entry.date.dayOfMonth, entry.date.monthValue)
-            GraphInterval.YEARLY -> LocalizationHelper.getMonthName(context, entry.date.month).take(3)
+            GraphInterval.HOURLY -> String.format(Locale.getDefault(), "%02d:00", entry.date.hour)
+            GraphInterval.DAILY -> isForecastGraph.takeIf { it }?.let {
+                "%02d.%02d".format(entry.date.dayOfMonth, entry.date.monthValue)
+            } ?: "%02d:00".format(entry.date.hour)
+            GraphInterval.WEEKLY -> isForecastGraph.takeIf { it }?.let {
+                "%02d.%02d".format(entry.date.dayOfMonth, entry.date.monthValue)
+            } ?: LocalizationHelper.getDayOfWeekName(context, entry.date.dayOfWeek).take(3)
+            else -> LocalizationHelper.getMonthName(context, entry.date.month).take(3)
         }
 
         val textWidth: Float = textPaint.measureText(labelText)
@@ -193,7 +207,7 @@ class GraphView @JvmOverloads constructor(
             value += stepY
         }
 
-        val stepIncrement: Int = ceil(yPositions.size / labelsNumber.toFloat()).roundToInt().coerceAtLeast(1)
+        val stepIncrement: Int = ceil(yPositions.size / labelsNumber.toFloat()).roundToInt().coerceAtLeast(minimumValue = 1)
         var index: Int = yPositions.size - 1
 
         repeat(times = labelsNumber) {
