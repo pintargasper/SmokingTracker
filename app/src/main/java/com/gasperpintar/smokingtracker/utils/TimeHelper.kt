@@ -7,6 +7,7 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.Period
 import java.time.ZoneId
 import java.util.Calendar
 
@@ -83,6 +84,52 @@ object TimeHelper {
 
         parts.add("$seconds${resources.getString(R.string.home_timer_second)}")
         return parts.joinToString(" ")
+    }
+
+    fun getDurationString(
+        resources: Resources,
+        start: LocalDateTime,
+        end: LocalDateTime = LocalDateTime.now()
+    ): String {
+        if (start.isAfter(end)) {
+            return ""
+        }
+
+        var current = start
+
+        val years = Period.between(current.toLocalDate(), end.toLocalDate()).years
+        current = current.plusYears(years.toLong())
+
+        val months = Period.between(current.toLocalDate(), end.toLocalDate()).months
+        current = current.plusMonths(months.toLong())
+
+        val remainingDuration = Duration.between(current, end)
+
+        val totalMinutes = remainingDuration.toMinutes()
+        val days = totalMinutes / (24 * 60)
+        val hours = (totalMinutes / 60) % 24
+        val minutes = totalMinutes % 60
+
+        return listOfNotNull(
+            years.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_years, it, it)
+            },
+            months.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_months, it, it)
+            },
+            days.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_days, it.toInt(), it)
+            },
+            hours.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_hours, it.toInt(), it)
+            },
+            minutes.takeIf { it > 0 }?.let {
+                resources.getQuantityString(R.plurals.time_minutes, it.toInt(), it)
+            },
+            (years == 0 && months == 0 && days == 0L && hours == 0L && minutes == 0L).takeIf { it }?.let {
+                resources.getQuantityString(R.plurals.time_minutes, 0, 0)
+            }
+        ).joinToString(" ")
     }
 
     fun formatTime(

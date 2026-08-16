@@ -6,42 +6,42 @@
     android:orientation="vertical"
     android:background="?attr/colorSurface"
     android:fitsSystemWindows="true"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:clipToPadding="false">
 
-    <LinearLayout
-        android:id="@+id/toolbar_statistics"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:layout_height="56dp">
 
         <ImageButton
             android:id="@+id/button_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@android:color/transparent"
             android:contentDescription="Back to previous screen"
             android:src="@drawable/ic_thin_outline_arrow_back"
-            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="?attr/colorOnSurface"
-            tools:ignore="HardcodedText"/>
+            tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/text_statistics_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/statistics_title"
-            style="@style/SpecialTitleTextView"/>
+            style="@style/MainTitleCenterTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/statistics_tab_layout"

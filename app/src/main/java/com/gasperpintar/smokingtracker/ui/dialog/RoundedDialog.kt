@@ -1,14 +1,14 @@
-package com.gasperpintar.smokingtracker.utils
+package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.content.Context
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.gasperpintar.smokingtracker.R
-import android.view.View
 
-class RoundedAlertDialog(context: Context) : AlertDialog(context) {
+class RoundedDialog(context: Context) : AlertDialog(context) {
 
-    fun showChained(): RoundedAlertDialog {
+    internal fun showChained(): RoundedDialog {
         super.show()
         window?.setBackgroundDrawable(
             ContextCompat.getDrawable(context, R.drawable.dialog_background)
@@ -16,9 +16,9 @@ class RoundedAlertDialog(context: Context) : AlertDialog(context) {
         return this
     }
 
-    fun setViewChained(
+    internal fun setViewChained(
         view: View
-    ): RoundedAlertDialog {
+    ): RoundedDialog {
         super.setView(view)
         return this
     }

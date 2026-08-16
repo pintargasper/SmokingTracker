@@ -61,6 +61,7 @@ class JsonHelper(
             } else {
                 AchievementUnit.valueOf(jsonEntry.unit)
             }
+
             AchievementEntry(
                 id = 0,
                 image = iconEnum.name,

@@ -103,7 +103,7 @@
                             android:id="@+id/label_frequency"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/notifications_popup_progress_frequency_label"
+                            android:text="@string/notifications_popup_frequency_label"
                             android:labelFor="@+id/spinner_progress_frequency"
                             style="@style/BodyTextView"/>
 

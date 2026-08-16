@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,14 +11,16 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.net.toUri
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.gasperpintar.smokingtracker.AboutActivity
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
+import com.gasperpintar.smokingtracker.model.CostEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
@@ -28,8 +30,12 @@ import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Manager
+import com.gasperpintar.smokingtracker.utils.WebHelper
 import kotlinx.coroutines.launch
+import java.io.File
+import java.time.LocalDateTime
 
 class SettingsFragment : Fragment() {
 
@@ -49,6 +55,8 @@ class SettingsFragment : Fragment() {
 
     private lateinit var selectedFile: TextView
 
+    private val mimeExcel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -67,7 +75,6 @@ class SettingsFragment : Fragment() {
         setupImportLauncher()
         setupExportLauncher()
         setup()
-        setupAbout()
 
         return binding.root
     }
@@ -80,8 +87,8 @@ class SettingsFragment : Fragment() {
     private fun setup() {
         lifecycleScope.launch {
             withSettings { settings ->
-                binding.languageServiceUrl.text = getLanguages()[settings.language]
-                binding.themeServiceUrl.text = getThemes()[settings.theme]
+                binding.languageService.text = getLanguages()[settings.language]
+                binding.themeService.text = getThemes()[settings.theme]
             }
         }
 
@@ -168,28 +175,47 @@ class SettingsFragment : Fragment() {
         }
 
         binding.costsLayout.setOnClickListener {
+
             lifecycleScope.launch {
+                val costs = costsRepository.getAll().map(transform = CostEntry::fromEntity)
                 DialogManager.showCostsDialog(
                     context = requireActivity(),
-                    costsRepository = costsRepository,
+                    costs = costs,
                     currency = settingsRepository.get()?.currency ?: "€",
+                    onDelete = { costEntry ->
+                        costsRepository.delete(
+                            entry = costEntry.toEntity()
+                        )
+                    },
+                    onCostAdded = { costEntity ->
+                        costsRepository.insert(
+                            entry = costEntity
+                        )
+                    },
+                    onRefresh = {
+                        costsRepository.getAll().map(transform = CostEntry::fromEntity)
+                    }
                 )
             }
         }
 
-        binding.downloadLayout.setOnClickListener {
+        binding.backupLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
-                exportDocumentLauncher.launch("st_data")
+                val fileName = "st_data_${LocalizationHelper.formatDateTime(LocalDateTime.now())}"
+
+                try {
+                    exportDocumentLauncher.launch(fileName)
+                } catch (_: ActivityNotFoundException) {
+                    exportViaShareIntent(fileName)
+                }
             }
         }
 
-        binding.uploadLayout.setOnClickListener {
+        binding.restoreLayout.setOnClickListener {
             DialogManager.showRestoreDialog(
                 context = requireActivity(),
                 onOpenFile = {
-                    importDocumentLauncher.launch(arrayOf(
-                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    ))
+                    importDocumentLauncher.launch(arrayOf(mimeExcel))
                 },
                 onConfirm = {
                     val dialog = DialogManager.showLoadingDialog(context = requireActivity())
@@ -220,33 +246,35 @@ class SettingsFragment : Fragment() {
                 },
                 onDismiss = {
                     if (::selectedFile.isInitialized) {
-                        selectedFile.text = getString(R.string.upload_popup_file_none)
+                        selectedFile.text = getString(R.string.restore_popup_file_none)
                         selectedFile.tag = null
                     }
                 },
                 onViewCreated = { textView ->
                     selectedFile = textView
-                    selectedFile.text = getString(R.string.upload_popup_file_none)
+                    selectedFile.text = getString(R.string.restore_popup_file_none)
                 }
             )
         }
 
-        binding.versionLayout.setOnClickListener {
-            DialogManager.showVersionDialog(
-                context = requireActivity(),
-                onLinkClicked = { _, url ->
-                    openUrl(url)
-                }
-            )
+        binding.aboutLayout.setOnClickListener {
+            startActivity(Intent(requireContext(), AboutActivity::class.java))
         }
 
-        binding.contributorsLayout.setOnClickListener {
-            DialogManager.showContributorsDialog(
-                context = requireActivity(),
-                onLinkClicked = { _, url ->
-                    openUrl(url)
-                }
-            )
+        binding.websiteLayout.setOnClickListener {
+            WebHelper.openUrl(context = requireContext(), url = "https://gasperpintar.com/smoking-tracker")
+        }
+
+        binding.changelogLayout.setOnClickListener {
+            WebHelper.openUrl(context = requireContext(), url =  "https://github.com/pintargasper/SmokingTracker/releases")
+        }
+
+        binding.translateLayout.setOnClickListener {
+            WebHelper.openUrl(context = requireContext(), url =  "https://translate.gasperpintar.com/projects/smokingtracker")
+        }
+
+        binding.privacyPolicyLayout.setOnClickListener {
+            WebHelper.openUrl(context = requireContext(), url = "https://gasperpintar.com/smoking-tracker/privacy-policy")
         }
     }
 
@@ -268,41 +296,6 @@ class SettingsFragment : Fragment() {
         block: suspend (SettingsEntity) -> Unit
     ) {
         block(settingsRepository.get()!!)
-    }
-
-    @SuppressLint(value = ["SetTextI18n"])
-    private fun setupAbout() {
-        val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
-        val versionName = packageInfo.versionName ?: getString(R.string.settings_category_data_version_unknown)
-
-        with(receiver = binding) {
-            appVersion.text = getString(R.string.settings_category_data_version, versionName)
-            websiteServiceUrl.text = "https://gasperpintar.com/smoking-tracker"
-
-            listOf(
-                websiteUrl to "https://gasperpintar.com/smoking-tracker",
-                translationsWebsiteUrl to "https://translate.gasperpintar.com/projects/smokingtracker",
-                privacyPolicyUrl to "https://gasperpintar.com/smoking-tracker/privacy-policy",
-                changelogUrl to "https://github.com/pintargasper/SmokingTracker/releases"
-            ).forEach {
-                (view, url) -> setupLink(view, url)
-            }
-        }
-    }
-
-    private fun setupLink(
-        view: View,
-        url: String
-    ) {
-        view.setOnClickListener {
-            openUrl(url)
-        }
-    }
-
-    private fun openUrl(
-        url: String
-    ) {
-        startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
     }
 
     private fun getLanguages(): List<String> {
@@ -332,7 +325,7 @@ class SettingsFragment : Fragment() {
                 if (::selectedFile.isInitialized) {
                     selectedFile.text = String.format(
                         $$"%1$s: %2$s",
-                        getString(R.string.upload_popup_file),
+                        getString(R.string.restore_popup_file),
                         FileHelper.getFileName(context = requireActivity(), uri = uri)
                     )
                     selectedFile.tag = uri
@@ -343,29 +336,66 @@ class SettingsFragment : Fragment() {
     private fun setupExportLauncher() {
         exportDocumentLauncher =
             registerForActivityResult(
-                ActivityResultContracts.CreateDocument(
-                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
+                ActivityResultContracts.CreateDocument(mimeExcel)
             ) { uri: Uri? ->
                 uri ?: return@registerForActivityResult
-                val dialog = DialogManager.showLoadingDialog(context = requireActivity())
-                dialog.setProgressType(ProgressType.BACKUP)
-                lifecycleScope.launch {
-                    Manager.downloadFile(
-                        context = requireActivity(),
-                        fileUri = uri,
-                        achievementRepository = achievementRepository,
-                        historyRepository = historyRepository,
-                        settingsRepository = settingsRepository,
-                        notificationsSettingsRepository = notificationsSettingsRepository,
-                        costsRepository = costsRepository,
-                        notesRepository = notesRepository,
-                        onProgress = { progress ->
-                            dialog.updateProgress(progress)
-                        }
-                    )
-                    dialog.dismiss()
-                }
+                exportFile(fileUri = uri)
             }
+    }
+
+    private fun exportViaShareIntent(fileName: String) {
+        val context = requireContext()
+        val cacheFile = File(context.cacheDir, "$fileName.xlsx")
+
+        if (cacheFile.exists()) {
+            cacheFile.delete()
+        }
+
+        exportFile(fileUri = Uri.fromFile(cacheFile)) {
+            val contentUri = FileProvider.getUriForFile(
+                context,
+                "${context.packageName}.provider",
+                cacheFile
+            )
+
+            val shareIntent = Intent(Intent.ACTION_SEND).apply {
+                type = mimeExcel
+                putExtra(Intent.EXTRA_STREAM, contentUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.backup_popup)))
+        }
+    }
+
+    private fun exportFile(
+        fileUri: Uri,
+        onFinished: () -> Unit = {}
+    ) {
+        val dialog = DialogManager.showLoadingDialog(context = requireActivity())
+        dialog.setProgressType(ProgressType.BACKUP)
+
+        lifecycleScope.launch {
+            try {
+                Manager.downloadFile(
+                    context = requireActivity(),
+                    fileUri = fileUri,
+                    achievementRepository = achievementRepository,
+                    historyRepository = historyRepository,
+                    settingsRepository = settingsRepository,
+                    notificationsSettingsRepository = notificationsSettingsRepository,
+                    costsRepository = costsRepository,
+                    notesRepository = notesRepository,
+                    onProgress = { progress ->
+                        dialog.updateProgress(progress)
+                    }
+                )
+
+                dialog.dismiss()
+                onFinished()
+            } catch (_: Exception) {
+                dialog.dismiss()
+            }
+        }
     }
 }

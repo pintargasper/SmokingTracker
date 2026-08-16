@@ -17,14 +17,13 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="8dp"
-        android:background="@drawable/dialog_background"
         android:layout_marginEnd="4dp">
 
         <TextView
             android:id="@+id/widget_daily_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/home_daily_label"
+            android:text="@string/home_daily"
             android:textColor="@color/primary"
             android:singleLine="true" />
 
@@ -32,7 +31,7 @@
             android:id="@+id/widget_daily_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="9"
             android:textColor="@color/primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
@@ -45,14 +44,13 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="8dp"
-        android:background="@drawable/dialog_background"
         android:layout_marginHorizontal="4dp">
 
         <TextView
             android:id="@+id/widget_weekly_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/home_weekly_label"
+            android:text="@string/home_weekly"
             android:textColor="@color/primary"
             android:singleLine="true" />
 
@@ -60,7 +58,7 @@
             android:id="@+id/widget_weekly_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="114"
             android:textColor="@color/primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
@@ -73,14 +71,13 @@
         android:orientation="vertical"
         android:gravity="center"
         android:padding="8dp"
-        android:background="@drawable/dialog_background"
         android:layout_marginStart="4dp">
 
         <TextView
             android:id="@+id/widget_monthly_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/home_monthly_label"
+            android:text="@string/home_monthly"
             android:textColor="@color/primary"
             android:singleLine="true" />
 
@@ -88,7 +85,7 @@
             android:id="@+id/widget_monthly_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0"
+            android:text="145"
             android:textColor="@color/primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />

@@ -176,6 +176,7 @@ class GraphFragment : Fragment() {
             GraphInterval.WEEKLY -> binding.currentDateWeekly
             GraphInterval.MONTHLY -> binding.currentDateMonthly
             GraphInterval.YEARLY -> binding.currentDateYearly
+            else -> binding.currentDateDaily
         }
         currentDateTextView.text = labelFormatter(startDateTime, endDateTime)
 
@@ -243,6 +244,7 @@ class GraphFragment : Fragment() {
             GraphInterval.WEEKLY -> binding.graphViewWeekly
             GraphInterval.MONTHLY -> binding.graphViewMonthly
             GraphInterval.YEARLY -> binding.graphViewYearly
+            else -> binding.graphViewDaily
         }
         currentGraphView.setData(data = entries, graphInterval = interval)
     }

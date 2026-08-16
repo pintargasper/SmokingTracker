@@ -6,6 +6,9 @@ import org.junit.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
+import java.util.Calendar
+import java.util.TimeZone
 
 class TimeHelperTest {
 
@@ -64,5 +67,33 @@ class TimeHelperTest {
     fun getEndOfDayReturnsCorrectEndOfDay() {
         val result: LocalDateTime = TimeHelper.getEndOfDay(date = inputDate)
         assertEquals(expectedEndOfDay, result)
+    }
+
+    @Test
+    fun getNextMidnightMillisReturnsTomorrowMidnight() {
+        val expected = LocalDate
+            .now()
+            .plusDays(1)
+            .atStartOfDay(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
+
+        val result = TimeHelper.getNextMidnightMillis()
+
+        assertEquals(expected, result)
+    }
+
+    @Test
+    fun toLocalDateTimeConvertsCalendarCorrectly() {
+        val calendar = Calendar.getInstance().apply {
+            timeZone = TimeZone.getTimeZone("UTC")
+            set(2025, Calendar.DECEMBER, 31, 15, 30, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val expected = calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+        val result = TimeHelper.toLocalDateTime(calendar)
+
+        assertEquals(expected, result)
     }
 }

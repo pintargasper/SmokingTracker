@@ -19,7 +19,7 @@
             android:id="@+id/popup_result_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/calculator_result_title"
+            android:text="@string/calculator_result"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
                 android:id="@+id/label_total_costs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_result_total_costs_label"
+                android:text="@string/calculator_result_total"
                 android:layout_marginBottom="2dp"
                 style="@style/SubtitleTextView"/>
 
@@ -65,7 +65,7 @@
                 android:id="@+id/label_cost_per_cigarette"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_result_cost_per_cigarette"
+                android:text="@string/calculator_result_cost"
                 android:layout_marginBottom="2dp"
                 style="@style/SubtitleTextView"/>
 
@@ -91,7 +91,7 @@
                 android:id="@+id/label_average_cost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_result_average_cost_per_hour"
+                android:text="@string/calculator_result_average_cost"
                 android:layout_marginBottom="2dp"
                 style="@style/SubtitleTextView"/>
 
@@ -117,7 +117,7 @@
                 android:id="@+id/label_time_spent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_result_time_spent_label"
+                android:text="@string/calculator_result_time_spent"
                 android:layout_marginBottom="2dp"
                 style="@style/SubtitleTextView"/>
 
@@ -151,7 +151,7 @@
                 android:id="@+id/label_average_time_per_cigarette"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_result_average_time_per_cigarette_label"
+                android:text="@string/calculator_result_average_time"
                 android:layout_marginBottom="2dp"
                 style="@style/SubtitleTextView"/>
 
@@ -159,7 +159,7 @@
                 android:id="@+id/popup_result_average_time_per_cigarette"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_result_average_time_per_cigarette_description"
+                android:text="@string/calculator_result_estimated_time"
                 style="@style/BodyTextView"/>
         </LinearLayout>
 

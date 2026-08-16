@@ -114,10 +114,10 @@ class AchievementsFragment : Fragment() {
                     ?.toLocalDate()
                     ?.let { localDate: LocalDate ->
                         getString(
-                            R.string.achievement_container_meta,
+                            R.string.achievement_last,
                             LocalizationHelper.formatDate(date = localDate)
                         )
-                    } ?: getString(R.string.achievement_container_meta, "/")
+                    } ?: getString(R.string.achievement_last, "/")
 
                 val achievedTimesText: String = requireContext().resources.getQuantityString(
                     R.plurals.achievement_achieved_times,
@@ -126,7 +126,7 @@ class AchievementsFragment : Fragment() {
                 )
 
                 textLastAchievedCountValue.text = getString(
-                    R.string.achievement_container_count,
+                    R.string.achievement_achieved,
                     achievedTimesText
                 )
 

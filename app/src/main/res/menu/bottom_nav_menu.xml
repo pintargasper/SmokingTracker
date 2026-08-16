@@ -4,21 +4,21 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_home"
-        android:title="@string/title_home" />
+        android:title="@string/navigation_home" />
 
     <item
         android:id="@+id/navigation_graph"
         android:icon="@drawable/ic_graph"
-        android:title="@string/title_graph" />
+        android:title="@string/navigation_graph" />
 
     <item
         android:id="@+id/navigation_analytics"
         android:icon="@drawable/ic_analytics"
-        android:title="@string/title_analytics" />
+        android:title="@string/navigation_more" />
 
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings"
-        android:title="@string/title_notifications" />
+        android:title="@string/navigation_settings" />
 
 </menu>

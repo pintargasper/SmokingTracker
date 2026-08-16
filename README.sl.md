@@ -80,10 +80,10 @@ Na voljo na drugih platformah
 
 **Ključne lastnosti**
 - **Lokalno shranjevanje podatkov** za večjo zasebnost
-- **Dnevna, mesečna in letna** statistika z grafi
+- **Dnevna, tedenska, mesečna in letna** statistika z grafi
 - **Preprosta analitika**, ki vam bo pomagala razumeti vaše navade
 - **Samodejne varnostne kopije** (odvisno od naprave)
-- **Večjezična podpora**: angleščina, slovenščina, ukrajinščina, nemščina, francoščina in srbščina
+- **Večjezična podpora**: angleščina, slovenščina, ukrajinščina, nemščina, francoščina, srbščina in Kitajščina (poenostavljena)
 - **Preprost in intuitiven** uporabniški vmesnik
 
 ### Slike aplikacije
@@ -179,7 +179,7 @@ Na voljo na drugih platformah
 ## 📝 Odvisnosti in različice
 
 **Vtičnik za Gradle**
-- Vtičnik za Android Gradle: 9.2.1
+- Vtičnik za Android Gradle: 9.3.1
 
 **Knjižnice**
 > Vse knjižnice so konfigurirane v [`libs.versions.toml`](gradle/libs.versions.toml)

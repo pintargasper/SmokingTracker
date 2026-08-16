@@ -37,12 +37,6 @@ class AchievementRepository(
         return achievementDao.getAll()
     }
 
-    suspend fun incrementAchievementTimes(
-        achievementId: Long
-    ) {
-        achievementDao.incrementAchievementTimesSafe(achievementId = achievementId)
-    }
-
     suspend fun resetAll(
         state: Boolean
     ) {

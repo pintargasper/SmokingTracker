@@ -22,7 +22,7 @@
             android:id="@+id/image_achievement"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:contentDescription="@string/achievements_container_icon"
+            android:contentDescription="@string/achievements_icon"
             android:src="@mipmap/ic_launcher"
             android:scaleType="centerInside" />
 
@@ -66,7 +66,7 @@
                 android:id="@+id/text_last_achieved_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/achievement_container_meta"
+                android:text="@string/achievement_last"
                 android:textSize="12sp"
                 android:textColor="?attr/colorOnSurface"
                 android:alpha="0.6" />
@@ -83,7 +83,7 @@
                 android:id="@+id/text_achieved_count_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/achievement_container_count"
+                android:text="@string/achievement_achieved"
                 android:textSize="12sp"
                 android:textColor="?attr/colorOnSurface"
                 android:alpha="0.6" />

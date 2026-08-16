@@ -60,7 +60,7 @@ class CalculatorActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun initListeners(): Unit = with(binding) {
+    private fun initListeners(): Unit = with(receiver = binding) {
         inputStartDate.setOnClickListener {
             DialogManager.showDatePickerDialog(
                 context = this@CalculatorActivity,

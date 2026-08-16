@@ -3,7 +3,7 @@ import com.android.build.api.dsl.ApplicationExtension
 plugins {
     alias(libs.plugins.android.application)
     id("com.github.jk1.dependency-license-report") version "3.1.4"
-    id("com.google.devtools.ksp") version "2.3.4"
+    id("com.google.devtools.ksp") version "2.3.6"
 }
 
 kotlin {
@@ -15,14 +15,14 @@ kotlin {
 
 configure<ApplicationExtension> {
     namespace = "com.gasperpintar.smokingtracker"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 13
-        versionName = "1.7.0"
+        targetSdk = 37
+        versionCode = 14
+        versionName = "1.8.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

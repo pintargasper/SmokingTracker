@@ -9,12 +9,10 @@ import androidx.work.WorkerParameters
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
-import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.Duration
@@ -60,19 +58,14 @@ class Worker(
         val settings = settingsRepository.get()
         val notifications = notificationsSettingsRepository.get()
 
-        var achievements = achievementRepository.getAll()
-
         if (lastHistory != null) {
             val achievementEvaluator = AchievementEvaluator(
+                context = applicationContext,
                 historyRepository = historyRepository,
-                achievementRepository = achievementRepository
+                achievementRepository = achievementRepository,
+                notificationsSettingsRepository = notificationsSettingsRepository
             )
-
-            achievementEvaluator.evaluate(
-                lastSmokeTime = lastHistory.createdAt,
-                now = now
-            )
-            achievements = achievementRepository.getAll()
+            achievementEvaluator.evaluate(lastSmokeTime = lastHistory.createdAt, now = now)
         }
 
         val duration: Duration? = lastHistory?.let {
@@ -94,7 +87,7 @@ class Worker(
 
             val shouldSend: Boolean = lastSentMillis == 0L || (nowMillis - lastSentMillis >= intervalMillis)
 
-            if (shouldSend && duration.toMinutes() >= 1) {
+            if (shouldSend && duration.toHours() > 1) {
                 Notifications.sendNotification(
                     context = applicationContext,
                     title = applicationContext.getString(R.string.notification_title),
@@ -111,37 +104,6 @@ class Worker(
                 sharedPreferences.edit {
                     putLong("last_progress_notification_time", nowMillis)
                 }
-            }
-        }
-
-        achievements.forEach { achievement ->
-            if (achievement.notify && notifications?.achievements == true && !achievement.reset) {
-
-                val displayText = AchievementEntry
-                    .fromEntity(entity = achievement)
-                    .getDisplayText(applicationContext)
-
-                val notificationContent: String = when (achievement.unit) {
-                    AchievementUnit.CIGARETTES -> applicationContext.getString(
-                        R.string.notification_achievement_unlocked_content_cigarettes,
-                        displayText
-                    )
-                    else -> applicationContext.getString(
-                        R.string.notification_achievement_unlocked_content_time,
-                        displayText
-                    )
-                }
-
-                Notifications.sendNotification(
-                    context = applicationContext,
-                    title = applicationContext.getString(R.string.notification_achievement_unlocked_title),
-                    content = notificationContent,
-                    notificationId = 1002 + achievement.id.toInt()
-                )
-
-                achievementRepository.update(
-                    entry = achievement.copy(notify = false)
-                )
             }
         }
         return Result.success()

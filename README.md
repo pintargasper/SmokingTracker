@@ -80,10 +80,10 @@ Available on other platforms
 
 **Key Features**
 - **Local data storage** for greater privacy
-- **Daily, monthly and yearly** statistics with graphs
--  **Simple analytics** to help you understand your habits
+- **Daily, weekly, monthly and yearly** statistics with graphs
+- **Simple analytics** to help you understand your habits
 - **Automatic backups** (depending on device)
-- **Multi language support**: English, Slovenian, Ukrainian, German, French and Serbian
+- **Multi language support**: English, Slovenian, Ukrainian, German, French, Serbian and Chinese (Simplified Han Script)
 - **Simple and intuitive** user interface
 
 ### Application images
@@ -179,7 +179,7 @@ Available on other platforms
 ## 📝 Dependencies & Versions
 
 **Gradle Plugin**
-- Android Gradle Plugin: 9.2.1
+- Android Gradle Plugin: 9.3.1
 
 **Libraries**
 > All libraries are configured in [`libs.versions.toml`](gradle/libs.versions.toml)

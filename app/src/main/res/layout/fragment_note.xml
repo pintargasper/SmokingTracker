@@ -11,7 +11,7 @@
         android:id="@+id/text_title_header"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/analytics_notes_add_title"
+        android:text="@string/notes_add"
         android:gravity="center_vertical"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="8dp"
@@ -60,7 +60,7 @@
                 android:id="@+id/text_emotion_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/analytics_notes_add_message"
+                android:text="@string/notes_mode"
                 android:textStyle="bold" />
 
             <com.google.android.material.slider.Slider
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:autofillHints="title"
-                android:hint="@string/analytics_notes_add_title_hint"
+                android:hint="@string/notes_title"
                 android:inputType="text"
                 android:layout_marginBottom="8dp"
                 tools:ignore="HardcodedText,VisualLintTextFieldSize"
@@ -90,7 +90,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:autofillHints="description"
-                android:hint="@string/analytics_notes_add_content_hint"
+                android:hint="@string/notes_content"
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="16dp"

@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Smoking Tracker</string>
-    <string name="title_home">Home</string>
-    <string name="title_graph">Graph</string>
-    <string name="title_analytics">Progress</string>
-    <string name="title_notifications">Settings</string>
+    <string name="application_name">Smoking Tracker</string>
+    <string name="application_tagline">Track. Analyze. Progress.</string>
+
+    <string name="navigation_home">Home</string>
+    <string name="navigation_graph">Graph</string>
+    <string name="navigation_more">More</string>
+    <string name="navigation_settings">Settings</string>
+
     <string name="home_timer_message">Time past after last cigarette</string>
     <string name="home_timer_day">d</string>
     <string name="home_timer_hour">h</string>
     <string name="home_timer_minute">m</string>
     <string name="home_timer_second">s</string>
-    <string name="home_daily_label">Daily</string>
-    <string name="home_weekly_label">Weekly</string>
-    <string name="home_monthly_label">Monthly</string>
+    <string name="home_daily">Daily</string>
+    <string name="home_weekly">Weekly</string>
+    <string name="home_monthly">Monthly</string>
     <string name="home_previous_day">Previous day</string>
     <string name="home_next_day">Next day</string>
     <string name="home_add_entry">Add new entry</string>
+
+    <string name="home_lent">Lent record</string>
+    <string name="home_edit">Edit record</string>
+    <string name="home_delete">Delete record</string>
+
     <string name="graph_daily">Daily Overview (%1$d)</string>
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
     <string name="graph_monthly">Monthly Overview (%1$d)</string>
@@ -29,87 +37,185 @@
     <string name="graph_next_day_monthly">Next day (Monthly)</string>
     <string name="graph_next_day_yearly">Next day (Yearly)</string>
     <string name="graph_view_info">There is no data to display the graph</string>
-    <string name="analytics_title">Progress</string>
-    <string name="analytics_calculator_title">Calculator</string>
-    <string name="analytics_calculator_description">A quick overview of total usage, costs and time</string>
-    <string name="analytics_achievements_title">Achievements</string>
-    <string name="analytics_achievements_description">Track your milestones and celebrate your progress</string>
-    <string name="analytics_notes_title">Notes</string>
-    <string name="analytics_notes_description">Save your thoughts and personal notes</string>
-    <string name="analytics_notes_add_title">Add note</string>
-    <string name="analytics_notes_edit_title">Edit note</string>
-    <string name="analytics_notes_add_message">Mood</string>
-    <string name="analytics_notes_add_title_hint">Note Title</string>
-    <string name="analytics_notes_add_content_hint">Note Content</string>
-    <string name="analytics_notes_add_content_emotions_very_bad">Very bad</string>
-    <string name="analytics_notes_add_content_emotions_bad">Bad</string>
-    <string name="analytics_notes_add_content_emotions_neutral">Neutral</string>
-    <string name="analytics_notes_add_content_emotions_good">Good</string>
-    <string name="analytics_notes_add_content_emotions_very_good">Very good</string>
-    <string name="achievements_title">Achievements</string>
-    <string name="achievements_cigarettes_avoided">Cigarettes avoided</string>
-    <string name="achievements_smoke_free_time">Smoke free time</string>
-    <string name="history_container_lent">Lent record</string>
-    <string name="history_container_edit">Edit record</string>
-    <string name="history_container_delete">Delete record</string>
-    <string name="achievements_container_icon">Achievement icon</string>
-    <string name="cost_container_price">Cost: %1$s %2$s</string>
-    <string name="cost_container_delete">Delete record</string>
-    <string name="settings_category_general">General</string>
-    <string name="settings_category_theme">Theme</string>
-    <string name="settings_category_language">Language</string>
-    <string name="settings_category_notifications">Notifications</string>
-    <string name="settings_category_notifications_url">Stay informed with notifications and alerts</string>
-    <string name="settings_category_statistics">Statistics</string>
-    <string name="settings_category_statistics_currency">Currency</string>
-    <string name="settings_category_statistics_currency_url">Choose your currency. If the currency is not listed, you can enter it yourself</string>
-    <string name="settings_category_statistics_costs">Costs</string>
-    <string name="settings_category_statistics_costs_url">Cost of one cigarette. The price of a cigarette can be determined by periods</string>
-    <string name="settings_category_data">Data</string>
-    <string name="settings_category_data_download">Backup</string>
-    <string name="settings_category_data_download_url">Backup your data to your device</string>
-    <string name="settings_category_data_upload">Restore</string>
-    <string name="settings_category_data_upload_url">Restore your data from your device</string>
-    <string name="settings_category_data_action">Open</string>
-    <string name="settings_category_data_about">About</string>
-    <string name="settings_category_data_version">Version %1$s</string>
+
+    <string name="more_progress">Progress</string>
+    <string name="more_progress_statistics">Statistics</string>
+    <string name="more_progress_statistics_description">Detailed insights and trends of your usage over time</string>
+    <string name="more_progress_achievements">Achievements</string>
+    <string name="more_progress_achievements_description">Track your milestones and celebrate your progress</string>
+    <string name="more_tools">Tools</string>
+    <string name="more_tools_calculator">Calculator</string>
+    <string name="more_tools_calculator_description">A quick overview of total usage, costs and time</string>
+    <string name="more_tools_notes">Notes</string>
+    <string name="more_tools_notes_description">Save your thoughts and personal notes</string>
+
+    <string name="achievements">Achievements</string>
+    <string name="achievements_icon">Achievement icon</string>
+    <string name="achievement_last">Last achieved: %1$s</string>
+    <string name="achievement_achieved">Achieved: %1$s</string>
+    <string name="achievements_time">Smoke free time</string>
+    <string name="achievement_congrats_one_day">One day hero</string>
+    <string name="achievement_congrats_two_days">Two day champion</string>
+    <string name="achievement_congrats_three_days">Three day warrior</string>
+    <string name="achievement_congrats_four_days">Four day master</string>
+    <string name="achievement_congrats_five_days">Five day legend</string>
+    <string name="achievement_congrats_six_days">Six day conqueror</string>
+    <string name="achievement_congrats_one_week">One week wonder</string>
+    <string name="achievement_congrats_two_weeks">Two week titan</string>
+    <string name="achievement_congrats_three_weeks">Three week trailblazer</string>
+    <string name="achievement_congrats_one_month">One month explorer</string>
+    <string name="achievement_congrats_three_months">Three month pathfinder</string>
+    <string name="achievement_congrats_six_months">Six month conqueror</string>
+    <string name="achievement_congrats_nine_month">Nine month defender</string>
+    <string name="achievement_congrats_one_year">One year pioneer</string>
+    <string name="achievements_avoided">Cigarettes avoided</string>
+    <string name="achievement_congrats_one_day_message">Well done! Keep pushing forward and stay consistent</string>
+    <string name="achievement_congrats_two_days_message">Great job! You are building momentum and staying strong</string>
+    <string name="achievement_congrats_three_days_message">Keep it up! Every step you take shows your dedication</string>
+    <string name="achievement_congrats_four_days_message">Amazing! Keep following through and stay committed</string>
+    <string name="achievement_congrats_five_days_message">Awesome! Your persistence is showing impressive results</string>
+    <string name="achievement_congrats_six_days_message">Fantastic! Your effort is paying off, keep going</string>
+    <string name="achievement_congrats_one_week_message">Outstanding! You have reached a major milestone</string>
+    <string name="achievement_congrats_two_weeks_message">Excellent! Two weeks of dedication is no small feat</string>
+    <string name="achievement_congrats_three_weeks_message">Incredible! Three weeks of consistency shows your determination</string>
+    <string name="achievement_congrats_one_month_message">Fantastic! One month of dedication shows real commitment</string>
+    <string name="achievement_congrats_three_months_message">Your consistency and effort are building unstoppable momentum</string>
+    <string name="achievement_congrats_six_months_message">Half a year of perseverance proves your determination and resilience are unmatched</string>
+    <string name="achievement_congrats_nine_months_message">Your relentless focus is shaping you into a true master of your journey</string>
+    <string name="achievement_congrats_one_year_message">A full year of commitment marks you as a legendary achiever</string>
+    <string name="achievement_congrats_twenty">First victory pack</string>
+    <string name="achievement_congrats_two_hundred">Pack conqueror</string>
+    <string name="achievement_congrats_four_hundred">Smoke buster</string>
+    <string name="achievement_congrats_six_hundred">Carton crusher</string>
+    <string name="achievement_congrats_eight_hundred">Freedom fighter</string>
+    <string name="achievement_congrats_thousand">Addiction destroyer</string>
+    <string name="achievement_congrats_twenty_message">Great start! Every effort is paving the way to victory</string>
+    <string name="achievement_congrats_two_hundred_message">Strong progress! Your focus is building unstoppable momentum</string>
+    <string name="achievement_congrats_four_hundred_message">Remarkable! Your persistence is truly paying off</string>
+    <string name="achievement_congrats_six_hundred_message">Exceptional work! You are mastering the journey step by step</string>
+    <string name="achievement_congrats_eight_hundred_message">Incredible! Your determination is making a real difference</string>
+    <string name="achievement_congrats_thousand_message">Legendary achievement! Your dedication and resilience are unmatched</string>
+
+    <string name="calculator_per_day">Cigarettes per day</string>
+    <string name="calculator_per_pack">Cigarettes per pack</string>
+    <string name="calculator_price">Price per pack</string>
+    <string name="calculator_period">Select period</string>
+    <string name="calculator_from">From:</string>
+    <string name="calculator_start_date">Start date</string>
+    <string name="calculator_to">To:</string>
+    <string name="calculator_end_date">End date</string>
+    <string name="calculator_calculate">Calculate</string>
+
+    <string name="calculator_result">Calculation result</string>
+    <string name="calculator_result_total">Total costs</string>
+    <string name="calculator_result_time_spent">Time spent</string>
+    <string name="calculator_result_average_cost">Average cost per hour</string>
+    <string name="calculator_result_cost">Cost per cigarette</string>
+    <string name="calculator_result_average_time">Average time to smoke 1 cigarette</string>
+    <string name="calculator_result_estimated_time">Estimated at 5 minutes</string>
+
+    <string name="notes_add">Add note</string>
+    <string name="notes_edit">Edit note</string>
+    <string name="notes_mode">Mood</string>
+    <string name="notes_title">Note Title</string>
+    <string name="notes_content">Note Content</string>
+    <string name="notes_emotions_very_bad">Very bad</string>
+    <string name="notes_emotions_bad">Bad</string>
+    <string name="notes_emotions_neutral">Neutral</string>
+    <string name="notes_emotions_good">Good</string>
+    <string name="notes_emotions_very_good">Very good</string>
+
+    <string name="cost_price">Cost: %1$s %2$s</string>
+    <string name="cost_delete">Delete record</string>
+
+    <string name="settings_general">General</string>
+    <string name="settings_general_theme">Theme</string>
+    <string name="settings_general_language">Language</string>
+    <string name="settings_general_notifications">Notifications</string>
+    <string name="settings_general_notifications_description">Stay informed with notifications and alerts</string>
+
+    <string name="settings_finance">Finance</string>
+    <string name="settings_finance_currency">Currency</string>
+    <string name="settings_finance_currency_description">Choose your currency. If the currency is not listed, you can enter it yourself</string>
+    <string name="settings_finance_costs">Costs</string>
+    <string name="settings_finance_costs_description">Cost of one cigarette. The price of a cigarette can be determined by periods</string>
+
+    <string name="settings_data">Data</string>
+    <string name="settings_data_backup">Backup</string>
+    <string name="settings_data_backup_text">Backup your data to your device</string>
+    <string name="settings_data_restore">Restore</string>
+    <string name="settings_data_restore_text">Restore your data from your device</string>
+
+    <string name="settings_about">About the app</string>
+    <string name="settings_about_description">Version, links and more</string>
+    <string name="settings_about_website">Website</string>
+    <string name="settings_about_website_description">Visit the website for more information</string>
+    <string name="settings_about_changelog">Changelog</string>
+    <string name="settings_about_changelog_description">View changelog</string>
+    <string name="settings_support">Support &amp; Security</string>
+    <string name="settings_support_translations">Help Translate</string>
+    <string name="settings_support_translations_description">Translate this app on your language using Weblate</string>
+    <string name="settings_support_privacy_policy">Privacy Policy</string>
+    <string name="settings_support_privacy_policy_description">View Privacy Policy</string>
+
+    <string name="about_view">View on</string>
+    <string name="about_view_github">View the source code, report issues, and contribute to the project</string>
+    <string name="about_view_f_droid">View the app on F-Droid</string>
+    <string name="about_view_izzy_on_droid">View the app on IzzyOnDroid</string>
+    <string name="about_view_open_apk">View the app on OpenAPK</string>
+
+    <string name="about_contributors">Contributors</string>
+    <string name="about_contributors_description">GitHub profiles</string>
+    <string name="about_contributors_slovenian">Slovenian translation</string>
+    <string name="about_contributors_ukrainian">Ukrainian translation</string>
+    <string name="about_contributors_russian">Russian translation</string>
+    <string name="about_contributors_serbian">Serbian translation</string>
+    <string name="about_contributors_chinese_simplified">Chinese (simplified) translation</string>
+    <string name="about_contributors_chinese_traditional">Chinese (traditional) translation</string>
+
+    <string name="about_version">Version: %1$s (%2$d)</string>
+    <string name="about_created_by">Developed by: %1$s</string>
+
     <string name="settings_category_data_version_view">View on available platforms</string>
     <string name="settings_category_data_version_unknown">Unknown</string>
-    <string name="settings_category_data_website">Website</string>
-    <string name="settings_category_data_translations_website">Help Translate</string>
-    <string name="settings_category_data_translations_website_url">Translate this app on your language using Weblate</string>
-    <string name="settings_category_data_changelog">Changelog</string>
-    <string name="settings_category_data_changelog_url">View changelog</string>
-    <string name="settings_category_data_privacy_policy">Security</string>
-    <string name="settings_category_data_privacy_policy_url">Privacy Policy</string>
     <string name="settings_category_about_contributors">Contributors</string>
     <string name="settings_category_about_contributors_url">View all contributors</string>
-    <string name="insert_popup_message">Add entry</string>
-    <string name="insert_popup_lent">A lent cigarette?</string>
-    <string name="insert_popup_insert">Add</string>
+
     <string name="popup_close">Close</string>
     <string name="popup_confirm">Confirm</string>
     <string name="popup_save">Save</string>
+    <string name="popup_backup">Backup</string>
+    <string name="popup_select">Select</string>
+
+    <string name="insert_popup">Add entry</string>
+    <string name="insert_popup_lent">A lent cigarette?</string>
+    <string name="insert_popup_add">Add</string>
+
     <string name="edit_popup_message">Date and time</string>
     <string name="edit_popup_lent">A lent cigarette?</string>
+
     <string name="delete_popup_message">Are you sure to delete this record?</string>
+
     <string name="language_popup">Select language</string>
     <string name="language_popup_info">Choose your preferred language</string>
     <string name="language_popup_check_box_system">System</string>
+
     <string name="theme_popup">Select theme</string>
     <string name="theme_popup_info">Choose your preferred theme</string>
     <string name="theme_popup_check_box_system">System</string>
     <string name="theme_popup_check_box_light_theme">Light theme</string>
     <string name="theme_popup_check_box_dark_theme">Dark theme</string>
+
     <string name="notifications_popup">Notifications</string>
     <string name="notifications_popup_info">Choose your notification preference</string>
     <string name="notifications_popup_check_box_system">System</string>
     <string name="notifications_popup_check_box_progress">Progress reminder</string>
     <string name="notifications_popup_check_box_achievements">Achievements</string>
-    <string name="notifications_popup_progress_frequency_label">Frequency</string>
-    <string name="notifications_popup_progress_frequency_default">Default</string>
-    <string name="notifications_popup_progress_frequency_daily">Daily</string>
-    <string name="notifications_popup_progress_frequency_weekly">Weekly</string>
+    <string name="notifications_popup_frequency_label">Frequency</string>
+    <string name="notifications_popup_frequency_default">Default</string>
+    <string name="notifications_popup_frequency_daily">Daily</string>
+    <string name="notifications_popup_frequency_weekly">Weekly</string>
+
     <string name="currency_popup">Select currency</string>
     <string name="currency_popup_info">Choose your preferred currency</string>
     <string name="currency_check_box_euro">Euro (€)</string>
@@ -118,67 +224,21 @@
     <string name="currency_check_box_custom">Other:</string>
     <string name="currency_check_box_edit_text" translatable="false">₽, ¥, zł, lei, лв, …</string>
     <string name="currency_text_error">Enter currency</string>
+
     <string name="costs_popup">Cost of a cigarette</string>
     <string name="costs_popup_info">Add cost time intervals</string>
-    <string name="download_popup">Backup your data</string>
-    <string name="download_popup_info">You will be notified of the data backup via push notification</string>
-    <string name="download_popup_download">Backup</string>
-    <string name="upload_popup_select">Select</string>
-    <string name="upload_popup_upload">Restore your data</string>
-    <string name="upload_popup_info">You will be notified of the data restore via push notification</string>
-    <string name="upload_popup_file">File</string>
-    <string name="upload_popup_file_none">None</string>
-    <string name="upload_popup_file_unknown">Unknown</string>
-    <string name="version_popup_title">View on</string>
-    <string name="contributors_popup_info">GitHub profiles</string>
-    <string name="contributors_popup_slovenian">Slovenian translation</string>
-    <string name="contributors_popup_ukrainian">Ukrainian translation</string>
-    <string name="contributors_popup_russian">Russian translation</string>
-    <string name="contributors_popup_serbian">Serbian translation</string>
-    <string name="contributors_popup_chinese_simplified">Chinese (simplified) translation</string>
+
+    <string name="backup_popup">Backup your data</string>
+    <string name="backup_popup_description">You will be notified of the data backup via push notification</string>
+
+    <string name="restore_popup">Restore your data</string>
+    <string name="restore_popup_info">You will be notified of the data restore via push notification</string>
+    <string name="restore_popup_file">File</string>
+    <string name="restore_popup_file_none">None</string>
+    <string name="restore_popup_file_unknown">Unknown</string>
+
     <string name="note_popup_save">Save note?</string>
-    <string name="achievement_container_meta">Last achieved: %1$s</string>
-    <string name="achievement_container_count">Achieved: %1$s</string>
-    <string name="achievement_title_congrats_days_1">One day hero</string>
-    <string name="achievement_title_congrats_days_2">Two day champion</string>
-    <string name="achievement_title_congrats_days_3">Three day warrior</string>
-    <string name="achievement_title_congrats_days_4">Four day master</string>
-    <string name="achievement_title_congrats_days_5">Five day legend</string>
-    <string name="achievement_title_congrats_days_6">Six day conqueror</string>
-    <string name="achievement_title_congrats_weeks_1">One week wonder</string>
-    <string name="achievement_title_congrats_weeks_2">Two week titan</string>
-    <string name="achievement_title_congrats_weeks_3">Three week trailblazer</string>
-    <string name="achievement_title_congrats_months_1">One month explorer</string>
-    <string name="achievement_title_congrats_months_3">Three month pathfinder</string>
-    <string name="achievement_title_congrats_months_6">Six month conqueror</string>
-    <string name="achievement_title_congrats_months_9">Nine month defender</string>
-    <string name="achievement_title_congrats_years_1">One year pioneer</string>
-    <string name="achievement_message_congrats_days_1">Well done! Keep pushing forward and stay consistent</string>
-    <string name="achievement_message_congrats_days_2">Great job! You are building momentum and staying strong</string>
-    <string name="achievement_message_congrats_days_3">Keep it up! Every step you take shows your dedication</string>
-    <string name="achievement_message_congrats_days_4">Amazing! Keep following through and stay committed</string>
-    <string name="achievement_message_congrats_days_5">Awesome! Your persistence is showing impressive results</string>
-    <string name="achievement_message_congrats_days_6">Fantastic! Your effort is paying off, keep going</string>
-    <string name="achievement_message_congrats_weeks_1">Outstanding! You have reached a major milestone</string>
-    <string name="achievement_message_congrats_weeks_2">Excellent! Two weeks of dedication is no small feat</string>
-    <string name="achievement_message_congrats_weeks_3">Incredible! Three weeks of consistency shows your determination</string>
-    <string name="achievement_message_congrats_months_1">Fantastic! One month of dedication shows real commitment</string>
-    <string name="achievement_message_congrats_months_3">Your consistency and effort are building unstoppable momentum</string>
-    <string name="achievement_message_congrats_months_6">Half a year of perseverance proves your determination and resilience are unmatched</string>
-    <string name="achievement_message_congrats_months_9">Your relentless focus is shaping you into a true master of your journey</string>
-    <string name="achievement_message_congrats_years_1">A full year of commitment marks you as a legendary achiever</string>
-    <string name="achievement_title_congrats_c_20">First victory pack</string>
-    <string name="achievement_title_congrats_c_200">Pack conqueror</string>
-    <string name="achievement_title_congrats_c_400">Smoke buster</string>
-    <string name="achievement_title_congrats_c_600">Carton crusher</string>
-    <string name="achievement_title_congrats_c_800">Freedom fighter</string>
-    <string name="achievement_title_congrats_c_1000">Addiction destroyer</string>
-    <string name="achievement_message_congrats_c_20">Great start! Every effort is paving the way to victory</string>
-    <string name="achievement_message_congrats_c_200">Strong progress! Your focus is building unstoppable momentum</string>
-    <string name="achievement_message_congrats_c_400">Remarkable! Your persistence is truly paying off</string>
-    <string name="achievement_message_congrats_c_600">Exceptional work! You are mastering the journey step by step</string>
-    <string name="achievement_message_congrats_c_800">Incredible! Your determination is making a real difference</string>
-    <string name="achievement_message_congrats_c_1000">Legendary achievement! Your dedication and resilience are unmatched</string>
+
     <string name="day_today">Today</string>
     <string name="day_monday">Monday</string>
     <string name="day_tuesday">Tuesday</string>
@@ -210,30 +270,11 @@
     <string name="notification_achievement_unlocked_title">Congratulations!</string>
     <string name="notification_achievement_unlocked_content_time">Milestone achieved: %1$s without smoking</string>
     <string name="notification_achievement_unlocked_content_cigarettes">You avoided %1$s</string>
-    <string name="calculator_cigarettes_per_day">Cigarettes per day</string>
-    <string name="calculator_cigarettes_per_pack">Cigarettes per pack</string>
-    <string name="calculator_price_per_pack">Price per pack</string>
-    <string name="calculator_period">Select period</string>
-    <string name="calculator_start_date">From:</string>
-    <string name="calculator_start_date_hint">Start date</string>
-    <string name="calculator_end_date">To:</string>
-    <string name="calculator_end_date_hint">End date</string>
-    <string name="calculator_button_calculate">Calculate</string>
-    <string name="calculator_result_title">Calculation result</string>
-    <string name="calculator_result_total_costs_label">Total costs</string>
-    <string name="calculator_result_time_spent_label">Time spent</string>
-    <string name="calculator_result_average_cost_per_hour">Average cost per hour</string>
-    <string name="calculator_result_cost_per_cigarette">Cost per cigarette</string>
-    <string name="calculator_result_average_time_per_cigarette_label">Average time to smoke 1 cigarette</string>
-    <string name="calculator_result_average_time_per_cigarette_description">Estimated at 5 minutes</string>
-    <string name="calculator_result_valute_unit">units</string>
+
     <string name="statistics_title">Statistics</string>
     <string name="statistics_basic">Basic</string>
     <string name="statistics_forecast">Forecast</string>
-    <string name="analytics_statistics_title">Statistics</string>
-    <string name="statistics_achievements_description">Detailed insights and trends of your usage over time</string>
     <string name="statistics_title_cigarettes_section">Overview</string>
-    <string name="statistics_title_money_section">Financial impact</string>
     <string name="statistics_title_money_section_instructions">Set cigarette price in settings to see financial impact</string>
     <string name="statistics_max_cigarettes">Maximum cigarettes smoked in a day</string>
     <string name="statistics_min_cigarettes">Minimum cigarettes smoked in a day</string>
@@ -241,20 +282,27 @@
     <string name="statistics_total_cigarettes">Total cigarettes smoked</string>
     <string name="statistics_first_entry">Since first entry</string>
     <string name="statistics_longest_streak">Longest time without smoking</string>
+    <string name="statistics_title_money_section">Financial impact</string>
     <string name="statistics_total_spent">Total spent</string>
     <string name="statistics_total_spent_today">Total spent today</string>
     <string name="statistics_total_spent_month">Total spent this month</string>
     <string name="statistics_most_expensive">Most expensive day</string>
     <string name="statistics_logged">Logged: %1$s</string>
     <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>
-    <string name="loading_bar_message_backup">Backing up…</string>
-    <string name="loading_bar_message_restore">Restoring…</string>
+
+    <string name="loading_bar_backup">Backing up…</string>
+    <string name="loading_bar_restore">Restoring…</string>
     <string name="loading_bar_progress_percentage">Progress: %1$d%%</string>
     <string name="loading_bar_encourage_0">Starting up…</string>
     <string name="loading_bar_encourage_15">Good progress…</string>
     <string name="loading_bar_encourage_50">Halfway done…</string>
     <string name="loading_bar_encourage_70">Almost finished…</string>
     <string name="loading_bar_encourage_100">Completed successfully</string>
+
+    <string name="widget_stats">Statistics</string>
+    <string name="widget_stats_quick_add">Statistics &amp; Quick Add</string>
+    <string name="widget_quick_add">Quick Add</string>
+
     <plurals name="time_years">
         <item quantity="one">%d year</item>
         <item quantity="other">%d years</item>

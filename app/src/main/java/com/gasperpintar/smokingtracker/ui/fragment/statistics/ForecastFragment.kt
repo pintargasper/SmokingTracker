@@ -12,7 +12,9 @@ import com.gasperpintar.smokingtracker.model.GraphEntry
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import kotlinx.coroutines.launch
+import java.time.Duration
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
 
 class ForecastFragment : Fragment() {
@@ -38,43 +40,67 @@ class ForecastFragment : Fragment() {
     }
 
     private fun setup() {
-        val interval = GraphInterval.YEARLY
         val current = LocalDateTime.now()
-        val mainCount = 12
 
         lifecycleScope.launch {
             val historyList = historyRepository.getEntries(date = current)
 
-            val mainRaw = (1 until mainCount).map { index ->
-                val date = current.minusMonths(index.toLong())
-                val quantity = historyList.count {
-                    it.createdAt.monthValue == date.monthValue && it.createdAt.year == date.year
-                }
-                GraphEntry(date = date.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0), quantity = quantity)
-            }.reversed()
+            if (historyList.isEmpty()) {
+                return@launch
+            }
 
-            val forecast = calculateForecast(data = mainRaw)
+            val oldestRecord = historyList.minByOrNull {
+                it.createdAt
+            } ?: return@launch
+
+            val interval = determineGraphInterval(oldestRecord = oldestRecord.createdAt, current = current)
+
+            val mainCount = when (interval) {
+                GraphInterval.HOURLY -> Duration.between(oldestRecord.createdAt, current).toHours().toInt() + 5
+                GraphInterval.DAILY -> Duration.between(oldestRecord.createdAt, current).toDays().toInt() + 7
+                GraphInterval.WEEKLY -> ((Duration.between(oldestRecord.createdAt, current).toDays() / 7) + 1).toInt()
+                GraphInterval.MONTHLY -> 12
+                else -> 12
+            }
+
+            val mainRaw = (0 until mainCount).map { index ->
+                val stepsBack = (mainCount - 1 - index).toLong()
+                val date = getDateForInterval(current, interval, stepsBack)
+
+                GraphEntry(
+                    date = normalizeDate(date, interval),
+                    quantity = historyList.count {
+                        isInInterval(recordDate = it.createdAt, date, interval)
+                    }
+                )
+            }
+
+            val forecast = calculateForecast(data = mainRaw, interval = interval)
 
             binding.forecastGraphView.setData(
                 data = mainRaw,
                 forecast = forecast,
-                graphInterval = interval
+                graphInterval = interval,
+                isForecast = true
             )
         }
     }
 
     private fun calculateForecast(
-        data: List<GraphEntry>
+        data: List<GraphEntry>,
+        interval: GraphInterval
     ): List<GraphEntry> {
         if (data.isEmpty()) {
             return emptyList()
         }
 
-        val knownX = data.indices.map {
+        val forecastData = data.dropLast(n = (interval == GraphInterval.MONTHLY).takeIf { it }?.let { 1 } ?: 0)
+
+        val knownX = forecastData.indices.map {
             (it + 1).toDouble()
         }
 
-        val knownY = data.map {
+        val knownY = forecastData.map {
             it.quantity.toDouble()
         }
 
@@ -83,16 +109,14 @@ class ForecastFragment : Fragment() {
 
         var numerator = 0.0
         var denominator = 0.0
-        for (i in data.indices) {
-            numerator += (knownX[i] - averageX) * (knownY[i] - averageY)
-            denominator += (knownX[i] - averageX) * (knownX[i] - averageX)
+        for (index in forecastData.indices) {
+            numerator += (knownX[index] - averageX) * (knownY[index] - averageY)
+            denominator += (knownX[index] - averageX) * (knownX[index] - averageX)
         }
 
-        val b = if (denominator != 0.0) {
+        val b = (denominator != 0.0).takeIf { it }?.let {
             numerator / denominator
-        } else {
-            0.0
-        }
+        } ?: 0.0
         val a = averageY - b * averageX
 
         val forecastSteps = 12
@@ -101,11 +125,76 @@ class ForecastFragment : Fragment() {
         return (1..forecastSteps).map { index ->
             val targetX = knownX.size.toDouble() + index
             val forecastY = a + b * targetX
-            val finalQuantity = forecastY.roundToInt().coerceAtLeast(0)
-            val forecastDate = lastDate.plusMonths(index.toLong()).withDayOfMonth(1)
+
+            val finalQuantity = forecastY.roundToInt().coerceAtLeast(minimumValue = 0)
+
+            val forecastDate = when (interval) {
+                GraphInterval.HOURLY -> lastDate.plusHours(index.toLong())
+                GraphInterval.DAILY -> lastDate.plusDays(index.toLong())
+                GraphInterval.WEEKLY -> lastDate.plusWeeks(index.toLong())
+                GraphInterval.MONTHLY -> lastDate.plusMonths(index.toLong()).withDayOfMonth(1)
+                else -> lastDate
+            }
+
             GraphEntry(quantity = finalQuantity, date = forecastDate)
         }
     }
+
+    private fun determineGraphInterval(
+        oldestRecord: LocalDateTime,
+        current: LocalDateTime
+    ): GraphInterval {
+        val hours = Duration.between(oldestRecord, current).toHours()
+        return when {
+            hours < 24 -> GraphInterval.HOURLY
+            hours < 24 * 7 -> GraphInterval.DAILY
+            oldestRecord.plusMonths(1).isAfter(current) -> GraphInterval.WEEKLY
+            else -> GraphInterval.MONTHLY
+        }
+    }
+
+    private fun getDateForInterval(
+        current: LocalDateTime,
+        interval: GraphInterval,
+        stepsBack: Long
+    ): LocalDateTime {
+        return when (interval) {
+            GraphInterval.HOURLY -> current.minusHours(stepsBack)
+            GraphInterval.DAILY -> current.minusDays(stepsBack)
+            GraphInterval.WEEKLY -> current.minusWeeks(stepsBack)
+            GraphInterval.MONTHLY -> current.minusMonths(stepsBack)
+            else -> current
+        }
+    }
+
+    private fun normalizeDate(
+        date: LocalDateTime,
+        interval: GraphInterval
+    ): LocalDateTime {
+        return when (interval) {
+            GraphInterval.HOURLY -> date.withMinute(0).withSecond(0).withNano(0)
+            GraphInterval.WEEKLY -> date.toLocalDate().atStartOfDay()
+            GraphInterval.MONTHLY -> date.withDayOfMonth(1).toLocalDate().atStartOfDay()
+            else -> date
+        }
+    }
+
+    private fun isInInterval(
+        recordDate: LocalDateTime,
+        date: LocalDateTime,
+        interval: GraphInterval
+    ): Boolean =
+        when (interval) {
+            GraphInterval.HOURLY -> recordDate.truncatedTo(ChronoUnit.HOURS) == date.truncatedTo(ChronoUnit.HOURS)
+            GraphInterval.DAILY -> recordDate.toLocalDate() == date.toLocalDate()
+            GraphInterval.WEEKLY -> {
+                val record = recordDate.toLocalDate()
+                val start = date.toLocalDate()
+                record >= start && record < start.plusWeeks(1)
+            }
+            GraphInterval.MONTHLY -> recordDate.year == date.year && recordDate.month == date.month
+            else -> false
+        }
 
     override fun onDestroyView() {
         super.onDestroyView()

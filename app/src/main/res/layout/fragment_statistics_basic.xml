@@ -4,7 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,14 +18,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/statistics_title_cigarettes_section"
-            android:gravity="start"
-            style="@style/SubtitleTextView"/>
+            style="@style/MainTitleTextView"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -69,7 +70,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -116,7 +116,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -148,7 +147,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -180,7 +178,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -212,7 +209,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -244,7 +240,7 @@
             android:layout_height="wrap_content"
             android:text="@string/statistics_title_money_section"
             android:gravity="start"
-            style="@style/SubtitleTextView"/>
+            style="@style/MainTitleTextView"/>
 
         <TextView
             android:id="@+id/statistics_title_instructions"
@@ -253,13 +249,12 @@
             android:text="@string/statistics_title_money_section_instructions"
             android:gravity="start"
             android:visibility="gone"
-            style="@style/SubBodyTextView"/>
+            style="@style/BodyTextView"/>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -290,7 +285,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -321,7 +315,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -352,7 +345,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:background="?attr/colorSurface"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 

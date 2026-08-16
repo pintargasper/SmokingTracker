@@ -52,7 +52,7 @@
                 android:id="@+id/text_start_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_start_date"
+                android:text="@string/calculator_from"
                 style="@style/BodyTextView" />
 
             <EditText
@@ -62,8 +62,8 @@
                 android:layout_weight="1"
                 android:focusable="false"
                 android:clickable="true"
-                android:hint="@string/calculator_start_date_hint"
-                android:autofillHints="@string/calculator_start_date_hint"
+                android:hint="@string/calculator_start_date"
+                android:autofillHints="@string/calculator_start_date"
                 android:inputType="date"
                 android:layout_marginHorizontal="8dp"
                 style="@style/EditText" />
@@ -72,7 +72,7 @@
                 android:id="@+id/text_end_date_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/calculator_end_date"
+                android:text="@string/calculator_to"
                 android:layout_marginEnd="8dp"
                 style="@style/BodyTextView" />
 
@@ -83,8 +83,8 @@
                 android:layout_weight="1"
                 android:focusable="false"
                 android:clickable="true"
-                android:hint="@string/calculator_end_date_hint"
-                android:autofillHints="@string/calculator_end_date_hint"
+                android:hint="@string/calculator_end_date"
+                android:autofillHints="@string/calculator_end_date"
                 android:inputType="date"
                 style="@style/EditText" />
         </LinearLayout>

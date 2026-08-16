@@ -48,8 +48,8 @@ class LoadingDialog(
 
     fun setProgressType(type: ProgressType) {
         when (type) {
-            ProgressType.BACKUP -> progressTextMessage.text = activity.getString(R.string.loading_bar_message_backup)
-            ProgressType.RESTORE -> progressTextMessage.text = activity.getString(R.string.loading_bar_message_restore)
+            ProgressType.BACKUP -> progressTextMessage.text = activity.getString(R.string.loading_bar_backup)
+            ProgressType.RESTORE -> progressTextMessage.text = activity.getString(R.string.loading_bar_restore)
         }
     }
 }
