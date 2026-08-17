@@ -248,7 +248,6 @@
     <string name="settings_about_changelog">更新日志</string>
     <string name="settings_about_changelog_description">查看更新日志</string>
     <string name="about_contributors">贡献者</string>
-    <string name="settings_category_about_contributors_url">查看所有贡献者</string>
     <string name="popup_save">保存</string>
     <string name="currency_popup">选择您的货币</string>
     <string name="currency_popup_info">选择您偏好的货币</string>

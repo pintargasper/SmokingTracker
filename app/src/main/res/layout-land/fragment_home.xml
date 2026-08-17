@@ -242,6 +242,7 @@
                         android:text="%1$02d.%2$02d.%3$d"
                         android:gravity="center"
                         android:singleLine="true"
+                        android:layout_marginTop="-5dp"
                         style="@style/MainTitleCenterTextView"
                         tools:ignore="HardcodedText" />
 
