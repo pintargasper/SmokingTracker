@@ -178,8 +178,6 @@
 
     <string name="settings_category_data_version_view">View on available platforms</string>
     <string name="settings_category_data_version_unknown">Unknown</string>
-    <string name="settings_category_about_contributors">Contributors</string>
-    <string name="settings_category_about_contributors_url">View all contributors</string>
 
     <string name="popup_close">Close</string>
     <string name="popup_confirm">Confirm</string>

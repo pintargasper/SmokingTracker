@@ -79,7 +79,7 @@
     <string name="settings_about_changelog">變更日誌</string>
     <string name="settings_about_changelog_description">查看變更日誌</string>
     <string name="settings_support_privacy_policy">隱私政策</string>
-    <string name="settings_category_about_contributors">貢獻者</string>
+    <string name="about_contributors">貢獻者</string>
     <string name="settings_category_about_contributors_url">查看所有貢獻者</string>
     <string name="insert_popup">新增項目</string>
     <string name="insert_popup_lent">一根借來的香菸？</string>

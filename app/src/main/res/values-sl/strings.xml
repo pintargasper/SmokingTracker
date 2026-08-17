@@ -271,7 +271,7 @@
     <string name="settings_finance_costs_description">Cena ene cigarete. Cena cigarete se lahko določi po obdobjih</string>
     <string name="settings_about_changelog">Dnevnik sprememb</string>
     <string name="settings_about_changelog_description">Ogled dnevnika sprememb</string>
-    <string name="settings_category_about_contributors">Sodelavci</string>
+    <string name="about_contributors">Sodelavci</string>
     <string name="settings_category_about_contributors_url">Ogled vseh sodelavcev</string>
     <string name="popup_save">Shrani</string>
     <string name="currency_popup">Izberite valuto</string>
