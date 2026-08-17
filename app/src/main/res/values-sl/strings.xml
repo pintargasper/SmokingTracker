@@ -297,4 +297,9 @@
     <string name="statistics_total_spent_today">Skupna poraba danes</string>
     <string name="statistics_total_spent_month">Skupna poraba ta mesec</string>
     <string name="statistics_most_expensive">Najdražji dan</string>
+    <string name="application_tagline">Sledi. Analiziraj. Napreduj.</string>
+    <string name="more_tools">Orodja</string>
+    <string name="settings_finance">Finance</string>
+    <string name="settings_about_description">Različica, povezave in drugo</string>
+    <string name="settings_about_website_description">Za več informacij obiščite spletno stran</string>
 </resources>
