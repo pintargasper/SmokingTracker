@@ -27,7 +27,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_close"
+        android:src="@drawable/close_48px"
         android:contentDescription="Close"
         app:tint="?attr/colorOnSurface"
         android:layout_margin="8dp"

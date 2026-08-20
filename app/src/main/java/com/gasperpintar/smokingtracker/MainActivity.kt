@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
         val navigationIds = listOf(
             R.id.navigation_home,
             R.id.navigation_graph,
-            R.id.navigation_analytics,
+            R.id.navigation_more,
             R.id.navigation_settings
         )
 

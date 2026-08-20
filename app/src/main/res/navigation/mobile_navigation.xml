@@ -18,7 +18,7 @@
         tools:layout="@layout/fragment_graph" />
 
     <fragment
-        android:id="@+id/navigation_analytics"
+        android:id="@+id/navigation_more"
         android:name="com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment"
         android:label="@string/navigation_more"
         tools:layout="@layout/fragment_settings" />
