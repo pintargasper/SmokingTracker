@@ -102,4 +102,27 @@
     <string name="notifications_popup_check_box_system">系統默認主題</string>
     <string name="notifications_popup_check_box_progress">進度提醒</string>
     <string name="notifications_popup_check_box_achievements">成就</string>
+    <string name="application_tagline">追蹤、分析、進步</string>
+    <string name="more_progress_statistics">統計</string>
+    <string name="more_progress_statistics_description">隨時間變化的使用情況詳細洞察與趨勢</string>
+    <string name="more_tools">工具</string>
+    <string name="achievement_last">上次達成：%1$s</string>
+    <string name="achievement_achieved">已達成：%1$s</string>
+    <string name="achievement_congrats_one_day">一日達成</string>
+    <string name="achievement_congrats_two_days">兩日不敗</string>
+    <string name="achievement_congrats_three_days">三日戰士</string>
+    <string name="achievement_congrats_four_days">四日高手</string>
+    <string name="achievement_congrats_five_days">五日傳奇</string>
+    <string name="achievement_congrats_six_days">六日制霸</string>
+    <string name="achievement_congrats_one_week">一週奇蹟</string>
+    <string name="achievement_congrats_two_weeks">兩週猛將</string>
+    <string name="achievement_congrats_three_weeks">三週先鋒</string>
+    <string name="achievement_congrats_one_month">滿月探險家</string>
+    <string name="achievement_congrats_three_months">三月拓荒者</string>
+    <string name="achievement_congrats_six_months">半年征服者</string>
+    <string name="achievement_congrats_nine_month">九月守護者</string>
+    <string name="achievement_congrats_one_year">一年先驅</string>
+    <string name="achievement_congrats_one_day_message">做得好！繼續保持，再接再厲！</string>
+    <string name="achievement_congrats_three_days_message">別停下來！你的每一步都證明了你的決心</string>
+    <string name="achievement_congrats_two_days_message">做得好！氣勢正在累積，繼續保持下去！</string>
 </resources>
