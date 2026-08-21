@@ -6,27 +6,28 @@
     android:id="@+id/card_record"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="?attr/colorSurface"
+    android:layout_marginVertical="3dp"
+    android:layout_marginHorizontal="5dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
 
         <TextView
             android:id="@+id/timer_label"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="00:00:00"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:layout_marginEnd="5dp"
             android:gravity="center_vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/lent"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            android:text="00:00:00"
             tools:ignore="HardcodedText"
             style="@style/SubtitleTextView"/>
 
@@ -34,44 +35,33 @@
             android:id="@+id/lent"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:padding="4dp"
+            android:layout_marginEnd="5dp"
             android:contentDescription="@string/home_lent"
             android:src="@drawable/hand_package_48px"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:visibility="visible"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/timer_label"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_button_edit"
-            app:tint="?attr/colorOnSurface"/>
+            android:visibility="visible" />
 
         <ImageButton
             android:id="@+id/image_button_edit"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:padding="4dp"
+            android:layout_marginEnd="5dp"
             android:contentDescription="@string/home_edit"
             android:src="@drawable/edit_48px"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/lent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/delete"
-            app:tint="?attr/colorOnSurface"/>
+            android:background="?attr/selectableItemBackgroundBorderless" />
 
         <ImageButton
             android:id="@+id/delete"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:padding="4dp"
+            android:layout_marginEnd="5dp"
             android:contentDescription="@string/home_delete"
             android:src="@drawable/delete_48px"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/image_button_edit"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:tint="?attr/colorOnSurface"/>
+            android:background="?attr/selectableItemBackgroundBorderless" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>

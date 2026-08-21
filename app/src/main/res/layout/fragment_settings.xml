@@ -17,8 +17,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_general"
+            android:layout_marginBottom="3dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="5dp"
             style="@style/MainTitleTextView"/>
 
         <androidx.cardview.widget.CardView
@@ -36,22 +36,40 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/image_theme"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_general_theme"
+                    android:src="@drawable/light_mode_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:text="@string/settings_general_theme"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/theme_service"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_general_theme"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:id="@+id/theme_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -70,22 +88,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_general_language"
+                    android:src="@drawable/language_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:text="@string/settings_general_language"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/language_service"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_general_language"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:id="@+id/language_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -94,7 +129,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -105,23 +139,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_general_notifications"
+                    android:src="@drawable/notification_settings_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="2dp"
-                    android:text="@string/settings_general_notifications"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/notifications_service"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_general_notifications_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_general_notifications"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_general_notifications_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -129,8 +179,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_finance"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="5dp"
             style="@style/MainTitleTextView"/>
 
         <androidx.cardview.widget.CardView
@@ -148,24 +199,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:id="@+id/currency_label"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_finance_currency"
+                    android:src="@drawable/currency_exchange_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_finance_currency"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/currency_service_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_finance_currency_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_finance_currency"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_finance_currency_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -174,7 +240,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -185,24 +250,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:id="@+id/costs_label"
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_finance_costs"
+                    android:src="@drawable/payments_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_finance_costs"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/costs_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_finance_costs_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_finance_costs"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_finance_costs_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -210,8 +290,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_data"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="5dp"
             style="@style/MainTitleTextView"/>
 
         <androidx.cardview.widget.CardView
@@ -229,22 +310,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_data_backup"
+                    android:src="@drawable/download_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_data_backup"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_data_backup_text"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_data_backup"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_data_backup_text"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -253,7 +351,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -264,22 +361,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_data_restore"
+                    android:src="@drawable/upload_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_data_restore"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_data_restore_text"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_data_restore"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_data_restore_text"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -287,8 +401,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_about"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="5dp"
             style="@style/MainTitleTextView"/>
 
         <androidx.cardview.widget.CardView
@@ -306,22 +421,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_about"
+                    android:src="@drawable/info_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_about"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_about_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_about"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_about_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -340,23 +472,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_about_website"
+                    android:src="@drawable/public_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_about_website"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/website_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_about_website_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_about_website"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_about_website_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -365,7 +513,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -376,22 +523,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_about_changelog"
+                    android:src="@drawable/history_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_about_changelog"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_about_changelog_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_about_changelog"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_about_changelog_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -399,8 +563,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_support"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="5dp"
             style="@style/MainTitleTextView"/>
 
         <androidx.cardview.widget.CardView
@@ -418,31 +583,47 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_support_translations"
+                    android:src="@drawable/translate_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_support_translations"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_support_translations_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_support_translations"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_support_translations_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginVertical="5dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
 
@@ -453,23 +634,39 @@
                 android:clickable="true"
                 android:focusable="true"
                 android:minHeight="55dp"
-                android:orientation="vertical"
-                android:padding="12dp">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_support_privacy_policy"
+                    android:src="@drawable/policy_48px" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_support_privacy_policy"
-                    android:layout_marginBottom="2dp"
-                    style="@style/SubtitleTextView"/>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/privacy_policy_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_support_privacy_policy_description"
-                    style="@style/BodyTextView"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_support_privacy_policy"
+                        style="@style/SubtitleTextView"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_support_privacy_policy_description"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
