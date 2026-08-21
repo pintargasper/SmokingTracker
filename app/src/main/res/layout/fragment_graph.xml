@@ -60,7 +60,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_daily"
-                        android:src="@drawable/ic_outline_arrow_back"
+                        android:src="@drawable/arrow_circle_left_48px"
                         app:tint="?attr/colorOnSurface"/>
 
                     <TextView
@@ -77,7 +77,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_daily"
-                        android:src="@drawable/ic_outline_arrow_forward"
+                        android:src="@drawable/arrow_circle_right_48px"
                         app:tint="?attr/colorOnSurface"/>
                 </LinearLayout>
             </LinearLayout>
@@ -132,7 +132,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_weakly"
-                        android:src="@drawable/ic_outline_arrow_back"
+                        android:src="@drawable/arrow_circle_left_48px"
                         app:tint="?attr/colorOnSurface"/>
 
                     <TextView
@@ -149,7 +149,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_weakly"
-                        android:src="@drawable/ic_outline_arrow_forward"
+                        android:src="@drawable/arrow_circle_right_48px"
                         app:tint="?attr/colorOnSurface"/>
                 </LinearLayout>
             </LinearLayout>
@@ -204,7 +204,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_monthly"
-                        android:src="@drawable/ic_outline_arrow_back"
+                        android:src="@drawable/arrow_circle_left_48px"
                         app:tint="?attr/colorOnSurface"/>
 
                     <TextView
@@ -221,7 +221,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_monthly"
-                        android:src="@drawable/ic_outline_arrow_forward"
+                        android:src="@drawable/arrow_circle_right_48px"
                         app:tint="?attr/colorOnSurface"/>
                 </LinearLayout>
             </LinearLayout>
@@ -278,7 +278,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_yearly"
-                        android:src="@drawable/ic_outline_arrow_back"
+                        android:src="@drawable/arrow_circle_left_48px"
                         app:tint="?attr/colorOnSurface"/>
 
                     <TextView
@@ -295,7 +295,7 @@
                         android:layout_height="48dp"
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_yearly"
-                        android:src="@drawable/ic_outline_arrow_forward"
+                        android:src="@drawable/arrow_circle_right_48px"
                         app:tint="?attr/colorOnSurface"/>
                 </LinearLayout>
             </LinearLayout>

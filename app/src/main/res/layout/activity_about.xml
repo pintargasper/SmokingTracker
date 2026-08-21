@@ -16,9 +16,10 @@
             android:id="@+id/button_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginStart="8dp"
             android:background="@android:color/transparent"
             android:contentDescription="Back to previous screen"
-            android:src="@drawable/ic_thin_outline_arrow_back"
+            android:src="@drawable/arrow_circle_left_48px"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -106,8 +107,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="5dp"
                 android:text="@string/about_view"
                 style="@style/MainTitleTextView" />
 
@@ -262,8 +263,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="5dp"
                 android:text="@string/about_contributors_description"
                 style="@style/BodyTextView" />
 
@@ -445,9 +446,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginVertical="5dp"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="8dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="4dp">
 
