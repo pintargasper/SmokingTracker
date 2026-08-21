@@ -116,7 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="48dp"
                         android:gravity="center_vertical"
-                        android:hint="@string/currency_check_box_edit_text"
+                        android:hint="@string/currency_check_box_edit_description"
                         android:autofillHints="none"
                         android:inputType="text"
                         android:paddingStart="8dp"

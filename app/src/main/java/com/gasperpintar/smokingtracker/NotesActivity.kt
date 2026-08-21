@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker
 import android.content.Context
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
@@ -72,9 +73,21 @@ class NotesActivity : AppCompatActivity() {
         adapter = Adapter(
             layoutId = R.layout.note_container,
             onBind = { itemView, noteEntry ->
+                val emotionIcon = itemView.findViewById<ImageView>(R.id.emotion_icon)
                 val title = itemView.findViewById<TextView>(R.id.title_label)
                 val content = itemView.findViewById<TextView>(R.id.content_label)
                 val deleteButton = itemView.findViewById<ImageButton>(R.id.delete)
+
+                emotionIcon.setImageResource(
+                    when (noteEntry.mood) {
+                        1 -> R.drawable.sentiment_frustrated_48px
+                        2 -> R.drawable.sentiment_dissatisfied_48px
+                        3 -> R.drawable.sentiment_neutral_48px
+                        4 -> R.drawable.sentiment_satisfied_48px
+                        5 -> R.drawable.sentiment_excited_48px
+                        else -> R.drawable.sentiment_neutral_48px
+                    }
+                )
 
                 title.text = noteEntry.title
                 content.text = noteEntry.content

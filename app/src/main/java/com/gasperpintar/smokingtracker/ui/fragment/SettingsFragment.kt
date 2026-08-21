@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -87,8 +88,9 @@ class SettingsFragment : Fragment() {
     private fun setup() {
         lifecycleScope.launch {
             withSettings { settings ->
-                binding.languageService.text = getLanguages()[settings.language]
+                binding.imageTheme.setImageResource(updateThemeIcon(settings.theme))
                 binding.themeService.text = getThemes()[settings.theme]
+                binding.languageService.text = getLanguages()[settings.language]
             }
         }
 
@@ -296,6 +298,21 @@ class SettingsFragment : Fragment() {
         block: suspend (SettingsEntity) -> Unit
     ) {
         block(settingsRepository.get()!!)
+    }
+
+    private fun updateThemeIcon(theme: Int): Int {
+        return when (theme) {
+            1 -> R.drawable.light_mode_48px
+            2 -> R.drawable.dark_mode_48px
+            0 -> {
+                val nightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+                when (nightMode) {
+                    Configuration.UI_MODE_NIGHT_YES -> R.drawable.dark_mode_48px
+                    else -> R.drawable.light_mode_48px
+                }
+            }
+            else -> R.drawable.light_mode_48px
+        }
     }
 
     private fun getLanguages(): List<String> {

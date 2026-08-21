@@ -27,7 +27,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/ic_close"
+        android:src="@drawable/close_48px"
         android:contentDescription="Close"
         app:tint="?attr/colorOnSurface"
         android:layout_margin="8dp"
@@ -63,15 +63,64 @@
                 android:text="@string/notes_mode"
                 android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/sentiment_frustrated_48px"
+                    android:contentDescription="Very dissatisfied"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/sentiment_dissatisfied_48px"
+                    android:contentDescription="Dissatisfied"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/sentiment_neutral_48px"
+                    android:contentDescription="Neutral"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/sentiment_satisfied_48px"
+                    android:contentDescription="Satisfied"
+                    tools:ignore="HardcodedText" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/sentiment_excited_48px"
+                    android:contentDescription="Very satisfied"
+                    tools:ignore="HardcodedText" />
+
+            </LinearLayout>
+
             <com.google.android.material.slider.Slider
                 android:id="@+id/slider_emotion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginHorizontal="20dp"
                 android:valueFrom="1"
                 android:valueTo="5"
                 android:value="3"
-                android:stepSize="1"
-                android:layout_marginBottom="8dp"/>
+                android:stepSize="1" />
 
             <EditText
                 android:id="@+id/input_title"

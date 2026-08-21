@@ -212,7 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/home_previous_day"
-                    android:src="@drawable/ic_outline_arrow_back"
+                    android:src="@drawable/arrow_circle_left_48px"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:tint="?attr/colorOnSurface"/>
@@ -253,7 +253,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/home_next_day"
-                    android:src="@drawable/ic_outline_arrow_forward"
+                    android:src="@drawable/arrow_circle_right_48px"
                     android:layout_gravity="center"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:tint="?attr/colorOnSurface"/>
