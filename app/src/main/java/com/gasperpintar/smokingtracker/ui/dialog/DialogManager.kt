@@ -47,7 +47,7 @@ object DialogManager {
 
         buttonConfirm.setOnClickListener {
             onConfirm(lentCheckbox.isChecked)
-            dialog.dismiss()
+            dismiss()
         }
     }
 
@@ -109,30 +109,24 @@ object DialogManager {
         context: FragmentActivity,
         selectedTheme: Int,
         onThemeSelected: (Int) -> Unit
-    ) = showDialog(context, layout = R.layout.theme_popup) {
-        val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
-        val checkboxLightTheme: CheckBox = dialogView.findViewById(R.id.checkbox_light_theme)
-        val checkboxDarkTheme: CheckBox = dialogView.findViewById(R.id.checkbox_dark_theme)
+    ) = showDialog(
+        context,
+        layout = R.layout.theme_popup
+    ) {
 
-        checkboxSystem.isChecked = selectedTheme == 0
-        checkboxLightTheme.isChecked = selectedTheme == 1
-        checkboxDarkTheme.isChecked = selectedTheme == 2
+        val themeCheckboxes = listOf(
+            0 to R.id.checkbox_system,
+            1 to R.id.checkbox_light_theme,
+            2 to R.id.checkbox_dark_theme
+        )
 
-        fun selectAndClose(theme: Int) {
-            onThemeSelected(theme)
-            dismiss()
-        }
-
-        checkboxSystem.setOnClickListener {
-            selectAndClose(theme = 0)
-        }
-
-        checkboxLightTheme.setOnClickListener {
-            selectAndClose(theme = 1)
-        }
-
-        checkboxDarkTheme.setOnClickListener {
-            selectAndClose(theme = 2)
+        themeCheckboxes.forEach { (index, checkboxId) ->
+            val checkbox: CheckBox = dialogView.findViewById(checkboxId)
+            checkbox.isChecked = selectedTheme == index
+            checkbox.setOnClickListener {
+                onThemeSelected(index)
+                dismiss()
+            }
         }
     }
 
@@ -154,16 +148,12 @@ object DialogManager {
             8 to R.id.checkbox_chinese_simplified
         )
 
-        fun selectAndClose(language: Int) {
-            onLanguageSelected(language)
-            dismiss()
-        }
-
         languageCheckboxes.forEach { (index, checkboxId) ->
             val checkbox: CheckBox = dialogView.findViewById(checkboxId)
             checkbox.isChecked = selectedLanguage == index
             checkbox.setOnClickListener {
-                selectAndClose(language = index)
+                onLanguageSelected(index)
+                dismiss()
             }
         }
     }
@@ -175,38 +165,44 @@ object DialogManager {
         onSettingsSelected: (SettingsEntity) -> Unit,
         onNotificationSettingsSelected: (NotificationsSettingsEntity) -> Unit
     ) = showDialog(context, layout = R.layout.notifications_popup) {
-        val checkboxSystem: CheckBox = dialogView.findViewById(R.id.checkbox_system)
-        val checkboxProgress: CheckBox = dialogView.findViewById(R.id.checkbox_progress)
-        val checkboxAchievements: CheckBox = dialogView.findViewById(R.id.checkbox_achievements)
+
+        val notificationCheckboxes = listOf(
+            0 to R.id.checkbox_system,
+            1 to R.id.checkbox_progress,
+            2 to R.id.checkbox_achievements
+        )
+
         val frequency: AutoCompleteTextView = dialogView.findViewById(R.id.spinner_progress_frequency)
 
         var currentNotificationSettings = notificationsSettings.copy()
         var currentSettings = settings.copy()
 
-        checkboxSystem.isChecked = currentNotificationSettings.system
-        checkboxProgress.isChecked = currentNotificationSettings.progress
-        checkboxAchievements.isChecked = currentNotificationSettings.achievements
-
-        fun updateNotificationSettings(update: (NotificationsSettingsEntity) -> NotificationsSettingsEntity) {
+        fun updateNotificationSettings(
+            update: (NotificationsSettingsEntity) -> NotificationsSettingsEntity
+        ) {
             currentNotificationSettings = update(currentNotificationSettings)
             onNotificationSettingsSelected(currentNotificationSettings)
         }
 
-        checkboxSystem.setOnCheckedChangeListener { _, isChecked ->
-            updateNotificationSettings {
-                it.copy(system = isChecked)
-            }
-        }
+        notificationCheckboxes.forEach { (index, checkboxId) ->
+            val checkbox: CheckBox = dialogView.findViewById(checkboxId)
 
-        checkboxProgress.setOnCheckedChangeListener { _, isChecked ->
-            updateNotificationSettings {
-                it.copy(progress = isChecked)
+            checkbox.isChecked = when (index) {
+                0 -> currentNotificationSettings.system
+                1 -> currentNotificationSettings.progress
+                2 -> currentNotificationSettings.achievements
+                else -> false
             }
-        }
 
-        checkboxAchievements.setOnCheckedChangeListener { _, isChecked ->
-            updateNotificationSettings {
-                it.copy(achievements = isChecked)
+            checkbox.setOnCheckedChangeListener { _, isChecked ->
+                updateNotificationSettings {
+                    when (index) {
+                        0 -> it.copy(system = isChecked)
+                        1 -> it.copy(progress = isChecked)
+                        2 -> it.copy(achievements = isChecked)
+                        else -> it
+                    }
+                }
             }
         }
 
@@ -513,17 +509,13 @@ object DialogManager {
         val tvAverageCostPerHour: TextView = dialogView.findViewById(R.id.popup_result_average_cost_per_hour)
         val tvTimeSpent: TextView = dialogView.findViewById(R.id.popup_result_time_spent)
 
-        val averageCostPerCigarette = totalCigarettes.takeIf {
-            it > 0
-        } ?.let {
+        val averageCostPerCigarette = totalCigarettes.takeIf { it > 0 } ?.let {
             totalCost / it
         } ?: 0.0
 
         val totalHours = totalTimeMinutes / 60.0
 
-        val averageCostPerHour = totalHours.takeIf {
-            it > 0
-        } ?.let {
+        val averageCostPerHour = totalHours.takeIf { it > 0 } ?.let {
             totalCost / it
         } ?: 0.0
 
