@@ -19,7 +19,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 <div style="display:flex; justify-content:center; align-items:center; gap:2px;">
   <a href="https://github.com/pintargasper/SmokingTracker/releases/latest" target="_blank">
     <img
-      src="assets/badges/en-US/github.png"
+      src="tools/badges/github.png"
       height="40px"
       alt="Download APK from GitHub"
     />
@@ -27,7 +27,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://f-droid.org/en/packages/com.gasperpintar.smokingtracker/" target="_blank">
     <img
-      src="assets/badges/en-US/f_droid.png"
+      src="tools/badges/f_droid.png"
       height="40px"
       alt="Download APK from F-droid"
     />
@@ -35,7 +35,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker" target="_blank">
     <img
-      src="assets/badges/en-US/izzyondroid.png"
+      src="tools/badges/izzyondroid.png"
       height="40px"
       alt="Download APK from IzzyOnDroid"
     />
@@ -43,7 +43,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/" target="_blank">
     <img
-      src="assets/badges/en-US/open_apk.png"
+      src="tools/badges/open_apk.png"
       height="40px"
       alt="Get it on OpenAPK"
     />
@@ -51,7 +51,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker" target="_blank">
     <img
-      src="assets/badges/en-US/google_play.png"
+      src="tools/badges/google_play.png"
       height="40px"
       alt="Get it on Google Play"
     />
@@ -83,7 +83,7 @@ Available on other platforms
 - **Daily, weekly, monthly and yearly** statistics with graphs
 - **Simple analytics** to help you understand your habits
 - **Automatic backups** (depending on device)
-- **Multi language support**: English, Slovenian, Ukrainian, German, French, Serbian and Chinese (Simplified Han Script)
+- **Multi language support**
 - **Simple and intuitive** user interface
 
 ### Application images
@@ -149,21 +149,6 @@ Available on other platforms
   </div>
 </details>
 
-## 🌐 Supported Languages
-
-| Language                         | Translated |
-|:--------------------------------|:-----------|
-| 🇺🇸 English                     | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
-| 🇸🇮 Slovenian                  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
-| 🇺🇦 Ukrainian                 | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/uk/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/uk) |
-| 🇩🇪 German                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/de/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/de) |
-| 🇫🇷 French                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/fr/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/fr) |
-| 🇷🇸 Serbian (Cyrillic script) | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-cyrl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-cyrl) |
-| 🇷🇸 Serbian (Latin script)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-latn/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-latn) |
-| 🇨🇳 Chinese (Simplified Han Script)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/zh_Hans/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/zh_Hans) |
-
-> Additional languages will be added in future releases
-
 ## 🌐 Help translate
 
 <div align="center">
@@ -179,7 +164,7 @@ Available on other platforms
 ## 📝 Dependencies & Versions
 
 **Gradle Plugin**
-- Android Gradle Plugin: 9.3.1
+- Android Gradle Plugin: 9.3.2
 
 **Libraries**
 > All libraries are configured in [`libs.versions.toml`](gradle/libs.versions.toml)

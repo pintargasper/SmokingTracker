@@ -19,7 +19,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 <div style="display:flex; justify-content:center; align-items:center; gap:2px;">
   <a href="https://github.com/pintargasper/SmokingTracker/releases/latest" target="_blank">
     <img
-      src="assets/badges/en-US/github.png"
+      src="tools/badges/github.png"
       height="40px"
       alt="Prenesi APK iz GitHub-a"
     />
@@ -27,7 +27,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://f-droid.org/en/packages/com.gasperpintar.smokingtracker/" target="_blank">
     <img
-      src="assets/badges/en-US/f_droid.png"
+      src="tools/badges/f_droid.png"
       height="40px"
       alt="Prenesi APK iz F-droid-a"
     />
@@ -35,7 +35,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker" target="_blank">
     <img
-      src="assets/badges/en-US/izzyondroid.png"
+      src="tools/badges/izzyondroid.png"
       height="40px"
       alt="Prenesi APK iz IzzyOnDroid-a"
     />
@@ -43,7 +43,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/" target="_blank">
     <img
-      src="assets/badges/en-US/open_apk.png"
+      src="tools/badges/open_apk.png"
       height="40px"
       alt="Pridobite ga na OpenApk"
     />
@@ -51,7 +51,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
   <a href="https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker" target="_blank">
     <img
-      src="assets/badges/en-US/google_play.png"
+      src="tools/badges/google_play.png"
       height="40px"
       alt="Pridobite ga na Google Play"
     />
@@ -83,7 +83,7 @@ Na voljo na drugih platformah
 - **Dnevna, tedenska, mesečna in letna** statistika z grafi
 - **Preprosta analitika**, ki vam bo pomagala razumeti vaše navade
 - **Samodejne varnostne kopije** (odvisno od naprave)
-- **Večjezična podpora**: angleščina, slovenščina, ukrajinščina, nemščina, francoščina, srbščina in Kitajščina (poenostavljena)
+- **Večjezična podpora**
 - **Preprost in intuitiven** uporabniški vmesnik
 
 ### Slike aplikacije
@@ -149,21 +149,6 @@ Na voljo na drugih platformah
   </div>
 </details>
 
-## 🌐 Podprti jeziki
-
-| Jezik                         | Prevedeno |
-|:--------------------------------|:-----------|
-| 🇺🇸 Angleščina                     | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/en/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/en) |
-| 🇸🇮 Slovenščina                  | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sl) |
-| 🇺🇦 Ukrajinščina                 | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/uk/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/uk) |
-| 🇩🇪 Nemščina                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/de/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/de) |
-| 🇫🇷 Francoščina                    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/fr/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/fr) |
-| 🇷🇸 Srbščina (cirilica) | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-cyrl/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-cyrl) |
-| 🇷🇸 Srbščina (latinica)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/sr-latn/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/sr-latn) |
-| 🇨🇳 Kitajščina (poenostavljena)    | [![Translation progress](https://translate.gasperpintar.com/widgets/smokingtracker/zh_Hans/svg-badge.svg)](https://translate.gasperpintar.com/projects/smokingtracker/app/zh_Hans) |
-
-> Dodatni jeziki bodo dodani v prihodnjih izdajah
-
 ## 🌐 Pomoč pri prevajanju
 
 <div align="center">
@@ -179,7 +164,7 @@ Na voljo na drugih platformah
 ## 📝 Odvisnosti in različice
 
 **Vtičnik za Gradle**
-- Vtičnik za Android Gradle: 9.3.1
+- Vtičnik za Android Gradle: 9.3.2
 
 **Knjižnice**
 > Vse knjižnice so konfigurirane v [`libs.versions.toml`](gradle/libs.versions.toml)

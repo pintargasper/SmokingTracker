@@ -152,6 +152,7 @@
     <string name="settings_about_website_description">Visit the website for more information</string>
     <string name="settings_about_changelog">Changelog</string>
     <string name="settings_about_changelog_description">View changelog</string>
+
     <string name="settings_support">Support &amp; Security</string>
     <string name="settings_support_translations">Help Translate</string>
     <string name="settings_support_translations_description">Translate this app on your language using Weblate</string>
