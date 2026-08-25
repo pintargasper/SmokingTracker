@@ -42,6 +42,12 @@ configure<ApplicationExtension> {
         }
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
@@ -58,6 +64,8 @@ configure<ApplicationExtension> {
 
     lint {
         disable.add("MissingTranslation")
+        disable.add("ObsoleteSdkInt")
+        disable.add("TrustAllX509TrustManager")
     }
 }
 

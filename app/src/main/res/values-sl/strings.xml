@@ -70,7 +70,7 @@
     <string name="settings_data_backup_text">Varnostno kopirajte podatke v svojo napravo</string>
     <string name="settings_data_restore">Obnovitev</string>
     <string name="settings_data_restore_text">Obnovite podatke iz svoje naprave</string>
-    <string name="settings_category_data_version_unknown">Neznano</string>
+    <string name="about_version_unknown">Neznano</string>
     <string name="settings_support_translations">Pomoč pri prevajanju</string>
     <string name="settings_support_translations_description">Prevedite to aplikacijo v svoj jezik z uporabo Weblate</string>
     <string name="settings_support_privacy_policy">Pravilnik o zasebnosti</string>
@@ -221,7 +221,6 @@
         <item quantity="few">%d krat</item>
         <item quantity="other">%d krat</item>
     </plurals>
-    <string name="settings_category_data_version_view">Oglejte si na razpoložljivih platformah</string>
     <string name="notifications_popup_check_box_progress">Opomnik o napredku</string>
     <string name="notifications_popup_frequency_label">Pogostost</string>
     <string name="notifications_popup_frequency_default">Privzeto</string>

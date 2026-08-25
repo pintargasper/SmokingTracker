@@ -27,7 +27,7 @@
     <string name="settings_data_backup_text">Napravi rezervnu kopiju svojih podataka na uređaj</string>
     <string name="settings_about">O aplikaciji</string>
     <string name="about_version">Verzija %1$s (%2$d)</string>
-    <string name="settings_category_data_version_unknown">Nepoznato</string>
+    <string name="about_version_unknown">Nepoznato</string>
     <string name="settings_about_website">Veb-sajt</string>
     <string name="settings_support_translations">Pomozite u prevođenju</string>
     <string name="settings_support_translations_description">Prevedite ovu aplikaciju na svoj jezik koristeći veb-sajt</string>
@@ -63,7 +63,6 @@
     <string name="achievements_icon">Ikona dostignuća</string>
     <string name="settings_data_restore">Vraćanje podataka</string>
     <string name="settings_data_restore_text">Vrati svoje podatke sa uređaja</string>
-    <string name="settings_category_data_version_view">Pogledaj na dostupnim platformama</string>
     <string name="popup_close">Zatvori</string>
     <string name="popup_confirm">Potvrdi</string>
     <string name="delete_popup_message">Da li ste sigurni da želite da obrišete ovaj zapis?</string>

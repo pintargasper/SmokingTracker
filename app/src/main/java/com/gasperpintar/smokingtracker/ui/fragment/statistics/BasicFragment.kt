@@ -25,6 +25,7 @@ import kotlinx.coroutines.withContext
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.Locale
 
 class BasicFragment : Fragment() {
 
@@ -68,7 +69,7 @@ class BasicFragment : Fragment() {
             binding.textMinCigarettesDate.text = LocalizationHelper.formatLoggedDate(resources, day = minResult?.day)
 
             binding.textAverageCigarettes.text = String.format("%.2f", historyRepository.getAverageCigarettesPerDay())
-            binding.textTotalCigarettes.text = historyRepository.getTotalCigarettes().toString()
+            binding.textTotalCigarettes.text = String.format(Locale.getDefault(), "%d", historyRepository.getTotalCigarettes())
 
             val firstRecordDate = withContext(Dispatchers.IO) {
                 historyRepository.getFirstRecordDate()
@@ -114,12 +115,8 @@ class BasicFragment : Fragment() {
             binding.monthSpent.text = averagePerMonth
 
             val mostExpensiveDay = withContext(Dispatchers.IO) {
-                allCosts.takeIf {
-                    it.isNotEmpty()
-                } ?.let { costs ->
-                    allHistory.takeIf {
-                        it.isNotEmpty()
-                    } ?.let { history ->
+                allCosts.takeIf { it.isNotEmpty() } ?.let { costs ->
+                    allHistory.takeIf { it.isNotEmpty() } ?.let { history ->
                         getMostExpensiveDay(allCosts = costs, history = history)
                     } ?: Pair(LocalizationHelper.formatMoney(settingsRepository, value = 0.0), null)
                 } ?: Pair(LocalizationHelper.formatMoney(settingsRepository, value = 0.0), null)

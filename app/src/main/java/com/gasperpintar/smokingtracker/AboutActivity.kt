@@ -50,7 +50,7 @@ class AboutActivity : AppCompatActivity() {
     private fun setup() {
 
         val packageInfo = packageManager.getPackageInfo(packageName, 0)
-        val versionName = packageInfo.versionName ?: getString(R.string.settings_category_data_version_unknown)
+        val versionName = packageInfo.versionName ?: getString(R.string.about_version_unknown)
         val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo)
 
         binding.appVersion.text = getString(

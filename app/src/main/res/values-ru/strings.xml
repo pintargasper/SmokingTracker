@@ -28,7 +28,7 @@
     <string name="achievements_time">Времени без курения</string>
     <string name="notifications_popup">Уведомления</string>
     <string name="edit_popup_lent">Одолжил сигарету?</string>
-    <string name="settings_category_data_version_unknown">Неизвестно</string>
+    <string name="about_version_unknown">Неизвестно</string>
     <string name="settings_support_translations">Помочь с переводом</string>
     <string name="more_progress">Аналитика</string>
     <string name="restore_popup">Восстановить данные из бэкапа</string>
@@ -86,7 +86,6 @@
     <string name="home_delete">Удалить запись</string>
     <string name="settings_general_theme">Тема</string>
     <string name="settings_general_language">Язык</string>
-    <string name="settings_category_data_version_view">Просмотреть на доступных платформах</string>
     <string name="theme_popup_check_box_system">Системная</string>
     <string name="theme_popup_check_box_light_theme">Светлая тема</string>
     <string name="notifications_popup_check_box_progress">Напоминание о прогрессе</string>

@@ -72,8 +72,7 @@
     <string name="settings_data_restore_text">Вратите своје податке са уређаја</string>
     <string name="settings_about">О апликацији</string>
     <string name="about_version">Верзија %1$s (%2$d)</string>
-    <string name="settings_category_data_version_view">Погледајте на доступним платформама</string>
-    <string name="settings_category_data_version_unknown">Непознато</string>
+    <string name="about_version_unknown">Непознато</string>
     <string name="settings_about_website">Веб-сајт</string>
     <string name="settings_support_translations">Помозите у превођењу</string>
     <string name="settings_support_translations_description">Преведите ову апликацију на свој језик користећи Weblate</string>

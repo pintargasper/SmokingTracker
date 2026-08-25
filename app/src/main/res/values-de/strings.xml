@@ -72,8 +72,7 @@
     <string name="settings_data_restore_text">Stelle deine Daten aus deinem Gerät wieder her</string>
     <string name="settings_about">Über</string>
     <string name="about_version">Version %1$s (%2$d)</string>
-    <string name="settings_category_data_version_view">Siehe auf verfügbaren Plattformen</string>
-    <string name="settings_category_data_version_unknown">Unbekannt</string>
+    <string name="about_version_unknown">Unbekannt</string>
     <string name="settings_about_website">Website</string>
     <string name="settings_support_translations">Unterstützung bei Übersetzung</string>
     <string name="settings_support_translations_description">Übersetze die App in deine Sprache mit Weblate</string>
