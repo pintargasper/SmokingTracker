@@ -53,12 +53,11 @@
     <string name="settings_data_restore_text">Відновити дані з пристрою</string>
     <string name="settings_about">Про</string>
     <string name="about_version">Версія %1$s (%2$d)</string>
-    <string name="settings_category_data_version_view">Переглянути на доступних платформах</string>
     <string name="settings_about_website">Сайт</string>
     <string name="settings_support_translations">Допомогти з перекладом</string>
     <string name="settings_support_translations_description">Допоможи перекласти застосунок своєю мовою у Weblate</string>
     <string name="settings_support_privacy_policy">Smoking Tracker - Політика щодо конфіденційності</string>
-    <string name="settings_category_data_version_unknown">Невідомо</string>
+    <string name="about_version_unknown">Невідомо</string>
     <string name="insert_popup">Додати запис</string>
     <string name="insert_popup_lent">Позичена сигарета?</string>
     <string name="insert_popup_add">Додати</string>

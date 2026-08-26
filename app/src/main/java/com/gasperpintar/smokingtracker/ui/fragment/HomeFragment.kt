@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
 
 class HomeFragment : Fragment() {
@@ -225,9 +226,9 @@ class HomeFragment : Fragment() {
         val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date)
         val monthlyCount: Int = historyRepository.getCountBetween(start = startOfMonth, end = endOfMonth)
 
-        binding.dailyValue.text = dailyCount.toString()
-        binding.weeklyValue.text = weeklyCount.toString()
-        binding.monthlyValue.text = monthlyCount.toString()
+        binding.dailyValue.text = String.format(Locale.getDefault(),dailyCount.toString())
+        binding.weeklyValue.text = String.format(Locale.getDefault(),weeklyCount.toString())
+        binding.monthlyValue.text = String.format(Locale.getDefault(),monthlyCount.toString())
     }
 
     private suspend fun loadHistoryForDay(

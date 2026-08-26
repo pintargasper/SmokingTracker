@@ -175,10 +175,8 @@
     <string name="about_contributors_chinese_traditional">Chinese (traditional) translation</string>
 
     <string name="about_version">Version: %1$s (%2$d)</string>
+    <string name="about_version_unknown">Unknown</string>
     <string name="about_created_by">Developed by: %1$s</string>
-
-    <string name="settings_category_data_version_view">View on available platforms</string>
-    <string name="settings_category_data_version_unknown">Unknown</string>
 
     <string name="popup_close">Close</string>
     <string name="popup_confirm">Confirm</string>
