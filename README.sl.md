@@ -14,7 +14,7 @@
 
 Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
-[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Spletna%20stran-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
+[![Website](https://custom-icon-badges.herokuapp.com/badge/Spletna%20stran-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
 
 <div style="display:flex; justify-content:center; align-items:center; gap:2px;">
   <a href="https://github.com/pintargasper/SmokingTracker/releases/latest" target="_blank">
@@ -58,14 +58,17 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
   </a>
 </div>
 
-[![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey)](https://apilevels.com)
-[![Preview release](https://img.shields.io/github/release/pintargasper/SmokingTracker.svg?maxAge=3600&include_prereleases&label=preview)](https://github.com/pintargasper/SmokingTracker/releases) 
-[![Downloads](https://img.shields.io/github/downloads/pintargasper/smokingtracker/total?style=flat-square)](https://github.com/pintargasper/SmokingTracker/releases)
-[![Translation status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
+[![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey?logo=android&logoColor=white&labelColor=625B71)](https://apilevels.com)
+[![Izdaja](https://img.shields.io/github/v/release/pintargasper/SmokingTracker?label=izdaja&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
+[![GitHub Prenosi](https://img.shields.io/github/downloads/pintargasper/SmokingTracker/total?label=prenosi&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
+[![IzzyOnDroid prenosi](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.gasperpintar.smokingtracker']&label=prenosi&labelColor=625B71&logo=android&logoColor=white)](https://apt.izzysoft.de/packages/com.gasperpintar.smokingtracker)
+[![Zvezdice](https://img.shields.io/github/stars/pintargasper/SmokingTracker?logo=github&label=zvezdice&labelColor=625B71&color=E0B6FF&style=flat)](https://github.com/pintargasper/SmokingTracker/stargazers)
+[![Licenca](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=licenca&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
+[![Prevodi](https://img.shields.io/weblate/progress/smokingtracker?server=https%3A%2F%2Ftranslate.gasperpintar.com&label=prevedeno&labelColor=625B71&logo=weblate&logoColor=white)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
 
 </div>
 
-Na voljo na drugih platformah
+Na voljo tudi na
  - [Android Freeware](https://www.androidfreeware.net/download-smoking-tracker-apk.html)
 
 ## Kazalo vsebine
@@ -79,12 +82,16 @@ Na voljo na drugih platformah
 **Sledilnik Kajenja** je enostavna aplikacija za sledenje kajenju, ki vam pomaga razumeti vaše navade in napredek pri opuščanju kajenja. Vsaka cigareta, ki jo pokadite, je jasno zabeležena, kar vam daje podroben vpogled v vaše dnevne, tedenske in mesečne vzorce
 
 **Ključne lastnosti**
-- **Lokalno shranjevanje podatkov** za večjo zasebnost
-- **Dnevna, tedenska, mesečna in letna** statistika z grafi
-- **Preprosta analitika**, ki vam bo pomagala razumeti vaše navade
-- **Samodejne varnostne kopije** (odvisno od naprave)
-- **Večjezična podpora**
-- **Preprost in intuitiven** uporabniški vmesnik
+- *Sledenje zgodovini kajenja*
+- *Dnevna, tedenska, mesečna in letna statistika*
+- *Analiza porabe*
+- *Napovedovanje kajenja*
+- *Sledenje času brez kajenja*
+- *Sledenje finančnemu vplivu in stroškom*
+- *Opombe*
+- *Lokalna hramba podatkov*
+- *Podpora za varnostno kopiranje Androida* (nastavitve naprave)
+- *Podpora za več jezikov*
 
 ### Slike aplikacije
 <details>

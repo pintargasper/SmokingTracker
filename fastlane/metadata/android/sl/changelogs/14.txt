@@ -1,6 +1,7 @@
-Novi pripomočki in izboljšave obvestil
+Novi pripomočki, izboljšave uporabniškega vmesnika in obvestil
 
 - Dodani novi pripomočki za boljši pregled
 - Dodani dnevi v tednu poleg datumov na začetnem zaslonu
+- Posodobljene vizualne podobe in ikone aplikacije
 - Izboljšana obvestila o dosežkih in opomnikih za napredek
 - Izboljšana splošna stabilnost in delovanje aplikacije

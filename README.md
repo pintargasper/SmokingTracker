@@ -14,7 +14,7 @@
 
 Created by [Gašper Pintar](https://gasperpintar.com)
 
-[![GitHub Releases](https://custom-icon-badges.herokuapp.com/badge/Website-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
+[![Website](https://custom-icon-badges.herokuapp.com/badge/Website-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
 
 <div style="display:flex; justify-content:center; align-items:center; gap:2px;">
   <a href="https://github.com/pintargasper/SmokingTracker/releases/latest" target="_blank">
@@ -58,14 +58,16 @@ Created by [Gašper Pintar](https://gasperpintar.com)
   </a>
 </div>
 
-[![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey)](https://apilevels.com)
-[![Preview release](https://img.shields.io/github/release/pintargasper/SmokingTracker.svg?maxAge=3600&include_prereleases&label=preview)](https://github.com/pintargasper/SmokingTracker/releases) 
-[![Downloads](https://img.shields.io/github/downloads/pintargasper/smokingtracker/total?style=flat-square)](https://github.com/pintargasper/SmokingTracker/releases)
-[![Translation status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
-
+[![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey?logo=android&logoColor=white&labelColor=625B71)](https://apilevels.com)
+[![Release](https://img.shields.io/github/v/release/pintargasper/SmokingTracker?label=release&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
+[![Downloads](https://img.shields.io/github/downloads/pintargasper/SmokingTracker/total?label=downloads&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
+[![IzzyOnDroid Downloads](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.gasperpintar.smokingtracker']&label=downloads&labelColor=625B71&logo=android&logoColor=white)](https://apt.izzysoft.de/packages/com.gasperpintar.smokingtracker)
+[![Stars](https://img.shields.io/github/stars/pintargasper/SmokingTracker?logo=github&label=stars&labelColor=625B71&color=E0B6FF&style=flat)](https://github.com/pintargasper/SmokingTracker/stargazers)
+[![License](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=license&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
+[![Translations](https://img.shields.io/weblate/progress/smokingtracker?server=https%3A%2F%2Ftranslate.gasperpintar.com&label=translated&labelColor=625B71&logo=weblate&logoColor=white)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
 </div>
 
-Available on other platforms
+Also available on
  - [Android Freeware](https://www.androidfreeware.net/download-smoking-tracker-apk.html)
 
 ## Table of Contents
@@ -79,12 +81,16 @@ Available on other platforms
 **Smoking Tracker** is an easy to use smoking tracking app that helps you understand your habits and progress towards quitting. Every cigarette you smoke is clearly recorded, giving you detailed insight into your daily, weekly and monthly patterns
 
 **Key Features**
-- **Local data storage** for greater privacy
-- **Daily, weekly, monthly and yearly** statistics with graphs
-- **Simple analytics** to help you understand your habits
-- **Automatic backups** (depending on device)
-- **Multi language support**
-- **Simple and intuitive** user interface
+- *Smoking history tracking*
+- *Daily, weekly, monthly and yearly statistics*
+- *Consumption analytics*
+- *Smoking forecasts*
+- *Smoke-free time tracking*
+- *Financial impact and cost tracking*
+- *Notes*
+- *Local data storage*
+- *Android backup support* (device settings)
+- *Multi-language support*
 
 ### Application images
 <details>
