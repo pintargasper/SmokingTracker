@@ -152,6 +152,11 @@ Also available on
       height="600px"
       alt="Note"
     />
+    <img
+      src="fastlane/metadata/android/en-US/images/phoneScreenshots/12.png"
+      height="600px"
+      alt="About the application"
+    />
   </div>
 </details>
 

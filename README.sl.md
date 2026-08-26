@@ -153,6 +153,11 @@ Na voljo tudi na
       height="600px"
       alt="Zapisek"
     />
+    <img
+      src="fastlane/metadata/android/sl/images/phoneScreenshots/12.png"
+      height="600px"
+      alt="O aplikaciji"
+    />
   </div>
 </details>
 
