@@ -96,9 +96,8 @@ def crop_image(image_path: Path) -> str:
             if cropped.size != TARGET_SIZE:
                 return "failed"
 
-            save_image(cropped, image_path, image.format)
+            save_image(image=cropped, image_path=image_path, image_format=image.format)
             return "processed"
-
     except (OSError, ValueError):
         return "failed"
 
@@ -109,7 +108,7 @@ def process_language(language_folder: Path, statistics: Statistics) -> None:
     if not screenshots_folder.exists():
         return
 
-    images = find_screenshots(screenshots_folder)
+    images = find_screenshots(folder=screenshots_folder)
 
     print("\n".join((
         "-" * 60,
@@ -127,7 +126,7 @@ def process_language(language_folder: Path, statistics: Statistics) -> None:
     }
 
     for image_path in images:
-        result = crop_image(image_path)
+        result = crop_image(image_path=image_path)
 
         if result in counters:
             attribute = counters[result]
@@ -163,7 +162,7 @@ def main() -> None:
     statistics = Statistics()
 
     for language_folder in language_folders:
-        process_language(language_folder, statistics)
+        process_language(language_folder=language_folder, statistics=statistics)
 
     statistics.summary()
 
