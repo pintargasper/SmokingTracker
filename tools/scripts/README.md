@@ -38,3 +38,40 @@ fastlane/
 - Keep screenshots in the appropriate Fastlane language directories
 - Do not manually modify screenshots when they can be processed by the script
 - Update EXPECTED_SIZE, TARGET_SIZE, and CROP together when changing screenshot dimensions
+
+## `dummy_data.py`
+
+Python script for generating dummy data for development and testing of the SmokingTracker Android application
+
+- Generates smoking history for the configured number of days
+- Generates smoke-free days and random smoking times
+- Generates borrowed cigarette entries
+- Calculates achievement progress based on generated history
+- Generates cigarette price history
+- Generates sample notes with different moods
+- Generates application settings
+- Generates notification settings
+- Exports all generated data to an Excel workbook
+
+### Usage
+
+Run the script from the project root
+
+```bash
+python tools/scripts/dummy_data.py
+```
+
+The generated Excel file is saved to
+
+```text
+tools/
+|__ scripts/
+    |__ dummy_data/
+        |__ dummy_data.xlsx
+```
+
+### Guidelines
+
+- Use the generated Excel file only for development and testing
+- Adjust the configuration constants in the script when different test data is needed
+- Keep the generated data representative of realistic application usage
