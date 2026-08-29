@@ -10,6 +10,6 @@ updates:
     open-pull-requests-limit: 10
     
     groups:
-      "[Dependencies] update-all":
+      "dependencies-update":
         patterns:
           - "*"
