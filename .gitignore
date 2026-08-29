@@ -12,3 +12,4 @@ local.properties
 !/gradle/wrapper/
 !/gradle/libs.versions.toml
 .kotlin/errors/
+/tools/scripts/dummy_data/dummy_data.xlsx
