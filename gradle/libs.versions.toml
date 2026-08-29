@@ -1,5 +1,6 @@
 [versions]
 agp = "9.3.2"
+ksp = "2.3.6"
 gson = "2.14.0"
 coreKtx = "1.19.0"
 junit = "4.13.2"
@@ -38,3 +39,4 @@ poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
