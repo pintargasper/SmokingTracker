@@ -75,9 +75,4 @@ jobs:
             adb shell run-as com.gasperpintar.smokingtracker cp /data/local/tmp/dummy_data.xlsx /data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx
             adb shell rm /data/local/tmp/dummy_data.xlsx
 
-            echo "----- Screengrabfile -----"
-            cat tools/configuration/Screengrabfile
-
-            echo "----- Running Fastlane -----"
-            cd tools/configuration
             fastlane screengrab
