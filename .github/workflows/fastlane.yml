@@ -36,7 +36,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '4.0.6'
+          ruby-version: '4.0'
 
 
       - name: Set up Fastlane
@@ -76,3 +76,22 @@ jobs:
             adb shell rm /data/local/tmp/dummy_data.xlsx
 
             fastlane screengrab
+
+      - name: Crop screenshots
+        run: |
+          python tools/scripts/image_cropper.py
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          commit-message: "Update fastlane app screenshots"
+          title: "Update app screenshots"
+          body: "Automated pull request containing the latest app screenshots captured by GitHub Actions."
+          branch: "update-screenshots"
+          delete-branch: true
+          add-paths: |
+            fastlane/metadata/android/
+
+          reviewers: "pintargasper"
+          assignees: "pintargasper"
+          labels: "screenshots"
