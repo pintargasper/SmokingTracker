@@ -34,7 +34,7 @@ jobs:
           cache: 'gradle'
 
       - name: Set up Fastlane
-        run: gem install fastlane
+        run: sudo gem install fastlane
 
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
