@@ -94,4 +94,4 @@ jobs:
 
           reviewers: "pintargasper"
           assignees: "pintargasper"
-          labels: "screenshots"
+          labels: "screenshots, fastlane"
