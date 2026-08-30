@@ -72,9 +72,16 @@ jobs:
 
             cd tools/configuration
 
-            pwd
-            ls -la
-            echo "----- Fastfile -----"
-            cat Fastfile
+            cd tools/configuration
 
+            echo "----- Current directory -----"
+            pwd
+
+            echo "----- Files -----"
+            ls -la
+
+            echo "----- Screengrabfile -----"
+            cat Screengrabfile
+
+            echo "----- Running Fastlane -----"
             fastlane screengrab
