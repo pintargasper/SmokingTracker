@@ -61,8 +61,8 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            ./gradlew assembleDebug
-            
+            ./gradlew assembleDebug assembleAndroidTest
+
             adb install app/build/outputs/apk/debug/app-debug.apk
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
             adb shell run-as com.gasperpintar.smokingtracker mkdir -p /data/user/0/com.gasperpintar.smokingtracker/files
