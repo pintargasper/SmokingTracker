@@ -65,6 +65,11 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-rules.rules
           sudo udevadm control --reload-rules && sudo udevadm trigger
 
+      - name: Check KVM
+        run: |
+          ls -l /dev/kvm
+          test -e /dev/kvm
+
       - name: Run Instrumented Tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
