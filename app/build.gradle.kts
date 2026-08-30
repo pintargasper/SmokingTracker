@@ -58,6 +58,7 @@ configure<ApplicationExtension> {
     }
 
     dependenciesInfo {
+
         includeInApk = false
         includeInBundle = false
     }
@@ -96,4 +97,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.screengrab)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
 }
