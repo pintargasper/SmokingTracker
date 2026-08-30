@@ -108,7 +108,7 @@ class ScreenshotTest {
     }
 
     private fun importDummyData() = runBlocking {
-        val file = File("/sdcard/Download/dummy_data.xlsx")
+        val file = File("/data/local/tmp/dummy_data.xlsx")
 
         check(value = file.exists()) {
             "Dummy data file not found: ${file.absolutePath}"
