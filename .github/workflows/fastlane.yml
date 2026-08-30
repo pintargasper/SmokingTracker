@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  pull-requests: write
 
 jobs:
   screenshots:
@@ -20,7 +21,9 @@ jobs:
           python-version: '3.14'
 
       - name: Install Python dependencies
-        run: pip install openpyxl
+        run: |
+          pip install openpyxl
+          pip install Pillow
 
       - name: Generate dummy data
         run: |
@@ -37,7 +40,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '4.0'
-
 
       - name: Set up Fastlane
         run: sudo gem install fastlane
