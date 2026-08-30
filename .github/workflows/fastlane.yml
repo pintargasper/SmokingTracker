@@ -65,7 +65,8 @@ jobs:
             adb install app/build/outputs/apk/debug/app-debug.apk
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
-            adb shell run-as com.gasperpintar.smokingtracker cp /data/local/tmp/dummy_data.xlsx files/dummy_data.xlsx
+            adb shell run-as com.gasperpintar.smokingtracker mkdir -p /data/user/0/com.gasperpintar.smokingtracker/files
+            adb shell run-as com.gasperpintar.smokingtracker cp /data/local/tmp/dummy_data.xlsx /data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx
             adb shell rm /data/local/tmp/dummy_data.xlsx
 
             cd tools/configuration
