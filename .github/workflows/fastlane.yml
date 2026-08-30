@@ -55,14 +55,8 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            adb push \
-              tools/scripts/dummy_data/dummy_data.xlsx \
-              /sdcard/Download/dummy_data.xlsx
-
-            adb shell run-as com.gasperpintar.smokingtracker cp \
-              /sdcard/Download/dummy_data.xlsx \
-              files/dummy_data.xlsx
-
+            adb push tools/scripts/dummy_data/dummy_data.xlsx /sdcard/Download/dummy_data.xlsx
+            adb shell run-as com.gasperpintar.smokingtracker cp /sdcard/Download/dummy_data.xlsx files/dummy_data.xlsx
             adb shell rm /sdcard/Download/dummy_data.xlsx
 
             cd tools/configuration
