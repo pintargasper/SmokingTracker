@@ -239,8 +239,8 @@ def generate_settings() -> dict:
     custom_currencies = ["CHF", "kr", "Kč", "zł", "¥"]
 
     return {
-        "Theme": randint(0, 2),
-        "Language": randint(0, 8),
+        "Theme": 1,
+        "Language": 1,
         "Frequency": randint(0, 2),
         "Currency": choice(currencies),
         "CustomCurrency": choice(custom_currencies) if randint(0, 2) == 0 else "",

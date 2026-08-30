@@ -10,7 +10,7 @@
     android:fillViewport="true">
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/mainViewPager"
+        android:id="@+id/main_view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:overScrollMode="never"

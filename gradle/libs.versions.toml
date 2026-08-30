@@ -17,8 +17,6 @@ workRuntimeKtx = "2.11.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 screengrab = "2.1.1"
-androidxTestRunner = "1.6.2"
-androidxTestRules = "1.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,8 +38,7 @@ poi-ooxml = { module = "org.apache.poi:poi-ooxml", version.ref = "poi" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 screengrab = { module = "tools.fastlane:screengrab", version.ref = "screengrab" }
-androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidxTestRunner" }
-androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidxTestRules" }
+androidx-espresso-contrib = { module = "androidx.test.espresso:espresso-contrib", version.ref = "espressoCore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
