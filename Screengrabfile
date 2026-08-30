@@ -11,7 +11,7 @@ locales([
 
 clear_previous_screenshots(true)
 
-output_directory('image-test')
+output_directory('fastlane/metadata/android')
 
 app_package_name('com.gasperpintar.smokingtracker')
 use_tests_in_classes(['com.gasperpintar.smokingtracker.ScreenshotTest'])
@@ -20,5 +20,4 @@ app_apk_path('app/build/outputs/apk/debug/app-debug.apk')
 tests_apk_path('app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk')
 
 use_timestamp_suffix(false)
-
 use_adb_root(true)
