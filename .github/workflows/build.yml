@@ -49,6 +49,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
+      - name: Install Python dependencies
+        run: |
+          pip install openpyxl
+
+      - name: Generate dummy data
+        run: |
+          python tools/scripts/dummy_data.py
+
       - name: Set up JDK 21
         uses: actions/setup-java@v6
         with:
@@ -80,4 +88,11 @@ jobs:
           disable-linux-hw-accel: false
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          script: ./gradlew connectedDebugAndroidTest
+          script: |
+
+            adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
+            adb shell run-as com.gasperpintar.smokingtracker mkdir -p /data/user/0/com.gasperpintar.smokingtracker/files
+            adb shell run-as com.gasperpintar.smokingtracker cp /data/local/tmp/dummy_data.xlsx /data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx
+            adb shell rm /data/local/tmp/dummy_data.xlsx
+            
+            ./gradlew connectedDebugAndroidTest
