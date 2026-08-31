@@ -49,35 +49,33 @@ class Statistics:
 
 def generate_history_day(date: datetime) -> list[dict]:
     now = datetime.now().replace(microsecond=0)
-    today = date.date() == now.date()
+    is_today = date.date() == now.date()
 
-    if not today and randint(1, 100) <= PROBABILITY:
+    start_time = date.replace(hour=7, minute=randint(0, 20), second=randint(0, 59), microsecond=0)
+    end_time = (
+        now - timedelta(minutes=90)
+        if is_today
+        else date.replace(hour=22, minute=59, second=59, microsecond=0)
+    )
+
+    if end_time < start_time:
         return []
 
-    start = date.replace(hour=0 if today else 7, minute=0, second=0)
-    end = now - timedelta(minutes=90) if today else date.replace(hour=22, minute=59, second=59)
+    target_count = randint(*AVERAGE_CIGARETTES_PER_DAY)
+    history: list[dict] = []
 
-    if end < start:
-        return []
+    current_time = start_time
+    while len(history) < target_count:
+        if current_time > end_time:
+            break
 
-    count = randint(1, 2) if today and now.hour < 7 else randint(*AVERAGE_CIGARETTES_PER_DAY)
-
-    if today and now.hour >= 7:
-        morning = randint(1, 2)
-        count -= morning
-        ranges = [(start, date.replace(hour=7), morning), (date.replace(hour=7), end, count)]
-    else:
-        ranges = [(start, end, count)]
-
-    history = []
-    for start, end, count in ranges:
-        duration = int((end - start).total_seconds())
-        history += [{
+        history.append({
             "Lent": int(randint(1, 100) < PROBABILITY),
-            "CreatedAt": (start + timedelta(seconds=randint(0, duration))).strftime(DATE_FORMAT)
-        } for _ in range(count)]
-
-    return sorted(history, key=lambda x: x["CreatedAt"])
+            "CreatedAt": current_time.strftime(DATE_FORMAT),
+        })
+        interval = timedelta(minutes=randint(30, 120), seconds=randint(0, 59))
+        current_time += interval
+    return history
 
 
 def get_duration(value: int, unit: str) -> timedelta:

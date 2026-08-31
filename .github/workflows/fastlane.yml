@@ -70,13 +70,25 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
+
+            adb wait-for-device
+
+            until [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = "1" ]; do
+              sleep 2
+            done
           
             adb shell wm size 1080x2400
             adb shell wm density 400
+
+            sleep 3
             
             ./gradlew assembleDebug assembleAndroidTest
 
-            adb install app/build/outputs/apk/debug/app-debug.apk
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+
+            adb shell input keyevent KEYCODE_WAKEUP
+            sleep 2
+
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
             adb shell run-as com.gasperpintar.smokingtracker mkdir -p /data/user/0/com.gasperpintar.smokingtracker/files
             adb shell run-as com.gasperpintar.smokingtracker cp /data/local/tmp/dummy_data.xlsx /data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx
