@@ -72,10 +72,7 @@ jobs:
           script: |
 
             adb shell wm size 1080x2400
-            
-            echo "=== Emulator display ==="
-            adb shell wm size
-            adb shell wm density
+            adb shell wm density 400
             
             ./gradlew assembleDebug assembleAndroidTest
 

@@ -48,22 +48,36 @@ class Statistics:
 
 
 def generate_history_day(date: datetime) -> list[dict]:
-    if randint(1, 100) <= PROBABILITY:
+    now = datetime.now().replace(microsecond=0)
+    today = date.date() == now.date()
+
+    if not today and randint(1, 100) <= PROBABILITY:
         return []
 
-    start_time = date.replace(hour=7, minute=0, second=0)
-    end_time = date.replace(hour=22, minute=59, second=59)
+    start = date.replace(hour=0 if today else 7, minute=0, second=0)
+    end = now - timedelta(minutes=90) if today else date.replace(hour=22, minute=59, second=59)
 
-    duration_seconds = int((end_time - start_time).total_seconds())
+    if end < start:
+        return []
 
-    history = [{
-        "Lent": 1 if randint(1, 100) < PROBABILITY else 0,
-        "CreatedAt": (
-            start_time
-            + timedelta(seconds=randint(0, duration_seconds))
-        ).strftime(DATE_FORMAT)
-    } for _ in range(randint(*AVERAGE_CIGARETTES_PER_DAY))]
-    return sorted(history, key=lambda entry: entry["CreatedAt"])
+    count = randint(1, 2) if today and now.hour < 7 else randint(*AVERAGE_CIGARETTES_PER_DAY)
+
+    if today and now.hour >= 7:
+        morning = randint(1, 2)
+        count -= morning
+        ranges = [(start, date.replace(hour=7), morning), (date.replace(hour=7), end, count)]
+    else:
+        ranges = [(start, end, count)]
+
+    history = []
+    for start, end, count in ranges:
+        duration = int((end - start).total_seconds())
+        history += [{
+            "Lent": int(randint(1, 100) < PROBABILITY),
+            "CreatedAt": (start + timedelta(seconds=randint(0, duration))).strftime(DATE_FORMAT)
+        } for _ in range(count)]
+
+    return sorted(history, key=lambda x: x["CreatedAt"])
 
 
 def get_duration(value: int, unit: str) -> timedelta:
