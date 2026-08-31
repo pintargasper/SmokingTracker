@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Update Pull Requests from GitHub Actions Bot and Dependabot
+      - name: Update and approve PR from Bots
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -31,4 +31,7 @@ jobs:
           for PR_NUM in $PRS; do
             echo "Updating Pull Requests #$PR_NUM..."
             gh pr update-branch "$PR_NUM" || echo "Failed to update Pull Request #$PR_NUM."
+
+            echo "Approving PR #$PR_NUM..."
+            gh pr review "$PR_NUM" --approve || echo "Failed to approve PR #$PR_NUM."
           done
