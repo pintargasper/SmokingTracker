@@ -48,18 +48,36 @@ class Statistics:
 
 
 def generate_history_day(date: datetime) -> list[dict]:
-    if randint(1, 100) <= PROBABILITY:
+    now = datetime.now().replace(microsecond=0)
+    today = date.date() == now.date()
+
+    if not today and randint(1, 100) <= PROBABILITY:
         return []
 
-    now = datetime.now().replace(microsecond=0)
-    start_time = date.replace(hour=7, minute=0, second=0)
-    end_time = now if date.date() == now.date() else date.replace(hour=22, minute=59, second=59)
+    start = date.replace(hour=0 if today else 7, minute=0, second=0)
+    end = now - timedelta(minutes=90) if today else date.replace(hour=22, minute=59, second=59)
 
-    history = [{
-        "Lent": 1 if randint(1, 100) < PROBABILITY else 0,
-        "CreatedAt": (start_time + timedelta(seconds=randint(0, int((end_time - start_time).total_seconds())))).strftime(DATE_FORMAT)
-    } for _ in range(randint(*AVERAGE_CIGARETTES_PER_DAY))]
-    return sorted(history, key=lambda entry: entry["CreatedAt"])
+    if end < start:
+        return []
+
+    count = randint(1, 2) if today and now.hour < 7 else randint(*AVERAGE_CIGARETTES_PER_DAY)
+
+    if today and now.hour >= 7:
+        morning = randint(1, 2)
+        count -= morning
+        ranges = [(start, date.replace(hour=7), morning), (date.replace(hour=7), end, count)]
+    else:
+        ranges = [(start, end, count)]
+
+    history = []
+    for start, end, count in ranges:
+        duration = int((end - start).total_seconds())
+        history += [{
+            "Lent": int(randint(1, 100) < PROBABILITY),
+            "CreatedAt": (start + timedelta(seconds=randint(0, duration))).strftime(DATE_FORMAT)
+        } for _ in range(count)]
+
+    return sorted(history, key=lambda x: x["CreatedAt"])
 
 
 def get_duration(value: int, unit: str) -> timedelta:
@@ -239,8 +257,8 @@ def generate_settings() -> dict:
     custom_currencies = ["CHF", "kr", "Kč", "zł", "¥"]
 
     return {
-        "Theme": randint(0, 2),
-        "Language": randint(0, 8),
+        "Theme": 1,
+        "Language": 1,
         "Frequency": randint(0, 2),
         "Currency": choice(currencies),
         "CustomCurrency": choice(custom_currencies) if randint(0, 2) == 0 else "",

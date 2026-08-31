@@ -18,6 +18,12 @@ class SettingsRepository(
         settingsDao.update(entity = settings)
     }
 
+    suspend fun upsert(
+        settings: SettingsEntity
+    ) {
+        settingsDao.upsert(entity = settings)
+    }
+
     suspend fun delete(
         settings: SettingsEntity
     ) {

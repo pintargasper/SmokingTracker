@@ -226,21 +226,25 @@ class SettingsFragment : Fragment() {
                         if (::selectedFile.isInitialized) {
                             val uri = selectedFile.tag as? Uri
                             uri?.let {
-                                lifecycleScope.launch {
-                                    Manager.uploadFile(
-                                        context = requireActivity(),
-                                        fileUri = it,
-                                        achievementRepository = achievementRepository,
-                                        historyRepository = historyRepository,
-                                        settingsRepository = settingsRepository,
-                                        notificationsSettingsRepository = notificationsSettingsRepository,
-                                        costsRepository = costsRepository,
-                                        notesRepository = notesRepository,
-                                        onProgress = { progress ->
-                                            dialog.updateProgress(progress)
-                                        }
-                                    )
-                                    requireActivity().recreate()
+                                try {
+                                    lifecycleScope.launch {
+                                        Manager.uploadFile(
+                                            context = requireActivity(),
+                                            fileUri = it,
+                                            achievementRepository = achievementRepository,
+                                            historyRepository = historyRepository,
+                                            settingsRepository = settingsRepository,
+                                            notificationsSettingsRepository = notificationsSettingsRepository,
+                                            costsRepository = costsRepository,
+                                            notesRepository = notesRepository,
+                                            onProgress = { progress ->
+                                                dialog.updateProgress(progress)
+                                            }
+                                        )
+                                        requireActivity().recreate()
+                                    }
+                                } catch (_: Exception) {
+                                    dialog.dismiss()
                                 }
                             }
                         }
