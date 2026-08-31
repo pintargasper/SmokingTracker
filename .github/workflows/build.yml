@@ -15,6 +15,29 @@ permissions:
   contents: read
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      app: ${{ steps.filter.outputs.app }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Check changed files
+        id: filter
+        uses: dorny/paths-filter@v4
+        with:
+          filters: |
+            app: 
+              - 'app/**' 
+              - 'gradle/**' 
+              - 'build.gradle*' 
+              - 'settings.gradle*' 
+              - 'gradle.properties' 
+              - 'gradlew' 
+              - 'gradlew.bat'
+              - 'tools/scripts/dummy_data.py'
+
   build:
     runs-on: ubuntu-latest
     steps:
@@ -35,6 +58,12 @@ jobs:
         run: ./gradlew assembleDebug test
 
   androidTest:
+    needs: changes
+    if: | 
+      needs.changes.outputs.app == 'true' || 
+      github.event_name == 'schedule' || 
+      github.event_name == 'workflow_dispatch'
+
     runs-on: ubuntu-latest
     strategy:
       matrix:
