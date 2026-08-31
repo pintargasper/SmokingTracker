@@ -66,6 +66,9 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 [![Licenca](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=licenca&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
 [![Prevodi](https://img.shields.io/weblate/progress/smokingtracker?server=https%3A%2F%2Ftranslate.gasperpintar.com&label=prevedeno&labelColor=625B71&logo=weblate&logoColor=white)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
 
+[![Build](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml)
+[![Fastlane](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml)
+[![Sync Bots](https://github.com/pintargasper/SmokingTracker/actions/workflows/sync-bots.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/sync-bots.yml)
 </div>
 
 Na voljo tudi na

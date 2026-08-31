@@ -65,6 +65,10 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 [![Stars](https://img.shields.io/github/stars/pintargasper/SmokingTracker?logo=github&label=stars&labelColor=625B71&color=E0B6FF&style=flat)](https://github.com/pintargasper/SmokingTracker/stargazers)
 [![License](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=license&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
 [![Translations](https://img.shields.io/weblate/progress/smokingtracker?server=https%3A%2F%2Ftranslate.gasperpintar.com&label=translated&labelColor=625B71&logo=weblate&logoColor=white)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
+
+[![Build](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml)
+[![Fastlane](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml)
+[![Sync Bots](https://github.com/pintargasper/SmokingTracker/actions/workflows/sync-bots.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/sync-bots.yml)
 </div>
 
 Also available on

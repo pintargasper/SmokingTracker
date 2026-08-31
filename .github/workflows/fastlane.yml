@@ -1,4 +1,4 @@
-name: Generate Screenshots
+name: Fastlane
 
 on:
   workflow_dispatch:
@@ -109,6 +109,5 @@ jobs:
           add-paths: |
             fastlane/metadata/android/
 
-          reviewers: "pintargasper"
           assignees: "pintargasper"
           labels: "screenshots, fastlane"
