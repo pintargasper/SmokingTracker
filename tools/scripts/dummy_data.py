@@ -51,13 +51,17 @@ def generate_history_day(date: datetime) -> list[dict]:
     if randint(1, 100) <= PROBABILITY:
         return []
 
-    now = datetime.now().replace(microsecond=0)
     start_time = date.replace(hour=7, minute=0, second=0)
-    end_time = now if date.date() == now.date() else date.replace(hour=22, minute=59, second=59)
+    end_time = date.replace(hour=22, minute=59, second=59)
+
+    duration_seconds = int((end_time - start_time).total_seconds())
 
     history = [{
         "Lent": 1 if randint(1, 100) < PROBABILITY else 0,
-        "CreatedAt": (start_time + timedelta(seconds=randint(0, int((end_time - start_time).total_seconds())))).strftime(DATE_FORMAT)
+        "CreatedAt": (
+            start_time
+            + timedelta(seconds=randint(0, duration_seconds))
+        ).strftime(DATE_FORMAT)
     } for _ in range(randint(*AVERAGE_CIGARETTES_PER_DAY))]
     return sorted(history, key=lambda entry: entry["CreatedAt"])
 
