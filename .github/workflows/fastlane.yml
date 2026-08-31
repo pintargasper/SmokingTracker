@@ -70,6 +70,7 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
+          
             adb shell wm size 1080x2400
             adb shell wm density 400
             
