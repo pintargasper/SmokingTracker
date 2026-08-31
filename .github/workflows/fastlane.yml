@@ -63,7 +63,7 @@ jobs:
           api-level: 34
           target: google_apis
           arch: x86_64
-          device: Pixel_6
+          profile: Pixel_6
           ram-size: 4096MB
           force-avd-creation: true
           disable-linux-hw-accel: false
@@ -72,7 +72,7 @@ jobs:
           script: |
             echo "=== Emulator display ==="
             adb shell wm size
-            adb shell wm 
+            adb shell wm density
             
             ./gradlew assembleDebug assembleAndroidTest
 
