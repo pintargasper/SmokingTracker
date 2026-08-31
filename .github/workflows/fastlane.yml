@@ -61,14 +61,19 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: 34
-          target: aosp_atd
+          target: google_apis
           arch: x86_64
+          device: Pixel_6
           ram-size: 4096MB
-          force-avd-creation: false
+          force-avd-creation: true
           disable-linux-hw-accel: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
+            echo "=== Emulator display ==="
+            adb shell wm size
+            adb shell wm 
+            
             ./gradlew assembleDebug assembleAndroidTest
 
             adb install app/build/outputs/apk/debug/app-debug.apk
