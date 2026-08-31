@@ -1,0 +1,34 @@
+name: Sync Bots
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  update-bot-prs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Update Pull Requests from GitHub Actions Bot and Dependabot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PRS=$(gh pr list --state open --json number,author --jq \
+            '.[] | select(.author.login == "app/dependabot" or .author.login == "app/github-actions" or .author.login == "github-actions[bot]") | .number')
+
+          if [ -z "$PRS" ]; then
+            echo "There are no open Pull Requests from selected bots"
+            exit 0
+          fi
+
+          for PR_NUM in $PRS; do
+            echo "Updating Pull Requests #$PR_NUM..."
+            gh pr update-branch "$PR_NUM" || echo "Failed to update Pull Request #$PR_NUM."
+          done
