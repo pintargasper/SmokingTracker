@@ -60,6 +60,16 @@ jobs:
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-rules.rules
+          sudo udevadm control --reload-rules && sudo udevadm trigger
+
+      - name: Check KVM
+        run: |
+          ls -l /dev/kvm
+          test -e /dev/kvm
+
       - name: Run Instrumented Tests
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
@@ -68,6 +78,7 @@ jobs:
           arch: x86_64
           ram-size: 4096MB
           force-avd-creation: false
+          disable-linux-hw-accel: false
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: ./gradlew connectedDebugAndroidTest

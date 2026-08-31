@@ -112,7 +112,7 @@ object Manager {
                 notificationId = 1002,
                 notificationsEnabled
             )
-        } catch (_: Exception) {
+        } catch (exception: Exception) {
             sendNotification(
                 context,
                 title = context.getString(R.string.notification_upload_failed_title),
@@ -120,6 +120,7 @@ object Manager {
                 notificationId = 1002,
                 notificationsEnabled
             )
+            throw exception
         }
     }
 
