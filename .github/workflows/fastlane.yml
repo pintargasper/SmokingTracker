@@ -88,6 +88,10 @@ jobs:
         run: |
           python tools/scripts/image_cropper.py
 
+      - name: Remove generated HTML
+        run: |
+          rm -f fastlane/metadata/android/screenshots.html
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
         with:
@@ -97,7 +101,7 @@ jobs:
           branch: "update-screenshots"
           delete-branch: true
           add-paths: |
-            fastlane/metadata/android/*/images/phoneScreenshots/
+            fastlane/metadata/android/
 
           reviewers: "pintargasper"
           assignees: "pintargasper"
