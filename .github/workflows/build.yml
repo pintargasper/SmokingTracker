@@ -28,13 +28,13 @@ jobs:
         uses: dorny/paths-filter@v4
         with:
           filters: |
-            app: 
-              - 'app/**' 
-              - 'gradle/**' 
-              - 'build.gradle*' 
-              - 'settings.gradle*' 
-              - 'gradle.properties' 
-              - 'gradlew' 
+            app:
+              - 'app/**'
+              - 'gradle/**'
+              - 'build.gradle*'
+              - 'settings.gradle*'
+              - 'gradle.properties'
+              - 'gradlew'
               - 'gradlew.bat'
               - 'tools/scripts/dummy_data.py'
 
@@ -60,39 +60,64 @@ jobs:
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-      - name: Build Debug APK and Run Unit Tests
-        run: ./gradlew assembleDebug test
+      - name: Build Debug APK, Run Unit Tests and Lint
+        run: ./gradlew assembleDebug test lint
 
   androidTest:
     needs: changes
-    if: | 
-      needs.changes.outputs.app == 'true' || 
-      github.event_name == 'schedule' || 
+    if: |
+      needs.changes.outputs.app == 'true' ||
+      github.event_name == 'schedule' ||
       github.event_name == 'workflow_dispatch'
 
     runs-on: ubuntu-latest
+
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - api-level: 26
-            target: default
-          - api-level: 34
+          - name: "API 34"
+            api-level: 34
             target: aosp_atd
-      fail-fast: false
+            legacy: false
+
+          - name: "API 26"
+            api-level: 26
+            target: default
+            legacy: true
 
     steps:
+      - name: Check if emulator should run
+        id: should-run
+        run: |
+          if [ "${{ matrix.legacy }}" = "true" ] &&
+             [ "${{ github.event_name }}" != "schedule" ] &&
+             [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+            echo "run=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "run=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout repository
+        if: steps.should-run.outputs.run == 'true'
         uses: actions/checkout@v7
 
+      - name: Set up Python
+        if: steps.should-run.outputs.run == 'true'
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14'
+
       - name: Install Python dependencies
-        run: |
-          pip install openpyxl
+        if: steps.should-run.outputs.run == 'true'
+        run: pip install openpyxl
 
       - name: Generate dummy data
-        run: |
-          python tools/scripts/dummy_data.py
+        if: steps.should-run.outputs.run == 'true'
+        run: python tools/scripts/dummy_data.py
 
       - name: Set up JDK 21
+        if: steps.should-run.outputs.run == 'true'
         uses: actions/setup-java@v6
         with:
           java-version: '21'
@@ -100,19 +125,23 @@ jobs:
           cache: 'gradle'
 
       - name: Fix line endings and make gradlew executable
+        if: steps.should-run.outputs.run == 'true'
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
       - name: Enable KVM
+        if: steps.should-run.outputs.run == 'true'
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm-rules.rules
           sudo udevadm control --reload-rules && sudo udevadm trigger
 
       - name: Check KVM
+        if: steps.should-run.outputs.run == 'true'
         run: |
           ls -l /dev/kvm
           test -e /dev/kvm
 
-      - name: Run Instrumented Tests
+      - name: Run Instrumented Tests for (${{ matrix.name }})
+        if: steps.should-run.outputs.run == 'true'
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -128,7 +157,6 @@ jobs:
             ./gradlew assembleDebug
 
             adb install -r app/build/outputs/apk/debug/app-debug.apk
-
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
             adb shell run-as com.gasperpintar.smokingtracker mkdir -p /data/user/0/com.gasperpintar.smokingtracker/files
             adb shell run-as com.gasperpintar.smokingtracker cp /data/local/tmp/dummy_data.xlsx /data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx
