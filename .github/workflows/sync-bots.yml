@@ -21,7 +21,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PRS=$(gh pr list --state open --json number,author --jq \
-            '.[] | select(.author.login == "app/dependabot" or .author.login == "app/github-actions" or .author.login == "github-actions[bot]") | .number')
+            '.[] | select(.author.login == "app/dependabot" or .author.login == "app/github-actions" or .author.login == "github-actions[bot]" or .author.login == "weblate") | .number')
 
           if [ -z "$PRS" ]; then
             echo "There are no open Pull Requests from selected bots"
@@ -29,9 +29,9 @@ jobs:
           fi
 
           for PR_NUM in $PRS; do
-            echo "Updating Pull Requests #$PR_NUM..."
+            echo "Updating Pull Request #$PR_NUM..."
             gh pr update-branch "$PR_NUM" || echo "Failed to update Pull Request #$PR_NUM."
 
-            echo "Approving PR #$PR_NUM..."
-            gh pr review "$PR_NUM" --approve || echo "Failed to approve PR #$PR_NUM."
+            echo "Approving Pull Request #$PR_NUM..."
+            gh pr review "$PR_NUM" --approve || echo "Failed to approve Pull Request #$PR_NUM."
           done
