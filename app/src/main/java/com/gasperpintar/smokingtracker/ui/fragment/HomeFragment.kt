@@ -48,6 +48,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentHomeBinding.inflate(inflater, container,false)
 
         initialize()

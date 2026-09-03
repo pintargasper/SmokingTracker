@@ -12,9 +12,7 @@ data class NoteEntry(
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime
 ): Identifiable {
-
     companion object {
-
         fun fromEntity(
             entity: NoteEntity
         ): NoteEntry {

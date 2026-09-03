@@ -21,9 +21,7 @@ data class AchievementEntry(
     val category: AchievementCategory,
     val unit: AchievementUnit
 ): Identifiable {
-
     companion object {
-
         fun fromEntity(
             entity: AchievementEntity
         ): AchievementEntry {
@@ -43,7 +41,9 @@ data class AchievementEntry(
         }
     }
 
-    fun toEntity(existing: AchievementEntity? = null): AchievementEntity {
+    fun toEntity(
+        existing: AchievementEntity? = null
+    ): AchievementEntity {
         return AchievementEntity(
             id = id,
             image = image,

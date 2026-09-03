@@ -10,9 +10,7 @@ data class CostEntry(
     val endDate: LocalDateTime,
     val price: Double,
 ): Identifiable {
-
     companion object {
-
         fun fromEntity(
             entity: CostEntity
         ): CostEntry {

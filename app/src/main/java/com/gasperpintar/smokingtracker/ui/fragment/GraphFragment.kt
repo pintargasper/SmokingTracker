@@ -35,6 +35,7 @@ class GraphFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentGraphBinding.inflate(inflater, container, false)
 
         initialize()
