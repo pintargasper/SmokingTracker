@@ -8,14 +8,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gasperpintar.smokingtracker.adapter.Adapter
+import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.databinding.ActivityNotesBinding
-import com.gasperpintar.smokingtracker.model.NoteEntry
+import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.NoteFragment
@@ -118,10 +117,6 @@ class NotesActivity : AppCompatActivity() {
                         }
                     )
                 }
-            },
-            diffCallback = object : DiffUtil.ItemCallback<NoteEntry>() {
-                override fun areItemsTheSame(oldItem: NoteEntry, newItem: NoteEntry) = oldItem.id == newItem.id
-                override fun areContentsTheSame(oldItem: NoteEntry, newItem: NoteEntry) = oldItem == newItem
             }
         )
         binding.recyclerviewNotes.layoutManager = LinearLayoutManager(this)

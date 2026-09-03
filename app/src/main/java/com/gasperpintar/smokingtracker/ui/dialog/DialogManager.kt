@@ -17,16 +17,15 @@ import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.adapter.Adapter
+import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.model.CostEntry
-import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -356,10 +355,6 @@ object DialogManager {
                         refreshAdapter()
                     }
                 }
-            },
-            diffCallback = object : DiffUtil.ItemCallback<CostEntry>() {
-                override fun areItemsTheSame(oldItem: CostEntry, newItem: CostEntry) = oldItem.id == newItem.id
-                override fun areContentsTheSame(oldItem: CostEntry, newItem: CostEntry) = oldItem == newItem
             }
         )
 

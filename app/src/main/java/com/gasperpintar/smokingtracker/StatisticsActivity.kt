@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
-import com.gasperpintar.smokingtracker.adapter.Pager
+import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityStatisticsBinding

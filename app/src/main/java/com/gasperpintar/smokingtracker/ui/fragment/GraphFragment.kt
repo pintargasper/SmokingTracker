@@ -11,7 +11,7 @@ import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
-import com.gasperpintar.smokingtracker.model.GraphEntry
+import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper

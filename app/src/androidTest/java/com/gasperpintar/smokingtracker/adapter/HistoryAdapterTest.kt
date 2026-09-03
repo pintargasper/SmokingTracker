@@ -10,7 +10,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Rule
@@ -56,8 +57,15 @@ class HistoryAdapterTest {
                     }
                 },
                 diffCallback = object : DiffUtil.ItemCallback<HistoryEntry>() {
-                    override fun areItemsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem.id == newItem.id
-                    override fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem == newItem
+                    override fun areItemsTheSame(
+                        oldItem: HistoryEntry,
+                        newItem: HistoryEntry
+                    ): Boolean = oldItem.id == newItem.id
+
+                    override fun areContentsTheSame(
+                        oldItem: HistoryEntry,
+                        newItem: HistoryEntry
+                    ): Boolean = oldItem == newItem
                 }
             )
 

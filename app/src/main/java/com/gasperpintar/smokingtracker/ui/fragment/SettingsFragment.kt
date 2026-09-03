@@ -21,7 +21,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
-import com.gasperpintar.smokingtracker.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository

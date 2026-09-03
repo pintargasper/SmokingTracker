@@ -10,14 +10,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.adapter.Adapter
+import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
-import com.gasperpintar.smokingtracker.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementIcon
@@ -98,7 +97,7 @@ class AchievementsFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val adapter = Adapter(
+        adapter = Adapter(
             layoutId = R.layout.achievements_container,
             onBind = { itemView, achievementEntry ->
                 val imageAchievement = itemView.findViewById<ImageView>(R.id.image_achievement)
@@ -133,6 +132,7 @@ class AchievementsFragment : Fragment() {
                 imageAchievement.setImageResource(
                     AchievementIcon.valueOf(achievementEntry.image).drawableResource
                 )
+
                 if (achievementEntry.times == 0L) {
                     imageAchievement.colorFilter = ColorMatrixColorFilter(
                         ColorMatrix().apply {
@@ -144,15 +144,10 @@ class AchievementsFragment : Fragment() {
                     imageAchievement.clearColorFilter()
                     imageAchievement.alpha = 1f
                 }
-            },
-            diffCallback = object : DiffUtil.ItemCallback<AchievementEntry>() {
-                override fun areItemsTheSame(oldItem: AchievementEntry, newItem: AchievementEntry) = oldItem.id == newItem.id
-                override fun areContentsTheSame(oldItem: AchievementEntry, newItem: AchievementEntry) = oldItem == newItem
             }
         )
         binding.recyclerviewAchievements.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerviewAchievements.adapter = adapter
-        this.adapter = adapter
     }
 
     private fun loadAchievements(

@@ -13,7 +13,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gasperpintar.smokingtracker.adapter.Pager
+import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity

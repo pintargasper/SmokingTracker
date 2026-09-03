@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.StatisticsActivity
 import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsForecastBinding
-import com.gasperpintar.smokingtracker.model.GraphEntry
+import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import kotlinx.coroutines.launch

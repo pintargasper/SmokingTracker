@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.model
+package com.gasperpintar.smokingtracker.database.model
 
 data class AchievementJsonEntry(
         val icon: String,

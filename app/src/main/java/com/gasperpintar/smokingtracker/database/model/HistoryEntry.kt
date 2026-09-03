@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.model
+package com.gasperpintar.smokingtracker.database.model
 
 import com.gasperpintar.smokingtracker._interface.Identifiable
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
@@ -11,9 +11,7 @@ data class HistoryEntry (
     val createdAt: LocalDateTime,
     val timerLabel: String
 ): Identifiable {
-
     companion object {
-
         fun fromEntity(
             entity: HistoryEntity
         ): HistoryEntry {
@@ -30,11 +28,7 @@ data class HistoryEntry (
         return HistoryEntity(
             id = id,
             createdAt = createdAt,
-            lent = if (isLent) {
-                1
-            } else {
-                0
-            }
+            lent = if (isLent) 1 else 0
         )
     }
 }

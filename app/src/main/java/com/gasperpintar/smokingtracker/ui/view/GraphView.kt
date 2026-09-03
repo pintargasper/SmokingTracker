@@ -10,7 +10,7 @@ import android.util.TypedValue
 import android.view.View
 import androidx.core.graphics.withRotation
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.model.GraphEntry
+import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.util.Locale

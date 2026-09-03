@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.adapter
+package com.gasperpintar.smokingtracker.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
