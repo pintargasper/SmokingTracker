@@ -1,35 +1,35 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.AppDatabase
+import com.gasperpintar.smokingtracker.SmokingTrackerApp
+import com.gasperpintar.smokingtracker.database.viewmodel.GraphViewModel
+import com.gasperpintar.smokingtracker.database.viewmodel.state.GraphUiState
 import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
-import com.gasperpintar.smokingtracker.database.model.GraphEntry
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.di.AppModelFactory
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalDateTime
+import java.util.Locale
 
 class GraphFragment : Fragment() {
 
     private var _binding: FragmentGraphBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: AppDatabase
-    private lateinit var historyRepository: HistoryRepository
+    private val viewModel: GraphViewModel by viewModels {
+        AppModelFactory(appContainer = (requireActivity().application as SmokingTrackerApp).appContainer)
+    }
 
-    private lateinit var selectedDate: LocalDate
-
+    @Override
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,58 +37,51 @@ class GraphFragment : Fragment() {
     ): View {
         _binding = FragmentGraphBinding.inflate(inflater, container, false)
 
-        database = (requireActivity() as MainActivity).database
-        historyRepository = HistoryRepository(historyDao = database.historyDao())
-
-        selectedDate = LocalDate.now()
-
-        setup()
-        loadGraphs()
+        initialize()
+        observeState()
 
         return binding.root
     }
 
+    @Override
     override fun onResume() {
         super.onResume()
-        loadGraphs()
+        viewModel.refresh()
     }
 
+    @Override
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun setup() {
+    private fun initialize() {
         setupNavigation(
             previous = binding.previousDayDaily,
             next = binding.nextDayDaily,
             previousUnit = { it.minusDays(1) },
-            nextUnit = { it.plusDays(1) },
-            loader = ::loadDailyData
+            nextUnit = { it.plusDays(1) }
         )
 
         setupNavigation(
             previous = binding.previousDayWeekly,
             next = binding.nextDayWeekly,
             previousUnit = { it.minusWeeks(1) },
-            nextUnit = { it.plusWeeks(1) },
-            loader = ::loadWeeklyData
+            nextUnit = { it.plusWeeks(1) }
         )
 
         setupNavigation(
             previous = binding.previousDayMonthly,
             next = binding.nextDayMonthly,
             previousUnit = { it.minusMonths(1) },
-            nextUnit = { it.plusMonths(1) },
-            loader = ::loadMonthlyData
+            nextUnit = { it.plusMonths(1) }
         )
 
         setupNavigation(
             previous = binding.previousDayYearly,
             next = binding.nextDayYearly,
             previousUnit = { it.minusYears(1) },
-            nextUnit = { it.plusYears(1) },
-            loader = ::loadYearlyData
+            nextUnit = { it.plusYears(1) }
         )
     }
 
@@ -96,156 +89,72 @@ class GraphFragment : Fragment() {
         previous: View,
         next: View,
         previousUnit: (LocalDate) -> LocalDate,
-        nextUnit: (LocalDate) -> LocalDate,
-        loader: suspend () -> Unit
+        nextUnit: (LocalDate) -> LocalDate
     ) {
         previous.setOnClickListener {
-            selectedDate = previousUnit(selectedDate)
-            lifecycleScope.launch { loader() }
+            val currentDate = viewModel.uiState.value.selectedDate
+            viewModel.selectDate(date = previousUnit(currentDate))
         }
 
         next.setOnClickListener {
-            selectedDate = nextUnit(selectedDate)
-            lifecycleScope.launch { loader() }
+            val currentDate = viewModel.uiState.value.selectedDate
+            viewModel.selectDate(date = nextUnit(currentDate))
         }
     }
 
-    private fun loadGraphs() {
-        lifecycleScope.launch {
-            loadDailyData()
-            loadWeeklyData()
-            loadMonthlyData()
-            loadYearlyData()
+    private fun observeState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                updateDaily(state = state)
+                updateWeekly(state = state)
+                updateMonthly(state = state)
+                updateYearly(state = state)
+            }
         }
     }
 
-    private suspend fun loadDailyData() {
-        loadGraph(
-            getDateRange = { TimeHelper.getDay(date = selectedDate) },
-            labelFormatter = { start, _ ->
-                LocalizationHelper.formatDate(date = start.toLocalDate())
-            },
-            interval = GraphInterval.DAILY
-        )
-    }
-
-    private suspend fun loadWeeklyData() {
-        loadGraph(
-            getDateRange = { TimeHelper.getWeek(date = selectedDate) },
-            labelFormatter = { start, end ->
-                LocalizationHelper.formatWeekRange(start = start.toLocalDate(), end = end.toLocalDate())
-            },
-            interval = GraphInterval.WEEKLY
-        )
-    }
-
-    @SuppressLint(value = ["DefaultLocale"])
-    private suspend fun loadMonthlyData() {
-        loadGraph(
-            getDateRange = { TimeHelper.getMonth(date = selectedDate) },
-            labelFormatter = { start, _ ->
-                String.format("%s %d",
-                    LocalizationHelper.getMonthName(context = requireContext(), start.month),
-                    start.year
-                )
-            },
-            interval = GraphInterval.MONTHLY
-        )
-    }
-
-    @SuppressLint(value = ["DefaultLocale"])
-    private suspend fun loadYearlyData() {
-        loadGraph(
-            getDateRange = { TimeHelper.getYear(date = selectedDate) },
-            labelFormatter = { start, _ ->
-                start.year.toString()
-            },
-            interval = GraphInterval.YEARLY
-        )
-    }
-
-    private suspend fun loadGraph(
-        getDateRange: () -> Pair<LocalDateTime, LocalDateTime>,
-        labelFormatter: (LocalDateTime, LocalDateTime) -> String,
-        interval: GraphInterval
+    private fun updateDaily(
+        state: GraphUiState
     ) {
-        val (startDateTime, endDateTime) = getDateRange()
+        val (start, _) = TimeHelper.getDay(date = state.selectedDate)
 
-        val currentDateTextView = when (interval) {
-            GraphInterval.DAILY -> binding.currentDateDaily
-            GraphInterval.WEEKLY -> binding.currentDateWeekly
-            GraphInterval.MONTHLY -> binding.currentDateMonthly
-            GraphInterval.YEARLY -> binding.currentDateYearly
-            else -> binding.currentDateDaily
-        }
-        currentDateTextView.text = labelFormatter(startDateTime, endDateTime)
+        binding.currentDateDaily.text = LocalizationHelper.formatDate(date = start.toLocalDate())
+        binding.graphDaily.text = getString(R.string.graph_daily, state.dailyCount)
+        binding.graphViewDaily.setData(data = state.dailyEntries, graphInterval = GraphInterval.DAILY)
+    }
 
-        val historyList = historyRepository.getBetween(startDateTime, endDateTime)
+    private fun updateWeekly(
+        state: GraphUiState
+    ) {
+        val (start, end) = TimeHelper.getWeek(date = state.selectedDate)
 
-        val entries: List<GraphEntry> = when (interval) {
-            GraphInterval.DAILY -> {
-                val hourlyCountMap: Map<Int, Int> =
-                    historyList.groupingBy {
-                        it.createdAt.hour
-                    }.eachCount()
-                (0..23).map { hour: Int ->
-                    GraphEntry(
-                        quantity = hourlyCountMap[hour] ?: 0,
-                        date = startDateTime.withHour(hour).withMinute(0).withSecond(0).withNano(0)
-                    )
-                }.dropLastWhile {
-                    it.quantity == 0
-                }
-            }
-            GraphInterval.YEARLY -> {
-                val monthCountMap = historyList.groupingBy { it.createdAt.monthValue }.eachCount()
-                (1..12).map { monthNumber ->
-                    val count = monthCountMap[monthNumber] ?: 0
-                    GraphEntry(
-                        quantity = count,
-                        date = startDateTime.withMonth(monthNumber).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0)
-                    )
-                }.dropLastWhile { it.quantity == 0 }
-            }
-            else -> {
-                val startDate = startDateTime.toLocalDate()
-                val endDate = endDateTime.toLocalDate()
-                generateSequence(seed = startDate) { day ->
-                    val nextDay = day.plusDays(1)
-                    if (nextDay <= endDate) {
-                        nextDay
-                    } else {
-                        null
-                    }
-                }.map { day ->
-                    GraphEntry(
-                        quantity = historyList.count {
-                            it.createdAt.toLocalDate() == day
-                        },
-                        date = day.atStartOfDay()
-                    )
-                }.toList().dropLastWhile {
-                    it.quantity == 0
-                }
-            }
-        }
+        binding.currentDateWeekly.text = LocalizationHelper.formatWeekRange(start = start.toLocalDate(), end = end.toLocalDate())
+        binding.graphWeekly.text = getString(R.string.graph_weekly, state.weeklyCount)
+        binding.graphViewWeekly.setData(data = state.weeklyEntries, graphInterval = GraphInterval.WEEKLY)
+    }
 
-        val intervalViewsAndStrings = mapOf(
-            GraphInterval.DAILY to Pair(binding.graphDaily, R.string.graph_daily),
-            GraphInterval.WEEKLY to Pair(binding.graphWeekly, R.string.graph_weekly),
-            GraphInterval.MONTHLY to Pair(binding.graphMonthly, R.string.graph_monthly),
-            GraphInterval.YEARLY to Pair(binding.graphYearly, R.string.graph_yearly)
-        )
-        val (currentTextView, stringResId) = intervalViewsAndStrings[interval]!!
-        currentTextView.text = getString(stringResId, historyList.size)
+    private fun updateMonthly(
+        state: GraphUiState
+    ) {
+        val (start, _) = TimeHelper.getMonth(date = state.selectedDate)
 
-        val currentGraphView = when (interval) {
-            GraphInterval.DAILY -> binding.graphViewDaily
-            GraphInterval.WEEKLY -> binding.graphViewWeekly
-            GraphInterval.MONTHLY -> binding.graphViewMonthly
-            GraphInterval.YEARLY -> binding.graphViewYearly
-            else -> binding.graphViewDaily
-        }
-        currentGraphView.setData(data = entries, graphInterval = interval)
+        binding.currentDateMonthly.text =
+            String.format(
+                Locale.getDefault(), "%s %d",
+                LocalizationHelper.getMonthName(context = requireContext(), start.month),
+                start.year
+            )
+        binding.graphMonthly.text = getString(R.string.graph_monthly, state.monthlyCount)
+        binding.graphViewMonthly.setData(data = state.monthlyEntries, graphInterval = GraphInterval.MONTHLY)
+    }
+
+    private fun updateYearly(
+        state: GraphUiState
+    ) {
+        val (start, _) = TimeHelper.getYear(date = state.selectedDate)
+
+        binding.currentDateYearly.text = start.year.toString()
+        binding.graphYearly.text = getString(R.string.graph_yearly, state.yearlyCount)
+        binding.graphViewYearly.setData(data = state.yearlyEntries, graphInterval = GraphInterval.YEARLY)
     }
 }

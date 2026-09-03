@@ -17,7 +17,7 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
-import com.gasperpintar.smokingtracker.di.AppViewModelFactory
+import com.gasperpintar.smokingtracker.di.AppModelFactory
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding get() = _binding!!
 
     private val viewModel: HomeViewModel by viewModels {
-        AppViewModelFactory(appContainer = (requireActivity().application as SmokingTrackerApp).appContainer)
+        AppModelFactory(appContainer = (requireActivity().application as SmokingTrackerApp).appContainer)
     }
 
     private var timerJob: Job? = null
@@ -126,11 +126,10 @@ class HomeFragment : Fragment() {
     private fun observeState() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.collect { state ->
-                binding.currentDay.text =
-                    LocalizationHelper.getDayOfWeekName(
-                        context = requireContext(),
-                        dayOfWeek = state.selectedDate.dayOfWeek
-                    )
+                binding.currentDay.text = LocalizationHelper.getDayOfWeekName(
+                    context = requireContext(),
+                    dayOfWeek = state.selectedDate.dayOfWeek
+                )
 
                 binding.currentDate.text = LocalizationHelper.formatDate(state.selectedDate)
                 binding.dailyValue.text = state.dailyCount.toString()
