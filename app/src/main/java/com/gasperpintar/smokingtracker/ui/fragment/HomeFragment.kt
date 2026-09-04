@@ -95,6 +95,27 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun observeState() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                binding.currentDay.text = LocalizationHelper.getDayOfWeekName(
+                    context = requireContext(),
+                    dayOfWeek = state.selectedDate.dayOfWeek
+                )
+
+                binding.currentDate.text = LocalizationHelper.formatDate(state.selectedDate)
+                binding.dailyValue.text = state.dailyCount.toString()
+                binding.weeklyValue.text = state.weeklyCount.toString()
+                binding.monthlyValue.text = state.monthlyCount.toString()
+
+                historyAdapter.submitList(state.history) {
+                    binding.recyclerviewHistory.scrollToPosition(0)
+                }
+                updateTimerLabel(entry = state.lastEntry)
+            }
+        }
+    }
+
     private fun setupAdapter() {
         historyAdapter = Adapter(
             layoutId = R.layout.history_container,
@@ -122,27 +143,6 @@ class HomeFragment : Fragment() {
         )
         binding.recyclerviewHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerviewHistory.adapter = historyAdapter
-    }
-
-    private fun observeState() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect { state ->
-                binding.currentDay.text = LocalizationHelper.getDayOfWeekName(
-                    context = requireContext(),
-                    dayOfWeek = state.selectedDate.dayOfWeek
-                )
-
-                binding.currentDate.text = LocalizationHelper.formatDate(state.selectedDate)
-                binding.dailyValue.text = state.dailyCount.toString()
-                binding.weeklyValue.text = state.weeklyCount.toString()
-                binding.monthlyValue.text = state.monthlyCount.toString()
-
-                historyAdapter.submitList(state.history) {
-                    binding.recyclerviewHistory.scrollToPosition(0)
-                }
-                updateTimerLabel(entry = state.lastEntry)
-            }
-        }
     }
 
     private fun startTimer() {

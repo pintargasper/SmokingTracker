@@ -25,17 +25,6 @@ class GraphViewModel(
         load()
     }
 
-    fun selectDate(
-        date: LocalDate
-    ) {
-        _uiState.value = _uiState.value.copy(selectedDate = date)
-        load()
-    }
-
-    fun refresh() {
-        load()
-    }
-
     private fun load() {
         viewModelScope.launch {
             val date = _uiState.value.selectedDate
@@ -62,6 +51,17 @@ class GraphViewModel(
                 yearlyCount = yearlyHistory.size
             )
         }
+    }
+
+    fun selectDate(
+        date: LocalDate
+    ) {
+        _uiState.value = _uiState.value.copy(selectedDate = date)
+        load()
+    }
+
+    fun refresh() {
+        load()
     }
 
     private fun createHourlyEntries(

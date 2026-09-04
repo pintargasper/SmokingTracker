@@ -87,7 +87,7 @@
     <string name="popup_select">Обери</string>
     <string name="restore_popup">Відновити дані з бекапу</string>
     <string name="restore_popup_info">Отримаєш сповіщення про відновлення даних</string>
-    <string name="restore_popup_file">Файл</string>
+    <string name="restore_popup_file">Файл %1$s</string>
     <string name="restore_popup_file_none">Пусто</string>
     <string name="restore_popup_file_unknown">Невизначено</string>
     <string name="about_view">Переглянути на</string>

@@ -108,7 +108,7 @@
     <string name="popup_select">Auswählen</string>
     <string name="restore_popup">Stelle deine Daten wieder her</string>
     <string name="restore_popup_info">Du wirst per Push-Benachrichtigung über die Datenwiederherstellung informiert</string>
-    <string name="restore_popup_file">Datei</string>
+    <string name="restore_popup_file">Datei %1$s</string>
     <string name="restore_popup_file_none">Keine ausgewählt</string>
     <string name="restore_popup_file_unknown">Unbekannt</string>
     <string name="about_view">Siehe auf</string>

@@ -108,7 +108,7 @@
     <string name="popup_select">Изаберите</string>
     <string name="restore_popup">Вратите своје податке</string>
     <string name="restore_popup_info">Бићете обавештени о враћању података путем push обавештења</string>
-    <string name="restore_popup_file">Датотека</string>
+    <string name="restore_popup_file">Датотека %1$s</string>
     <string name="restore_popup_file_none">Ништа</string>
     <string name="restore_popup_file_unknown">Непознато</string>
     <string name="about_view">Погледајте на</string>

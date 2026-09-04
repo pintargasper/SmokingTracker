@@ -200,7 +200,7 @@
     <string name="currency_check_box_dollar">美元 ($)</string>
     <string name="restore_popup">還原您的資料</string>
     <string name="restore_popup_info">我們將透過推播通知告知您資料還原狀態</string>
-    <string name="restore_popup_file">檔案</string>
+    <string name="restore_popup_file">檔案 %1$s</string>
     <string name="restore_popup_file_none">無</string>
     <string name="restore_popup_file_unknown">未知</string>
     <string name="note_popup_save">要儲存筆記嗎？</string>

@@ -16,8 +16,8 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 class HomeViewModel(
-    private val historyRepository: HistoryRepository,
-    private val achievementRepository: AchievementRepository
+    private val achievementRepository: AchievementRepository,
+    private val historyRepository: HistoryRepository
 ): ViewModel() {
 
     private val _uiState = MutableStateFlow(value = HomeUiState())
@@ -25,6 +25,32 @@ class HomeViewModel(
 
     init {
         load()
+    }
+
+    fun load() {
+        viewModelScope.launch {
+            val date = _uiState.value.selectedDate
+            val (startOfDay, endOfDay) = TimeHelper.getDay(date)
+
+            val historyEntities = historyRepository.getBetween(start = startOfDay, end = endOfDay)
+            val history = historyEntities.map(transform = HistoryEntry::fromEntity)
+            val dailyCount = historyRepository.getCountBetween(start = startOfDay, end = endOfDay)
+
+            val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date)
+            val weeklyCount = historyRepository.getCountBetween(start = startOfWeek, end = endOfWeek)
+
+            val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date)
+            val monthlyCount = historyRepository.getCountBetween(start = startOfMonth, end = endOfMonth)
+
+            val lastEntry = historyRepository.getLast()
+            _uiState.value = _uiState.value.copy(
+                history = history,
+                dailyCount = dailyCount,
+                weeklyCount = weeklyCount,
+                monthlyCount = monthlyCount,
+                lastEntry = lastEntry
+            )
+        }
     }
 
     fun selectDate(
@@ -54,10 +80,7 @@ class HomeViewModel(
                 achievementRepository.resetAll(state = false)
             }
 
-            val updatedEntry = entry.copy(
-                createdAt = dateTime,
-                isLent = isLent
-            )
+            val updatedEntry = entry.copy(createdAt = dateTime, isLent = isLent)
             historyRepository.update(entry = updatedEntry.toEntity())
             load()
         }
@@ -73,33 +96,6 @@ class HomeViewModel(
 
             historyRepository.delete(entry = entry.toEntity())
             load()
-        }
-    }
-
-    fun load() {
-        viewModelScope.launch {
-            val date = _uiState.value.selectedDate
-
-            val (startOfDay, endOfDay) = TimeHelper.getDay(date)
-
-            val historyEntities = historyRepository.getBetween(start = startOfDay, end = endOfDay)
-            val history = historyEntities.map(transform = HistoryEntry::fromEntity)
-            val dailyCount = historyRepository.getCountBetween(start = startOfDay, end = endOfDay)
-
-            val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date)
-            val weeklyCount = historyRepository.getCountBetween(start = startOfWeek, end = endOfWeek)
-
-            val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date)
-            val monthlyCount = historyRepository.getCountBetween(start = startOfMonth, end = endOfMonth)
-
-            val lastEntry = historyRepository.getLast()
-            _uiState.value = _uiState.value.copy(
-                history = history,
-                dailyCount = dailyCount,
-                weeklyCount = weeklyCount,
-                monthlyCount = monthlyCount,
-                lastEntry = lastEntry
-            )
         }
     }
 }

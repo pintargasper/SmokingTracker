@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gasperpintar.smokingtracker.database.viewmodel.GraphViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
+import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 
 class AppModelFactory(
     private val appContainer: AppContainer
@@ -15,13 +16,24 @@ class AppModelFactory(
         return when {
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(
-                    historyRepository = appContainer.historyRepository,
-                    achievementRepository = appContainer.achievementRepository
+                    achievementRepository = appContainer.achievementRepository,
+                    historyRepository = appContainer.historyRepository
                 ) as T
             }
 
             modelClass.isAssignableFrom(GraphViewModel::class.java) -> {
                 GraphViewModel(historyRepository = appContainer.historyRepository) as T
+            }
+
+            modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
+                SettingsViewModel(
+                    achievementRepository = appContainer.achievementRepository,
+                    historyRepository = appContainer.historyRepository,
+                    settingsRepository = appContainer.settingsRepository,
+                    notificationsSettingsRepository = appContainer.notificationsSettingsRepository,
+                    costsRepository = appContainer.costsRepository,
+                    notesRepository = appContainer.notesRepository
+                ) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

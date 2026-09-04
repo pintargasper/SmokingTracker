@@ -89,7 +89,7 @@
     <string name="popup_select">Izaberi</string>
     <string name="restore_popup">Vrati rezervnu kopiju podataka</string>
     <string name="restore_popup_info">Bićete obavešteni o vraćanju podataka putem obaveštenja</string>
-    <string name="restore_popup_file">Datoteka</string>
+    <string name="restore_popup_file">Datoteka %1$s</string>
     <string name="restore_popup_file_none">Ništa</string>
     <string name="restore_popup_file_unknown">Nepoznato</string>
     <string name="about_view">Pogledaj na</string>
