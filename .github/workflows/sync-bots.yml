@@ -2,8 +2,7 @@ name: Sync Bots
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
 
 jobs:
   update-bot-prs:
@@ -13,25 +12,25 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+      - uses: actions/checkout@v7
 
-      - name: Update and approve PR from Bots
+      - name: Update and approve PRs
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PRS=$(gh pr list --state open --json number,author --jq \
-            '.[] | select(.author.login == "app/dependabot" or .author.login == "app/github-actions" or .author.login == "github-actions[bot]") | .number')
+          PRS=$(gh pr list --state open --json number,author --jq '
+            .[] | select(
+              .author.login == "app/dependabot" or
+              .author.login == "app/github-actions" or
+              .author.login == "github-actions[bot]" or
+              .author.login == "weblate-translations[bot]"
+            ) | .number
+          ')
 
-          if [ -z "$PRS" ]; then
-            echo "There are no open Pull Requests from selected bots"
-            exit 0
-          fi
+          [ -z "$PRS" ] && echo "No matching Pull Requests." && exit 0
 
-          for PR_NUM in $PRS; do
-            echo "Updating Pull Requests #$PR_NUM..."
-            gh pr update-branch "$PR_NUM" || echo "Failed to update Pull Request #$PR_NUM."
-
-            echo "Approving PR #$PR_NUM..."
-            gh pr review "$PR_NUM" --approve || echo "Failed to approve PR #$PR_NUM."
+          for PR in $PRS; do
+            echo "Updating and approving Pull Request #$PR..."
+            gh pr update-branch "$PR" || echo "Update failed."
+            gh pr review "$PR" --approve || echo "Approval failed."
           done

@@ -272,4 +272,20 @@
     <string name="statistics_total_spent_today">今日总花费</string>
     <string name="statistics_total_spent_month">本月总花费</string>
     <string name="statistics_most_expensive">最昂贵的一天</string>
+    <string name="application_tagline">追踪。分析。进步。</string>
+    <string name="more_tools">工具</string>
+    <string name="settings_finance">金融</string>
+    <string name="settings_about_description">版本、链接及更多内容</string>
+    <string name="settings_about_website_description">访问网站以获取更多信息</string>
+    <string name="settings_support">支持与安全</string>
+    <string name="settings_support_privacy_policy_description">查看隐私政策</string>
+    <string name="about_view_github">查看源代码、反馈问题或参与项目贡献</string>
+    <string name="about_view_f_droid">在 F-Droid 上查看应用</string>
+    <string name="about_view_izzy_on_droid">在 IzzyOnDroid 上查看应用</string>
+    <string name="about_view_open_apk">在 OpenAPK 上查看应用</string>
+    <string name="about_contributors_chinese_traditional">正体中文翻译</string>
+    <string name="about_created_by">由 %1$s 开发</string>
+    <string name="widget_stats">统计</string>
+    <string name="widget_quick_add">快速添加</string>
+    <string name="widget_stats_quick_add">统计与快速添加</string>
 </resources>

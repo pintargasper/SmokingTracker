@@ -64,7 +64,7 @@ Ustvaril [Gašper Pintar](https://gasperpintar.com)
 [![IzzyOnDroid prenosi](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.gasperpintar.smokingtracker']&label=prenosi&labelColor=625B71&logo=android&logoColor=white)](https://apt.izzysoft.de/packages/com.gasperpintar.smokingtracker)
 [![Zvezdice](https://img.shields.io/github/stars/pintargasper/SmokingTracker?logo=github&label=zvezdice&labelColor=625B71&color=E0B6FF&style=flat)](https://github.com/pintargasper/SmokingTracker/stargazers)
 [![Licenca](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=licenca&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
-[![Prevodi](https://img.shields.io/weblate/progress/smokingtracker?server=https%3A%2F%2Ftranslate.gasperpintar.com&label=prevedeno&labelColor=625B71&logo=weblate&logoColor=white)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
+[![Prevodi](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/)
 
 [![Build](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml)
 [![Fastlane](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml)
@@ -167,12 +167,8 @@ Na voljo tudi na
 ## 🌐 Pomoč pri prevajanju
 
 <div align="center">
-  <a href="https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget" target="_blank">
-    <img
-      src="http://translate.gasperpintar.com/widget/smokingtracker/multi-auto.svg"
-      width="500px"
-      alt="Help translate"
-    >
+  <a href="https://translate.gasperpintar.com/engage/smokingtracker/">
+      <img src="https://translate.gasperpintar.com/widget/smokingtracker/matrix-auto.svg" alt="Translation status">
   </a>
 </div>
 
