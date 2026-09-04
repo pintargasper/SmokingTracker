@@ -18,12 +18,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          PRS=$(gh pr list --state open --json number,author,labels --jq '
+          PRS=$(gh pr list --state open --json number,author --jq '
             .[] | select(
               .author.login == "app/dependabot" or
               .author.login == "app/github-actions" or
               .author.login == "github-actions[bot]" or
-              (.author.login == "pintargasper" and ([.labels[].name] | index("translations")))
+              .author.login == "weblate-translations[bot]"
             ) | .number
           ')
 
