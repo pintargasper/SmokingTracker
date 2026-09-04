@@ -64,7 +64,7 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 [![IzzyOnDroid Downloads](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.gasperpintar.smokingtracker']&label=downloads&labelColor=625B71&logo=android&logoColor=white)](https://apt.izzysoft.de/packages/com.gasperpintar.smokingtracker)
 [![Stars](https://img.shields.io/github/stars/pintargasper/SmokingTracker?logo=github&label=stars&labelColor=625B71&color=E0B6FF&style=flat)](https://github.com/pintargasper/SmokingTracker/stargazers)
 [![License](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=license&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
-[![Translations](https://img.shields.io/weblate/progress/smokingtracker?server=https%3A%2F%2Ftranslate.gasperpintar.com&label=translated&labelColor=625B71&logo=weblate&logoColor=white)](https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget)
+[![Translation status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/)
 
 [![Build](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml)
 [![Fastlane](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml)
@@ -167,12 +167,8 @@ Also available on
 ## 🌐 Help translate
 
 <div align="center">
-  <a href="https://translate.gasperpintar.com/engage/smokingtracker/?utm_source=widget" target="_blank">
-    <img
-      src="http://translate.gasperpintar.com/widget/smokingtracker/multi-auto.svg"
-      width="500px"
-      alt="Help translate"
-    >
+  <a href="https://translate.gasperpintar.com/engage/smokingtracker/">
+    <img src="https://translate.gasperpintar.com/widget/smokingtracker/matrix-auto.svg" alt="Translation status">
   </a>
 </div>
 
