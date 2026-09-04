@@ -37,7 +37,7 @@
     <string name="popup_select">Sélectionner</string>
     <string name="restore_popup">Restaurer vos données</string>
     <string name="restore_popup_info">Vous recevrez une notification push de la restauration de vos données</string>
-    <string name="restore_popup_file">Fichier %1$s</string>
+    <string name="restore_popup_file">Fichier: %1$s</string>
     <string name="restore_popup_file_none">Aucun</string>
     <string name="restore_popup_file_unknown">Inconnu</string>
     <string name="home_daily">Journalier</string>

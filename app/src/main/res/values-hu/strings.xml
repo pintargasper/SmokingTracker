@@ -219,7 +219,7 @@
     <string name="backup_popup_description">Push értesítést kapsz, amikor elkészül a biztonsági mentés</string>
     <string name="restore_popup">Állítsd vissza az adataidat</string>
     <string name="restore_popup_info">Push értesítést kapsz, amikor elkészül az adatok visszaállítása</string>
-    <string name="restore_popup_file">Fájl %1$s</string>
+    <string name="restore_popup_file">Fájl: %1$s</string>
     <string name="restore_popup_file_none">Nincs</string>
     <string name="restore_popup_file_unknown">Ismeretlen</string>
     <string name="note_popup_save">Mented a jegyzetet?</string>

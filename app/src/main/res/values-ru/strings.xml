@@ -107,7 +107,7 @@
     <string name="graph_next_day_yearly">Следующий период (за год)</string>
     <string name="notifications_popup_frequency_default">Стандартно</string>
     <string name="restore_popup_info">Вы получите уведомление о восстановлении данных посредством push-уведомления</string>
-    <string name="restore_popup_file">Файл %1$s</string>
+    <string name="restore_popup_file">Файл: %1$s</string>
     <string name="restore_popup_file_none">Пусто</string>
     <string name="restore_popup_file_unknown">Неизвестно</string>
     <string name="about_view">Посмотреть на</string>

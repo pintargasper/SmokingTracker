@@ -89,7 +89,7 @@
     <string name="popup_select">选择</string>
     <string name="restore_popup">恢复数据</string>
     <string name="restore_popup_info">恢复完成后将通过通知告知你</string>
-    <string name="restore_popup_file">文件 %1$s</string>
+    <string name="restore_popup_file">文件: %1$s</string>
     <string name="restore_popup_file_none">无</string>
     <string name="restore_popup_file_unknown">未知</string>
     <string name="about_view">在以下平台查看</string>

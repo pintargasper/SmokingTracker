@@ -447,11 +447,7 @@ object DialogManager {
 
         onViewCreated(textViewSelectedFile)
 
-        textViewSelectedFile.text = String.format(
-            $$"%1$s: %2$s",
-            context.getString(R.string.restore_popup_file),
-            context.getString(R.string.restore_popup_file_none)
-        )
+        textViewSelectedFile.text = context.getString(R.string.restore_popup_file, context.getString(R.string.restore_popup_file_none))
 
         buttonOpenFile.setOnClickListener {
             onOpenFile()

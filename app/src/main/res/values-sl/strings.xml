@@ -91,7 +91,7 @@
     <string name="popup_select">Izberite</string>
     <string name="restore_popup">Obnovite svoje podatke</string>
     <string name="restore_popup_info">O obnovitvi podatkov boste obveščeni prek potisnega obvestila</string>
-    <string name="restore_popup_file">Datoteka %1$s</string>
+    <string name="restore_popup_file">Datoteka: %1$s</string>
     <string name="restore_popup_file_none">Nobena</string>
     <string name="restore_popup_file_unknown">Neznano</string>
     <string name="application_name">Sledilnik Kajenja</string>

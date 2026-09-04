@@ -3,85 +3,74 @@ package com.gasperpintar.smokingtracker
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
+import androidx.core.view.children
 import androidx.core.view.get
+import androidx.core.view.size
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gasperpintar.smokingtracker.ui.adapter.Pager
-import com.gasperpintar.smokingtracker.database.AppDatabase
-import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
-import com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment
+import com.gasperpintar.smokingtracker.di.AppModelFactory
+import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
 import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
+import com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
-import com.gasperpintar.smokingtracker.utils.JsonHelper
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.launch
 import java.util.concurrent.TimeUnit
-import androidx.core.view.size
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostsRepository
-import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
-import java.time.LocalDate
-import java.time.LocalTime
-import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    lateinit var database: AppDatabase
-    private lateinit var achievementRepository: AchievementRepository
-    private lateinit var settingsRepository: SettingsRepository
-    private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
-    private lateinit var costsRepository: CostsRepository
+    private val appContainer by lazy { (application as SmokingTrackerApp).appContainer }
+    private val viewModel: MainViewModel by viewModels { AppModelFactory(
+        application = application as SmokingTrackerApp,
+        appContainer = appContainer
+    ) }
 
     lateinit var permissionsHelper: Permissions
 
+    @Override
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        initViewBinding()
+        initialize()
+        observeState()
         initPager()
-        initPermissions()
-
-        lifecycleScope.launch {
-            initializeApplication()
-        }
     }
 
+    @Override
     override fun attachBaseContext(
         context: Context
     ) {
-        database = Provider.getDatabase(context = context.applicationContext)
-        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
-        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
-        costsRepository = CostsRepository(costDao = database.costsDao())
-
+        val appContainer = (context.applicationContext as SmokingTrackerApp).appContainer
         super.attachBaseContext(
             LocalizationHelper.getLocalizedContext(
                 context = context,
-                settingsRepository = settingsRepository
+                settingsRepository = appContainer.settingsRepository
             )
         )
     }
 
+    @Override
     override fun onResume() {
         super.onResume()
         if (permissionsHelper.isNotificationPermissionGranted()) {
@@ -90,143 +79,67 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Override
     override fun onStart() {
         super.onStart()
-        val navView = binding.navView
-        for (i in 0 until navView.menu.size) {
-            val itemView = navView.findViewById<android.view.View>(navView.menu[i].itemId)
-            itemView?.setOnLongClickListener {
-                true
+        binding.navView.let { navView ->
+            (0 until navView.menu.size).forEach { i ->
+                navView.findViewById<View>(navView.menu[i].itemId)?.setOnLongClickListener { true }
             }
         }
     }
 
-    private fun initViewBinding() {
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
-
-    private fun initPermissions() {
+    private fun initialize() {
         permissionsHelper = Permissions(activity = this)
+        handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
     }
 
-    private suspend fun initializeApplication() {
-        val settings: SettingsEntity = getOrCreateDefaultSettings()
-        val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-
-        handleAppVersioning(sharedPreferences = sharedPreferences)
-        applyTheme(themeId = settings.theme)
-        handleNotifications(sharedPreferences = sharedPreferences)
-        updateLastCostPeriod(costsRepository = costsRepository)
+    private fun observeState() {
+        lifecycleScope.launch {
+            viewModel.uiState.collect { state ->
+                state.settings?.let { settings ->
+                    applyTheme(themeId = settings.theme)
+                }
+            }
+        }
     }
 
     private fun initPager() {
-        val fragments = listOf(
-            { HomeFragment() },
-            { GraphFragment() },
-            { ProgressFragment() },
-            { SettingsFragment() }
-        )
-
-        val navigationIds = listOf(
-            R.id.navigation_home,
-            R.id.navigation_graph,
-            R.id.navigation_more,
-            R.id.navigation_settings
-        )
-
         binding.mainViewPager.adapter = Pager(
-            fragmentActivity = this,
-            fragmentCreator = fragments
+            this,
+            listOf(::HomeFragment, ::GraphFragment, ::ProgressFragment, ::SettingsFragment)
         )
 
-        binding.mainViewPager.registerOnPageChangeCallback(
-            object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    if (position in 0 until binding.navView.menu.size) {
-                        binding.navView.menu[position].isChecked = true
-                    }
-                }
+        binding.mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.navView.menu[position].isChecked = true
             }
-        )
+        })
 
-        binding.navView.setOnItemSelectedListener { item ->
-            val index: Int = navigationIds.indexOf(item.itemId)
-            if (index >= 0) {
-                binding.mainViewPager.setCurrentItem(index, false)
-            }
+        binding.navView.setOnItemSelectedListener {
+            binding.mainViewPager.setCurrentItem(binding.navView.menu.children.indexOf(it), false)
             true
         }
     }
 
-    private suspend fun getOrCreateDefaultSettings(): SettingsEntity {
-        val defaultSettings = settingsRepository.get() ?: SettingsEntity(
-            id = 1,
-            theme = 0,
-            language = getDefaultLanguageIndex(),
-            frequency = 0,
-            currency = "€",
-            customCurrency = ""
-        ).also {
-            settingsRepository.insert(settings = it)
-        }
-
-        notificationsSettingsRepository.get() ?: NotificationsSettingsEntity(
-            id = 1,
-            system = true,
-            achievements = true,
-            progress = true
-        ).also {
-            notificationsSettingsRepository.insert(settings = it)
-        }
-        return defaultSettings
-    }
-
-    private suspend fun handleAppVersioning(
-        sharedPreferences: SharedPreferences
-    ) {
-        val versionName: String? = packageManager.getPackageInfo(packageName, 0).versionName
-        val lastVersionName: String? = sharedPreferences.getString("last_version_name", null)
-
-        if (versionName != lastVersionName) {
-            JsonHelper(achievementRepository = achievementRepository).initializeAchievementsIfNeeded(context = this)
-
-            sharedPreferences.edit {
-                putString("last_version_name", versionName)
-            }
-            recreate()
-        }
-    }
-
-    suspend fun updateLastCostPeriod(costsRepository: CostsRepository) {
-        val lastEntry = costsRepository.getLast() ?: return
-        val today = LocalDate.now()
-        val lastEndDate = lastEntry.endDate.toLocalDate()
-        if (lastEndDate.isEqual(today.minusDays(1))) {
-            costsRepository.update(
-                entry = lastEntry.copy(
-                    endDate = today.atTime(LocalTime.MAX)
-                )
-            )
-        }
-    }
-
     private fun handleNotifications(sharedPreferences: SharedPreferences) {
-        val isFirstRun: Boolean = sharedPreferences.getBoolean("first_run", true)
-
-        if (isFirstRun) {
-            permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
-                if (isGranted) {
-                    Notifications.createNotificationChannel(context = this)
-                    scheduleNotificationWorker()
+        when {
+            sharedPreferences.getBoolean("first_run", true) ->
+                permissionsHelper.checkAndRequestNotificationPermission {
+                    if (it) {
+                        Notifications.createNotificationChannel(this)
+                        scheduleNotificationWorker()
+                    }
                 }
+
+            permissionsHelper.isNotificationPermissionGranted() -> {
+                Notifications.createNotificationChannel(context = this)
+                scheduleNotificationWorker()
             }
-            sharedPreferences.edit {
-                putBoolean("first_run", false)
-            }
-        } else if (permissionsHelper.isNotificationPermissionGranted()) {
-            Notifications.createNotificationChannel(context = this)
-            scheduleNotificationWorker()
+        }
+
+        sharedPreferences.edit {
+            putBoolean("first_run", false)
         }
     }
 
@@ -245,26 +158,12 @@ class MainActivity : AppCompatActivity() {
             )
     }
 
-    private fun applyTheme(themeId: Int) {
+    private fun applyTheme( themeId: Int ) {
         when (themeId) {
             0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            2 -> AppCompatDelegate.setDefaultNightMode( AppCompatDelegate.MODE_NIGHT_YES)
             else -> Unit
-        }
-    }
-
-    private fun getDefaultLanguageIndex(): Int {
-        return when (Locale.getDefault().language) {
-            "en" -> 1
-            "sl" -> 2
-            "uk" -> 3
-            "de" -> 4
-            "fr" -> 5
-            "sr" -> 6
-            "sr-Latn" -> 7
-            "zh-Hans" -> 8
-            else -> 0
         }
     }
 }

@@ -230,7 +230,7 @@
 
     <string name="restore_popup">Restore your data</string>
     <string name="restore_popup_info">You will be notified of the data restore via push notification</string>
-    <string name="restore_popup_file">File %1$s</string>
+    <string name="restore_popup_file">File: %1$s</string>
     <string name="restore_popup_file_none">None</string>
     <string name="restore_popup_file_unknown">Unknown</string>
 
