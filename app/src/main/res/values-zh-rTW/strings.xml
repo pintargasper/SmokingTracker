@@ -210,4 +210,82 @@
     <string name="day_wednesday">星期三</string>
     <string name="day_thursday">星期四</string>
     <string name="day_friday">星期五</string>
+    <string name="day_saturday">星期六</string>
+    <string name="day_sunday">星期天</string>
+    <string name="month_january">一月</string>
+    <string name="month_february">二月</string>
+    <string name="month_march">三月</string>
+    <string name="month_april">四月</string>
+    <string name="month_may">五月</string>
+    <string name="month_june">六月</string>
+    <string name="month_july">七月</string>
+    <string name="month_august">八月</string>
+    <string name="month_september">九月</string>
+    <string name="month_october">十月</string>
+    <string name="month_november">十一月</string>
+    <string name="month_december">十二月</string>
+    <string name="notification_title">進度提醒</string>
+    <string name="notification_content">距離您上一支香菸已過去 %1$s</string>
+    <string name="notification_download_title">備份完成</string>
+    <string name="notification_download_content">已成功建立備份於檔案 %1$s</string>
+    <string name="notification_upload_title">還原完成</string>
+    <string name="notification_upload_content">資料已成功還原</string>
+    <string name="notification_upload_failed_title">資料還原失敗</string>
+    <string name="notification_upload_failed_content">載入檔案時發生錯誤</string>
+    <string name="notification_achievement_unlocked_title">恭喜！</string>
+    <string name="notification_achievement_unlocked_content_time">達成里程碑：已戒菸 %1$s</string>
+    <string name="notification_achievement_unlocked_content_cigarettes">您已少抽了 %1$s</string>
+    <string name="statistics_title">統計資料</string>
+    <string name="statistics_basic">基礎統計</string>
+    <string name="statistics_forecast">預測</string>
+    <string name="statistics_title_cigarettes_section">概覽</string>
+    <string name="statistics_title_money_section_instructions">請在設定中設定香菸價格以查看財務影響</string>
+    <string name="statistics_max_cigarettes">單日最高吸菸量</string>
+    <string name="statistics_min_cigarettes">單日最低吸菸量</string>
+    <string name="statistics_avg_cigarettes">每日平均吸菸量</string>
+    <string name="statistics_total_cigarettes">吸菸總數量</string>
+    <string name="statistics_first_entry">自首次紀錄以來</string>
+    <string name="statistics_longest_streak">最長戒菸時間</string>
+    <string name="statistics_title_money_section">財務影響</string>
+    <string name="statistics_total_spent">總支出</string>
+    <string name="statistics_total_spent_today">今日總支出</string>
+    <string name="statistics_total_spent_month">本月總支出</string>
+    <string name="statistics_most_expensive">花費最高的一天</string>
+    <string name="statistics_logged">已紀錄：%1$s</string>
+    <string name="statistics_forecast_info">資料越豐富，預測結果越精準</string>
+    <string name="loading_bar_backup">正在備份…</string>
+    <string name="loading_bar_restore">正在還原…</string>
+    <string name="loading_bar_progress_percentage">進度：%1$d%%</string>
+    <string name="loading_bar_encourage_0">正在啟動…</string>
+    <string name="loading_bar_encourage_15">進展順利…</string>
+    <string name="loading_bar_encourage_50">已完成一半…</string>
+    <string name="loading_bar_encourage_70">即將完成…</string>
+    <string name="loading_bar_encourage_100">已順利完成</string>
+    <string name="widget_stats">統計資料</string>
+    <string name="widget_stats_quick_add">統計與快速新增</string>
+    <string name="widget_quick_add">快速新增</string>
+    <plurals name="time_years">
+        <item quantity="other">%d 年</item>
+    </plurals>
+    <plurals name="time_months">
+        <item quantity="other">%d 個月</item>
+    </plurals>
+    <plurals name="time_weeks">
+        <item quantity="other">%d 週</item>
+    </plurals>
+    <plurals name="time_days">
+        <item quantity="other">%d 天</item>
+    </plurals>
+    <plurals name="time_hours">
+        <item quantity="other">%d 小時</item>
+    </plurals>
+    <plurals name="time_minutes">
+        <item quantity="other">%d 分</item>
+    </plurals>
+    <plurals name="cigarettes_count">
+        <item quantity="other">%d 支香菸</item>
+    </plurals>
+    <plurals name="achievement_achieved_times">
+        <item quantity="other">%d 次</item>
+    </plurals>
 </resources>
