@@ -15,7 +15,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.databinding.ActivityNotesBinding
-import com.gasperpintar.smokingtracker.model.NoteEntry
+import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.NoteFragment

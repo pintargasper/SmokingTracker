@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker.adapter
 
-import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before

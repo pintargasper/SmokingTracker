@@ -17,7 +17,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
-import com.gasperpintar.smokingtracker.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementIcon

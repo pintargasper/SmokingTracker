@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.model
+package com.gasperpintar.smokingtracker.database.model
 
 import android.content.Context
 import com.gasperpintar.smokingtracker.R

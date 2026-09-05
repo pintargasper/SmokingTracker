@@ -1,9 +1,9 @@
 package com.gasperpintar.smokingtracker.repository
 
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
-import com.gasperpintar.smokingtracker.model.CigarettesPerDay
+import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import java.time.LocalDateTime
 
 class HistoryRepository(

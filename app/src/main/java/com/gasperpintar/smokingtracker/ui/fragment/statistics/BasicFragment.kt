@@ -13,7 +13,7 @@ import com.gasperpintar.smokingtracker.StatisticsActivity
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsBasicBinding
-import com.gasperpintar.smokingtracker.model.CigarettesPerDay
+import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository

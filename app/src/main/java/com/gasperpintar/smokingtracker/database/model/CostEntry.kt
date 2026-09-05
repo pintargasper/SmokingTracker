@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.model
+package com.gasperpintar.smokingtracker.database.model
 
 import com.gasperpintar.smokingtracker._interface.Identifiable
 import com.gasperpintar.smokingtracker.database.entity.CostEntity

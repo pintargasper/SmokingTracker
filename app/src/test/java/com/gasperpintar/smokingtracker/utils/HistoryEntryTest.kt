@@ -1,7 +1,7 @@
 package com.gasperpintar.smokingtracker.utils
 
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.LocalDateTime

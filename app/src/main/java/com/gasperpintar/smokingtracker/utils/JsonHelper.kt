@@ -3,8 +3,8 @@ package com.gasperpintar.smokingtracker.utils
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.model.AchievementEntry
-import com.gasperpintar.smokingtracker.model.AchievementJsonEntry
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.model.AchievementJsonEntry
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementIcon
