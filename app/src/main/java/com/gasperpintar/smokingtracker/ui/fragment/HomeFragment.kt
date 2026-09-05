@@ -11,10 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.adapter.Adapter
 import com.gasperpintar.smokingtracker.database.AppDatabase
+import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
@@ -56,7 +56,7 @@ class HomeFragment : Fragment() {
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        database = (requireActivity() as MainActivity).database
+        database = Provider.getDatabase(context = requireContext())
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
 

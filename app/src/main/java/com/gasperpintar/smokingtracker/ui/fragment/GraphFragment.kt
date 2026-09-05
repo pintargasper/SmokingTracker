@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
-import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
+import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
+import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -37,7 +37,7 @@ class GraphFragment : Fragment() {
     ): View {
         _binding = FragmentGraphBinding.inflate(inflater, container, false)
 
-        database = (requireActivity() as MainActivity).database
+        database = Provider.getDatabase(context = requireContext())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
 
         selectedDate = LocalDate.now()

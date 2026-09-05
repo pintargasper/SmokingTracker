@@ -18,4 +18,17 @@ data class SettingsEntity(
 
     @ColumnInfo(defaultValue = "")
     val customCurrency: String
-)
+) {
+    companion object {
+        fun default(language: Int): SettingsEntity {
+            return SettingsEntity(
+                id = 1,
+                theme = 0,
+                language = language,
+                frequency = 0,
+                currency = "€",
+                customCurrency = ""
+            )
+        }
+    }
+}
