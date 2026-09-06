@@ -2,7 +2,7 @@
 -keep @androidx.room.Dao interface * { *; }
 -keep @androidx.room.Database class * { *; }
 
--keep class com.gasperpintar.smokingtracker.model.** { *; }
+-keep class com.gasperpintar.smokingtracker.database.model.** { *; }
 
 -keepclassmembers enum com.gasperpintar.smokingtracker.type.** { *; }
 -keep class com.gasperpintar.smokingtracker.type.** { *; }
