@@ -37,7 +37,10 @@ class MainViewModel(
         notificationsSettingsRepository.get() ?: NotificationsSettingsEntity.default().also {
             notificationsSettingsRepository.insert(settings = it)
         }
-        return settingsRepository.get() ?: SettingsEntity.default(language = getLanguageIndex(context = context))
+
+        return settingsRepository.get() ?: SettingsEntity.default(language = getLanguageIndex(context = context)).also {
+            settingsRepository.insert(settings = it)
+        }
     }
 
     private suspend fun handleAppVersioning(context: Context) {

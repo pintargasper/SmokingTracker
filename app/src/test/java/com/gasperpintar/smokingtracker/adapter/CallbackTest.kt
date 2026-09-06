@@ -1,47 +1,48 @@
 package com.gasperpintar.smokingtracker.adapter
 
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.ui.adapter.Callback
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.time.LocalDateTime
 
-class DiffCallbackTest {
+class CallbackTest {
 
-    private lateinit var diffCallback: DiffCallback<HistoryEntry>
+    private lateinit var callback: Callback<HistoryEntry>
 
     @Before
     fun setup() {
-        diffCallback = DiffCallback()
+        callback = Callback()
     }
 
     @Test
     fun areItemsTheSameReturnsTrueWhenIdsAreEqual() {
         val oldItem = createHistoryEntry(id = 1, timerLabel = "00:00:00")
         val newItem = createHistoryEntry(id = 1, timerLabel = "01:00:00")
-        assertTrue(diffCallback.areItemsTheSame(oldItem, newItem))
+        assertTrue(callback.areItemsTheSame(oldItem, newItem))
     }
 
     @Test
     fun areItemsTheSameReturnsFalseWhenIdsAreDifferent() {
         val oldItem = createHistoryEntry(id = 1, timerLabel = "00:00:00")
         val newItem = createHistoryEntry(id = 2, timerLabel = "00:00:00")
-        assertFalse(diffCallback.areItemsTheSame(oldItem, newItem))
+        assertFalse(callback.areItemsTheSame(oldItem, newItem))
     }
 
     @Test
     fun areContentsTheSameReturnsTrueWhenObjectsAreEqual() {
         val oldItem = createHistoryEntry(id = 1, timerLabel = "00:00:00")
         val newItem = createHistoryEntry(id = 1, timerLabel = "00:00:00")
-        assertTrue(diffCallback.areContentsTheSame(oldItem, newItem))
+        assertTrue(callback.areContentsTheSame(oldItem, newItem))
     }
 
     @Test
     fun areContentsTheSameReturnsFalseWhenObjectsDiffer() {
         val oldItem = createHistoryEntry(id = 1, timerLabel = "00:00:00")
         val newItem = createHistoryEntry(id = 1, timerLabel = "01:00:00")
-        assertFalse(diffCallback.areContentsTheSame(oldItem, newItem))
+        assertFalse(callback.areContentsTheSame(oldItem, newItem))
     }
 
     private fun createHistoryEntry(

@@ -3,7 +3,6 @@ package com.gasperpintar.smokingtracker.adapter
 import android.view.View
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
@@ -11,6 +10,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Rule
@@ -32,7 +32,7 @@ class HistoryAdapterTest {
 
         activityScenarioRule.scenario.onActivity { activity ->
 
-            val adapter = Adapter(
+            val adapter = Adapter<HistoryEntry>(
                 layoutId = R.layout.history_container,
                 onBind = { itemView, historyEntry ->
                     val timerLabel: TextView = itemView.findViewById(R.id.timer_label)
@@ -54,10 +54,6 @@ class HistoryAdapterTest {
                     deleteButton.setOnClickListener {
                         clickedDeleteEntry.set(historyEntry)
                     }
-                },
-                diffCallback = object : DiffUtil.ItemCallback<HistoryEntry>() {
-                    override fun areItemsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem.id == newItem.id
-                    override fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem == newItem
                 }
             )
 

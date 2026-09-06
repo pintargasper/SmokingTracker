@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.adapter
+package com.gasperpintar.smokingtracker.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -9,10 +9,12 @@ class Pager(
     private val fragmentCreator: List<() -> Fragment>
 ) : FragmentStateAdapter(fragmentActivity) {
 
+    @Override
     override fun getItemCount(): Int {
         return fragmentCreator.size
     }
 
+    @Override
     override fun createFragment(
         position: Int
     ): Fragment {

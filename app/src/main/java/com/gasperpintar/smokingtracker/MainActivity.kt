@@ -16,7 +16,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gasperpintar.smokingtracker.adapter.Pager
+import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
@@ -92,11 +92,10 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
         handleNotifications(sharedPreferences = sharedPreferences)
-
-        initPager()
+        setupPager()
     }
 
-    private fun initPager() {
+    private fun setupPager() {
         binding.mainViewPager.adapter = Pager(
             this,
             listOf(::HomeFragment, ::GraphFragment, ::ProgressFragment, ::SettingsFragment)

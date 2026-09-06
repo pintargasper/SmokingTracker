@@ -22,7 +22,7 @@ data class SettingsEntity(
     companion object {
         fun default(language: Int): SettingsEntity {
             return SettingsEntity(
-                id = 1,
+                id = 0L,
                 theme = 0,
                 language = language,
                 frequency = 0,

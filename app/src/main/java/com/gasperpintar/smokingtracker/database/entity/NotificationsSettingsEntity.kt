@@ -15,7 +15,7 @@ data class NotificationsSettingsEntity(
     companion object {
         fun default(): NotificationsSettingsEntity {
             return NotificationsSettingsEntity(
-                id = 1,
+                id = 0L,
                 system = true,
                 achievements = true,
                 progress = true
