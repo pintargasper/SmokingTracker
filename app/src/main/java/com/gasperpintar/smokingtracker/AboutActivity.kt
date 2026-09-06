@@ -2,13 +2,9 @@ package com.gasperpintar.smokingtracker
 
 import android.content.Context
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.PackageInfoCompat
-import com.gasperpintar.smokingtracker.database.AppDatabase
-import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityAboutBinding
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.WebHelper
 
@@ -16,71 +12,65 @@ class AboutActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAboutBinding
 
-    lateinit var database: AppDatabase
-    private lateinit var settingsRepository: SettingsRepository
-
+    @Override
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
         super.onCreate(savedInstanceState)
         binding = ActivityAboutBinding.inflate(layoutInflater)
+
+        initialize()
+
         setContentView(binding.root)
-
-        binding.buttonBack.setOnClickListener {
-            finish()
-        }
-
-        setup()
     }
 
+    @Override
     override fun attachBaseContext(
         context: Context
     ) {
-        database = Provider.getDatabase(context = context.applicationContext)
-        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-
         super.attachBaseContext(
             LocalizationHelper.getLocalizedContext(
                 context = context,
-                settingsRepository = settingsRepository
+                settingsRepository = (context.applicationContext as Application).container.settingsRepository
             )
         )
     }
 
-    private fun setup() {
+    private fun initialize() = with(receiver = binding) {
+        buttonBack.setOnClickListener {
+            finish()
+        }
 
         val packageInfo = packageManager.getPackageInfo(packageName, 0)
         val versionName = packageInfo.versionName ?: getString(R.string.about_version_unknown)
         val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo)
 
-        binding.appVersion.text = getString(
+        appVersion.text = getString(
             R.string.about_version,
             versionName,
             versionCode
         )
+        createdBy.text = getString(R.string.about_created_by, "Gašper Pintar")
 
         setupLinks()
-
-        binding.createdBy.text = getString(R.string.about_created_by, "Gašper Pintar")
     }
 
-    private fun setupLinks() {
-        setupLink(binding.githubLayout, "https://github.com/pintargasper/SmokingTracker")
-        setupLink(binding.fDroidLayout, "https://f-droid.org/packages/com.gasperpintar.smokingtracker")
-        setupLink(binding.izzyOnDroidLayout, "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker")
-        setupLink(binding.openApkLayout, "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/")
-
-        setupLink(binding.contributor1Layout, "https://github.com/pintargasper")
-        setupLink(binding.contributor2Layout, "https://github.com/mrtaxi")
-        setupLink(binding.contributor3Layout, "https://github.com/jocixlinux-sys")
-        setupLink(binding.contributor4Layout, "https://github.com/iaanneed")
-        setupLink(binding.contributor5Layout, "https://github.com/ywnzzl")
-        setupLink(binding.contributor6Layout, "https://github.com/acidefluorhydrique")
-    }
-
-    private fun setupLink(view: View, url: String) {
-        view.setOnClickListener {
-            WebHelper.openUrl(this, url)
+    private fun setupLinks() = with(receiver = binding) {
+        mapOf(
+            githubLayout to "https://github.com/pintargasper/SmokingTracker",
+            fDroidLayout to "https://f-droid.org/packages/com.gasperpintar.smokingtracker",
+            izzyOnDroidLayout to "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker",
+            openApkLayout to "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/",
+            contributor1Layout to "https://github.com/pintargasper",
+            contributor2Layout to "https://github.com/mrtaxi",
+            contributor3Layout to "https://github.com/jocixlinux-sys",
+            contributor4Layout to "https://github.com/iaanneed",
+            contributor5Layout to "https://github.com/ywnzzl",
+            contributor6Layout to "https://github.com/acidefluorhydrique"
+        ).forEach { (view, url) ->
+            view.setOnClickListener {
+                WebHelper.openUrl(context = this@AboutActivity, url)
+            }
         }
     }
 }
