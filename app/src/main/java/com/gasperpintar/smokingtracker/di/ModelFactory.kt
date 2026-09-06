@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gasperpintar.smokingtracker.Application
+import com.gasperpintar.smokingtracker.database.viewmodel.AchievementViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.CalculatorViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.GraphViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
@@ -55,6 +56,12 @@ class ModelFactory(
             modelClass.isAssignableFrom(CalculatorViewModel::class.java) -> {
                 CalculatorViewModel(
                     settingsRepository = container.settingsRepository,
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(AchievementViewModel::class.java) -> {
+                AchievementViewModel(
+                    achievementRepository = container.achievementRepository
                 ) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

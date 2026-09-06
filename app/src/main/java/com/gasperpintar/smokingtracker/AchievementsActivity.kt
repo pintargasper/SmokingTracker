@@ -3,7 +3,6 @@ package com.gasperpintar.smokingtracker
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.databinding.ActivityAchievementsBinding
 import com.gasperpintar.smokingtracker.type.AchievementCategory
@@ -43,7 +42,6 @@ class AchievementsActivity : AppCompatActivity() {
         binding.buttonBack.setOnClickListener {
             finish()
         }
-
         setupPager()
     }
 
@@ -51,17 +49,10 @@ class AchievementsActivity : AppCompatActivity() {
         achievementsViewPager.adapter = Pager(
             this@AchievementsActivity,
             listOf(
-                { AchievementsFragment.newInstance(AchievementCategory.SMOKE_FREE_TIME) },
-                { AchievementsFragment.newInstance(AchievementCategory.CIGARETTES_AVOIDED) }
+                { createAchievementsFragment(AchievementCategory.SMOKE_FREE_TIME) },
+                { createAchievementsFragment(AchievementCategory.CIGARETTES_AVOIDED) }
             )
         )
-
-        achievementsViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            @Override
-            override fun onPageSelected(position: Int) {
-                achievementsTabLayout.getTabAt(position)?.select()
-            }
-        })
 
         TabLayoutMediator(achievementsTabLayout, achievementsViewPager) { tab, position ->
             tab.text = getString(
@@ -72,5 +63,13 @@ class AchievementsActivity : AppCompatActivity() {
                 }
             )
         }.attach()
+    }
+
+    private fun createAchievementsFragment(
+        achievementType: AchievementCategory
+    ) = AchievementsFragment().apply {
+        arguments = Bundle().apply {
+            putString("achievement_type", achievementType.name)
+        }
     }
 }

@@ -9,14 +9,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.AppDatabase
-import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.viewmodel.AchievementViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
@@ -26,41 +27,29 @@ import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class AchievementsFragment : Fragment() {
+class AchievementsFragment: Fragment() {
 
     private var _binding: FragmentAchievementsBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: AppDatabase
-    private lateinit var achievementRepository: AchievementRepository
-    private lateinit var adapter: Adapter<AchievementEntry>
+    private val viewModel: AchievementViewModel by viewModels {
+        ModelFactory(
+            container = (requireActivity().application as Application).container
+        )
+    }
+
     private lateinit var achievementType: AchievementCategory
+    private lateinit var adapter: Adapter<AchievementEntry>
 
-    companion object {
-
-        private const val ARG_ACHIEVEMENT_TYPE = "achievement_type"
-        fun newInstance(type: AchievementCategory): AchievementsFragment {
-            return AchievementsFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_ACHIEVEMENT_TYPE, type.ordinal)
-                }
-            }
-        }
-    }
-
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
+    @Override
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        database = Provider.getDatabase(context = requireContext().applicationContext)
-        achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
-        val typeOrdinal = arguments?.getInt(ARG_ACHIEVEMENT_TYPE)
-        achievementType = typeOrdinal?.let {
-            AchievementCategory.entries[it]
-        } ?: AchievementCategory.SMOKE_FREE_TIME
+        achievementType = AchievementCategory.valueOf(
+            requireArguments().getString("achievement_type")!!
+        )
     }
 
+    @Override
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -68,35 +57,23 @@ class AchievementsFragment : Fragment() {
     ): View {
         _binding = FragmentAchievementsBinding.inflate(inflater, container, false)
 
-        setupRecyclerView()
+        initialize()
 
-        lifecycleScope.launch {
-            val achievements = achievementRepository.getAll().map {
-                AchievementEntry(
-                    id = it.id,
-                    image = it.image,
-                    value = it.value,
-                    title = it.title,
-                    message = it.message,
-                    times = it.times,
-                    lastAchieved = it.lastAchieved,
-                    reset = it.reset,
-                    notify = it.notify,
-                    category = it.category,
-                    unit = it.unit
-                )
-            }.filter { it.category == achievementType }
-            loadAchievements(achievementEntries = achievements)
-        }
         return binding.root
     }
 
+    @Override
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-    private fun setupRecyclerView() {
+    private fun initialize() {
+        setupAdapter()
+        loadAchievements()
+    }
+
+    private fun setupAdapter() = with(receiver = binding) {
         adapter = Adapter(
             layoutId = R.layout.achievements_container,
             onBind = { itemView, achievementEntry ->
@@ -109,14 +86,9 @@ class AchievementsFragment : Fragment() {
                 textAchievementTitle.text = getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
                 textAchievementMessage.text = getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)
 
-                textLastAchieved.text = achievementEntry.lastAchieved
-                    ?.toLocalDate()
-                    ?.let { localDate: LocalDate ->
-                        getString(
-                            R.string.achievement_last,
-                            LocalizationHelper.formatDate(date = localDate)
-                        )
-                    } ?: getString(R.string.achievement_last, "/")
+                textLastAchieved.text = achievementEntry.lastAchieved?.toLocalDate()?.let { localDate: LocalDate ->
+                    getString(R.string.achievement_last, LocalizationHelper.formatDate(date = localDate))
+                } ?: getString(R.string.achievement_last, "/")
 
                 val achievedTimesText: String = requireContext().resources.getQuantityString(
                     R.plurals.achievement_achieved_times,
@@ -129,31 +101,30 @@ class AchievementsFragment : Fragment() {
                     achievedTimesText
                 )
 
-                imageAchievement.setImageResource(
-                    AchievementIcon.valueOf(achievementEntry.image).drawableResource
-                )
-                if (achievementEntry.times == 0L) {
-                    imageAchievement.colorFilter = ColorMatrixColorFilter(
-                        ColorMatrix().apply {
-                            setSaturation(0f)
-                        }
-                    )
-                    imageAchievement.alpha = 0.4f
-                } else {
-                    imageAchievement.clearColorFilter()
-                    imageAchievement.alpha = 1f
+                imageAchievement.setImageResource(AchievementIcon.valueOf(achievementEntry.image).drawableResource)
+                when (achievementEntry.times) {
+                    0L -> {
+                        imageAchievement.colorFilter = ColorMatrixColorFilter(
+                        ColorMatrix().apply { setSaturation(0f) })
+                        imageAchievement.alpha = 0.4f
+                    }
+                    else -> {
+                        imageAchievement.clearColorFilter()
+                        imageAchievement.alpha = 1f
+                    }
                 }
             }
         )
-        binding.recyclerviewAchievements.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerviewAchievements.adapter = adapter
+        recyclerviewAchievements.layoutManager = LinearLayoutManager(requireContext())
+        recyclerviewAchievements.adapter = adapter
     }
 
-    private fun loadAchievements(
-        achievementEntries: List<AchievementEntry>
-    ) {
-        adapter.submitList(achievementEntries) {
-            binding.recyclerviewAchievements.scrollToPosition(0)
+    private fun loadAchievements() = with(receiver = binding) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val state = viewModel.getAchievements(category = achievementType)
+            adapter.submitList(state.achievements) {
+                recyclerviewAchievements.scrollToPosition(0)
+            }
         }
     }
 }

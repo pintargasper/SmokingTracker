@@ -21,9 +21,7 @@ data class AchievementEntry(
     val category: AchievementCategory,
     val unit: AchievementUnit
 ): Identifiable {
-
     companion object {
-
         fun fromEntity(
             entity: AchievementEntity
         ): AchievementEntry {
@@ -62,43 +60,18 @@ data class AchievementEntry(
     fun getDisplayText(
         context: Context
     ): String {
-        return when (unit) {
-            AchievementUnit.HOURS ->
-                context.resources.getQuantityString(
-                    R.plurals.time_hours,
-                    value,
-                    value
-                )
-            AchievementUnit.DAYS ->
-                context.resources.getQuantityString(
-                    R.plurals.time_days,
-                    value,
-                    value
-                )
-            AchievementUnit.WEEKS ->
-                context.resources.getQuantityString(
-                    R.plurals.time_weeks,
-                    value,
-                    value
-                )
-            AchievementUnit.MONTHS ->
-                context.resources.getQuantityString(
-                    R.plurals.time_months,
-                    value,
-                    value
-                )
-            AchievementUnit.YEARS ->
-                context.resources.getQuantityString(
-                    R.plurals.time_years,
-                    value,
-                    value
-                )
-            AchievementUnit.CIGARETTES ->
-                context.resources.getQuantityString(
-                    R.plurals.cigarettes_count,
-                    value,
-                    value
-                )
+        val resource = when (unit) {
+            AchievementUnit.HOURS -> R.plurals.time_hours
+            AchievementUnit.DAYS -> R.plurals.time_days
+            AchievementUnit.WEEKS -> R.plurals.time_weeks
+            AchievementUnit.MONTHS -> R.plurals.time_months
+            AchievementUnit.YEARS -> R.plurals.time_years
+            AchievementUnit.CIGARETTES -> R.plurals.cigarettes_count
         }
+        return context.resources.getQuantityString(
+            resource,
+            value,
+            value
+        )
     }
 }
