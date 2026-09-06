@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gasperpintar.smokingtracker.Application
+import com.gasperpintar.smokingtracker.database.viewmodel.CalculatorViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.GraphViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
@@ -48,6 +49,12 @@ class ModelFactory(
                     notesRepository = container.notesRepository,
                     notificationsSettingsRepository = container.notificationsSettingsRepository,
                     settingsRepository = container.settingsRepository
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(CalculatorViewModel::class.java) -> {
+                CalculatorViewModel(
+                    settingsRepository = container.settingsRepository,
                 ) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

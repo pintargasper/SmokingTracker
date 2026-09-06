@@ -36,20 +36,20 @@ class ProgressFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() {
-        binding.statisticsLayout.setOnClickListener {
+    private fun initialize() = with(receiver = binding) {
+        statisticsLayout.setOnClickListener {
             startActivity(Intent(requireContext(), StatisticsActivity::class.java))
         }
 
-        binding.calculatorLayout.setOnClickListener {
+        calculatorLayout.setOnClickListener {
             startActivity(Intent(requireContext(), CalculatorActivity::class.java))
         }
 
-        binding.achievementsLayout.setOnClickListener {
+        achievementsLayout.setOnClickListener {
             startActivity(Intent(requireContext(), AchievementsActivity::class.java))
         }
 
-        binding.notesLayout.setOnClickListener {
+        notesLayout.setOnClickListener {
             startActivity(Intent(requireContext(), NotesActivity::class.java))
         }
     }

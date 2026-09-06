@@ -76,8 +76,8 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() {
-        binding.buttonAddEntry.setOnClickListener {
+    private fun initialize() = with(receiver = binding) {
+        buttonAddEntry.setOnClickListener {
             DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
                 viewLifecycleOwner.lifecycleScope.launch {
                     viewModel.insert(isLent = isLent)
@@ -86,12 +86,12 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.previousDay.setOnClickListener {
+        previousDay.setOnClickListener {
             viewModel.previousDay()
             loadHistory()
         }
 
-        binding.nextDay.setOnClickListener {
+        nextDay.setOnClickListener {
             viewModel.nextDay()
             loadHistory()
         }
@@ -99,7 +99,7 @@ class HomeFragment : Fragment() {
         loadHistory()
     }
 
-    private fun setupAdapter() {
+    private fun setupAdapter() = with(receiver = binding) {
         historyAdapter = Adapter(
             layoutId = R.layout.history_container,
             onBind = { itemView, historyEntry ->
@@ -130,28 +130,28 @@ class HomeFragment : Fragment() {
                 }
             }
         )
-        binding.recyclerviewHistory.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerviewHistory.adapter = historyAdapter
+        recyclerviewHistory.layoutManager = LinearLayoutManager(requireContext())
+        recyclerviewHistory.adapter = historyAdapter
     }
 
-    private fun loadHistory() {
+    private fun loadHistory() = with(receiver = binding) {
         viewLifecycleOwner.lifecycleScope.launch {
             val state = viewModel.getHistory()
             lastEntry = state.lastEntry
 
-            binding.currentDay.text = LocalizationHelper.getDayOfWeekName(
+            currentDay.text = LocalizationHelper.getDayOfWeekName(
                 context = requireContext(),
                 dayOfWeek = state.selectedDate.dayOfWeek
             )
-            binding.currentDate.text = LocalizationHelper.formatDate(date = state.selectedDate)
-            binding.dailyValue.text = state.dailyCount.toString()
-            binding.weeklyValue.text = state.weeklyCount.toString()
-            binding.monthlyValue.text = state.monthlyCount.toString()
+            currentDate.text = LocalizationHelper.formatDate(date = state.selectedDate)
+            dailyValue.text = state.dailyCount.toString()
+            weeklyValue.text = state.weeklyCount.toString()
+            monthlyValue.text = state.monthlyCount.toString()
 
             updateTimerLabel(entry = lastEntry)
 
             historyAdapter.submitList(state.history) {
-                binding.recyclerviewHistory.scrollToPosition(0)
+                recyclerviewHistory.scrollToPosition(0)
             }
             WidgetHelper.updateAllWidgets(context = requireContext())
         }
@@ -174,10 +174,10 @@ class HomeFragment : Fragment() {
 
     private fun updateTimerLabel(
         entry: HistoryEntity?
-    ) {
+    ) = with(receiver = binding) {
         val duration = entry?.createdAt?.let { createdAt ->
             Duration.between(createdAt, LocalDateTime.now())
         }
-        binding.timerLabel.text = TimeHelper.formatDuration(resources = resources, duration = duration)
+        timerLabel.text = TimeHelper.formatDuration(resources = resources, duration = duration)
     }
 }

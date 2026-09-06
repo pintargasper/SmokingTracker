@@ -68,7 +68,7 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() {
+    private fun initialize() = with(receiver = binding) {
         viewLifecycleOwner.lifecycleScope.launch {
             setupSettings()
         }
@@ -76,44 +76,44 @@ class SettingsFragment : Fragment() {
         setupDataManagement()
         setupLaunchers()
 
-        binding.aboutLayout.setOnClickListener {
+        aboutLayout.setOnClickListener {
             startActivity(Intent(requireContext(), AboutActivity::class.java))
         }
     }
 
-    private suspend fun setupSettings() {
+    private suspend fun setupSettings() = with(receiver = binding) {
         val state = viewModel.getSettings()
         updateUi(state = state)
 
-        binding.themeLayout.setOnClickListener {
+        themeLayout.setOnClickListener {
             DialogManager.showThemeDialog(
                 context = requireActivity(),
                 selectedTheme = state.settings.theme,
                 onThemeSelected = { theme ->
                     lifecycleScope.launch {
-                        viewModel.updateSettings { it.copy(theme = theme) }
+                        state.settings = state.settings.copy(theme = theme)
+                        viewModel.updateSettings(state.settings)
                         requireActivity().recreate()
-                        setupSettings()
                     }
                 }
             )
         }
 
-        binding.languageLayout.setOnClickListener {
+        languageLayout.setOnClickListener {
             DialogManager.showLanguageDialog(
                 context = requireActivity(),
                 selectedLanguage = state.settings.language,
                 onLanguageSelected = { language ->
                     lifecycleScope.launch {
-                        viewModel.updateSettings { it.copy(language = language) }
+                        state.settings = state.settings.copy(language = language)
+                        viewModel.updateSettings(state.settings)
                         requireActivity().recreate()
-                        setupSettings()
                     }
                 }
             )
         }
 
-        binding.notificationsLayout.setOnClickListener {
+        notificationsLayout.setOnClickListener {
             if (!NotificationManagerCompat.from(requireContext()).areNotificationsEnabled()) {
                 startActivity(Intent("android.settings.APP_NOTIFICATION_SETTINGS").apply {
                     putExtra("android.provider.extra.APP_PACKAGE", requireContext().packageName)
@@ -127,35 +127,35 @@ class SettingsFragment : Fragment() {
                 notificationsSettings = state.notificationsSettings,
                 onSettingsSelected = { updatedSettings ->
                     viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.updateSettings { updatedSettings }
-                        setupSettings()
+                        state.settings = updatedSettings
+                        viewModel.updateSettings(updatedSettings)
                     }
                 },
                 onNotificationSettingsSelected = { updatedNotificationSettings ->
                     viewLifecycleOwner.lifecycleScope.launch {
+                        state.notificationsSettings = updatedNotificationSettings
                         viewModel.updateNotificationSettings(updatedNotificationSettings)
-                        setupSettings()
                     }
                 }
             )
         }
 
-        binding.currencyLayout.setOnClickListener {
+        currencyLayout.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 DialogManager.showCurrencyDialog(
                     context = requireActivity(),
                     settings = state.settings,
                     onCurrencySelected = { currency, custom ->
                         viewLifecycleOwner.lifecycleScope.launch {
-                            viewModel.updateSettings { it.copy(currency = currency, customCurrency = custom) }
-                            setupSettings()
+                            state.settings = state.settings.copy(currency = currency, customCurrency = custom)
+                            viewModel.updateSettings(state.settings)
                         }
                     }
                 )
             }
         }
 
-        binding.costsLayout.setOnClickListener {
+        costsLayout.setOnClickListener {
             DialogManager.showCostsDialog(
                 context = requireActivity(),
                 costs = state.costs,
@@ -167,27 +167,24 @@ class SettingsFragment : Fragment() {
         }
 
         val links = mapOf(
-            binding.websiteLayout to "https://gasperpintar.com/smoking-tracker",
-            binding.changelogLayout to "https://github.com/pintargasper/SmokingTracker/releases",
-            binding.translateLayout to "https://translate.gasperpintar.com/projects/smokingtracker",
-            binding.privacyPolicyLayout to "https://gasperpintar.com/smoking-tracker/privacy-policy"
+            websiteLayout to "https://gasperpintar.com/smoking-tracker",
+            changelogLayout to "https://github.com/pintargasper/SmokingTracker/releases",
+            translateLayout to "https://translate.gasperpintar.com/projects/smokingtracker",
+            privacyPolicyLayout to "https://gasperpintar.com/smoking-tracker/privacy-policy"
         )
         links.forEach { (view, url) ->
             view.setOnClickListener { WebHelper.openUrl(context = requireContext(), url) }
         }
     }
 
-    private fun updateUi(state: SettingsState) {
-        binding.imageTheme.setImageResource(
-            updateThemeIcon(state.settings.theme)
-        )
-
-        binding.themeService.text = resources.getStringArray(R.array.theme_names)[state.settings.theme]
-        binding.languageService.text = resources.getStringArray(R.array.language_names)[state.settings.language]
+    private fun updateUi(state: SettingsState) = with(receiver = binding) {
+        imageTheme.setImageResource(updateThemeIcon(state.settings.theme))
+        themeService.text = resources.getStringArray(R.array.theme_names)[state.settings.theme]
+        languageService.text = resources.getStringArray(R.array.language_names)[state.settings.language]
     }
 
-    private fun setupDataManagement() {
-        binding.backupLayout.setOnClickListener {
+    private fun setupDataManagement() = with(receiver = binding) {
+        backupLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
                 val fileName = "st_data_${LocalizationHelper.formatDateTime(LocalDateTime.now())}"
                 try {
@@ -198,7 +195,7 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        binding.restoreLayout.setOnClickListener {
+        restoreLayout.setOnClickListener {
             DialogManager.showRestoreDialog(
                 context = requireActivity(),
                 onOpenFile = { importDocumentLauncher.launch(arrayOf(mimeExcel)) },

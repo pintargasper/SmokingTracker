@@ -95,19 +95,19 @@ class MainActivity : AppCompatActivity() {
         setupPager()
     }
 
-    private fun setupPager() {
-        binding.mainViewPager.adapter = Pager(
-            this,
+    private fun setupPager() = with(receiver = binding) {
+        mainViewPager.adapter = Pager(
+            this@MainActivity,
             listOf(::HomeFragment, ::GraphFragment, ::ProgressFragment, ::SettingsFragment)
         )
 
-        binding.mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+        mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 binding.navView.menu[position].isChecked = true
             }
         })
 
-        binding.navView.setOnItemSelectedListener {
+        navView.setOnItemSelectedListener {
             binding.mainViewPager.setCurrentItem(binding.navView.menu.children.indexOf(it), false)
             true
         }

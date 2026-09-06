@@ -55,31 +55,31 @@ class GraphFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() {
+    private fun initialize() = with(receiver = binding) {
         setupNavigation(
-            previous = binding.previousDayDaily,
-            next = binding.nextDayDaily,
+            previous = previousDayDaily,
+            next = nextDayDaily,
             previousUnit = { it.minusDays(1) },
             nextUnit = { it.plusDays(1) }
         )
 
         setupNavigation(
-            previous = binding.previousDayWeekly,
-            next = binding.nextDayWeekly,
+            previous = previousDayWeekly,
+            next = nextDayWeekly,
             previousUnit = { it.minusWeeks(1) },
             nextUnit = { it.plusWeeks(1) }
         )
 
         setupNavigation(
-            previous = binding.previousDayMonthly,
-            next = binding.nextDayMonthly,
+            previous = previousDayMonthly,
+            next = nextDayMonthly,
             previousUnit = { it.minusMonths(1) },
             nextUnit = { it.plusMonths(1) }
         )
 
         setupNavigation(
-            previous = binding.previousDayYearly,
-            next = binding.nextDayYearly,
+            previous = previousDayYearly,
+            next = nextDayYearly,
             previousUnit = { it.minusYears(1) },
             nextUnit = { it.plusYears(1) }
         )
@@ -114,42 +114,42 @@ class GraphFragment : Fragment() {
 
     private fun updateDaily(
         state: GraphState
-    ) {
+    ) = with(receiver = binding) {
         val (start, _) = TimeHelper.getDay(date = state.selectedDate)
-        binding.currentDateDaily.text = LocalizationHelper.formatDate(date = start.toLocalDate())
-        binding.graphDaily.text = getString(R.string.graph_daily, state.dailyCount)
-        binding.graphViewDaily.setData(data = state.dailyEntries, graphInterval = GraphInterval.DAILY)
+        currentDateDaily.text = LocalizationHelper.formatDate(date = start.toLocalDate())
+        graphDaily.text = getString(R.string.graph_daily, state.dailyCount)
+        graphViewDaily.setData(data = state.dailyEntries, graphInterval = GraphInterval.DAILY)
     }
 
     private fun updateWeekly(
         state: GraphState
-    ) {
+    ) = with(receiver = binding) {
         val (start, end) = TimeHelper.getWeek(date = state.selectedDate)
-        binding.currentDateWeekly.text = LocalizationHelper.formatWeekRange(start = start.toLocalDate(), end = end.toLocalDate())
-        binding.graphWeekly.text = getString(R.string.graph_weekly, state.weeklyCount)
-        binding.graphViewWeekly.setData(data = state.weeklyEntries, graphInterval = GraphInterval.WEEKLY)
+        currentDateWeekly.text = LocalizationHelper.formatWeekRange(start = start.toLocalDate(), end = end.toLocalDate())
+        graphWeekly.text = getString(R.string.graph_weekly, state.weeklyCount)
+        graphViewWeekly.setData(data = state.weeklyEntries, graphInterval = GraphInterval.WEEKLY)
     }
 
     private fun updateMonthly(
         state: GraphState
-    ) {
+    ) = with(receiver = binding) {
         val (start, _) = TimeHelper.getMonth(date = state.selectedDate)
-        binding.currentDateMonthly.text =
+        currentDateMonthly.text =
             String.format(
                 Locale.getDefault(), "%s %d",
                 LocalizationHelper.getMonthName(context = requireContext(), start.month),
                 start.year
             )
-        binding.graphMonthly.text = getString(R.string.graph_monthly, state.monthlyCount)
-        binding.graphViewMonthly.setData(data = state.monthlyEntries, graphInterval = GraphInterval.MONTHLY)
+        graphMonthly.text = getString(R.string.graph_monthly, state.monthlyCount)
+        graphViewMonthly.setData(data = state.monthlyEntries, graphInterval = GraphInterval.MONTHLY)
     }
 
     private fun updateYearly(
         state: GraphState
-    ) {
+    ) = with(receiver = binding) {
         val (start, _) = TimeHelper.getYear(date = state.selectedDate)
-        binding.currentDateYearly.text = start.year.toString()
-        binding.graphYearly.text = getString(R.string.graph_yearly, state.yearlyCount)
-        binding.graphViewYearly.setData(data = state.yearlyEntries, graphInterval = GraphInterval.YEARLY)
+        currentDateYearly.text = start.year.toString()
+        graphYearly.text = getString(R.string.graph_yearly, state.yearlyCount)
+        graphViewYearly.setData(data = state.yearlyEntries, graphInterval = GraphInterval.YEARLY)
     }
 }

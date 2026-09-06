@@ -37,11 +37,9 @@ class SettingsViewModel(
     }
 
     suspend fun updateSettings(
-        updateBlock: (SettingsEntity) -> SettingsEntity
+        settings: SettingsEntity
     ) {
-        val currentSettings = settingsRepository.get() ?: return
-        val updatedSettings = updateBlock(currentSettings)
-        settingsRepository.update(settings = updatedSettings)
+        settingsRepository.update(settings = settings)
     }
 
     suspend fun updateNotificationSettings(

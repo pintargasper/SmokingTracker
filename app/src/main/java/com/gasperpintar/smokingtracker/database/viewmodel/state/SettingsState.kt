@@ -5,7 +5,7 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 
 data class SettingsState(
-    val settings: SettingsEntity,
-    val notificationsSettings: NotificationsSettingsEntity,
+    var settings: SettingsEntity,
+    var notificationsSettings: NotificationsSettingsEntity,
     val costs: List<CostEntry> = emptyList()
 )
