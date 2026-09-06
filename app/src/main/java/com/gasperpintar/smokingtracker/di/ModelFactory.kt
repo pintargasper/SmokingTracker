@@ -6,6 +6,7 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.viewmodel.GraphViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
+import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 
 class ModelFactory(
     private val application: Application? = null,
@@ -36,6 +37,17 @@ class ModelFactory(
             modelClass.isAssignableFrom(GraphViewModel::class.java) -> {
                 GraphViewModel(
                     historyRepository = container.historyRepository,
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(SettingsViewModel::class.java) -> {
+                SettingsViewModel(
+                    achievementRepository = container.achievementRepository,
+                    costsRepository = container.costsRepository,
+                    historyRepository = container.historyRepository,
+                    notesRepository = container.notesRepository,
+                    notificationsSettingsRepository = container.notificationsSettingsRepository,
+                    settingsRepository = container.settingsRepository
                 ) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
