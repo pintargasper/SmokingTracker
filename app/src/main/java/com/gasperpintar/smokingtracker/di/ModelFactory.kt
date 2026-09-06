@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.di
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gasperpintar.smokingtracker.Application
+import com.gasperpintar.smokingtracker.database.viewmodel.GraphViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 
@@ -28,6 +29,12 @@ class ModelFactory(
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(
                     achievementRepository = container.achievementRepository,
+                    historyRepository = container.historyRepository,
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(GraphViewModel::class.java) -> {
+                GraphViewModel(
                     historyRepository = container.historyRepository,
                 ) as T
             }
