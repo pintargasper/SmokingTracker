@@ -23,7 +23,6 @@ class AchievementEvaluator(
         lastSmokeTime: LocalDateTime,
         now: LocalDateTime
     ) {
-
         val achievements: List<AchievementEntity> = achievementRepository.getAll()
         val averageCigarettesPerDay = historyRepository.getAverageCigarettesPerDay()
 
@@ -74,20 +73,16 @@ class AchievementEvaluator(
                 Notifications.createNotificationChannel(context)
 
                 val displayText = AchievementEntry.fromEntity(entity = updatedAchievement).getDisplayText(context)
-
-                val notificationContent =
-                    when (updatedAchievement.unit) {
-                        AchievementUnit.CIGARETTES ->
-                            context.getString(
+                val notificationContent = when (updatedAchievement.unit) {
+                    AchievementUnit.CIGARETTES -> context.getString(
                                 R.string.notification_achievement_unlocked_content_cigarettes,
                                 displayText
                             )
-                        else ->
-                            context.getString(
+                    else -> context.getString(
                                 R.string.notification_achievement_unlocked_content_time,
                                 displayText
                             )
-                    }
+                }
 
                 Notifications.sendNotification(
                     context = context,

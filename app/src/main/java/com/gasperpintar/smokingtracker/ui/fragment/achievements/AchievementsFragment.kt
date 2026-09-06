@@ -11,9 +11,9 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gasperpintar.smokingtracker.AchievementsActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
+import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.repository.AchievementRepository
@@ -53,7 +53,7 @@ class AchievementsFragment : Fragment() {
     ) {
         super.onCreate(savedInstanceState)
 
-        database = (requireActivity() as AchievementsActivity).database
+        database = Provider.getDatabase(context = requireContext().applicationContext)
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         val typeOrdinal = arguments?.getInt(ARG_ACHIEVEMENT_TYPE)
         achievementType = typeOrdinal?.let {

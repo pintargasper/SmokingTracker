@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            @Override
             override fun onPageSelected(position: Int) {
                 binding.navView.menu[position].isChecked = true
             }

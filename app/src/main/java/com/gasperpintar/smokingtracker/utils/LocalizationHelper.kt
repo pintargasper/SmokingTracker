@@ -32,7 +32,6 @@ object LocalizationHelper {
         } else {
             Locale.forLanguageTag(selectedLanguage)
         }
-
         Locale.setDefault(locale)
 
         val configuration = Configuration(context.resources.configuration)
