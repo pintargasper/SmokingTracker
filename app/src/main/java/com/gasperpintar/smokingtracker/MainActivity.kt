@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
         setupPager()
     }
 
-    private fun setupPager() = with(receiver = binding) {
+    private fun setupPager() = binding.apply {
         mainViewPager.adapter = Pager(
             this@MainActivity,
             listOf(::HomeFragment, ::GraphFragment, ::ProgressFragment, ::SettingsFragment)

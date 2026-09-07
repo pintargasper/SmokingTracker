@@ -47,7 +47,7 @@ class CalculatorActivity : AppCompatActivity() {
         )
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         inputStartDate.setOnClickListener {
             DialogManager.showDatePickerDialog(context = this@CalculatorActivity) { date ->
                 inputStartDate.setText( viewModel.setStartDate(date))
@@ -71,7 +71,7 @@ class CalculatorActivity : AppCompatActivity() {
         }
     }
 
-    private suspend fun calculate() = with(receiver = binding) {
+    private suspend fun calculate() = binding.apply {
         val state = viewModel.calculate(
             dailyCigarettes = inputDailyCigarettes.text.toString().toIntOrNull() ?: 0,
             cigarettesPerPack = inputCigarettesPerPack.text.toString().toIntOrNull() ?: 20,

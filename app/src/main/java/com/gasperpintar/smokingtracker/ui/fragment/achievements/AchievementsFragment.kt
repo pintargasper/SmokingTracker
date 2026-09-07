@@ -72,7 +72,7 @@ class AchievementsFragment: Fragment() {
         loadAchievements()
     }
 
-    private fun setupAdapter() = with(receiver = binding) {
+    private fun setupAdapter() = binding.apply {
         adapter = Adapter(
             bindingFactory = AchievementsContainerBinding::inflate,
             onBind = { achievementEntry ->
@@ -110,7 +110,7 @@ class AchievementsFragment: Fragment() {
         recyclerviewAchievements.adapter = adapter
     }
 
-    private fun loadAchievements() = with(receiver = binding) {
+    private fun loadAchievements() = binding.apply {
         viewLifecycleOwner.lifecycleScope.launch {
             val state = viewModel.getAchievements(category = achievementType)
             adapter.submitList(state.achievements) {

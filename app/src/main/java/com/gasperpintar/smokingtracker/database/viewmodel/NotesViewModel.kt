@@ -11,9 +11,7 @@ class NotesViewModel(
 ) : ViewModel() {
 
     suspend fun getNotes(): NoteState {
-        return NoteState(
-            notes = notesRepository.getAll().map(transform = NoteEntry::fromEntity)
-        )
+        return NoteState(notes = notesRepository.getAll().map(transform = NoteEntry::fromEntity))
     }
 
     suspend fun getById(id: Long): NoteEntity? {
@@ -25,8 +23,6 @@ class NotesViewModel(
     }
 
     suspend fun delete(note: NoteEntry) {
-        notesRepository.delete(
-            entry = note.toEntity()
-        )
+        notesRepository.delete(entry = note.toEntity())
     }
 }

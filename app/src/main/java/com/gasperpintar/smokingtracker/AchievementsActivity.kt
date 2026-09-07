@@ -38,14 +38,14 @@ class AchievementsActivity : AppCompatActivity() {
         )
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         buttonBack.setOnClickListener {
             finish()
         }
         setupPager()
     }
 
-    private fun setupPager() = with(receiver = binding) {
+    private fun setupPager() = binding.apply {
         achievementsViewPager.adapter = Pager(
             this@AchievementsActivity,
             listOf(

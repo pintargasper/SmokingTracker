@@ -77,30 +77,34 @@ class NoteFragment : Fragment() {
         }
     }
 
-    private fun loadNote() {
+    private fun loadNote() = binding.apply {
         viewLifecycleOwner.lifecycleScope.launch {
             existingNote = viewModel.getById(id = noteId)?.also { note ->
-                binding.inputTitle.setText(note.title)
-                binding.inputContent.setText(note.content)
-                binding.sliderEmotion.value = note.mood.toFloat()
+                inputTitle.setText(note.title)
+                inputContent.setText(note.content)
+                sliderEmotion.value = note.mood.toFloat()
             }
         }
     }
 
-    private fun saveNote(close: Boolean = false) {
+    private fun saveNote(close: Boolean = false) = binding.apply {
         DialogManager.showSaveNoteDialog(
             context = requireActivity(),
             onSave = {
+                val title = inputTitle.text.toString().trim()
+                val content = inputContent.text.toString().trim()
+                val mood = sliderEmotion.value.toInt()
+
                 viewLifecycleOwner.lifecycleScope.launch {
-                    val note = NoteEntity(
-                        id = if (noteId == -1L) 0 else noteId,
-                        title = binding.inputTitle.text.toString().trim(),
-                        content = binding.inputContent.text.toString().trim(),
-                        mood = binding.sliderEmotion.value.toInt(),
-                        createdAt = existingNote?.createdAt ?: LocalDateTime.now(),
-                        updatedAt = LocalDateTime.now()
-                    )
-                    viewModel.save(note)
+                    val now = LocalDateTime.now()
+                    viewModel.save(NoteEntity(
+                        id = existingNote?.id ?: 0L,
+                        title = title,
+                        content = content,
+                        mood = mood,
+                        createdAt = existingNote?.createdAt ?: now,
+                        updatedAt = now
+                    ))
                     (requireActivity() as? NotesActivity)?.loadNotes()
                     parentFragmentManager.popBackStack()
                 }

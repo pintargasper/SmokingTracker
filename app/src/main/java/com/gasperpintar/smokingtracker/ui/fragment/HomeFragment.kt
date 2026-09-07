@@ -74,7 +74,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         buttonAddEntry.setOnClickListener {
             DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
                 viewLifecycleOwner.lifecycleScope.launch {
@@ -97,7 +97,7 @@ class HomeFragment : Fragment() {
         loadHistory()
     }
 
-    private fun setupAdapter() = with(receiver = binding) {
+    private fun setupAdapter() = binding.apply {
         adapter = Adapter(
             bindingFactory = HistoryContainerBinding::inflate,
             onBind = { historyEntry ->
@@ -127,7 +127,7 @@ class HomeFragment : Fragment() {
         recyclerviewHistory.adapter = adapter
     }
 
-    private fun loadHistory() = with(receiver = binding) {
+    private fun loadHistory() = binding.apply {
         viewLifecycleOwner.lifecycleScope.launch {
             val state = viewModel.getHistory()
             lastEntry = state.lastEntry
@@ -167,7 +167,7 @@ class HomeFragment : Fragment() {
 
     private fun updateTimerLabel(
         entry: HistoryEntity?
-    ) = with(receiver = binding) {
+    ) = binding.apply {
         val duration = entry?.createdAt?.let { createdAt ->
             Duration.between(createdAt, LocalDateTime.now())
         }

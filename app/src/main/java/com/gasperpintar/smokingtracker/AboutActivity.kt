@@ -36,7 +36,7 @@ class AboutActivity : AppCompatActivity() {
         )
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         buttonBack.setOnClickListener {
             finish()
         }
@@ -55,7 +55,7 @@ class AboutActivity : AppCompatActivity() {
         setupLinks()
     }
 
-    private fun setupLinks() = with(receiver = binding) {
+    private fun setupLinks() = binding.apply {
         mapOf(
             githubLayout to "https://github.com/pintargasper/SmokingTracker",
             fDroidLayout to "https://f-droid.org/packages/com.gasperpintar.smokingtracker",

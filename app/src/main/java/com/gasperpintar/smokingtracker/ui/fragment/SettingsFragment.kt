@@ -68,7 +68,7 @@ class SettingsFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         viewLifecycleOwner.lifecycleScope.launch {
             setupSettings()
         }
@@ -81,7 +81,7 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private suspend fun setupSettings() = with(receiver = binding) {
+    private suspend fun setupSettings() = binding.apply {
         val state = viewModel.getSettings()
         updateUi(state = state)
 
@@ -177,13 +177,13 @@ class SettingsFragment : Fragment() {
         }
     }
 
-    private fun updateUi(state: SettingsState) = with(receiver = binding) {
+    private fun updateUi(state: SettingsState) = binding.apply {
         imageTheme.setImageResource(updateThemeIcon(state.settings.theme))
         themeService.text = resources.getStringArray(R.array.theme_names)[state.settings.theme]
         languageService.text = resources.getStringArray(R.array.language_names)[state.settings.language]
     }
 
-    private fun setupDataManagement() = with(receiver = binding) {
+    private fun setupDataManagement() = binding.apply {
         backupLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
                 val fileName = "st_data_${LocalizationHelper.formatDateTime(LocalDateTime.now())}"

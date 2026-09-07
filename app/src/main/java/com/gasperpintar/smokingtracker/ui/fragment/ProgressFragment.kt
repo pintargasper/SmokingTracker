@@ -36,7 +36,7 @@ class ProgressFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         statisticsLayout.setOnClickListener {
             startActivity(Intent(requireContext(), StatisticsActivity::class.java))
         }

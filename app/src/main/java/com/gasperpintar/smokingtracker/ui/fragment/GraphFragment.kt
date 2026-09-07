@@ -55,7 +55,7 @@ class GraphFragment : Fragment() {
         _binding = null
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         setupNavigation(
             previous = previousDayDaily,
             next = nextDayDaily,
@@ -114,7 +114,7 @@ class GraphFragment : Fragment() {
 
     private fun updateDaily(
         state: GraphState
-    ) = with(receiver = binding) {
+    ) = binding.apply {
         val (start, _) = TimeHelper.getDay(date = state.selectedDate)
         currentDateDaily.text = LocalizationHelper.formatDate(date = start.toLocalDate())
         graphDaily.text = getString(R.string.graph_daily, state.dailyCount)
@@ -123,7 +123,7 @@ class GraphFragment : Fragment() {
 
     private fun updateWeekly(
         state: GraphState
-    ) = with(receiver = binding) {
+    ) = binding.apply {
         val (start, end) = TimeHelper.getWeek(date = state.selectedDate)
         currentDateWeekly.text = LocalizationHelper.formatWeekRange(start = start.toLocalDate(), end = end.toLocalDate())
         graphWeekly.text = getString(R.string.graph_weekly, state.weeklyCount)
@@ -132,7 +132,7 @@ class GraphFragment : Fragment() {
 
     private fun updateMonthly(
         state: GraphState
-    ) = with(receiver = binding) {
+    ) = binding.apply {
         val (start, _) = TimeHelper.getMonth(date = state.selectedDate)
         currentDateMonthly.text =
             String.format(
@@ -146,7 +146,7 @@ class GraphFragment : Fragment() {
 
     private fun updateYearly(
         state: GraphState
-    ) = with(receiver = binding) {
+    ) = binding.apply {
         val (start, _) = TimeHelper.getYear(date = state.selectedDate)
         currentDateYearly.text = start.year.toString()
         graphYearly.text = getString(R.string.graph_yearly, state.yearlyCount)

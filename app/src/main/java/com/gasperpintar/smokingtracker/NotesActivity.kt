@@ -53,7 +53,7 @@ class NotesActivity : AppCompatActivity() {
         )
     }
 
-    private fun initialize() = with(receiver = binding) {
+    private fun initialize() = binding.apply {
         buttonAddNote.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
@@ -69,7 +69,7 @@ class NotesActivity : AppCompatActivity() {
         loadNotes()
     }
 
-    private fun setupAdapter() = with(receiver = binding) {
+    private fun setupAdapter() = binding.apply {
         adapter = Adapter(
             bindingFactory = NoteContainerBinding::inflate,
             onBind = { noteEntry ->
@@ -98,7 +98,7 @@ class NotesActivity : AppCompatActivity() {
         recyclerviewNotes.adapter = adapter
     }
 
-    fun loadNotes() = with(receiver = binding) {
+    fun loadNotes() = binding.apply {
         lifecycleScope.launch {
             adapter.submitList(viewModel.getNotes().notes) {
                 recyclerviewNotes.scrollToPosition(0)
