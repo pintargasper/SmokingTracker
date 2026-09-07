@@ -525,8 +525,8 @@ object DialogManager {
         onSave: () -> Unit,
         onClose: () -> Unit = {}
     ) = showDialog(context, layout = R.layout.save_note_popup) {
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_save)
-        val buttonClose: Button = dialogView.findViewById(R.id.button_close)
+        val buttonConfirm: Button = dialogView.findViewById(R.id.save)
+        val buttonClose: Button = dialogView.findViewById(R.id.close)
 
         buttonConfirm.setOnClickListener {
             dismiss()

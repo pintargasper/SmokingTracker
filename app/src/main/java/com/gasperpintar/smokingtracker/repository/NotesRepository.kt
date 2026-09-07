@@ -36,4 +36,8 @@ class NotesRepository(
     suspend fun getAll(): List<NoteEntity> {
         return notesDao.getAll()
     }
+
+    suspend fun getById(id: Long): NoteEntity? {
+        return notesDao.getById(id = id)
+    }
 }

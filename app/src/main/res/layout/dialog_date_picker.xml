@@ -20,7 +20,7 @@
         style="?android:attr/buttonBarStyle">
 
         <Button
-            android:id="@+id/button_close"
+            android:id="@+id/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@android:string/cancel"

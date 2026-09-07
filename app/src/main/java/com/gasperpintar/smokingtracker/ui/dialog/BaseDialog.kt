@@ -12,7 +12,7 @@ abstract class BaseDialog(
 ) {
     internal val dialogView: View = LayoutInflater.from(activity).inflate(layoutResource, null)
     internal val dialog: RoundedDialog = RoundedDialog(activity).setViewChained(dialogView)
-    internal val buttonClose: Button? = dialogView.findViewById(R.id.button_close)
+    internal val buttonClose: Button? = dialogView.findViewById(R.id.close)
 
     init {
         buttonClose?.setOnClickListener {
