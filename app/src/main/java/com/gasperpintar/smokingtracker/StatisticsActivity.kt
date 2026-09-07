@@ -2,14 +2,9 @@ package com.gasperpintar.smokingtracker
 
 import android.content.Context
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager2.widget.ViewPager2
-import com.gasperpintar.smokingtracker.ui.adapter.Pager
-import com.gasperpintar.smokingtracker.database.AppDatabase
-import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.databinding.ActivityStatisticsBinding
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.fragment.statistics.BasicFragment
 import com.gasperpintar.smokingtracker.ui.fragment.statistics.ForecastFragment
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -19,67 +14,54 @@ class StatisticsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityStatisticsBinding
 
-    lateinit var database: AppDatabase
-    private lateinit var settingsRepository: SettingsRepository
-
+    @Override
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
         super.onCreate(savedInstanceState)
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
+
+        initialize()
+
         setContentView(binding.root)
-
-        createPager()
-
-        binding.buttonBack.setOnClickListener {
-            finish()
-        }
     }
 
+    @Override
     override fun attachBaseContext(
         context: Context
     ) {
-        database = Provider.getDatabase(context = context.applicationContext)
-        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        super.attachBaseContext(LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository))
+        super.attachBaseContext(
+            LocalizationHelper.getLocalizedContext(
+                context = context,
+                settingsRepository = (context.applicationContext as Application).container.settingsRepository
+            )
+        )
     }
 
-    private fun createPager() {
-        val viewPager = binding.statisticsViewPager
-        val tabLayout = binding.statisticsTabLayout
+    private fun initialize() = with(receiver = binding) {
+        buttonBack.setOnClickListener {
+            finish()
+        }
+        setupPager()
+    }
 
-        val fragments = listOf(
-            { BasicFragment() },
-            { ForecastFragment() }
+    private fun setupPager() = with(receiver = binding) {
+        statisticsViewPager.adapter = Pager(
+            this@StatisticsActivity,
+            listOf(
+                { BasicFragment() },
+                { ForecastFragment() }
+            )
         )
 
-        val tabTitles = listOf(
-            getString(R.string.statistics_basic),
-            getString(R.string.statistics_forecast)
-        )
-
-        viewPager.adapter = Pager(
-            fragmentActivity = this,
-            fragmentCreator = fragments
-        )
-        viewPager.isUserInputEnabled = true
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            val customTabView = layoutInflater.inflate(
-                R.layout.view_tab,
-                tabLayout,
-                false
-            ) as TextView
-
-            customTabView.text = tabTitles.getOrNull(position) ?: ""
-            customTabView.isSelected = true
-            tab.customView = customTabView
+        TabLayoutMediator(statisticsTabLayout, statisticsViewPager) { tab, position ->
+            tab.text = getString(
+                when (position) {
+                    0 -> R.string.statistics_basic
+                    1 -> R.string.statistics_forecast
+                    else -> R.string.statistics_basic
+                }
+            )
         }.attach()
-
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                tabLayout.getTabAt(position)?.select()
-            }
-        })
     }
 }

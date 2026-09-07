@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.gasperpintar.smokingtracker.StatisticsActivity
-import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsForecastBinding
+import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
+import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsForecastBinding
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import kotlinx.coroutines.launch
@@ -31,7 +31,7 @@ class ForecastFragment : Fragment() {
     ): View {
         _binding = FragmentStatisticsForecastBinding.inflate(inflater, container, false)
 
-        val database = (requireActivity() as StatisticsActivity).database
+        val database = Provider.getDatabase(context = requireContext())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
 
         setup()

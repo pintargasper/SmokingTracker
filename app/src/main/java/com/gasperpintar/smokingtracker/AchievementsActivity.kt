@@ -38,8 +38,8 @@ class AchievementsActivity : AppCompatActivity() {
         )
     }
 
-    private fun initialize() {
-        binding.buttonBack.setOnClickListener {
+    private fun initialize() = with(receiver = binding) {
+        buttonBack.setOnClickListener {
             finish()
         }
         setupPager()

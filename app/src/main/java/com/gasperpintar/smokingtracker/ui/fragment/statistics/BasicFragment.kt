@@ -9,11 +9,11 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.StatisticsActivity
+import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsBasicBinding
 import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
+import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsBasicBinding
 import com.gasperpintar.smokingtracker.repository.CostsRepository
 import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
@@ -43,7 +43,7 @@ class BasicFragment : Fragment() {
     ): View {
         _binding = FragmentStatisticsBasicBinding.inflate(inflater, container, false)
 
-        val database = (requireActivity() as StatisticsActivity).database
+        val database = Provider.getDatabase(requireContext())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         costsRepository = CostsRepository(costDao = database.costsDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
