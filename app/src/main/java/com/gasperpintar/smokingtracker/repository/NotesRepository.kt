@@ -24,6 +24,10 @@ class NotesRepository(
         notesDao.upsert(entity = entry)
     }
 
+    suspend fun delete(entry: NoteEntity) {
+        notesDao.delete(entity = entry)
+    }
+
     suspend fun deleteAll() {
         notesDao.deleteAll()
         notesDao.resetAutoIncrement()

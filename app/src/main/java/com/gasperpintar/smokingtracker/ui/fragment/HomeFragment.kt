@@ -4,18 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
+import com.gasperpintar.smokingtracker.databinding.HistoryContainerBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
@@ -42,7 +40,7 @@ class HomeFragment : Fragment() {
     private var lastEntry: HistoryEntity? = null
     private var timerJob: Job? = null
 
-    private lateinit var historyAdapter: Adapter<HistoryEntry>
+    private lateinit var adapter: Adapter<HistoryEntry, HistoryContainerBinding>
 
     @Override
     override fun onCreateView(
@@ -100,18 +98,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupAdapter() = with(receiver = binding) {
-        historyAdapter = Adapter(
-            layoutId = R.layout.history_container,
-            onBind = { itemView, historyEntry ->
-                val timerLabel = itemView.findViewById<TextView>(R.id.timer_label)
-                val lentButton = itemView.findViewById<ImageButton>(R.id.lent)
-                val editButton = itemView.findViewById<ImageButton>(R.id.image_button_edit)
-                val deleteButton = itemView.findViewById<ImageButton>(R.id.delete)
-
+        adapter = Adapter(
+            bindingFactory = HistoryContainerBinding::inflate,
+            onBind = { historyEntry ->
                 timerLabel.text = historyEntry.timerLabel
-                lentButton.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
+                lent.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
 
-                editButton.setOnClickListener {
+                edit.setOnClickListener {
                     DialogManager.showEditDialog(context = requireActivity(), entry = historyEntry) { newDateTime, isLent ->
                         viewLifecycleOwner.lifecycleScope.launch {
                             viewModel.update(entry = historyEntry, dateTime = newDateTime, isLent = isLent)
@@ -120,7 +113,7 @@ class HomeFragment : Fragment() {
                     }
                 }
 
-                deleteButton.setOnClickListener {
+                delete.setOnClickListener {
                     DialogManager.showDeleteDialog(context = requireActivity()) {
                         viewLifecycleOwner.lifecycleScope.launch {
                             viewModel.delete(entry = historyEntry)
@@ -131,7 +124,7 @@ class HomeFragment : Fragment() {
             }
         )
         recyclerviewHistory.layoutManager = LinearLayoutManager(requireContext())
-        recyclerviewHistory.adapter = historyAdapter
+        recyclerviewHistory.adapter = adapter
     }
 
     private fun loadHistory() = with(receiver = binding) {
@@ -150,7 +143,7 @@ class HomeFragment : Fragment() {
 
             updateTimerLabel(entry = lastEntry)
 
-            historyAdapter.submitList(state.history) {
+            adapter.submitList(state.history) {
                 recyclerviewHistory.scrollToPosition(0)
             }
             WidgetHelper.updateAllWidgets(context = requireContext())

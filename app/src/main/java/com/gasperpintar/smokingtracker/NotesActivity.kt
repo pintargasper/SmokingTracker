@@ -2,19 +2,16 @@ package com.gasperpintar.smokingtracker
 
 import android.content.Context
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.gasperpintar.smokingtracker.database.AppDatabase
-import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.database.model.NoteEntry
+import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityNotesBinding
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.databinding.NoteContainerBinding
+import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.NoteFragment
@@ -25,93 +22,71 @@ class NotesActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNotesBinding
 
-    lateinit var database: AppDatabase
-    private lateinit var settingsRepository: SettingsRepository
+    private val appContainer by lazy { (application as Application).container }
+    private val viewModel: NotesViewModel by viewModels {
+        ModelFactory(application = application as Application, container = appContainer)
+    }
 
-    private lateinit var adapter: Adapter<NoteEntry>
+    private lateinit var adapter: Adapter<NoteEntry, NoteContainerBinding>
 
+    @Override
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
         super.onCreate(savedInstanceState)
         binding = ActivityNotesBinding.inflate(layoutInflater)
+
+        initialize()
+
         setContentView(binding.root)
+    }
 
-        binding.buttonBack.setOnClickListener {
-            finish()
-        }
+    @Override
+    override fun attachBaseContext(
+        context: Context
+    ) {
+        super.attachBaseContext(
+            LocalizationHelper.getLocalizedContext(
+                context = context,
+                settingsRepository = (context.applicationContext as Application).container.settingsRepository
+            )
+        )
+    }
 
-        binding.buttonAddNote.setOnClickListener {
+    private fun initialize() = with(receiver = binding) {
+        buttonAddNote.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .add(R.id.fragment_container, NoteFragment())
                 .addToBackStack("AddNote")
                 .commit()
         }
-        setupRecyclerView()
+
+        buttonBack.setOnClickListener {
+            finish()
+        }
+        setupAdapter()
         loadNotes()
     }
 
-    override fun attachBaseContext(
-        context: Context
-    ) {
-        database = Provider.getDatabase(context = context.applicationContext)
-        settingsRepository = SettingsRepository(
-            settingsDao = database.settingsDao()
-        )
-
-        super.attachBaseContext(
-            LocalizationHelper.getLocalizedContext(
-                context = context,
-                settingsRepository = settingsRepository
-            )
-        )
-    }
-
-    private fun setupRecyclerView() {
+    private fun setupAdapter() = with(receiver = binding) {
         adapter = Adapter(
-            layoutId = R.layout.note_container,
-            onBind = { itemView, noteEntry ->
-                val emotionIcon = itemView.findViewById<ImageView>(R.id.emotion_icon)
-                val title = itemView.findViewById<TextView>(R.id.title_label)
-                val content = itemView.findViewById<TextView>(R.id.content_label)
-                val deleteButton = itemView.findViewById<ImageButton>(R.id.delete)
+            bindingFactory = NoteContainerBinding::inflate,
+            onBind = { noteEntry ->
+                emotionIcon.setImageResource(noteEntry.moodIcon)
+                titleLabel.text = noteEntry.title
+                contentLabel.text = noteEntry.content
 
-                emotionIcon.setImageResource(
-                    when (noteEntry.mood) {
-                        1 -> R.drawable.sentiment_frustrated_48px
-                        2 -> R.drawable.sentiment_dissatisfied_48px
-                        3 -> R.drawable.sentiment_neutral_48px
-                        4 -> R.drawable.sentiment_satisfied_48px
-                        5 -> R.drawable.sentiment_excited_48px
-                        else -> R.drawable.sentiment_neutral_48px
-                    }
-                )
-
-                title.text = noteEntry.title
-                content.text = noteEntry.content
-
-                itemView.setOnClickListener {
-                    val fragment = NoteFragment().apply {
-                        arguments = Bundle().apply {
-                            putLong("note_id", noteEntry.id)
-                        }
-                    }
-                    (itemView.context as AppCompatActivity)
-                        .supportFragmentManager
-                        .beginTransaction()
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .add(R.id.fragment_container, fragment)
-                        .addToBackStack("EditNote")
-                        .commit()
+                root.setOnClickListener {
+                    openNote(noteId = noteEntry.id)
                 }
 
-                deleteButton.setOnClickListener {
+                delete.setOnClickListener {
                     DialogManager.showDeleteDialog(
-                        context = this,
+                        context = this@NotesActivity,
                         onConfirm = {
                             lifecycleScope.launch {
-                                database.notesDao().delete(entity = noteEntry.toEntity())
+                                viewModel.delete(noteEntry)
                                 loadNotes()
                             }
                         }
@@ -119,17 +94,29 @@ class NotesActivity : AppCompatActivity() {
                 }
             }
         )
-        binding.recyclerviewNotes.layoutManager = LinearLayoutManager(this)
-        binding.recyclerviewNotes.adapter = adapter
+        recyclerviewNotes.layoutManager = LinearLayoutManager(this@NotesActivity)
+        recyclerviewNotes.adapter = adapter
     }
 
-    fun loadNotes() {
+    fun loadNotes() = with(receiver = binding) {
         lifecycleScope.launch {
-            val notes: List<NoteEntity> = database.notesDao().getAll()
-            val notesList: List<NoteEntry> = notes.map(transform = NoteEntry::fromEntity)
-            adapter.submitList(notesList) {
-                binding.recyclerviewNotes.scrollToPosition(0)
+            adapter.submitList(viewModel.getNotes().notes) {
+                recyclerviewNotes.scrollToPosition(0)
             }
         }
+    }
+
+    private fun openNote(noteId: Long) {
+        val fragment = NoteFragment().apply {
+            arguments = Bundle().apply {
+                putLong("note_id", noteId)
+            }
+        }
+
+        supportFragmentManager.beginTransaction()
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+            .add(R.id.fragment_container, fragment)
+            .addToBackStack("EditNote")
+            .commit()
     }
 }

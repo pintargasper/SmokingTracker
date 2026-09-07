@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.NotesActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
+import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.databinding.FragmentNoteBinding
 import com.gasperpintar.smokingtracker.repository.NotesRepository
@@ -35,7 +36,7 @@ class NoteFragment : Fragment() {
     ): View {
         _binding = FragmentNoteBinding.inflate(inflater, container, false)
 
-        database = (requireActivity() as NotesActivity).database
+        database = Provider.getDatabase(requireContext())
         notesRepository = NotesRepository(notesDao = database.notesDao())
 
         return binding.root
@@ -106,7 +107,7 @@ class NoteFragment : Fragment() {
                         createdAt = existingNote?.createdAt ?: LocalDateTime.now(),
                         updatedAt = LocalDateTime.now()
                     )
-                    notesRepository.upsert(entry = note)
+                    database.notesDao().upsert(entity = note)
                     (requireActivity() as NotesActivity).loadNotes()
                     parentFragmentManager.popBackStack()
                 }

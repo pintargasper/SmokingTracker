@@ -1,6 +1,8 @@
 package com.gasperpintar.smokingtracker.ui.adapter
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
-class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+class ViewHolder<B : ViewBinding>(
+    val binding: B
+) : RecyclerView.ViewHolder(binding.root)

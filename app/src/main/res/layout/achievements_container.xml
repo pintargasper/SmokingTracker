@@ -42,7 +42,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/text_achievement_title"
+                    android:id="@+id/achievement_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="3"
@@ -51,7 +51,7 @@
                     style="@style/MainTitleTextView"/>
 
                 <TextView
-                    android:id="@+id/text_achievement_message"
+                    android:id="@+id/achievement_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
@@ -60,7 +60,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/text_last_achieved_label"
+            android:id="@+id/last_achieved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/achievement_last"
@@ -69,7 +69,7 @@
 
 
         <TextView
-            android:id="@+id/text_achieved_count_label"
+            android:id="@+id/achieved_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/achievement_achieved"

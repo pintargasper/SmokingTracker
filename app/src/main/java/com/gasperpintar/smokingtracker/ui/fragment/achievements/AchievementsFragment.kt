@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +14,7 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.AchievementViewModel
+import com.gasperpintar.smokingtracker.databinding.AchievementsContainerBinding
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.AchievementCategory
@@ -39,7 +38,7 @@ class AchievementsFragment: Fragment() {
     }
 
     private lateinit var achievementType: AchievementCategory
-    private lateinit var adapter: Adapter<AchievementEntry>
+    private lateinit var adapter: Adapter<AchievementEntry, AchievementsContainerBinding>
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,18 +74,11 @@ class AchievementsFragment: Fragment() {
 
     private fun setupAdapter() = with(receiver = binding) {
         adapter = Adapter(
-            layoutId = R.layout.achievements_container,
-            onBind = { itemView, achievementEntry ->
-                val imageAchievement = itemView.findViewById<ImageView>(R.id.image_achievement)
-                val textAchievementTitle = itemView.findViewById<TextView>(R.id.text_achievement_title)
-                val textAchievementMessage = itemView.findViewById<TextView>(R.id.text_achievement_message)
-                val textLastAchieved = itemView.findViewById<TextView>(R.id.text_last_achieved_label)
-                val textLastAchievedCountValue = itemView.findViewById<TextView>(R.id.text_achieved_count_label)
-
-                textAchievementTitle.text = getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
-                textAchievementMessage.text = getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)
-
-                textLastAchieved.text = achievementEntry.lastAchieved?.toLocalDate()?.let { localDate: LocalDate ->
+            bindingFactory = AchievementsContainerBinding::inflate,
+            onBind = { achievementEntry ->
+                achievementTitle.text = getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
+                achievementMessage.text = getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)
+                lastAchieved.text = achievementEntry.lastAchieved?.toLocalDate()?.let { localDate: LocalDate ->
                     getString(R.string.achievement_last, LocalizationHelper.formatDate(date = localDate))
                 } ?: getString(R.string.achievement_last, "/")
 
@@ -96,11 +88,10 @@ class AchievementsFragment: Fragment() {
                     achievementEntry.times
                 )
 
-                textLastAchievedCountValue.text = getString(
+                achievedCount.text = getString(
                     R.string.achievement_achieved,
                     achievedTimesText
                 )
-
                 imageAchievement.setImageResource(AchievementIcon.valueOf(achievementEntry.image).drawableResource)
                 when (achievementEntry.times) {
                     0L -> {

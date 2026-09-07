@@ -12,7 +12,6 @@ import android.widget.CalendarView
 import android.widget.CheckBox
 import android.widget.DatePicker
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
@@ -25,6 +24,7 @@ import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEnti
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.databinding.CostContainerBinding
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -316,7 +316,7 @@ object DialogManager {
 
         val decimalFormat = DecimalFormat("0.00#")
 
-        lateinit var adapter: Adapter<CostEntry>
+        lateinit var adapter: Adapter<CostEntry, CostContainerBinding>
 
         fun formatDate(date: LocalDate): String {
             return when (date) {
@@ -331,19 +331,15 @@ object DialogManager {
         }
 
         adapter = Adapter(
-            layoutId = R.layout.cost_container,
-            onBind = { itemView, costEntry ->
-                val textPeriod: TextView = itemView.findViewById(R.id.date_label)
-                val price: TextView = itemView.findViewById(R.id.price_label)
-                val delete: ImageButton = itemView.findViewById(R.id.delete)
-
-                textPeriod.text = buildString {
+            bindingFactory = CostContainerBinding::inflate,
+            onBind = { costEntry ->
+               dateLabel.text = buildString {
                     append(formatDate(costEntry.startDate.toLocalDate()))
                     append(" - ")
                     append(formatDate(costEntry.endDate.toLocalDate()))
                 }
 
-                price.text = itemView.context.getString(
+                priceLabel.text = context.getString(
                     R.string.cost_price,
                     decimalFormat.format(costEntry.price),
                     currency

@@ -43,7 +43,7 @@
             android:visibility="visible" />
 
         <ImageButton
-            android:id="@+id/image_button_edit"
+            android:id="@+id/edit"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="4dp"

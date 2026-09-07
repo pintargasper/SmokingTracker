@@ -17,7 +17,8 @@ class Callback<T : Identifiable> : DiffUtil.ItemCallback<T>() {
     @SuppressLint(value = ["DiffUtilEquals"])
     @Override
     override fun areContentsTheSame(
-        oldItem: T, newItem: T
+        oldItem: T,
+        newItem: T
     ): Boolean {
         return oldItem == newItem
     }
