@@ -30,26 +30,25 @@ class LoadingDialog(
         progressBar.progress = 0
     }
 
-    fun updateProgress(progress: Int) {
-        activity.runOnUiThread {
-            progressBar.progress = progress
-            progressTextPercentage.text = activity.getString(R.string.loading_bar_progress_percentage, progress)
+    fun updateProgress(progress: Int) = activity.runOnUiThread {
+        progressBar.progress = progress
+        progressTextPercentage.text = activity.getString(R.string.loading_bar_progress_percentage, progress)
 
-            progressTextInfo.text = when {
-                progress >= 100 -> activity.getString(R.string.loading_bar_encourage_100)
-                progress >= 70 -> activity.getString(R.string.loading_bar_encourage_70)
-                progress >= 50 -> activity.getString(R.string.loading_bar_encourage_50)
-                progress >= 15 -> activity.getString(R.string.loading_bar_encourage_15)
-                progress >= 0 -> activity.getString(R.string.loading_bar_encourage_0)
-                else -> null
-            }
+        progressTextInfo.text = when {
+            progress >= 100 -> activity.getString(R.string.loading_bar_encourage_100)
+            progress >= 70 -> activity.getString(R.string.loading_bar_encourage_70)
+            progress >= 50 -> activity.getString(R.string.loading_bar_encourage_50)
+            progress >= 15 -> activity.getString(R.string.loading_bar_encourage_15)
+            else -> activity.getString(R.string.loading_bar_encourage_0)
         }
     }
 
     fun setProgressType(type: ProgressType) {
-        when (type) {
-            ProgressType.BACKUP -> progressTextMessage.text = activity.getString(R.string.loading_bar_backup)
-            ProgressType.RESTORE -> progressTextMessage.text = activity.getString(R.string.loading_bar_restore)
-        }
+        progressTextMessage.text = activity.getString(
+            when (type) {
+                ProgressType.BACKUP -> R.string.loading_bar_backup
+                ProgressType.RESTORE -> R.string.loading_bar_restore
+            }
+        )
     }
 }
