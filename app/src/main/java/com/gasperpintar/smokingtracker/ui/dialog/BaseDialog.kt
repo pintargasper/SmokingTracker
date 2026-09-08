@@ -2,37 +2,46 @@ package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
 import androidx.fragment.app.FragmentActivity
+import androidx.viewbinding.ViewBinding
 import com.gasperpintar.smokingtracker.R
 
-abstract class BaseDialog(
+abstract class BaseDialog<B : ViewBinding>(
     protected val activity: FragmentActivity,
-    layoutResource: Int
+    bindingInflater: (LayoutInflater) -> B
 ) {
-    internal val dialogView: View = LayoutInflater.from(activity).inflate(layoutResource, null)
-    internal val dialog: RoundedDialog = RoundedDialog(activity).setViewChained(dialogView)
-    internal val buttonClose: Button? = dialogView.findViewById(R.id.close)
+    internal val binding: B = bindingInflater(activity.layoutInflater)
+    internal val dialog = RoundedDialog(context = activity).apply { setView(binding.root) }
 
     init {
-        buttonClose?.setOnClickListener {
-            dialog.dismiss()
-        }
+        binding.root.findViewById<View>(R.id.close)?.setOnClickListener { dismiss() }
     }
 
     internal abstract fun setup()
 
-    internal fun show() {
+    internal open fun show() {
         setup()
-        dialog.showChained()
+        dialog.show()
     }
 
     internal fun dismiss() {
         dialog.dismiss()
     }
 
-    internal fun setCancelable(cancelable: Boolean) {
-        dialog.setCancelable(cancelable)
-        dialog.setCanceledOnTouchOutside(cancelable)
+    internal fun setCancelable(cancelable: Boolean) = dialog.run {
+        setCancelable(cancelable)
+        setCanceledOnTouchOutside(cancelable)
+    }
+
+    companion object {
+        internal inline fun <B : ViewBinding> show(
+            context: FragmentActivity,
+            noinline bindingInflater: (LayoutInflater) -> B,
+            crossinline block: BaseDialog<B>.() -> Unit
+        ) {
+            object : BaseDialog<B>(activity = context, bindingInflater) {
+                override fun setup() = block()
+            }.apply { show() }
+        }
     }
 }

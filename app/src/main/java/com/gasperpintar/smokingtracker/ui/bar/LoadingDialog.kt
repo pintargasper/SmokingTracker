@@ -1,54 +1,43 @@
 package com.gasperpintar.smokingtracker.ui.bar
 
-import android.widget.ProgressBar
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.databinding.LoadingPopupBinding
 import com.gasperpintar.smokingtracker.ui.dialog.BaseDialog
 
 class LoadingDialog(
     context: FragmentActivity
-) : BaseDialog(activity = context, R.layout.loading_popup) {
+) : BaseDialog<LoadingPopupBinding>(
+    activity = context,
+    bindingInflater = LoadingPopupBinding::inflate
+) {
 
-    private lateinit var progressTextMessage: TextView
-    private lateinit var progressTextInfo: TextView
-    private lateinit var progressTextPercentage: TextView
-    private lateinit var progressBar: ProgressBar
-
+    @Override
     override fun setup() {
         setCancelable(false)
-        progressTextMessage = dialogView.findViewById(R.id.popup_message)
-        progressTextInfo = dialogView.findViewById(R.id.popup_message_info)
-        progressTextPercentage = dialogView.findViewById(R.id.popup_message_percentage)
-        progressBar = dialogView.findViewById(R.id.popup_progress_bar)
-
-        progressTextInfo.text = activity.getString(R.string.loading_bar_encourage_0)
-        progressTextPercentage.text = activity.getString(R.string.loading_bar_progress_percentage, 0)
-
-        progressBar.isIndeterminate = false
-        progressBar.max = 100
-        progressBar.progress = 0
+        binding.popupProgressBar.max = 100
+        updateProgress(progress = 0)
     }
 
-    fun updateProgress(progress: Int) = activity.runOnUiThread {
-        progressBar.progress = progress
-        progressTextPercentage.text = activity.getString(R.string.loading_bar_progress_percentage, progress)
-
-        progressTextInfo.text = when {
-            progress >= 100 -> activity.getString(R.string.loading_bar_encourage_100)
-            progress >= 70 -> activity.getString(R.string.loading_bar_encourage_70)
-            progress >= 50 -> activity.getString(R.string.loading_bar_encourage_50)
-            progress >= 15 -> activity.getString(R.string.loading_bar_encourage_15)
-            else -> activity.getString(R.string.loading_bar_encourage_0)
-        }
-    }
-
-    fun setProgressType(type: ProgressType) {
-        progressTextMessage.text = activity.getString(
-            when (type) {
-                ProgressType.BACKUP -> R.string.loading_bar_backup
-                ProgressType.RESTORE -> R.string.loading_bar_restore
+    fun updateProgress(
+        progress: Int
+    ) = activity.runOnUiThread {
+        binding.popupProgressBar.progress = progress
+        binding.popupMessagePercentage.text = activity.getString(R.string.loading_bar_progress_percentage, progress)
+        binding.popupMessageInfo.setText(
+            when {
+                progress >= 100 -> R.string.loading_bar_encourage_100
+                progress >= 70 -> R.string.loading_bar_encourage_70
+                progress >= 50 -> R.string.loading_bar_encourage_50
+                progress >= 15 -> R.string.loading_bar_encourage_15
+                else -> R.string.loading_bar_encourage_0
             }
         )
     }
+
+    fun setProgressType(
+        type: ProgressType
+    ) = binding.popupMessage.setText(
+        if (type == ProgressType.BACKUP) R.string.loading_bar_backup else R.string.loading_bar_restore
+    )
 }

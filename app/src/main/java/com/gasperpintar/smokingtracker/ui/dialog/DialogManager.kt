@@ -1,37 +1,18 @@
 package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.annotation.SuppressLint
-import android.net.Uri
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.format.DateFormat
-import android.view.View
-import android.widget.AutoCompleteTextView
-import android.widget.Button
-import android.widget.CalendarView
-import android.widget.CheckBox
-import android.widget.DatePicker
-import android.widget.EditText
 import android.widget.TextView
-import android.widget.TimePicker
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
-import com.gasperpintar.smokingtracker.databinding.CostContainerBinding
-import com.gasperpintar.smokingtracker.ui.adapter.Adapter
+import com.gasperpintar.smokingtracker.databinding.EditPopupBinding
+import com.gasperpintar.smokingtracker.databinding.InsertPopupBinding
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import com.gasperpintar.smokingtracker.utils.TimeHelper
-import kotlinx.coroutines.launch
-import java.text.DecimalFormat
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.Calendar
 
@@ -40,12 +21,9 @@ object DialogManager {
     fun showInsertDialog(
         context: FragmentActivity,
         onConfirm: (isLent: Boolean) -> Unit
-    ) = showDialog(context, layout = R.layout.insert_popup) {
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
-
-        buttonConfirm.setOnClickListener {
-            onConfirm(lentCheckbox.isChecked)
+    ) = BaseDialog.show(context, bindingInflater = InsertPopupBinding::inflate) {
+        binding.buttonConfirm.setOnClickListener {
+            onConfirm(binding.lentCheckbox.isChecked)
             dismiss()
         }
     }
@@ -54,40 +32,29 @@ object DialogManager {
         context: FragmentActivity,
         entry: HistoryEntry,
         onConfirm: (newDateTime: LocalDateTime, isLent: Boolean) -> Unit
-    ) = showDialog(context, layout = R.layout.edit_popup) {
-        val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
-        val lentCheckbox: CheckBox = dialogView.findViewById(R.id.lent_checkbox)
-        val datePicker: DatePicker = dialogView.findViewById(R.id.date_picker)
-        val timePicker: TimePicker = dialogView.findViewById(R.id.time_picker)
+    ) = BaseDialog.show(context, EditPopupBinding::inflate) {
+        binding.run {
+            lentCheckbox.isChecked = entry.isLent
+            timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
 
-        lentCheckbox.isChecked = entry.isLent
-        timePicker.setIs24HourView(DateFormat.is24HourFormat(context))
+            entry.createdAt.let { dateTime ->
+                datePicker.updateDate(dateTime.year, dateTime.monthValue - 1, dateTime.dayOfMonth)
+                timePicker.hour = dateTime.hour
+                timePicker.minute = dateTime.minute
+            }
 
-        entry.createdAt.let { dateTime ->
-            datePicker.updateDate(
-                dateTime.year,
-                dateTime.monthValue - 1,
-                dateTime.dayOfMonth
-            )
-            timePicker.hour = dateTime.hour
-            timePicker.minute = dateTime.minute
-        }
-
-        buttonConfirm.setOnClickListener {
-            val selectedDateTime = LocalDateTime.of(
-                datePicker.year,
-                datePicker.month + 1,
-                datePicker.dayOfMonth,
-                timePicker.hour,
-                timePicker.minute,
-                LocalDateTime.now().second
-            )
-
-            onConfirm(
-                selectedDateTime,
-                lentCheckbox.isChecked
-            )
-            dismiss()
+            buttonConfirm.setOnClickListener {
+                val selectedDateTime = LocalDateTime.of(
+                    datePicker.year,
+                    datePicker.month + 1,
+                    datePicker.dayOfMonth,
+                    timePicker.hour,
+                    timePicker.minute,
+                    LocalDateTime.now().second
+                )
+                onConfirm(selectedDateTime, lentCheckbox.isChecked)
+                dismiss()
+            }
         }
     }
 
@@ -95,13 +62,13 @@ object DialogManager {
         context: FragmentActivity,
         onConfirm: () -> Unit
     ) = showDialog(context, layout = R.layout.delete_popup) {
-
+        /*
         val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
 
         buttonConfirm.setOnClickListener {
             onConfirm()
             dismiss()
-        }
+        }*/
     }
 
     fun showThemeDialog(
@@ -113,7 +80,7 @@ object DialogManager {
         layout = R.layout.theme_popup
     ) {
 
-        val themeCheckboxes = listOf(
+        /*val themeCheckboxes = listOf(
             0 to R.id.checkbox_system,
             1 to R.id.checkbox_light_theme,
             2 to R.id.checkbox_dark_theme
@@ -126,7 +93,7 @@ object DialogManager {
                 onThemeSelected(index)
                 dismiss()
             }
-        }
+        }*/
     }
 
     fun showLanguageDialog(
@@ -135,7 +102,7 @@ object DialogManager {
         onLanguageSelected: (Int) -> Unit
     ) = showDialog(context, layout = R.layout.language_popup) {
 
-        val languageCheckboxes = listOf(
+        /*val languageCheckboxes = listOf(
             0 to R.id.checkbox_system,
             1 to R.id.checkbox_english,
             2 to R.id.checkbox_slovenian,
@@ -154,7 +121,7 @@ object DialogManager {
                 onLanguageSelected(index)
                 dismiss()
             }
-        }
+        }*/
     }
 
     fun showNotificationsDialog(
@@ -165,7 +132,7 @@ object DialogManager {
         onNotificationSettingsSelected: (NotificationsSettingsEntity) -> Unit
     ) = showDialog(context, layout = R.layout.notifications_popup) {
 
-        val notificationCheckboxes = listOf(
+        /*val notificationCheckboxes = listOf(
             0 to R.id.checkbox_system,
             1 to R.id.checkbox_progress,
             2 to R.id.checkbox_achievements
@@ -213,7 +180,7 @@ object DialogManager {
         frequency.setOnItemClickListener { _, _, position, _ ->
             currentSettings = currentSettings.copy(frequency = position)
             onSettingsSelected(currentSettings)
-        }
+        }*/
     }
 
     fun showCurrencyDialog(
@@ -222,7 +189,7 @@ object DialogManager {
         onCurrencySelected: (String, String) -> Unit
     ) = showDialog(context, R.layout.currency_popup) {
 
-        val currencyCheckboxes = listOf(
+        /*val currencyCheckboxes = listOf(
             0 to R.id.checkbox_euro,
             1 to R.id.checkbox_dollar,
             2 to R.id.checkbox_pound,
@@ -293,7 +260,7 @@ object DialogManager {
                 customCheckbox.isChecked = true
                 errorTextView.visibility = View.GONE
             }
-        }
+        }*/
     }
 
     @SuppressLint(value = ["DefaultLocale"])
@@ -305,7 +272,7 @@ object DialogManager {
         onCostAdded: suspend (CostEntity) -> Unit,
         onRefresh: suspend () -> List<CostEntry>
     ) = showDialog(context, layout = R.layout.costs_popup) {
-        val packPrice: EditText = dialogView.findViewById(R.id.input_pack_price)
+        /*val packPrice: EditText = dialogView.findViewById(R.id.input_pack_price)
         val inputStartDate: EditText = dialogView.findViewById(R.id.input_start_date)
         val inputEndDate: EditText = dialogView.findViewById(R.id.input_end_date)
         val buttonAddPeriod: Button = dialogView.findViewById(R.id.button_add_period)
@@ -416,18 +383,18 @@ object DialogManager {
                 inputEndDate.text.clear()
                 packPrice.text.clear()
             }
-        }
+        }*/
     }
 
     fun showBackupDialog(
         context: FragmentActivity,
         onDownload: () -> Unit
     ) = showDialog(context, layout = R.layout.download_popup) {
-        val buttonDownload: Button = dialogView.findViewById(R.id.button_download)
+        /*val buttonDownload: Button = dialogView.findViewById(R.id.button_download)
         buttonDownload.setOnClickListener {
             onDownload()
             dismiss()
-        }
+        }*/
     }
 
     fun showRestoreDialog(
@@ -436,8 +403,8 @@ object DialogManager {
         onConfirm: () -> Unit,
         onDismiss: () -> Unit,
         onViewCreated: (TextView) -> Unit
-    ) = showDialog(context, layout = R.layout.upload_popup) {
-        val textViewSelectedFile: TextView = dialogView.findViewById(R.id.text_selected_file)
+    ) = showDialog(context, layout = R.layout.calculator_result_popup) {
+        /*val textViewSelectedFile: TextView = dialogView.findViewById(R.id.text_selected_file)
         val buttonOpenFile: Button = dialogView.findViewById(R.id.button_open_file)
         val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
 
@@ -459,14 +426,14 @@ object DialogManager {
 
         dialog.setOnDismissListener {
             onDismiss()
-        }
+        }*/
     }
 
     fun showDatePickerDialog(
         context: FragmentActivity,
         onDateSelected: (Calendar) -> Unit
     ) = showDialog(context, layout = R.layout.dialog_date_picker) {
-        val selectedDate = Calendar.getInstance()
+        /*val selectedDate = Calendar.getInstance()
         val calendarView: CalendarView = dialogView.findViewById(R.id.customCalendarView)
         val buttonConfirm: Button = dialogView.findViewById(R.id.button_confirm)
 
@@ -479,7 +446,7 @@ object DialogManager {
         buttonConfirm.setOnClickListener {
             onDateSelected(selectedDate)
             dismiss()
-        }
+        }*/
     }
 
     @SuppressLint(value = ["DefaultLocale"])
@@ -491,7 +458,7 @@ object DialogManager {
         currencyUnit: String,
         formatTime: (Int) -> String
     ) = showDialog(context, layout = R.layout.calculator_result_popup) {
-        val tvTotalCosts: TextView = dialogView.findViewById(R.id.popup_result_total_costs)
+        /*val tvTotalCosts: TextView = dialogView.findViewById(R.id.popup_result_total_costs)
         val tvCostPerCigarette: TextView = dialogView.findViewById(R.id.popup_result_cost_per_cigarette)
         val tvAverageCostPerHour: TextView = dialogView.findViewById(R.id.popup_result_average_cost_per_hour)
         val tvTimeSpent: TextView = dialogView.findViewById(R.id.popup_result_time_spent)
@@ -509,14 +476,14 @@ object DialogManager {
         tvTotalCosts.text = String.format("%.2f %s", totalCost, currencyUnit)
         tvCostPerCigarette.text = String.format("%.3f %s", averageCostPerCigarette, currencyUnit)
         tvAverageCostPerHour.text = String.format("%.2f %s", averageCostPerHour, currencyUnit)
-        tvTimeSpent.text = formatTime(totalTimeMinutes)
+        tvTimeSpent.text = formatTime(totalTimeMinutes)*/
     }
 
     fun showLoadingDialog(
         context: FragmentActivity
     ): LoadingDialog {
         val dialog = LoadingDialog(context)
-        dialog.show()
+        //dialog.show()
         return dialog
     }
 
@@ -525,7 +492,7 @@ object DialogManager {
         onSave: () -> Unit,
         onClose: () -> Unit = {}
     ) = showDialog(context, layout = R.layout.save_note_popup) {
-        val buttonConfirm: Button = dialogView.findViewById(R.id.save)
+        /*val buttonConfirm: Button = dialogView.findViewById(R.id.save)
         val buttonClose: Button = dialogView.findViewById(R.id.close)
 
         buttonConfirm.setOnClickListener {
@@ -536,16 +503,17 @@ object DialogManager {
         buttonClose.setOnClickListener {
             dismiss()
             onClose()
-        }
+        }*/
     }
 
     private inline fun showDialog(
         context: FragmentActivity,
         layout: Int,
-        crossinline set: BaseDialog.() -> Unit
+        crossinline set: BaseDialog.Companion.() -> Unit
     ) {
-        object : BaseDialog(activity = context, layoutResource = layout) {
+        /*object : BaseDialog(activity = context, layoutResource = layout) {
             override fun setup() = set()
         }.show()
+    }*/
     }
 }
