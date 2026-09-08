@@ -55,6 +55,7 @@ class HomeViewModel(
     suspend fun insert(
         isLent: Boolean
     ) {
+        if (!isLent) achievementRepository.resetAll(state = true)
         historyRepository.insert(entry = HistoryEntity.default(isLent = isLent))
     }
 
@@ -63,9 +64,7 @@ class HomeViewModel(
         dateTime: LocalDateTime,
         isLent: Boolean
     ) {
-        if (entry.id == lastEntry?.id) {
-            achievementRepository.resetAll(state = false)
-        }
+        if (entry.id == lastEntry?.id) achievementRepository.resetAll(state = false)
         val updatedEntry = entry.copy(createdAt = dateTime, isLent = isLent)
         historyRepository.update(entry = updatedEntry.toEntity())
     }
@@ -73,9 +72,7 @@ class HomeViewModel(
     suspend fun delete(
         entry: HistoryEntry
     ) {
-        if (entry.id == lastEntry?.id) {
-            achievementRepository.resetAll(state = false)
-        }
+        if (entry.id == lastEntry?.id) achievementRepository.resetAll(state = false)
         historyRepository.delete(entry = entry.toEntity())
     }
 }

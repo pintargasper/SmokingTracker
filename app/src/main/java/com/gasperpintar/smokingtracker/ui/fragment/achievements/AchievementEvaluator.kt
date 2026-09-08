@@ -19,79 +19,45 @@ class AchievementEvaluator(
     private val notificationsSettingsRepository: NotificationsSettingsRepository
 ) {
 
-    suspend fun evaluate(
-        lastSmokeTime: LocalDateTime,
-        now: LocalDateTime
-    ) {
-        val achievements: List<AchievementEntity> = achievementRepository.getAll()
+    suspend fun evaluate(lastSmokeTime: LocalDateTime, now: LocalDateTime) {
+        val achievements = achievementRepository.getAll().ifEmpty { return }
         val averageCigarettesPerDay = historyRepository.getAverageCigarettesPerDay()
+        val notifyEnabled = notificationsSettingsRepository.get()?.achievements == true
+        if (notifyEnabled) Notifications.createNotificationChannel(context)
 
-        for (achievement in achievements) {
-            val calculatedUnlockDate: LocalDateTime? =
-                when (achievement.category) {
-                    AchievementCategory.SMOKE_FREE_TIME -> {
-                        val requiredSeconds = achievement.unit.toSeconds(achievement.value) ?: continue
-                        lastSmokeTime.plusSeconds(requiredSeconds).takeIf {
-                            !now.isBefore(it)
-                        }
-                    }
+        achievements.forEach { achievement ->
+            val seconds = when (achievement.category) {
+                AchievementCategory.SMOKE_FREE_TIME -> achievement.unit.toSeconds(achievement.value)
+                AchievementCategory.CIGARETTES_AVOIDED -> averageCigarettesPerDay.takeIf { it > 0 }?.let { (achievement.value / it * 86400).toLong() }
+            } ?: return@forEach
 
-                    AchievementCategory.CIGARETTES_AVOIDED -> {
-                        if (averageCigarettesPerDay <= 0.0) {
-                            continue
-                        }
+            val unlockDate = lastSmokeTime.plusSeconds(seconds).takeIf { !now.isBefore(it) } ?: return@forEach
 
-                        lastSmokeTime.plusSeconds((achievement.value / averageCigarettesPerDay * 86400).toLong()).takeIf {
-                            !now.isBefore(it)
-                        }
-                    }
-                }
+            val isNew = achievement.lastAchieved == null && achievement.reset
+            val isOutdated = achievement.lastAchieved?.isEqual(unlockDate) == false
+            if (!isNew && !isOutdated) return@forEach
 
-            if (calculatedUnlockDate == null) {
-                continue
-            }
-
-            val isNewAchievement = achievement.lastAchieved == null && achievement.reset
-            val isIncorrectDate = achievement.lastAchieved != null && !achievement.lastAchieved.isEqual(calculatedUnlockDate)
-
-            if (!isNewAchievement && !isIncorrectDate) {
-                continue
-            }
-
-            val updatedAchievement = achievement.copy(
+            val updated = achievement.copy(
                 times = achievement.times + 1,
-                lastAchieved = calculatedUnlockDate,
+                lastAchieved = unlockDate,
                 reset = false,
-                notify = true
+                notify = !notifyEnabled
             )
-
-            achievementRepository.update(entry = updatedAchievement)
-
-            val notifications = notificationsSettingsRepository.get()
-
-            if (notifications?.achievements == true) {
-                Notifications.createNotificationChannel(context)
-
-                val displayText = AchievementEntry.fromEntity(entity = updatedAchievement).getDisplayText(context)
-                val notificationContent = when (updatedAchievement.unit) {
-                    AchievementUnit.CIGARETTES -> context.getString(
-                                R.string.notification_achievement_unlocked_content_cigarettes,
-                                displayText
-                            )
-                    else -> context.getString(
-                                R.string.notification_achievement_unlocked_content_time,
-                                displayText
-                            )
-                }
-
-                Notifications.sendNotification(
-                    context = context,
-                    title = context.getString(R.string.notification_achievement_unlocked_title),
-                    content = notificationContent,
-                    notificationId = 1002 + updatedAchievement.id.toInt()
-                )
-                achievementRepository.update(entry = updatedAchievement.copy(notify = false))
-            }
+            if (notifyEnabled) sendNotification(achievement = updated)
+            achievementRepository.update(entry = updated)
         }
+    }
+
+    private fun sendNotification(achievement: AchievementEntity) {
+        val text = AchievementEntry.fromEntity(achievement).getDisplayText(context)
+        val resId = if (achievement.unit == AchievementUnit.CIGARETTES) R.string.notification_achievement_unlocked_content_cigarettes
+        else R.string.notification_achievement_unlocked_content_time
+
+        Notifications.sendNotification(
+            context = context,
+            title = context.getString(R.string.notification_achievement_unlocked_title),
+            content = context.getString(resId, text),
+            notificationId = 1002 + achievement.id.toInt()
+        )
     }
 }

@@ -11,6 +11,7 @@ import com.gasperpintar.smokingtracker.utils.WidgetHelper
 class StatsQuickAddWidget : AppWidgetProvider() {
 
     @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
+    @Override
     override fun onUpdate(
         context: Context,
         appWidgetManager: AppWidgetManager,
@@ -27,10 +28,19 @@ class StatsQuickAddWidget : AppWidgetProvider() {
     }
 
     @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
+    @Override
     override fun onEnabled(
         context: Context
     ) {
         super.onEnabled(context)
         WidgetHelper.scheduleMidnightWidgetUpdate(context)
+    }
+
+    @Override
+    override fun onDisabled(
+        context: Context
+    ) {
+        super.onDisabled(context)
+        //WidgetHelper.cancelMidnightWidgetUpdate(context)
     }
 }

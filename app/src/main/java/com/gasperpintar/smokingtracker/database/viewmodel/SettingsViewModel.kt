@@ -48,11 +48,15 @@ class SettingsViewModel(
         notificationsSettingsRepository.update(settings = settings)
     }
 
-    suspend fun addCost(cost: CostEntry) {
+    suspend fun addCost(
+        cost: CostEntry
+    ) {
         costsRepository.insert(entry = cost.toEntity())
     }
 
-    suspend fun deleteCost(cost: CostEntry) {
+    suspend fun deleteCost(
+        cost: CostEntry
+    ) {
         costsRepository.delete(entry = cost.toEntity())
     }
 

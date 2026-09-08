@@ -5,42 +5,21 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 
-class MarqueeTextView : AppCompatTextView {
+class MarqueeTextView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : AppCompatTextView(context, attrs, defStyleAttr) {
 
-    constructor(
-        context: Context
-    ) : super(context) {
-        initializeMarquee()
+    init {
+        isSingleLine = true
+        ellipsize = TextUtils.TruncateAt.MARQUEE
+        marqueeRepeatLimit = -1
+        isFocusable = false
+        isFocusableInTouchMode = false
+        isSelected = true
     }
 
-    constructor(
-        context: Context, attributeSet: AttributeSet
-    ) : super(context, attributeSet) {
-        initializeMarquee()
-    }
-
-    constructor(
-        context: Context,
-        attributeSet: AttributeSet,
-        defaultStyleAttribute: Int
-    ) : super(
-        context,
-        attributeSet,
-        defaultStyleAttribute) {
-        initializeMarquee()
-    }
-
-    override fun isFocused(): Boolean {
-        return true
-    }
-
-    private fun initializeMarquee() {
-        this.isSingleLine = true
-        this.ellipsize = TextUtils.TruncateAt.MARQUEE
-        this.marqueeRepeatLimit = -1
-        this.isFocusable = false
-        this.isFocusableInTouchMode = false
-        this.setHorizontallyScrolling(true)
-        this.isSelected = true
-    }
+    @Override
+    override fun isFocused(): Boolean = true
 }
