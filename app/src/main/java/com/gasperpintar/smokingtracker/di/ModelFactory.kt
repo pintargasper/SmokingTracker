@@ -6,6 +6,7 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.viewmodel.AchievementViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.BasicViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.CalculatorViewModel
+import com.gasperpintar.smokingtracker.database.viewmodel.ForecastViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.GraphViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
@@ -77,6 +78,12 @@ class ModelFactory(
                 BasicViewModel(
                     historyRepository = container.historyRepository,
                     costsRepository = container.costsRepository,
+                ) as T
+            }
+
+            modelClass.isAssignableFrom(ForecastViewModel::class.java) -> {
+                ForecastViewModel(
+                    historyRepository = container.historyRepository
                 ) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
