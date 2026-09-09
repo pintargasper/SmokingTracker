@@ -244,7 +244,7 @@ class SettingsFragment : Fragment() {
 
         val uri = selectedFile.tag as? Uri ?: return
 
-        val dialog = DialogManager.showLoadingDialog(requireActivity()).apply {
+        val dialog = DialogManager.showLoadingDialog(context = requireActivity()).apply {
             setProgressType(ProgressType.RESTORE)
         }
 
@@ -278,7 +278,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun exportFile(fileUri: Uri, onFinished: () -> Unit = {}) {
-        val dialog = DialogManager.showLoadingDialog(requireActivity()).apply {
+        val dialog = DialogManager.showLoadingDialog(context = requireActivity()).apply {
             setProgressType(ProgressType.BACKUP)
         }
 

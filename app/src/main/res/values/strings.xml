@@ -127,6 +127,7 @@
 
     <string name="cost_price">Cost: %1$s %2$s</string>
     <string name="cost_delete">Delete record</string>
+    <string name="cost_format" translatable="false">%1$s - %2$s</string>
 
     <string name="settings_general">General</string>
     <string name="settings_general_theme">Theme</string>
