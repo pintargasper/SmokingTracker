@@ -4,7 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.DashPathEffect
+import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.Path
+import android.graphics.Shader
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -13,221 +16,170 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import java.util.Locale
+import java.time.LocalDateTime
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
 class GraphView @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet? = null
-) : View(context, attrs) {
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : View(context, attrs, defStyleAttr) {
 
-    private var dataList: List<GraphEntry> = emptyList()
-    private var forecastList: List<GraphEntry> = emptyList()
-    private var labelsNumber: Int = 5
-    private var currentGraphInterval: GraphInterval = GraphInterval.WEEKLY
+    private fun Float.dp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics)
+    private fun Float.sp() = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, this, resources.displayMetrics)
 
-    private val paddingLeft: Float = 80f
-    private val paddingRight: Float = 80f
-    private val paddingTop: Float = 60f
-    private val paddingBottom: Float = 120f
-    private val pointRadius: Float = 12f
+    private val themeColor by lazy {
+        TypedValue().also { context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, it, true) }.data
+    }
 
+    private val paddingLeft = 36f.dp()
+    private val paddingRight = 24f.dp()
+    private val paddingTop = 24f.dp()
+    private val paddingBottom = 48f.dp()
+    private val pointRadius = 4f.dp()
+
+    private var combinedEntries = emptyList<GraphEntry>()
+    private var validMainCount = 0
+    private var maxDataValue = 1
+    private var labelsCount = 5
+    private var currentGraphInterval = GraphInterval.WEEKLY
     private var isForecastGraph = false
 
-    private val textPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
-        color = typedValue.data
-        textSize = 30f
+    private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textSize = 11f.sp() }
+    private val linePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { strokeWidth = 2f.dp(); style = Paint.Style.STROKE }
+    private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+
+    private val fillPath = Path()
+    private val dashEffect = DashPathEffect(floatArrayOf(6f.dp(), 4f.dp()), 0f)
+
+    init {
+        if (isInEditMode) {
+            val now = LocalDateTime.now()
+            setData(listOf(GraphEntry(quantity = 5, date = now.minusDays(3)), GraphEntry(quantity = 12, date = now)), graphInterval = GraphInterval.WEEKLY)
+        }
     }
 
-    private val linePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.GRAY
-        strokeWidth = 6f
-        style = Paint.Style.STROKE
+    @Override
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        updateGradientShader()
     }
 
-    private val pointPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        color = Color.GRAY
-        style = Paint.Style.FILL
-    }
-
-    private val forecastLinePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
-        color = typedValue.data
-        strokeWidth = 6f
-        style = Paint.Style.STROKE
-        pathEffect = DashPathEffect(floatArrayOf(15f, 10f), 0f)
-    }
-
-    private val forecastPointPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        val typedValue = TypedValue()
-        context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, typedValue, true)
-        color = typedValue.data
-        style = Paint.Style.FILL
-    }
-
-    override fun onDraw(
-        canvas: Canvas
-    ) {
+    @Override
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        textPaint.color = themeColor
 
-        if (dataList.isEmpty() && forecastList.isEmpty()) {
-            drawEmptyMessage(canvas)
+        if (combinedEntries.isEmpty()) {
+            val message = context.getString(R.string.graph_view_info)
+            canvas.drawText(message, (width - textPaint.measureText(message)) / 2f, height / 2f, textPaint)
             return
         }
 
-        val graphWidth: Float = width - paddingLeft - paddingRight
-        val graphHeight: Float = height - paddingTop - paddingBottom
+        val graphWidth = width - paddingLeft - paddingRight
+        val graphHeight = height - paddingTop - paddingBottom
 
-        val maxMain = dataList.maxOfOrNull { it.quantity } ?: 0
-        val maxForecast = forecastList.maxOfOrNull { it.quantity } ?: 0
-        val maxDataValue: Int = maxOf(maxMain, maxForecast).coerceAtLeast(1)
+        val yLabels = getYAxisLabels(maxDataValue)
+        yLabels.forEachIndexed { _, labelValue ->
+            val yPosition = paddingTop + graphHeight * (1f - labelValue.toFloat() / maxDataValue)
+            canvas.drawText(labelValue.toString(), paddingLeft - 28f.dp(), yPosition + 4f.dp(), textPaint)
+        }
 
-        drawAxes(canvas, graphWidth, graphHeight)
-        drawYAxisLabels(canvas, graphHeight, maxDataValue)
-        drawAllData(canvas, graphHeight, maxDataValue)
+        val stepX = graphWidth / (combinedEntries.size - 1).coerceAtLeast(minimumValue = 1)
+        val labelStep = if (combinedEntries.size > 10) 2 else 1
+
+        fillPath.reset()
+        fillPath.moveTo(paddingLeft, paddingTop + graphHeight)
+
+        var previousX = -1f
+        var previousY = -1f
+
+        combinedEntries.forEachIndexed { index, entry ->
+            val xPosition = paddingLeft + index * stepX
+            val yPosition = paddingTop + graphHeight * (1 - entry.quantity.toFloat() / maxDataValue)
+            val isForecastItem = index >= validMainCount
+
+            fillPath.lineTo(xPosition, yPosition)
+
+            if (previousX >= 0) {
+                linePaint.color = if (isForecastItem) themeColor else Color.GRAY
+                linePaint.pathEffect = if (isForecastItem) dashEffect else null
+                canvas.drawLine(previousX, previousY, xPosition, yPosition, linePaint)
+            }
+
+            fillPaint.shader = null
+            fillPaint.color = if (isForecastItem) themeColor else Color.GRAY
+            canvas.drawCircle(xPosition, yPosition, pointRadius, fillPaint)
+
+            if (index % labelStep == 0) drawXLabel(canvas, xPosition, graphHeight, entry)
+            previousX = xPosition
+            previousY = yPosition
+        }
+
+        fillPath.lineTo(previousX, paddingTop + graphHeight)
+        fillPath.close()
+        updateGradientShader()
+        canvas.drawPath(fillPath, fillPaint)
     }
 
     fun setData(
         data: List<GraphEntry>,
         forecast: List<GraphEntry> = emptyList(),
         graphInterval: GraphInterval,
-        labels: Int = labelsNumber,
+        labels: Int = 5,
         isForecast: Boolean = false
     ) {
-        dataList = data
-        forecastList = forecast
-        currentGraphInterval = graphInterval
-        labelsNumber = labels
-        isForecastGraph = isForecast
+        this.currentGraphInterval = graphInterval
+        this.labelsCount = labels
+        this.isForecastGraph = isForecast
+
+        val validMain = data.filter { it.quantity > 0 }
+        val validForecast = forecast.filter { it.quantity > 0 }
+
+        validMainCount = validMain.size
+        combinedEntries = validMain + validForecast
+        maxDataValue = maxOf(
+            a = validMain.maxOfOrNull { it.quantity } ?: 0,
+            b = validForecast.maxOfOrNull { it.quantity } ?: 0
+        ).coerceAtLeast(minimumValue = 1)
+
+        updateGradientShader()
         invalidate()
     }
 
-    private fun drawAxes(
-        canvas: Canvas,
-        graphWidth: Float,
-        graphHeight: Float
-    ) {
-        canvas.drawLine(paddingLeft, paddingTop, paddingLeft, paddingTop + graphHeight, linePaint)
-        canvas.drawLine(paddingLeft, paddingTop + graphHeight, paddingLeft + graphWidth, paddingTop + graphHeight, linePaint)
+    private fun getYAxisLabels(maxDataValue: Int): List<Int> {
+        if (maxDataValue == 0) return emptyList()
+        val stepIncrement = ceil(x = (maxDataValue + 1) / 5f).roundToInt().coerceAtLeast(minimumValue = 1)
+        return generateSequence(seed = maxDataValue) { index ->
+            (index - stepIncrement).takeIf { it >= 0 }
+        }.toList()
     }
 
-    private fun drawAllData(
-        canvas: Canvas,
-        graphHeight: Float,
-        maxDataValue: Int
-    ) {
-        val validMain = dataList.filter { it.quantity > 0 }
-        val validForecast = forecastList.filter { it.quantity > 0 }
-        val combinedList = validMain + validForecast
-
-        if (combinedList.isEmpty()) {
-            return
-        }
-
-        val stretchedStepX: Float = (width - paddingLeft - paddingRight) / (combinedList.size - 1).coerceAtLeast(minimumValue = 1)
-
-        var previousX: Float? = null
-        var previousY: Float? = null
-
-        combinedList.forEachIndexed { index, entry ->
-            val x = paddingLeft + index * stretchedStepX
-            val y = paddingTop + graphHeight * (1 - entry.quantity.toFloat() / maxDataValue)
-
-            val isForecast = index >= validMain.size
-
-            val currentLinePaint = isForecast.takeIf { it }?.let {
-                forecastLinePaint
-            } ?: linePaint
-
-            val currentPointPaint = isForecast.takeIf { it }?.let {
-                forecastPointPaint
-            } ?: pointPaint
-
-            if (previousX != null && previousY != null) {
-                canvas.drawLine(previousX, previousY, x, y, currentLinePaint)
-            }
-
-            canvas.drawCircle(x, y, pointRadius, currentPointPaint)
-            drawXLabel(canvas, x, graphHeight, entry, index, combinedList.size)
-
-            previousX = x
-            previousY = y
+    private fun updateGradientShader() {
+        val graphHeight = height - paddingTop - paddingBottom
+        if (graphHeight > 0) {
+            val semiTransparentThemeColor = (themeColor and 0x00FFFFFF) or 0x28000000
+            fillPaint.shader = LinearGradient(
+                0f, paddingTop, 0f, paddingTop + graphHeight,
+                semiTransparentThemeColor, Color.TRANSPARENT, Shader.TileMode.CLAMP
+            )
         }
     }
 
-    private fun drawXLabel(
-        canvas: Canvas,
-        x: Float,
-        graphHeight: Float,
-        entry: GraphEntry,
-        index: Int,
-        totalSize: Int
-    ) {
-        val step = (totalSize > 10).takeIf { it }?.let { 2 } ?: 1
-        if (index % step != 0) {
-            return
+    private fun drawXLabel(canvas: Canvas, xPosition: Float, graphHeight: Float, entry: GraphEntry) {
+        val date = entry.date
+        val labelText = when (currentGraphInterval) {
+            GraphInterval.HOURLY -> "%02d:00".format(date.hour)
+            GraphInterval.DAILY -> if (isForecastGraph) "${date.dayOfMonth}.${date.monthValue}" else "%02d:00".format(date.hour)
+            GraphInterval.WEEKLY -> if (isForecastGraph) "${date.dayOfMonth}.${date.monthValue}" else LocalizationHelper.getDayOfWeekName(context, date.dayOfWeek).take(n = 3)
+            GraphInterval.MONTHLY -> if (isForecastGraph) LocalizationHelper.getMonthName(context, date.month).take(n = 3) else "${date.dayOfMonth}.${date.monthValue}"
+            else -> LocalizationHelper.getMonthName(context, date.month).take(n = 3)
         }
 
-        val labelText: String = when (currentGraphInterval) {
-            GraphInterval.HOURLY -> String.format(Locale.getDefault(), "%02d:00", entry.date.hour)
-            GraphInterval.DAILY -> isForecastGraph.takeIf { it }?.let {
-                "%02d.%02d".format(entry.date.dayOfMonth, entry.date.monthValue)
-            } ?: "%02d:00".format(entry.date.hour)
-            GraphInterval.WEEKLY -> isForecastGraph.takeIf { it }?.let {
-                "%02d.%02d".format(entry.date.dayOfMonth, entry.date.monthValue)
-            } ?: LocalizationHelper.getDayOfWeekName(context, entry.date.dayOfWeek).take(3)
-            else -> LocalizationHelper.getMonthName(context, entry.date.month).take(3)
+        val yPosition = paddingTop + graphHeight + 20f.dp()
+        canvas.withRotation(-45f, xPosition, yPosition) {
+            drawText(labelText, xPosition - textPaint.measureText(labelText) / 2f, yPosition, textPaint)
         }
-
-        val textWidth: Float = textPaint.measureText(labelText)
-        canvas.withRotation(-45f, x, paddingTop + graphHeight + 60f) {
-            drawText(labelText, x - textWidth / 2, paddingTop + graphHeight + 60f, textPaint)
-        }
-    }
-
-    private fun drawYAxisLabels(
-        canvas: Canvas,
-        graphHeight: Float,
-        maxDataValue: Int
-    ) {
-        if (maxDataValue == 0) {
-            return
-        }
-
-        val yPositions: MutableList<Float> = mutableListOf()
-        val stepY = 1f
-        var value = 0f
-
-        while (value <= maxDataValue) {
-            yPositions.add(paddingTop + graphHeight * (1 - value / maxDataValue))
-            value += stepY
-        }
-
-        val stepIncrement: Int = ceil(yPositions.size / labelsNumber.toFloat()).roundToInt().coerceAtLeast(minimumValue = 1)
-        var index: Int = yPositions.size - 1
-
-        repeat(times = labelsNumber) {
-            val y: Float = yPositions.getOrNull(index) ?: return@repeat
-            val labelValue: Int = ((maxDataValue.toFloat() / (yPositions.size - 1)) * index).roundToInt()
-
-            canvas.drawText(labelValue.toString(), paddingLeft - 70f, y + 10f, textPaint)
-            index -= stepIncrement
-
-            if (index < 0) {
-                return@repeat
-            }
-        }
-    }
-
-    private fun drawEmptyMessage(
-        canvas: Canvas
-    ) {
-        val message = context.getString(R.string.graph_view_info)
-        val textWidth = textPaint.measureText(message)
-        canvas.drawText(message, (width - textWidth) / 2, height / 2f, textPaint)
     }
 }
