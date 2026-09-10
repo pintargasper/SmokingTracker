@@ -15,6 +15,7 @@ import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -116,7 +117,7 @@ class GraphFragment : Fragment() {
         state: GraphState
     ) = binding.apply {
         val (start, _) = TimeHelper.getDay(date = state.selectedDate)
-        currentDateDaily.text = LocalizationHelper.formatDate(date = start.toLocalDate())
+        currentDateDaily.text = start.toLocalDate().formatLocalized()
         graphDaily.text = getString(R.string.graph_daily, state.dailyCount)
         graphViewDaily.setData(data = state.dailyEntries, graphInterval = GraphInterval.DAILY)
     }
@@ -137,7 +138,7 @@ class GraphFragment : Fragment() {
         currentDateMonthly.text =
             String.format(
                 Locale.getDefault(), "%s %d",
-                LocalizationHelper.getMonthName(context = requireContext(), start.month),
+                LocalizationHelper.getMonthName(month = start.month),
                 start.year
             )
         graphMonthly.text = getString(R.string.graph_monthly, state.monthlyCount)

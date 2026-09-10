@@ -49,7 +49,7 @@ class MainViewModel(
         val lastVersionName = sharedPreferences.getString("last_version_name", null)
 
         if (versionName != lastVersionName) {
-            JsonHelper(achievementRepository = achievementRepository).initializeAchievementsIfNeeded(context = context)
+            JsonHelper(achievementRepository = achievementRepository).initializeAchievements(context = context)
             sharedPreferences.edit { putString("last_version_name", versionName) }
         }
     }

@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.utils
 
 import android.content.res.Resources
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDate
@@ -183,7 +184,7 @@ object TimeHelper {
         return Triple(
             updatedStartDate,
             updatedEndDate,
-            LocalizationHelper.formatDate(calendarForDisplay.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate())
+            calendarForDisplay.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().formatLocalized()
         )
     }
 }

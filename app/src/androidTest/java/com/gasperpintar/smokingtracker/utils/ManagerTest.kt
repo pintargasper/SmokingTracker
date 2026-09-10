@@ -10,6 +10,8 @@ import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.repository.*
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.utils.manager.Manager
+import com.gasperpintar.smokingtracker.utils.manager.Mappers
 import kotlinx.coroutines.runBlocking
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.After
@@ -96,27 +98,39 @@ class ManagerTest {
                 onProgress = {}
             )
 
-            val history = historyRepository.getAll().first()
+            val histories = historyRepository.getAll()
+            val achievements = achievementRepository.getAll()
+            val costs = costsRepository.getAll()
+            val notes = notesRepository.getAll()
+            val settings = settingsRepository.get()
+            val notifications = notificationsRepository.get()
+
+            assertTrue("History should not be empty", histories.isNotEmpty())
+            assertTrue("Achievements should not be empty", achievements.isNotEmpty())
+            assertTrue("Costs should not be empty", costs.isNotEmpty())
+            assertTrue("Notes should not be empty", notes.isNotEmpty())
+            assertTrue("Settings should exist", settings != null)
+            assertTrue("Notifications settings should exist", notifications != null)
+
+            val history = histories.first()
             assertTrue(history.lent == 1)
 
-            val achievement = achievementRepository.getAll().first()
+            val achievement = achievements.first()
             assertTrue(achievement.value == 9)
             assertTrue(achievement.times == 2L)
             assertTrue(achievement.notify)
 
-            val cost = costsRepository.getAll().first()
+            val cost = costs.first()
             assertTrue(cost.price == 4.5)
 
-            val note = notesRepository.getAll().first()
+            val note = notes.first()
             assertTrue(note.title == "Test")
             assertTrue(note.content == "Smoking note")
             assertTrue(note.mood == 3)
 
-            val settings = settingsRepository.get()
             assertTrue(settings?.currency == "€")
             assertTrue(settings?.frequency == 5)
 
-            val notifications = notificationsRepository.get()
             assertTrue(notifications?.system == true)
             assertTrue(notifications?.progress == false)
         }
@@ -163,37 +177,37 @@ class ManagerTest {
 
             sheet(
                 name = "History",
-                headers = listOf("Lent", "CreatedAt"),
+                headers = Mappers.HISTORY_HEADERS,
                 values = listOf(1, "2026-01-01 12:00:00")
             )
 
             sheet(
                 name = "Achievements",
-                headers = listOf("Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit"),
-                values = listOf(9, 2, "", true, true, AchievementCategory.entries.first().name, AchievementUnit.entries.first().name)
+                headers = Mappers.ACHIEVEMENTS_HEADERS,
+                values = listOf(9, 2, "", true, true, AchievementCategory.entries.first().name, AchievementUnit.entries.first().name, 1)
             )
 
             sheet(
                 name = "Costs",
-                headers = listOf("Price", "StartDate", "EndDate"),
+                headers = Mappers.COSTS_HEADERS,
                 values = listOf(4.5, "2026-01-01 00:00:00", "2026-01-02 00:00:00")
             )
 
             sheet(
                 name = "Notes",
-                headers = listOf("Title", "Content", "Mood", "CreatedAt", "UpdatedAt"),
+                headers = Mappers.NOTES_HEADERS,
                 values = listOf("Test", "Smoking note", 3, "2026-01-01 10:00:00", "2026-01-01 11:00:00")
             )
 
             sheet(
                 name = "Settings",
-                headers = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency"),
+                headers = Mappers.SETTINGS_HEADERS,
                 values = listOf(1, 2, 5, "€", "")
             )
 
             sheet(
                 name = "NotificationsSettings",
-                headers = listOf("System", "Achievements", "Progress"),
+                headers = Mappers.NOTIF_SETTINGS_HEADERS,
                 values = listOf(true, true, false)
             )
             file.outputStream().use(block = workbook::write)

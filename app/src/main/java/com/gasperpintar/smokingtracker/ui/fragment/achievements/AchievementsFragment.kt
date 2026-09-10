@@ -22,7 +22,7 @@ import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -79,7 +79,7 @@ class AchievementsFragment: Fragment() {
                 achievementTitle.text = getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
                 achievementMessage.text = getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)
                 lastAchieved.text = achievementEntry.lastAchieved?.toLocalDate()?.let { localDate: LocalDate ->
-                    getString(R.string.achievement_last, LocalizationHelper.formatDate(date = localDate))
+                    getString(R.string.achievement_last, localDate.formatLocalized())
                 } ?: getString(R.string.achievement_last, "/")
 
                 val achievedTimesText: String = requireContext().resources.getQuantityString(

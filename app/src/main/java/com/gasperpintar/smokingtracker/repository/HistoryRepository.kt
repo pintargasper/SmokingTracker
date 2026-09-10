@@ -15,6 +15,12 @@ class HistoryRepository(
         historyDao.insert(entity = entry)
     }
 
+    suspend fun insertAll(
+        entries: List<HistoryEntity>
+    ) {
+        historyDao.insertAll(entities = entries)
+    }
+
     suspend fun update(
         entry: HistoryEntity
     ) {

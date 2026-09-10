@@ -41,22 +41,6 @@ data class AchievementEntry(
         }
     }
 
-    fun toEntity(existing: AchievementEntity? = null): AchievementEntity {
-        return AchievementEntity(
-            id = id,
-            image = image,
-            value = value,
-            title = title,
-            message = message,
-            category = category,
-            unit = unit,
-            times = existing?.times ?: times,
-            lastAchieved = existing?.lastAchieved ?: lastAchieved,
-            reset = existing?.reset ?: reset,
-            notify = existing?.notify ?: notify
-        )
-    }
-
     fun getDisplayText(
         context: Context
     ): String {
@@ -68,10 +52,6 @@ data class AchievementEntry(
             AchievementUnit.YEARS -> R.plurals.time_years
             AchievementUnit.CIGARETTES -> R.plurals.cigarettes_count
         }
-        return context.resources.getQuantityString(
-            resource,
-            value,
-            value
-        )
+        return context.resources.getQuantityString(resource, value, value)
     }
 }

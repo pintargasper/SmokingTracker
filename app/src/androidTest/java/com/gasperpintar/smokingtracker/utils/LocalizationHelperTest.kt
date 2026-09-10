@@ -8,6 +8,7 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -83,7 +84,7 @@ class LocalizationHelperTest {
             Locale.setDefault(Locale.forLanguageTag("sl-SI"))
 
             val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
-            val result = LocalizationHelper.formatDateTime(dateTime)
+            val result = dateTime.formatLocalized()
 
             assert(result.isNotEmpty())
             assert(result.contains("12"))
@@ -103,7 +104,7 @@ class LocalizationHelperTest {
             Locale.setDefault(Locale.forLanguageTag("en-US"))
 
             val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
-            val result = LocalizationHelper.formatDateTime(dateTime)
+            val result = dateTime.formatLocalized()
 
             assertEquals("8_12_26_6_36_PM", result)
         } finally {
@@ -119,7 +120,7 @@ class LocalizationHelperTest {
             Locale.setDefault(Locale.forLanguageTag("en-US"))
 
             val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
-            val result = LocalizationHelper.formatDateTime(dateTime)
+            val result = dateTime.formatLocalized()
 
             assert(result.isNotEmpty())
             assert(result.none {
@@ -133,7 +134,7 @@ class LocalizationHelperTest {
     @Test
     fun getDayOfWeekNameReturnsNonEmptyString() {
         for (day in DayOfWeek.entries) {
-            val result = LocalizationHelper.getDayOfWeekName(context, dayOfWeek = day)
+            val result = LocalizationHelper.getDayOfWeekName(dayOfWeek = day)
             assert(result.isNotEmpty())
         }
     }
@@ -141,7 +142,7 @@ class LocalizationHelperTest {
     @Test
     fun getMonthNameReturnsNonEmptyString() {
         for(month in Month.entries) {
-            val result = LocalizationHelper.getMonthName(context, month = month)
+            val result = LocalizationHelper.getMonthName(month = month)
             assert(result.isNotEmpty())
         }
     }
@@ -150,7 +151,7 @@ class LocalizationHelperTest {
     fun formatLoggedDateReturnsFormattedDateWhenDayIsProvided() {
         val day = "2026-08-12"
 
-        val formattedDate = LocalizationHelper.formatDate(LocalDate.parse(day))
+        val formattedDate = LocalDate.parse(day).formatLocalized()
 
         val expected = context.resources.getString(R.string.statistics_logged, formattedDate)
         val actual = LocalizationHelper.formatLoggedDate(resources = context.resources, day = day)

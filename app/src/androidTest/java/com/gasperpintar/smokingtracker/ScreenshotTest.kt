@@ -21,7 +21,7 @@ import com.gasperpintar.smokingtracker.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.repository.NotesRepository
 import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.repository.SettingsRepository
-import com.gasperpintar.smokingtracker.utils.Manager
+import com.gasperpintar.smokingtracker.utils.manager.Manager
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule

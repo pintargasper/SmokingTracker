@@ -32,7 +32,7 @@ import com.gasperpintar.smokingtracker.databinding.ThemePopupBinding
 import com.gasperpintar.smokingtracker.databinding.UploadPopupBinding
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -232,7 +232,7 @@ object DialogManager {
             fun formatDate(date: LocalDate): String {
                 return when (date) {
                     LocalDate.now() -> context.getString(R.string.day_today)
-                    else -> LocalizationHelper.formatDate(date)
+                    else -> date.formatLocalized()
                 }
             }
 

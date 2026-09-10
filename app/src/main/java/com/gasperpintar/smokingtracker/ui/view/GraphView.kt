@@ -172,9 +172,9 @@ class GraphView @JvmOverloads constructor(
         val labelText = when (currentGraphInterval) {
             GraphInterval.HOURLY -> "%02d:00".format(date.hour)
             GraphInterval.DAILY -> if (isForecastGraph) "${date.dayOfMonth}.${date.monthValue}" else "%02d:00".format(date.hour)
-            GraphInterval.WEEKLY -> if (isForecastGraph) "${date.dayOfMonth}.${date.monthValue}" else LocalizationHelper.getDayOfWeekName(context, date.dayOfWeek).take(n = 3)
-            GraphInterval.MONTHLY -> if (isForecastGraph) LocalizationHelper.getMonthName(context, date.month).take(n = 3) else "${date.dayOfMonth}.${date.monthValue}"
-            else -> LocalizationHelper.getMonthName(context, date.month).take(n = 3)
+            GraphInterval.WEEKLY -> if (isForecastGraph) "${date.dayOfMonth}.${date.monthValue}" else LocalizationHelper.getDayOfWeekName(dayOfWeek = date.dayOfWeek).take(n = 3)
+            GraphInterval.MONTHLY -> if (isForecastGraph) LocalizationHelper.getMonthName(month = date.month).take(n = 3) else "${date.dayOfMonth}.${date.monthValue}"
+            else -> LocalizationHelper.getMonthName(month = date.month).take(n = 3)
         }
 
         val yPosition = paddingTop + graphHeight + 20f.dp()
