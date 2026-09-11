@@ -6,10 +6,7 @@ import androidx.core.net.toUri
 
 object WebHelper {
 
-    fun openUrl(
-        context: Context,
-        url: String
-    ) {
-        context.startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
+    fun Context.openUrl(url: String) {
+        startActivity(Intent(Intent.ACTION_VIEW, url.toUri()))
     }
 }

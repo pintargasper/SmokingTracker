@@ -35,7 +35,7 @@ class PermissionsTest {
                 true
             }
 
-            val actual = permissions.isNotificationPermissionGranted()
+            val actual = permissions.isNotificationPermissionGranted
 
             assertEquals(expected, actual)
         }

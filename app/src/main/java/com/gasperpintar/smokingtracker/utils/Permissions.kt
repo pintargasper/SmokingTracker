@@ -14,42 +14,20 @@ open class Permissions(
     private var permissionCallback: ((Boolean) -> Unit)? = null
 
     private val requestPermissionLauncher =
-        activity.registerForActivityResult(
-            ActivityResultContracts.RequestPermission()
-        ) { isGranted: Boolean ->
+        activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             permissionCallback?.invoke(isGranted)
             permissionCallback = null
         }
 
-    fun checkAndRequestNotificationPermission(
-        callback: (Boolean) -> Unit
-    ) {
+    val isNotificationPermissionGranted: Boolean
+        get() = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU || ContextCompat.checkSelfPermission(
+            activity,
+            Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+
+    fun checkAndRequestNotificationPermission(callback: (Boolean) -> Unit) {
+        if (isNotificationPermissionGranted) return callback(true)
         permissionCallback = callback
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            when {
-                ContextCompat.checkSelfPermission(
-                    activity,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> callback(true)
-
-                else -> requestPermissionLauncher.launch(
-                    Manifest.permission.POST_NOTIFICATIONS
-                )
-            }
-        } else {
-            callback(true)
-        }
-    }
-
-    fun isNotificationPermissionGranted(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ContextCompat.checkSelfPermission(
-                activity,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
+        requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
     }
 }

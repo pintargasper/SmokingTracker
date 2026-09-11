@@ -6,7 +6,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.utils.WidgetHelper
+import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 
 class StatsQuickAddWidget : AppWidgetProvider() {
 
@@ -41,6 +41,6 @@ class StatsQuickAddWidget : AppWidgetProvider() {
         context: Context
     ) {
         super.onDisabled(context)
-        //WidgetHelper.cancelMidnightWidgetUpdate(context)
+        WidgetHelper.cancelMidnightWidgetUpdate(context)
     }
 }

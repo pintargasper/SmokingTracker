@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.PackageInfoCompat
 import com.gasperpintar.smokingtracker.databinding.ActivityAboutBinding
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import com.gasperpintar.smokingtracker.utils.WebHelper
+import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 
 class AboutActivity : AppCompatActivity() {
 
@@ -69,7 +69,7 @@ class AboutActivity : AppCompatActivity() {
             contributor6Layout to "https://github.com/acidefluorhydrique"
         ).forEach { (view, url) ->
             view.setOnClickListener {
-                WebHelper.openUrl(context = this@AboutActivity, url)
+                this@AboutActivity.openUrl(url)
             }
         }
     }

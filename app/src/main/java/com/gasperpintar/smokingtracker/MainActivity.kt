@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
     @Override
     override fun onResume() {
         super.onResume()
-        if (permissionsHelper.isNotificationPermissionGranted()) {
+        if (permissionsHelper.isNotificationPermissionGranted) {
             Notifications.createNotificationChannel(context = this)
             scheduleNotificationWorker()
         }
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                 sharedPreferences.edit { putBoolean("first_run", false) }
             }
 
-            permissionsHelper.isNotificationPermissionGranted() -> {
+            permissionsHelper.isNotificationPermissionGranted -> {
                 Notifications.createNotificationChannel(context = this)
                 scheduleNotificationWorker()
             }

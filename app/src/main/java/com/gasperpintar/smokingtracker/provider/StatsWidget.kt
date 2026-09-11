@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.utils.WidgetHelper
+import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 
 class StatsWidget : AppWidgetProvider() {
 
@@ -48,6 +48,7 @@ class StatsWidget : AppWidgetProvider() {
     }
 
     @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
+    @Override
     override fun onEnabled(
         context: Context
     ) {
@@ -60,6 +61,6 @@ class StatsWidget : AppWidgetProvider() {
         context: Context
     ) {
         super.onDisabled(context)
-        //WidgetHelper.cancelMidnightWidgetUpdate(context)
+        WidgetHelper.cancelMidnightWidgetUpdate(context)
     }
 }

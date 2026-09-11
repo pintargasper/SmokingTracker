@@ -11,6 +11,7 @@ import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
+import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull

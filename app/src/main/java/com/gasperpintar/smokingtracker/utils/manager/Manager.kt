@@ -186,10 +186,8 @@ object Manager {
             }
             success = true
         } finally {
-            val title =
-                context.getString(if (success) R.string.notification_upload_title else R.string.notification_upload_failed_title)
-            val content =
-                context.getString(if (success) R.string.notification_upload_content else R.string.notification_upload_failed_content)
+            val title = context.getString(if (success) R.string.notification_upload_title else R.string.notification_upload_failed_title)
+            val content = context.getString(if (success) R.string.notification_upload_content else R.string.notification_upload_failed_content)
             sendNotification(context, title, content, notificationId = 1002, notificationsEnabled)
         }
     }
@@ -251,7 +249,7 @@ object Manager {
         if (!notificationsEnabled) return
 
         val mainActivity = context as? MainActivity ?: return
-        if (!mainActivity.permissionsHelper.isNotificationPermissionGranted()) return
+        if (!mainActivity.permissionsHelper.isNotificationPermissionGranted) return
 
         val safeUri = fileUri?.takeIf { it.scheme == "content" }
         Notifications.sendNotification(context, title, content, notificationId, safeUri)

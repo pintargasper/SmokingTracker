@@ -28,7 +28,7 @@ import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
-import com.gasperpintar.smokingtracker.utils.WebHelper
+import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDateTime
@@ -173,7 +173,7 @@ class SettingsFragment : Fragment() {
             privacyPolicyLayout to "https://gasperpintar.com/smoking-tracker/privacy-policy"
         )
         links.forEach { (view, url) ->
-            view.setOnClickListener { WebHelper.openUrl(context = requireContext(), url) }
+            view.setOnClickListener { requireContext().openUrl(url) }
         }
     }
 
