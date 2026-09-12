@@ -33,7 +33,6 @@ class LocalizationHelperTest {
 
     private val languageSystem = 0
     private val languageEnglish = "en"
-    private val invalidLanguageId = 999
 
     @Before
     fun setup() {
@@ -49,10 +48,11 @@ class LocalizationHelperTest {
 
     @Test
     fun getLocalizedContextReturnsSystemLocaleWhenLanguageIsSystem() = runBlocking {
-        settingsRepository.insert(settings = SettingsEntity.default(language = languageSystem))
+        settingsRepository.insert(settings = SettingsEntity.default(language = 0))
 
+        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
         val expected = context.resources.configuration.locales[0].language
-        val actual = LocalizationHelper.getLocalizedContext(context, settingsRepository).resources.configuration.locales[0].language
+        val actual = localizedContext.resources.configuration.locales[0].language
 
         assertEquals(expected, actual)
     }
@@ -73,10 +73,11 @@ class LocalizationHelperTest {
 
     @Test
     fun getLocalizedContextReturnsSystemLocaleWhenLanguageIdIsInvalid() = runBlocking {
-        settingsRepository.insert(settings = SettingsEntity.default(language = invalidLanguageId))
+        settingsRepository.insert(settings = SettingsEntity.default(language = 999))
 
+        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
         val expected = context.resources.configuration.locales[0].language
-        val actual = LocalizationHelper.getLocalizedContext(context, settingsRepository).resources.configuration.locales[0].language
+        val actual = localizedContext.resources.configuration.locales[0].language
 
         assertEquals(expected, actual)
     }
