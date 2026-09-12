@@ -143,10 +143,18 @@ class ScreenshotTest {
             ?.replace(oldChar = '_', newChar = '-')
             ?: return 0
 
-        val languageValues = ApplicationProvider.getApplicationContext<Context>().resources
-            .getStringArray(R.array.language_values)
-
-        return languageValues.indexOf(languageTag).takeIf { it >= 0 } ?: 0
+        return when {
+            languageTag.startsWith("en") -> 1
+            languageTag.startsWith("sl") -> 2
+            languageTag.startsWith("uk") -> 3
+            languageTag.startsWith("de") -> 4
+            languageTag.startsWith("fr") -> 5
+            languageTag.startsWith("sr-Latn") -> 7
+            languageTag.startsWith("sr-Cyrl") -> 6
+            languageTag.startsWith("zh-Hans") -> 8
+            languageTag.startsWith("zh-Hant") -> 9
+            else -> 0
+        }
     }
 
     private fun captureScreenshot(name: String, delayMs: Long = 1500) {

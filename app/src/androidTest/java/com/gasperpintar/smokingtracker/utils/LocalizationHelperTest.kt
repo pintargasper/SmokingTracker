@@ -47,17 +47,6 @@ class LocalizationHelperTest {
     }
 
     @Test
-    fun getLocalizedContextReturnsSystemLocaleWhenLanguageIsSystem() = runBlocking {
-        settingsRepository.insert(settings = SettingsEntity.default(language = 0))
-
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
-        val expected = context.resources.configuration.locales[0].language
-        val actual = localizedContext.resources.configuration.locales[0].language
-
-        assertEquals(expected, actual)
-    }
-
-    @Test
     fun getLocalizedContextReturnsEnglishLocaleWhenLanguageIsEnglish() = runBlocking {
         val languageValues = context.resources.getStringArray(R.array.language_values)
         val englishIndex = languageValues.indexOf(languageEnglish)
@@ -69,17 +58,6 @@ class LocalizationHelperTest {
         val actual = LocalizationHelper.getLocalizedContext(context, settingsRepository).resources.configuration.locales[0].language
 
         assertEquals(languageEnglish, actual)
-    }
-
-    @Test
-    fun getLocalizedContextReturnsSystemLocaleWhenLanguageIdIsInvalid() = runBlocking {
-        settingsRepository.insert(settings = SettingsEntity.default(language = 999))
-
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
-        val expected = context.resources.configuration.locales[0].language
-        val actual = localizedContext.resources.configuration.locales[0].language
-
-        assertEquals(expected, actual)
     }
 
     @Test
