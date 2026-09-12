@@ -7,7 +7,6 @@ import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
@@ -22,186 +21,96 @@ import org.junit.runner.RunWith
 @RunWith(value = AndroidJUnit4::class)
 class WidgetHelperTest {
 
-    private lateinit var context: Context
+    private val context: Context = ApplicationProvider.getApplicationContext()
 
     @Before
     fun setup() {
-        context = ApplicationProvider.getApplicationContext()
-
-        removeMidnightPendingIntent()
-        removeAddNewEntryPendingIntent()
+        removePendingIntent(action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE)
+        removePendingIntent(action = WidgetHelper.ACTION_ADD_NEW_ENTRY)
     }
 
     @After
     fun teardown() {
-        removeMidnightPendingIntent()
-        removeAddNewEntryPendingIntent()
-        TestProvider.closeDatabase()
+        removePendingIntent(action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE)
+        removePendingIntent(action = WidgetHelper.ACTION_ADD_NEW_ENTRY)
     }
 
     @Test
     fun scheduleMidnightWidgetUpdateCreatesPendingIntent() {
         WidgetHelper.scheduleMidnightWidgetUpdate(context)
-
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE.hashCode(),
-            Intent(
-                context,
-                StatsWidget::class.java
-            ).apply {
-                action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE
-            },
-            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        assertNotNull(pendingIntent)
+        assertNotNull(getPendingIntent(action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE))
     }
 
     @Test
     fun updateWidgetDoesNotCrashWithoutRegisteredWidgets() {
-        val exception = runCatching {
-            WidgetHelper.updateWidget(
-                context = context,
-                widgetClass = StatsWidget::class.java
-            )
-        }.exceptionOrNull()
-
-        assertNull(exception)
+        assertNoException { WidgetHelper.updateWidget(context, widgetClass = StatsWidget::class.java) }
     }
 
     @Test
-    fun updateStatsQuickAddWidgetClassDoesNotCrashWithoutRegisteredWidgets() {
-        val exception = runCatching {
-            WidgetHelper.updateWidget(
-                context = context,
-                widgetClass = StatsQuickAddWidget::class.java
-            )
-        }.exceptionOrNull()
-
-        assertNull(exception)
+    fun updateStatsQuickAddWidgetDoesNotCrashWithoutRegisteredWidgets() {
+        assertNoException { WidgetHelper.updateWidget(context, widgetClass = StatsQuickAddWidget::class.java) }
     }
 
     @Test
-    fun updateQuickAddWidgetClassDoesNotCrashWithoutRegisteredWidgets() {
-        val exception = runCatching {
-            WidgetHelper.updateWidget(
-                context = context,
-                widgetClass = QuickAddWidget::class.java
-            )
-        }.exceptionOrNull()
-
-        assertNull(exception)
+    fun updateQuickAddWidgetDoesNotCrashWithoutRegisteredWidgets() {
+        assertNoException { WidgetHelper.updateWidget(context, widgetClass = QuickAddWidget::class.java) }
     }
 
     @Test
     fun updateAllWidgetsDoesNotCrashWithoutRegisteredWidgets() {
-        val exception = runCatching {
-            WidgetHelper.updateAllWidgets(context)
-        }.exceptionOrNull()
-
-        assertNull(exception)
+        assertNoException { WidgetHelper.updateAllWidgets(context) }
     }
 
     @Test
     fun updateStatsWidgetDoesNotCrashWithEmptyWidgetIds() {
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-
-        val exception = runCatching {
-            WidgetHelper.updateStatsWidget(
-                context = context,
-                appWidgetManager = appWidgetManager,
-                appWidgetIds = intArrayOf(1),
-                layoutId = R.layout.widget_stats
-            )
-        }.exceptionOrNull()
-
-        assertNull(exception)
+        updateStatsWidget(appWidgetIds = intArrayOf(1))
     }
 
     @Test
     fun updateStatsWidgetDoesNotCrashWithoutWeeklyStats() {
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-
-        val exception = runCatching {
-            WidgetHelper.updateStatsWidget(
-                context = context,
-                appWidgetManager = appWidgetManager,
-                appWidgetIds = intArrayOf(1),
-                layoutId = R.layout.widget_stats,
-                showWeekly = false,
-                showMonthly = true
-            )
-        }.exceptionOrNull()
-
-        assertNull(exception)
+        updateStatsWidget(appWidgetIds = intArrayOf(1), showWeekly = false, showMonthly = true)
     }
 
     @Test
     fun updateStatsWidgetDoesNotCrashWithoutMonthlyStats() {
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-
-        val exception = runCatching {
-            WidgetHelper.updateStatsWidget(
-                context = context,
-                appWidgetManager = appWidgetManager,
-                appWidgetIds = intArrayOf(1),
-                layoutId = R.layout.widget_stats,
-                showWeekly = true,
-                showMonthly = false
-            )
-        }.exceptionOrNull()
-
-        assertNull(exception)
+        updateStatsWidget(appWidgetIds = intArrayOf(1), showWeekly = true, showMonthly = false)
     }
 
     @Test
     fun updateStatsWidgetDoesNotCrashWithoutWeeklyAndMonthlyStats() {
-        val appWidgetManager = AppWidgetManager.getInstance(context)
+        updateStatsWidget(appWidgetIds = intArrayOf(), showWeekly = false, showMonthly = false)
+    }
 
-        val exception = runCatching {
+    private fun updateStatsWidget(
+        appWidgetIds: IntArray,
+        showWeekly: Boolean = true,
+        showMonthly: Boolean = true
+    ) {
+        assertNoException {
             WidgetHelper.updateStatsWidget(
                 context = context,
-                appWidgetManager = appWidgetManager,
-                appWidgetIds = intArrayOf(),
+                appWidgetManager = AppWidgetManager.getInstance(context),
+                appWidgetIds = appWidgetIds,
                 layoutId = R.layout.widget_stats,
-                showWeekly = false,
-                showMonthly = false
+                showWeekly = showWeekly,
+                showMonthly = showMonthly
             )
-        }.exceptionOrNull()
-
-        assertNull(exception)
+        }
     }
 
-    private fun removeMidnightPendingIntent() {
-        val pendingIntent = PendingIntent.getBroadcast(
+    private fun getPendingIntent(action: String): PendingIntent? =
+        PendingIntent.getBroadcast(
             context,
-            WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE.hashCode(),
-            Intent(
-                context,
-                StatsWidget::class.java
-            ).apply {
-                action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE
-            },
+            action.hashCode(),
+            Intent(context, StatsWidget::class.java).apply { this.action = action },
             PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
         )
 
-        pendingIntent?.cancel()
+    private fun removePendingIntent(action: String) {
+        getPendingIntent(action)?.cancel()
     }
 
-    private fun removeAddNewEntryPendingIntent() {
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            WidgetHelper.ACTION_ADD_NEW_ENTRY.hashCode(),
-            Intent(
-                context,
-                StatsWidget::class.java
-            ).apply {
-                action = WidgetHelper.ACTION_ADD_NEW_ENTRY
-            },
-            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        pendingIntent?.cancel()
+    private fun assertNoException(block: () -> Unit) {
+        assertNull(runCatching(block).exceptionOrNull())
     }
 }

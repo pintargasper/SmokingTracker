@@ -6,23 +6,22 @@ import com.gasperpintar.smokingtracker.database.specifications.Migrations
 
 object TestProvider {
 
-    private var databaseInstance: AppDatabase? = null
+    private var database: AppDatabase? = null
 
     fun getInMemoryDatabase(context: Context): AppDatabase {
-        return databaseInstance ?: synchronized(lock = this) {
-            val instance = Room.inMemoryDatabaseBuilder(
+        return database ?: synchronized(lock = this) {
+            Room.inMemoryDatabaseBuilder(
                 context = context.applicationContext,
                 klass = AppDatabase::class.java
             ).addMigrations(*Migrations.migrationList)
                 .addTypeConverter(Converters())
                 .build()
-            databaseInstance = instance
-            instance
+                .also { database = it }
         }
     }
 
     fun closeDatabase() {
-        databaseInstance?.close()
-        databaseInstance = null
+        database?.close()
+        database = null
     }
 }

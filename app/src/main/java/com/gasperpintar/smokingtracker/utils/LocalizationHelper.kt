@@ -20,10 +20,10 @@ import java.util.Locale
 object LocalizationHelper {
 
     fun getLocalizedContext(context: Context, settingsRepository: SettingsRepository): Context {
-        val lang = context.resources.getStringArray(R.array.language_values)
+        val language = context.resources.getStringArray(R.array.language_values)
             .getOrNull(index = runBlocking { settingsRepository.get() }?.language ?: 0)
 
-        val targetLocale = lang?.takeUnless { it == "system" }
+        val targetLocale = language?.takeUnless { it == "system" }
             ?.let(block = Locale::forLanguageTag) ?: Resources.getSystem().configuration.locales[0]
 
         val config = context.resources.configuration

@@ -67,52 +67,49 @@ class ScreenshotTest {
         ActivityScenario.launch(MainActivity::class.java).use { scenario ->
             scenario.recreate()
 
-            captureScreenshot("1")
+            captureScreenshot(name = "1")
 
-            val mainScreenshots = listOf("2", "3", "4")
-            for (name in mainScreenshots) {
+            listOf("2", "3", "4").forEach {
                 onView(withId(R.id.main_view_pager)).perform(swipeLeft())
-                captureScreenshot(name)
+                captureScreenshot(it)
             }
         }
 
         ActivityScenario.launch(StatisticsActivity::class.java).use {
-            captureScreenshot("5")
+            captureScreenshot(name = "5")
             onView(withId(R.id.statistics_view_pager)).perform(swipeLeft())
-            captureScreenshot("6")
+            captureScreenshot(name = "6")
         }
 
         ActivityScenario.launch(AchievementsActivity::class.java).use {
-            captureScreenshot("7")
+            captureScreenshot(name = "7")
             onView(withId(R.id.achievements_view_pager)).perform(swipeLeft())
-            captureScreenshot("8")
+            captureScreenshot(name = "8")
         }
 
         ActivityScenario.launch(CalculatorActivity::class.java).use {
-            captureScreenshot("9")
+            captureScreenshot(name = "9")
         }
 
         ActivityScenario.launch(NotesActivity::class.java).use {
-            captureScreenshot("10")
+            captureScreenshot(name = "10")
 
             runCatching {
                 onView(withId(R.id.recyclerview_notes))
                     .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-                captureScreenshot("11")
+                captureScreenshot(name = "11")
             }
         }
 
         ActivityScenario.launch(AboutActivity::class.java).use {
-            captureScreenshot("12")
+            captureScreenshot(name = "12")
         }
     }
 
     private fun importDummyData() = runBlocking {
         val file = File("/data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx")
 
-        check(value = file.exists()) {
-            "Dummy data file not found: ${file.absolutePath}"
-        }
+        check(value = file.exists()) { "Dummy data file not found: ${file.absolutePath}" }
 
         Manager.uploadFile(
             context = context,
@@ -136,38 +133,20 @@ class ScreenshotTest {
     }
 
     private fun setTestLanguage() = runBlocking {
-        val languageIndex = getDefaultLanguageIndex()
-        val current = settingsRepository.get()
-
-        val targetSettings = current?.copy(language = languageIndex) ?: SettingsEntity(
-            id = 1,
-            language = languageIndex,
-            theme = 0,
-            frequency = 0,
-            currency = "€",
-            customCurrency = ""
-        )
-        settingsRepository.upsert(settings = targetSettings)
+        val language = getDefaultLanguageIndex()
+        settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntity.default(language))
     }
 
     private fun getDefaultLanguageIndex(): Int {
         val languageTag = InstrumentationRegistry.getArguments()
             .getString("testLocale")
-            ?.replace('_', '-')
+            ?.replace(oldChar = '_', newChar = '-')
             ?: return 0
 
-        return when {
-            languageTag.startsWith("en") -> 1
-            languageTag.startsWith("sl") -> 2
-            languageTag.startsWith("uk") -> 3
-            languageTag.startsWith("de") -> 4
-            languageTag.startsWith("fr") -> 5
-            languageTag.startsWith("sr-Latn") -> 7
-            languageTag.startsWith("sr-Cyrl") -> 6
-            languageTag.startsWith("zh-Hans") -> 8
-            languageTag.startsWith("zh-Hant") -> 9
-            else -> 0
-        }
+        val languageValues = ApplicationProvider.getApplicationContext<Context>().resources
+            .getStringArray(R.array.language_values)
+
+        return languageValues.indexOf(languageTag).takeIf { it >= 0 } ?: 0
     }
 
     private fun captureScreenshot(name: String, delayMs: Long = 1500) {

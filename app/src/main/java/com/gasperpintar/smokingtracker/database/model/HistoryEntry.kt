@@ -30,11 +30,7 @@ data class HistoryEntry (
         return HistoryEntity(
             id = id,
             createdAt = createdAt,
-            lent = if (isLent) {
-                1
-            } else {
-                0
-            }
+            lent = if (isLent) 1 else 0
         )
     }
 }

@@ -15,7 +15,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.LocalDateTime
-import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(value = AndroidJUnit4::class)
 class HistoryAdapterTest {
@@ -24,11 +23,11 @@ class HistoryAdapterTest {
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun onBindViewHolder_bindsDataAndHandlesClicksCorrectly() {
-        val clickedEditEntry = AtomicReference<HistoryEntry?>()
-        val clickedDeleteEntry = AtomicReference<HistoryEntry?>()
-
+    fun onBindViewHolderBindsDataAndHandlesClicksCorrectly() {
         activityScenarioRule.scenario.onActivity { activity ->
+            var clickedEditEntry: HistoryEntry? = null
+            var clickedDeleteEntry: HistoryEntry? = null
+
             val adapter = Adapter<HistoryEntry, HistoryContainerBinding>(
                 bindingFactory = HistoryContainerBinding::inflate,
                 onBind = { historyEntry ->
@@ -36,11 +35,11 @@ class HistoryAdapterTest {
                     lent.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
 
                     edit.setOnClickListener {
-                        clickedEditEntry.set(historyEntry)
+                        clickedEditEntry = historyEntry
                     }
 
                     delete.setOnClickListener {
-                        clickedDeleteEntry.set(historyEntry)
+                        clickedDeleteEntry = historyEntry
                     }
                 }
             )
@@ -56,12 +55,10 @@ class HistoryAdapterTest {
                 createdAt = LocalDateTime.of(2025, 12, 31, 10, 0),
                 timerLabel = "00:10:00"
             )
-
             adapter.submitList(listOf(historyEntry))
 
-            val viewHolder = adapter.createViewHolder(recyclerView, 0).also {
-                adapter.bindViewHolder(it, 0)
-            }
+            val viewHolder = adapter.createViewHolder(recyclerView, 0)
+            adapter.bindViewHolder(viewHolder, 0)
 
             val binding = HistoryContainerBinding.bind(viewHolder.itemView)
 
@@ -69,10 +66,10 @@ class HistoryAdapterTest {
             assertEquals(View.VISIBLE, binding.lent.visibility)
 
             binding.edit.performClick()
-            assertSame(historyEntry, clickedEditEntry.get())
+            assertSame(historyEntry, clickedEditEntry)
 
             binding.delete.performClick()
-            assertSame(historyEntry, clickedDeleteEntry.get())
+            assertSame(historyEntry, clickedDeleteEntry)
         }
     }
 }

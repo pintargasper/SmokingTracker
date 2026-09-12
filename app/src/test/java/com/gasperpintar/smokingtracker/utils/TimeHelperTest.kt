@@ -25,62 +25,59 @@ class TimeHelperTest {
 
     @Test
     fun getDayReturnsCorrectStartAndEndOfDay() {
-        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getDay(date = inputDate)
+        val result = TimeHelper.getDay(date = inputDate)
+
         assertEquals(expectedStartOfDay, result.first)
         assertEquals(expectedEndOfDay, result.second)
     }
 
     @Test
     fun getWeekReturnsCorrectStartAndEndOfWeek() {
-        val expectedStartOfWeek: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 29), LocalTime.MIDNIGHT)
-        val expectedEndOfWeek: LocalDateTime = LocalDateTime.of(LocalDate.of(2026, 1, 4), LocalTime.MAX)
+        val expectedStart = LocalDate.of(2025, 12, 29).atStartOfDay()
+        val expectedEnd = LocalDate.of(2026, 1, 4).atTime(LocalTime.MAX)
 
-        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getWeek(date = inputDate)
+        val result = TimeHelper.getWeek(inputDate)
 
-        assertEquals(expectedStartOfWeek, result.first)
-        assertEquals(expectedEndOfWeek, result.second)
+        assertEquals(expectedStart, result.first)
+        assertEquals(expectedEnd, result.second)
     }
 
     @Test
     fun getMonthReturnsCorrectStartAndEndOfMonth() {
-        val expectedStartOfMonth: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 1), LocalTime.MIDNIGHT)
-        val expectedEndOfMonth: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 31), LocalTime.MAX)
+        val expectedStart = LocalDate.of(2025, 12, 1).atStartOfDay()
+        val expectedEnd = LocalDate.of(2025, 12, 31).atTime(LocalTime.MAX)
 
-        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getMonth(date = inputDate)
+        val result = TimeHelper.getMonth(inputDate)
 
-        assertEquals(expectedStartOfMonth, result.first)
-        assertEquals(expectedEndOfMonth, result.second)
+        assertEquals(expectedStart, result.first)
+        assertEquals(expectedEnd, result.second)
     }
 
     @Test
     fun getYearReturnsCorrectStartAndEndOfYear() {
-        val expectedStartOfYear: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 1, 1), LocalTime.MIDNIGHT)
-        val expectedEndOfYear: LocalDateTime = LocalDateTime.of(LocalDate.of(2025, 12, 31), LocalTime.MAX)
+        val expectedStart = LocalDate.of(2025, 1, 1).atStartOfDay()
+        val expectedEnd = LocalDate.of(2025, 12, 31).atTime(LocalTime.MAX)
 
-        val result: Pair<LocalDateTime, LocalDateTime> = TimeHelper.getYear(date = inputDate)
+        val result = TimeHelper.getYear(inputDate)
 
-        assertEquals(expectedStartOfYear, result.first)
-        assertEquals(expectedEndOfYear, result.second)
+        assertEquals(expectedStart, result.first)
+        assertEquals(expectedEnd, result.second)
     }
 
     @Test
     fun getEndOfDayReturnsCorrectEndOfDay() {
-        val result: LocalDateTime = TimeHelper.getEndOfDay(date = inputDate)
-        assertEquals(expectedEndOfDay, result)
+        assertEquals(expectedEndOfDay, TimeHelper.getEndOfDay(inputDate))
     }
 
     @Test
     fun getNextMidnightMillisReturnsTomorrowMidnight() {
-        val expected = LocalDate
-            .now()
+        val expected = LocalDate.now()
             .plusDays(1)
             .atStartOfDay(ZoneId.systemDefault())
             .toInstant()
             .toEpochMilli()
 
-        val result = TimeHelper.getNextMidnightMillis()
-
-        assertEquals(expected, result)
+        assertEquals(expected, TimeHelper.getNextMidnightMillis())
     }
 
     @Test
@@ -92,8 +89,7 @@ class TimeHelperTest {
         }
 
         val expected = calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
-        val result = TimeHelper.toLocalDateTime(calendar)
 
-        assertEquals(expected, result)
+        assertEquals(expected, TimeHelper.toLocalDateTime(calendar))
     }
 }

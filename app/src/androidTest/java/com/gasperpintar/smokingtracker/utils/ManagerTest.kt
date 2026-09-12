@@ -16,6 +16,7 @@ import kotlinx.coroutines.runBlocking
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.junit.After
 import org.junit.Assert.assertTrue
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -27,7 +28,6 @@ class ManagerTest {
 
     private lateinit var context: Context
     private lateinit var database: AppDatabase
-
     private lateinit var achievementRepository: AchievementRepository
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
@@ -72,11 +72,9 @@ class ManagerTest {
             assertTrue(file.exists())
             assertTrue(file.length() > 0)
 
-            FileInputStream(file).use { input ->
-                XSSFWorkbook(input).use { workbook ->
-                    assertTrue(workbook.numberOfSheets > 0)
-                }
-            }
+            FileInputStream(file).use { XSSFWorkbook(it).use { workbook ->
+                assertTrue(workbook.numberOfSheets > 0)
+            }}
             file.delete()
         }
     }
@@ -112,45 +110,37 @@ class ManagerTest {
             assertTrue("Settings should exist", settings != null)
             assertTrue("Notifications settings should exist", notifications != null)
 
-            val history = histories.first()
-            assertTrue(history.lent == 1)
+            assertEquals(1, histories.first().lent)
 
             val achievement = achievements.first()
-            assertTrue(achievement.value == 9)
-            assertTrue(achievement.times == 2L)
-            assertTrue(achievement.notify)
+            assertEquals(9, achievement.value)
+            assertEquals(2L, achievement.times)
+            assertEquals(true, achievement.notify)
 
-            val cost = costs.first()
-            assertTrue(cost.price == 4.5)
+            assertEquals(4.5, costs.first().price, 0.001)
 
             val note = notes.first()
-            assertTrue(note.title == "Test")
-            assertTrue(note.content == "Smoking note")
-            assertTrue(note.mood == 3)
+            assertEquals("Test", note.title)
+            assertEquals("Smoking note", note.content)
+            assertEquals(3, note.mood)
 
-            assertTrue(settings?.currency == "€")
-            assertTrue(settings?.frequency == 5)
+            assertEquals("€", settings?.currency)
+            assertEquals(5, settings?.frequency)
 
-            assertTrue(notifications?.system == true)
-            assertTrue(notifications?.progress == false)
+            assertEquals(true, notifications?.system)
+            assertEquals(false, notifications?.progress)
         }
     }
 
-
     private fun temporaryFile(): Pair<File, Uri> {
         val file = File.createTempFile("backup", ".xlsx", context.cacheDir)
-        return file to FileProvider.getUriForFile(
-            context,
-            "${context.packageName}.provider",
-            file
-        )
+        return file to FileProvider.getUriForFile(context, "${context.packageName}.provider", file)
     }
 
     private fun uploadWorkbook(): Uri {
         val file = File.createTempFile("data", ".xlsx", context.cacheDir)
 
         XSSFWorkbook().use { workbook ->
-
             fun sheet(
                 name: String,
                 headers: List<String>,
@@ -158,11 +148,8 @@ class ManagerTest {
             ) {
                 workbook.createSheet(name).apply {
                     createRow(0).apply {
-                        headers.forEachIndexed { index, h ->
-                            createCell(index).setCellValue(h)
-                        }
+                        headers.forEachIndexed { index, value -> createCell(index).setCellValue(value) }
                     }
-
                     createRow(1).apply {
                         values.forEachIndexed { index, value ->
                             when (value) {
@@ -175,41 +162,17 @@ class ManagerTest {
                 }
             }
 
-            sheet(
-                name = "History",
-                headers = Mappers.HISTORY_HEADERS,
-                values = listOf(1, "2026-01-01 12:00:00")
-            )
-
+            sheet(name = "History", headers = Mappers.HISTORY_HEADERS, values = listOf(1, "2026-01-01 12:00:00"))
             sheet(
                 name = "Achievements",
                 headers = Mappers.ACHIEVEMENTS_HEADERS,
                 values = listOf(9, 2, "", true, true, AchievementCategory.entries.first().name, AchievementUnit.entries.first().name, 1)
             )
 
-            sheet(
-                name = "Costs",
-                headers = Mappers.COSTS_HEADERS,
-                values = listOf(4.5, "2026-01-01 00:00:00", "2026-01-02 00:00:00")
-            )
-
-            sheet(
-                name = "Notes",
-                headers = Mappers.NOTES_HEADERS,
-                values = listOf("Test", "Smoking note", 3, "2026-01-01 10:00:00", "2026-01-01 11:00:00")
-            )
-
-            sheet(
-                name = "Settings",
-                headers = Mappers.SETTINGS_HEADERS,
-                values = listOf(1, 2, 5, "€", "")
-            )
-
-            sheet(
-                name = "NotificationsSettings",
-                headers = Mappers.NOTIF_SETTINGS_HEADERS,
-                values = listOf(true, true, false)
-            )
+            sheet(name = "Costs", headers = Mappers.COSTS_HEADERS, values = listOf(4.5, "2026-01-01 00:00:00", "2026-01-02 00:00:00"))
+            sheet(name = "Notes", headers = Mappers.NOTES_HEADERS, values = listOf("Test", "Smoking note", 3, "2026-01-01 10:00:00", "2026-01-01 11:00:00"))
+            sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS, values = listOf(1, 2, 5, "€", ""))
+            sheet(name = "NotificationsSettings", headers = Mappers.NOTIF_SETTINGS_HEADERS, values = listOf(true, true, false))
             file.outputStream().use(block = workbook::write)
         }
         return FileProvider.getUriForFile(context, "${context.packageName}.provider", file)

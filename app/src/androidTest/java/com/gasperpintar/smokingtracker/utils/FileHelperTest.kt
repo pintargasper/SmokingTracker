@@ -30,15 +30,10 @@ class FileHelperTest {
         val temporaryFile = File.createTempFile("test_data", ".xlsx")
 
         try {
+            val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", temporaryFile)
             val expected = temporaryFile.name
-            val actual = FileHelper.getFileName(
-                context,
-                FileProvider.getUriForFile(
-                    context,
-                    "${context.packageName}.provider",
-                    temporaryFile
-                )
-            )
+            val actual = FileHelper.getFileName(context, uri)
+
             assertEquals(expected, actual)
         } finally {
             temporaryFile.delete()

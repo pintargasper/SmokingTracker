@@ -24,10 +24,7 @@ class TimeHelperTest {
     @Test
     fun formatDurationReturnsZeroSecondsWhenDurationIsNull() {
         val expected = "0${context.getString(R.string.home_timer_second)}"
-        val actual = TimeHelper.formatDuration(
-            resources = context.resources,
-            duration = null
-        )
+        val actual = TimeHelper.formatDuration(resources = context.resources, duration = null)
 
         assertEquals(expected, actual)
     }
@@ -37,48 +34,28 @@ class TimeHelperTest {
         val duration = Duration.ofSeconds(1 * 86400L + 2 * 3600L + 3 * 60L + 4L)
 
         val expected = "1${context.getString(R.string.home_timer_day)} " +
-                "2${context.getString(R.string.home_timer_hour)} " +
+                "2${context.getString(R.string.home_timer_hour)} "+
                 "3${context.getString(R.string.home_timer_minute)} " +
                 "4${context.getString(R.string.home_timer_second)}"
 
-        val actual = TimeHelper.formatDuration(
-            resources = context.resources,
-            duration = duration
-        )
+        val actual = TimeHelper.formatDuration(resources = context.resources, duration = duration)
 
         assertEquals(expected, actual)
     }
 
     @Test
     fun formatTimeFormatsHoursAndMinutes() {
-        val expected = context.resources.getQuantityString(
-            R.plurals.time_hours,
-            2,
-            2
-        ) + " " + context.resources.getQuantityString(
-            R.plurals.time_minutes,
-            5,
-            5
-        )
-        val actual = TimeHelper.formatTime(
-            resources = context.resources,
-            totalMinutes = 125
-        )
+        val expected = context.resources.getQuantityString(R.plurals.time_hours, 2, 2) + " " +
+                context.resources.getQuantityString(R.plurals.time_minutes, 5, 5)
+        val actual = TimeHelper.formatTime(resources = context.resources, totalMinutes = 125)
 
         assertEquals(expected, actual)
     }
 
     @Test
     fun formatTimeFormatsOnlyMinutesWhenHoursAreZero() {
-        val expected = context.resources.getQuantityString(
-            R.plurals.time_minutes,
-            15,
-            15
-            )
-        val actual = TimeHelper.formatTime(
-            resources = context.resources,
-            totalMinutes = 15
-        )
+        val expected = context.resources.getQuantityString(R.plurals.time_minutes, 15, 15)
+        val actual = TimeHelper.formatTime(resources = context.resources, totalMinutes = 15)
 
         assertEquals(expected, actual)
     }
@@ -88,18 +65,13 @@ class TimeHelperTest {
         val start = LocalDateTime.of(2020, 1, 1, 10, 30)
         val end = LocalDateTime.of(2022, 3, 4, 13, 45)
 
-        val expected =
-            context.resources.getQuantityString(R.plurals.time_years, 2, 2) + " " +
-                    context.resources.getQuantityString(R.plurals.time_months, 2, 2) + " " +
-                    context.resources.getQuantityString(R.plurals.time_days, 3, 3) + " " +
-                    context.resources.getQuantityString(R.plurals.time_hours, 3, 3) + " " +
-                    context.resources.getQuantityString(R.plurals.time_minutes, 15, 15)
+        val expected = context.resources.getQuantityString(R.plurals.time_years, 2, 2) + " " +
+                context.resources.getQuantityString(R.plurals.time_months, 2, 2) + " " +
+                context.resources.getQuantityString(R.plurals.time_days, 3, 3) + " " +
+                context.resources.getQuantityString(R.plurals.time_hours, 3, 3) + " " +
+                context.resources.getQuantityString(R.plurals.time_minutes, 15, 15)
 
-        val actual = TimeHelper.getDurationString(
-            resources = context.resources,
-            start = start,
-            end = end
-        )
+        val actual = TimeHelper.getDurationString(resources = context.resources, start = start, end = end)
 
         assertEquals(expected, actual)
     }

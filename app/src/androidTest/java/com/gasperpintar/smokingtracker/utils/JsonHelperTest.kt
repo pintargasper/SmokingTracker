@@ -53,13 +53,11 @@ class JsonHelperTest {
     @Test
     fun initializeAchievementsSetsCorrectUnitsForCategories() = runBlocking {
         jsonHelper.initializeAchievements(context)
-        val achievements = achievementRepository.getAll()
 
-        val cigarettesAchievements = achievements.filter { it.category == AchievementCategory.CIGARETTES_AVOIDED }
-        assertTrue(cigarettesAchievements.isNotEmpty())
-        cigarettesAchievements.forEach {
-            assertEquals(AchievementUnit.CIGARETTES, it.unit)
-        }
+        val achievements = achievementRepository.getAll().filter { it.category == AchievementCategory.CIGARETTES_AVOIDED }
+
+        assertTrue(achievements.isNotEmpty())
+        assertTrue(achievements.all { it.unit == AchievementUnit.CIGARETTES })
     }
 
     @Test
