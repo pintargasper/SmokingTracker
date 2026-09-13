@@ -32,7 +32,6 @@ import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDateTime
-import kotlin.text.replace
 
 class SettingsFragment : Fragment() {
 

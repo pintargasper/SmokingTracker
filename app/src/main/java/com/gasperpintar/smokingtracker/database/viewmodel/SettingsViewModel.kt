@@ -13,7 +13,9 @@ import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.manager.Manager
+import java.time.LocalDateTime
 
 class SettingsViewModel(
     private val achievementRepository: AchievementRepository,
@@ -79,6 +81,16 @@ class SettingsViewModel(
                 notesRepository = notesRepository,
                 onProgress = onProgress
             )
+
+            val lastSmoke = historyRepository.getLast()
+            if (lastSmoke != null) {
+                AchievementEvaluator(
+                    context = context,
+                    historyRepository = historyRepository,
+                    achievementRepository = achievementRepository,
+                    notificationsSettingsRepository = notificationsSettingsRepository
+                ).evaluate(lastSmokeTime = lastSmoke.createdAt, now = LocalDateTime.now())
+            }
             onFinished()
         } catch (_: Exception) {
             onError()
