@@ -38,7 +38,7 @@ class MainViewModel(
             notificationsSettingsRepository.insert(settings = it)
         }
 
-        return settingsRepository.get() ?: SettingsEntity.default(language = getLanguageIndex(context = context)).also {
+        return settingsRepository.get() ?: SettingsEntity.default(language = getLanguage(context = context)).also {
             settingsRepository.insert(settings = it)
         }
     }
@@ -64,8 +64,8 @@ class MainViewModel(
         }
     }
 
-    private fun getLanguageIndex(context: Context): Int {
+    private fun getLanguage(context: Context): String {
         val languageValues = context.resources.getStringArray(R.array.language_values)
-        return languageValues.indexOf(Locale.getDefault().toLanguageTag()).takeIf { it >= 0 } ?: 0
+        return languageValues.firstOrNull { it == Locale.getDefault().toLanguageTag() } ?: "system"
     }
 }

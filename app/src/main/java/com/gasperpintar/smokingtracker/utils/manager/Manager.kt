@@ -154,11 +154,7 @@ object Manager {
                                 importHistorySheet(workbook, historyRepository, onStepProgress = it)
                             },
                             SyncedStep(weight = workbook.getRowCount(sheetName = "Achievements")) {
-                                importAchievementSheet(
-                                    workbook,
-                                    achievementRepository,
-                                    onStepProgress = it
-                                )
+                                importAchievementSheet(workbook, achievementRepository, onStepProgress = it)
                             },
                             SyncedStep(weight = workbook.getRowCount(sheetName = "Costs")) {
                                 importCostsSheet(workbook, costsRepository, onStepProgress = it)
@@ -167,18 +163,10 @@ object Manager {
                                 importNotesSheet(workbook, notesRepository, onStepProgress = it)
                             },
                             SyncedStep(weight = workbook.getRowCount(sheetName = "Settings")) {
-                                importSettingsSheet(
-                                    workbook,
-                                    settingsRepository,
-                                    onStepProgress = it
-                                )
+                                importSettingsSheet(workbook = workbook, repository = settingsRepository, onStepProgress = it)
                             },
                             SyncedStep(weight = workbook.getRowCount(sheetName = "NotificationsSettings")) {
-                                importNotificationsSettingsSheet(
-                                    workbook,
-                                    notificationsSettingsRepository,
-                                    onStepProgress = it
-                                )
+                                importNotificationsSettingsSheet(workbook, notificationsSettingsRepository, onStepProgress = it)
                             }
                         )
                     ).run(onProgress)
@@ -192,7 +180,11 @@ object Manager {
         }
     }
 
-    private suspend fun importHistorySheet(workbook: XSSFWorkbook, repository: HistoryRepository, onStepProgress: (Int) -> Unit) {
+    private suspend fun importHistorySheet(
+        workbook: XSSFWorkbook,
+        repository: HistoryRepository,
+        onStepProgress: (Int) -> Unit
+    ) {
         val entities = workbook.import(sheetName = "History", requiredHeaders = Mappers.HISTORY_HEADERS, onStepProgress) { row, col, _ ->
             Mappers.parseHistory(row, col, dateFormatter)
         }
@@ -200,7 +192,11 @@ object Manager {
         if (entities.isNotEmpty()) repository.insertAll(entries = entities)
     }
 
-    private suspend fun importAchievementSheet(workbook: XSSFWorkbook, repository: AchievementRepository, onStepProgress: (Int) -> Unit) {
+    private suspend fun importAchievementSheet(
+        workbook: XSSFWorkbook,
+        repository: AchievementRepository,
+        onStepProgress: (Int) -> Unit
+    ) {
         val entities = workbook.import(sheetName = "Achievements", requiredHeaders = Mappers.ACHIEVEMENTS_HEADERS, onStepProgress) { row, col, index ->
             Mappers.parseAchievement(row, col, index, dateFormatter)
         }
@@ -208,7 +204,11 @@ object Manager {
         if (entities.isNotEmpty()) repository.insert(entries = entities)
     }
 
-    private suspend fun importCostsSheet(workbook: XSSFWorkbook, repository: CostsRepository, onStepProgress: (Int) -> Unit) {
+    private suspend fun importCostsSheet(
+        workbook: XSSFWorkbook,
+        repository: CostsRepository,
+        onStepProgress: (Int) -> Unit
+    ) {
         val entities = workbook.import(sheetName = "Costs", requiredHeaders = Mappers.COSTS_HEADERS, onStepProgress) { row, col, _ ->
             Mappers.parseCost(row, col, dateFormatter)
         }
@@ -216,7 +216,11 @@ object Manager {
         if (entities.isNotEmpty()) repository.insertAll(entries = entities)
     }
 
-    private suspend fun importNotesSheet(workbook: XSSFWorkbook, repository: NotesRepository, onStepProgress: (Int) -> Unit) {
+    private suspend fun importNotesSheet(
+        workbook: XSSFWorkbook,
+        repository: NotesRepository,
+        onStepProgress: (Int) -> Unit
+    ) {
         val entities = workbook.import(sheetName = "Notes", requiredHeaders = Mappers.NOTES_HEADERS, onStepProgress) { row, col, _ ->
             Mappers.parseNote(row, col, dateFormatter)
         }
@@ -224,14 +228,22 @@ object Manager {
         if (entities.isNotEmpty()) repository.insertAll(entries = entities)
     }
 
-    private suspend fun importSettingsSheet(workbook: XSSFWorkbook, repository: SettingsRepository, onStepProgress: (Int) -> Unit) {
+    private suspend fun importSettingsSheet(
+        workbook: XSSFWorkbook,
+        repository: SettingsRepository,
+        onStepProgress: (Int) -> Unit
+    ) {
         workbook.importSingleRow(sheetName = "Settings", onStepProgress) { row, col ->
             repository.get()?.let { repository.delete(settings = it) }
             repository.insert(settings = Mappers.parseSettings(row, col))
         }
     }
 
-    private suspend fun importNotificationsSettingsSheet(workbook: XSSFWorkbook, repository: NotificationsSettingsRepository, onStepProgress: (Int) -> Unit) {
+    private suspend fun importNotificationsSettingsSheet(
+        workbook: XSSFWorkbook,
+        repository: NotificationsSettingsRepository,
+        onStepProgress: (Int) -> Unit
+    ) {
         workbook.importSingleRow(sheetName = "NotificationsSettings", onStepProgress) { row, col ->
             repository.get()?.let { repository.delete(settings = it) }
             repository.insert(settings = Mappers.parseNotificationsSettings(row, col))

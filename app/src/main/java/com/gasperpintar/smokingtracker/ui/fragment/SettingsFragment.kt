@@ -179,7 +179,9 @@ class SettingsFragment : Fragment() {
     private fun updateUi(state: SettingsState) = binding.apply {
         imageTheme.setImageResource(updateThemeIcon(state.settings.theme))
         themeService.text = resources.getStringArray(R.array.theme_names)[state.settings.theme]
-        languageService.text = resources.getStringArray(R.array.language_names)[state.settings.language]
+        languageService.text = resources.getStringArray(R.array.language_names)
+            .getOrElse(resources.getStringArray(R.array.language_values)
+                .indexOf(state.settings.language)) { "system" }
     }
 
     private fun setupDataManagement() = binding.apply {

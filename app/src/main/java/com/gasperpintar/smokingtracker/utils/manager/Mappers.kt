@@ -12,6 +12,7 @@ import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.parseDateTime
+import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
 import java.time.format.DateTimeFormatter
 
@@ -88,10 +89,16 @@ object Mappers {
         row: Row,
         col: Map<String, Int>
     ): SettingsEntity {
+        val language = row.getCell(col["Language"]!!)?.let {
+            if (it.cellType == CellType.STRING) it.stringCellValue
+            else arrayOf("system", "en", "sl", "uk", "de", "fr", "sr", "sr-Latn", "zh-Hans")
+                .getOrNull(index = it.numericCellValue.toInt())
+        } ?: "system"
+
         return SettingsEntity(
             id = 0,
             theme = row.getCell(col["Theme"]!!)?.numericCellValue?.toInt() ?: 0,
-            language = row.getCell(col["Language"]!!)?.numericCellValue?.toInt() ?: 0,
+            language = language,
             frequency = row.getCell(col["Frequency"]!!)?.numericCellValue?.toInt() ?: 0,
             currency = row.getCell(col["Currency"]!!)?.stringCellValue ?: "€",
             customCurrency = row.getCell(col["CustomCurrency"]!!)?.stringCellValue.orEmpty()

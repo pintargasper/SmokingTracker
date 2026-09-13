@@ -114,16 +114,19 @@ object DialogManager {
 
     fun showLanguageDialog(
         context: FragmentActivity,
-        selectedLanguage: Int,
-        onLanguageSelected: (Int) -> Unit
+        selectedLanguage: String,
+        onLanguageSelected: (String) -> Unit
     ) = BaseDialog.show(context, bindingInflater = LanguagePopupBinding::inflate) {
         binding.run {
-            listOf(checkboxSystem, checkboxEnglish, checkboxSlovenian, checkboxUkrainian,
-                checkboxGerman, checkboxFrench, checkboxSerbianCyrillicScript,
-                checkboxSerbianLatinScript, checkboxChineseSimplified).forEachIndexed { index, checkbox ->
-                checkbox.isChecked = selectedLanguage == index
+            val languages = context.resources.getStringArray(R.array.language_values)
+
+            listOf(checkboxSystem, checkboxGerman, checkboxEnglish, checkboxFrench, checkboxHungarian,
+                checkboxSlovenian, checkboxSerbianLatinScript, checkboxSerbianCyrillicScript, checkboxUkrainian,
+                checkboxChineseSimplified, checkboxChineseTraditional
+            ).forEachIndexed { index, checkbox ->
+                checkbox.isChecked = selectedLanguage == languages[index]
                 checkbox.setOnClickListener {
-                    onLanguageSelected(index)
+                    onLanguageSelected(languages[index])
                     dismiss()
                 }
             }

@@ -1,26 +1,30 @@
 <resources>
     <string-array name="language_values">
         <item>system</item>
-        <item>en</item>
-        <item>sl</item>
-        <item>uk</item>
         <item>de</item>
+        <item>en</item>
         <item>fr</item>
+        <item>hu</item>
+        <item>sl</item>
         <item>sr</item>
         <item>sr-Latn</item>
+        <item>uk</item>
         <item>zh-Hans</item>
+        <item>zh-Hant</item>
     </string-array>
 
     <string-array name="language_names">
         <item>@string/language_popup_check_box_system</item>
-        <item>English</item>
-        <item>Slovenščina</item>
-        <item>Українська</item>
         <item>Deutsch</item>
+        <item>English</item>
         <item>Français</item>
+        <item>Magyar</item>
+        <item>Slovenščina</item>
         <item>Српски</item>
         <item>Srpski</item>
-        <item>中文 (简体)</item>
+        <item>Українська</item>
+        <item>简体中文</item>
+        <item>繁體中文</item>
     </string-array>
 
     <string-array name="theme_names">
