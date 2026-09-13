@@ -18,7 +18,6 @@ import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 import kotlinx.coroutines.Job
@@ -134,7 +133,7 @@ class HomeFragment : Fragment() {
             lastEntry = state.lastEntry
 
             currentDay.text = LocalizationHelper.getDayOfWeekName(dayOfWeek = state.selectedDate.dayOfWeek)
-            currentDate.text = state.selectedDate.formatLocalized()
+            currentDate.text = LocalizationHelper.formatDate(date = state.selectedDate)
             dailyValue.text = state.dailyCount.toString()
             weeklyValue.text = state.weeklyCount.toString()
             monthlyValue.text = state.monthlyCount.toString()

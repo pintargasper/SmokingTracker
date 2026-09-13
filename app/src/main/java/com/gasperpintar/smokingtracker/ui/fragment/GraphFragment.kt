@@ -15,11 +15,9 @@ import com.gasperpintar.smokingtracker.databinding.FragmentGraphBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.util.Locale
 
 class GraphFragment : Fragment() {
 
@@ -117,7 +115,7 @@ class GraphFragment : Fragment() {
         state: GraphState
     ) = binding.apply {
         val (start, _) = TimeHelper.getDay(date = state.selectedDate)
-        currentDateDaily.text = start.toLocalDate().formatLocalized()
+        currentDateDaily.text = LocalizationHelper.formatDateRange(start = start.toLocalDate(), end = null, skeleton = "dMMMM")
         graphDaily.text = getString(R.string.graph_daily, state.dailyCount)
         graphViewDaily.setData(data = state.dailyEntries, graphInterval = GraphInterval.DAILY)
     }
@@ -126,7 +124,7 @@ class GraphFragment : Fragment() {
         state: GraphState
     ) = binding.apply {
         val (start, end) = TimeHelper.getWeek(date = state.selectedDate)
-        currentDateWeekly.text = LocalizationHelper.formatWeekRange(start = start.toLocalDate(), end = end.toLocalDate())
+        currentDateWeekly.text = LocalizationHelper.formatDateRange(start = start.toLocalDate(), end = end.toLocalDate())
         graphWeekly.text = getString(R.string.graph_weekly, state.weeklyCount)
         graphViewWeekly.setData(data = state.weeklyEntries, graphInterval = GraphInterval.WEEKLY)
     }
@@ -135,12 +133,7 @@ class GraphFragment : Fragment() {
         state: GraphState
     ) = binding.apply {
         val (start, _) = TimeHelper.getMonth(date = state.selectedDate)
-        currentDateMonthly.text =
-            String.format(
-                Locale.getDefault(), "%s %d",
-                LocalizationHelper.getMonthName(month = start.month),
-                start.year
-            )
+        currentDateMonthly.text = LocalizationHelper.formatDateRange(start = start.toLocalDate(), end = null, skeleton = "MMMM yyyy")
         graphMonthly.text = getString(R.string.graph_monthly, state.monthlyCount)
         graphViewMonthly.setData(data = state.monthlyEntries, graphInterval = GraphInterval.MONTHLY)
     }

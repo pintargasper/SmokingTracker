@@ -11,6 +11,7 @@ import java.text.DecimalFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.Month
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -18,6 +19,10 @@ import java.time.format.TextStyle
 import java.util.Locale
 
 object LocalizationHelper {
+
+    fun getLocale(): Locale {
+        return Locale.getDefault()
+    }
 
     fun getLocalizedContext(context: Context, settingsRepository: SettingsRepository): Context {
         val language = context.resources.getStringArray(R.array.language_values)
@@ -36,42 +41,65 @@ object LocalizationHelper {
         })
     }
 
-    fun LocalDate.formatLocalized(): String {
-        return format(DateTimeFormatter.ofLocalizedDate(
-            FormatStyle.LONG).withLocale(Locale.getDefault())
-        )
+    fun formatDate(
+        date: LocalDate,
+        style: FormatStyle = FormatStyle.LONG
+    ): String {
+        return date.format(DateTimeFormatter.ofLocalizedDate(style).withLocale(getLocale()))
     }
 
-    fun LocalDateTime.formatLocalized(): String = format(
-        DateTimeFormatter
-            .ofLocalizedDateTime(FormatStyle.SHORT)
-            .withLocale(Locale.getDefault())
-    ).replace(Regex(pattern = "\\W+"), replacement = "_").trim(chars = charArrayOf('_'))
+    fun formatTime(
+        time: LocalTime,
+        style: FormatStyle = FormatStyle.SHORT
+    ): String {
+        return time.format(DateTimeFormatter.ofLocalizedTime(style).withLocale(getLocale()))
+    }
+
+    fun formatDateTime(
+        dateTime: LocalDateTime,
+        style: FormatStyle = FormatStyle.SHORT
+    ): String {
+        return dateTime.format(DateTimeFormatter.ofLocalizedDateTime(style).withLocale(getLocale()))
+    }
+
+    fun formatDateRange(
+        start: LocalDate,
+        end: LocalDate? = null,
+        skeleton: String? = "ddMM"
+    ): String {
+        val format = DateTimeFormatter.ofPattern(
+            DateFormat.getBestDateTimePattern(getLocale(), skeleton),
+            getLocale()
+        )
+
+        return end?.let {
+            "${start.format(format)} - ${it.format(format)}"
+        } ?: start.format(format).replace(Regex("\\p{L}+")) {
+            it.value.replaceFirstChar { char -> char.uppercase(getLocale()) }
+        }
+    }
+
+    fun getDayOfWeekName(
+        dayOfWeek: DayOfWeek,
+        style: TextStyle = TextStyle.FULL
+    ): String {
+        return dayOfWeek.getDisplayName(style, getLocale()).replaceFirstChar { it.titlecase(locale = getLocale()) }
+    }
+
+    fun getMonthName(
+        month: Month,
+        style: TextStyle = TextStyle.FULL
+    ): String {
+        return month.getDisplayName(style, getLocale()).replaceFirstChar { it.titlecase(locale = getLocale()) }
+    }
 
     fun formatLoggedDate(resources: Resources, day: String?): String {
         return day?.let {
-            resources.getString(R.string.statistics_logged, LocalDate.parse(it).formatLocalized())
+            resources.getString(R.string.statistics_logged, formatDate(LocalDate.parse(it)))
         } ?: ""
-    }
-
-    fun formatWeekRange(start: LocalDate, end: LocalDate): String {
-        val formatter = DateTimeFormatter.ofPattern(
-            DateFormat.getBestDateTimePattern(Locale.getDefault(), "ddMM")
-        )
-        return "${start.format(formatter)} - ${end.format(formatter)}"
     }
 
     suspend fun formatMoney(settingsRepository: SettingsRepository, value: Double): String {
         return "${DecimalFormat("0.00#").format(value)} ${settingsRepository.get()?.currency ?: "€"}"
-    }
-
-    fun getDayOfWeekName(dayOfWeek: DayOfWeek): String {
-        return dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault())
-            .replaceFirstChar { it.titlecase(Locale.getDefault()) }
-    }
-
-    fun getMonthName(month: Month): String {
-        return month.getDisplayName(TextStyle.FULL, Locale.getDefault())
-            .replaceFirstChar { it.titlecase(Locale.getDefault()) }
     }
 }

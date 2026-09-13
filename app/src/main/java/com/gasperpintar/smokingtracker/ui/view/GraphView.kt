@@ -17,6 +17,7 @@ import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.time.LocalDateTime
+import java.time.format.TextStyle
 import kotlin.math.ceil
 import kotlin.math.roundToInt
 
@@ -170,11 +171,14 @@ class GraphView @JvmOverloads constructor(
     private fun drawXLabel(canvas: Canvas, xPosition: Float, graphHeight: Float, entry: GraphEntry) {
         val date = entry.date
         val labelText = when (currentGraphInterval) {
-            GraphInterval.HOURLY -> "%02d:00".format(date.hour)
-            GraphInterval.DAILY -> if (isForecastGraph) "${date.dayOfMonth}.${date.monthValue}" else "%02d:00".format(date.hour)
-            GraphInterval.WEEKLY -> if (isForecastGraph) "${date.dayOfMonth}.${date.monthValue}" else LocalizationHelper.getDayOfWeekName(dayOfWeek = date.dayOfWeek).take(n = 3)
-            GraphInterval.MONTHLY -> if (isForecastGraph) LocalizationHelper.getMonthName(month = date.month).take(n = 3) else "${date.dayOfMonth}.${date.monthValue}"
-            else -> LocalizationHelper.getMonthName(month = date.month).take(n = 3)
+            GraphInterval.HOURLY -> LocalizationHelper.formatTime(date.toLocalTime())
+            GraphInterval.DAILY -> if (isForecastGraph) LocalizationHelper.formatDateRange(date.toLocalDate())
+            else LocalizationHelper.formatTime(date.toLocalTime())
+            GraphInterval.WEEKLY -> if (isForecastGraph) LocalizationHelper.formatDateRange(date.toLocalDate())
+            else LocalizationHelper.getDayOfWeekName(dayOfWeek = date.dayOfWeek, style = TextStyle.SHORT)
+            GraphInterval.MONTHLY -> if (isForecastGraph) LocalizationHelper.getMonthName(month = date.month, style = TextStyle.SHORT)
+            else LocalizationHelper.formatDateRange(date.toLocalDate())
+            else -> LocalizationHelper.getMonthName(month = date.month, style = TextStyle.SHORT)
         }
 
         val yPosition = paddingTop + graphHeight + 20f.dp()

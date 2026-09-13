@@ -27,11 +27,12 @@ import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDateTime
+import kotlin.text.replace
 
 class SettingsFragment : Fragment() {
 
@@ -186,7 +187,8 @@ class SettingsFragment : Fragment() {
     private fun setupDataManagement() = binding.apply {
         backupLayout.setOnClickListener {
             DialogManager.showBackupDialog(context = requireActivity()) {
-                val fileName = "st_data_${LocalDateTime.now().formatLocalized()}"
+                val fileName = "st_data_${LocalizationHelper.formatDateTime(dateTime = LocalDateTime.now())
+                    .replace(Regex(pattern = "\\W+"), replacement = "_").trim(chars = charArrayOf('_'))}"
                 try {
                     exportDocumentLauncher.launch(fileName)
                 } catch (_: ActivityNotFoundException) {
