@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.viewmodel.state.BasicState
-import com.gasperpintar.smokingtracker.repository.CostsRepository
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.CostsRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime

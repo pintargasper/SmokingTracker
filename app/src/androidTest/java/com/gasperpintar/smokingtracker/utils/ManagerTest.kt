@@ -7,7 +7,12 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
-import com.gasperpintar.smokingtracker.repository.*
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.CostsRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.NotesRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.utils.manager.Manager
@@ -42,7 +47,8 @@ class ManagerTest {
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        notificationsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        notificationsRepository =
+            NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
         costsRepository = CostsRepository(costDao = database.costsDao())
         notesRepository = NotesRepository(notesDao = database.notesDao())
     }

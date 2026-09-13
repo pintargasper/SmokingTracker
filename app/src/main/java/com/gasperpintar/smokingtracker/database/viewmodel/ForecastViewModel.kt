@@ -3,7 +3,7 @@ package com.gasperpintar.smokingtracker.database.viewmodel
 import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.ForecastState
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import java.time.Duration
 import java.time.LocalDateTime

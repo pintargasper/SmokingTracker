@@ -3,12 +3,12 @@ package com.gasperpintar.smokingtracker.di
 import android.content.Context
 import com.gasperpintar.smokingtracker._interface.Container
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostsRepository
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.repository.NotesRepository
-import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.CostsRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.NotesRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 
 class Container(context: Context): Container {
 

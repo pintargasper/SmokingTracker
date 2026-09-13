@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.repository
+package com.gasperpintar.smokingtracker.database.repository
 
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay

@@ -2,7 +2,7 @@ package com.gasperpintar.smokingtracker.database.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.CalculatorState
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.Duration
 import java.util.Calendar

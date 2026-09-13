@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.NoteState
-import com.gasperpintar.smokingtracker.repository.NotesRepository
+import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 
 class NotesViewModel(
     private val notesRepository: NotesRepository

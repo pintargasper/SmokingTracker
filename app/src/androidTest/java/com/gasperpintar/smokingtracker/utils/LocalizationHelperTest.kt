@@ -7,7 +7,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import kotlinx.coroutines.runBlocking
 import org.junit.After

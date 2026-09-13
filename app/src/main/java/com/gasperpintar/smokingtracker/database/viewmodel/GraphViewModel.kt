@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.GraphState
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.LocalDate
 import java.time.LocalDateTime

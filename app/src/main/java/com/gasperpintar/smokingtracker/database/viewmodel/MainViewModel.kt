@@ -8,11 +8,11 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostsRepository
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.CostsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import java.util.Locale
-import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.utils.JsonHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate

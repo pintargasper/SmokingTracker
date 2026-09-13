@@ -4,9 +4,9 @@ import android.content.Context
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications

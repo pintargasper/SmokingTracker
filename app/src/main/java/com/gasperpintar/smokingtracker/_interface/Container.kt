@@ -1,11 +1,11 @@
 package com.gasperpintar.smokingtracker._interface
 
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostsRepository
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.repository.NotesRepository
-import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.CostsRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.NotesRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 
 interface Container {
     val achievementRepository: AchievementRepository

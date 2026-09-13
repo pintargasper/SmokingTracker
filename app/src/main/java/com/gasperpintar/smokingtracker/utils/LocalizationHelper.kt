@@ -5,7 +5,7 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.text.format.DateFormat
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 import java.time.DayOfWeek

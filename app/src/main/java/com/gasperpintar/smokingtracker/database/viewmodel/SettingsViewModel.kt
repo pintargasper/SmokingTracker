@@ -7,12 +7,12 @@ import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEnti
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostsRepository
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.repository.NotesRepository
-import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.CostsRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.NotesRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 
 class SettingsViewModel(

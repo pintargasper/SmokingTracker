@@ -4,7 +4,7 @@ import android.content.Context
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.database.model.AchievementJsonEntry
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
