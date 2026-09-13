@@ -8,11 +8,9 @@ import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatLocalized
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -22,6 +20,8 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.Locale
 
 @RunWith(value = AndroidJUnit4::class)
@@ -63,7 +63,7 @@ class LocalizationHelperTest {
     @Test
     fun formatDateTimeReturnsFormattedDateTimeForSlovenianLocale() {
         withLocale(Locale.forLanguageTag("sl-SI")) {
-            val result = LocalDateTime.of(2026, 8, 12, 18, 36).formatLocalized()
+            val result = LocalizationHelper.formatDateTime(LocalDateTime.of(2026, 8, 12, 18, 36))
 
             assertTrue(result.isNotEmpty())
             assertTrue(result.contains(other = "12"))
@@ -76,18 +76,12 @@ class LocalizationHelperTest {
     @Test
     fun formatDateTimeReturnsFormattedDateTimeForEnglishLocale() {
         withLocale(Locale.US) {
-            val result = LocalDateTime.of(2026, 8, 12, 18, 36).formatLocalized()
-            assertEquals("8_12_26_6_36_PM", result)
-        }
-    }
+            val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
 
-    @Test
-    fun formatDateTimeDoesNotContainInvalidFileNameCharacters() {
-        withLocale(Locale.US) {
-            val result = LocalDateTime.of(2026, 8, 12, 18, 36).formatLocalized()
+            val expected = dateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.US))
+            val actual = LocalizationHelper.formatDateTime(dateTime)
 
-            assertTrue(result.isNotEmpty())
-            assertFalse(result.any { it in "/:\\*?\"<>|" })
+            assertEquals(expected, actual)
         }
     }
 
@@ -109,7 +103,7 @@ class LocalizationHelperTest {
     fun formatLoggedDateReturnsFormattedDateWhenDayIsProvided() {
         val day = "2026-08-12"
 
-        val formattedDate = LocalDate.parse(day).formatLocalized()
+        val formattedDate = LocalizationHelper.formatDate(LocalDate.parse(day))
         val expected = context.resources.getString(R.string.statistics_logged, formattedDate)
         val actual = LocalizationHelper.formatLoggedDate(resources = context.resources, day = day)
 

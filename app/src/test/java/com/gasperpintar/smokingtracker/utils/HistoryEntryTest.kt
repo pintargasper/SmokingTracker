@@ -13,7 +13,7 @@ class HistoryEntryTest {
     @Test
     fun historyEntityToHistoryEntryConversionIsCorrect() {
         val entity = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1)
-        val expected = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30:00")
+        val expected = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30")
 
         assertEquals(expected, HistoryEntry.fromEntity(entity))
     }
