@@ -66,7 +66,8 @@ class AboutActivity : AppCompatActivity() {
             contributor3Layout to "https://github.com/jocixlinux-sys",
             contributor4Layout to "https://github.com/iaanneed",
             contributor5Layout to "https://github.com/ywnzzl",
-            contributor6Layout to "https://github.com/acidefluorhydrique"
+            contributor6Layout to "https://github.com/acidefluorhydrique",
+            contributor7Layout to "https://github.com/nrob81"
         ).forEach { (view, url) ->
             view.setOnClickListener {
                 this@AboutActivity.openUrl(url)
