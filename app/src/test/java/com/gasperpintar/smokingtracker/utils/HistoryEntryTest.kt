@@ -5,6 +5,7 @@ import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.LocalDateTime
+import java.util.Locale
 
 class HistoryEntryTest {
 
@@ -12,10 +13,12 @@ class HistoryEntryTest {
 
     @Test
     fun historyEntityToHistoryEntryConversionIsCorrect() {
-        val entity = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1)
-        val expected = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30")
+        withLocale {
+            val entity = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1)
+            val expected = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30\u202fAM")
 
-        assertEquals(expected, HistoryEntry.fromEntity(entity))
+            assertEquals(expected, HistoryEntry.fromEntity(entity))
+        }
     }
 
     @Test
@@ -24,5 +27,14 @@ class HistoryEntryTest {
         val expected = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1)
 
         assertEquals(expected, entry.toEntity())
+    }
+
+    private fun withLocale(block: () -> Unit) {
+        try {
+            Locale.setDefault(Locale.US)
+            block()
+        } finally {
+            Locale.setDefault(Locale.getDefault())
+        }
     }
 }
