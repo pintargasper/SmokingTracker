@@ -216,7 +216,6 @@ object DialogManager {
 
     fun showCostsDialog(
         context: FragmentActivity,
-        costs: List<CostEntry>,
         currency: String,
         onDelete: suspend (CostEntry) -> Unit,
         onCostAdded: suspend (CostEntity) -> Unit,
@@ -268,7 +267,10 @@ object DialogManager {
                 layoutManager = LinearLayoutManager(context)
                 this.adapter = adapter
             }
-            adapter.submitList(costs)
+
+            context.lifecycleScope.launch {
+                refreshData()
+            }
 
             listOf(inputStartDate to true, inputEndDate to false).forEach { (inputField, isStartDate) ->
                 inputField.apply {

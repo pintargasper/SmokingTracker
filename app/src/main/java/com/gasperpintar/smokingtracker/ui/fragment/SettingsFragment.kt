@@ -159,7 +159,6 @@ class SettingsFragment : Fragment() {
         costsLayout.setOnClickListener {
             DialogManager.showCostsDialog(
                 context = requireActivity(),
-                costs = state.costs,
                 currency = state.settings.currency,
                 onDelete = viewModel::deleteCost,
                 onCostAdded = { viewModel.addCost(CostEntry.fromEntity(it)) },

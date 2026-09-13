@@ -2,8 +2,8 @@ package com.gasperpintar.smokingtracker.database.model
 
 import com.gasperpintar.smokingtracker._interface.Identifiable
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 data class HistoryEntry (
     override val id: Long,
@@ -21,7 +21,7 @@ data class HistoryEntry (
                 id = entity.id,
                 isLent = entity.lent > 0,
                 createdAt = entity.createdAt,
-                timerLabel = entity.createdAt.format(DateTimeFormatter.ofPattern("HH:mm:ss"))
+                timerLabel = LocalizationHelper.formatTime(time = entity.createdAt.toLocalTime())
             )
         }
     }
