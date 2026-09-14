@@ -39,7 +39,7 @@ abstract class Base<VB : ViewBinding>(
         _binding = null
     }
 
-    protected abstract fun initialize(): VB
+    protected abstract fun initialize(): Any?
 
     protected fun showContent() {
         binding.root.alpha = 1f

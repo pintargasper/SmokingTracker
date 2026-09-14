@@ -2,7 +2,7 @@ package com.gasperpintar.smokingtracker.utils.manager
 
 import android.content.Context
 import android.net.Uri
-import com.gasperpintar.smokingtracker.MainActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository

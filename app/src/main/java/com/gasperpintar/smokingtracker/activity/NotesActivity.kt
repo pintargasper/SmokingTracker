@@ -1,12 +1,12 @@
-package com.gasperpintar.smokingtracker
+package com.gasperpintar.smokingtracker.activity
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.gasperpintar.smokingtracker.Application
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityNotesBinding
@@ -15,12 +15,11 @@ import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.NoteFragment
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 
-class NotesActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityNotesBinding
+class NotesActivity : Base<ActivityNotesBinding>(
+    bindingInflater = ActivityNotesBinding::inflate
+) {
 
     private val appContainer by lazy { (application as Application).container }
     private val viewModel: NotesViewModel by viewModels {
@@ -30,30 +29,7 @@ class NotesActivity : AppCompatActivity() {
     private lateinit var adapter: Adapter<NoteEntry, NoteContainerBinding>
 
     @Override
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityNotesBinding.inflate(layoutInflater)
-
-        initialize()
-
-        setContentView(binding.root)
-    }
-
-    @Override
-    override fun attachBaseContext(
-        context: Context
-    ) {
-        super.attachBaseContext(
-            LocalizationHelper.getLocalizedContext(
-                context = context,
-                settingsRepository = (context.applicationContext as Application).container.settingsRepository
-            )
-        )
-    }
-
-    private fun initialize() = binding.apply {
+    override fun initialize() = binding.apply {
         buttonAddNote.setOnClickListener {
             supportFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)

@@ -11,7 +11,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.gasperpintar.smokingtracker.AboutActivity
+import com.gasperpintar.smokingtracker.activity.AboutActivity
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.CostEntry

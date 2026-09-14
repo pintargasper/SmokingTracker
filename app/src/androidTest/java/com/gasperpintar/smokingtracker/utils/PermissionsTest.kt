@@ -8,7 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.gasperpintar.smokingtracker.MainActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test

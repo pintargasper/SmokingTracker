@@ -1,42 +1,16 @@
-package com.gasperpintar.smokingtracker
+package com.gasperpintar.smokingtracker.activity
 
-import android.content.Context
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.pm.PackageInfoCompat
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.databinding.ActivityAboutBinding
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 
-class AboutActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityAboutBinding
-
-    @Override
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAboutBinding.inflate(layoutInflater)
-
-        initialize()
-
-        setContentView(binding.root)
-    }
+class AboutActivity : Base<ActivityAboutBinding>(
+    bindingInflater = ActivityAboutBinding::inflate
+) {
 
     @Override
-    override fun attachBaseContext(
-        context: Context
-    ) {
-        super.attachBaseContext(
-            LocalizationHelper.getLocalizedContext(
-                context = context,
-                settingsRepository = (context.applicationContext as Application).container.settingsRepository
-            )
-        )
-    }
-
-    private fun initialize() = binding.apply {
+    override fun initialize() = binding.apply {
         buttonBack.setOnClickListener {
             finish()
         }

@@ -1,44 +1,19 @@
-package com.gasperpintar.smokingtracker
+package com.gasperpintar.smokingtracker.activity
 
-import android.content.Context
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.gasperpintar.smokingtracker.ui.adapter.Pager
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.databinding.ActivityAchievementsBinding
 import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementsFragment
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.google.android.material.tabs.TabLayoutMediator
 
-class AchievementsActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityAchievementsBinding
-
-    @Override
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAchievementsBinding.inflate(layoutInflater)
-
-        initialize()
-
-        setContentView(binding.root)
-    }
+class AchievementsActivity : Base<ActivityAchievementsBinding>(
+    bindingInflater = ActivityAchievementsBinding::inflate
+) {
 
     @Override
-    override fun attachBaseContext(
-        context: Context
-    ) {
-        super.attachBaseContext(
-            LocalizationHelper.getLocalizedContext(
-                context = context,
-                settingsRepository = (context.applicationContext as Application).container.settingsRepository
-            )
-        )
-    }
-
-    private fun initialize() = binding.apply {
+    override fun initialize() = binding.apply {
         buttonBack.setOnClickListener {
             finish()
         }

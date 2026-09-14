@@ -1,22 +1,19 @@
-package com.gasperpintar.smokingtracker
+package com.gasperpintar.smokingtracker.activity
 
-import android.content.Context
-import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.viewmodel.CalculatorViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.CalculatorState
 import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 
-class CalculatorActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityCalculatorBinding
+class CalculatorActivity : Base<ActivityCalculatorBinding>(
+    bindingInflater = ActivityCalculatorBinding::inflate
+) {
 
     private val appContainer by lazy { (application as Application).container }
     private val viewModel: CalculatorViewModel by viewModels {
@@ -24,30 +21,7 @@ class CalculatorActivity : AppCompatActivity() {
     }
 
     @Override
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCalculatorBinding.inflate(layoutInflater)
-
-        initialize()
-
-        setContentView(binding.root)
-    }
-
-    @Override
-    override fun attachBaseContext(
-        context: Context
-    ) {
-        super.attachBaseContext(
-            LocalizationHelper.getLocalizedContext(
-                context = context,
-                settingsRepository = (context.applicationContext as Application).container.settingsRepository
-            )
-        )
-    }
-
-    private fun initialize() = binding.apply {
+    override fun initialize() = binding.apply {
         inputStartDate.setOnClickListener {
             DialogManager.showDatePickerDialog(context = this@CalculatorActivity) { date ->
                 inputStartDate.setText( viewModel.setStartDate(date))

@@ -1,11 +1,8 @@
-package com.gasperpintar.smokingtracker
+package com.gasperpintar.smokingtracker.activity
 
-import android.content.Context
 import android.content.SharedPreferences
-import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.view.children
@@ -16,25 +13,25 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gasperpintar.smokingtracker.ui.adapter.Pager
+import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
+import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
 import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
 import com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.runBlocking
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
+class MainActivity : Base<ActivityMainBinding>(
+    bindingInflater = ActivityMainBinding::inflate
+) {
 
     private val appContainer by lazy { (application as Application).container }
     private val viewModel: MainViewModel by viewModels {
@@ -44,27 +41,13 @@ class MainActivity : AppCompatActivity() {
     var permissionsHelper: Permissions = Permissions(activity = this)
 
     @Override
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+    override fun initialize() {
+        val settings: SettingsEntity = runBlocking { viewModel.getSettings(context = this@MainActivity) }
+        applyTheme(themeId = settings.theme)
 
-        initialize()
-
-        setContentView(binding.root)
-    }
-
-    @Override
-    override fun attachBaseContext(
-        context: Context
-    ) {
-        super.attachBaseContext(
-            LocalizationHelper.getLocalizedContext(
-                context = context,
-                settingsRepository = (context.applicationContext as Application).container.settingsRepository
-            )
-        )
+        val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+        handleNotifications(sharedPreferences = sharedPreferences)
+        setupPager()
     }
 
     @Override
@@ -84,15 +67,6 @@ class MainActivity : AppCompatActivity() {
                 navView.findViewById<View>(navView.menu[i].itemId)?.setOnLongClickListener { true }
             }
         }
-    }
-
-    private fun initialize() {
-        val settings: SettingsEntity = runBlocking { viewModel.getSettings(context = this@MainActivity) }
-        applyTheme(themeId = settings.theme)
-
-        val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-        handleNotifications(sharedPreferences = sharedPreferences)
-        setupPager()
     }
 
     private fun setupPager() = binding.apply {

@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.gasperpintar.smokingtracker.MainActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.databinding.HistoryContainerBinding
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter

@@ -12,6 +12,12 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.gasperpintar.smokingtracker.activity.AboutActivity
+import com.gasperpintar.smokingtracker.activity.AchievementsActivity
+import com.gasperpintar.smokingtracker.activity.CalculatorActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
+import com.gasperpintar.smokingtracker.activity.NotesActivity
+import com.gasperpintar.smokingtracker.activity.StatisticsActivity
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity

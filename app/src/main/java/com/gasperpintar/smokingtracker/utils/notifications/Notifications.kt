@@ -12,7 +12,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.gasperpintar.smokingtracker.MainActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
 import com.gasperpintar.smokingtracker.R
 import androidx.core.content.getSystemService
 

@@ -3,10 +3,6 @@ package com.gasperpintar.smokingtracker.ui.fragment.achievements
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,14 +18,14 @@ import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
+import com.gasperpintar.smokingtracker.ui.fragment.Base
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class AchievementsFragment: Fragment() {
-
-    private var _binding: FragmentAchievementsBinding? = null
-    private val binding get() = _binding!!
+class AchievementsFragment : Base<FragmentAchievementsBinding>(
+    bindingInflater = FragmentAchievementsBinding::inflate
+) {
 
     private val viewModel: AchievementViewModel by viewModels {
         ModelFactory(
@@ -49,27 +45,12 @@ class AchievementsFragment: Fragment() {
     }
 
     @Override
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentAchievementsBinding.inflate(inflater, container, false)
-
-        initialize()
-
-        return binding.root
-    }
-
-    @Override
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun initialize() {
+    override fun initialize() {
         setupAdapter()
-        loadAchievements()
+        viewLifecycleOwner.lifecycleScope.launch {
+            loadAchievements()
+            showContent()
+        }
     }
 
     private fun setupAdapter() = binding.apply {
@@ -110,12 +91,10 @@ class AchievementsFragment: Fragment() {
         recyclerviewAchievements.adapter = adapter
     }
 
-    private fun loadAchievements() = binding.apply {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val state = viewModel.getAchievements(category = achievementType)
-            adapter.submitList(state.achievements) {
-                recyclerviewAchievements.scrollToPosition(0)
-            }
+    private suspend fun loadAchievements() = binding.apply {
+        val state = viewModel.getAchievements(category = achievementType)
+        adapter.submitList(state.achievements) {
+            recyclerviewAchievements.scrollToPosition(0)
         }
     }
 }

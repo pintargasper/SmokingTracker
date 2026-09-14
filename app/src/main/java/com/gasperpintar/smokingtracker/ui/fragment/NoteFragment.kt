@@ -1,15 +1,10 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.activity.addCallback
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.NotesActivity
+import com.gasperpintar.smokingtracker.activity.NotesActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
@@ -19,10 +14,9 @@ import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
-class NoteFragment : Fragment() {
-
-    private var _binding: FragmentNoteBinding? = null
-    private val binding: FragmentNoteBinding get() = _binding!!
+class NoteFragment : Base<FragmentNoteBinding>(
+    bindingInflater = FragmentNoteBinding::inflate
+) {
 
     private val viewModel: NotesViewModel by viewModels {
         ModelFactory(
@@ -34,25 +28,7 @@ class NoteFragment : Fragment() {
     private var existingNote: NoteEntity? = null
 
     @Override
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentNoteBinding.inflate(inflater, container, false)
-
-        initialize()
-
-        return binding.root
-    }
-
-    @Override
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun initialize() = binding.apply {
+    override fun initialize() = binding.apply {
         noteId = arguments?.getLong("note_id") ?: -1L
 
         val closeAction = { saveNote(close = true) }
@@ -75,6 +51,7 @@ class NoteFragment : Fragment() {
                 else -> ""
             }
         }
+        showContent()
     }
 
     private fun loadNote() = binding.apply {

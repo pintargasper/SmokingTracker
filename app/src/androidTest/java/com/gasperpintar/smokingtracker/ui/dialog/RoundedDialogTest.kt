@@ -2,7 +2,7 @@ package com.gasperpintar.smokingtracker.ui.dialog
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.gasperpintar.smokingtracker.MainActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
 import org.junit.Assert.assertNotNull
 import org.junit.Rule
 import org.junit.Test
