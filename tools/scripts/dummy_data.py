@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
-from random import randint, sample, choice
+from random import randint, choice, choices
 from json import load
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
@@ -16,8 +16,9 @@ OUTPUT_FOLDER.mkdir(exist_ok=True)
 OUTPUT_FILE = OUTPUT_FOLDER / "dummy_data.xlsx"
 
 DAYS = 360
-AVERAGE_CIGARETTES_PER_DAY = (8, 10)
-PROBABILITY = 2
+AVERAGE_CIGARETTES_PER_DAY = (8, 30)
+SMOKE_FREE_PROBABILITY = 2
+LENT_PROBABILITY = 2
 SECONDS_IN_DAY = 60 * 60 * 24
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
@@ -51,30 +52,49 @@ def generate_history_day(date: datetime) -> list[dict]:
     now = datetime.now().replace(microsecond=0)
     is_today = date.date() == now.date()
 
-    start_time = date.replace(hour=7, minute=randint(0, 20), second=randint(0, 59), microsecond=0)
-    end_time = (
-        now - timedelta(minutes=90)
-        if is_today
-        else date.replace(hour=22, minute=59, second=59, microsecond=0)
-    )
+    start_time = date.replace(hour=7, minute=randint(0, 30), second=randint(0, 59), microsecond=0)
+    end_time = (now - timedelta(minutes=90) if is_today else date.replace(hour=23, minute=59, second=59, microsecond=0))
 
-    if end_time < start_time:
+    if end_time <= start_time:
         return []
 
-    target_count = randint(*AVERAGE_CIGARETTES_PER_DAY)
-    history: list[dict] = []
+    if randint(1, 100) <= SMOKE_FREE_PROBABILITY:
+        return []
 
+    cigarettes = randint(*AVERAGE_CIGARETTES_PER_DAY)
+
+    history = []
     current_time = start_time
-    while len(history) < target_count:
-        if current_time > end_time:
-            break
 
+    interval_ranges = [(10, 25), (25, 45), (45, 70), (70, 110), (110, 180)]
+    interval_weights = [35, 30, 20, 10, 5]
+
+    while len(history) < cigarettes and current_time <= end_time:
         history.append({
-            "Lent": int(randint(1, 100) < PROBABILITY),
+            "Lent": int(randint(1, 100) <= LENT_PROBABILITY),
             "CreatedAt": current_time.strftime(DATE_FORMAT),
         })
-        interval = timedelta(minutes=randint(30, 120), seconds=randint(0, 59))
-        current_time += interval
+        remaining = cigarettes - len(history)
+
+        if remaining <= 0:
+            break
+
+        remaining_minutes = int((end_time - current_time).total_seconds() / 60)
+        if remaining_minutes <= 0:
+            break
+
+        minimum_interval = 10
+        maximum_interval = max(minimum_interval, remaining_minutes // remaining)
+
+        interval_min, interval_max = choices(interval_ranges, weights=interval_weights, k=1)[0]
+        interval_min = min(interval_min, maximum_interval)
+        interval_max = min(interval_max, maximum_interval)
+
+        if interval_min > interval_max:
+            interval_min = interval_max
+
+        interval = randint(interval_min, interval_max)
+        current_time += timedelta(minutes=interval, seconds=randint(0, 59))
     return history
 
 
@@ -119,14 +139,13 @@ def generate_achievements(history: list[dict]) -> list[dict]:
         }
         for index, (category, item) in enumerate(((category, item) for category, items in data.items() for item in items), start=1)
     ]
-
     timestamps = sorted(datetime.strptime(entry["CreatedAt"], DATE_FORMAT) for entry in history)
 
     if not timestamps:
         return achievements
 
     now = datetime.now().replace(microsecond=0)
-    average_cigarettes_per_day = len(timestamps) / max((timestamps[-1] - timestamps[0]).total_seconds() / SECONDS_IN_DAY, 1)
+    average_cigarettes_per_day = len(timestamps) / max((now - timestamps[0]).total_seconds() / SECONDS_IN_DAY, 1)
 
     periods = list(zip(timestamps, timestamps[1:]))
     periods.append((timestamps[-1], now))
@@ -232,7 +251,7 @@ def generate_notes() -> list[dict]:
     notes = []
 
     now = datetime.now().replace(microsecond=0)
-    for template in sample(templates, len(templates)):
+    for template in templates:
         created_at = now - timedelta(
             days=randint(0, DAYS - 1),
             hours=randint(0, 23),
@@ -256,7 +275,7 @@ def generate_settings() -> dict:
 
     return {
         "Theme": 1,
-        "Language": 1,
+        "Language": "en",
         "Frequency": randint(0, 2),
         "Currency": choice(currencies),
         "CustomCurrency": choice(custom_currencies) if randint(0, 2) == 0 else "",
@@ -265,7 +284,6 @@ def generate_settings() -> dict:
 
 def generate_notifications() -> dict:
     values = ["TRUE", "FALSE"]
-
     return {
         "System": choice(values),
         "Achievements": choice(values),
