@@ -184,7 +184,8 @@
         android:id="@+id/card_day_navigation"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/layout_timeline"
@@ -193,46 +194,46 @@
 
         <LinearLayout
             android:id="@+id/day_navigation"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:padding="8dp">
 
             <ImageButton
                 android:id="@+id/previous_day"
                 android:layout_width="48dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:contentDescription="@string/home_previous_day"
                 android:src="@drawable/arrow_circle_left_48px"
-                android:layout_gravity="center"
+                android:padding="0dp"
                 app:tint="?attr/colorOnSurface"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
 
             <LinearLayout
-                android:layout_width="180dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:minWidth="170dp"
                 android:layout_marginHorizontal="8dp"
                 android:orientation="vertical"
                 android:gravity="center">
 
                 <TextView
                     android:id="@+id/current_day"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Day"
                     android:gravity="center"
-                    android:singleLine="true"
                     style="@style/SubtitleTextView"
                     tools:ignore="HardcodedText" />
 
                 <TextView
                     android:id="@+id/current_date"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="%1$02d.%2$02d.%3$d"
                     android:gravity="center"
-                    android:singleLine="true"
                     android:layout_marginTop="-5dp"
                     style="@style/MainTitleCenterTextView"
                     tools:ignore="HardcodedText" />
@@ -242,12 +243,12 @@
             <ImageButton
                 android:id="@+id/next_day"
                 android:layout_width="48dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:contentDescription="@string/home_next_day"
                 android:src="@drawable/arrow_circle_right_48px"
-                android:layout_gravity="center"
+                android:padding="0dp"
                 app:tint="?attr/colorOnSurface"
-                style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                style="@style/Widget.MaterialComponents.Button.TextButton" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
@@ -255,7 +256,8 @@
         android:id="@+id/card_recyclerview_history"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="4dp"
         app:layout_constraintTop_toBottomOf="@id/card_day_navigation"
@@ -267,7 +269,35 @@
             android:id="@+id/recyclerview_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="8dp"/>
+            android:padding="8dp" />
+
+        <LinearLayout
+            android:id="@+id/layout_empty_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/empty_history_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_no_entries"
+                android:gravity="center"
+                style="@style/MainTitleCenterTextView" />
+
+            <TextView
+                android:id="@+id/empty_history_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_no_entries_message"
+                android:gravity="center"
+                style="@style/BodyTextView" />
+
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView

@@ -19,10 +19,11 @@
     <string name="home_previous_day">Previous day</string>
     <string name="home_next_day">Next day</string>
     <string name="home_add_entry">Add new entry</string>
-
     <string name="home_lent">Lent record</string>
     <string name="home_edit">Edit record</string>
     <string name="home_delete">Delete record</string>
+    <string name="home_no_entries">No entries found for this day</string>
+    <string name="home_no_entries_message">Click the \"Add new entry\" button to add a new entry</string>
 
     <string name="graph_daily">Daily Overview (%1$d)</string>
     <string name="graph_weekly">Weekly Overview (%1$d)</string>

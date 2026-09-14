@@ -140,8 +140,13 @@ class HomeFragment : Fragment() {
 
             updateTimerLabel(entry = lastEntry)
 
-            adapter.submitList(state.history) {
-                recyclerviewHistory.scrollToPosition(0)
+            state.history.let {
+                recyclerviewHistory.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+                layoutEmptyHistory.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+
+                adapter.submitList(it) {
+                    recyclerviewHistory.scrollToPosition(0)
+                }
             }
             WidgetHelper.updateAllWidgets(context = requireContext())
         }
