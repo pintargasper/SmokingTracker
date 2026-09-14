@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.activity
 
 import android.content.SharedPreferences
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
@@ -45,9 +46,9 @@ class MainActivity : Base<ActivityMainBinding>(
         val settings: SettingsEntity = runBlocking { viewModel.getSettings(context = this@MainActivity) }
         applyTheme(themeId = settings.theme)
 
-        val sharedPreferences: SharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-        handleNotifications(sharedPreferences = sharedPreferences)
+        handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
         setupPager()
+        setupNavigation()
     }
 
     @Override
@@ -120,6 +121,19 @@ class MainActivity : Base<ActivityMainBinding>(
                 ExistingPeriodicWorkPolicy.KEEP,
                 workRequest
             )
+    }
+
+    private fun setupNavigation() {
+        onBackPressedDispatcher.addCallback(owner = this, onBackPressedCallback = object : OnBackPressedCallback(enabled = true) {
+            override fun handleOnBackPressed() = when {
+                binding.mainViewPager.currentItem != 0 ->
+                    binding.mainViewPager.setCurrentItem(0, false)
+                else -> {
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                }
+            }
+        })
     }
 
     private fun applyTheme(themeId: Int) {
