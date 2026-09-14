@@ -137,23 +137,23 @@ class ScreenshotTest {
         settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntity.default(language))
     }
 
-    private fun getDefaultLanguageIndex(): Int {
+    private fun getDefaultLanguageIndex(): String {
         val languageTag = InstrumentationRegistry.getArguments()
             .getString("testLocale")
             ?.replace(oldChar = '_', newChar = '-')
-            ?: return 0
+            ?: return "system"
 
         return when {
-            languageTag.startsWith("en") -> 1
-            languageTag.startsWith("sl") -> 2
-            languageTag.startsWith("uk") -> 3
-            languageTag.startsWith("de") -> 4
-            languageTag.startsWith("fr") -> 5
-            languageTag.startsWith("sr-Latn") -> 7
-            languageTag.startsWith("sr-Cyrl") -> 6
-            languageTag.startsWith("zh-Hans") -> 8
-            languageTag.startsWith("zh-Hant") -> 9
-            else -> 0
+            languageTag.startsWith("en") -> "en"
+            languageTag.startsWith("sl") -> "sl"
+            languageTag.startsWith("uk") -> "uk"
+            languageTag.startsWith("de") -> "de"
+            languageTag.startsWith("fr") -> "fr"
+            languageTag.startsWith("sr-Latn") -> "sr-Latn"
+            languageTag.startsWith("sr-Cyrl") -> "sr-Cyrl"
+            languageTag.startsWith("zh-Hans") -> "zh-Hans"
+            languageTag.startsWith("zh-Hant") -> "zh-Hant"
+            else -> "system"
         }
     }
 

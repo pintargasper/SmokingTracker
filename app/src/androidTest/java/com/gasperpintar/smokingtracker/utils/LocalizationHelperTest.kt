@@ -31,7 +31,7 @@ class LocalizationHelperTest {
     private lateinit var database: AppDatabase
     private lateinit var settingsRepository: SettingsRepository
 
-    private val languageSystem = 0
+    private val languageSystem = "system"
     private val languageEnglish = "en"
 
     @Before
@@ -49,11 +49,11 @@ class LocalizationHelperTest {
     @Test
     fun getLocalizedContextReturnsEnglishLocaleWhenLanguageIsEnglish() = runBlocking {
         val languageValues = context.resources.getStringArray(R.array.language_values)
-        val englishIndex = languageValues.indexOf(languageEnglish)
+        val english = languageValues.firstOrNull { it == languageEnglish }
 
-        assertTrue("English language must exist in language values", englishIndex >= 0)
+        assertTrue("English language must exist in language values", english == "en")
 
-        settingsRepository.insert(settings = SettingsEntity.default(language = englishIndex))
+        settingsRepository.insert(settings = SettingsEntity.default(language = english ?: languageEnglish))
 
         val actual = LocalizationHelper.getLocalizedContext(context, settingsRepository).resources.configuration.locales[0].language
 
