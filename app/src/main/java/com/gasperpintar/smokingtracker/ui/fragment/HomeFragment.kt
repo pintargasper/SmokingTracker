@@ -1,10 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,10 +24,9 @@ import java.time.Duration
 import java.time.LocalDateTime
 import kotlin.time.Duration.Companion.milliseconds
 
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
-    private val binding: FragmentHomeBinding get() = _binding!!
+class HomeFragment : Base<FragmentHomeBinding>(
+    bindingInflater = FragmentHomeBinding::inflate
+) {
 
     private val viewModel: HomeViewModel by viewModels {
         ModelFactory(container = (requireActivity().application as Application).container)
@@ -43,16 +38,35 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: Adapter<HistoryEntry, HistoryContainerBinding>
 
     @Override
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+    override fun initialize() = binding.apply {
+        buttonAddEntry.setOnClickListener {
+            DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    viewModel.insert(isLent = isLent)
+                    loadHistory()
+                }
+            }
+        }
 
-        initialize()
+        previousDay.setOnClickListener {
+            viewModel.previousDay()
+            viewLifecycleOwner.lifecycleScope.launch {
+                loadHistory()
+            }
+        }
 
-        return binding.root
+        nextDay.setOnClickListener {
+            viewModel.nextDay()
+            viewLifecycleOwner.lifecycleScope.launch {
+                loadHistory()
+            }
+        }
+        setupAdapter()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            loadHistory()
+            showContent()
+        }
     }
 
     @Override
@@ -71,30 +85,6 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         stopTimer()
-        _binding = null
-    }
-
-    private fun initialize() = binding.apply {
-        buttonAddEntry.setOnClickListener {
-            DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.insert(isLent = isLent)
-                    loadHistory()
-                }
-            }
-        }
-
-        previousDay.setOnClickListener {
-            viewModel.previousDay()
-            loadHistory()
-        }
-
-        nextDay.setOnClickListener {
-            viewModel.nextDay()
-            loadHistory()
-        }
-        setupAdapter()
-        loadHistory()
     }
 
     private fun setupAdapter() = binding.apply {
@@ -127,29 +117,28 @@ class HomeFragment : Fragment() {
         recyclerviewHistory.adapter = adapter
     }
 
-    private fun loadHistory() = binding.apply {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val state = viewModel.getHistory()
-            lastEntry = state.lastEntry
+    private suspend fun loadHistory() = binding.apply {
+        val state = viewModel.getHistory()
+        lastEntry = state.lastEntry
 
-            currentDay.text = LocalizationHelper.getDayOfWeekName(dayOfWeek = state.selectedDate.dayOfWeek)
-            currentDate.text = LocalizationHelper.formatDate(date = state.selectedDate)
-            dailyValue.text = state.dailyCount.toString()
-            weeklyValue.text = state.weeklyCount.toString()
-            monthlyValue.text = state.monthlyCount.toString()
+        currentDay.text =
+            LocalizationHelper.getDayOfWeekName(dayOfWeek = state.selectedDate.dayOfWeek)
+        currentDate.text = LocalizationHelper.formatDate(date = state.selectedDate)
+        dailyValue.text = state.dailyCount.toString()
+        weeklyValue.text = state.weeklyCount.toString()
+        monthlyValue.text = state.monthlyCount.toString()
 
-            updateTimerLabel(entry = lastEntry)
+        updateTimerLabel(entry = lastEntry)
 
-            state.history.let {
-                recyclerviewHistory.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
-                layoutEmptyHistory.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+        state.history.let {
+            recyclerviewHistory.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+            layoutEmptyHistory.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
 
-                adapter.submitList(it) {
-                    recyclerviewHistory.scrollToPosition(0)
-                }
+            adapter.submitList(it) {
+                recyclerviewHistory.scrollToPosition(0)
             }
-            WidgetHelper.updateAllWidgets(context = requireContext())
         }
+        WidgetHelper.updateAllWidgets(context = requireContext())
     }
 
     private fun startTimer() {

@@ -1,10 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
@@ -19,42 +15,16 @@ import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class GraphFragment : Fragment() {
-
-    private var _binding: FragmentGraphBinding? = null
-    private val binding get() = _binding!!
+class GraphFragment : Base<FragmentGraphBinding>(
+    bindingInflater = FragmentGraphBinding::inflate
+) {
 
     private val viewModel: GraphViewModel by viewModels {
         ModelFactory(container = (requireActivity().application as Application).container)
     }
 
     @Override
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentGraphBinding.inflate(inflater, container, false)
-
-        initialize()
-        loadGraphs()
-
-        return binding.root
-    }
-
-    @Override
-    override fun onResume() {
-        super.onResume()
-        loadGraphs()
-    }
-
-    @Override
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun initialize() = binding.apply {
+    override fun initialize() = binding.apply {
         setupNavigation(
             previous = previousDayDaily,
             next = nextDayDaily,
@@ -82,6 +52,19 @@ class GraphFragment : Fragment() {
             previousUnit = { it.minusYears(1) },
             nextUnit = { it.plusYears(1) }
         )
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            loadGraphs()
+            showContent()
+        }
+    }
+
+    @Override
+    override fun onResume() {
+        super.onResume()
+        viewLifecycleOwner.lifecycleScope.launch {
+            loadGraphs()
+        }
     }
 
     private fun setupNavigation(
@@ -92,23 +75,25 @@ class GraphFragment : Fragment() {
     ) {
         previous.setOnClickListener {
             viewModel.previous(previousUnit)
-            loadGraphs()
+            viewLifecycleOwner.lifecycleScope.launch {
+                loadGraphs()
+            }
         }
 
         next.setOnClickListener {
             viewModel.next(nextUnit)
-            loadGraphs()
+            viewLifecycleOwner.lifecycleScope.launch {
+                loadGraphs()
+            }
         }
     }
 
-    private fun loadGraphs() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            val state = viewModel.getEntries()
-            updateDaily(state)
-            updateWeekly(state)
-            updateMonthly(state)
-            updateYearly(state)
-        }
+    private suspend fun loadGraphs() {
+        val state = viewModel.getEntries()
+        updateDaily(state)
+        updateWeekly(state)
+        updateMonthly(state)
+        updateYearly(state)
     }
 
     private fun updateDaily(

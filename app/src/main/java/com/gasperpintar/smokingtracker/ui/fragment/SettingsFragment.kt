@@ -4,16 +4,11 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.AboutActivity
@@ -33,10 +28,9 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDateTime
 
-class SettingsFragment : Fragment() {
-
-    private var _binding: FragmentSettingsBinding? = null
-    private val binding get() = _binding!!
+class SettingsFragment : Base<FragmentSettingsBinding>(
+    bindingInflater = FragmentSettingsBinding::inflate
+) {
 
     private val viewModel: SettingsViewModel by viewModels {
         ModelFactory(container = (requireActivity().application as Application).container)
@@ -50,34 +44,17 @@ class SettingsFragment : Fragment() {
     private val mimeExcel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
     @Override
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
-
-        initialize()
-
-        return binding.root
-    }
-
-    @Override
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun initialize() = binding.apply {
-        viewLifecycleOwner.lifecycleScope.launch {
-            setupSettings()
-        }
-
+    override fun initialize() = binding.apply {
         setupDataManagement()
         setupLaunchers()
 
         aboutLayout.setOnClickListener {
             startActivity(Intent(requireContext(), AboutActivity::class.java))
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            setupSettings()
+            showContent()
         }
     }
 
@@ -181,7 +158,8 @@ class SettingsFragment : Fragment() {
         themeService.text = resources.getStringArray(R.array.theme_names)[state.settings.theme]
         languageService.text = resources.getStringArray(R.array.language_names)
             .getOrElse(resources.getStringArray(R.array.language_values)
-                .indexOf(state.settings.language)) { "system" }
+                .indexOf(state.settings.language)
+            ) { "system" }
     }
 
     private fun setupDataManagement() = binding.apply {
@@ -245,7 +223,6 @@ class SettingsFragment : Fragment() {
         }
 
         val uri = selectedFile.tag as? Uri ?: return
-
         val dialog = DialogManager.showLoadingDialog(context = requireActivity()).apply {
             setProgressType(ProgressType.RESTORE)
         }
