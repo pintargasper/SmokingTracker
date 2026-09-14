@@ -25,6 +25,13 @@ jobs:
           pip install openpyxl
           pip install Pillow
 
+      - name: Set system date to last Sunday 22:00
+        run: |
+          sudo timedatectl set-timezone Europe/Ljubljana
+          LAST_SUNDAY=$(date -d "last sunday" "+%Y-%m-%d")
+          sudo date -s "${LAST_SUNDAY} 22:00:00"
+          date
+
       - name: Generate dummy data
         run: |
           python tools/scripts/dummy_data.py
