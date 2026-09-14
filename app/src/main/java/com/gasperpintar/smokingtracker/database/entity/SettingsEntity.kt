@@ -20,13 +20,16 @@ data class SettingsEntity(
     val customCurrency: String
 ) {
     companion object {
-        fun default(language: String): SettingsEntity {
+        fun default(
+            language: String = "system",
+            currency: String = "€"
+        ): SettingsEntity {
             return SettingsEntity(
                 id = 0L,
                 theme = 0,
                 language = language,
                 frequency = 0,
-                currency = "€",
+                currency = currency,
                 customCurrency = ""
             )
         }

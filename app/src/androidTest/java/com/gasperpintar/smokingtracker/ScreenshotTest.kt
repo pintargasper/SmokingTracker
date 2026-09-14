@@ -67,6 +67,7 @@ class ScreenshotTest {
         grantNotificationPermission()
         importDummyData()
         setTestLanguage()
+        setTestCurrency()
     }
 
     @Test fun captureAllScreenshots() {
@@ -140,7 +141,12 @@ class ScreenshotTest {
 
     private fun setTestLanguage() = runBlocking {
         val language = getDefaultLanguageIndex()
-        settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntity.default(language))
+        settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntity.default(language = language))
+    }
+
+    private fun setTestCurrency() = runBlocking {
+        val currency = getDefaultCurrency()
+        settingsRepository.upsert(settingsRepository.get()?.copy(currency = currency) ?: SettingsEntity.default(currency = currency))
     }
 
     private fun getDefaultLanguageIndex(): String {
@@ -160,6 +166,23 @@ class ScreenshotTest {
             languageTag.startsWith("zh-Hans") -> "zh-Hans"
             languageTag.startsWith("zh-Hant") -> "zh-Hant"
             else -> "system"
+        }
+    }
+
+    private fun getDefaultCurrency(): String {
+        val languageTag = InstrumentationRegistry.getArguments()
+            .getString("testLocale")
+            ?.replace(oldChar = '_', newChar = '-')
+            ?: return "€"
+
+        return when {
+            languageTag.startsWith("en") -> "$"
+            languageTag.startsWith("hu") -> "Ft"
+            languageTag.startsWith("sr") -> "дин."
+            languageTag.startsWith("uk") -> "₴"
+            languageTag.startsWith("zh-Hans") -> "¥"
+            languageTag.startsWith("zh-Hant") -> "¥"
+            else -> "€"
         }
     }
 
