@@ -38,5 +38,5 @@ jobs:
             --target master \
             --draft \
             --title "${VERSION}" \
-            --notes-file "release/notes/${VERSION}.md"
+            --notes-file "release/notes/${VERSION}.md" \
             --discussion-category "Announcements"
