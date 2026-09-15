@@ -8,7 +8,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.gasperpintar.smokingtracker.MainActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -24,39 +24,25 @@ class PermissionsTest {
     fun isNotificationPermissionGrantedReturnsCorrectState() {
         activityScenarioRule.scenario.moveToState(Lifecycle.State.CREATED)
         activityScenarioRule.scenario.onActivity { activity ->
-            val permissions = Permissions(activity)
+            val expected = Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                    ContextCompat.checkSelfPermission(
+                        activity, Manifest.permission.POST_NOTIFICATIONS
+                    ) == PackageManager.PERMISSION_GRANTED
 
-            val expected = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                ContextCompat.checkSelfPermission(
-                    activity,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED
-            } else {
-                true
-            }
-
-            val actual = permissions.isNotificationPermissionGranted()
+            val actual = Permissions(activity).isNotificationPermissionGranted
 
             assertEquals(expected, actual)
         }
     }
 
-
     @Test
     fun checkAndRequestNotificationPermissionReturnsTrueOnOlderAndroid() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            return
-        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) return
 
         var callbackResult: Boolean? = null
-
         activityScenarioRule.scenario.moveToState(Lifecycle.State.CREATED)
         activityScenarioRule.scenario.onActivity { activity ->
-            val permissions = Permissions(activity)
-
-            permissions.checkAndRequestNotificationPermission {
-                callbackResult = it
-            }
+            Permissions(activity).checkAndRequestNotificationPermission { callbackResult = it }
         }
 
         assertEquals(true, callbackResult)
@@ -64,9 +50,7 @@ class PermissionsTest {
 
     @Test
     fun checkAndRequestNotificationPermissionReturnsTrueWhenAlreadyGranted() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            return
-        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
 
         InstrumentationRegistry.getInstrumentation().uiAutomation.grantRuntimePermission(
             "com.gasperpintar.smokingtracker",
@@ -74,11 +58,8 @@ class PermissionsTest {
         )
 
         var callbackResult: Boolean? = null
-
         activityScenarioRule.scenario.moveToState(Lifecycle.State.CREATED)
         activityScenarioRule.scenario.onActivity { activity ->
-            val permissions = Permissions(activity)
-
             val expected = PackageManager.PERMISSION_GRANTED
             val actual = ContextCompat.checkSelfPermission(
                 activity,
@@ -87,9 +68,7 @@ class PermissionsTest {
 
             assertEquals(expected, actual)
 
-            permissions.checkAndRequestNotificationPermission {
-                callbackResult = it
-            }
+            Permissions(activity).checkAndRequestNotificationPermission { callbackResult = it }
         }
 
         assertEquals(true, callbackResult)

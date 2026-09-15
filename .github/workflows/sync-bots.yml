@@ -10,9 +10,9 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
       - name: Update and approve PRs
         env:

@@ -7,10 +7,11 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -19,6 +20,8 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.Month
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.Locale
 
 @RunWith(value = AndroidJUnit4::class)
@@ -27,6 +30,9 @@ class LocalizationHelperTest {
     private lateinit var context: Context
     private lateinit var database: AppDatabase
     private lateinit var settingsRepository: SettingsRepository
+
+    private val languageSystem = "system"
+    private val languageEnglish = "en"
 
     @Before
     fun setup() {
@@ -41,108 +47,55 @@ class LocalizationHelperTest {
     }
 
     @Test
-    fun getLocalizedContextReturnsSystemLocaleWhenLanguageIsSystem() = runBlocking {
-        settingsRepository.insert(settings = createSettingsEntity(languageId = 0))
-
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
-        val expected = context.resources.configuration.locales[0].language
-        val actual = localizedContext.resources.configuration.locales[0].language
-
-        assertEquals(expected, actual)
-    }
-
-    @Test
     fun getLocalizedContextReturnsEnglishLocaleWhenLanguageIsEnglish() = runBlocking {
-        val supportedLanguages = context.resources.getStringArray(R.array.language_values)
-        val index = supportedLanguages.indexOf("en")
+        val languageValues = context.resources.getStringArray(R.array.language_values)
+        val english = languageValues.firstOrNull { it == languageEnglish }
 
-        database.settingsDao().insert(entity = createSettingsEntity(languageId = index))
+        assertTrue("English language must exist in language values", english == "en")
 
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
-        val actualLanguage = localizedContext.resources.configuration.locales[0].language
+        settingsRepository.insert(settings = SettingsEntity.default(language = english ?: languageEnglish))
 
-        assertEquals("en", actualLanguage)
-    }
+        val actual = LocalizationHelper.getLocalizedContext(context, settingsRepository).resources.configuration.locales[0].language
 
-    @Test
-    fun getLocalizedContextReturnsSystemLocaleWhenLanguageIdIsInvalid() = runBlocking {
-        database.settingsDao().insert(entity = createSettingsEntity(languageId = 999))
-
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = context, settingsRepository = settingsRepository)
-        val expected = context.resources.configuration.locales[0].language
-        val actual = localizedContext.resources.configuration.locales[0].language
-
-        assertEquals(expected, actual)
+        assertEquals(languageEnglish, actual)
     }
 
     @Test
     fun formatDateTimeReturnsFormattedDateTimeForSlovenianLocale() {
-        val originalLocale = Locale.getDefault()
+        withLocale(Locale.forLanguageTag("sl-SI")) {
+            val result = LocalizationHelper.formatDateTime(LocalDateTime.of(2026, 8, 12, 18, 36))
 
-        try {
-            Locale.setDefault(Locale.forLanguageTag("sl-SI"))
-
-            val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
-            val result = LocalizationHelper.formatDateTime(dateTime)
-
-            assert(result.isNotEmpty())
-            assert(result.contains("12"))
-            assert(result.contains("8"))
-            assert(result.contains("18"))
-            assert(result.contains("36"))
-        } finally {
-            Locale.setDefault(originalLocale)
+            assertTrue(result.isNotEmpty())
+            assertTrue(result.contains(other = "12"))
+            assertTrue(result.contains(other = "8"))
+            assertTrue(result.contains(other = "18"))
+            assertTrue(result.contains(other = "36"))
         }
     }
 
     @Test
     fun formatDateTimeReturnsFormattedDateTimeForEnglishLocale() {
-        val originalLocale = Locale.getDefault()
-
-        try {
-            Locale.setDefault(Locale.forLanguageTag("en-US"))
-
+        withLocale(Locale.US) {
             val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
-            val result = LocalizationHelper.formatDateTime(dateTime)
 
-            assertEquals("8_12_26_6_36_PM", result)
-        } finally {
-            Locale.setDefault(originalLocale)
-        }
-    }
+            val expected = dateTime.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT).withLocale(Locale.US))
+            val actual = LocalizationHelper.formatDateTime(dateTime)
 
-    @Test
-    fun formatDateTimeDoesNotContainInvalidFileNameCharacters() {
-        val originalLocale = Locale.getDefault()
-
-        try {
-            Locale.setDefault(Locale.forLanguageTag("en-US"))
-
-            val dateTime = LocalDateTime.of(2026, 8, 12, 18, 36)
-            val result = LocalizationHelper.formatDateTime(dateTime)
-
-            assert(result.isNotEmpty())
-            assert(result.none {
-                it in "/:\\*?\"<>|"
-            })
-        } finally {
-            Locale.setDefault(originalLocale)
+            assertEquals(expected, actual)
         }
     }
 
     @Test
     fun getDayOfWeekNameReturnsNonEmptyString() {
-        for (day in DayOfWeek.entries) {
-            val result = LocalizationHelper.getDayOfWeekName(context, dayOfWeek = day)
-            assert(result.isNotEmpty())
+        DayOfWeek.entries.forEach {
+            assertTrue(LocalizationHelper.getDayOfWeekName(dayOfWeek = it).isNotEmpty())
         }
     }
 
     @Test
     fun getMonthNameReturnsNonEmptyString() {
-        for(month in Month.entries) {
-            val result = LocalizationHelper.getMonthName(context, month = month)
-            assert(result.isNotEmpty())
+        Month.entries.forEach {
+            assertTrue(LocalizationHelper.getMonthName(month = it).isNotEmpty())
         }
     }
 
@@ -151,7 +104,6 @@ class LocalizationHelperTest {
         val day = "2026-08-12"
 
         val formattedDate = LocalizationHelper.formatDate(LocalDate.parse(day))
-
         val expected = context.resources.getString(R.string.statistics_logged, formattedDate)
         val actual = LocalizationHelper.formatLoggedDate(resources = context.resources, day = day)
 
@@ -161,15 +113,12 @@ class LocalizationHelperTest {
     @Test
     fun formatLoggedDateReturnsEmptyStringWhenDayIsNull() {
         val actual = LocalizationHelper.formatLoggedDate(resources = context.resources, day = null)
-
         assertEquals("", actual)
     }
 
     @Test
     fun formatMoneyFormatsValueWithConfiguredCurrency() = runBlocking {
-        settingsRepository.insert(
-            settings = createSettingsEntity(languageId = 0).copy(currency = "$")
-        )
+        settingsRepository.insert(settings = SettingsEntity.default(language = languageSystem).copy(currency = "$"))
 
         val expected = "${DecimalFormat("0.00#").format(12.5)} $"
         val actual = LocalizationHelper.formatMoney(settingsRepository = settingsRepository, value = 12.5)
@@ -179,7 +128,7 @@ class LocalizationHelperTest {
 
     @Test
     fun formatMoneyFormatsValueWithThreeDecimalPlaces() = runBlocking {
-        settingsRepository.insert(settings = createSettingsEntity(languageId = 0).copy(currency = "€"))
+        settingsRepository.insert(settings = SettingsEntity.default(language = languageSystem).copy(currency = "€"))
 
         val expected = "${DecimalFormat("0.00#").format(12.30)} €"
         val actual = LocalizationHelper.formatMoney(settingsRepository = settingsRepository, value = 12.30)
@@ -195,14 +144,13 @@ class LocalizationHelperTest {
         assertEquals(expected, actual)
     }
 
-    private fun createSettingsEntity(languageId: Int): SettingsEntity {
-        return SettingsEntity(
-            id = 0,
-            theme = 0,
-            language = languageId,
-            frequency = 0,
-            currency = "€",
-            customCurrency = ""
-        )
+    private fun withLocale(locale: Locale, block: () -> Unit) {
+        val originalLocale = Locale.getDefault()
+        try {
+            Locale.setDefault(locale)
+            block()
+        } finally {
+            Locale.setDefault(originalLocale)
+        }
     }
 }

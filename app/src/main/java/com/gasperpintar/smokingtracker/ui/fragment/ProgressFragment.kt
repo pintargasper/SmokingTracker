@@ -1,55 +1,33 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
 import android.content.Intent
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import com.gasperpintar.smokingtracker.AchievementsActivity
-import com.gasperpintar.smokingtracker.CalculatorActivity
-import com.gasperpintar.smokingtracker.NotesActivity
-import com.gasperpintar.smokingtracker.StatisticsActivity
+import com.gasperpintar.smokingtracker.activity.AchievementsActivity
+import com.gasperpintar.smokingtracker.activity.CalculatorActivity
+import com.gasperpintar.smokingtracker.activity.NotesActivity
+import com.gasperpintar.smokingtracker.activity.StatisticsActivity
 import com.gasperpintar.smokingtracker.databinding.FragmentProgressBinding
-import kotlin.reflect.KClass
 
-class ProgressFragment : Fragment() {
+class ProgressFragment : Base<FragmentProgressBinding>(
+    bindingInflater = FragmentProgressBinding::inflate
+) {
 
-    private var _binding: FragmentProgressBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentProgressBinding.inflate(inflater, container, false)
-
-        setup()
-
-        return binding.root
-    }
-
-    private fun setup() {
-        binding.statisticsLayout.setOnClickListener {
-            startActivity(clazz = StatisticsActivity::class)
+    @Override
+    override fun initialize() = binding.apply {
+        statisticsLayout.setOnClickListener {
+            startActivity(Intent(requireContext(), StatisticsActivity::class.java))
         }
 
-        binding.calculatorLayout.setOnClickListener {
-            startActivity(clazz = CalculatorActivity::class)
+        calculatorLayout.setOnClickListener {
+            startActivity(Intent(requireContext(), CalculatorActivity::class.java))
         }
 
-        binding.achievementsLayout.setOnClickListener {
-            startActivity(clazz = AchievementsActivity::class)
+        achievementsLayout.setOnClickListener {
+            startActivity(Intent(requireContext(), AchievementsActivity::class.java))
         }
 
-        binding.notesLayout.setOnClickListener {
-            startActivity(clazz = NotesActivity::class)
+        notesLayout.setOnClickListener {
+            startActivity(Intent(requireContext(), NotesActivity::class.java))
         }
-    }
-
-    private fun startActivity(clazz: KClass<*>) {
-        val intent = Intent(binding.root.context, clazz.java)
-        binding.root.context.startActivity(intent)
+        showContent()
     }
 }

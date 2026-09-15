@@ -2,11 +2,13 @@ locales([
   'de-DE',
   'en-US',
   'fr-FR',
-  'sl',
+  'hu-HU',
+  'sl-SI',
   'sr-Cyrl',
   'sr-Latn',
-  'uk',
-  'zh-Hans'
+  'uk-UA',
+  'zh-Hans',
+  'zh-Hant'
 ])
 
 clear_previous_screenshots(true)
