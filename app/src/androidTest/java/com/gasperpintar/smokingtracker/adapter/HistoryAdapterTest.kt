@@ -1,23 +1,20 @@
 package com.gasperpintar.smokingtracker.adapter
 
 import android.view.View
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.gasperpintar.smokingtracker.MainActivity
-import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.model.HistoryEntry
+import com.gasperpintar.smokingtracker.activity.MainActivity
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.databinding.HistoryContainerBinding
+import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.LocalDateTime
-import java.util.concurrent.atomic.AtomicReference
 
 @RunWith(value = AndroidJUnit4::class)
 class HistoryAdapterTest {
@@ -26,38 +23,24 @@ class HistoryAdapterTest {
     val activityScenarioRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun onBindViewHolder_bindsDataAndHandlesClicksCorrectly() {
-        val clickedEditEntry = AtomicReference<HistoryEntry?>()
-        val clickedDeleteEntry = AtomicReference<HistoryEntry?>()
-
+    fun onBindViewHolderBindsDataAndHandlesClicksCorrectly() {
         activityScenarioRule.scenario.onActivity { activity ->
+            var clickedEditEntry: HistoryEntry? = null
+            var clickedDeleteEntry: HistoryEntry? = null
 
-            val adapter = Adapter(
-                layoutId = R.layout.history_container,
-                onBind = { itemView, historyEntry ->
-                    val timerLabel: TextView = itemView.findViewById(R.id.timer_label)
-                    val lentButton: ImageButton = itemView.findViewById(R.id.lent)
-                    val editButton: ImageButton = itemView.findViewById(R.id.image_button_edit)
-                    val deleteButton: ImageButton = itemView.findViewById(R.id.delete)
-
+            val adapter = Adapter<HistoryEntry, HistoryContainerBinding>(
+                bindingFactory = HistoryContainerBinding::inflate,
+                onBind = { historyEntry ->
                     timerLabel.text = historyEntry.timerLabel
-                    lentButton.visibility = if (historyEntry.isLent) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
+                    lent.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
+
+                    edit.setOnClickListener {
+                        clickedEditEntry = historyEntry
                     }
 
-                    editButton.setOnClickListener {
-                        clickedEditEntry.set(historyEntry)
+                    delete.setOnClickListener {
+                        clickedDeleteEntry = historyEntry
                     }
-
-                    deleteButton.setOnClickListener {
-                        clickedDeleteEntry.set(historyEntry)
-                    }
-                },
-                diffCallback = object : DiffUtil.ItemCallback<HistoryEntry>() {
-                    override fun areItemsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem.id == newItem.id
-                    override fun areContentsTheSame(oldItem: HistoryEntry, newItem: HistoryEntry): Boolean = oldItem == newItem
                 }
             )
 
@@ -72,28 +55,21 @@ class HistoryAdapterTest {
                 createdAt = LocalDateTime.of(2025, 12, 31, 10, 0),
                 timerLabel = "00:10:00"
             )
-
             adapter.submitList(listOf(historyEntry))
 
-            val viewHolder = adapter.createViewHolder(recyclerView, 0).also {
-                adapter.bindViewHolder(it, 0)
-            }
+            val viewHolder = adapter.createViewHolder(recyclerView, 0)
+            adapter.bindViewHolder(viewHolder, 0)
 
-            val itemView = viewHolder.itemView
+            val binding = HistoryContainerBinding.bind(viewHolder.itemView)
 
-            val timerLabel: TextView = itemView.findViewById(R.id.timer_label)
-            val lentButton: ImageButton = itemView.findViewById(R.id.lent)
-            val editButton: ImageButton = itemView.findViewById(R.id.image_button_edit)
-            val deleteButton: ImageButton = itemView.findViewById(R.id.delete)
+            assertEquals("00:10:00", binding.timerLabel.text.toString())
+            assertEquals(View.VISIBLE, binding.lent.visibility)
 
-            assertEquals("00:10:00", timerLabel.text.toString())
-            assertEquals(View.VISIBLE, lentButton.visibility)
+            binding.edit.performClick()
+            assertSame(historyEntry, clickedEditEntry)
 
-            editButton.performClick()
-            assertSame(historyEntry, clickedEditEntry.get())
-
-            deleteButton.performClick()
-            assertSame(historyEntry, clickedDeleteEntry.get())
+            binding.delete.performClick()
+            assertSame(historyEntry, clickedDeleteEntry)
         }
     }
 }

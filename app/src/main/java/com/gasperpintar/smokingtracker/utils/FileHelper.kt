@@ -11,22 +11,17 @@ object FileHelper {
         context: Context,
         uri: Uri?
     ): String {
-        var name = context.getString(R.string.restore_popup_file_unknown)
+        val name = context.getString(R.string.restore_popup_file_unknown)
+        if (uri == null) return name
 
-        if (uri == null) {
-            return name
+        return when (uri.scheme) {
+            "file" -> uri.lastPathSegment ?: name
+            else -> context.contentResolver.query(uri, arrayOf(OpenableColumns.DISPLAY_NAME), null, null, null)?.use { cursor ->
+                val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (cursor.moveToFirst() && nameIndex != -1) {
+                    cursor.getString(nameIndex)
+                } else null
+            } ?: name
         }
-
-        if (uri.scheme == "file") {
-            return uri.lastPathSegment ?: name
-        }
-
-        context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-            if (cursor.moveToFirst() && nameIndex != -1) {
-                name = cursor.getString(nameIndex)
-            }
-        }
-        return name
     }
 }

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
-from random import randint, sample, choice
+from random import randint, choice, choices, gauss
 from json import load
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
@@ -16,8 +16,11 @@ OUTPUT_FOLDER.mkdir(exist_ok=True)
 OUTPUT_FILE = OUTPUT_FOLDER / "dummy_data.xlsx"
 
 DAYS = 360
-AVERAGE_CIGARETTES_PER_DAY = (8, 10)
-PROBABILITY = 2
+AVERAGE_CIGARETTES_PER_DAY = (8, 25)
+SMOKE_FREE_PROBABILITY = 2
+LENT_PROBABILITY = 2
+MONTHLY_MIN_GAP = 4
+DAILY_VARIATION = 2.5
 SECONDS_IN_DAY = 60 * 60 * 24
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
@@ -47,34 +50,81 @@ class Statistics:
         )))
 
 
-def generate_history_day(date: datetime) -> list[dict]:
-    now = datetime.now().replace(microsecond=0)
-    is_today = date.date() == now.date()
+def generate_monthly_averages(start_date: datetime, end_date: datetime) -> dict[tuple[int, int], int]:
+    minimum, maximum = AVERAGE_CIGARETTES_PER_DAY
 
-    start_time = date.replace(hour=7, minute=randint(0, 20), second=randint(0, 59), microsecond=0)
-    end_time = (
-        now - timedelta(minutes=90)
-        if is_today
-        else date.replace(hour=22, minute=59, second=59, microsecond=0)
-    )
+    averages: dict[tuple[int, int], int] = {}
+    previous_average: int | None = None
 
-    if end_time < start_time:
+    current = start_date.replace(day=1)
+    while current <= end_date:
+        candidates = list(range(minimum, maximum + 1))
+
+        if previous_average is not None:
+            candidates = [
+                value
+                for value in candidates
+                if abs(value - previous_average) >= MONTHLY_MIN_GAP
+            ]
+
+        average = choice(candidates)
+        averages[(current.year, current.month)] = average
+        previous_average = average
+
+        if current.month == 12:
+            current = current.replace(year=current.year + 1, month=1)
+        else:
+            current = current.replace(month=current.month + 1)
+    return averages
+
+
+def generate_cigarette_count(monthly_average: int) -> int:
+    minimum, maximum = AVERAGE_CIGARETTES_PER_DAY
+    count = round(gauss(monthly_average, DAILY_VARIATION))
+    return max(minimum, min(maximum, count))
+
+
+def generate_history_day(date: datetime, monthly_average: int, end_time: datetime | None = None) -> list[dict]:
+    start_time = date.replace(hour=7, minute=randint(0, 30), second=randint(0, 59), microsecond=0)
+    end_time = end_time or date.replace(hour=23, minute=59, second=59, microsecond=0)
+
+    if randint(1, 100) <= SMOKE_FREE_PROBABILITY:
         return []
 
-    target_count = randint(*AVERAGE_CIGARETTES_PER_DAY)
-    history: list[dict] = []
+    cigarettes = generate_cigarette_count(monthly_average=monthly_average)
 
+    history = []
     current_time = start_time
-    while len(history) < target_count:
-        if current_time > end_time:
-            break
 
+    interval_ranges = [(10, 25), (25, 45), (45, 70), (70, 110), (110, 180)]
+    interval_weights = [35, 30, 20, 10, 5]
+
+    while len(history) < cigarettes and current_time <= end_time:
         history.append({
-            "Lent": int(randint(1, 100) < PROBABILITY),
+            "Lent": int(randint(1, 100) <= LENT_PROBABILITY),
             "CreatedAt": current_time.strftime(DATE_FORMAT),
         })
-        interval = timedelta(minutes=randint(30, 120), seconds=randint(0, 59))
-        current_time += interval
+
+        remaining = cigarettes - len(history)
+        if remaining == 0:
+            break
+
+        remaining_minutes = int((end_time - current_time).total_seconds() / 60)
+        if remaining_minutes <= 0:
+            break
+
+        minimum_interval = 10
+        maximum_interval = max(minimum_interval, remaining_minutes // remaining)
+
+        interval_min, interval_max = choices(interval_ranges, weights=interval_weights, k=1)[0]
+        interval_min = min(interval_min, maximum_interval)
+        interval_max = min(interval_max, maximum_interval)
+
+        if interval_min > interval_max:
+            interval_min = interval_max
+
+        interval = randint(interval_min, interval_max)
+        current_time += timedelta(minutes=interval, seconds=randint(0, 59))
     return history
 
 
@@ -93,12 +143,28 @@ def update_last_achieved(achievement: dict, achieved_at: datetime) -> None:
         achievement["LastAchieved"] = achieved_at.strftime(DATE_FORMAT)
 
 
+def get_last_completed_sunday(date: datetime) -> datetime:
+    days_since_sunday = (date.weekday() + 1) % 7
+    return date - timedelta(days=days_since_sunday)
+
+
+def get_dataset_end_time() -> datetime:
+    now = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    return get_last_completed_sunday(now).replace(hour=19, minute=30)
+
+
 def generate_history() -> list[dict]:
     history = []
-    start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - timedelta(days=DAYS - 1)
+
+    end_date = get_dataset_end_time()
+    start_date = end_date.replace(hour=0) - timedelta(days=DAYS - 1)
+    monthly_averages = generate_monthly_averages(start_date=start_date, end_date=end_date)
 
     for day in range(DAYS):
-        history.extend(generate_history_day(start_date + timedelta(days=day)))
+        date = start_date + timedelta(days=day)
+        monthly_average = monthly_averages[(date.year, date.month)]
+        end_time = end_date if date.date() == end_date.date() else None
+        history.extend(generate_history_day(date=date, monthly_average=monthly_average, end_time=end_time))
     return history
 
 
@@ -119,17 +185,16 @@ def generate_achievements(history: list[dict]) -> list[dict]:
         }
         for index, (category, item) in enumerate(((category, item) for category, items in data.items() for item in items), start=1)
     ]
-
     timestamps = sorted(datetime.strptime(entry["CreatedAt"], DATE_FORMAT) for entry in history)
 
     if not timestamps:
         return achievements
 
-    now = datetime.now().replace(microsecond=0)
-    average_cigarettes_per_day = len(timestamps) / max((timestamps[-1] - timestamps[0]).total_seconds() / SECONDS_IN_DAY, 1)
+    end_time = get_dataset_end_time()
+    average_cigarettes_per_day = len(timestamps) / max((end_time - timestamps[0]).total_seconds() / SECONDS_IN_DAY, 1)
 
     periods = list(zip(timestamps, timestamps[1:]))
-    periods.append((timestamps[-1], now))
+    periods.append((timestamps[-1], end_time))
 
     for achievement in achievements:
         threshold = achievement["Value"]
@@ -141,7 +206,7 @@ def generate_achievements(history: list[dict]) -> list[dict]:
                     if end - start >= duration:
                         achievement["Times"] += 1
                         update_last_achieved(achievement, start + duration)
-                achievement["Reset"] = (now - timestamps[-1] < duration)
+                achievement["Reset"] = (end_time - timestamps[-1] < duration)
 
             case "CIGARETTES_AVOIDED":
                 for start, end in periods:
@@ -152,15 +217,14 @@ def generate_achievements(history: list[dict]) -> list[dict]:
                         achievement["Times"] += 1
                         update_last_achieved(achievement, start + timedelta(days=threshold / average_cigarettes_per_day))
 
-                current_cigarettes_avoided = ((now - timestamps[-1]).total_seconds() / SECONDS_IN_DAY * average_cigarettes_per_day)
+                current_cigarettes_avoided = ((end_time - timestamps[-1]).total_seconds() / SECONDS_IN_DAY * average_cigarettes_per_day)
                 achievement["Reset"] = (current_cigarettes_avoided < threshold)
     return achievements
 
 
 def generate_costs() -> list[dict]:
-    now = datetime.now().replace(microsecond=0)
-    start_date = (now.replace(hour=0, minute=0, second=0) - timedelta(days=DAYS - 1))
-    end_date = now.replace(hour=23, minute=59, second=59)
+    end_date = get_dataset_end_time()
+    start_date = end_date.replace(hour=0) - timedelta(days=DAYS - 1)
 
     prices = [0.18, 0.20, 0.21, 0.22, 0.23, 0.24, 0.26, 0.28, 0.30]
 
@@ -230,18 +294,16 @@ def generate_notes() -> list[dict]:
     ]
 
     notes = []
-
-    now = datetime.now().replace(microsecond=0)
-    for template in sample(templates, len(templates)):
-        created_at = now - timedelta(
+    end_time = get_dataset_end_time()
+    for template in templates:
+        created_at = end_time - timedelta(
             days=randint(0, DAYS - 1),
             hours=randint(0, 23),
             minutes=randint(0, 59),
             seconds=randint(0, 59),
         )
 
-        updated_at = created_at + timedelta(minutes=randint(1, 60))
-
+        updated_at = min(created_at + timedelta(minutes=randint(1, 60)), end_time)
         notes.append({
             **template,
             "CreatedAt": created_at.strftime(DATE_FORMAT),
@@ -256,7 +318,7 @@ def generate_settings() -> dict:
 
     return {
         "Theme": 1,
-        "Language": 1,
+        "Language": "en",
         "Frequency": randint(0, 2),
         "Currency": choice(currencies),
         "CustomCurrency": choice(custom_currencies) if randint(0, 2) == 0 else "",
@@ -265,7 +327,6 @@ def generate_settings() -> dict:
 
 def generate_notifications() -> dict:
     values = ["TRUE", "FALSE"]
-
     return {
         "System": choice(values),
         "Achievements": choice(values),

@@ -12,16 +12,22 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.gasperpintar.smokingtracker.activity.AboutActivity
+import com.gasperpintar.smokingtracker.activity.AchievementsActivity
+import com.gasperpintar.smokingtracker.activity.CalculatorActivity
+import com.gasperpintar.smokingtracker.activity.MainActivity
+import com.gasperpintar.smokingtracker.activity.NotesActivity
+import com.gasperpintar.smokingtracker.activity.StatisticsActivity
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.repository.CostsRepository
-import com.gasperpintar.smokingtracker.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.repository.NotesRepository
-import com.gasperpintar.smokingtracker.repository.NotificationsSettingsRepository
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
-import com.gasperpintar.smokingtracker.utils.Manager
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.CostsRepository
+import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.NotesRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.utils.manager.Manager
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
@@ -61,58 +67,56 @@ class ScreenshotTest {
         grantNotificationPermission()
         importDummyData()
         setTestLanguage()
+        setTestCurrency()
     }
 
     @Test fun captureAllScreenshots() {
         ActivityScenario.launch(MainActivity::class.java).use { scenario ->
             scenario.recreate()
 
-            captureScreenshot("1")
+            captureScreenshot(name = "1")
 
-            val mainScreenshots = listOf("2", "3", "4")
-            for (name in mainScreenshots) {
+            listOf("2", "3", "4").forEach {
                 onView(withId(R.id.main_view_pager)).perform(swipeLeft())
-                captureScreenshot(name)
+                captureScreenshot(it)
             }
         }
 
         ActivityScenario.launch(StatisticsActivity::class.java).use {
-            captureScreenshot("5")
+            captureScreenshot(name = "5")
             onView(withId(R.id.statistics_view_pager)).perform(swipeLeft())
-            captureScreenshot("6")
+            captureScreenshot(name = "6")
         }
 
         ActivityScenario.launch(AchievementsActivity::class.java).use {
-            captureScreenshot("7")
+            captureScreenshot(name = "7")
             onView(withId(R.id.achievements_view_pager)).perform(swipeLeft())
-            captureScreenshot("8")
+            captureScreenshot(name = "8")
         }
 
         ActivityScenario.launch(CalculatorActivity::class.java).use {
-            captureScreenshot("9")
+            captureScreenshot(name = "9")
         }
 
         ActivityScenario.launch(NotesActivity::class.java).use {
-            captureScreenshot("10")
+            captureScreenshot(name = "10")
 
             runCatching {
                 onView(withId(R.id.recyclerview_notes))
                     .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-                captureScreenshot("11")
+                captureScreenshot(name = "11")
             }
         }
 
         ActivityScenario.launch(AboutActivity::class.java).use {
-            captureScreenshot("12")
+            captureScreenshot(name = "12")
         }
     }
 
     private fun importDummyData() = runBlocking {
         val file = File("/data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx")
 
-        check(value = file.exists()) {
-            "Dummy data file not found: ${file.absolutePath}"
-        }
+        check(value = file.exists()) { "Dummy data file not found: ${file.absolutePath}" }
 
         Manager.uploadFile(
             context = context,
@@ -136,37 +140,50 @@ class ScreenshotTest {
     }
 
     private fun setTestLanguage() = runBlocking {
-        val languageIndex = getDefaultLanguageIndex()
-        val current = settingsRepository.get()
-
-        val targetSettings = current?.copy(language = languageIndex) ?: SettingsEntity(
-            id = 1,
-            language = languageIndex,
-            theme = 0,
-            frequency = 0,
-            currency = "€",
-            customCurrency = ""
-        )
-        settingsRepository.upsert(settings = targetSettings)
+        val language = getDefaultLanguageIndex()
+        settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntity.default(language = language))
     }
 
-    private fun getDefaultLanguageIndex(): Int {
+    private fun setTestCurrency() = runBlocking {
+        val currency = getDefaultCurrency()
+        settingsRepository.upsert(settingsRepository.get()?.copy(currency = currency) ?: SettingsEntity.default(currency = currency))
+    }
+
+    private fun getDefaultLanguageIndex(): String {
         val languageTag = InstrumentationRegistry.getArguments()
             .getString("testLocale")
-            ?.replace('_', '-')
-            ?: return 0
+            ?.replace(oldChar = '_', newChar = '-')
+            ?: return "system"
 
         return when {
-            languageTag.startsWith("en") -> 1
-            languageTag.startsWith("sl") -> 2
-            languageTag.startsWith("uk") -> 3
-            languageTag.startsWith("de") -> 4
-            languageTag.startsWith("fr") -> 5
-            languageTag.startsWith("sr-Latn") -> 7
-            languageTag.startsWith("sr-Cyrl") -> 6
-            languageTag.startsWith("zh-Hans") -> 8
-            languageTag.startsWith("zh-Hant") -> 9
-            else -> 0
+            languageTag.startsWith("de") -> "de"
+            languageTag.startsWith("en") -> "en"
+            languageTag.startsWith("fr") -> "fr"
+            languageTag.startsWith("hu") -> "hu"
+            languageTag.startsWith("sl") -> "sl"
+            languageTag.startsWith("sr-Latn") -> "sr-Latn"
+            languageTag.startsWith("sr-Cyrl") -> "sr-Cyrl"
+            languageTag.startsWith("uk") -> "uk"
+            languageTag.startsWith("zh-Hans") -> "zh-Hans"
+            languageTag.startsWith("zh-Hant") -> "zh-Hant"
+            else -> "system"
+        }
+    }
+
+    private fun getDefaultCurrency(): String {
+        val languageTag = InstrumentationRegistry.getArguments()
+            .getString("testLocale")
+            ?.replace(oldChar = '_', newChar = '-')
+            ?: return "€"
+
+        return when {
+            languageTag.startsWith("en") -> "$"
+            languageTag.startsWith("hu") -> "Ft"
+            languageTag.startsWith("sr") -> "дин."
+            languageTag.startsWith("uk") -> "₴"
+            languageTag.startsWith("zh-Hans") -> "¥"
+            languageTag.startsWith("zh-Hant") -> "¥"
+            else -> "€"
         }
     }
 

@@ -1,125 +1,104 @@
 package com.gasperpintar.smokingtracker.utils
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.text.format.DateFormat
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.Month
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
+import java.time.format.TextStyle
 import java.util.Locale
 
 object LocalizationHelper {
 
-    fun getLocalizedContext(
-        context: Context,
-        settingsRepository: SettingsRepository
-    ): Context {
-        val settings = runBlocking { settingsRepository.get() }
-        val languageId = settings?.language ?: 0
-        val supportedLanguages = context.resources.getStringArray(R.array.language_values)
-        val selectedLanguage = supportedLanguages.getOrNull(index = languageId) ?: "system"
-
-        val locale: Locale = if (selectedLanguage == "system") {
-            context.resources.configuration.locales.get(0)
-        } else {
-            Locale.forLanguageTag(selectedLanguage)
-        }
-
-        Locale.setDefault(locale)
-
-        val configuration = Configuration(context.resources.configuration)
-        configuration.setLocale(locale)
-        configuration.setLayoutDirection(locale)
-
-        return context.createConfigurationContext(configuration)
+    fun getLocale(): Locale {
+        return Locale.getDefault()
     }
 
-    fun formatDate(date: LocalDate): String {
-        val formatter = DateTimeFormatter
-            .ofLocalizedDate(FormatStyle.LONG)
-            .withLocale(Locale.getDefault())
-        return date.format(formatter)
+    fun getLocalizedContext(context: Context, settingsRepository: SettingsRepository): Context {
+        val language = runBlocking { settingsRepository.get() }?.language
+
+        val targetLocale = language?.takeUnless { it == "system" }
+            ?.let(block = Locale::forLanguageTag) ?: Resources.getSystem().configuration.locales[0]
+
+        val config = context.resources.configuration
+        if (config.locales[0] == targetLocale) return context
+
+        Locale.setDefault(targetLocale)
+        return context.createConfigurationContext(Configuration(config).apply {
+            setLocale(targetLocale)
+            setLayoutDirection(targetLocale)
+        })
     }
 
-    fun formatDateTime(dateTime: LocalDateTime): String {
-        val formatter = DateTimeFormatter
-            .ofLocalizedDateTime(FormatStyle.SHORT)
-            .withLocale(Locale.getDefault())
-
-        return dateTime.format(formatter)
-            .replace(Regex("[^a-zA-Z0-9]+"), "_")
-            .trim('_')
-    }
-
-    fun formatLoggedDate(
-        resources: Resources,
-        day: String?
+    fun formatDate(
+        date: LocalDate,
+        style: FormatStyle = FormatStyle.LONG
     ): String {
+        return date.format(DateTimeFormatter.ofLocalizedDate(style).withLocale(getLocale()))
+    }
+
+    fun formatTime(
+        time: LocalTime,
+        style: FormatStyle = FormatStyle.SHORT
+    ): String {
+        return time.format(DateTimeFormatter.ofLocalizedTime(style).withLocale(getLocale()))
+    }
+
+    fun formatDateTime(
+        dateTime: LocalDateTime,
+        style: FormatStyle = FormatStyle.SHORT
+    ): String {
+        return dateTime.format(DateTimeFormatter.ofLocalizedDateTime(style).withLocale(getLocale()))
+    }
+
+    fun formatDateRange(
+        start: LocalDate,
+        end: LocalDate? = null,
+        skeleton: String? = "ddMM"
+    ): String {
+        val format = DateTimeFormatter.ofPattern(
+            DateFormat.getBestDateTimePattern(getLocale(), skeleton),
+            getLocale()
+        )
+
+        return end?.let {
+            "${start.format(format)} - ${it.format(format)}"
+        } ?: start.format(format).replace(Regex("\\p{L}+")) {
+            it.value.replaceFirstChar { char -> char.uppercase(getLocale()) }
+        }
+    }
+
+    fun getDayOfWeekName(
+        dayOfWeek: DayOfWeek,
+        style: TextStyle = TextStyle.FULL
+    ): String {
+        return dayOfWeek.getDisplayName(style, getLocale()).replaceFirstChar { it.titlecase(locale = getLocale()) }
+    }
+
+    fun getMonthName(
+        month: Month,
+        style: TextStyle = TextStyle.FULL
+    ): String {
+        return month.getDisplayName(style, getLocale()).replaceFirstChar { it.titlecase(locale = getLocale()) }
+    }
+
+    fun formatLoggedDate(resources: Resources, day: String?): String {
         return day?.let {
             resources.getString(R.string.statistics_logged, formatDate(LocalDate.parse(it)))
         } ?: ""
     }
 
-    @SuppressLint(value = ["DefaultLocale"])
-    fun formatWeekRange(
-        start: LocalDate,
-        end: LocalDate
-    ): String {
-        val locale = Locale.getDefault()
-        return when (locale.language) {
-            "sl", "uk" -> String.format("%02d.%02d/%02d.%02d", start.dayOfMonth, start.monthValue, end.dayOfMonth, end.monthValue)
-            else -> String.format("%02d/%02d-%02d/%02d", start.monthValue, start.dayOfMonth, end.monthValue, end.dayOfMonth)
-        }
-    }
-
-    suspend fun formatMoney(
-        settingsRepository: SettingsRepository,
-        value: Double
-    ): String {
-        val currency: String = settingsRepository.get()?.currency ?: "€"
-        return "${DecimalFormat("0.00#").format(value)} $currency"
-    }
-
-    fun getDayOfWeekName(
-        context: Context,
-        dayOfWeek: DayOfWeek
-    ): String {
-        return when(dayOfWeek) {
-            DayOfWeek.MONDAY -> context.getString(R.string.day_monday)
-            DayOfWeek.TUESDAY -> context.getString(R.string.day_tuesday)
-            DayOfWeek.WEDNESDAY -> context.getString(R.string.day_wednesday)
-            DayOfWeek.THURSDAY -> context.getString(R.string.day_thursday)
-            DayOfWeek.FRIDAY -> context.getString(R.string.day_friday)
-            DayOfWeek.SATURDAY -> context.getString(R.string.day_saturday)
-            DayOfWeek.SUNDAY -> context.getString(R.string.day_sunday)
-        }
-    }
-
-    fun getMonthName(
-        context: Context,
-        month: Month
-    ): String {
-        return when(month) {
-            Month.JANUARY -> context.getString(R.string.month_january)
-            Month.FEBRUARY -> context.getString(R.string.month_february)
-            Month.MARCH -> context.getString(R.string.month_march)
-            Month.APRIL -> context.getString(R.string.month_april)
-            Month.MAY -> context.getString(R.string.month_may)
-            Month.JUNE -> context.getString(R.string.month_june)
-            Month.JULY -> context.getString(R.string.month_july)
-            Month.AUGUST -> context.getString(R.string.month_august)
-            Month.SEPTEMBER -> context.getString(R.string.month_september)
-            Month.OCTOBER -> context.getString(R.string.month_october)
-            Month.NOVEMBER -> context.getString(R.string.month_november)
-            Month.DECEMBER -> context.getString(R.string.month_december)
-        }
+    suspend fun formatMoney(settingsRepository: SettingsRepository, value: Double): String {
+        return "${DecimalFormat("0.00#").format(value)} ${settingsRepository.get()?.currency ?: "€"}"
     }
 }

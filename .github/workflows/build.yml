@@ -2,9 +2,13 @@ name: Build
 
 on:
   push:
+    paths-ignore:
+      - '.github/workflows/**'
   pull_request:
     branches:
       - master
+    paths-ignore:
+      - '.github/workflows/**'
   schedule:
     - cron: '0 8 * * 1'
   workflow_dispatch:

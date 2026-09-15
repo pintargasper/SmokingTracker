@@ -10,7 +10,7 @@ data class SettingsEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val theme: Int,
-    val language: Int,
+    val language: String,
     val frequency: Int,
 
     @ColumnInfo(defaultValue = "€")
@@ -18,4 +18,20 @@ data class SettingsEntity(
 
     @ColumnInfo(defaultValue = "")
     val customCurrency: String
-)
+) {
+    companion object {
+        fun default(
+            language: String = "system",
+            currency: String = "€"
+        ): SettingsEntity {
+            return SettingsEntity(
+                id = 0L,
+                theme = 0,
+                language = language,
+                frequency = 0,
+                currency = currency,
+                customCurrency = ""
+            )
+        }
+    }
+}

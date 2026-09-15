@@ -104,7 +104,7 @@
             app:layout_constraintWidth_max="320dp">
 
             <Button
-                android:id="@+id/button_close"
+                android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_close"

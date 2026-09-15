@@ -5,7 +5,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
-import com.gasperpintar.smokingtracker.repository.AchievementRepository
+import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import kotlinx.coroutines.runBlocking
@@ -38,72 +38,36 @@ class JsonHelperTest {
     }
 
     @Test
-    fun loadAchievementsFromJsonReturnsSmokeFreeAchievements() {
-        val result = jsonHelper.loadAchievementsFromJson(
-            context,
-            AchievementCategory.SMOKE_FREE_TIME
-        )
-
-        assertTrue(result.isNotEmpty())
-
-        result.forEach {
-            assertEquals(AchievementCategory.SMOKE_FREE_TIME, it.category)
-        }
-
-        assertTrue(result.all { it.image.isNotBlank() })
-        assertTrue(result.all { it.title.isNotBlank() })
-        assertTrue(result.all { it.message.isNotBlank() })
-    }
-
-    @Test
-    fun loadAchievementsFromJsonReturnsCigarettesAvoidedAchievements() {
-        val result = jsonHelper.loadAchievementsFromJson(
-            context,
-            AchievementCategory.CIGARETTES_AVOIDED
-        )
-
-        assertTrue(result.isNotEmpty())
-
-        result.forEach {
-            assertEquals(AchievementCategory.CIGARETTES_AVOIDED, it.category)
-            assertEquals(AchievementUnit.CIGARETTES, it.unit)
-        }
-
-        assertTrue(result.all { it.image.isNotBlank() })
-        assertTrue(result.all { it.title.isNotBlank() })
-        assertTrue(result.all { it.message.isNotBlank() })
-    }
-
-    @Test
-    fun initializeAchievementsIfNeededInsertsAchievementsIntoEmptyDatabase() = runBlocking {
+    fun initializeAchievementsInsertsAchievementsIntoEmptyDatabase() = runBlocking {
         assertTrue(achievementRepository.getAll().isEmpty())
 
-        jsonHelper.initializeAchievementsIfNeeded(context)
+        jsonHelper.initializeAchievements(context)
         val achievements = achievementRepository.getAll()
 
         assertTrue(achievements.isNotEmpty())
+        assertTrue(achievements.all { it.image.isNotBlank() })
+        assertTrue(achievements.all { it.title.isNotBlank() })
+        assertTrue(achievements.all { it.message.isNotBlank() })
     }
 
     @Test
-    fun initializeAchievementsIfNeededDoesNotInsertDuplicates() = runBlocking {
-        jsonHelper.initializeAchievementsIfNeeded(context)
+    fun initializeAchievementsSetsCorrectUnitsForCategories() = runBlocking {
+        jsonHelper.initializeAchievements(context)
+
+        val achievements = achievementRepository.getAll().filter { it.category == AchievementCategory.CIGARETTES_AVOIDED }
+
+        assertTrue(achievements.isNotEmpty())
+        assertTrue(achievements.all { it.unit == AchievementUnit.CIGARETTES })
+    }
+
+    @Test
+    fun initializeAchievementsDoesNotInsertDuplicates() = runBlocking {
+        jsonHelper.initializeAchievements(context)
 
         val countBefore = achievementRepository.getAll().size
-        jsonHelper.initializeAchievementsIfNeeded(context)
+        jsonHelper.initializeAchievements(context)
         val countAfter = achievementRepository.getAll().size
 
         assertEquals(countBefore, countAfter)
-    }
-
-    @Test
-    fun migratePreservesIdsAndCount() = runBlocking {
-        jsonHelper.initializeAchievementsIfNeeded(context)
-
-        val before = achievementRepository.getAll()
-        jsonHelper.migrate(achievementRepository)
-        val after = achievementRepository.getAll()
-
-        assertEquals(before.size, after.size)
-        assertEquals(before.map { it.id }, after.map { it.id })
     }
 }

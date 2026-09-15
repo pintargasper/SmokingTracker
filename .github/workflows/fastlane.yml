@@ -2,6 +2,11 @@ name: Fastlane
 
 on:
   workflow_dispatch:
+    inputs:
+      release_id:
+        description: "Release ID (used automatically by release workflow)"
+        required: false
+        type: string
 
 permissions:
   contents: write
@@ -10,7 +15,6 @@ permissions:
 jobs:
   screenshots:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -24,6 +28,13 @@ jobs:
         run: |
           pip install openpyxl
           pip install Pillow
+
+      - name: Set system date to last Sunday 22:00
+        run: |
+          sudo timedatectl set-timezone Europe/Ljubljana
+          LAST_SUNDAY=$(date -d "last sunday" "+%Y-%m-%d")
+          sudo date -s "${LAST_SUNDAY} 22:00:00"
+          echo "TIMESTAMP=$(date +%s)" >> "$GITHUB_ENV"
 
       - name: Generate dummy data
         run: |
@@ -74,12 +85,25 @@ jobs:
             adb shell wm size 1080x2400
             adb shell wm density 400
 
+            adb root
+            adb wait-for-device
+            sleep 2
+
+            adb shell settings put global auto_time 0
+            adb shell settings put global auto_time_zone 0
+            adb shell setprop persist.sys.timezone Europe/Ljubljana
+
+            adb shell su 0 date -s "@${TIMESTAMP}"
+
             sleep 3
             
             ./gradlew assembleDebug assembleAndroidTest
 
             adb install -r app/build/outputs/apk/debug/app-debug.apk
 
+            adb shell input keyevent KEYCODE_WAKEUP
+            adb shell input keyevent KEYCODE_HOME
+            sleep 1
             adb shell input keyevent KEYCODE_WAKEUP
             sleep 2
 
@@ -102,9 +126,19 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "Update fastlane app screenshots"
-          title: "Update app screenshots"
+          title: >-
+            Update app screenshots${{
+              inputs.release_id != '' &&
+              format(' ({0})', inputs.release_id) ||
+              ''
+            }}
           body: "Automated pull request containing the latest app screenshots captured by GitHub Actions."
-          branch: "update-screenshots"
+          branch: >-
+            update-screenshots${{
+              inputs.release_id != '' &&
+              format('-{0}', inputs.release_id) ||
+              ''
+            }}
           delete-branch: true
           add-paths: |
             fastlane/metadata/android/

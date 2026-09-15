@@ -11,4 +11,15 @@ data class NotificationsSettingsEntity(
     val system: Boolean,
     val achievements: Boolean,
     val progress: Boolean
-)
+) {
+    companion object {
+        fun default(): NotificationsSettingsEntity {
+            return NotificationsSettingsEntity(
+                id = 0L,
+                system = true,
+                achievements = true,
+                progress = true
+            )
+        }
+    }
+}
