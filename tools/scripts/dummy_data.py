@@ -145,8 +145,6 @@ def update_last_achieved(achievement: dict, achieved_at: datetime) -> None:
 
 def get_last_completed_sunday(date: datetime) -> datetime:
     days_since_sunday = (date.weekday() + 1) % 7
-    if days_since_sunday == 0:
-        days_since_sunday = 7
     return date - timedelta(days=days_since_sunday)
 
 
