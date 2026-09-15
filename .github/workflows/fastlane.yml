@@ -89,7 +89,7 @@ jobs:
             adb shell settings put global auto_time_zone 0
             adb shell setprop persist.sys.timezone Europe/Ljubljana
 
-            adb shell date -s "$(date '+%Y-%m-%d %H:%M:%S')"
+            adb shell date -s "$(date +%s)"
 
             sleep 3
             
