@@ -15,7 +15,6 @@ permissions:
 jobs:
   screenshots:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -94,7 +93,7 @@ jobs:
             adb shell settings put global auto_time_zone 0
             adb shell setprop persist.sys.timezone Europe/Ljubljana
 
-            adb shell date "$(date '+%m%d%H%M%Y.%S')"
+            adb shell su 0 date -t "$(date +%s)"
 
             sleep 3
             
@@ -135,10 +134,10 @@ jobs:
             }}
           body: "Automated pull request containing the latest app screenshots captured by GitHub Actions."
           branch: >-
-            update-screenshots-${{
+            update-screenshots${{
               inputs.release_id != '' &&
-              inputs.release_id ||
-              github.run_id
+              format('-{0}', inputs.release_id) ||
+              ''
             }}
           delete-branch: true
           add-paths: |
