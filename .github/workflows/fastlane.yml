@@ -98,6 +98,9 @@ jobs:
             adb install -r app/build/outputs/apk/debug/app-debug.apk
 
             adb shell input keyevent KEYCODE_WAKEUP
+            adb shell input keyevent KEYCODE_HOME
+            sleep 1
+            adb shell input keyevent KEYCODE_WAKEUP
             sleep 2
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
