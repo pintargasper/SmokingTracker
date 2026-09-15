@@ -2,11 +2,11 @@ locales([
   'de-DE',
   'en-US',
   'fr-FR',
-  'hu',
-  'sl',
+  'hu-HU',
+  'sl-SI',
   'sr-Cyrl',
   'sr-Latn',
-  'uk',
+  'uk-UA',
   'zh-Hans',
   'zh-Hant'
 ])

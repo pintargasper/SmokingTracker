@@ -35,7 +35,6 @@ jobs:
           LAST_SUNDAY=$(date -d "last sunday" "+%Y-%m-%d")
           sudo date -s "${LAST_SUNDAY} 22:00:00"
           echo "TIMESTAMP=$(date +%s)" >> "$GITHUB_ENV"
-          date
 
       - name: Generate dummy data
         run: |
