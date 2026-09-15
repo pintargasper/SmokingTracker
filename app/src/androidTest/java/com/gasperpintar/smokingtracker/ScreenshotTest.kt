@@ -156,13 +156,14 @@ class ScreenshotTest {
             ?: return "system"
 
         return when {
-            languageTag.startsWith("en") -> "en"
-            languageTag.startsWith("sl") -> "sl"
-            languageTag.startsWith("uk") -> "uk"
             languageTag.startsWith("de") -> "de"
+            languageTag.startsWith("en") -> "en"
             languageTag.startsWith("fr") -> "fr"
+            languageTag.startsWith("hu") -> "hu"
+            languageTag.startsWith("sl") -> "sl"
             languageTag.startsWith("sr-Latn") -> "sr-Latn"
             languageTag.startsWith("sr-Cyrl") -> "sr-Cyrl"
+            languageTag.startsWith("uk") -> "uk"
             languageTag.startsWith("zh-Hans") -> "zh-Hans"
             languageTag.startsWith("zh-Hant") -> "zh-Hant"
             else -> "system"
