@@ -81,12 +81,16 @@ jobs:
             adb shell wm size 1080x2400
             adb shell wm density 400
 
+            adb root
+            adb wait-for-device
+            sleep 2
+
             adb shell settings put global auto_time 0
             adb shell settings put global auto_time_zone 0
             adb shell setprop persist.sys.timezone Europe/Ljubljana
 
-            TARGET_DATE=$(date +"%Y%m%d.220000")
-            adb shell date -s "$TARGET_DATE" || adb shell "su 0 date $TARGET_DATE"
+            TARGET_DATE=$(TZ=Europe/Ljubljana date -d "last sunday 22:00" "+%Y-%m-%d %H:%M:%S")
+            adb shell date -s "$TARGET_DATE"
 
             sleep 3
             
