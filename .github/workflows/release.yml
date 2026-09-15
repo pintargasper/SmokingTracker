@@ -1,10 +1,12 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. v1.2.0)"
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -15,9 +17,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          ref: master
 
-      - name: Release
+      - name: Check release notes
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          echo "Starting release from master..."
+          if [ ! -f "release/notes/${VERSION}.md" ]; then
+            echo "Release notes not found: release/notes/${VERSION}.md"
+            exit 1
+          fi
+
+          echo "Release notes found: release/notes/${VERSION}.md"
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release create "${VERSION}" \
+            --target master \
+            --draft \
+            --title "${VERSION}" \
+            --notes-file "release/notes/${VERSION}.md"
