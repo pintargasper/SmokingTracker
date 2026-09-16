@@ -126,6 +126,9 @@ jobs:
         with:
           ruby-version: ${{ vars.RUBY_VERSION }}
           bundler: latest
+
+      - name: Set up Fastlane
+        run: sudo gem install fastlane
           
 #      - name: Decode signing keystore
 #        env:
@@ -169,9 +172,7 @@ jobs:
       - name: Upload to Google Play
         env:
           GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
-        run: |
-          bundle install
-          bundle exec fastlane --fastfile Fastfile android playstore
+        run: fastlane android playstore --fastfile Fastfile
             
       - name: Remove signing files
         if: always()
