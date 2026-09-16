@@ -12,6 +12,7 @@ on:
   schedule:
     - cron: '0 8 * * 1'
   workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read
@@ -73,7 +74,8 @@ jobs:
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_call'
 
     runs-on: ubuntu-latest
     steps:
@@ -98,7 +100,8 @@ jobs:
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_call'
 
     runs-on: ubuntu-latest
     steps:
@@ -126,7 +129,8 @@ jobs:
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_call'
 
     runs-on: ubuntu-latest
     outputs:
@@ -137,7 +141,8 @@ jobs:
         id: matrix
         run: |
           if [ "${{ github.event_name }}" = "schedule" ] ||
-            [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            [ "${{ github.event_name }}" = "workflow_dispatch" ] ||
+            [ "${{ github.event_name }}" = "workflow_call" ]; then
             echo 'matrix={"include":[{"name":"API 34","api-level":34,"target":"aosp_atd"},{"name":"API 26","api-level":26,"target":"default"}]}' >> "$GITHUB_OUTPUT"
           else
             echo 'matrix={"include":[{"name":"API 34","api-level":34,"target":"aosp_atd"}]}' >> "$GITHUB_OUTPUT"
@@ -154,7 +159,8 @@ jobs:
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch'
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_call'
 
     runs-on: ubuntu-latest
     strategy:
