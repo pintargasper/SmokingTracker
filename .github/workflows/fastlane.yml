@@ -2,16 +2,7 @@ name: Fastlane
 
 on:
   workflow_dispatch:
-    inputs:
-      release_id:
-        description: "Release ID (used automatically by release workflow)"
-        required: false
-        type: string
   workflow_call:
-    inputs:
-      release_id:
-        required: true
-        type: string
     outputs:
       pull_request_number:
         description: "Pull request number created by this workflow"
@@ -138,19 +129,9 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "Update fastlane app screenshots"
-          title: >-
-            Update app screenshots${{
-              inputs.release_id != '' &&
-              format(' ({0})', inputs.release_id) ||
-              ''
-            }}
+          title: "Update app screenshots"
           body: "Automated pull request containing the latest app screenshots captured by GitHub Actions."
-          branch: >-
-            update-screenshots${{
-              inputs.release_id != '' &&
-              format('-{0}', inputs.release_id) ||
-              ''
-            }}
+          branch: update-screenshots
           delete-branch: true
           add-paths: |
             fastlane/metadata/android/

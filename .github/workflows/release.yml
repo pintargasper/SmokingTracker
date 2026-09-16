@@ -67,28 +67,30 @@ jobs:
 
           echo "Release notes found: release/notes/${VERSION}.md"
 
-  build:
-    needs: release
-    uses: ./.github/workflows/build.yml
+#  build:
+#   needs: release
+#   uses: ./.github/workflows/build.yml
 
-  fastlane:
-    needs: build
-    uses: ./.github/workflows/fastlane.yml
-    with:
-      release_id: ${{ github.run_id }}
+#  fastlane:
+#    needs: build
+#    uses: ./.github/workflows/fastlane.yml
 
   merge-screenshots:
-    needs: fastlane
+#    needs: fastlane
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
       - name: Merge screenshot Pull Request
         env:
           GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
+#          PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
+          PR_NUMBER: 70
         run: |
           gh pr merge "$PR_NUMBER" \
             --squash \
