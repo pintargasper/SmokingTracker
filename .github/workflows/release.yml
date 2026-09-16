@@ -184,6 +184,17 @@ jobs:
             fi
           fi
 
+          for lang_dir in */; do
+            if [ -d "$lang_dir" ]; then
+              for text_file in "title.txt" "short_description.txt" "full_description.txt"; do
+                if [ ! -s "${lang_dir}${text_file}" ]; then
+                  echo "Creating fallback ${text_file} for ${lang_dir}"
+                  cp "en-US/${text_file}" "${lang_dir}${text_file}" 2>/dev/null || true
+                fi
+              done
+            fi
+          done
+
           KEEP_IMAGES=("1.png" "2.png" "3.png" "4.png" "5.png" "7.png" "9.png" "12.png")
 
           shopt -s nullglob
