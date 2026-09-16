@@ -125,7 +125,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ vars.RUBY_VERSION }}
-          bundler: latest
 
       - name: Set up Fastlane
         run: sudo gem install fastlane
