@@ -109,6 +109,8 @@ jobs:
     environment: production
     permissions:
       contents: write
+    env:
+      METADATA_PATH: '/tmp/gplay_metadata'
 
     steps:
       - name: Checkout repository
@@ -164,10 +166,10 @@ jobs:
 
       - name: Prepare metadata for Google Play
         run: |
-          mkdir -p /tmp/gplay_metadata
-          cp -r fastlane/metadata/android/* /tmp/gplay_metadata/
+          mkdir -p "$METADATA_PATH"
+          cp -r fastlane/metadata/android/* "$METADATA_PATH"
 
-          cd /tmp/gplay_metadata
+          cd "$METADATA_PATH"
           [ -d "hu" ] && mv hu hu-HU || true
           [ -d "zh-Hans" ] && mv zh-Hans zh-CN || true
           [ -d "zh-Hant" ] && mv zh-Hant zh-TW || true
@@ -195,7 +197,7 @@ jobs:
                   fi
                 fi
               done
-              cd /tmp/gplay_metadata
+              cd "$METADATA_PATH"
             fi
           done
 
@@ -208,6 +210,7 @@ jobs:
       - name: Upload to Google Play
         env:
           GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
+          VERSION_CODE: $(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
         run: fastlane android playstore
             
       - name: Remove signing files
