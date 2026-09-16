@@ -175,11 +175,12 @@ jobs:
           [ -d "zh-Hant" ] && mv zh-Hant zh-TW || true
 
           rm -rf sr-Latn
-          if [ -d "sr-Crly" ]; then
+          if [ -d "sr-Cyrl" ]; then
             if [ -d "sr" ]; then
-              rm -rf sr-Crly
+              rm -rf sr-Cyrl
             else
-              mv sr-Crly sr
+              echo "Renaming sr-Cyrl to sr..."
+              mv sr-Cyrl sr
             fi
           fi
 
