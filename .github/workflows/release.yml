@@ -162,17 +162,6 @@ jobs:
 #          gh release upload "${VERSION}" \
 #            app/build/outputs/apk/release/smoking-tracker.${VERSION}.apk
 
-      - name: Create Google Play credentials
-        env:
-          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-        run: |
-          cat <<< "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/service-account.json"
-
-      - name: Upload to Google Play
-        env:
-          GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
-        run: fastlane android playstore
-
       - name: Prepare metadata for Google Play
         run: |
           mkdir -p /tmp/gplay_metadata
@@ -209,6 +198,17 @@ jobs:
               cd /tmp/gplay_metadata
             fi
           done
+
+      - name: Create Google Play credentials
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          cat <<< "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/service-account.json"
+
+      - name: Upload to Google Play
+        env:
+          GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
+        run: fastlane android playstore
             
       - name: Remove signing files
         if: always()

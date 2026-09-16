@@ -6,7 +6,7 @@ platform :android do
       json_key: ENV["GOOGLE_PLAY_JSON"],
       track: "production",
       metadata_path: '/tmp/gplay_metadata',
-      skip_submission: true
+      changes_not_sent_for_review: true
     )
   end
 end
