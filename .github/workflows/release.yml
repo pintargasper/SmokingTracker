@@ -8,10 +8,6 @@ on:
         required: true
         type: string
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -56,26 +52,26 @@ jobs:
 
 #          echo "App version check passed."
 
-      - name: Check release notes
-        env:
-          VERSION: ${{ inputs.version }}
-        run: |
-          if [ ! -f "release/notes/${VERSION}.md" ]; then
-            echo "Release notes not found: release/notes/${VERSION}.md"
-            exit 1
-          fi
+#      - name: Check release notes
+#        env:
+#          VERSION: ${{ inputs.version }}
+#        run: |
+#          if [ ! -f "release/notes/${VERSION}.md" ]; then
+#            echo "Release notes not found: release/notes/${VERSION}.md"
+#            exit 1
+#          fi
 
-          echo "Release notes found: release/notes/${VERSION}.md"
-
+#          echo "Release notes found: release/notes/${VERSION}.md"
+  
 #  build:
 #   needs: release
 #   uses: ./.github/workflows/build.yml
 
 #  fastlane:
-#    needs: build
-#    uses: ./.github/workflows/fastlane.yml
+#   needs: build
+#   uses: ./.github/workflows/fastlane.yml
 
-  merge-screenshots:
+  prepare:
 #    needs: fastlane
     runs-on: ubuntu-latest
     permissions:
@@ -86,23 +82,70 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Merge screenshot Pull Request
-        env:
-          GH_TOKEN: ${{ github.token }}
-#          PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
-          PR_NUMBER: 70
-        run: |
-          gh pr merge "$PR_NUMBER" \
-            --squash \
-            --delete-branch
-
-#      - name: Create draft release
+#      - name: Merge screenshot Pull Request
 #        env:
 #          GH_TOKEN: ${{ github.token }}
-#          VERSION: ${{ inputs.version }}
+#          PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
+         
 #        run: |
-#          gh release create "${VERSION}" \
-#            --target master \
-#            --draft \
-#            --title "${VERSION}" \
-#            --notes-file "release/notes/${VERSION}.md"  
+#          gh pr merge "$PR_NUMBER" \
+#            --squash \
+#            --delete-branch
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release create "${VERSION}" \
+            --target master \
+            --draft \
+            --title "${VERSION}" \
+            --notes-file "release/notes/${VERSION}.md"  
+
+  publish:
+    needs: prepare
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v6
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Decode signing keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          base64 --decode <<< "$KEYSTORE_BASE64" > "$RUNNER_TEMP/release.keystore"
+
+      - name: Fix line endings and make gradlew executable
+        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
+
+      - name: Build signed APK
+        env:
+          ORG_GRADLE_PROJECT_KEYSTORE_FILE: ${{ runner.temp }}/release.keystore
+          ORG_GRADLE_PROJECT_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          ./gradlew assembleRelease
+
+      - name: Upload APK to draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release upload "${VERSION}" \
+            app/build/outputs/apk/release/app-release.apk
+      
+      - name: Remove signing keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/release.keystore"

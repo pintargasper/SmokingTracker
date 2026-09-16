@@ -53,10 +53,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up JDK 21
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
-          java-version: '21'
+          java-version: ${{ vars.JAVA_VERSION }}
           distribution: 'temurin'
           cache: 'gradle'
 
@@ -82,10 +82,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up JDK 21
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
-          java-version: '21'
+          java-version: ${{ vars.JAVA_VERSION }}
           distribution: 'temurin'
           cache: 'gradle'
 
@@ -108,10 +108,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up JDK 21
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
-          java-version: '21'
+          java-version: ${{ vars.JAVA_VERSION }}
           distribution: 'temurin'
           cache: 'gradle'
 
@@ -143,9 +143,9 @@ jobs:
           if [ "${{ github.event_name }}" = "schedule" ] ||
             [ "${{ github.event_name }}" = "workflow_dispatch" ] ||
             [ "${{ github.event_name }}" = "workflow_call" ]; then
-            echo 'matrix={"include":[{"name":"API 34","api-level":34,"target":"aosp_atd"},{"name":"API 26","api-level":26,"target":"default"}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"include":[{"name":"API ${{ vars.ANDROID_API_TARGET }}","api-level":${{ vars.ANDROID_API_TARGET }},"target":"aosp_atd"},{"name":"API ${{ vars.ANDROID_API_MIN }}","api-level":${{ vars.ANDROID_API_MIN }},"target":"default"}]}' >> "$GITHUB_OUTPUT"
           else
-            echo 'matrix={"include":[{"name":"API 34","api-level":34,"target":"aosp_atd"}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"include":[{"name":"API ${{ vars.ANDROID_API_TARGET }}","api-level":${{ vars.ANDROID_API_TARGET }},"target":"aosp_atd"}]}' >> "$GITHUB_OUTPUT"
           fi
 
   androidTest:
@@ -174,7 +174,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.14'
+          python-version: ${{ vars.PYTHON_VERSION }}
 
       - name: Install Python dependencies
         run: pip install openpyxl
@@ -182,10 +182,10 @@ jobs:
       - name: Generate dummy data
         run: python tools/scripts/dummy_data.py
 
-      - name: Set up JDK 21
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
-          java-version: '21'
+          java-version: ${{ vars.JAVA_VERSION }}
           distribution: 'temurin'
           cache: 'gradle'
 
