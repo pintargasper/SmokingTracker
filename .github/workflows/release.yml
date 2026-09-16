@@ -125,6 +125,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ vars.RUBY_VERSION }}
+          bundler: default
           
 #      - name: Decode signing keystore
 #        env:
