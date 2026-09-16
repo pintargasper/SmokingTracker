@@ -172,7 +172,7 @@ jobs:
       - name: Upload to Google Play
         env:
           GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
-        run: fastlane android playstore --fastfile Fastfile
+        run: fastlane android playstore -f Fastfile
             
       - name: Remove signing files
         if: always()
