@@ -125,7 +125,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ vars.RUBY_VERSION }}
-          bundler: default
+          bundler: latest
           
 #      - name: Decode signing keystore
 #        env:
@@ -170,6 +170,7 @@ jobs:
         env:
           GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
         run: |
+          bundle install
           bundle exec fastlane -f Fastfile android playstore
             
       - name: Remove signing files
