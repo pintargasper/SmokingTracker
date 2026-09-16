@@ -29,9 +29,8 @@ configure<ApplicationExtension> {
 
     signingConfigs {
         create("release") {
-            val keystoreFile = providers.gradleProperty("KEYSTORE_FILE").orNull
-            if (keystoreFile != null) {
-                storeFile = file(keystoreFile)
+            if (providers.gradleProperty("KEYSTORE_FILE").isPresent) {
+                storeFile = file(providers.gradleProperty("KEYSTORE_FILE").get())
                 storePassword = providers.gradleProperty("KEYSTORE_PASSWORD").orNull
                 keyAlias = providers.gradleProperty("KEY_ALIAS").orNull
                 keyPassword = providers.gradleProperty("KEY_PASSWORD").orNull
