@@ -4,7 +4,7 @@ platform :android do
   lane :playstore do
     upload_to_play_store(
       package_name: "com.gasperpintar.smokingtracker",
-      version_code: ENV["VERSION_CODE"].to_i
+      version_code: ENV["VERSION_CODE"].to_i,
       json_key: ENV["GOOGLE_PLAY_JSON"],
       track: "production",
       metadata_path: ENV["METADATA_PATH"],
