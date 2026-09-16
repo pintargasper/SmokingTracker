@@ -10,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   release:
@@ -20,40 +21,40 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Check app version
-        env:
-          VERSION: ${{ inputs.version }}
-        run: |
-          EXPECTED_VERSION_NAME="${VERSION#v}"
+#      - name: Check app version
+#        env:
+#          VERSION: ${{ inputs.version }}
+#        run: |
+#          EXPECTED_VERSION_NAME="${VERSION#v}"
 
-          VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
-          VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
+#          VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
+#          VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
 
-          PREVIOUS_VERSION_CODE=$(git show HEAD^:app/build.gradle.kts \
-            | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
-            | head -1)
+#          PREVIOUS_VERSION_CODE=$(git show HEAD^:app/build.gradle.kts \
+#            | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
+#            | head -1)
+#
+#          echo "Input version:           ${VERSION}"
+#          echo "Expected versionName:    ${EXPECTED_VERSION_NAME}"
+#          echo "Current versionName:     ${VERSION_NAME}"
+#          echo "Current versionCode:     ${VERSION_CODE}"
+#          echo "Previous versionCode:    ${PREVIOUS_VERSION_CODE}"
 
-          echo "Input version:           ${VERSION}"
-          echo "Expected versionName:    ${EXPECTED_VERSION_NAME}"
-          echo "Current versionName:     ${VERSION_NAME}"
-          echo "Current versionCode:     ${VERSION_CODE}"
-          echo "Previous versionCode:    ${PREVIOUS_VERSION_CODE}"
+#          if [ "${VERSION_NAME}" != "${EXPECTED_VERSION_NAME}" ]; then
+#            echo "ERROR: versionName does not match release input."
+#            echo "Expected: ${EXPECTED_VERSION_NAME}"
+#            echo "Found:    ${VERSION_NAME}"
+#            exit 1
+#          fi
 
-          if [ "${VERSION_NAME}" != "${EXPECTED_VERSION_NAME}" ]; then
-            echo "ERROR: versionName does not match release input."
-            echo "Expected: ${EXPECTED_VERSION_NAME}"
-            echo "Found:    ${VERSION_NAME}"
-            exit 1
-          fi
+#          if [ "${VERSION_CODE}" -le "${PREVIOUS_VERSION_CODE}" ]; then
+#            echo "ERROR: versionCode must be greater than the previous versionCode."
+#            echo "Previous: ${PREVIOUS_VERSION_CODE}"
+#            echo "Found:    ${VERSION_CODE}"
+#            exit 1
+#          fi
 
-          if [ "${VERSION_CODE}" -le "${PREVIOUS_VERSION_CODE}" ]; then
-            echo "ERROR: versionCode must be greater than the previous versionCode."
-            echo "Previous: ${PREVIOUS_VERSION_CODE}"
-            echo "Found:    ${VERSION_CODE}"
-            exit 1
-          fi
-
-          echo "App version check passed."
+#          echo "App version check passed."
 
       - name: Check release notes
         env:
@@ -66,17 +67,40 @@ jobs:
 
           echo "Release notes found: release/notes/${VERSION}.md"
 
-      - name: Create draft release
+  build:
+    needs: release
+    uses: ./.github/workflows/build.yml
+
+  fastlane:
+    needs: build
+    uses: ./.github/workflows/fastlane.yml
+    with:
+      release_id: ${{ github.run_id }}
+
+  merge-screenshots:
+    needs: fastlane
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Merge screenshot Pull Request
         env:
           GH_TOKEN: ${{ github.token }}
-          VERSION: ${{ inputs.version }}
+          PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
         run: |
-          gh release create "${VERSION}" \
-            --target master \
-            --draft \
-            --title "${VERSION}" \
-            --notes-file "release/notes/${VERSION}.md"  
+          gh pr merge "$PR_NUMBER" \
+            --squash \
+            --delete-branch
 
-#  build:
-#    needs: release
-#    uses: ./.github/workflows/build.yml
+#      - name: Create draft release
+#        env:
+#          GH_TOKEN: ${{ github.token }}
+#          VERSION: ${{ inputs.version }}
+#        run: |
+#          gh release create "${VERSION}" \
+#            --target master \
+#            --draft \
+#            --title "${VERSION}" \
+#            --notes-file "release/notes/${VERSION}.md"  

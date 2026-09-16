@@ -7,6 +7,15 @@ on:
         description: "Release ID (used automatically by release workflow)"
         required: false
         type: string
+  workflow_call:
+    inputs:
+      release_id:
+        required: true
+        type: string
+    outputs:
+      pull_request_number:
+        description: "Pull request number created by this workflow"
+        value: ${{ jobs.screenshots.outputs.pull-request-number }}
 
 permissions:
   contents: write
@@ -15,6 +24,8 @@ permissions:
 jobs:
   screenshots:
     runs-on: ubuntu-latest
+    outputs:
+      pull-request-number: ${{ steps.create-pull-request.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -123,6 +134,7 @@ jobs:
           rm -f fastlane/metadata/android/screenshots.html
 
       - name: Create Pull Request
+        id: create-pull-request
         uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "Update fastlane app screenshots"
