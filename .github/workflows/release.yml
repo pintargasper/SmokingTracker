@@ -139,14 +139,32 @@ jobs:
         run: |
           ./gradlew assembleRelease
 
+      - name: Rename APK
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          mv app/build/outputs/apk/release/app-release.apk \
+             "app/build/outputs/apk/release/smoking-tracker.${VERSION}.apk"
+
       - name: Upload APK to draft release
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ inputs.version }}
         run: |
           gh release upload "${VERSION}" \
-            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/apk/release/smoking-tracker.${VERSION}.apk
       
       - name: Remove signing keystore
         if: always()
-        run: rm -f "$RUNNER_TEMP/release.keystore"
+        run: |
+          if [ -f "$RUNNER_TEMP/release.keystore" ]; then
+            echo "Keystore exists. Removing..."
+            rm -f "$RUNNER_TEMP/release.keystore"
+          fi
+
+          if [ -f "$RUNNER_TEMP/release.keystore" ]; then
+            echo "ERROR: Keystore still exists!"
+            exit 1
+          else
+            echo "Keystore successfully removed."
+          fi
