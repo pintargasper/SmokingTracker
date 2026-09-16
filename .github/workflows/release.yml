@@ -200,6 +200,10 @@ jobs:
               cd "$METADATA_PATH"
             fi
           done
+        
+      - name: Extract Version Code
+        run: |
+          echo "VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)" >> $GITHUB_ENV
 
       - name: Create Google Play credentials
         env:
@@ -210,7 +214,7 @@ jobs:
       - name: Upload to Google Play
         env:
           GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
-          VERSION_CODE: $(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
+          VERSION_CODE: ${{ env.VERSION_CODE }}
         run: fastlane android playstore
             
       - name: Remove signing files
