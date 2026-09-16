@@ -106,6 +106,7 @@ jobs:
   publish:
     needs: prepare
     runs-on: ubuntu-latest
+    environment: production
     permissions:
       contents: write
 
