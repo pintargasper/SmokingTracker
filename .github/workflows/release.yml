@@ -61,7 +61,7 @@ jobs:
 #            exit 1
 #          fi
 
-#          echo "Release notes found: release/notes/${VERSION}.md"
+          echo "Release notes found: release/notes/${VERSION}.md"
   
 #  build:
 #   needs: release
@@ -71,16 +71,16 @@ jobs:
 #   needs: build
 #   uses: ./.github/workflows/fastlane.yml
 
-  prepare:
+#  prepare:
 #    needs: fastlane
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
+#    runs-on: ubuntu-latest
+#    permissions:
+#      contents: write
+#      pull-requests: write
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+#    steps:
+#      - name: Checkout repository
+#        uses: actions/checkout@v7
 
 #      - name: Merge screenshot Pull Request
 #        env:
@@ -104,7 +104,7 @@ jobs:
 #            --notes-file "release/notes/${VERSION}.md"  
 
   publish:
-    needs: prepare
+#    needs: prepare
     runs-on: ubuntu-latest
     environment: production
     permissions:
@@ -137,8 +137,8 @@ jobs:
 #        run: |
 #          base64 --decode <<< "$KEYSTORE_BASE64" > "$RUNNER_TEMP/release.keystore"
 
-#      - name: Fix line endings and make gradlew executable
-#        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
+      - name: Fix line endings and make gradlew executable
+        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
 #      - name: Build signed APK and AAB
 #        env:
@@ -192,6 +192,11 @@ jobs:
                   cp "en-US/${text_file}" "${lang_dir}${text_file}" 2>/dev/null || true
                 fi
               done
+
+              mkdir -p "${lang_dir}changelogs"
+              if [ ! -f "${lang_dir}changelogs/${VERSION_CODE}.txt" ]; then
+                cp "en-US/changelogs/${VERSION_CODE}.txt" "${lang_dir}changelogs/${VERSION_CODE}.txt" 2>/dev/null || true
+              fi
             fi
           done
 
@@ -200,15 +205,28 @@ jobs:
           shopt -s nullglob
           for lang_dir in */; do
             SCREENSHOT_DIR="${lang_dir}images/phoneScreenshots"
+
             if [ -d "$SCREENSHOT_DIR" ]; then
               cd "$SCREENSHOT_DIR"
+
+              for index in "${!KEEP_IMAGES[@]}"; do
+                  old_file="${KEEP_IMAGES[$index]}"
+                  if [ -f "$old_file" ]; then
+                    mv "$old_file" "temp_$((index + 1)).png"
+                  fi
+                done
+              
               for file in *; do
-                if [ -f "$file" ]; then
-                  if [[ ! " ${KEEP_IMAGES[*]} " =~ " ${file} " ]]; then
+                  if [[ "$file" != temp_*.png ]]; then
                     rm -f "$file"
                   fi
-                fi
+                done
+
+              for temp_file in temp_*.png; do
+                  final_name="${temp_file#temp_}"
+                  mv "$temp_file" "$final_name"
               done
+
               cd "$METADATA_PATH"
             fi
           done
