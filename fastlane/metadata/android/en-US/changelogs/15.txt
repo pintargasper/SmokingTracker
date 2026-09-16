@@ -1,0 +1,7 @@
+Improvements and Fixes
+
+- Added Hungarian language 🇭🇺
+- Improved translations and localization
+- Smoother and more responsive app experience
+- Fixed minor bugs and improved stability
+- Improved date, time, and history display
