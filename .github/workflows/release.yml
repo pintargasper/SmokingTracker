@@ -138,14 +138,14 @@ jobs:
 #      - name: Fix line endings and make gradlew executable
 #        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-#      - name: Build signed APK
+#      - name: Build signed APK and AAB
 #        env:
 #          ORG_GRADLE_PROJECT_KEYSTORE_FILE: ${{ runner.temp }}/release.keystore
 #          ORG_GRADLE_PROJECT_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
 #          ORG_GRADLE_PROJECT_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
 #          ORG_GRADLE_PROJECT_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 #        run: |
-#          ./gradlew assembleRelease
+#          ./gradlew assembleRelease bundleRelease
 
 #      - name: Rename APK
 #        env:
@@ -172,6 +172,43 @@ jobs:
         env:
           GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
         run: fastlane android playstore
+
+      - name: Prepare metadata for Google Play
+        run: |
+          mkdir -p /tmp/gplay_metadata
+          cp -r fastlane/metadata/android/* /tmp/gplay_metadata/
+
+          cd /tmp/gplay_metadata
+          [ -d "hu" ] && mv hu hu-HU || true
+          [ -d "zh-Hans" ] && mv zh-Hans zh-CN || true
+          [ -d "zh-Hant" ] && mv zh-Hant zh-TW || true
+
+          rm -rf sr-Latn
+          if [ -d "sr-Crly" ]; then
+            if [ -d "sr" ]; then
+              rm -rf sr-Crly
+            else
+              mv sr-Crly sr
+            fi
+          fi
+
+          KEEP_IMAGES=("1.png" "2.png" "3.png" "4.png" "5.png" "7.png" "9.png" "12.png")
+
+          shopt -s nullglob
+          for lang_dir in */; do
+            SCREENSHOT_DIR="${lang_dir}images/phoneScreenshots"
+            if [ -d "$SCREENSHOT_DIR" ]; then
+              cd "$SCREENSHOT_DIR"
+              for file in *; do
+                if [ -f "$file" ]; then
+                  if [[ ! " ${KEEP_IMAGES[*]} " =~ " ${file} " ]]; then
+                    rm -f "$file"
+                  fi
+                fi
+              done
+              cd /tmp/gplay_metadata
+            fi
+          done
             
       - name: Remove signing files
         if: always()
