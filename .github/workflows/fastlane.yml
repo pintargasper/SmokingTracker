@@ -2,11 +2,11 @@ name: Fastlane
 
 on:
   workflow_dispatch:
-    inputs:
-      release_id:
-        description: "Release ID (used automatically by release workflow)"
-        required: false
-        type: string
+  workflow_call:
+    outputs:
+      pull_request_number:
+        description: "Pull request number created by this workflow"
+        value: ${{ jobs.screenshots.outputs.pull-request-number }}
 
 permissions:
   contents: write
@@ -15,6 +15,8 @@ permissions:
 jobs:
   screenshots:
     runs-on: ubuntu-latest
+    outputs:
+      pull-request-number: ${{ steps.create-pull-request.outputs.pull-request-number }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -22,7 +24,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: '3.14'
+          python-version: ${{ vars.PYTHON_VERSION }}
 
       - name: Install Python dependencies
         run: |
@@ -40,17 +42,17 @@ jobs:
         run: |
           python tools/scripts/dummy_data.py
 
-      - name: Set up JDK 21
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
         uses: actions/setup-java@v6
         with:
-          java-version: '21'
+          java-version: ${{ vars.JAVA_VERSION }}
           distribution: 'temurin'
           cache: 'gradle'
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '4.0'
+          ruby-version: ${{ vars.RUBY_VERSION }}
 
       - name: Set up Fastlane
         run: sudo gem install fastlane
@@ -71,7 +73,7 @@ jobs:
       - name: Generate Screenshots
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 34
+          api-level: ${{ vars.ANDROID_API_TARGET }}
           target: google_apis
           arch: x86_64
           profile: pixel_6
@@ -123,22 +125,13 @@ jobs:
           rm -f fastlane/metadata/android/screenshots.html
 
       - name: Create Pull Request
+        id: create-pull-request
         uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "Update fastlane app screenshots"
-          title: >-
-            Update app screenshots${{
-              inputs.release_id != '' &&
-              format(' ({0})', inputs.release_id) ||
-              ''
-            }}
+          title: "Update app screenshots"
           body: "Automated pull request containing the latest app screenshots captured by GitHub Actions."
-          branch: >-
-            update-screenshots${{
-              inputs.release_id != '' &&
-              format('-{0}', inputs.release_id) ||
-              ''
-            }}
+          branch: update-screenshots
           delete-branch: true
           add-paths: |
             fastlane/metadata/android/

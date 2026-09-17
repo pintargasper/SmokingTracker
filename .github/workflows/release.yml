@@ -1,13 +1,12 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
-
-permissions:
-  contents: write
+    inputs:
+      version:
+        description: "Release version (e.g. v1.2.0)"
+        required: true
+        type: string
 
 jobs:
   release:
@@ -16,8 +15,302 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          ref: master
+          fetch-depth: 2
 
-      - name: Release
+      - name: Check app version
+        env:
+          VERSION: ${{ inputs.version }}
         run: |
-          echo "Starting release from master..."
+          EXPECTED_VERSION_NAME="${VERSION#v}"
+
+          VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
+          VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
+
+          PREVIOUS_VERSION_CODE=$(git show HEAD^:app/build.gradle.kts \
+            | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
+            | head -1)
+
+          echo "Input version:           ${VERSION}"
+          echo "Expected versionName:    ${EXPECTED_VERSION_NAME}"
+          echo "Current versionName:     ${VERSION_NAME}"
+          echo "Current versionCode:     ${VERSION_CODE}"
+          echo "Previous versionCode:    ${PREVIOUS_VERSION_CODE}"
+
+          if [ "${VERSION_NAME}" != "${EXPECTED_VERSION_NAME}" ]; then
+            echo "ERROR: versionName does not match release input."
+            echo "Expected: ${EXPECTED_VERSION_NAME}"
+            echo "Found:    ${VERSION_NAME}"
+            exit 1
+          fi
+
+          if [ "${VERSION_CODE}" -le "${PREVIOUS_VERSION_CODE}" ]; then
+            echo "ERROR: versionCode must be greater than the previous versionCode."
+            echo "Previous: ${PREVIOUS_VERSION_CODE}"
+            echo "Found:    ${VERSION_CODE}"
+            exit 1
+          fi
+
+          echo "App version check passed."
+
+      - name: Check release notes
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          if [ ! -f "release/notes/${VERSION}.md" ]; then
+            echo "Release notes not found: release/notes/${VERSION}.md"
+            exit 1
+          fi
+
+          echo "Release notes found: release/notes/${VERSION}.md"
+  
+  build:
+   needs: release
+   uses: ./.github/workflows/build.yml
+
+  fastlane:
+   needs: build
+   uses: ./.github/workflows/fastlane.yml
+
+  prepare:
+    needs: fastlane
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release_sha: ${{ steps.get_sha.outputs.release_sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Merge screenshot Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
+        run: |
+          gh pr merge "$PR_NUMBER" \
+            --squash \
+            --delete-branch
+
+      - name: Get release commit
+        id: get_sha
+        run: |
+          git fetch origin master
+          echo "release_sha=$(git rev-parse origin/master)" >> "$GITHUB_OUTPUT"
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release create "${VERSION}" \
+            --target master \
+            --draft \
+            --title "${VERSION}" \
+            --notes-file "release/notes/${VERSION}.md"  
+
+  publish:
+    needs: prepare
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: write
+    env:
+      METADATA_PATH: '/tmp/gplay_metadata'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.prepare.outputs.release_sha }}
+
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v6
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ vars.RUBY_VERSION }}
+
+      - name: Set up Fastlane
+        run: sudo gem install fastlane
+
+      - name: Extract Version Code
+        run: |
+          echo "VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)" >> $GITHUB_ENV
+
+      - name: Check changelog
+        run: |
+          CHANGELOG="fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt"
+
+          if [ ! -s "$CHANGELOG" ]; then
+            echo "ERROR: Changelog not found:"
+            echo "$CHANGELOG"
+            exit 1
+          fi
+
+          echo "Google Play changelog found:"
+          cat "$CHANGELOG"
+          
+      - name: Decode signing keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          base64 --decode <<< "$KEYSTORE_BASE64" > "$RUNNER_TEMP/release.keystore"
+
+      - name: Fix line endings and make gradlew executable
+        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
+
+      - name: Build signed APK and AAB
+        env:
+          ORG_GRADLE_PROJECT_KEYSTORE_FILE: ${{ runner.temp }}/release.keystore
+          ORG_GRADLE_PROJECT_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          ./gradlew assembleRelease bundleRelease
+
+      - name: Verify APK and AAB
+        run: |
+          APK="app/build/outputs/apk/release/app-release.apk"
+          AAB="app/build/outputs/bundle/release/app-release.aab"
+
+          if [ ! -s "$APK" ]; then
+            echo "ERROR: APK not found at $APK"
+            exit 1
+          fi
+
+          if [ ! -s "$AAB" ]; then
+            echo "ERROR: AAB not found at $AAB"
+            exit 1
+          fi
+
+          echo "APK and AAB successfully built."
+
+      - name: Rename APK
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          mv app/build/outputs/apk/release/app-release.apk \
+            "app/build/outputs/apk/release/smoking-tracker.${VERSION}.apk"
+
+      - name: Upload APK to draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release upload "${VERSION}" \
+            app/build/outputs/apk/release/smoking-tracker.${VERSION}.apk
+
+      - name: Prepare metadata for Google Play
+        run: |
+          mkdir -p "$METADATA_PATH"
+          cp -r fastlane/metadata/android/* "$METADATA_PATH"
+
+          cd "$METADATA_PATH"
+          [ -d "hu" ] && mv hu hu-HU || true
+          [ -d "zh-Hans" ] && mv zh-Hans zh-CN || true
+          [ -d "zh-Hant" ] && mv zh-Hant zh-TW || true
+
+          rm -rf sr-Latn
+          if [ -d "sr-Cyrl" ]; then
+            if [ -d "sr" ]; then
+              rm -rf sr-Cyrl
+            else
+              echo "Renaming sr-Cyrl to sr..."
+              mv sr-Cyrl sr
+            fi
+          fi
+
+          for lang_dir in */; do
+            if [ -d "$lang_dir" ]; then
+              for text_file in "title.txt" "short_description.txt" "full_description.txt"; do
+                if [ ! -s "${lang_dir}${text_file}" ]; then
+                  echo "Creating fallback ${text_file} for ${lang_dir}"
+                  cp "en-US/${text_file}" "${lang_dir}${text_file}" 2>/dev/null || true
+                fi
+              done
+
+              mkdir -p "${lang_dir}changelogs"
+              if [ ! -f "${lang_dir}changelogs/${VERSION_CODE}.txt" ]; then
+                cp "en-US/changelogs/${VERSION_CODE}.txt" "${lang_dir}changelogs/${VERSION_CODE}.txt" 2>/dev/null || true
+              fi
+            fi
+          done
+
+          KEEP_IMAGES=("1.png" "2.png" "3.png" "4.png" "5.png" "7.png" "9.png" "12.png")
+
+          shopt -s nullglob
+          for lang_dir in */; do
+            SCREENSHOT_DIR="${lang_dir}images/phoneScreenshots"
+
+            if [ -d "$SCREENSHOT_DIR" ]; then
+              cd "$SCREENSHOT_DIR"
+
+              for index in "${!KEEP_IMAGES[@]}"; do
+                  old_file="${KEEP_IMAGES[$index]}"
+                  if [ -f "$old_file" ]; then
+                    mv "$old_file" "temp_$((index + 1)).png"
+                  fi
+                done
+              
+              for file in *; do
+                  if [[ "$file" != temp_*.png ]]; then
+                    rm -f "$file"
+                  fi
+                done
+
+              for temp_file in temp_*.png; do
+                  final_name="${temp_file#temp_}"
+                  mv "$temp_file" "$final_name"
+              done
+
+              cd "$METADATA_PATH"
+            fi
+          done
+
+      - name: Create Google Play credentials
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          cat <<< "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/service-account.json"
+
+      - name: Upload to Google Play
+        env:
+          GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
+          VERSION_CODE: ${{ env.VERSION_CODE }}
+        run: fastlane android playstore
+            
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release edit "${VERSION}" \
+            --draft=false \
+            --discussion-category "Announcements"
+
+      - name: Remove signing files
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/release.keystore" ]; then
+            echo "Keystore exists. Removing..."
+            rm -f "$RUNNER_TEMP/release.keystore"
+          fi
+
+          if [ -f "$RUNNER_TEMP/service-account.json" ]; then
+            echo "Google Play credentials exist. Removing..."
+            rm -f "$RUNNER_TEMP/service-account.json"
+          fi
+
+          if [ -f "$RUNNER_TEMP/release.keystore" ] || [ -f "$RUNNER_TEMP/service-account.json" ]; then
+            echo "ERROR: Signing files still exist!"
+            exit 1
+          else
+            echo "Signing files successfully removed."
+          fi

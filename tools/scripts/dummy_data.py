@@ -84,11 +84,11 @@ def generate_cigarette_count(monthly_average: int) -> int:
     return max(minimum, min(maximum, count))
 
 
-def generate_history_day(date: datetime, monthly_average: int, end_time: datetime | None = None) -> list[dict]:
+def generate_history_day(date: datetime, monthly_average: int, end_time: datetime | None = None, last_day: bool = False) -> list[dict]:
     start_time = date.replace(hour=7, minute=randint(0, 30), second=randint(0, 59), microsecond=0)
     end_time = end_time or date.replace(hour=23, minute=59, second=59, microsecond=0)
 
-    if randint(1, 100) <= SMOKE_FREE_PROBABILITY:
+    if not last_day and randint(1, 100) <= SMOKE_FREE_PROBABILITY:
         return []
 
     cigarettes = generate_cigarette_count(monthly_average=monthly_average)
@@ -164,7 +164,7 @@ def generate_history() -> list[dict]:
         date = start_date + timedelta(days=day)
         monthly_average = monthly_averages[(date.year, date.month)]
         end_time = end_date if date.date() == end_date.date() else None
-        history.extend(generate_history_day(date=date, monthly_average=monthly_average, end_time=end_time))
+        history.extend(generate_history_day(date=date, monthly_average=monthly_average, end_time=end_time, last_day=date.date() == end_date.date()))
     return history
 
 

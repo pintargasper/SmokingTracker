@@ -27,6 +27,17 @@ configure<ApplicationExtension> {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+            if (providers.gradleProperty("KEYSTORE_FILE").isPresent) {
+                storeFile = file(providers.gradleProperty("KEYSTORE_FILE").get())
+                storePassword = providers.gradleProperty("KEYSTORE_PASSWORD").orNull
+                keyAlias = providers.gradleProperty("KEY_ALIAS").orNull
+                keyPassword = providers.gradleProperty("KEY_PASSWORD").orNull
+            }
+        }
+    }
+
     buildTypes {
         getByName("debug") {
             isDebuggable = true
@@ -35,6 +46,11 @@ configure<ApplicationExtension> {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+
+            if (providers.gradleProperty("KEYSTORE_FILE").isPresent) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
