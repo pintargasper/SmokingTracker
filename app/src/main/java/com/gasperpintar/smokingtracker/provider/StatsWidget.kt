@@ -4,31 +4,11 @@ import android.Manifest
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 
 class StatsWidget : AppWidgetProvider() {
-
-    @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
-    @Override
-    override fun onReceive(
-        context: Context,
-        intent: Intent
-    ) {
-        super.onReceive(context, intent)
-        when (intent.action) {
-            WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE -> {
-                WidgetHelper.scheduleMidnightWidgetUpdate(context)
-                WidgetHelper.updateAllWidgets(context)
-            }
-
-            WidgetHelper.ACTION_ADD_NEW_ENTRY -> {
-                WidgetHelper.addNewEntry(context, pendingResult = goAsync())
-            }
-        }
-    }
 
     @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
     @Override

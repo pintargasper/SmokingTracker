@@ -30,6 +30,9 @@
         <activity android:name=".activity.NotesActivity" />
         <activity android:name=".activity.AboutActivity" />
         <receiver
+            android:name=".provider.WidgetActionReceiver"
+            android:exported="false" />
+        <receiver
             android:label="@string/widget_stats"
             android:name=".provider.StatsWidget"
             android:exported="true">

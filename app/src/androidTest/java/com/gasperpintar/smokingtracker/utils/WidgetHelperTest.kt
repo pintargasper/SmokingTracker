@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
+import com.gasperpintar.smokingtracker.provider.WidgetActionReceiver
 import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 import org.junit.After
 import org.junit.Assert.assertNotNull
@@ -102,7 +103,7 @@ class WidgetHelperTest {
         PendingIntent.getBroadcast(
             context,
             action.hashCode(),
-            Intent(context, StatsWidget::class.java).apply { this.action = action },
+            Intent(context, WidgetActionReceiver::class.java).apply { this.action = action },
             PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
         )
 
