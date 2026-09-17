@@ -5,10 +5,11 @@ platform :android do
     upload_to_play_store(
       package_name: "com.gasperpintar.smokingtracker",
       version_code: ENV["VERSION_CODE"].to_i,
+      aab: "app/build/outputs/bundle/release/app-release.aab",
       json_key: ENV["GOOGLE_PLAY_JSON"],
       track: "production",
       metadata_path: ENV["METADATA_PATH"],
-      changes_not_sent_for_review: true
+      changes_not_sent_for_review: false
     )
   end
 end
