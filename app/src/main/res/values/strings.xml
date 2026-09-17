@@ -135,6 +135,8 @@
     <string name="settings_general_language">Language</string>
     <string name="settings_general_notifications">Notifications</string>
     <string name="settings_general_notifications_description">Stay informed with notifications and alerts</string>
+    <string name="settings_general_day_end_hour">Day end hour</string>
+    <string name="settings_general_day_end_hour_description">Set when your day ends</string>
 
     <string name="settings_finance">Finance</string>
     <string name="settings_finance_currency">Currency</string>

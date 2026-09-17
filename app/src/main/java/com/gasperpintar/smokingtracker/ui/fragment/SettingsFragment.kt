@@ -117,6 +117,19 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             )
         }
 
+        dayEndLayout.setOnClickListener {
+            DialogManager.showEndDayDialog(
+                context = requireActivity(),
+                settings = state.settings,
+                onTimeSelected = { dayEndMinutes ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        state.settings = state.settings.copy(dayEndMinutes = dayEndMinutes)
+                        viewModel.updateSettings(state.settings)
+                    }
+                }
+            )
+        }
+
         currencyLayout.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
                 DialogManager.showCurrencyDialog(

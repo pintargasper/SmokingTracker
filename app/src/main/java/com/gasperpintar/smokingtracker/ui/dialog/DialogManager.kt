@@ -24,6 +24,7 @@ import com.gasperpintar.smokingtracker.databinding.DeletePopupBinding
 import com.gasperpintar.smokingtracker.databinding.DialogDatePickerBinding
 import com.gasperpintar.smokingtracker.databinding.DownloadPopupBinding
 import com.gasperpintar.smokingtracker.databinding.EditPopupBinding
+import com.gasperpintar.smokingtracker.databinding.EndDayPopupBinding
 import com.gasperpintar.smokingtracker.databinding.InsertPopupBinding
 import com.gasperpintar.smokingtracker.databinding.LanguagePopupBinding
 import com.gasperpintar.smokingtracker.databinding.NotificationsPopupBinding
@@ -166,6 +167,23 @@ object DialogManager {
                     currentSettings = currentSettings.copy(frequency = position)
                     onSettingsSelected(currentSettings)
                 }
+            }
+        }
+    }
+
+    fun showEndDayDialog(
+        context: FragmentActivity,
+        settings: SettingsEntity,
+        onTimeSelected: (Int) -> Unit
+    ) = BaseDialog.show(context, bindingInflater = EndDayPopupBinding::inflate) {
+        binding.run {
+            timePicker.is24Hour = DateFormat.is24HourFormat(context)
+            timePicker.hour = settings.dayEndMinutes / 60
+            timePicker.minute = settings.dayEndMinutes % 60
+
+            buttonConfirm.setOnClickListener {
+                onTimeSelected(timePicker.hour * 60 + timePicker.minute)
+                dismiss()
             }
         }
     }

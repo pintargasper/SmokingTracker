@@ -7,7 +7,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(jdkVersion = 21)
     compilerOptions {
         freeCompilerArgs.addAll(listOf("-Xjvm-default=all"))
     }
@@ -21,8 +21,8 @@ configure<ApplicationExtension> {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
         targetSdk = 37
-        versionCode = 14
-        versionName = "1.8.0"
+        versionCode = 15
+        versionName = "1.8.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -74,7 +74,6 @@ configure<ApplicationExtension> {
     }
 
     dependenciesInfo {
-
         includeInApk = false
         includeInBundle = false
     }
@@ -83,6 +82,7 @@ configure<ApplicationExtension> {
         disable.add("MissingTranslation")
         disable.add("ObsoleteSdkInt")
         disable.add("TrustAllX509TrustManager")
+        disable.add("TooManyViews")
     }
 }
 
