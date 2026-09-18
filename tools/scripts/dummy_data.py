@@ -313,15 +313,13 @@ def generate_notes() -> list[dict]:
 
 
 def generate_settings() -> dict:
-    currencies = ["€", "$", "£"]
-    custom_currencies = ["CHF", "kr", "Kč", "zł", "¥"]
-
     return {
         "Theme": 1,
         "Language": "en",
         "Frequency": randint(0, 2),
-        "Currency": choice(currencies),
-        "CustomCurrency": choice(custom_currencies) if randint(0, 2) == 0 else "",
+        "Currency": "€",
+        "CustomCurrency": "",
+        "DayEndMinutes": 0
     }
 
 
