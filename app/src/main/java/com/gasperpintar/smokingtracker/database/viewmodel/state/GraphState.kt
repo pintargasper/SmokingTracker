@@ -12,5 +12,6 @@ data class GraphState(
     val dailyCount: Int = 0,
     val weeklyCount: Int = 0,
     val monthlyCount: Int = 0,
-    val yearlyCount: Int = 0
+    val yearlyCount: Int = 0,
+    val dayEndMinutes: Int = 0
 )

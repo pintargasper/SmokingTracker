@@ -40,7 +40,6 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
     private lateinit var importDocumentLauncher: ActivityResultLauncher<Array<String>>
 
     private lateinit var selectedFile: TextView
-
     private val mimeExcel = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 
     @Override
@@ -81,7 +80,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                 context = requireActivity(),
                 selectedLanguage = state.settings.language,
                 onLanguageSelected = { language ->
-                    lifecycleScope.launch {
+                    viewLifecycleOwner.lifecycleScope.launch {
                         state.settings = state.settings.copy(language = language)
                         viewModel.updateSettings(state.settings)
                         requireActivity().recreate()
@@ -125,6 +124,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                     viewLifecycleOwner.lifecycleScope.launch {
                         state.settings = state.settings.copy(dayEndMinutes = dayEndMinutes)
                         viewModel.updateSettings(state.settings)
+                        requireActivity().recreate()
                     }
                 }
             )
@@ -211,7 +211,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         importDocumentLauncher = registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             uri ?: return@registerForActivityResult
             if (::selectedFile.isInitialized) {
-                val fileName = FileHelper.getFileName(requireActivity(), uri)
+                val fileName = FileHelper.getFileName(context = requireActivity(), uri)
                 selectedFile.text = getString(R.string.restore_popup_file, fileName)
                 selectedFile.tag = uri
             }

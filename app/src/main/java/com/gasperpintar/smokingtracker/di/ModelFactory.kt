@@ -36,12 +36,14 @@ class ModelFactory(
                 HomeViewModel(
                     achievementRepository = container.achievementRepository,
                     historyRepository = container.historyRepository,
+                    settingsRepository = container.settingsRepository
                 ) as T
             }
 
             modelClass.isAssignableFrom(GraphViewModel::class.java) -> {
                 GraphViewModel(
                     historyRepository = container.historyRepository,
+                    settingsRepository = container.settingsRepository
                 ) as T
             }
 
@@ -78,12 +80,14 @@ class ModelFactory(
                 BasicViewModel(
                     historyRepository = container.historyRepository,
                     costsRepository = container.costsRepository,
+                    settingsRepository = container.settingsRepository
                 ) as T
             }
 
             modelClass.isAssignableFrom(ForecastViewModel::class.java) -> {
                 ForecastViewModel(
-                    historyRepository = container.historyRepository
+                    historyRepository = container.historyRepository,
+                    settingsRepository = container.settingsRepository
                 ) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

@@ -77,7 +77,7 @@ class TimeHelperTest {
             .toInstant()
             .toEpochMilli()
 
-        assertEquals(expected, TimeHelper.getNextMidnightMillis())
+        assertEquals(expected, TimeHelper.getNextMidnightMillis(dayEndMinutes = 0))
     }
 
     @Test

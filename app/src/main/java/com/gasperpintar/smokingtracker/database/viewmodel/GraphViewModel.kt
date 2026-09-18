@@ -5,30 +5,43 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.GraphState
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class GraphViewModel(
-    private val historyRepository: HistoryRepository
+    private val historyRepository: HistoryRepository,
+    private val settingsRepository: SettingsRepository
 ): ViewModel() {
 
-    private var selectedDate = LocalDate.now()
+    private var selectedDate: LocalDate? = null
+    private var endMinutes: Int? = null
 
     fun previous(previousUnit: (LocalDate) -> LocalDate) {
-        selectedDate = previousUnit(selectedDate)
+        selectedDate = previousUnit(selectedDate!!)
     }
 
     fun next(nextUnit: (LocalDate) -> LocalDate) {
-        selectedDate = nextUnit(selectedDate)
+        selectedDate = nextUnit(selectedDate!!)
     }
 
     suspend fun getEntries(): GraphState {
-        val date = selectedDate
-        val (dailyStart, dailyEnd) = TimeHelper.getDay(date)
-        val (weeklyStart, weeklyEnd) = TimeHelper.getWeek(date)
-        val (monthlyStart, monthlyEnd) = TimeHelper.getMonth(date)
-        val (yearlyStart, yearlyEnd) = TimeHelper.getYear(date)
+        val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
+        if (selectedDate == null) selectedDate = TimeHelper.dayDate(dayEndMinutes)
+        if (endMinutes != dayEndMinutes) {
+            selectedDate = TimeHelper.updateDayDate(
+                selectedDate = selectedDate!!,
+                oldDayEndMinutes = endMinutes ?: 0,
+                newDayEndMinutes = dayEndMinutes
+            )
+            endMinutes = dayEndMinutes
+        }
+
+        val (dailyStart, dailyEnd) = TimeHelper.getDay(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
+        val (weeklyStart, weeklyEnd) = TimeHelper.getWeek(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
+        val (monthlyStart, monthlyEnd) = TimeHelper.getMonth(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
+        val (yearlyStart, yearlyEnd) = TimeHelper.getYear(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
 
         val dailyHistory = historyRepository.getBetween(start = dailyStart, end = dailyEnd)
         val weeklyHistory = historyRepository.getBetween(start = weeklyStart, end = weeklyEnd)
@@ -36,7 +49,7 @@ class GraphViewModel(
         val yearlyHistory = historyRepository.getBetween(start = yearlyStart, end = yearlyEnd)
 
         return GraphState(
-            selectedDate = date,
+            selectedDate = selectedDate!!,
             dailyEntries = createHourlyEntries(history = dailyHistory, start = dailyStart),
             weeklyEntries = createDailyEntries(history = weeklyHistory, start = weeklyStart, end = weeklyEnd),
             monthlyEntries = createDailyEntries(history = monthlyHistory, start = monthlyStart, end = monthlyEnd),
@@ -44,7 +57,8 @@ class GraphViewModel(
             dailyCount = dailyHistory.size,
             weeklyCount = weeklyHistory.size,
             monthlyCount = monthlyHistory.size,
-            yearlyCount = yearlyHistory.size
+            yearlyCount = yearlyHistory.size,
+            dayEndMinutes = dayEndMinutes
         )
     }
 
@@ -52,13 +66,13 @@ class GraphViewModel(
         history: List<HistoryEntity>,
         start: LocalDateTime
     ): List<GraphEntry> {
-        val hourlyCountMap = history.groupingBy { it.createdAt.hour }.eachCount()
-        return (0..23).map { hour ->
+        return (0..23).map { index ->
+            val hourStart = start.plusHours(index.toLong())
             GraphEntry(
-                quantity = hourlyCountMap[hour] ?: 0,
-                date = start.withHour(hour).withMinute(0).withSecond(0).withNano(0)
+                quantity = history.count { it.createdAt in hourStart..<hourStart.plusHours(1) },
+                date = hourStart
             )
-        }.dropLastWhile { it.quantity == 0 }
+        }
     }
 
     private fun createDailyEntries(
@@ -66,30 +80,27 @@ class GraphViewModel(
         start: LocalDateTime,
         end: LocalDateTime
     ): List<GraphEntry> {
-        val startDate = start.toLocalDate()
-        val endDate = end.toLocalDate()
-
-        return generateSequence(seed = startDate) { day ->
-            val nextDay = day.plusDays(1)
-            if (nextDay <= endDate) nextDay else null
-        }.map { day ->
+        return generateSequence(seed = start) { dayStart ->
+            val nextDayStart = dayStart.plusDays(1)
+            if (nextDayStart < end) nextDayStart else null
+        }.map { dayStart ->
             GraphEntry(
-                quantity = history.count { it.createdAt.toLocalDate() == day },
-                date = day.atStartOfDay()
+                quantity = history.count { it.createdAt >= dayStart && it.createdAt < dayStart.plusDays(1) },
+                date = dayStart
             )
-        }.toList().dropLastWhile { it.quantity == 0 }
+        }.toList()
     }
 
     private fun createYearlyEntries(
         history: List<HistoryEntity>,
         start: LocalDateTime
     ): List<GraphEntry> {
-        val monthCountMap = history.groupingBy { it.createdAt.monthValue }.eachCount()
-        return (1..12).map { monthNumber ->
+        return (0..11).map { index ->
+            val monthStart = start.plusMonths(index.toLong())
             GraphEntry(
-                quantity = monthCountMap[monthNumber] ?: 0,
-                date = start.withMonth(monthNumber).withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0).withNano(0)
+                quantity = history.count { it.createdAt in monthStart..<monthStart.plusMonths(1) },
+                date = monthStart
             )
-        }.dropLastWhile { it.quantity == 0 }
+        }
     }
 }

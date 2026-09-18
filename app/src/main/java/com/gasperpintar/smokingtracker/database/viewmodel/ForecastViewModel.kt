@@ -2,25 +2,29 @@ package com.gasperpintar.smokingtracker.database.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
-import com.gasperpintar.smokingtracker.database.viewmodel.state.ForecastState
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.viewmodel.state.ForecastState
 import com.gasperpintar.smokingtracker.type.GraphInterval
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
 
 class ForecastViewModel(
-    private val historyRepository: HistoryRepository
+    private val historyRepository: HistoryRepository,
+    private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
     suspend fun getForecast(): ForecastState {
         val current = LocalDateTime.now()
+        val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
         val history = historyRepository.getEntries(date = current)
 
         if (history.isEmpty()) return ForecastState()
         val oldestRecord = history.minByOrNull { it.createdAt } ?: return ForecastState()
-        val interval = determineGraphInterval(oldestRecord.createdAt, current)
+        val interval = determineGraphInterval(oldestRecord = oldestRecord.createdAt, current = current)
 
         val mainCount = when (interval) {
             GraphInterval.HOURLY -> Duration.between(oldestRecord.createdAt, current).toHours().toInt() + 5
@@ -29,20 +33,24 @@ class ForecastViewModel(
             else -> 12
         }
 
-        val historyGrouped = history.groupBy { normalizeDate(it.createdAt, interval) }
+        val historyGrouped = history.groupBy {
+            normalizeDate(date = it.createdAt, interval = interval, dayEndMinutes = dayEndMinutes)
+        }
+
         val main = (0 until mainCount).map { index ->
             val stepsBack = (mainCount - 1 - index).toLong()
-            val date = normalizeDate(getDateForInterval(current, interval, stepsBack), interval)
+            val date = getDateForInterval(current = current, interval = interval, stepsBack = stepsBack, dayEndMinutes = dayEndMinutes)
             val count = historyGrouped[date]?.size ?: 0
             GraphEntry(date = date, quantity = count)
         }
-        val forecast = calculateForecast(data = main, interval)
+        val forecast = calculateForecast(data = main, interval = interval, dayEndMinutes = dayEndMinutes)
         return ForecastState(data = main, forecast = forecast, interval = interval)
     }
 
     private fun calculateForecast(
         data: List<GraphEntry>,
-        interval: GraphInterval
+        interval: GraphInterval,
+        dayEndMinutes: Int
     ): List<GraphEntry> {
         if (data.isEmpty()) return emptyList()
 
@@ -66,13 +74,14 @@ class ForecastViewModel(
             val targetX = knownX.size.toDouble() + index
             val forecastY = (a + b * targetX).roundToInt().coerceAtLeast(minimumValue = 0)
 
-            val forecastDate = when (interval) {
+            val rawForecastDate = when (interval) {
                 GraphInterval.HOURLY -> lastDate.plusHours(index.toLong())
                 GraphInterval.DAILY -> lastDate.plusDays(index.toLong())
                 GraphInterval.WEEKLY -> lastDate.plusWeeks(index.toLong())
-                GraphInterval.MONTHLY -> lastDate.plusMonths(index.toLong()).withDayOfMonth(1)
+                GraphInterval.MONTHLY -> lastDate.plusMonths(index.toLong())
                 else -> lastDate
             }
+            val forecastDate = normalizeDate(date = rawForecastDate, interval = interval, dayEndMinutes = dayEndMinutes)
             GraphEntry(quantity = forecastY, date = forecastDate)
         }
     }
@@ -93,23 +102,34 @@ class ForecastViewModel(
     private fun getDateForInterval(
         current: LocalDateTime,
         interval: GraphInterval,
-        stepsBack: Long
-    ): LocalDateTime = when (interval) {
-        GraphInterval.HOURLY -> current.minusHours(stepsBack)
-        GraphInterval.DAILY -> current.minusDays(stepsBack)
-        GraphInterval.WEEKLY -> current.minusWeeks(stepsBack)
-        GraphInterval.MONTHLY -> current.minusMonths(stepsBack)
-        else -> current
+        stepsBack: Long,
+        dayEndMinutes: Int
+    ): LocalDateTime {
+        val date = when (interval) {
+            GraphInterval.HOURLY -> current.minusHours(stepsBack)
+            GraphInterval.DAILY -> TimeHelper.dayDate(dateTime = current, dayEndMinutes = dayEndMinutes).minusDays(stepsBack).atStartOfDay()
+            GraphInterval.WEEKLY -> TimeHelper.dayDate(dateTime = current, dayEndMinutes = dayEndMinutes).minusWeeks(stepsBack).atStartOfDay()
+            GraphInterval.MONTHLY -> TimeHelper.dayDate(dateTime = current, dayEndMinutes = dayEndMinutes).minusMonths(stepsBack).withDayOfMonth(1).atStartOfDay()
+            else -> current
+        }
+        return normalizeDate(date = date, interval = interval, dayEndMinutes = dayEndMinutes)
     }
 
     private fun normalizeDate(
         date: LocalDateTime,
-        interval: GraphInterval
-    ): LocalDateTime = when (interval) {
-        GraphInterval.HOURLY -> date.truncatedTo(ChronoUnit.HOURS)
-        GraphInterval.DAILY -> date.truncatedTo(ChronoUnit.DAYS)
-        GraphInterval.WEEKLY -> date.truncatedTo(ChronoUnit.DAYS)
-        GraphInterval.MONTHLY -> date.withDayOfMonth(1).truncatedTo(ChronoUnit.DAYS)
-        else -> date
+        interval: GraphInterval,
+        dayEndMinutes: Int
+    ): LocalDateTime {
+        return when (interval) {
+            GraphInterval.HOURLY -> {
+                val offset = dayEndMinutes.toLong()
+                date.minusMinutes(offset).truncatedTo(ChronoUnit.HOURS).plusMinutes(offset)
+            }
+            GraphInterval.DAILY -> TimeHelper.dayDate(dateTime = date, dayEndMinutes = dayEndMinutes).atStartOfDay()
+            GraphInterval.WEEKLY -> TimeHelper.dayDate(dateTime = date, dayEndMinutes = dayEndMinutes).atStartOfDay()
+            GraphInterval.MONTHLY ->
+                TimeHelper.dayDate(dateTime = date, dayEndMinutes = dayEndMinutes).withDayOfMonth(1).atStartOfDay()
+            else -> date
+        }
     }
 }

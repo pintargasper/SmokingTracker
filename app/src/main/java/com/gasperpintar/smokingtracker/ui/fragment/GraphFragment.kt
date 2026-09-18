@@ -99,7 +99,7 @@ class GraphFragment : Base<FragmentGraphBinding>(
     private fun updateDaily(
         state: GraphState
     ) = binding.apply {
-        val (start, _) = TimeHelper.getDay(date = state.selectedDate)
+        val (start, _) = TimeHelper.getDay(date = state.selectedDate, dayEndMinutes = state.dayEndMinutes)
         currentDateDaily.text = LocalizationHelper.formatDateRange(start = start.toLocalDate(), end = null, skeleton = "dMMMM")
         graphDaily.text = getString(R.string.graph_daily, state.dailyCount)
         graphViewDaily.setData(data = state.dailyEntries, graphInterval = GraphInterval.DAILY)
@@ -108,7 +108,7 @@ class GraphFragment : Base<FragmentGraphBinding>(
     private fun updateWeekly(
         state: GraphState
     ) = binding.apply {
-        val (start, end) = TimeHelper.getWeek(date = state.selectedDate)
+        val (start, end) = TimeHelper.getWeek(date = state.selectedDate, dayEndMinutes = state.dayEndMinutes)
         currentDateWeekly.text = LocalizationHelper.formatDateRange(start = start.toLocalDate(), end = end.toLocalDate())
         graphWeekly.text = getString(R.string.graph_weekly, state.weeklyCount)
         graphViewWeekly.setData(data = state.weeklyEntries, graphInterval = GraphInterval.WEEKLY)
@@ -117,7 +117,7 @@ class GraphFragment : Base<FragmentGraphBinding>(
     private fun updateMonthly(
         state: GraphState
     ) = binding.apply {
-        val (start, _) = TimeHelper.getMonth(date = state.selectedDate)
+        val (start, _) = TimeHelper.getMonth(date = state.selectedDate, dayEndMinutes = state.dayEndMinutes)
         currentDateMonthly.text = LocalizationHelper.formatDateRange(start = start.toLocalDate(), end = null, skeleton = "MMMM yyyy")
         graphMonthly.text = getString(R.string.graph_monthly, state.monthlyCount)
         graphViewMonthly.setData(data = state.monthlyEntries, graphInterval = GraphInterval.MONTHLY)
@@ -126,7 +126,7 @@ class GraphFragment : Base<FragmentGraphBinding>(
     private fun updateYearly(
         state: GraphState
     ) = binding.apply {
-        val (start, _) = TimeHelper.getYear(date = state.selectedDate)
+        val (start, _) = TimeHelper.getYear(date = state.selectedDate, dayEndMinutes = state.dayEndMinutes)
         currentDateYearly.text = start.year.toString()
         graphYearly.text = getString(R.string.graph_yearly, state.yearlyCount)
         graphViewYearly.setData(data = state.yearlyEntries, graphInterval = GraphInterval.YEARLY)

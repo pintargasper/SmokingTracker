@@ -26,7 +26,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.time.LocalDate
 import kotlin.time.Duration.Companion.milliseconds
 
 object WidgetHelper {
@@ -51,18 +50,26 @@ object WidgetHelper {
     fun scheduleMidnightWidgetUpdate(
         context: Context
     ) {
-        val alarmManager = context.getSystemService(AlarmManager::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context,
-            ACTION_MIDNIGHT_WIDGET_UPDATE.hashCode(),
-            Intent(ACTION_MIDNIGHT_WIDGET_UPDATE, null, context, WidgetActionReceiver::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
+        CoroutineScope(context = Dispatchers.IO).launch {
+            val alarmManager = context.getSystemService(AlarmManager::class.java)
+            val pendingIntent = PendingIntent.getBroadcast(
+                context,
+                ACTION_MIDNIGHT_WIDGET_UPDATE.hashCode(),
+                Intent(
+                    ACTION_MIDNIGHT_WIDGET_UPDATE,
+                    null,
+                    context,
+                    WidgetActionReceiver::class.java
+                ),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
 
-        val triggerAt = TimeHelper.getNextMidnightMillis()
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms())
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
-        else alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
+            val container = (context.applicationContext as Application).container
+            val triggerAt = TimeHelper.getNextMidnightMillis(container.settingsRepository.get()!!.dayEndMinutes)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms())
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
+            else alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
+        }
     }
 
     fun cancelMidnightWidgetUpdate(
@@ -108,13 +115,15 @@ object WidgetHelper {
         showMonthly: Boolean = true
     ) {
         val container = (context.applicationContext as Application).container
-        val today = LocalDate.now()
-
-        val (dayStart, dayEnd) = TimeHelper.getDay(date = today)
-        val (weekStart, weekEnd) = TimeHelper.getWeek(date = today)
-        val (monthStart, monthEnd) = TimeHelper.getMonth(date = today)
 
         CoroutineScope(context = Dispatchers.IO).launch {
+            val dayEndMinutes = container.settingsRepository.get()!!.dayEndMinutes
+            val today = TimeHelper.dayDate(dayEndMinutes)
+
+            val (dayStart, dayEnd) = TimeHelper.getDay(date = today, dayEndMinutes = dayEndMinutes)
+            val (weekStart, weekEnd) = TimeHelper.getWeek(date = today, dayEndMinutes = dayEndMinutes)
+            val (monthStart, monthEnd) = TimeHelper.getMonth(date = today, dayEndMinutes = dayEndMinutes)
+
             try {
                 val repository = container.historyRepository
                 val stats = WidgetStats(
