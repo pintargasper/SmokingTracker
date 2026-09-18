@@ -92,7 +92,7 @@ class AchievementsFragment : Base<FragmentAchievementsBinding>(
     }
 
     private suspend fun loadAchievements() = binding.apply {
-        val state = viewModel.getAchievements(category = achievementType)
+        val state = viewModel.getState(category = achievementType)
         adapter.submitList(state.achievements) {
             recyclerviewAchievements.scrollToPosition(0)
         }

@@ -1,4 +1,4 @@
-# SmokingTracker v1.8.1
+# SmokingTracker v1.9.0
 
 ## What's new
 

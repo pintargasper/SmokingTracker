@@ -10,7 +10,7 @@ class NotesViewModel(
     private val notesRepository: NotesRepository
 ) : ViewModel() {
 
-    suspend fun getNotes(): NoteState {
+    suspend fun getState(): NoteState {
         return NoteState(notes = notesRepository.getAll().map(transform = NoteEntry::fromEntity))
     }
 

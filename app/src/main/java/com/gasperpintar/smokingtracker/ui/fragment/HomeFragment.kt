@@ -118,7 +118,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
     }
 
     private suspend fun loadHistory() = binding.apply {
-        val state = viewModel.getHistory()
+        val state = viewModel.getState()
         lastEntry = state.lastEntry
 
         currentDay.text =

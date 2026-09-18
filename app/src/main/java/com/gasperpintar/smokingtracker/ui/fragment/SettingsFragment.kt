@@ -58,7 +58,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
     }
 
     private suspend fun setupSettings() = binding.apply {
-        val state = viewModel.getSettings()
+        val state = viewModel.getState()
         updateUi(state = state)
 
         themeLayout.setOnClickListener {
@@ -151,7 +151,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                 currency = state.settings.currency,
                 onDelete = viewModel::deleteCost,
                 onCostAdded = { viewModel.addCost(CostEntry.fromEntity(it)) },
-                onRefresh = { viewModel.getSettings().costs }
+                onRefresh = { viewModel.getState().costs }
             )
         }
 

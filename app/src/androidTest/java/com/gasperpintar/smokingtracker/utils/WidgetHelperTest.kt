@@ -12,7 +12,7 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
-import com.gasperpintar.smokingtracker.provider.WidgetActionReceiver
+import com.gasperpintar.smokingtracker.provider.WidgetReceiver
 import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
@@ -118,7 +118,7 @@ class WidgetHelperTest {
         PendingIntent.getBroadcast(
             context,
             action.hashCode(),
-            Intent(context, WidgetActionReceiver::class.java).apply { this.action = action },
+            Intent(context, WidgetReceiver::class.java).apply { this.action = action },
             PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
         )
 

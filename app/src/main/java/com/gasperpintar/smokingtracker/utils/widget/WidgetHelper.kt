@@ -19,7 +19,7 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
-import com.gasperpintar.smokingtracker.provider.WidgetActionReceiver
+import com.gasperpintar.smokingtracker.provider.WidgetReceiver
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.CoroutineScope
@@ -59,7 +59,7 @@ object WidgetHelper {
                     ACTION_MIDNIGHT_WIDGET_UPDATE,
                     null,
                     context,
-                    WidgetActionReceiver::class.java
+                    WidgetReceiver::class.java
                 ),
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
@@ -79,7 +79,7 @@ object WidgetHelper {
         val pendingIntent = PendingIntent.getBroadcast(
             context,
             ACTION_MIDNIGHT_WIDGET_UPDATE.hashCode(),
-            Intent(ACTION_MIDNIGHT_WIDGET_UPDATE, null, context, WidgetActionReceiver::class.java),
+            Intent(ACTION_MIDNIGHT_WIDGET_UPDATE, null, context, WidgetReceiver::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         alarmManager.cancel(pendingIntent)
@@ -136,7 +136,7 @@ object WidgetHelper {
                 val addEntryIntent = PendingIntent.getBroadcast(
                     context,
                     ACTION_ADD_NEW_ENTRY.hashCode(),
-                    Intent(context, WidgetActionReceiver::class.java).apply {
+                    Intent(context, WidgetReceiver::class.java).apply {
                         action = ACTION_ADD_NEW_ENTRY
                     },
                     PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE

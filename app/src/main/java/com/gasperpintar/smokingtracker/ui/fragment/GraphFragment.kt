@@ -89,7 +89,7 @@ class GraphFragment : Base<FragmentGraphBinding>(
     }
 
     private suspend fun loadGraphs() {
-        val state = viewModel.getEntries()
+        val state = viewModel.getState()
         updateDaily(state)
         updateWeekly(state)
         updateMonthly(state)

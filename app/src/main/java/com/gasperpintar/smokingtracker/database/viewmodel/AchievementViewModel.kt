@@ -10,7 +10,7 @@ class AchievementViewModel(
     private val achievementRepository: AchievementRepository
 ) : ViewModel() {
 
-    suspend fun getAchievements(
+    suspend fun getState(
         category: AchievementCategory
     ): AchievementState {
         val achievements = achievementRepository.getAll()

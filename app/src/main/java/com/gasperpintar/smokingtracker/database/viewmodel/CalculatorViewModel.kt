@@ -16,7 +16,9 @@ class CalculatorViewModel(
     private val perMinute = 5
     private val millisInDay = Duration.ofDays(1).toMillis()
 
-    fun setStartDate(date: Calendar): String {
+    fun setStartDate(
+        date: Calendar
+    ): String {
         val (start, end, text) = TimeHelper.applySelectedDate(
             startDate = startDate,
             endDate = endDate,
@@ -28,7 +30,9 @@ class CalculatorViewModel(
         return text
     }
 
-    fun setEndDate(date: Calendar): String {
+    fun setEndDate(
+        date: Calendar
+    ): String {
         val (start, end, text) = TimeHelper.applySelectedDate(
             startDate = startDate,
             endDate = endDate,
@@ -40,7 +44,7 @@ class CalculatorViewModel(
         return text
     }
 
-    suspend fun calculate(
+    suspend fun getState(
         dailyCigarettes: Int,
         cigarettesPerPack: Int,
         packPrice: Double

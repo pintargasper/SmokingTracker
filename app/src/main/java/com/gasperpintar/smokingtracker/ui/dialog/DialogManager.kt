@@ -17,6 +17,7 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.databinding.CalculatorResultPopupBinding
+import com.gasperpintar.smokingtracker.databinding.ChangelogPopupBinding
 import com.gasperpintar.smokingtracker.databinding.CostContainerBinding
 import com.gasperpintar.smokingtracker.databinding.CostsPopupBinding
 import com.gasperpintar.smokingtracker.databinding.CurrencyPopupBinding
@@ -441,6 +442,18 @@ object DialogManager {
                 dismiss()
                 onClose()
             }
+        }
+    }
+
+    fun showChangelogDialog(
+        context: FragmentActivity,
+    ) = BaseDialog.show(context, bindingInflater = ChangelogPopupBinding::inflate) {
+        setCancelable(false)
+        binding.run {
+        changelogText.text = context.assets
+            .open("changelog.md")
+            .bufferedReader()
+            .use { it.readText() }
         }
     }
 }

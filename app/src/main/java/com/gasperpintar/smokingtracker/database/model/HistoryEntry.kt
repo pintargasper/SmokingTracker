@@ -5,15 +5,13 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.time.LocalDateTime
 
-data class HistoryEntry (
+data class HistoryEntry(
     override val id: Long,
     val isLent: Boolean,
     val createdAt: LocalDateTime,
     val timerLabel: String
 ): Identifiable {
-
     companion object {
-
         fun fromEntity(
             entity: HistoryEntity
         ): HistoryEntry {

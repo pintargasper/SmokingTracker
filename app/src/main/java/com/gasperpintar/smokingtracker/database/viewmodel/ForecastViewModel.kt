@@ -17,7 +17,7 @@ class ForecastViewModel(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    suspend fun getForecast(): ForecastState {
+    suspend fun getState(): ForecastState {
         val current = LocalDateTime.now()
         val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
         val history = historyRepository.getEntries(date = current)

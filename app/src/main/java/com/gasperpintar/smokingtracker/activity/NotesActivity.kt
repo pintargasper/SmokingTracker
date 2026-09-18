@@ -23,7 +23,7 @@ class NotesActivity : Base<ActivityNotesBinding>(
 
     private val appContainer by lazy { (application as Application).container }
     private val viewModel: NotesViewModel by viewModels {
-        ModelFactory(application = application as Application, container = appContainer)
+        ModelFactory(container = appContainer)
     }
 
     private lateinit var adapter: Adapter<NoteEntry, NoteContainerBinding>
@@ -76,7 +76,7 @@ class NotesActivity : Base<ActivityNotesBinding>(
 
     fun loadNotes() = binding.apply {
         lifecycleScope.launch {
-            adapter.submitList(viewModel.getNotes().notes) {
+            adapter.submitList(viewModel.getState().notes) {
                 recyclerviewNotes.scrollToPosition(0)
             }
         }

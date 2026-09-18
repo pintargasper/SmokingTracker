@@ -17,7 +17,7 @@ class BasicViewModel(
     private val settingsRepository: SettingsRepository
 ) : ViewModel() {
 
-    suspend fun getStatistics(): BasicState {
+    suspend fun getState(): BasicState {
         val history = historyRepository.getAll()
         val costs = costsRepository.getAll()
         val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes

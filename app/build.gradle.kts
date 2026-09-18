@@ -22,7 +22,7 @@ configure<ApplicationExtension> {
         minSdk = 26
         targetSdk = 37
         versionCode = 15
-        versionName = "1.8.1"
+        versionName = "1.9.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -83,6 +83,36 @@ configure<ApplicationExtension> {
         disable.add("ObsoleteSdkInt")
         disable.add("TrustAllX509TrustManager")
         disable.add("TooManyViews")
+    }
+
+    sourceSets {
+        getByName("main") {
+            assets.directories.add(
+                layout.buildDirectory.dir(
+                    "versions/v${defaultConfig.versionName}"
+                ).get().asFile.path
+            )
+        }
+    }
+}
+
+tasks {
+    copyVersionFiles()
+}
+
+fun copyVersionFiles() {
+    val version = "v${android.defaultConfig.versionName}"
+    val source = rootProject.file("versions/$version")
+    val destination = layout.buildDirectory.dir("versions/$version")
+
+    tasks.register<Copy>(name = "copyVersionFiles") {
+        description = "Copies version files to the package assets"
+        from(source)
+        into(destination)
+    }
+
+    tasks.named("preBuild") {
+        dependsOn("copyVersionFiles")
     }
 }
 

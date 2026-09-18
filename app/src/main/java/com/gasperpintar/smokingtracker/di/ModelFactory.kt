@@ -2,7 +2,6 @@ package com.gasperpintar.smokingtracker.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.viewmodel.AchievementViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.BasicViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.CalculatorViewModel
@@ -14,7 +13,6 @@ import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 
 class ModelFactory(
-    private val application: Application? = null,
     private val container: Container
 ) : ViewModelProvider.Factory {
 
@@ -24,7 +22,6 @@ class ModelFactory(
         return when {
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(
-                    application = application!!,
                     achievementRepository = container.achievementRepository,
                     costsRepository = container.costsRepository,
                     settingsRepository = container.settingsRepository,

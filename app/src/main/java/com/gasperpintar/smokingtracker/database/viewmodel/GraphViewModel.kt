@@ -18,15 +18,19 @@ class GraphViewModel(
     private var selectedDate: LocalDate? = null
     private var endMinutes: Int? = null
 
-    fun previous(previousUnit: (LocalDate) -> LocalDate) {
+    fun previous(
+        previousUnit: (LocalDate) -> LocalDate
+    ) {
         selectedDate = previousUnit(selectedDate!!)
     }
 
-    fun next(nextUnit: (LocalDate) -> LocalDate) {
+    fun next(
+        nextUnit: (LocalDate) -> LocalDate
+    ) {
         selectedDate = nextUnit(selectedDate!!)
     }
 
-    suspend fun getEntries(): GraphState {
+    suspend fun getState(): GraphState {
         val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
         if (selectedDate == null) selectedDate = TimeHelper.dayDate(dayEndMinutes)
         if (endMinutes != dayEndMinutes) {

@@ -15,11 +15,11 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
+import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
 import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
 import com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment
@@ -36,19 +36,21 @@ class MainActivity : Base<ActivityMainBinding>(
 
     private val appContainer by lazy { (application as Application).container }
     private val viewModel: MainViewModel by viewModels {
-        ModelFactory(application = application as Application, container = appContainer)
+        ModelFactory(container = appContainer)
     }
 
     var permissionsHelper: Permissions = Permissions(activity = this)
 
     @Override
     override fun initialize() {
-        val settings: SettingsEntity = runBlocking { viewModel.getSettings(context = this@MainActivity) }
-        applyTheme(themeId = settings.theme)
+        val state = runBlocking { viewModel.getState(context = this@MainActivity) }
 
-        handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
+        applyTheme(themeId = state.settings.theme)
         setupPager()
         setupNavigation()
+
+        val isFirstRun = handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
+        if (!isFirstRun && state.isNewVersion) showChangelog()
     }
 
     @Override
@@ -89,9 +91,10 @@ class MainActivity : Base<ActivityMainBinding>(
         }
     }
 
-    private fun handleNotifications(sharedPreferences: SharedPreferences) {
+    private fun handleNotifications(sharedPreferences: SharedPreferences): Boolean {
+        val isFirstRun = sharedPreferences.getBoolean("first_run", true)
         when {
-            sharedPreferences.getBoolean("first_run", true) -> {
+            isFirstRun -> {
                 permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
                     if (isGranted) {
                         Notifications.createNotificationChannel(context = this)
@@ -106,6 +109,7 @@ class MainActivity : Base<ActivityMainBinding>(
                 scheduleNotificationWorker()
             }
         }
+        return isFirstRun
     }
 
     private fun scheduleNotificationWorker() {
@@ -143,5 +147,9 @@ class MainActivity : Base<ActivityMainBinding>(
             2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             else -> Unit
         }
+    }
+
+    private fun showChangelog() {
+        DialogManager.showChangelogDialog(context = this)
     }
 }

@@ -7,7 +7,7 @@ import android.content.Intent
 import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 
-class WidgetActionReceiver : BroadcastReceiver() {
+class WidgetReceiver : BroadcastReceiver() {
 
     @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
     @Override
