@@ -56,12 +56,23 @@ jobs:
         env:
           VERSION: ${{ inputs.version }}
         run: |
-          if [ ! -f "release/notes/${VERSION}.md" ]; then
-            echo "Release notes not found: release/notes/${VERSION}.md"
+          NOTES="versions/${VERSION}/notes.md"
+          CHANGELOG="versions/${VERSION}/changelog.md"
+
+          if [ ! -s "$NOTES" ]; then
+            echo "ERROR: Release notes not found:"
+            echo "$NOTES"
             exit 1
           fi
 
-          echo "Release notes found: release/notes/${VERSION}.md"
+          if [ ! -s "$CHANGELOG" ]; then
+            echo "ERROR: App changelog not found:"
+            echo "$CHANGELOG"
+            exit 1
+          fi
+
+          echo "Release notes found: $NOTES"
+          echo "App changelog found: $CHANGELOG"
   
   build:
    needs: release
@@ -108,7 +119,7 @@ jobs:
             --target master \
             --draft \
             --title "${VERSION}" \
-            --notes-file "release/notes/${VERSION}.md"  
+            --notes-file "versions/${VERSION}/notes.md"  
 
   publish:
     needs: prepare
