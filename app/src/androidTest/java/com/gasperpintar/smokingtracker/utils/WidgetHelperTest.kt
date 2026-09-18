@@ -6,26 +6,33 @@ import android.content.Context
 import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
 import com.gasperpintar.smokingtracker.provider.WidgetActionReceiver
 import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.milliseconds
 
 @RunWith(value = AndroidJUnit4::class)
 class WidgetHelperTest {
 
     private val context: Context = ApplicationProvider.getApplicationContext()
+    private val container = (context.applicationContext as Application).container
 
     @Before
-    fun setup() {
+    fun setup() = runBlocking {
+        container.settingsRepository.insert(SettingsEntity.default())
         removePendingIntent(action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE)
         removePendingIntent(action = WidgetHelper.ACTION_ADD_NEW_ENTRY)
     }
@@ -37,9 +44,17 @@ class WidgetHelperTest {
     }
 
     @Test
-    fun scheduleMidnightWidgetUpdateCreatesPendingIntent() {
+    fun scheduleMidnightWidgetUpdateCreatesPendingIntent() = runBlocking {
         WidgetHelper.scheduleMidnightWidgetUpdate(context)
-        assertNotNull(getPendingIntent(action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE))
+
+        var pendingIntent: PendingIntent? = null
+        repeat(times = 20) {
+            pendingIntent = getPendingIntent(action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE)
+            if (pendingIntent != null) return@repeat
+            delay(duration = 100.milliseconds)
+        }
+
+        assertNotNull(pendingIntent)
     }
 
     @Test
