@@ -10,13 +10,16 @@ Each application version has its own directory containing the documentation asso
 versions/
 |__ vX.Y.Z/
     |__ notes.md
-    |__ changelog.md
+    |__ <language>
+        |__ changelog.md
 |__ vX.Y.Z/
     |__ notes.md
-    |__ changelog.md
+    |__ <language>
+        |__ changelog.md
 |__ vX.Y.Z/
     |__ notes.md
-    |__ changelog.md
+    |__ <language>
+        |__ changelog.md
 ```
 
 Each version directory follows the `vX.Y.Z` format and contains the following files:
