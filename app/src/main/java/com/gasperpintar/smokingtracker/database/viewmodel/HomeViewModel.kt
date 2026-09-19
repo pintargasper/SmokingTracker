@@ -6,44 +6,57 @@ import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.HomeState
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.LocalDate
 import java.time.LocalDateTime
 
 class HomeViewModel(
     private val achievementRepository: AchievementRepository,
-    private val historyRepository: HistoryRepository
+    private val historyRepository: HistoryRepository,
+    private val settingsRepository: SettingsRepository
 ): ViewModel() {
 
-    private var selectedDate = LocalDate.now()
+    private var selectedDate: LocalDate? = null
+    private var endMinutes: Int? = null
     private var lastEntry: HistoryEntity? = null
 
     fun previousDay() {
-        selectedDate = selectedDate.minusDays(1)
+        selectedDate = selectedDate!!.minusDays(1)
     }
 
     fun nextDay() {
-        selectedDate = selectedDate.plusDays(1)
+        selectedDate = selectedDate!!.plusDays(1)
     }
 
-    suspend fun getHistory(): HomeState {
-        val date = selectedDate
-        val (startOfDay, endOfDay) = TimeHelper.getDay(date)
-        val historyEntities = historyRepository.getBetween(start = startOfDay, end = endOfDay)
-
+    suspend fun getState(): HomeState {
+        val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
+        if (selectedDate == null) selectedDate = TimeHelper.dayDate(dayEndMinutes)
+        if (endMinutes != dayEndMinutes) {
+            selectedDate = TimeHelper.updateDayDate(
+                selectedDate = selectedDate!!,
+                oldDayEndMinutes = endMinutes ?: 0,
+                newDayEndMinutes = dayEndMinutes
+            )
+            endMinutes = dayEndMinutes
+        }
         lastEntry = historyRepository.getLast()
+
+
+        val (startOfDay, endOfDay) = TimeHelper.getDay(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
+        val historyEntities = historyRepository.getBetween(start = startOfDay, end = endOfDay)
 
         val history = historyEntities.map(transform = HistoryEntry::fromEntity)
         val dailyCount = historyRepository.getCountBetween(start = startOfDay, end = endOfDay)
 
-        val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date)
+        val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
         val weeklyCount = historyRepository.getCountBetween(start = startOfWeek, end = endOfWeek)
 
-        val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date)
+        val (startOfMonth, endOfMonth) = TimeHelper.getMonth(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
         val monthlyCount = historyRepository.getCountBetween(start = startOfMonth, end = endOfMonth)
 
         return HomeState(
-            selectedDate = date,
+            selectedDate = selectedDate!!,
             history = history,
             lastEntry = lastEntry,
             dailyCount = dailyCount,

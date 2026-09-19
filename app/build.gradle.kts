@@ -7,7 +7,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(jdkVersion = 21)
     compilerOptions {
         freeCompilerArgs.addAll(listOf("-Xjvm-default=all"))
     }
@@ -21,8 +21,8 @@ configure<ApplicationExtension> {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
         targetSdk = 37
-        versionCode = 14
-        versionName = "1.8.0"
+        versionCode = 15
+        versionName = "1.9.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -74,7 +74,6 @@ configure<ApplicationExtension> {
     }
 
     dependenciesInfo {
-
         includeInApk = false
         includeInBundle = false
     }
@@ -83,6 +82,39 @@ configure<ApplicationExtension> {
         disable.add("MissingTranslation")
         disable.add("ObsoleteSdkInt")
         disable.add("TrustAllX509TrustManager")
+        disable.add("TooManyViews")
+    }
+
+    sourceSets {
+        getByName("main") {
+            assets.directories.add(
+                layout.buildDirectory.dir(
+                    "versions/v${defaultConfig.versionName}"
+                ).get().asFile.path
+            )
+        }
+    }
+}
+
+tasks {
+    copyVersionFiles()
+}
+
+fun copyVersionFiles() {
+    val version = "v${android.defaultConfig.versionName}"
+    val source = rootProject.file("versions/$version")
+    val destination = layout.buildDirectory.dir("versions/$version")
+
+    tasks.register<Copy>(name = "copyVersionFiles") {
+        description = "Copies version files to the package assets"
+        from(source) {
+            exclude("notes.md")
+        }
+        into(destination)
+    }
+
+    tasks.named("preBuild") {
+        dependsOn("copyVersionFiles")
     }
 }
 
@@ -109,6 +141,8 @@ dependencies {
 
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.gson)
+    implementation(libs.markwon)
+    implementation(libs.markwon.linkify)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

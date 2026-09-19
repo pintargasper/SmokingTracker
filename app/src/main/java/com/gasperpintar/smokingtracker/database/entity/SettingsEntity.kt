@@ -17,7 +17,10 @@ data class SettingsEntity(
     val currency: String,
 
     @ColumnInfo(defaultValue = "")
-    val customCurrency: String
+    val customCurrency: String,
+
+    @ColumnInfo(defaultValue = "0")
+    val dayEndMinutes: Int
 ) {
     companion object {
         fun default(
@@ -30,7 +33,8 @@ data class SettingsEntity(
                 language = language,
                 frequency = 0,
                 currency = currency,
-                customCurrency = ""
+                customCurrency = "",
+                dayEndMinutes = 0
             )
         }
     }

@@ -36,7 +36,7 @@ class BasicFragment : Base<FragmentStatisticsBasicBinding>(
         val settingsRepository = (requireActivity().application as Application).container.settingsRepository
         val fallbackDuration = resources.getQuantityString(R.plurals.time_minutes, 0, 0)
 
-        val state = viewModel.getStatistics()
+        val state = viewModel.getState()
         textMaxCigarettes.text = state.maxCigarettes.toString()
         textMaxCigarettesDate.text = LocalizationHelper.formatLoggedDate(resources, day = state.maxCigarettesDate)
 

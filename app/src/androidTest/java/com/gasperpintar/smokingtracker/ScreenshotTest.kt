@@ -114,8 +114,7 @@ class ScreenshotTest {
     }
 
     private fun importDummyData() = runBlocking {
-        val file = File("/data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx")
-
+        val file = File(context.filesDir, "dummy_data.xlsx")
         check(value = file.exists()) { "Dummy data file not found: ${file.absolutePath}" }
 
         Manager.uploadFile(

@@ -46,14 +46,15 @@ object Migrations {
                     language TEXT NOT NULL,
                     frequency INTEGER NOT NULL,
                     currency TEXT NOT NULL DEFAULT '€',
-                    customCurrency TEXT NOT NULL DEFAULT ''
+                    customCurrency TEXT NOT NULL DEFAULT '',
+                    dayEndMinutes INTEGER NOT NULL DEFAULT 0
                 )
             """)
             database.execSQL("""
-                INSERT INTO settings_new (id, theme, language, frequency, currency, customCurrency)
+                INSERT INTO settings_new (id, theme, language, frequency, currency, customCurrency, dayEndMinutes)
                 SELECT id, theme, CASE language WHEN 0 THEN 'system' WHEN 1 THEN 'en' WHEN 2 THEN 'sl' WHEN 3 THEN 'uk'
                         WHEN 4 THEN 'de' WHEN 5 THEN 'fr' WHEN 6 THEN 'sr' WHEN 7 THEN 'sr-Latn' WHEN 8 THEN 'zh-Hans' ELSE 'system' END,
-                    frequency, currency, customCurrency FROM settings
+                    frequency, currency, customCurrency, 0 FROM settings
             """)
             database.execSQL("DROP TABLE settings")
             database.execSQL("ALTER TABLE settings_new RENAME TO settings")

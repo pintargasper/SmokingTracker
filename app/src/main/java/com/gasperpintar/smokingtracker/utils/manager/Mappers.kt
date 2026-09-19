@@ -22,7 +22,7 @@ object Mappers {
     val ACHIEVEMENTS_HEADERS = listOf("Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id")
     val COSTS_HEADERS = listOf("Price", "StartDate", "EndDate")
     val NOTES_HEADERS = listOf("Title", "Content", "Mood", "CreatedAt", "UpdatedAt")
-    val SETTINGS_HEADERS = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency")
+    val SETTINGS_HEADERS = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency", "DayEndMinutes")
     val NOTIF_SETTINGS_HEADERS = listOf("System", "Achievements", "Progress")
 
     fun parseHistory(
@@ -30,8 +30,8 @@ object Mappers {
         col: Map<String, Int>,
         formatter: DateTimeFormatter
     ): HistoryEntity? {
-        val lent = row.getCell(col["Lent"]!!)?.numericCellValue?.toInt() ?: return null
-        val createdAt = row.parseDateTime(col["CreatedAt"]!!, formatter) ?: return null
+        val lent = col["Lent"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: return null
+        val createdAt = col["CreatedAt"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
         return HistoryEntity(id = 0, lent = lent, createdAt = createdAt)
     }
 
@@ -42,21 +42,21 @@ object Mappers {
         formatter: DateTimeFormatter
     ): AchievementEntity? {
         val enumIndex = index.coerceIn(0, AchievementIcon.entries.lastIndex)
-        val lastAchieved = row.parseDateTime(col["LastAchieved"]!!, formatter)
+        val lastAchieved = col["LastAchieved"]?.let { columnIndex -> row.parseDateTime(columnIndex, formatter) }
 
         return runCatching {
             AchievementEntity(
                 id = 0,
                 image = AchievementIcon.entries[enumIndex].name,
-                value = row.getCell(col["Value"]!!)?.numericCellValue?.toInt() ?: 0,
+                value = col["Value"]?.let { columnIndex -> row.getCell(columnIndex)?.numericCellValue?.toInt() } ?: 0,
                 title = AchievementTitle.entries[enumIndex].name,
                 message = AchievementMessage.entries[enumIndex].name,
-                times = row.getCell(col["Times"]!!)?.numericCellValue?.toLong() ?: 0L,
+                times = col["Times"]?.let { columnIndex -> row.getCell(columnIndex)?.numericCellValue?.toLong() } ?: 0L,
                 lastAchieved = lastAchieved,
-                reset = row.getCell(col["Reset"]!!)?.booleanCellValue ?: false,
-                notify = row.getCell(col["Notify"]!!)?.booleanCellValue ?: false,
-                category = AchievementCategory.valueOf(row.getCell(col["Category"]!!)?.stringCellValue.orEmpty()),
-                unit = AchievementUnit.valueOf(row.getCell(col["Unit"]!!)?.stringCellValue.orEmpty())
+                reset = col["Reset"]?.let { columnIndex -> row.getCell(columnIndex)?.booleanCellValue } ?: false,
+                notify = col["Notify"]?.let { columnIndex -> row.getCell(columnIndex)?.booleanCellValue } ?: false,
+                category = col["Category"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { AchievementCategory.valueOf(it) } ?: return@runCatching null,
+                unit = col["Unit"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { AchievementUnit.valueOf(it) } ?: return@runCatching null
             )
         }.getOrNull()
     }
@@ -66,9 +66,9 @@ object Mappers {
         col: Map<String, Int>,
         formatter: DateTimeFormatter
     ): CostEntity? {
-        val price = row.getCell(col["Price"]!!)?.numericCellValue ?: return null
-        val startDate = row.parseDateTime(col["StartDate"]!!, formatter) ?: return null
-        val endDate = row.parseDateTime(col["EndDate"]!!, formatter) ?: return null
+        val price = col["Price"]?.let { index -> row.getCell(index)?.numericCellValue } ?: return null
+        val startDate = col["StartDate"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
+        val endDate = col["EndDate"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
         return CostEntity(id = 0, price = price, startDate = startDate, endDate = endDate)
     }
 
@@ -77,11 +77,11 @@ object Mappers {
         col: Map<String, Int>,
         formatter: DateTimeFormatter
     ): NoteEntity? {
-        val title = row.getCell(col["Title"]!!)?.stringCellValue ?: return null
-        val content = row.getCell(col["Content"]!!)?.stringCellValue.orEmpty()
-        val mood = row.getCell(col["Mood"]!!)?.numericCellValue?.toInt() ?: return null
-        val createdAt = row.parseDateTime(col["CreatedAt"]!!, formatter) ?: return null
-        val updatedAt = row.parseDateTime(col["UpdatedAt"]!!, formatter) ?: return null
+        val title = col["Title"]?.let { index -> row.getCell(index)?.stringCellValue } ?: return null
+        val content = col["Content"]?.let { index -> row.getCell(index)?.stringCellValue }.orEmpty()
+        val mood = col["Mood"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: return null
+        val createdAt = col["CreatedAt"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
+        val updatedAt = col["UpdatedAt"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
         return NoteEntity(id = 0, title = title, content = content, mood = mood, createdAt = createdAt, updatedAt = updatedAt)
     }
 
@@ -89,19 +89,21 @@ object Mappers {
         row: Row,
         col: Map<String, Int>
     ): SettingsEntity {
-        val language = row.getCell(col["Language"]!!)?.let {
-            if (it.cellType == CellType.STRING) it.stringCellValue
-            else arrayOf("system", "en", "sl", "uk", "de", "fr", "sr", "sr-Latn", "zh-Hans")
-                .getOrNull(index = it.numericCellValue.toInt())
+        val language = col["Language"]?.let { index ->
+            row.getCell(index)?.let {
+                if (it.cellType == CellType.STRING) it.stringCellValue
+                else arrayOf("system", "en", "sl", "uk", "de", "fr", "sr", "sr-Latn", "zh-Hans").getOrNull(it.numericCellValue.toInt())
+            }
         } ?: "system"
 
         return SettingsEntity(
             id = 0,
-            theme = row.getCell(col["Theme"]!!)?.numericCellValue?.toInt() ?: 0,
+            theme = col["Theme"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
             language = language,
-            frequency = row.getCell(col["Frequency"]!!)?.numericCellValue?.toInt() ?: 0,
-            currency = row.getCell(col["Currency"]!!)?.stringCellValue ?: "€",
-            customCurrency = row.getCell(col["CustomCurrency"]!!)?.stringCellValue.orEmpty()
+            frequency = col["Frequency"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
+            currency = col["Currency"]?.let { index -> row.getCell(index)?.stringCellValue } ?: "€",
+            customCurrency = col["CustomCurrency"]?.let { index -> row.getCell(index)?.stringCellValue }.orEmpty(),
+            dayEndMinutes = col["DayEndMinutes"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0
         )
     }
 
@@ -111,9 +113,9 @@ object Mappers {
     ): NotificationsSettingsEntity {
         return NotificationsSettingsEntity(
             id = 0,
-            system = row.getCell(col["System"]!!)?.booleanCellValue ?: true,
-            achievements = row.getCell(col["Achievements"]!!)?.booleanCellValue ?: true,
-            progress = row.getCell(col["Progress"]!!)?.booleanCellValue ?: true
+            system = col["System"]?.let { index -> row.getCell(index)?.booleanCellValue } ?: true,
+            achievements = col["Achievements"]?.let { index -> row.getCell(index)?.booleanCellValue } ?: true,
+            progress = col["Progress"]?.let { index -> row.getCell(index)?.booleanCellValue } ?: true
         )
     }
 
@@ -134,7 +136,7 @@ object Mappers {
     }
 
     fun SettingsEntity.toExcelRow(): List<Any?> {
-        return listOf(theme, language, frequency, currency, customCurrency)
+        return listOf(theme, language, frequency, currency, customCurrency, dayEndMinutes)
     }
 
     fun NotificationsSettingsEntity.toExcelRow(): List<Any?> {

@@ -15,28 +15,51 @@ import java.util.Calendar
 object TimeHelper {
 
     fun getDay(
-        date: LocalDate
+        date: LocalDate,
+        dayEndMinutes: Int = 0
     ): Pair<LocalDateTime, LocalDateTime> {
-        return date.atStartOfDay() to date.atTime(LocalTime.MAX)
+        val endTime = getDayEndTime(dayEndMinutes)
+        return date.atTime(endTime) to date.plusDays(1).atTime(endTime)
     }
 
-    fun getWeek(date: LocalDate): Pair<LocalDateTime, LocalDateTime> {
+    fun getWeek(
+        date: LocalDate,
+        dayEndMinutes: Int = 0
+    ): Pair<LocalDateTime, LocalDateTime> {
         val startOfWeek = date.with(previousOrSame(DayOfWeek.MONDAY))
-        return startOfWeek.atStartOfDay() to startOfWeek.plusDays(6).atTime(LocalTime.MAX)
+        val endTime = getDayEndTime(dayEndMinutes)
+        return startOfWeek.atTime(endTime) to startOfWeek.plusDays(7).atTime(endTime)
     }
 
     fun getMonth(
-        date: LocalDate
+        date: LocalDate,
+        dayEndMinutes: Int = 0
     ): Pair<LocalDateTime, LocalDateTime> {
-        return date.withDayOfMonth(1).atStartOfDay() to
-                date.withDayOfMonth(date.lengthOfMonth()).atTime(LocalTime.MAX)
+        val endTime = getDayEndTime(dayEndMinutes)
+        return date.withDayOfMonth(1).atTime(endTime) to date.withDayOfMonth(1).plusMonths(1).atTime(endTime)
     }
 
     fun getYear(
-        date: LocalDate
+        date: LocalDate,
+        dayEndMinutes: Int = 0
     ): Pair<LocalDateTime, LocalDateTime> {
-        return date.withDayOfYear(1).atStartOfDay() to
-                date.withDayOfYear(date.lengthOfYear()).atTime(LocalTime.MAX)
+        val endTime = getDayEndTime(dayEndMinutes)
+        return date.withDayOfYear(1).atTime(endTime) to date.withDayOfYear(1).plusYears(1).atTime(endTime)
+    }
+
+    fun dayDate(dayEndMinutes: Int): LocalDate {
+        return LocalDate.now().let {
+            if (LocalTime.now() < getDayEndTime(dayEndMinutes)) it.minusDays(1) else it
+        }
+    }
+
+    fun dayDate(
+        dateTime: LocalDateTime,
+        dayEndMinutes: Int
+    ): LocalDate {
+        return dateTime.toLocalDate().let {
+            if (dateTime.toLocalTime() < getDayEndTime(dayEndMinutes)) it.minusDays(1) else it
+        }
     }
 
     fun getEndOfDay(
@@ -45,8 +68,23 @@ object TimeHelper {
         return date.atTime(LocalTime.MAX)
     }
 
-    fun getNextMidnightMillis(): Long {
-        return LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
+    fun updateDayDate(
+        selectedDate: LocalDate,
+        oldDayEndMinutes: Int,
+        newDayEndMinutes: Int
+    ): LocalDate {
+        return dayDate(newDayEndMinutes).takeIf {
+            selectedDate == dayDate(oldDayEndMinutes)
+        } ?: selectedDate
+    }
+
+    fun getNextMidnightMillis(dayEndMinutes: Int): Long {
+        val endTime = getDayEndTime(dayEndMinutes)
+        return LocalDate.now().atTime(endTime)
+            .plusDays(if (LocalTime.now() < endTime) 0 else 1)
+            .atZone(ZoneId.systemDefault())
+            .toInstant()
+            .toEpochMilli()
     }
 
     fun formatDuration(resources: Resources, duration: Duration?): String {
@@ -137,5 +175,9 @@ object TimeHelper {
             .toLocalDate()
             .let { LocalizationHelper.formatDate(it) }
         return Triple(start, end, date)
+    }
+
+    private fun getDayEndTime(dayEndMinutes: Int): LocalTime {
+        return LocalTime.of(dayEndMinutes / 60, dayEndMinutes % 60)
     }
 }

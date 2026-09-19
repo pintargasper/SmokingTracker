@@ -26,7 +26,7 @@ class SettingsViewModel(
     private val notesRepository: NotesRepository
 ): ViewModel() {
 
-    suspend fun getSettings(): SettingsState {
+    suspend fun getState(): SettingsState {
         val settings = settingsRepository.get()
         val notificationsSettings = notificationsSettingsRepository.get()
         val costs = costsRepository.getAll().map(transform = CostEntry::fromEntity)

@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:text="@string/currency_popup_info"
             android:gravity="center"
-            android:maxLines="2"
             android:ellipsize="end"
             app:layout_constraintTop_toBottomOf="@id/popup_currency_title"
             app:layout_constraintStart_toStartOf="parent"

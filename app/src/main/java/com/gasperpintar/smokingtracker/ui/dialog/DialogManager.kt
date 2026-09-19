@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.net.Uri
 import android.text.format.DateFormat
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -17,6 +18,7 @@ import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.databinding.CalculatorResultPopupBinding
+import com.gasperpintar.smokingtracker.databinding.ChangelogPopupBinding
 import com.gasperpintar.smokingtracker.databinding.CostContainerBinding
 import com.gasperpintar.smokingtracker.databinding.CostsPopupBinding
 import com.gasperpintar.smokingtracker.databinding.CurrencyPopupBinding
@@ -24,6 +26,7 @@ import com.gasperpintar.smokingtracker.databinding.DeletePopupBinding
 import com.gasperpintar.smokingtracker.databinding.DialogDatePickerBinding
 import com.gasperpintar.smokingtracker.databinding.DownloadPopupBinding
 import com.gasperpintar.smokingtracker.databinding.EditPopupBinding
+import com.gasperpintar.smokingtracker.databinding.EndDayPopupBinding
 import com.gasperpintar.smokingtracker.databinding.InsertPopupBinding
 import com.gasperpintar.smokingtracker.databinding.LanguagePopupBinding
 import com.gasperpintar.smokingtracker.databinding.NotificationsPopupBinding
@@ -34,6 +37,10 @@ import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
+import io.noties.markwon.AbstractMarkwonPlugin
+import io.noties.markwon.Markwon
+import io.noties.markwon.core.MarkwonTheme
+import io.noties.markwon.linkify.LinkifyPlugin
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.time.LocalDate
@@ -121,7 +128,7 @@ object DialogManager {
             val languages = context.resources.getStringArray(R.array.language_values)
 
             listOf(checkboxSystem, checkboxGerman, checkboxEnglish, checkboxFrench, checkboxHungarian,
-                checkboxSlovenian, checkboxSerbianLatinScript, checkboxSerbianCyrillicScript, checkboxUkrainian,
+                checkboxSlovenian, checkboxSerbianCyrillicScript, checkboxSerbianLatinScript, checkboxUkrainian,
                 checkboxChineseSimplified, checkboxChineseTraditional
             ).forEachIndexed { index, checkbox ->
                 checkbox.isChecked = selectedLanguage == languages[index]
@@ -166,6 +173,23 @@ object DialogManager {
                     currentSettings = currentSettings.copy(frequency = position)
                     onSettingsSelected(currentSettings)
                 }
+            }
+        }
+    }
+
+    fun showEndDayDialog(
+        context: FragmentActivity,
+        settings: SettingsEntity,
+        onTimeSelected: (Int) -> Unit
+    ) = BaseDialog.show(context, bindingInflater = EndDayPopupBinding::inflate) {
+        binding.run {
+            timePicker.is24Hour = DateFormat.is24HourFormat(context)
+            timePicker.hour = settings.dayEndMinutes / 60
+            timePicker.minute = settings.dayEndMinutes % 60
+
+            buttonConfirm.setOnClickListener {
+                onTimeSelected(timePicker.hour * 60 + timePicker.minute)
+                dismiss()
             }
         }
     }
@@ -423,6 +447,38 @@ object DialogManager {
                 dismiss()
                 onClose()
             }
+        }
+    }
+
+    fun showChangelogDialog(
+        context: FragmentActivity,
+    ) = BaseDialog.show(context, bindingInflater = ChangelogPopupBinding::inflate) {
+        setCancelable(false)
+
+        val locale = LocalizationHelper.getLocale()
+        val languageTag = locale.toLanguageTag()
+        val language = locale.language
+
+        runCatching {
+            val directory = context.assets.list("")?.firstOrNull { it == languageTag }
+                ?: context.assets.list("")?.firstOrNull { it == language }
+                ?: context.assets.list("")?.firstOrNull { it.startsWith(prefix = "$language-") }
+                ?: "en-US"
+
+            val content = context.assets.open("$directory/changelog.md")
+                .bufferedReader()
+                .use { it.readText() }
+
+            Markwon.builder(context)
+                .usePlugin(LinkifyPlugin.create())
+                .usePlugin(object : AbstractMarkwonPlugin() {
+                override fun configureTheme(builder: MarkwonTheme.Builder) {
+                    builder.headingBreakHeight(0)
+                }
+            }).build().setMarkdown(binding.changelogText, content)
+            binding.changelogText.movementMethod = LinkMovementMethod.getInstance()
+        }.onFailure {
+            binding.changelogText.text = ""
         }
     }
 }

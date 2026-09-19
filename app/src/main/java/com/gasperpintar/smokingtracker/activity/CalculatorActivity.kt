@@ -17,7 +17,7 @@ class CalculatorActivity : Base<ActivityCalculatorBinding>(
 
     private val appContainer by lazy { (application as Application).container }
     private val viewModel: CalculatorViewModel by viewModels {
-        ModelFactory(application = application as Application, container = appContainer)
+        ModelFactory(container = appContainer)
     }
 
     @Override
@@ -46,7 +46,7 @@ class CalculatorActivity : Base<ActivityCalculatorBinding>(
     }
 
     private suspend fun calculate() = binding.apply {
-        val state = viewModel.calculate(
+        val state = viewModel.getState(
             dailyCigarettes = inputDailyCigarettes.text.toString().toIntOrNull() ?: 0,
             cigarettesPerPack = inputCigarettesPerPack.text.toString().toIntOrNull() ?: 20,
             packPrice = inputPackPrice.text.toString().toDoubleOrNull() ?: 0.0

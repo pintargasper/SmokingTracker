@@ -28,7 +28,7 @@ class ForecastFragment : Base<FragmentStatisticsForecastBinding>(
     }
 
     private suspend fun loadForecast() = binding.apply {
-        val state = viewModel.getForecast()
+        val state = viewModel.getState()
         if (state.data.isEmpty()) {
             return@apply
         }

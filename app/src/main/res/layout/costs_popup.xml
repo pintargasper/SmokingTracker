@@ -28,9 +28,6 @@
             android:layout_height="wrap_content"
             android:text="@string/costs_popup_info"
             android:gravity="center"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:layout_marginTop="4dp"
             style="@style/BodyTextView" />
 
         <androidx.recyclerview.widget.RecyclerView
