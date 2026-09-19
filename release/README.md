@@ -1,4 +1,4 @@
-# Versions
+# Release
 
 This directory contains version-specific documentation for the SmokingTracker Android application.
 
@@ -7,19 +7,11 @@ Each application version has its own directory containing the documentation asso
 ## Structure
 
 ```text
-versions/
-|__ vX.Y.Z/
-    |__ notes.md
-    |__ <language>
-        |__ changelog.md
-|__ vX.Y.Z/
-    |__ notes.md
-    |__ <language>
-        |__ changelog.md
-|__ vX.Y.Z/
-    |__ notes.md
-    |__ <language>
-        |__ changelog.md
+release/
+|__ notes/
+    |__ vX.Y.Z.md
+|__ changelogs/
+    |__ vX.Y.Z.md
 ```
 
 Each version directory follows the `vX.Y.Z` format and contains the following files:
