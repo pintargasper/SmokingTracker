@@ -69,9 +69,9 @@ Older app versions may still import and restore the backup data, but the app may
 
 Thanks to everyone who contributed code, translations, testing, documentation, and feedback to this release.
 
-@nrob81
-@acidefluorhydrique
-Weblate contributors
+- @nrob81
+- @acidefluorhydrique
+- Weblate contributors
 
 🔗 Issues / Suggestions
 
