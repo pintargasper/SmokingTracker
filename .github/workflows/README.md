@@ -146,8 +146,9 @@ For each release, the corresponding version directory must contain:
 ```text
 versions/
 |__ vX.Y.Z/
-|__ notes.md
-    |__ changelog.md
+    |__ notes.md
+    |__ en-US/
+        |__ changelog.md
 ```
 
 notes.md contains the GitHub Release notes, while changelog.md contains the user-facing changelog used by the application.
@@ -182,7 +183,7 @@ The release process runs in the following order:
 - Update the application versionName and versionCode before creating a release
 - Use the vX.Y.Z format for the workflow release input
 - Create versions/<version>/notes.md for every release
-- Create versions/<version>/changelog.md for every release
+- Create versions/<version>/en-US/changelog.md for every release
 - Keep the GitHub release notes and application changelog appropriate for their respective purposes
 - Add the corresponding Fastlane changelog using the application's versionCode
 - Do not reuse a previous version's release notes or changelog
