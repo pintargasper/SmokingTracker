@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.ui.dialog
 
 import android.net.Uri
 import android.text.format.DateFormat
+import android.text.method.LinkMovementMethod
 import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
@@ -36,6 +37,10 @@ import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
+import io.noties.markwon.AbstractMarkwonPlugin
+import io.noties.markwon.Markwon
+import io.noties.markwon.core.MarkwonTheme
+import io.noties.markwon.linkify.LinkifyPlugin
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.time.LocalDate
@@ -454,15 +459,26 @@ object DialogManager {
         val languageTag = locale.toLanguageTag()
         val language = locale.language
 
-        binding.changelogText.text = runCatching {
+        runCatching {
             val directory = context.assets.list("")?.firstOrNull { it == languageTag }
                 ?: context.assets.list("")?.firstOrNull { it == language }
                 ?: context.assets.list("")?.firstOrNull { it.startsWith(prefix = "$language-") }
                 ?: "en-US"
 
-            context.assets.open("$directory/changelog.md")
+            val content = context.assets.open("$directory/changelog.md")
                 .bufferedReader()
                 .use { it.readText() }
-        }.getOrDefault(defaultValue = "")
+
+            Markwon.builder(context)
+                .usePlugin(LinkifyPlugin.create())
+                .usePlugin(object : AbstractMarkwonPlugin() {
+                override fun configureTheme(builder: MarkwonTheme.Builder) {
+                    builder.headingBreakHeight(0)
+                }
+            }).build().setMarkdown(binding.changelogText, content)
+            binding.changelogText.movementMethod = LinkMovementMethod.getInstance()
+        }.onFailure {
+            binding.changelogText.text = ""
+        }
     }
 }

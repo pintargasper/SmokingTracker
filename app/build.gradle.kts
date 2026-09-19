@@ -139,6 +139,8 @@ dependencies {
 
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.gson)
+    implementation(libs.markwon)
+    implementation(libs.markwon.linkify)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

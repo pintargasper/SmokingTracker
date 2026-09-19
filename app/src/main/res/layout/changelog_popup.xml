@@ -2,6 +2,7 @@
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_changelog_popup_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -15,19 +16,10 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/popup_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/changelog_popup_what_is_new"
-            style="@style/MainTitleCenterTextView" />
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/changelog_scroll"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:fillViewport="true">
 
@@ -36,9 +28,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="@string/changelog_popup_what_is_new"
+                android:text="What's new in this version"
                 android:textIsSelectable="true"
-                style="@style/BodyTextView" />
+                android:textColorLink="@color/links"
+                style="@style/BodyTextView"
+                tools:ignore="HardcodedText" />
 
         </androidx.core.widget.NestedScrollView>
 

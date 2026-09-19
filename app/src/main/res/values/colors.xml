@@ -15,4 +15,5 @@
     <color name="on_error">#FFFFFF</color>
 
     <color name="success">#4CAF50</color>
+    <color name="links">#64B5F6</color>
 </resources>

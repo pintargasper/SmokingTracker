@@ -239,8 +239,6 @@
     <string name="restore_popup_file_none">None</string>
     <string name="restore_popup_file_unknown">Unknown</string>
 
-    <string name="changelog_popup_what_is_new">What\'s new</string>
-
     <string name="note_popup_save">Save note?</string>
 
     <string name="day_today">Today</string>

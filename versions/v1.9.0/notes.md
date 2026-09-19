@@ -2,9 +2,8 @@
 
 ✨ Improvements
 
+- Added configurable End day options with support for a custom day offset throughout the application
 - Improved widget updates and quick-add feedback
-- Added configurable End day options
-- Added support for a custom day offset throughout the application
 - Added a new What's New popup for application updates
 - Improved application update and notification handling
 - Improved overall application stability and maintainability
@@ -87,4 +86,4 @@ Please report via **[GitHub Issues](https://github.com/pintargasper/SmokingTrack
 - Google Play Store: https://play.google.com/store/apps/details?id=com.gasperpintar.smokingtracker
 
 📄 **Full Changelog**
-https://github.com/pintargasper/SmokingTracker/compare/v1.8.1...v1.9.0
+https://github.com/pintargasper/SmokingTracker/compare/v1.8.0...v1.9.0
