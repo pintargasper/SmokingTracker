@@ -107,7 +107,9 @@ fun copyVersionFiles() {
 
     tasks.register<Copy>(name = "copyVersionFiles") {
         description = "Copies version files to the package assets"
-        from(source)
+        from(source) {
+            exclude("notes.md")
+        }
         into(destination)
     }
 
