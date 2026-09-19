@@ -57,7 +57,7 @@ jobs:
           VERSION: ${{ inputs.version }}
         run: |
           NOTES="versions/${VERSION}/notes.md"
-          CHANGELOG="versions/${VERSION}/changelog.md"
+          CHANGELOG="versions/${VERSION}/en-US/changelog.md"
 
           if [ ! -s "$NOTES" ]; then
             echo "ERROR: Release notes not found:"

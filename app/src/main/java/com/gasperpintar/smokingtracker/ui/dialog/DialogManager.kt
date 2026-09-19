@@ -123,7 +123,7 @@ object DialogManager {
             val languages = context.resources.getStringArray(R.array.language_values)
 
             listOf(checkboxSystem, checkboxGerman, checkboxEnglish, checkboxFrench, checkboxHungarian,
-                checkboxSlovenian, checkboxSerbianLatinScript, checkboxSerbianCyrillicScript, checkboxUkrainian,
+                checkboxSlovenian, checkboxSerbianCyrillicScript, checkboxSerbianLatinScript, checkboxUkrainian,
                 checkboxChineseSimplified, checkboxChineseTraditional
             ).forEachIndexed { index, checkbox ->
                 checkbox.isChecked = selectedLanguage == languages[index]
@@ -449,11 +449,20 @@ object DialogManager {
         context: FragmentActivity,
     ) = BaseDialog.show(context, bindingInflater = ChangelogPopupBinding::inflate) {
         setCancelable(false)
-        binding.run {
-        changelogText.text = context.assets
-            .open("changelog.md")
-            .bufferedReader()
-            .use { it.readText() }
-        }
+
+        val locale = LocalizationHelper.getLocale()
+        val languageTag = locale.toLanguageTag()
+        val language = locale.language
+
+        binding.changelogText.text = runCatching {
+            val directory = context.assets.list("")?.firstOrNull { it == languageTag }
+                ?: context.assets.list("")?.firstOrNull { it == language }
+                ?: context.assets.list("")?.firstOrNull { it.startsWith(prefix = "$language-") }
+                ?: "en-US"
+
+            context.assets.open("$directory/changelog.md")
+                .bufferedReader()
+                .use { it.readText() }
+        }.getOrDefault(defaultValue = "")
     }
 }
