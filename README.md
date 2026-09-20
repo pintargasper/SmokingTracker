@@ -5,7 +5,7 @@
 <h1>Smoking Tracker</h1>
 
 <p align="center">
-  <strong>English</strong> | <a href="README.sl.md">Slovenščina</a> 
+  <a href="README.md">English</a> | <a href="README.sl.md">Slovenščina</a> 
 </p>
 
 </div>
@@ -84,7 +84,7 @@ Also available on
 ## 🚀 About
 **Smoking Tracker** is an easy to use smoking tracking app that helps you understand your habits and progress towards quitting. Every cigarette you smoke is clearly recorded, giving you detailed insight into your daily, weekly and monthly patterns
 
-**Key Features**
+### Key Features
 - *Smoking history tracking*
 - *Daily, weekly, monthly and yearly statistics*
 - *Consumption analytics*
@@ -175,12 +175,12 @@ Also available on
 ## 📝 Dependencies & Versions
 
 **Gradle Plugin**
-- Android Gradle Plugin: 9.3.2
+- Android Gradle Plugin: 9.4.1
 
 **Libraries**
 > All libraries are configured in [`libs.versions.toml`](gradle/libs.versions.toml)
 
-## 📝 Building Instructions
+## 🛠️ Building Instructions
 
 ### Steps
 
