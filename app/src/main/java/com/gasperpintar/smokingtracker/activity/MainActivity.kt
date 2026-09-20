@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.core.view.get
@@ -45,12 +44,11 @@ class MainActivity : Base<ActivityMainBinding>(
     override fun initialize() {
         val state = runBlocking { viewModel.getState(context = this@MainActivity) }
 
-        applyTheme(themeId = state.settings.theme)
         setupPager()
         setupNavigation()
 
         val isFirstRun = handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
-        if (!isFirstRun && state.isNewVersion) showChangelog()
+        if (!isFirstRun && state.isNewVersion) DialogManager.showChangelogDialog(context = this)
     }
 
     @Override
@@ -79,7 +77,6 @@ class MainActivity : Base<ActivityMainBinding>(
         )
 
         mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            @Override
             override fun onPageSelected(position: Int) {
                 binding.navView.menu[position].isChecked = true
             }
@@ -138,18 +135,5 @@ class MainActivity : Base<ActivityMainBinding>(
                 }
             }
         })
-    }
-
-    private fun applyTheme(themeId: Int) {
-        when (themeId) {
-            0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            else -> Unit
-        }
-    }
-
-    private fun showChangelog() {
-        DialogManager.showChangelogDialog(context = this)
     }
 }

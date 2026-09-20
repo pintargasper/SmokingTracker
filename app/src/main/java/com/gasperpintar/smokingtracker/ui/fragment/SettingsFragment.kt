@@ -69,7 +69,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                     lifecycleScope.launch {
                         state.settings = state.settings.copy(theme = theme)
                         viewModel.updateSettings(state.settings)
-                        requireActivity().recreate()
+                        Application().applyTheme(themeId = theme)
                     }
                 }
             )

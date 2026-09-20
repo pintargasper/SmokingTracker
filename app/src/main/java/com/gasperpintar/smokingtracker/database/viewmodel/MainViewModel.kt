@@ -7,17 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
-import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
-import java.util.Locale
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.MainState
 import com.gasperpintar.smokingtracker.utils.JsonHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.Locale
 
 class MainViewModel(
     private val achievementRepository: AchievementRepository,
@@ -39,12 +38,11 @@ class MainViewModel(
             notificationsSettingsRepository.insert(settings = it)
         }
 
-        val settings = settingsRepository.get() ?: SettingsEntity.default(language = getLanguage(context = context)).also {
+        settingsRepository.get() ?: SettingsEntity.default(language = getLanguage(context = context)).also {
             settingsRepository.insert(settings = it)
         }
 
         return MainState(
-            settings = SettingsEntry.fromEntity(entity = settings),
             isNewVersion = handleAppVersioning(context = context)
         )
     }
