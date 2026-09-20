@@ -293,4 +293,9 @@
     <string name="widget_stats">Statistika</string>
     <string name="widget_stats_quick_add">Statistika in hitro dodajanje</string>
     <string name="widget_quick_add">Hitro dodajanje</string>
+    <string name="home_no_entries">Za ta dan ni najdenih vnosov</string>
+    <string name="home_no_entries_message">Kliknite gumb \"Dodaj nov vnos\", da dodate nov vnos</string>
+    <string name="settings_general_day_end_hour_description">Nastavite, kdaj se vaš dan zaključi</string>
+    <string name="about_contributors_hungarian">Prevod v madžarščino</string>
+    <string name="settings_general_day_end_hour">Ura zaključka dneva</string>
 </resources>
