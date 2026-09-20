@@ -36,7 +36,7 @@ The release workflow uses this file when creating the corresponding GitHub relea
 
 ## `vX.Y.Z.txt`
 
-The `changelogs/vX.Y.Z.txt` file contains the user-facing changes introduced in the corresponding application version.
+The `changelogs\<language>/vX.Y.Z.txt` file contains the user-facing changes introduced in the corresponding application version.
 
 It should focus on changes that are relevant to users rather than internal implementation details.
 
