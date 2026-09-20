@@ -91,7 +91,7 @@ razumeti vaše navade in napredek pri opuščanju kajenja. Vsaka cigareta, ki jo
 pokadite, je jasno zabeležena, kar vam daje podroben vpogled v vaše dnevne,
 tedenske in mesečne vzorce
 
-### Key Features
+### Ključne značilnosti
 - *Sledenje zgodovini kajenja*
 - *Dnevna, tedenska, mesečna in letna statistika*
 - *Analiza porabe*
@@ -182,13 +182,13 @@ tedenske in mesečne vzorce
 ## 📝 Odvisnosti in različice
 
 **Vtičnik za Gradle**
-- Android Gradle Plugin: 9.4.1
+- Vtičnik Android Gradle: 9.4.1
 
 **Knjižnice**
 > Vse knjižnice so konfigurirane v
 > [`libs.versions.toml`](gradle/libs.versions.toml)
 
-## 🛠️ Building Instructions
+## 🛠️ Navodila za izdelavo
 
 ### Navodila za gradnjo
 
