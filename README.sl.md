@@ -12,7 +12,7 @@
 
 <div align="center">
 
-Created by [Gašper Pintar](https://gasperpintar.com)
+Ustvaril [Gašper Pintar](https://gasperpintar.com)
 
 [![Website](https://custom-icon-badges.herokuapp.com/badge/Website-lightgray?style=for-the-badge&logo=website&logoColor=white)](https://gasperpintar.com/smoking-tracker)
 
@@ -59,14 +59,14 @@ Created by [Gašper Pintar](https://gasperpintar.com)
 </div>
 
 [![OS](https://img.shields.io/badge/OS-Android%208%2B-lightgrey?logo=android&logoColor=white&labelColor=625B71)](https://apilevels.com)
-[![Release](https://img.shields.io/github/v/release/pintargasper/SmokingTracker?label=release&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
-[![Downloads](https://img.shields.io/github/downloads/pintargasper/SmokingTracker/total?label=downloads&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
-[![IzzyOnDroid
-Downloads](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.gasperpintar.smokingtracker']&label=downloads&labelColor=625B71&logo=android&logoColor=white)](https://apt.izzysoft.de/packages/com.gasperpintar.smokingtracker)
-[![Stars](https://img.shields.io/github/stars/pintargasper/SmokingTracker?logo=github&label=stars&labelColor=625B71&color=E0B6FF&style=flat)](https://github.com/pintargasper/SmokingTracker/stargazers)
-[![License](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=license&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
-[![Translation
-status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/)
+[![Izdaja](https://img.shields.io/github/v/release/pintargasper/SmokingTracker?label=release&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
+[![Prenosi](https://img.shields.io/github/downloads/pintargasper/SmokingTracker/total?label=downloads&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/releases)
+[![Prenosi z
+IzzyOnDroid](https://img.shields.io/badge/dynamic/json?url=https://dlstats.izzyondroid.org/iod-stats-collector/stats/basic/yearly/rolling.json&query=$.['com.gasperpintar.smokingtracker']&label=downloads&labelColor=625B71&logo=android&logoColor=white)](https://apt.izzysoft.de/packages/com.gasperpintar.smokingtracker)
+[![Zvezdice](https://img.shields.io/github/stars/pintargasper/SmokingTracker?logo=github&label=stars&labelColor=625B71&color=E0B6FF&style=flat)](https://github.com/pintargasper/SmokingTracker/stargazers)
+[![Licenca](https://img.shields.io/github/license/pintargasper/SmokingTracker?label=license&logo=github&labelColor=625B71)](https://github.com/pintargasper/SmokingTracker/blob/master/LICENSE)
+[![Stanje
+prevoda](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)](https://translate.gasperpintar.com/engage/smokingtracker/)
 
 [![Build](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/build.yml)
 [![Fastlane](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/fastlane.yml)
@@ -74,36 +74,36 @@ status](https://translate.gasperpintar.com/widget/smokingtracker/svg-badge.svg)]
 Bots](https://github.com/pintargasper/SmokingTracker/actions/workflows/sync-bots.yml/badge.svg)](https://github.com/pintargasper/SmokingTracker/actions/workflows/sync-bots.yml)
 </div>
 
-Also available on
+Na voljo tudi na
  - [Android
    Freeware](https://www.androidfreeware.net/download-smoking-tracker-apk.html)
 
-## Table of Contents
-- [About](#-about)
-- [Supported Languages](#-supported-languages)
-- [Help Translate](#-help-translate)
-- [Dependencies & Versions](#-dependencies--versions)
-- [Building instructions](#-building-instructions)
+## Kazalo vsebine
+- [O aplikaciji](#-about)
+- [Podprti jeziki](#-supported-languages)
+- [Pomagajte pri prevajanju](#-help-translate)
+- [Odvisnosti in različice](#-dependencies--versions)
+- [Navodila za gradnjo](#-building-instructions)
 
-## 🚀 About
-**Smoking Tracker** is an easy to use smoking tracking app that helps you
-understand your habits and progress towards quitting. Every cigarette you smoke
-is clearly recorded, giving you detailed insight into your daily, weekly and
-monthly patterns
+## 🚀 O aplikaciji
+**Sledilnik Kajenja** je enostavna aplikacija za sledenje kajenju, ki vam pomaga
+razumeti vaše navade in napredek pri opuščanju kajenja. Vsaka cigareta, ki jo
+pokadite, je jasno zabeležena, kar vam daje podroben vpogled v vaše dnevne,
+tedenske in mesečne vzorce
 
-**Key Features**
-- *Smoking history tracking*
-- *Daily, weekly, monthly and yearly statistics*
-- *Consumption analytics*
-- *Smoking forecasts*
-- *Smoke-free time tracking*
-- *Financial impact and cost tracking*
-- *Notes*
-- *Local data storage*
-- *Android backup support* (device settings)
-- *Multi-language support*
+**Ključne lastnosti**
+- *Sledenje zgodovini kajenja*
+- *Dnevna, tedenska, mesečna in letna statistika*
+- *Analiza porabe*
+- *Napovedovanje kajenja*
+- *Sledenje času brez kajenja*
+- *Sledenje finančnemu vplivu in stroškom*
+- *Opombe*
+- *Lokalna hramba podatkov*
+- *Podpora za varnostno kopiranje Androida* (nastavitve naprave)
+- *Podpora za več jezikov*
 
-### Application images
+### Slike aplikacije
 <details>
   <summary>View application images</summary>
 
@@ -171,7 +171,7 @@ monthly patterns
   </div>
 </details>
 
-## 🌐 Help translate
+## 🌐 Pomagajte pri prevajanju
 
 <div align="center">
   <a href="https://translate.gasperpintar.com/engage/smokingtracker/">
@@ -179,39 +179,40 @@ monthly patterns
   </a>
 </div>
 
-## 📝 Dependencies & Versions
+## 📝 Odvisnosti in različice
 
-**Gradle Plugin**
-- Android Gradle Plugin: 9.3.2
+**Vtičnik za Gradle**
+- Vtičnik za Android Gradle: 9.3.2
 
-**Libraries**
-> All libraries are configured in
+**Knjižnice**
+> Vse knjižnice so konfigurirane v
 > [`libs.versions.toml`](gradle/libs.versions.toml)
 
-## 📝 Building Instructions
+## 📝 Navodila za gradnjo
 
-### Steps
+### Navodila za gradnjo
 
-1. **Clone the repository**
+1. **Kloniraj repozitorij**
 ```shell
 git clone https://github.com/pintargasper/SmokingTracker.git
 cd SmokingTracker
 ```
 
-2. **Open the project in Android Studio**
-- Choose **Import Project (Gradle)** and wait for the project to sync
-- Make sure you have the correct **JDK** and **Android SDK** version set up
+2. **Odprite projekt v Android Studiu**
+- Izberite **Uvozi projekt (Gradle)** in počakajte, da se projekt sinhronizira
+- Prepričajte se, da imate nastavljeno pravilno različico **JDK** in **Android
+  SDK**
 
-3. **Build the APK or run the app**
-- For a debug build
+3. **Zgradite APK ali zaženite aplikacijo**
+- Za različico za razhroščevanje
 ```shell
 ./gradlew assembleDebug
 ```
-- For a release build
+- Za končno različico
 ```shell
 ./gradlew assembleRelease
 ```
 
-4. **Run on emulator or device**
-- In Android Studio, select an emulator or connect a physical device and click
-  **Run**
+4. **Zaženi na emulatorju ali napravi**
+- V programu Android Studio izberite emulator ali priključite fizično napravo in
+  kliknite **Zaženi**
