@@ -1,0 +1,31 @@
+## Kaj je novega
+
+- Dodane nastavljive možnosti za zaključek dneva s podporo za nastavitev poljubnega zamika dneva v celotni aplikaciji
+- Dodano novo pojavno okno »Kaj je novega« ob posodobitvah aplikacije
+- Izboljšano posodabljanje gradnikov in povratne informacije pri hitrem dodajanju
+- Izboljšano upravljanje posodobitev aplikacije in obvestil
+
+## Izboljšave
+
+- Izboljšani splošna stabilnost in zanesljivost aplikacije
+- Izboljšana združljivost pri uvozu iz Excela
+- Dodana podpora za lokalizirane dnevnike sprememb v aplikaciji
+
+## Popravki napak
+
+- Odpravljena težava pri uvozu iz Excela, kadar manjkajo stolpci
+- Izboljšana zanesljivost posodabljanja gradnikov
+
+## Pomembno
+
+Format varnostnih kopij Excel je bil posodobljen. Priporočamo, da varnostne kopije, ustvarjene z različico 1.9.0, obnovite z različico 1.9.0 ali novejšo.
+
+## Sodelujoči
+
+Hvala vsem, ki ste prispevali k tej izdaji, vključno s kodo, prevodi, testiranjem, dokumentacijo in povratnimi informacijami.
+
+[Oglejte si seznam sodelujočih](https://github.com/pintargasper/SmokingTracker/graphs/contributors)
+
+## Celotne opombe ob izdaji
+
+Za več podrobnosti o tej izdaji si oglejte [celotne opombe ob izdaji na GitHubu](https://github.com/pintargasper/SmokingTracker/releases/tag/v1.9.0).
