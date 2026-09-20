@@ -88,9 +88,7 @@ configure<ApplicationExtension> {
     sourceSets {
         getByName("main") {
             assets.directories.add(
-                layout.buildDirectory.dir(
-                    "versions/v${defaultConfig.versionName}"
-                ).get().asFile.path
+                layout.buildDirectory.dir("changelogs/").get().asFile.path
             )
         }
     }
@@ -102,15 +100,23 @@ tasks {
 
 fun copyVersionFiles() {
     val version = "v${android.defaultConfig.versionName}"
-    val source = rootProject.file("versions/$version")
-    val destination = layout.buildDirectory.dir("versions/$version")
+    val source = rootProject.file("release/changelogs")
+    val destination = layout.buildDirectory.dir("changelogs/changelogs")
 
     tasks.register<Copy>(name = "copyVersionFiles") {
         description = "Copies version files to the package assets"
-        from(source) {
-            exclude("notes.md")
-        }
+        from(source)
         into(destination)
+        include("**/$version.txt")
+        rename("$version.txt", "$version.md")
+
+        doLast {
+            destination.get().asFile.walkBottomUp().filter {
+                it.isDirectory && it != destination.get().asFile
+            }.filter {
+                it.listFiles()?.isEmpty() == true
+            }.forEach(File::delete)
+        }
     }
 
     tasks.named("preBuild") {

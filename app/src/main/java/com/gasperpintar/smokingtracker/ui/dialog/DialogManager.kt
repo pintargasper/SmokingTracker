@@ -460,12 +460,18 @@ object DialogManager {
         val language = locale.language
 
         runCatching {
-            val directory = context.assets.list("")?.firstOrNull { it == languageTag }
-                ?: context.assets.list("")?.firstOrNull { it == language }
-                ?: context.assets.list("")?.firstOrNull { it.startsWith(prefix = "$language-") }
+            val version = context.packageManager
+                .getPackageInfo(context.packageName, 0)
+                .versionName
+
+            val directories = context.assets.list("changelogs") ?: emptyArray()
+            val directory = directories.firstOrNull { it == languageTag }
+                ?: directories.firstOrNull { it == language }
+                ?: directories.firstOrNull { it.startsWith(prefix = "$language-") }
                 ?: "en-US"
 
-            val content = context.assets.open("$directory/changelog.md")
+            val content = context.assets
+                .open("changelogs/$directory/v$version.md")
                 .bufferedReader()
                 .use { it.readText() }
 
