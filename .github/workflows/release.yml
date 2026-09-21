@@ -29,7 +29,9 @@ jobs:
           echo "Available tags:"
           git tag --sort=-version:refname | head -10
 
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD 2>/dev/null || true)
+          PREVIOUS_TAG=$(git tag --sort=-version:refname \
+          | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \
+          | awk -v current="${VERSION}" '$0 != current && $0 < current { print; exit }')
 
           if [ -z "${PREVIOUS_TAG}" ]; then
             echo "ERROR: No previous release tag found."
@@ -37,8 +39,8 @@ jobs:
           fi
 
           PREVIOUS_VERSION_CODE=$(git show "${PREVIOUS_TAG}:app/build.gradle.kts" \
-            | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
-            | head -1)
+          | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
+          | head -1)
 
           if [ -z "${PREVIOUS_VERSION_CODE}" ]; then
             echo "ERROR: Could not determine versionCode from previous tag."
