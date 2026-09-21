@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
-        with:
-          fetch-depth: 2
 
       - name: Check app version
         env:
@@ -26,7 +24,9 @@ jobs:
           VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
           VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
 
-          PREVIOUS_VERSION_CODE=$(git show HEAD^:app/build.gradle.kts \
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD)
+
+          PREVIOUS_VERSION_CODE=$(git show "${PREVIOUS_TAG}:app/build.gradle.kts" \
             | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
             | head -1)
 
@@ -80,6 +80,7 @@ jobs:
 
   fastlane:
    #needs: build
+   needs: release
    uses: ./.github/workflows/fastlane.yml
    permissions:
       contents: write
