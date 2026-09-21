@@ -92,13 +92,12 @@ jobs:
           echo "Release notes found: $NOTES"
           echo "App changelog found: $CHANGELOG"
   
-  #build:
-  # needs: release
-  # uses: ./.github/workflows/build.yml
+  build:
+   needs: release
+   uses: ./.github/workflows/build.yml
 
   fastlane:
-   #needs: build
-   needs: release
+   needs: build
    uses: ./.github/workflows/fastlane.yml
    permissions:
       contents: write
@@ -307,27 +306,27 @@ jobs:
             fi
           done
 
-      #- name: Create Google Play credentials
-      #  env:
-      #    SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-      #  run: |
-      #    cat <<< "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/service-account.json"
+      - name: Create Google Play credentials
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+        run: |
+          cat <<< "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/service-account.json"
 
-      #- name: Upload to Google Play
-      #  env:
-      #    GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
-      #    VERSION_CODE: ${{ env.VERSION_CODE }}
-      #  run: fastlane android playstore
+      - name: Upload to Google Play
+        env:
+          GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
+          VERSION_CODE: ${{ env.VERSION_CODE }}
+        run: fastlane android playstore
             
-      #- name: Publish GitHub release
-      #  env:
-      #    GH_TOKEN: ${{ github.token }}
-      #    VERSION: ${{ inputs.version }}
-      #  run: |
-      #    gh release edit "${VERSION}" \
-      #      --draft=false \
-      #      --latest \
-      #      --discussion-category "Announcements"
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release edit "${VERSION}" \
+            --draft=false \
+            --latest \
+            --discussion-category "Announcements"
 
       - name: Remove signing files
         if: always()
