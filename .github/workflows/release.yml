@@ -74,12 +74,12 @@ jobs:
           echo "Release notes found: $NOTES"
           echo "App changelog found: $CHANGELOG"
   
-  #build:
-  # needs: release
-  # uses: ./.github/workflows/build.yml
+  build:
+   needs: release
+   uses: ./.github/workflows/build.yml
 
   fastlane:
-  # needs: build
+   needs: build
    uses: ./.github/workflows/fastlane.yml
 
   prepare:
