@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
+        with:
+          fetch-tags: true
 
       - name: Check app version
         env:
@@ -24,11 +26,25 @@ jobs:
           VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
           VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
 
-          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD)
+          echo "Available tags:"
+          git tag --sort=-version:refname | head -10
+
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD 2>/dev/null || true)
+
+          if [ -z "${PREVIOUS_TAG}" ]; then
+            echo "ERROR: No previous release tag found."
+            exit 1
+          fi
 
           PREVIOUS_VERSION_CODE=$(git show "${PREVIOUS_TAG}:app/build.gradle.kts" \
             | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
             | head -1)
+
+          if [ -z "${PREVIOUS_VERSION_CODE}" ]; then
+            echo "ERROR: Could not determine versionCode from previous tag."
+            echo "Previous tag: ${PREVIOUS_TAG}"
+            exit 1
+          fi
 
           echo "Input version:           ${VERSION}"
           echo "Expected versionName:    ${EXPECTED_VERSION_NAME}"
