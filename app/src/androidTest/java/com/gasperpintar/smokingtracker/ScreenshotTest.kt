@@ -78,7 +78,9 @@ class ScreenshotTest {
 
             listOf("2", "3", "4").forEach {
                 onView(withId(R.id.main_view_pager)).perform(swipeLeft())
-                captureScreenshot(it)
+                captureScreenshot(name = it,
+                    delayMs = if (it == "2") 10_000 else 1_500
+                )
             }
         }
 

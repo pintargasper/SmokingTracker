@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          fetch-depth: 2
+          fetch-tags: true
 
       - name: Check app version
         env:
@@ -26,9 +26,27 @@ jobs:
           VERSION_NAME=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
           VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)
 
-          PREVIOUS_VERSION_CODE=$(git show HEAD^:app/build.gradle.kts \
-            | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
-            | head -1)
+          echo "Available tags:"
+          git tag --sort=-version:refname | head -10
+
+          PREVIOUS_TAG=$(git tag --sort=-version:refname \
+          | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' \
+          | awk -v current="${VERSION}" '$0 != current && $0 < current { print; exit }')
+
+          if [ -z "${PREVIOUS_TAG}" ]; then
+            echo "ERROR: No previous release tag found."
+            exit 1
+          fi
+
+          PREVIOUS_VERSION_CODE=$(git show "${PREVIOUS_TAG}:app/build.gradle.kts" \
+          | grep -oP 'versionCode\s*=\s*\K[0-9]+' \
+          | head -1)
+
+          if [ -z "${PREVIOUS_VERSION_CODE}" ]; then
+            echo "ERROR: Could not determine versionCode from previous tag."
+            echo "Previous tag: ${PREVIOUS_TAG}"
+            exit 1
+          fi
 
           echo "Input version:           ${VERSION}"
           echo "Expected versionName:    ${EXPECTED_VERSION_NAME}"
@@ -81,6 +99,9 @@ jobs:
   fastlane:
    needs: build
    uses: ./.github/workflows/fastlane.yml
+   permissions:
+      contents: write
+      pull-requests: write
 
   prepare:
     needs: fastlane
@@ -119,7 +140,7 @@ jobs:
             --target master \
             --draft \
             --title "${VERSION}" \
-            --notes-file "release/notes/${VERSION}.md"  
+            --notes-file "release/notes/${VERSION}.md"
 
   publish:
     needs: prepare
@@ -304,6 +325,7 @@ jobs:
         run: |
           gh release edit "${VERSION}" \
             --draft=false \
+            --latest \
             --discussion-category "Announcements"
 
       - name: Remove signing files
