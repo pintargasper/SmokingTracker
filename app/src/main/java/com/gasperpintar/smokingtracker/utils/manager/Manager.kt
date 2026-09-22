@@ -234,8 +234,9 @@ object Manager {
         onStepProgress: (Int) -> Unit
     ) {
         workbook.importSingleRow(sheetName = "Settings", onStepProgress) { row, col ->
+            val settings = runCatching { Mappers.parseSettings(row, col) }.getOrNull() ?: return@importSingleRow
             repository.get()?.let { repository.delete(settings = it) }
-            repository.insert(settings = Mappers.parseSettings(row, col))
+            repository.insert(settings = settings)
         }
     }
 
@@ -245,8 +246,9 @@ object Manager {
         onStepProgress: (Int) -> Unit
     ) {
         workbook.importSingleRow(sheetName = "NotificationsSettings", onStepProgress) { row, col ->
+            val settings = runCatching { Mappers.parseNotificationsSettings(row, col) }.getOrNull() ?: return@importSingleRow
             repository.get()?.let { repository.delete(settings = it) }
-            repository.insert(settings = Mappers.parseNotificationsSettings(row, col))
+            repository.insert(settings = settings)
         }
     }
 

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.CalculatorState
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.TimeHelper
-import java.time.Duration
+import java.time.temporal.ChronoUnit
 import java.util.Calendar
 
 class CalculatorViewModel(
@@ -14,7 +14,6 @@ class CalculatorViewModel(
     private var startDate: Calendar? = null
     private var endDate: Calendar? = null
     private val perMinute = 5
-    private val millisInDay = Duration.ofDays(1).toMillis()
 
     fun setStartDate(
         date: Calendar
@@ -61,9 +60,9 @@ class CalculatorViewModel(
     }
 
     private fun calculateDays(): Int {
-        if (startDate == null || endDate == null) return 1
-        if (endDate!!.before(startDate)) return 1
-        val diffMillis = endDate!!.timeInMillis - startDate!!.timeInMillis
-        return (diffMillis / millisInDay).toInt() + 1
+        val start = startDate?.let { TimeHelper.toLocalDateTime(calendar = it).toLocalDate() } ?: return 1
+        val end = endDate?.let { TimeHelper.toLocalDateTime(calendar = it).toLocalDate() } ?: return 1
+        if (end.isBefore(start)) return 1
+        return ChronoUnit.DAYS.between(start, end).toInt() + 1
     }
 }
