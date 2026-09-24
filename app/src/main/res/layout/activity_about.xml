@@ -297,6 +297,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/about_contributors_code"
+                        style="@style/BodyTextView"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="@string/about_contributors_slovenian"
                         style="@style/BodyTextView"/>
 
@@ -313,6 +319,41 @@
 
                 <LinearLayout
                     android:id="@+id/contributor_2_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="55dp"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="anzepintar"
+                        style="@style/SubtitleTextView"
+                        tools:ignore="HardcodedText" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/about_contributors_code"
+                        style="@style/BodyTextView"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="8dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:id="@+id/contributor_3_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -347,7 +388,7 @@
                 app:cardElevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/contributor_3_layout"
+                    android:id="@+id/contributor_4_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -382,7 +423,7 @@
                 app:cardElevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/contributor_4_layout"
+                    android:id="@+id/contributor_5_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -417,7 +458,7 @@
                 app:cardElevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/contributor_5_layout"
+                    android:id="@+id/contributor_6_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -452,7 +493,7 @@
                 app:cardElevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/contributor_6_layout"
+                    android:id="@+id/contributor_7_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -493,7 +534,7 @@
                 app:cardElevation="4dp">
 
                 <LinearLayout
-                    android:id="@+id/contributor_7_layout"
+                    android:id="@+id/contributor_8_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
