@@ -48,8 +48,8 @@ class MappersTest {
             HistoryEntity(id = 8, lent = 0, createdAt = createdAt.plusHours(1))
         )
 
-        val actual = roundTrip(headers = Mappers.HISTORY_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, col, _ ->
-            Mappers.parseHistory(row, col, formatter)
+        val actual = roundTrip(headers = Mappers.HISTORY_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, _ ->
+            Mappers.parseHistory(row, column, formatter)
         }
 
         assertEquals(entities.map { it.copy(id = 0) }, actual)
@@ -59,8 +59,8 @@ class MappersTest {
     fun costRoundTripIsCorrect() {
         val entities = listOf(CostEntity(id = 3, startDate = createdAt, endDate = createdAt.plusDays(30), price = 0.275))
 
-        val actual = roundTrip(headers = Mappers.COSTS_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, col, _ ->
-            Mappers.parseCost(row, col, formatter)
+        val actual = roundTrip(headers = Mappers.COSTS_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, _ ->
+            Mappers.parseCost(row, column, formatter)
         }
 
         assertEquals(entities.map { it.copy(id = 0) }, actual)
@@ -73,8 +73,8 @@ class MappersTest {
             NoteEntity(id = 2, title = "Empty", content = "", mood = 1, createdAt = createdAt, updatedAt = createdAt)
         )
 
-        val actual = roundTrip(headers = Mappers.NOTES_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, col, _ ->
-            Mappers.parseNote(row, col, formatter)
+        val actual = roundTrip(headers = Mappers.NOTES_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, _ ->
+            Mappers.parseNote(row, column, formatter)
         }
 
         assertEquals(entities.map { it.copy(id = 0) }, actual)
@@ -84,8 +84,8 @@ class MappersTest {
     fun settingsRoundTripIsCorrect() {
         val entity = SettingsEntity(id = 1, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90)
 
-        val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, col, _ ->
-            Mappers.parseSettings(row, col)
+        val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
+            Mappers.parseSettings(row, column)
         }
 
         assertEquals(listOf(entity.copy(id = 0)), actual)
@@ -95,8 +95,8 @@ class MappersTest {
     fun notificationsSettingsRoundTripIsCorrect() {
         val entity = NotificationsSettingsEntity(id = 1, system = false, achievements = true, progress = false)
 
-        val actual = roundTrip(headers = Mappers.NOTIF_SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, col, _ ->
-            Mappers.parseNotificationsSettings(row, col)
+        val actual = roundTrip(headers = Mappers.NOTIF_SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
+            Mappers.parseNotificationsSettings(row, column)
         }
 
         assertEquals(listOf(entity.copy(id = 0)), actual)
@@ -109,8 +109,8 @@ class MappersTest {
             achievement(index = 1).copy(id = 2)
         )
 
-        val actual = roundTrip(headers = Mappers.ACHIEVEMENTS_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, col, index ->
-            Mappers.parseAchievement(row, col, index, formatter)
+        val actual = roundTrip(headers = Mappers.ACHIEVEMENTS_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, index ->
+            Mappers.parseAchievement(row, column, index, formatter)
         }
 
         assertEquals(entities.map { it.copy(id = 0) }, actual)
@@ -118,12 +118,12 @@ class MappersTest {
 
     @Test
     fun parseAchievementClampsIndexToLastResource() {
-        val (row, col) = row(
+        val (row, column) = row(
             headers = Mappers.ACHIEVEMENTS_HEADERS,
             values = listOf(1, 0, "", true, true, AchievementCategory.CIGARETTES_AVOIDED.name, AchievementUnit.CIGARETTES.name, 1)
         )
 
-        val actual = Mappers.parseAchievement(row, col, index = 100, formatter = formatter)
+        val actual = Mappers.parseAchievement(row, column, index = 100, formatter = formatter)
 
         assertEquals(AchievementIcon.entries.last().name, actual?.image)
         assertEquals(AchievementTitle.entries.last().name, actual?.title)
@@ -132,48 +132,48 @@ class MappersTest {
 
     @Test
     fun parseAchievementReturnsNullForInvalidCategory() {
-        val (row, col) = row(
+        val (row, column) = row(
             headers = Mappers.ACHIEVEMENTS_HEADERS,
             values = listOf(1, 0, "", true, true, "UNKNOWN", AchievementUnit.DAYS.name, 1)
         )
 
-        assertNull(Mappers.parseAchievement(row, col, index = 0, formatter = formatter))
+        assertNull(Mappers.parseAchievement(row, column, index = 0, formatter = formatter))
     }
 
     @Test
     fun parseAchievementReturnsNullWithoutCategory() {
-        val (row, col) = row(headers = listOf("Value", "Unit"), values = listOf(1, AchievementUnit.DAYS.name))
+        val (row, column) = row(headers = listOf("Value", "Unit"), values = listOf(1, AchievementUnit.DAYS.name))
 
-        assertNull(Mappers.parseAchievement(row, col, index = 0, formatter = formatter))
+        assertNull(Mappers.parseAchievement(row, column, index = 0, formatter = formatter))
     }
 
     @Test
     fun parseSettingsMapsLegacyLanguageIndexes() {
         listOf("system", "en", "sl", "uk", "de", "fr", "sr", "sr-Latn", "zh-Hans").forEachIndexed { index, language ->
-            val (row, col) = row(headers = listOf("Language"), values = listOf(index))
-            assertEquals(language, Mappers.parseSettings(row, col).language)
+            val (row, column) = row(headers = listOf("Language"), values = listOf(index))
+            assertEquals(language, Mappers.parseSettings(row, column).language)
         }
 
-        val (row, col) = row(headers = listOf("Language"), values = listOf(42))
-        assertEquals("system", Mappers.parseSettings(row, col).language)
+        val (row, column) = row(headers = listOf("Language"), values = listOf(42))
+        assertEquals("system", Mappers.parseSettings(row, column).language)
     }
 
     @Test
     fun parseSettingsUsesDefaultsForColumnsMissingInOlderBackups() {
-        val (row, col) = row(headers = listOf("Theme", "Language", "Frequency", "Currency"), values = listOf(1, "en", 2, "$"))
+        val (row, column) = row(headers = listOf("Theme", "Language", "Frequency", "Currency"), values = listOf(1, "en", 2, "$"))
 
         val expected = SettingsEntity(id = 0, theme = 1, language = "en", frequency = 2, currency = "$", customCurrency = "", dayEndMinutes = 0)
 
-        assertEquals(expected, Mappers.parseSettings(row, col))
+        assertEquals(expected, Mappers.parseSettings(row, column))
     }
 
     @Test
     fun parseNotificationsSettingsEnablesMissingColumns() {
-        val (row, col) = row(headers = listOf("System"), values = listOf(false))
+        val (row, column) = row(headers = listOf("System"), values = listOf(false))
 
         val expected = NotificationsSettingsEntity(id = 0, system = false, achievements = true, progress = true)
 
-        assertEquals(expected, Mappers.parseNotificationsSettings(row, col))
+        assertEquals(expected, Mappers.parseNotificationsSettings(row, column))
     }
 
     @Test

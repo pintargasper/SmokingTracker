@@ -32,7 +32,7 @@ class FileHelperTest {
         try {
             val uri = FileProvider.getUriForFile(context, "${context.packageName}.provider", temporaryFile)
             val expected = temporaryFile.name
-            val actual = FileHelper.getFileName(context, uri)
+            val actual = FileHelper.getFileName(context = context, uri = uri)
 
             assertEquals(expected, actual)
         } finally {
@@ -43,7 +43,7 @@ class FileHelperTest {
     @Test
     fun getFileNameReturnsUnknownWhenUriIsNull() {
         val expected = context.getString(R.string.restore_popup_file_unknown)
-        val actual = FileHelper.getFileName(context, null)
+        val actual = FileHelper.getFileName(context = context, uri = null)
         assertEquals(expected, actual)
     }
 }

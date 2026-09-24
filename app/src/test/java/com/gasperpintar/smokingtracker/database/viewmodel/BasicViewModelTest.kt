@@ -45,11 +45,10 @@ class BasicViewModelTest {
     fun getStateSumsSpentUsingPriceValidAtEachEntry() = runBlocking {
         insertCost(start = LocalDateTime.of(2026, 1, 1, 0, 0), end = LocalDateTime.of(2026, 2, 1, 0, 0), price = 0.25)
         insertCost(start = LocalDateTime.of(2026, 2, 1, 0, 0), end = LocalDateTime.of(2026, 3, 1, 0, 0), price = 0.30)
-        insertHistory(
-            LocalDateTime.of(2026, 1, 15, 10, 0),
+        insertHistory(dates = arrayOf(LocalDateTime.of(2026, 1, 15, 10, 0),
             LocalDateTime.of(2026, 1, 15, 18, 0),
             LocalDateTime.of(2026, 2, 1, 0, 0),
-            LocalDateTime.of(2026, 3, 5, 12, 0)
+            LocalDateTime.of(2026, 3, 5, 12, 0))
         )
 
         val state = viewModel.getState()
@@ -64,10 +63,9 @@ class BasicViewModelTest {
     fun getStateAssignsEntriesBeforeDayEndToPreviousDay() = runBlocking {
         settingsDao.update(entity = settingsDao.get()!!.copy(dayEndMinutes = 120))
         insertCost(start = LocalDateTime.of(2026, 1, 1, 0, 0), end = LocalDateTime.of(2026, 2, 1, 0, 0), price = 0.25)
-        insertHistory(
-            LocalDateTime.of(2026, 1, 15, 12, 0),
+        insertHistory(dates = arrayOf(LocalDateTime.of(2026, 1, 15, 12, 0),
             LocalDateTime.of(2026, 1, 16, 1, 0),
-            LocalDateTime.of(2026, 1, 16, 1, 30)
+            LocalDateTime.of(2026, 1, 16, 1, 30))
         )
 
         val state = viewModel.getState()
@@ -78,7 +76,7 @@ class BasicViewModelTest {
 
     @Test
     fun getStateWithoutCostsReportsNoSpending() = runBlocking {
-        insertHistory(LocalDateTime.of(2026, 1, 15, 10, 0))
+        insertHistory(dates = arrayOf(LocalDateTime.of(2026, 1, 15, 10, 0)))
 
         val state = viewModel.getState()
 
@@ -92,7 +90,7 @@ class BasicViewModelTest {
     fun getStateCalculatesTodaySpent() = runBlocking {
         val today = LocalDate.now()
         insertCost(start = today.minusDays(1).atStartOfDay(), end = today.plusDays(1).atStartOfDay(), price = 0.4)
-        insertHistory(today.atTime(12, 0), today.atTime(12, 30), today.minusDays(1).atTime(12, 0))
+        insertHistory(dates = arrayOf(today.atTime(12, 0), today.atTime(12, 30), today.minusDays(1).atTime(12, 0)))
 
         val state = viewModel.getState()
 
@@ -101,10 +99,9 @@ class BasicViewModelTest {
 
     @Test
     fun getStateReturnsCurrentStreakWhenLastEntryIsOld() = runBlocking {
-        insertHistory(
-            LocalDateTime.of(2020, 1, 1, 10, 0),
+        insertHistory(dates = arrayOf(LocalDateTime.of(2020, 1, 1, 10, 0),
             LocalDateTime.of(2020, 1, 10, 10, 0),
-            LocalDateTime.of(2020, 1, 11, 10, 0)
+            LocalDateTime.of(2020, 1, 11, 10, 0))
         )
 
         val state = viewModel.getState()
@@ -115,7 +112,7 @@ class BasicViewModelTest {
     @Test
     fun getStateReturnsHistoricalStreakWhenItIsLongest() = runBlocking {
         val now = LocalDateTime.now()
-        insertHistory(now.minusDays(30), now.minusDays(10), now.minusHours(1))
+        insertHistory(dates = arrayOf(now.minusDays(30), now.minusDays(10), now.minusHours(1)))
 
         val state = viewModel.getState()
 

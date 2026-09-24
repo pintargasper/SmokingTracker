@@ -36,12 +36,18 @@ class ExtensionsTest {
 
     @Test
     fun createWritesHeadersAndTypedCells() {
-        workbook.create(name = "Data", headers = listOf("Flag", "Number", "Text", "Empty"), data = listOf(1)) {
+        workbook.create(
+            name = "Data",
+            headers = listOf("Flag", "Number", "Text", "Empty"),
+            data = listOf(1)
+        ) {
             listOf(true, 5, "text", null)
         }
 
         val sheet = workbook.getSheet("Data")
-        assertEquals(listOf("Flag", "Number", "Text", "Empty"), sheet.getRow(0).map { it.stringCellValue })
+        assertEquals(
+            listOf("Flag", "Number", "Text", "Empty"),
+            sheet.getRow(0).map { it.stringCellValue })
 
         val row = sheet.getRow(1)
         assertEquals(CellType.BOOLEAN, row.getCell(0).cellType)
@@ -55,7 +61,11 @@ class ExtensionsTest {
     fun createReportsProgressUntilCompletion() {
         val progress = mutableListOf<Int>()
 
-        workbook.create(name = "Data", headers = listOf("Value"), data = listOf(1, 2, 3, 4), onStepProgress = { progress += it }) {
+        workbook.create(
+            name = "Data",
+            headers = listOf("Value"),
+            data = listOf(1, 2, 3, 4),
+            onStepProgress = { progress += it }) {
             listOf(it)
         }
 
@@ -66,7 +76,11 @@ class ExtensionsTest {
     fun createWithEmptyDataWritesOnlyHeaders() {
         val progress = mutableListOf<Int>()
 
-        workbook.create(name = "Data", headers = listOf("Value"), data = emptyList<Int>(), onStepProgress = { progress += it }) {
+        workbook.create(
+            name = "Data",
+            headers = listOf("Value"),
+            data = emptyList<Int>(),
+            onStepProgress = { progress += it }) {
             listOf(it)
         }
 
@@ -95,18 +109,27 @@ class ExtensionsTest {
 
     @Test
     fun importSkipsRowsWhenParserReturnsNull() {
-        sheet(name = "Data", headers = listOf("Value"), rows = listOf(listOf(1), listOf(-1), listOf(3)))
+        sheet(
+            name = "Data",
+            headers = listOf("Value"),
+            rows = listOf(listOf(1), listOf(-1), listOf(3))
+        )
 
-        val actual = workbook.import(sheetName = "Data", requiredHeaders = listOf("Value")) { row, col, _ ->
-            row.getCell(col.getValue("Value")).numericCellValue.toInt().takeIf { it > 0 }
-        }
+        val actual =
+            workbook.import(sheetName = "Data", requiredHeaders = listOf("Value")) { row, col, _ ->
+                row.getCell(col.getValue("Value")).numericCellValue.toInt().takeIf { it > 0 }
+            }
 
         assertEquals(listOf(1, 3), actual)
     }
 
     @Test
     fun importSkipsRowsWhenParserThrows() {
-        sheet(name = "Data", headers = listOf("Value"), rows = listOf(listOf(1), listOf("abc"), listOf(3)))
+        sheet(
+            name = "Data",
+            headers = listOf("Value"),
+            rows = listOf(listOf(1), listOf("abc"), listOf(3))
+        )
 
         assertEquals(listOf(1, 3), importValues(sheetName = "Data"))
     }
@@ -120,14 +143,20 @@ class ExtensionsTest {
             createCell(3).setCellValue("Other")
         }
 
-        assertEquals(mapOf("Name" to 0, "Other" to 3), workbook.getSheet("Data").getHeaderColumnMap())
+        assertEquals(
+            mapOf("Name" to 0, "Other" to 3),
+            workbook.getSheet("Data").getHeaderColumnMap()
+        )
     }
 
     @Test
     fun parseDateTimeParsesFormattedText() {
         val row = row(value = "2026-01-01 12:30:15")
 
-        assertEquals(LocalDateTime.of(2026, 1, 1, 12, 30, 15), row.parseDateTime(column = 0, formatter = formatter))
+        assertEquals(
+            LocalDateTime.of(2026, 1, 1, 12, 30, 15),
+            row.parseDateTime(column = 0, formatter = formatter)
+        )
     }
 
     @Test
@@ -149,17 +178,25 @@ class ExtensionsTest {
         row.createCell(0).apply {
             setCellValue(LocalDateTime.of(2026, 1, 1, 12, 30, 15))
             cellStyle = workbook.createCellStyle().apply {
-                dataFormat = workbook.creationHelper.createDataFormat().getFormat("yyyy-mm-dd hh:mm:ss")
+                dataFormat =
+                    workbook.creationHelper.createDataFormat().getFormat("yyyy-mm-dd hh:mm:ss")
             }
         }
 
-        assertEquals(LocalDateTime.of(2026, 1, 1, 12, 30, 15), row.parseDateTime(column = 0, formatter = formatter))
+        assertEquals(
+            LocalDateTime.of(2026, 1, 1, 12, 30, 15),
+            row.parseDateTime(column = 0, formatter = formatter)
+        )
     }
 
     @Test
     fun getRowCountReturnsNumberOfDataRows() {
         sheet(name = "Headers", headers = listOf("Value"), rows = emptyList())
-        sheet(name = "Data", headers = listOf("Value"), rows = listOf(listOf(1), listOf(2), listOf(3)))
+        sheet(
+            name = "Data",
+            headers = listOf("Value"),
+            rows = listOf(listOf(1), listOf(2), listOf(3))
+        )
 
         assertEquals(1, workbook.getRowCount(sheetName = "Missing"))
         assertEquals(1, workbook.getRowCount(sheetName = "Headers"))
@@ -172,14 +209,19 @@ class ExtensionsTest {
         val progress = mutableListOf<Int>()
         var called = false
 
-        workbook.importSingleRow(sheetName = "Settings", onStepProgress = { progress += it }) { _, _ -> called = true }
+        workbook.importSingleRow(
+            sheetName = "Settings",
+            onStepProgress = { progress += it }) { _, _ -> called = true }
 
         assertFalse(called)
         assertEquals(listOf(100), progress)
     }
 
     private fun importValues(sheetName: String): List<Int> {
-        return workbook.import(sheetName = sheetName, requiredHeaders = listOf("Value")) { row, col, _ ->
+        return workbook.import(
+            sheetName = sheetName,
+            requiredHeaders = listOf("Value")
+        ) { row, col, _ ->
             row.getCell(col.getValue("Value")).numericCellValue.toInt()
         }
     }
@@ -190,7 +232,13 @@ class ExtensionsTest {
         rows: List<List<Any>>
     ) {
         workbook.createSheet(name).apply {
-            createRow(0).apply { headers.forEachIndexed { index, header -> createCell(index).setCellValue(header) } }
+            createRow(0).apply {
+                headers.forEachIndexed { index, header ->
+                    createCell(index).setCellValue(
+                        header
+                    )
+                }
+            }
             rows.forEachIndexed { rowIndex, values ->
                 createRow(rowIndex + 1).apply {
                     values.forEachIndexed { index, value ->

@@ -91,6 +91,7 @@ class CalculatorViewModelTest {
         assertEquals(LocalizationHelper.formatDate(LocalDate.of(2026, 1, 1)), actual)
     }
 
+    @Suppress("SameParameterValue")
     private fun calendar(year: Int, month: Int, day: Int, hour: Int): Calendar {
         return Calendar.getInstance().apply {
             clear()

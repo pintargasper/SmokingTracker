@@ -20,7 +20,7 @@ class FakeCostsDao : FakeDao<CostEntity>(
 
     @Override
     override suspend fun getAll(): List<CostEntity> {
-        return items.sortedWith(compareByDescending<CostEntity> { it.startDate }.thenByDescending { it.endDate })
+        return items.sortedWith(comparator = compareByDescending<CostEntity> { it.startDate }.thenByDescending { it.endDate })
     }
 
     @Override

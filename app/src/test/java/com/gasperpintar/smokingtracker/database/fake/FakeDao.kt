@@ -24,7 +24,7 @@ open class FakeDao<T>(
     @Override
     override suspend fun insert(entity: T) {
         val id = idOf(entity).takeIf { it != 0L } ?: nextId
-        nextId = maxOf(nextId, id + 1)
+        nextId = maxOf(a = nextId, b = id + 1)
         items += withId(entity, id)
     }
 
@@ -45,6 +45,6 @@ open class FakeDao<T>(
     }
 
     protected fun resetId() {
-        nextId = (items.maxOfOrNull(idOf) ?: 0L) + 1
+        nextId = (items.maxOfOrNull(selector = idOf) ?: 0L) + 1
     }
 }

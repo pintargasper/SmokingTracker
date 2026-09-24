@@ -23,7 +23,6 @@ class ConvertersTest {
     @Test
     fun localDateTimeRoundTripDropsSubSecondPrecision() {
         val date = LocalDateTime.of(2026, 1, 5, 7, 8, 9, 123_456_789)
-
         val actual = converters.toLocalDateTime(dateString = converters.fromLocalDateTime(date = date))
 
         assertEquals(date.withNano(0), actual)
