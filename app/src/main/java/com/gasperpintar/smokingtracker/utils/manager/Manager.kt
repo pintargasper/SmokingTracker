@@ -55,9 +55,7 @@ object Manager {
                             headers = Mappers.HISTORY_HEADERS,
                             data = history,
                             onStepProgress = progress
-                        ) {
-                            it.toExcelRow(dateFormatter)
-                        }
+                        ) { it.toExcelRow(dateFormatter) }
                     },
                     SyncedStep(weight = achievements.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
@@ -65,9 +63,7 @@ object Manager {
                             headers = Mappers.ACHIEVEMENTS_HEADERS,
                             data = achievements,
                             onStepProgress = progress
-                        ) {
-                            it.toExcelRow(dateFormatter)
-                        }
+                        ) { it.toExcelRow(dateFormatter) }
                     },
                     SyncedStep(weight = costs.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
@@ -75,9 +71,7 @@ object Manager {
                             headers = Mappers.COSTS_HEADERS,
                             data = costs,
                             onStepProgress = progress
-                        ) {
-                            it.toExcelRow(dateFormatter)
-                        }
+                        ) { it.toExcelRow(dateFormatter) }
                     },
                     SyncedStep(weight = notes.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
@@ -85,9 +79,7 @@ object Manager {
                             headers = Mappers.NOTES_HEADERS,
                             data = notes,
                             onStepProgress = progress
-                        ) {
-                            it.toExcelRow(dateFormatter)
-                        }
+                        ) { it.toExcelRow(dateFormatter) }
                     },
                     SyncedStep(weight = settings.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
@@ -95,9 +87,7 @@ object Manager {
                             headers = Mappers.SETTINGS_HEADERS,
                             data = settings,
                             onStepProgress = progress
-                        ) {
-                            it.toExcelRow()
-                        }
+                        ) { it.toExcelRow() }
                     },
                     SyncedStep(weight = notifSettings.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
@@ -105,9 +95,7 @@ object Manager {
                             headers = Mappers.NOTIF_SETTINGS_HEADERS,
                             data = notifSettings,
                             onStepProgress = progress
-                        ) {
-                            it.toExcelRow()
-                        }
+                        ) { it.toExcelRow() }
                     },
                     SyncedStep(weight = 5) { progress ->
                         context.contentResolver.openOutputStream(fileUri)
@@ -234,8 +222,9 @@ object Manager {
         onStepProgress: (Int) -> Unit
     ) {
         workbook.importSingleRow(sheetName = "Settings", onStepProgress) { row, col ->
+            val settings = runCatching { Mappers.parseSettings(row, col) }.getOrNull() ?: return@importSingleRow
             repository.get()?.let { repository.delete(settings = it) }
-            repository.insert(settings = Mappers.parseSettings(row, col))
+            repository.insert(settings = settings)
         }
     }
 
@@ -245,8 +234,9 @@ object Manager {
         onStepProgress: (Int) -> Unit
     ) {
         workbook.importSingleRow(sheetName = "NotificationsSettings", onStepProgress) { row, col ->
+            val settings = runCatching { Mappers.parseNotificationsSettings(row, col) }.getOrNull() ?: return@importSingleRow
             repository.get()?.let { repository.delete(settings = it) }
-            repository.insert(settings = Mappers.parseNotificationsSettings(row, col))
+            repository.insert(settings = settings)
         }
     }
 

@@ -79,6 +79,6 @@ class HistoryRepository(
     }
 
     suspend fun getEntries(date: LocalDateTime): List<HistoryEntry> {
-        return getBetween(start = date.minusMonths(12), end = date).map(transform = HistoryEntry.Companion::fromEntity)
+        return getBetween(start = date.minusMonths(12), end = date).map(transform = HistoryEntry::fromEntity)
     }
 }

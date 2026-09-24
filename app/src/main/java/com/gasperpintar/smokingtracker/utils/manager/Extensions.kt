@@ -1,5 +1,7 @@
 package com.gasperpintar.smokingtracker.utils.manager
 
+import org.apache.poi.ss.usermodel.CellType
+import org.apache.poi.ss.usermodel.DateUtil
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -57,7 +59,7 @@ object Extensions {
 
         return buildList(capacity = rows.size) {
             rows.forEachIndexed { index, row ->
-                rowParser(row, columnMap, index)?.let(block = ::add)
+                runCatching { rowParser(row, columnMap, index) }.getOrNull()?.let(block = ::add)
                 onStepProgress(((index + 1) * 100) / rows.size)
             }
         }.also { onStepProgress(100) }
@@ -87,9 +89,14 @@ object Extensions {
         column: Int,
         formatter: DateTimeFormatter
     ): LocalDateTime? {
-        return getCell(column)?.stringCellValue
-            ?.takeIf { it.isNotEmpty() }
-            ?.let { runCatching { LocalDateTime.parse(it, formatter) }.getOrNull() }
+        val cell = getCell(column) ?: return null
+        return when (cell.cellType) {
+            CellType.STRING -> cell.stringCellValue
+                .takeIf { it.isNotEmpty() }
+                ?.let { runCatching { LocalDateTime.parse(it, formatter) }.getOrNull() }
+            CellType.NUMERIC -> cell.takeIf { DateUtil.isCellDateFormatted(it) }?.localDateTimeCellValue
+            else -> null
+        }
     }
 
     fun XSSFWorkbook.getRowCount(sheetName: String): Int {

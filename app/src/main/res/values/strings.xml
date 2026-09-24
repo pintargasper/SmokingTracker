@@ -171,6 +171,7 @@
 
     <string name="about_contributors">Contributors</string>
     <string name="about_contributors_description">GitHub profiles</string>
+    <string name="about_contributors_code">Code contribution</string>
     <string name="about_contributors_slovenian">Slovenian translation</string>
     <string name="about_contributors_ukrainian">Ukrainian translation</string>
     <string name="about_contributors_russian">Russian translation</string>

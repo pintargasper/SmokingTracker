@@ -36,12 +36,13 @@ class AboutActivity : Base<ActivityAboutBinding>(
             izzyOnDroidLayout to "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker",
             openApkLayout to "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/",
             contributor1Layout to "https://github.com/pintargasper",
-            contributor2Layout to "https://github.com/mrtaxi",
-            contributor3Layout to "https://github.com/jocixlinux-sys",
-            contributor4Layout to "https://github.com/iaanneed",
-            contributor5Layout to "https://github.com/ywnzzl",
-            contributor6Layout to "https://github.com/acidefluorhydrique",
-            contributor7Layout to "https://github.com/nrob81"
+            contributor2Layout to "https://github.com/anzepintar",
+            contributor3Layout to "https://github.com/mrtaxi",
+            contributor4Layout to "https://github.com/jocixlinux-sys",
+            contributor5Layout to "https://github.com/iaanneed",
+            contributor6Layout to "https://github.com/ywnzzl",
+            contributor7Layout to "https://github.com/acidefluorhydrique",
+            contributor8Layout to "https://github.com/nrob81"
         ).forEach { (view, url) ->
             view.setOnClickListener {
                 this@AboutActivity.openUrl(url)

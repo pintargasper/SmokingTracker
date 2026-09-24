@@ -175,4 +175,93 @@ class TimeHelperTest {
 
         assertEquals(expected, TimeHelper.toLocalDateTime(calendar))
     }
+
+    @Test
+    fun dayDateBeforeDayEndBelongsToPreviousDay() {
+        val dateTime = LocalDateTime.of(inputDate, LocalTime.of(1, 30))
+
+        assertEquals(inputDate.minusDays(1), TimeHelper.dayDate(dateTime = dateTime, dayEndMinutes = 120))
+    }
+
+    @Test
+    fun dayDateAtDayEndBelongsToSameDay() {
+        val dateTime = LocalDateTime.of(inputDate, LocalTime.of(2, 0))
+
+        assertEquals(inputDate, TimeHelper.dayDate(dateTime = dateTime, dayEndMinutes = 120))
+        assertEquals(inputDate, TimeHelper.dayDate(dateTime = expectedStartOfDay, dayEndMinutes = 0))
+    }
+
+    @Test
+    fun updateDayDateKeepsSelectedDateWhenItIsNotCurrentDay() {
+        val selectedDate = LocalDate.of(2020, 1, 1)
+
+        assertEquals(
+            selectedDate,
+            TimeHelper.updateDayDate(selectedDate = selectedDate, oldDayEndMinutes = 0, newDayEndMinutes = 120)
+        )
+    }
+
+    @Test
+    fun applySelectedDateKeepsValidRange() {
+        val startDate = calendar(date = LocalDate.of(2026, 1, 1))
+        val selectedDate = calendar(date = LocalDate.of(2026, 1, 10))
+
+        val (start, end, text) = TimeHelper.applySelectedDate(
+            startDate = startDate,
+            endDate = null,
+            selectedDate = selectedDate,
+            isStartDate = false
+        )
+
+        assertEquals(startDate, start)
+        assertEquals(selectedDate, end)
+        assertEquals(LocalizationHelper.formatDate(LocalDate.of(2026, 1, 10)), text)
+    }
+
+    @Test
+    fun applySelectedDateClampsStartDateToEndDate() {
+        val endDate = calendar(date = LocalDate.of(2026, 1, 10))
+
+        val (start, end, text) = TimeHelper.applySelectedDate(
+            startDate = null,
+            endDate = endDate,
+            selectedDate = calendar(date = LocalDate.of(2026, 1, 15)),
+            isStartDate = true
+        )
+
+        assertEquals(endDate, start)
+        assertEquals(endDate, end)
+        assertEquals(LocalizationHelper.formatDate(LocalDate.of(2026, 1, 10)), text)
+    }
+
+    @Test
+    fun applySelectedDateClampsEndDateToStartDate() {
+        val startDate = calendar(date = LocalDate.of(2026, 1, 10))
+
+        val (start, end, text) = TimeHelper.applySelectedDate(
+            startDate = startDate,
+            endDate = null,
+            selectedDate = calendar(date = LocalDate.of(2026, 1, 5)),
+            isStartDate = false
+        )
+
+        assertEquals(startDate, start)
+        assertEquals(startDate, end)
+        assertEquals(LocalizationHelper.formatDate(LocalDate.of(2026, 1, 10)), text)
+    }
+
+    @Test
+    fun getWeekStartsOnMonday() {
+        val monday = LocalDateTime.of(LocalDate.of(2025, 12, 29), LocalTime.MIDNIGHT)
+
+        assertEquals(monday, TimeHelper.getWeek(date = LocalDate.of(2026, 1, 4)).first)
+        assertEquals(monday, TimeHelper.getWeek(date = LocalDate.of(2025, 12, 29)).first)
+    }
+
+    private fun calendar(date: LocalDate): Calendar {
+        return Calendar.getInstance().apply {
+            clear()
+            set(date.year, date.monthValue - 1, date.dayOfMonth, 10, 0, 0)
+        }
+    }
 }
