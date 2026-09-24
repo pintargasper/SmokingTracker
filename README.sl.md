@@ -5,7 +5,7 @@
 <h1>Smoking Tracker</h1>
 
 <p align="center">
-  <strong>English</strong> | <a href="README.sl.md">Slovenščina</a> 
+  <a href="README.md">English</a> | <a href="README.sl.md">Slovenščina</a> 
 </p>
 
 </div>
@@ -91,7 +91,7 @@ razumeti vaše navade in napredek pri opuščanju kajenja. Vsaka cigareta, ki jo
 pokadite, je jasno zabeležena, kar vam daje podroben vpogled v vaše dnevne,
 tedenske in mesečne vzorce
 
-**Ključne lastnosti**
+### Ključne značilnosti
 - *Sledenje zgodovini kajenja*
 - *Dnevna, tedenska, mesečna in letna statistika*
 - *Analiza porabe*
@@ -182,13 +182,13 @@ tedenske in mesečne vzorce
 ## 📝 Odvisnosti in različice
 
 **Vtičnik za Gradle**
-- Vtičnik za Android Gradle: 9.3.2
+- Vtičnik Android Gradle: 9.4.1
 
 **Knjižnice**
 > Vse knjižnice so konfigurirane v
 > [`libs.versions.toml`](gradle/libs.versions.toml)
 
-## 📝 Navodila za gradnjo
+## 🛠️ Navodila za izdelavo
 
 ### Navodila za gradnjo
 

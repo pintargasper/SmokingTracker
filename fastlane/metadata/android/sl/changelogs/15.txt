@@ -1,0 +1,9 @@
+## Izboljšave in popravki
+
+- Dodan madžarski jezik
+- Dodana možnost nastavitve zamika zaključka dneva
+- Izboljšani prevodi in lokalizacija
+- Izboljšane povratne informacije gradnika pri dodajanju vnosa
+- Bolj tekoča in odzivna uporabniška izkušnja
+- Odpravljene manjše napake in izboljšana stabilnost
+- Izboljšan prikaz datuma, časa in zgodovine

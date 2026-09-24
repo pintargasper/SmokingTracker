@@ -251,7 +251,7 @@
     <string name="settings_finance_costs_description">Cena ene cigarete. Cena cigarete se lahko določi po obdobjih</string>
     <string name="settings_about_changelog">Dnevnik sprememb</string>
     <string name="settings_about_changelog_description">Ogled dnevnika sprememb</string>
-    <string name="about_contributors">Sodelavci</string>
+    <string name="about_contributors">Sodelujoči</string>
     <string name="popup_save">Shrani</string>
     <string name="currency_popup">Izberite valuto</string>
     <string name="currency_popup_info">Izberite svojo želeno valuto</string>
@@ -293,4 +293,10 @@
     <string name="widget_stats">Statistika</string>
     <string name="widget_stats_quick_add">Statistika in hitro dodajanje</string>
     <string name="widget_quick_add">Hitro dodajanje</string>
+    <string name="home_no_entries">Za ta dan ni najdenih vnosov</string>
+    <string name="home_no_entries_message">Kliknite gumb \"Dodaj nov vnos\", da dodate nov vnos</string>
+    <string name="settings_general_day_end_hour_description">Nastavite, kdaj se vaš dan zaključi</string>
+    <string name="about_contributors_hungarian">Prevod v madžarščino</string>
+    <string name="settings_general_day_end_hour">Ura zaključka dneva</string>
+    <string name="about_contributors_code">Prispevek kode</string>
 </resources>
