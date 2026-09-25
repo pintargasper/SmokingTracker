@@ -85,9 +85,9 @@ class ScreenshotTest {
         }
 
         ActivityScenario.launch(StatisticsActivity::class.java).use {
-            captureScreenshot(name = "5")
+            captureScreenshot(name = "5", 3_000)
             onView(withId(R.id.statistics_view_pager)).perform(swipeLeft())
-            captureScreenshot(name = "6")
+            captureScreenshot(name = "6", 10_000)
         }
 
         ActivityScenario.launch(AchievementsActivity::class.java).use {
