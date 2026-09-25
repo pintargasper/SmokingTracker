@@ -92,19 +92,19 @@ jobs:
           echo "Release notes found: $NOTES"
           echo "App changelog found: $CHANGELOG"
   
-  build:
-   needs: release
-   uses: ./.github/workflows/build.yml
+  #build:
+   #needs: release
+   #uses: ./.github/workflows/build.yml
 
-  fastlane:
-   needs: build
-   uses: ./.github/workflows/fastlane.yml
-   permissions:
-      contents: write
-      pull-requests: write
+  #fastlane:
+   #needs: build
+   #uses: ./.github/workflows/fastlane.yml
+   #permissions:
+      #contents: write
+      #pull-requests: write
 
   prepare:
-    needs: fastlane
+    #needs: fastlane
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -116,14 +116,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
+      - name: Generate App Token for Bypass
+        id: generate_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.MERGE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.MERGE_APP_PRIVATE_KEY }}
+
       - name: Merge screenshot Pull Request
         env:
-          GH_TOKEN: ${{ github.token }}
-          PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
+          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
+          #PR_NUMBER: ${{ needs.fastlane.outputs.pull_request_number }}
+          PR_NUMBER: 80
         run: |
           gh pr merge "$PR_NUMBER" \
             --squash \
-            --delete-branch
+            --delete-branch \
+            --admin
 
       - name: Get release commit
         id: get_sha
