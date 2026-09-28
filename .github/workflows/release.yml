@@ -333,8 +333,7 @@ jobs:
         run: |
           gh release edit "${VERSION}" \
             --draft=false \
-            --latest \
-            --discussion-category "Announcements"
+            --latest
 
       - name: Remove signing files
         if: always()
