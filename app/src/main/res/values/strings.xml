@@ -287,6 +287,7 @@
     <string name="widget_stats">Statistics</string>
     <string name="widget_stats_quick_add">Statistics &amp; Quick Add</string>
     <string name="widget_quick_add">Quick Add</string>
+    <string name="widget_only_quick_add">Only Quick Add</string>
 
     <plurals name="time_years">
         <item quantity="one">%d year</item>

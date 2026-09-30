@@ -7,7 +7,7 @@ import android.content.Context
 import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
 
-class QuickAddWidget : AppWidgetProvider() {
+class OnlyQuickAddWidget : AppWidgetProvider() {
 
     @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
     @Override
@@ -21,9 +21,7 @@ class QuickAddWidget : AppWidgetProvider() {
             context = context,
             appWidgetManager = appWidgetManager,
             appWidgetIds = appWidgetIds,
-            widgetClass = this.javaClass,
-            showWeekly = false,
-            showMonthly = false
+            widgetClass = this.javaClass
         )
         WidgetHelper.scheduleMidnightWidgetUpdate(context)
     }

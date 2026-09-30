@@ -115,7 +115,7 @@ fun copyVersionFiles() {
                 it.isDirectory && it != destination.get().asFile
             }.filter {
                 it.listFiles()?.isEmpty() == true
-            }.forEach(File::delete)
+            }.forEach(action = File::delete)
         }
     }
 

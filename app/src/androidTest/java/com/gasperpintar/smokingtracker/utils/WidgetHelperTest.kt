@@ -7,7 +7,6 @@ import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
@@ -103,11 +102,11 @@ class WidgetHelperTest {
         showMonthly: Boolean = true
     ) {
         assertNoException {
-            WidgetHelper.updateStatsWidget(
+            WidgetHelper.updateWidget(
                 context = context,
                 appWidgetManager = AppWidgetManager.getInstance(context),
                 appWidgetIds = appWidgetIds,
-                layoutId = R.layout.widget_stats,
+                widgetClass = StatsWidget::class.java,
                 showWeekly = showWeekly,
                 showMonthly = showMonthly
             )

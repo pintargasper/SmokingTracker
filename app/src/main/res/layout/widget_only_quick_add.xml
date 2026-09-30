@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:gravity="center"
+    android:background="@color/surface">
+
+    <ImageButton
+        android:id="@+id/widget_add_new_entry_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/home_add_entry"
+        android:src="@mipmap/ic_launcher"
+        android:padding="0dp"
+        android:background="@null" />
+
+    <TextView
+        android:id="@+id/widget_add_new_entry"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/success"
+        android:visibility="gone" />
+
+</LinearLayout>
