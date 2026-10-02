@@ -1,4 +1,4 @@
-## Izboljšave in popravki
+Izboljšave in popravki
 
 - Dodan madžarski jezik
 - Dodana možnost nastavitve zamika zaključka dneva
