@@ -5,7 +5,7 @@
     <string name="home_timer_minute">Min.</string>
     <string name="home_timer_second">Sek.</string>
     <string name="application_name">Zigarettentracker</string>
-    <string name="navigation_home">Übersicht</string>
+    <string name="navigation_home">Heim</string>
     <string name="navigation_graph">Graphen</string>
     <string name="navigation_more">Analytik</string>
     <string name="navigation_settings">Einstellungen</string>
@@ -280,4 +280,7 @@
     <string name="widget_stats">Statistiken</string>
     <string name="widget_stats_quick_add">Statistiken &amp; schnelles hinzufügen</string>
     <string name="widget_quick_add">Schnelles Hinzufügen</string>
+    <string name="cost_delete">Datensatz löschen</string>
+    <string name="about_contributors">Mitwirkende</string>
+    <string name="about_contributors_code">Codebeitrag</string>
 </resources>
