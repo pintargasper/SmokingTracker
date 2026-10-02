@@ -5,7 +5,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import androidx.annotation.RequiresPermission
-import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
+import com.gasperpintar.smokingtracker.utils.WidgetHelper
 
 class WidgetReceiver : BroadcastReceiver() {
 

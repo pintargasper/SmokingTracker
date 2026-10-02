@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.utils.widget
+package com.gasperpintar.smokingtracker.utils
 
 import android.Manifest
 import android.app.AlarmManager
@@ -22,12 +22,11 @@ import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
 import com.gasperpintar.smokingtracker.provider.WidgetReceiver
-import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.collections.get
 import kotlin.time.Duration.Companion.milliseconds
 
 object WidgetHelper {
@@ -53,7 +52,6 @@ object WidgetHelper {
 
             val container = (context.applicationContext as Application).container
             val triggerAt = TimeHelper.getNextMidnightMillis(container.settingsRepository.get()!!.dayEndMinutes)
-
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S || alarmManager.canScheduleExactAlarms())
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pendingIntent)
             else
@@ -200,11 +198,10 @@ object WidgetHelper {
         context: Context,
         action: String
     ): PendingIntent {
-        val intent = Intent(action, null, context, WidgetReceiver::class.java)
         return PendingIntent.getBroadcast(
             context,
             action.hashCode(),
-            intent,
+            Intent(action, null, context, WidgetReceiver::class.java),
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
     }

@@ -1,6 +1,8 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
+import android.appwidget.AppWidgetManager
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.Uri
@@ -19,6 +21,11 @@ import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
+import com.gasperpintar.smokingtracker.provider.OnlyQuickAddWidget
+import com.gasperpintar.smokingtracker.provider.QuickAddWidget
+import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
+import com.gasperpintar.smokingtracker.provider.StatsWidget
+import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
@@ -126,6 +133,24 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                         viewModel.updateSettings(state.settings)
                         requireActivity().recreate()
                     }
+                }
+            )
+        }
+
+        widgetsLayout.setOnClickListener {
+            DialogManager.showWidgetsDialog(
+                context = requireActivity(),
+                onWidgetSelected = { widget ->
+                    val appWidgetManager = AppWidgetManager.getInstance(requireContext())
+                    if (!appWidgetManager.isRequestPinAppWidgetSupported) return@showWidgetsDialog
+
+                    val provider = when (widget) {
+                        Widget.ONLY_QUICK_ADD -> ComponentName(requireContext(), OnlyQuickAddWidget::class.java)
+                        Widget.QUICK_ADD -> ComponentName(requireContext(), QuickAddWidget::class.java)
+                        Widget.STATS -> ComponentName(requireContext(), StatsWidget::class.java)
+                        Widget.STATS_QUICK_ADD -> ComponentName(requireContext(), StatsQuickAddWidget::class.java)
+                    }
+                    appWidgetManager.requestPinAppWidget(provider, null, null)
                 }
             )
         }

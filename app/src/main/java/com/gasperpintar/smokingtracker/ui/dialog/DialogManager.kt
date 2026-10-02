@@ -33,6 +33,8 @@ import com.gasperpintar.smokingtracker.databinding.NotificationsPopupBinding
 import com.gasperpintar.smokingtracker.databinding.SaveNotePopupBinding
 import com.gasperpintar.smokingtracker.databinding.ThemePopupBinding
 import com.gasperpintar.smokingtracker.databinding.UploadPopupBinding
+import com.gasperpintar.smokingtracker.databinding.WidgetPopupBinding
+import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -191,6 +193,18 @@ object DialogManager {
                 onTimeSelected(timePicker.hour * 60 + timePicker.minute)
                 dismiss()
             }
+        }
+    }
+
+    fun showWidgetsDialog(
+        context: FragmentActivity,
+        onWidgetSelected: (widgetType: Widget) -> Unit
+    ) = BaseDialog.show(context, bindingInflater = WidgetPopupBinding::inflate) {
+        binding.run {
+            widget1.setOnClickListener { onWidgetSelected(Widget.ONLY_QUICK_ADD) }
+            widget2.setOnClickListener { onWidgetSelected(Widget.QUICK_ADD) }
+            widget3.setOnClickListener { onWidgetSelected(Widget.STATS) }
+            widget4.setOnClickListener { onWidgetSelected(Widget.STATS_QUICK_ADD) }
         }
     }
 

@@ -137,6 +137,8 @@
     <string name="settings_general_notifications_description">Stay informed with notifications and alerts</string>
     <string name="settings_general_day_end_hour">Day end hour</string>
     <string name="settings_general_day_end_hour_description">Set when your day ends</string>
+    <string name="settings_general_widgets">Widgets</string>
+    <string name="settings_general_widgets_description">Add widgets to the home screen</string>
 
     <string name="settings_finance">Finance</string>
     <string name="settings_finance_currency">Currency</string>
@@ -189,6 +191,7 @@
     <string name="popup_save">Save</string>
     <string name="popup_backup">Backup</string>
     <string name="popup_select">Select</string>
+    <string name="popup_add">Add</string>
 
     <string name="insert_popup">Add entry</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
@@ -218,6 +221,11 @@
     <string name="notifications_popup_frequency_default">Default</string>
     <string name="notifications_popup_frequency_daily">Daily</string>
     <string name="notifications_popup_frequency_weekly">Weekly</string>
+
+    <string name="widgets_popup_stats_description">View your smoking statistics</string>
+    <string name="widgets_popup_stats_quick_add_description">View statistics and quickly add a cigarette</string>
+    <string name="widgets_popup_quick_add_description">Quickly add a cigarette</string>
+    <string name="widgets_popup_only_quick_add_description">Quickly add a cigarette with a single tap</string>
 
     <string name="currency_popup">Select currency</string>
     <string name="currency_popup_info">Choose your preferred currency</string>

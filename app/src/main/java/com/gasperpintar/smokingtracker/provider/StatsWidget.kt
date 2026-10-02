@@ -5,7 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import androidx.annotation.RequiresPermission
-import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
+import com.gasperpintar.smokingtracker.utils.WidgetHelper
 
 class StatsWidget : AppWidgetProvider() {
 

@@ -15,7 +15,7 @@ import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
-import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
+import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
