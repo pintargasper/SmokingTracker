@@ -231,7 +231,7 @@
     <string name="notes_emotions_neutral">Neutral</string>
     <string name="notes_emotions_good">Gut</string>
     <string name="notes_emotions_very_good">Sehr gut</string>
-    <string name="cost_price">Kosten: %1$s %2$c</string>
+    <string name="cost_price">Kosten: %1$s %2$s</string>
     <string name="settings_general_day_end_hour">Tagesende</string>
     <string name="settings_general_day_end_hour_description">Wähle wann der Tag endet</string>
     <string name="settings_finance">Finanzen</string>
@@ -246,7 +246,7 @@
     <string name="settings_support">Hilfe &amp; Sicherheit</string>
     <string name="settings_support_privacy_policy_description">Zur Datenschutzerklärumg</string>
     <string name="about_view_github">Zeige den Quellcode, melde Fehler und trage zum Projekt bei</string>
-    <string name="about_view_f_droid">Zeige die APP auf F-Droid</string>
+    <string name="about_view_f_droid">Zeige die Anwendung auf F-Droid</string>
     <string name="about_view_izzy_on_droid">Zeige die Anwendung auf IzzyOnDroid</string>
     <string name="about_view_open_apk">Zeige die Anwendung auf OpenAPK</string>
     <string name="about_contributors_description">GitHub Profile</string>
