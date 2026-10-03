@@ -23,8 +23,8 @@
         <item>Српски</item>
         <item>Srpski</item>
         <item>Українська</item>
-        <item>简体中文</item>
         <item>繁體中文</item>
+        <item>简体中文</item>
     </string-array>
 
     <string-array name="theme_names">

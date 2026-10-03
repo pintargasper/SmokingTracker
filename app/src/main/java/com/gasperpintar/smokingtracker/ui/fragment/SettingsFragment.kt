@@ -77,6 +77,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                         state.settings = state.settings.copy(theme = theme)
                         viewModel.updateSettings(state.settings)
                         Application().applyTheme(themeId = theme)
+                        updateUi(state = state)
                     }
                 }
             )
