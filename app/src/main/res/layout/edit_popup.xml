@@ -1,140 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_edit_popup_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="20dp">
+    style="@style/Card">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/popup_message"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/edit_popup_message"
             android:gravity="center"
-            android:maxLines="1"
             android:ellipsize="end"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/MainTitleCenterTextView"/>
+            style="@style/MainTitleCenterTextView" />
 
         <HorizontalScrollView
             android:id="@+id/scroll_date_time"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fillViewport="true"
-            app:layout_constraintTop_toBottomOf="@id/popup_message"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            tools:ignore="ScrollViewSize">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center"
-                tools:ignore="ScrollViewSize">
+                android:gravity="center">
 
                 <DatePicker
                     android:id="@+id/date_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:calendarViewShown="false"
-                    android:datePickerMode="spinner"/>
+                    android:datePickerMode="spinner" />
 
                 <TimePicker
                     android:id="@+id/time_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:timePickerMode="spinner"/>
+                    android:timePickerMode="spinner" />
+
             </LinearLayout>
         </HorizontalScrollView>
 
         <LinearLayout
             android:id="@+id/lent_cigarette_layout"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/scroll_date_time"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginTop="16dp">
 
             <TextView
                 android:id="@+id/lent_label"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="@string/edit_popup_lent"
                 android:gravity="center_vertical"
                 android:maxLines="1"
                 android:ellipsize="end"
-                style="@style/BodyTextView"/>
+                style="@style/BodyTextView" />
 
             <CheckBox
                 android:id="@+id/lent_checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                style="@style/CheckBox"/>
+                style="@style/CheckBox" />
+
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_confirm_button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:padding="8dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/lent_cigarette_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp"
+            style="@style/Card">
 
             <Button
-                android:id="@+id/button_confirm"
+                android:id="@+id/confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_confirm"
-                style="@style/Button"/>
+                style="@style/Button" />
+
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_close_button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:padding="8dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/card_confirm_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            style="@style/Card">
 
             <Button
                 android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_close"
-                style="@style/Button"/>
+                style="@style/Button" />
+
         </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>

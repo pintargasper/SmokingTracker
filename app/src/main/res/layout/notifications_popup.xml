@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_notifications_popup_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="20dp">
+    style="@style/Card">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/popup_notifications_title"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/notifications_popup"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/MainTitleCenterTextView"/>
+            style="@style/MainTitleCenterTextView" />
 
         <TextView
             android:id="@+id/popup_notifications_info"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/notifications_popup_info"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
-            app:layout_constraintTop_toBottomOf="@id/popup_notifications_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/BodyTextView"/>
+            style="@style/BodyTextView" />
 
         <ScrollView
             android:id="@+id/notifications_inner_options_container"
@@ -44,9 +38,6 @@
             android:layout_height="160dp"
             android:layout_marginTop="16dp"
             android:fillViewport="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/popup_notifications_info"
             tools:ignore="TextSizeCheck">
 
             <LinearLayout
@@ -71,7 +62,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/notifications_popup_check_box_system"
                         android:maxWidth="300dp"
-                        style="@style/CheckBox"/>
+                        style="@style/CheckBox" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -89,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/notifications_popup_check_box_progress"
-                        style="@style/CheckBox"/>
+                        style="@style/CheckBox" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -104,13 +96,13 @@
                             android:layout_height="wrap_content"
                             android:text="@string/notifications_popup_frequency_label"
                             android:labelFor="@+id/spinner_progress_frequency"
-                            style="@style/BodyTextView"/>
+                            style="@style/BodyTextView" />
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                             android:layout_width="150dp"
                             android:layout_height="wrap_content"
-                            app:hintEnabled="false">
+                            app:hintEnabled="false"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                             <AutoCompleteTextView
                                 android:id="@+id/spinner_progress_frequency"
@@ -124,9 +116,10 @@
                                 android:inputType="none"
                                 app:simpleItems="@array/frequency_options"
                                 tools:ignore="LabelFor"
-                                style="@style/BodyTextView"/>
+                                style="@style/BodyTextView" />
 
                         </com.google.android.material.textfield.TextInputLayout>
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -145,37 +138,31 @@
                         android:layout_height="wrap_content"
                         android:maxWidth="300dp"
                         android:text="@string/notifications_popup_check_box_achievements"
-                        style="@style/CheckBox"/>
+                        style="@style/CheckBox"
+                        tools:ignore="VisualLintButtonSize" />
+
                 </LinearLayout>
 
             </LinearLayout>
+
         </ScrollView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_close_notifications_button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:padding="8dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/notifications_inner_options_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_max="320dp">
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp"
+            style="@style/Card">
 
             <Button
                 android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:text="@string/popup_close"
-                style="@style/Button"/>
+                style="@style/Button" />
+
         </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>

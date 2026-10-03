@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,23 +8,18 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?attr/colorSurface">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_graph_daily"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginHorizontal="16dp"
+            style="@style/Card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,12 +34,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_daily"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView"/>
+                    style="@style/SpecialTitleTextView" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_daily"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"/>
+                    android:layout_height="240dp" />
 
                 <LinearLayout
                     android:id="@+id/graph_controls_daily"
@@ -61,7 +58,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_daily"
                         android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
 
                     <TextView
                         android:id="@+id/current_date_daily"
@@ -69,7 +66,7 @@
                         android:layout_height="48dp"
                         android:text="%02d.%02d.%04d"
                         tools:ignore="HardcodedText,TextSizeCheck"
-                        style="@style/MainTitleCenterTextView"/>
+                        style="@style/MainTitleCenterTextView" />
 
                     <ImageButton
                         android:id="@+id/next_day_daily"
@@ -78,23 +75,19 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_daily"
                         android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
+
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_graph_weekly"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/card_graph_daily"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginHorizontal="16dp"
+            style="@style/Card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,12 +102,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_weekly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView"/>
+                    style="@style/SpecialTitleTextView" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_weekly"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"/>
+                    android:layout_height="240dp" />
 
                 <LinearLayout
                     android:id="@+id/graph_controls_weekly"
@@ -133,7 +126,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_weakly"
                         android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
 
                     <TextView
                         android:id="@+id/current_date_weekly"
@@ -141,7 +134,7 @@
                         android:layout_height="48dp"
                         android:text="%1$d.%2$d/%3$d.%4$d %5$d"
                         tools:ignore="HardcodedText,TextSizeCheck"
-                        style="@style/MainTitleCenterTextView"/>
+                        style="@style/MainTitleCenterTextView" />
 
                     <ImageButton
                         android:id="@+id/next_day_weekly"
@@ -150,23 +143,19 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_weakly"
                         android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
+
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_graph_monthly"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/card_graph_weekly"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_marginHorizontal="16dp"
+            style="@style/Card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -181,12 +170,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_monthly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView"/>
+                    style="@style/SpecialTitleTextView" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_monthly"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"/>
+                    android:layout_height="240dp" />
 
                 <LinearLayout
                     android:id="@+id/graph_controls_monthly"
@@ -205,7 +194,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_monthly"
                         android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
 
                     <TextView
                         android:id="@+id/current_date_monthly"
@@ -213,7 +202,7 @@
                         android:layout_height="48dp"
                         android:text="%1$s %2$d"
                         tools:ignore="HardcodedText"
-                        style="@style/MainTitleCenterTextView"/>
+                        style="@style/MainTitleCenterTextView" />
 
                     <ImageButton
                         android:id="@+id/next_day_monthly"
@@ -222,25 +211,20 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_monthly"
                         android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
+
                 </LinearLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_graph_yearly"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/card_graph_monthly"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_marginBottom="8dp"
+            android:layout_marginHorizontal="16dp"
+            style="@style/Card">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -255,12 +239,12 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_yearly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView"/>
+                    style="@style/SpecialTitleTextView" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_yearly"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp"/>
+                    android:layout_height="240dp" />
 
                 <LinearLayout
                     android:id="@+id/graph_controls_yearly"
@@ -279,7 +263,7 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_yearly"
                         android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
 
                     <TextView
                         android:id="@+id/current_date_yearly"
@@ -287,7 +271,7 @@
                         android:layout_height="48dp"
                         android:text="%1$d"
                         tools:ignore="HardcodedText"
-                        style="@style/MainTitleCenterTextView"/>
+                        style="@style/MainTitleCenterTextView" />
 
                     <ImageButton
                         android:id="@+id/next_day_yearly"
@@ -296,9 +280,14 @@
                         android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_yearly"
                         android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface"/>
+                        app:tint="?attr/colorOnSurface" />
+
                 </LinearLayout>
+
             </LinearLayout>
+
         </androidx.cardview.widget.CardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>
