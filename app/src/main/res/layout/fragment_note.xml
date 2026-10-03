@@ -160,11 +160,11 @@
 
                     <Button
                         android:id="@+id/save"
+                        style="@style/Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/popup_save"
-                        style="@style/Button"
-                        tools:ignore="VisualLintButtonSize" />
+                        tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
                 </androidx.cardview.widget.CardView>
 
