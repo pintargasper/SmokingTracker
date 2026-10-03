@@ -110,6 +110,10 @@ fun copyVersionFiles() {
         include("**/$version.txt")
         rename("$version.txt", "$version.md")
 
+        doFirst {
+            destination.get().asFile.deleteRecursively()
+        }
+
         doLast {
             destination.get().asFile.walkBottomUp().filter {
                 it.isDirectory && it != destination.get().asFile

@@ -474,28 +474,30 @@ object DialogManager {
         val language = locale.language
 
         runCatching {
-            val version = context.packageManager
-                .getPackageInfo(context.packageName, 0)
-                .versionName
+            val version = context.packageManager.getPackageInfo(context.packageName, 0).versionName
 
             val directories = context.assets.list("changelogs") ?: emptyArray()
-            val directory = directories.firstOrNull { it == languageTag }
-                ?: directories.firstOrNull { it == language }
-                ?: directories.firstOrNull { it.startsWith(prefix = "$language-") }
+            val changelogFile = "v$version.md"
+
+            val directory = sequenceOf(languageTag, language)
+                .plus(directories.filter { it.startsWith(prefix = "$language-") })
+                .firstOrNull { directory -> changelogFile in (context.assets.list("changelogs/$directory") ?: emptyArray()) }
                 ?: "en-US"
 
             val content = context.assets
-                .open("changelogs/$directory/v$version.md")
+                .open("changelogs/$directory/$changelogFile")
                 .bufferedReader()
                 .use { it.readText() }
 
             Markwon.builder(context)
                 .usePlugin(LinkifyPlugin.create())
                 .usePlugin(object : AbstractMarkwonPlugin() {
-                override fun configureTheme(builder: MarkwonTheme.Builder) {
-                    builder.headingBreakHeight(0)
-                }
-            }).build().setMarkdown(binding.changelogText, content)
+                    override fun configureTheme(builder: MarkwonTheme.Builder) {
+                        builder.headingBreakHeight(0)
+                    }
+                })
+                .build()
+                .setMarkdown(binding.changelogText, content)
             binding.changelogText.movementMethod = LinkMovementMethod.getInstance()
         }.onFailure {
             binding.changelogText.text = ""

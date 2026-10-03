@@ -16,7 +16,6 @@
         android:padding="16dp">
 
         <ScrollView
-            android:id="@+id/changelog_scroll"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_marginBottom="8dp"
@@ -36,7 +35,6 @@
         </ScrollView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
@@ -44,7 +42,7 @@
             style="@style/Card">
 
             <Button
-                android:id="@+id/confirm"
+                android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_close"
