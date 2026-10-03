@@ -5,4 +5,4 @@ Bug Fixes
 - Improved system language detection and localization
 - Improved UI consistency and stability
 - Fixed widget, layout, and minor UI issues
-- Updated Slovenian and German translations
+- Updated translations
