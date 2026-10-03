@@ -1,0 +1,8 @@
+Popravki napak
+
+- Dodana podpora za pripomočke na začetnem zaslonu
+- Izboljšane posodobitve pripomočkov in delovanje osveževanja
+- Izboljšano zaznavanje in lokalizacija sistemskega jezika
+- Izboljšana doslednost in stabilnost uporabniškega vmesnika
+- Odpravljene težave z pripomočki, postavitvijo in manjšimi težavami z uporabniškim vmesnikom
+- Posodobljeni prevodi
