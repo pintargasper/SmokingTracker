@@ -1,42 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_language_popup_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="20dp">
+    style="@style/Card">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/popup_language_title"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/language_popup"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/MainTitleCenterTextView"/>
+            style="@style/MainTitleCenterTextView" />
 
         <TextView
             android:id="@+id/popup_language_info"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/language_popup_info"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
-            app:layout_constraintTop_toBottomOf="@id/popup_language_title"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            style="@style/BodyTextView"/>
+            style="@style/BodyTextView" />
 
         <ScrollView
             android:id="@+id/language_inner_options_container"
@@ -44,9 +38,6 @@
             android:layout_height="160dp"
             android:layout_marginTop="16dp"
             android:fillViewport="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/popup_language_info"
             tools:ignore="TextSizeCheck">
 
             <LinearLayout
@@ -63,8 +54,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/language_popup_check_box_system"
                     android:maxWidth="300dp"
-                    tools:ignore="VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_german"
@@ -72,8 +63,8 @@
                     android:layout_height="wrap_content"
                     android:text="Deutsch"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_english"
@@ -81,8 +72,8 @@
                     android:layout_height="wrap_content"
                     android:text="English"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_french"
@@ -90,8 +81,8 @@
                     android:layout_height="wrap_content"
                     android:text="Français"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_hungarian"
@@ -99,8 +90,8 @@
                     android:layout_height="wrap_content"
                     android:text="Magyar"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_slovenian"
@@ -108,8 +99,8 @@
                     android:layout_height="wrap_content"
                     android:text="Slovenščina"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_serbian_cyrillic_script"
@@ -117,8 +108,8 @@
                     android:layout_height="wrap_content"
                     android:text="Српски"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_serbian_latin_script"
@@ -126,8 +117,8 @@
                     android:layout_height="wrap_content"
                     android:text="Srpski"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_ukrainian"
@@ -135,8 +126,8 @@
                     android:layout_height="wrap_content"
                     android:text="Українська"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_chinese_traditional"
@@ -144,8 +135,8 @@
                     android:layout_height="wrap_content"
                     android:text="繁體中文"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
                 <CheckBox
                     android:id="@+id/checkbox_chinese_simplified"
@@ -153,36 +144,29 @@
                     android:layout_height="wrap_content"
                     android:text="简体中文"
                     android:maxWidth="300dp"
-                    tools:ignore="HardcodedText,VisualLintButtonSize"
-                    style="@style/CheckBox"/>
+                    style="@style/CheckBox"
+                    tools:ignore="HardcodedText,VisualLintButtonSize" />
 
             </LinearLayout>
+
         </ScrollView>
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/card_close_language_button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:padding="8dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/language_inner_options_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_max="320dp">
+            android:layout_marginVertical="8dp"
+            android:layout_marginHorizontal="16dp"
+            style="@style/Card">
 
             <Button
                 android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_close"
-                style="@style/Button"/>
+                style="@style/Button" />
+
         </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>

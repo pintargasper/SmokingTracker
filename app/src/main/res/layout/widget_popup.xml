@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_widgets_popup_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="20dp">
+    style="@style/Card">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="@string/settings_general_widgets"
             android:gravity="center"
-            style="@style/MainTitleCenterTextView"/>
+            style="@style/MainTitleCenterTextView" />
 
         <TextView
             android:id="@+id/popup_widgets_info"
@@ -31,15 +30,12 @@
             android:layout_marginTop="4dp"
             android:text="@string/settings_general_widgets_description"
             android:gravity="center"
-            android:maxLines="2"
-            android:ellipsize="end"
-            style="@style/BodyTextView"/>
+            style="@style/BodyTextView" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:layout_marginTop="16dp"
-            android:fillViewport="true"
             tools:ignore="TextSizeCheck">
 
             <LinearLayout
@@ -64,35 +60,32 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/widget_only_quick_add"
-                            style="@style/SubtitleTextView"/>
+                            style="@style/SubtitleTextView" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="@string/widgets_popup_only_quick_add_description"
-                            style="@style/BodyTextView"/>
+                            style="@style/BodyTextView" />
 
                     </LinearLayout>
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginVertical="8dp"
+                        android:layout_marginHorizontal="16dp"
                         android:padding="8dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
+                        style="@style/Card">
 
                         <Button
                             android:id="@+id/widget_1"
-                            style="@style/Button"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@string/popup_add"
+                            style="@style/Button"
                             tools:ignore="DuplicateSpeakableTextCheck" />
 
                     </androidx.cardview.widget.CardView>
@@ -116,14 +109,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/widget_quick_add"
-                            style="@style/SubtitleTextView"/>
+                            style="@style/SubtitleTextView" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="@string/widgets_popup_quick_add_description"
-                            style="@style/BodyTextView"/>
+                            style="@style/BodyTextView" />
 
                     </LinearLayout>
 
@@ -135,8 +128,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:padding="8dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
+                        style="@style/Card">
 
                         <Button
                             android:id="@+id/widget_2"
@@ -144,7 +136,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@string/popup_add"
-                            style="@style/Button"/>
+                            style="@style/Button" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -167,14 +159,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/widget_stats"
-                            style="@style/SubtitleTextView"/>
+                            style="@style/SubtitleTextView" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="@string/widgets_popup_stats_description"
-                            style="@style/BodyTextView"/>
+                            style="@style/BodyTextView" />
 
                     </LinearLayout>
 
@@ -186,8 +178,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:padding="8dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
+                        style="@style/Card">
 
                         <Button
                             android:id="@+id/widget_3"
@@ -195,7 +186,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@string/popup_add" />
+                            android:text="@string/popup_add"
+                            tools:ignore="TextContrastCheck" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -218,14 +210,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/widget_stats_quick_add"
-                            style="@style/SubtitleTextView"/>
+                            style="@style/SubtitleTextView" />
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="2dp"
                             android:text="@string/widgets_popup_stats_quick_add_description"
-                            style="@style/BodyTextView"/>
+                            style="@style/BodyTextView" />
 
                     </LinearLayout>
 
@@ -237,8 +229,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:padding="8dp"
-                        app:cardCornerRadius="12dp"
-                        app:cardElevation="4dp">
+                        style="@style/Card">
 
                         <Button
                             android:id="@+id/widget_4"
@@ -246,7 +237,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:text="@string/popup_add"
-                            style="@style/Button"/>
+                            style="@style/Button" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -264,15 +255,14 @@
             android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="16dp"
             android:padding="8dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
+            style="@style/Card">
 
             <Button
                 android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_close"
-                style="@style/Button"/>
+                style="@style/Button" />
 
         </androidx.cardview.widget.CardView>
 
