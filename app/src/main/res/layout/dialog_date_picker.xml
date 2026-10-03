@@ -1,36 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="20dp">
-
-    <CalendarView
-        android:id="@+id/customCalendarView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:showWeekNumber="false" />
+    style="@style/Card"
+    tools:ignore="VisualLintBounds">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        style="?android:attr/buttonBarStyle">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/close"
-            android:layout_width="wrap_content"
+        <CalendarView
+            android:id="@+id/customCalendarView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@android:string/cancel"
-            style="@style/Button"/>
+            android:showWeekNumber="false" />
 
-        <Button
-            android:id="@+id/button_confirm"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@android:string/ok"
-            style="@style/Button"/>
+            android:gravity="end"
+            android:orientation="horizontal"
+            style="?android:attr/buttonBarStyle">
+
+            <Button
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/cancel"
+                style="@style/Button" />
+
+            <Button
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/ok"
+                style="@style/Button" />
+
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+</androidx.cardview.widget.CardView>

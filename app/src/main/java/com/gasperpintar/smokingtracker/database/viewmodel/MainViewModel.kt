@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
@@ -16,7 +16,6 @@ import com.gasperpintar.smokingtracker.utils.JsonHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
-import java.util.Locale
 
 class MainViewModel(
     private val achievementRepository: AchievementRepository,
@@ -38,7 +37,7 @@ class MainViewModel(
             notificationsSettingsRepository.insert(settings = it)
         }
 
-        settingsRepository.get() ?: SettingsEntity.default(language = getLanguage(context = context)).also {
+        settingsRepository.get() ?: SettingsEntity.default(language = Application().applyLanguage(context = context)).also {
             settingsRepository.insert(settings = it)
         }
 
@@ -70,12 +69,5 @@ class MainViewModel(
         if (lastEndDate.isEqual(today.minusDays(1))) {
             costsRepository.update(entry = lastEntry.copy(endDate = today.atTime(LocalTime.MAX)))
         }
-    }
-
-    private fun getLanguage(
-        context: Context
-    ): String {
-        val languageValues = context.resources.getStringArray(R.array.language_values)
-        return languageValues.firstOrNull { it == Locale.getDefault().toLanguageTag() } ?: "system"
     }
 }

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/widget_container"
@@ -109,12 +110,13 @@
                 android:id="@+id/widget_add_new_entry"
                 android:layout_width="wrap_content"
                 android:layout_height="48dp"
-                android:textAlignment="center"
+                android:clickable="true"
                 android:gravity="center"
                 android:text="@string/insert_popup"
+                android:textAlignment="center"
                 android:textColor="@color/primary"
                 android:textSize="18sp"
-                android:clickable="true" />
+                tools:ignore="TextSizeCheck" />
         </LinearLayout>
 
     </LinearLayout>

@@ -1,0 +1,32 @@
+## What's new
+
+- Added support for adding home screen widgets directly from the application
+- Improved home screen widgets and their update behavior
+- Improved home screen data refresh after widget updates
+- Improved automatic system language detection
+- Improved application localization and language handling
+
+## Improvements
+
+- Improved overall application stability and reliability
+- Improved widget functionality and update handling
+- Improved consistency across application screens and layouts
+- Improved application UI consistency and maintainability
+- Improved compatibility with different system languages and locale settings
+
+## Bug fixes
+
+- Fixed widget update and refresh issues
+- Fixed automatic system language detection
+- Fixed various UI and layout inconsistencies
+- Improved reliability of widget updates
+
+## Contributors
+
+Thanks to everyone who contributed to this release, including code, translations, testing, documentation, and feedback.
+
+[View contributors](https://github.com/pintargasper/SmokingTracker/graphs/contributors)
+
+## Full Release Notes
+
+For more details about this release, see the [full release notes on GitHub](https://github.com/pintargasper/SmokingTracker/releases/tag/v1.9.1).

@@ -33,6 +33,8 @@ import com.gasperpintar.smokingtracker.databinding.NotificationsPopupBinding
 import com.gasperpintar.smokingtracker.databinding.SaveNotePopupBinding
 import com.gasperpintar.smokingtracker.databinding.ThemePopupBinding
 import com.gasperpintar.smokingtracker.databinding.UploadPopupBinding
+import com.gasperpintar.smokingtracker.databinding.WidgetPopupBinding
+import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -57,7 +59,7 @@ object DialogManager {
         context: FragmentActivity,
         onConfirm: (isLent: Boolean) -> Unit
     ) = BaseDialog.show(context, bindingInflater = InsertPopupBinding::inflate) {
-        binding.buttonConfirm.setOnClickListener {
+        binding.add.setOnClickListener {
             onConfirm(binding.lentCheckbox.isChecked)
             dismiss()
         }
@@ -78,7 +80,7 @@ object DialogManager {
                 timePicker.minute = dateTime.minute
             }
 
-            buttonConfirm.setOnClickListener {
+            confirm.setOnClickListener {
                 val selectedDateTime = LocalDateTime.of(
                     datePicker.year,
                     datePicker.month + 1,
@@ -97,7 +99,7 @@ object DialogManager {
         context: FragmentActivity,
         onConfirm: () -> Unit
     ) = BaseDialog.show(context, bindingInflater = DeletePopupBinding::inflate) {
-        binding.buttonConfirm.setOnClickListener {
+        binding.confirm.setOnClickListener {
             onConfirm()
             dismiss()
         }
@@ -187,10 +189,22 @@ object DialogManager {
             timePicker.hour = settings.dayEndMinutes / 60
             timePicker.minute = settings.dayEndMinutes % 60
 
-            buttonConfirm.setOnClickListener {
+            confirm.setOnClickListener {
                 onTimeSelected(timePicker.hour * 60 + timePicker.minute)
                 dismiss()
             }
+        }
+    }
+
+    fun showWidgetsDialog(
+        context: FragmentActivity,
+        onWidgetSelected: (widgetType: Widget) -> Unit
+    ) = BaseDialog.show(context, bindingInflater = WidgetPopupBinding::inflate) {
+        binding.run {
+            widget1.setOnClickListener { onWidgetSelected(Widget.ONLY_QUICK_ADD) }
+            widget2.setOnClickListener { onWidgetSelected(Widget.QUICK_ADD) }
+            widget3.setOnClickListener { onWidgetSelected(Widget.STATS) }
+            widget4.setOnClickListener { onWidgetSelected(Widget.STATS_QUICK_ADD) }
         }
     }
 
@@ -317,7 +331,7 @@ object DialogManager {
                 }
             }
 
-            buttonAddPeriod.setOnClickListener {
+            confirm.setOnClickListener {
                 val start = TimeHelper.toLocalDateTime(calendar = startDate ?: Calendar.getInstance())
                 val end = TimeHelper.toLocalDateTime(calendar = endDate ?: Calendar.getInstance())
 
@@ -345,7 +359,7 @@ object DialogManager {
         context: FragmentActivity,
         onDownload: () -> Unit
     ) = BaseDialog.show(context, bindingInflater = DownloadPopupBinding::inflate) {
-        binding.buttonDownload.setOnClickListener {
+        binding.download.setOnClickListener {
             onDownload()
             dismiss()
         }
@@ -366,8 +380,8 @@ object DialogManager {
                 context.getString(R.string.restore_popup_file_none)
             )
 
-            buttonOpenFile.setOnClickListener { onOpenFile() }
-            buttonConfirm.setOnClickListener {
+            openFile.setOnClickListener { onOpenFile() }
+            confirm.setOnClickListener {
                 if (textSelectedFile.tag is Uri) {
                     onConfirm()
                     dismiss()
@@ -392,7 +406,7 @@ object DialogManager {
                 selectedDate.set(year, month, dayOfMonth)
             }
 
-            buttonConfirm.setOnClickListener {
+            confirm.setOnClickListener {
                 onDateSelected(selectedDate)
                 dismiss()
             }
@@ -460,28 +474,30 @@ object DialogManager {
         val language = locale.language
 
         runCatching {
-            val version = context.packageManager
-                .getPackageInfo(context.packageName, 0)
-                .versionName
+            val version = context.packageManager.getPackageInfo(context.packageName, 0).versionName
 
             val directories = context.assets.list("changelogs") ?: emptyArray()
-            val directory = directories.firstOrNull { it == languageTag }
-                ?: directories.firstOrNull { it == language }
-                ?: directories.firstOrNull { it.startsWith(prefix = "$language-") }
+            val changelogFile = "v$version.md"
+
+            val directory = sequenceOf(languageTag, language)
+                .plus(directories.filter { it.startsWith(prefix = "$language-") })
+                .firstOrNull { directory -> changelogFile in (context.assets.list("changelogs/$directory") ?: emptyArray()) }
                 ?: "en-US"
 
             val content = context.assets
-                .open("changelogs/$directory/v$version.md")
+                .open("changelogs/$directory/$changelogFile")
                 .bufferedReader()
                 .use { it.readText() }
 
             Markwon.builder(context)
                 .usePlugin(LinkifyPlugin.create())
                 .usePlugin(object : AbstractMarkwonPlugin() {
-                override fun configureTheme(builder: MarkwonTheme.Builder) {
-                    builder.headingBreakHeight(0)
-                }
-            }).build().setMarkdown(binding.changelogText, content)
+                    override fun configureTheme(builder: MarkwonTheme.Builder) {
+                        builder.headingBreakHeight(0)
+                    }
+                })
+                .build()
+                .setMarkdown(binding.changelogText, content)
             binding.changelogText.movementMethod = LinkMovementMethod.getInstance()
         }.onFailure {
             binding.changelogText.text = ""
