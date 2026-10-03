@@ -5,8 +5,7 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import androidx.annotation.RequiresPermission
-import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
+import com.gasperpintar.smokingtracker.utils.WidgetHelper
 
 class QuickAddWidget : AppWidgetProvider() {
 
@@ -18,11 +17,13 @@ class QuickAddWidget : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        WidgetHelper.updateStatsWidget(
+        WidgetHelper.updateWidget(
             context = context,
             appWidgetManager = appWidgetManager,
             appWidgetIds = appWidgetIds,
-            layoutId = R.layout.widget_quick_add
+            widgetClass = this.javaClass,
+            showWeekly = false,
+            showMonthly = false
         )
         WidgetHelper.scheduleMidnightWidgetUpdate(context)
     }

@@ -1,16 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:fillViewport="true"
-    android:clipToPadding="false">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp">
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/button_back"
@@ -20,28 +23,25 @@
             android:background="@android:color/transparent"
             android:contentDescription="Back to previous screen"
             android:src="@drawable/arrow_circle_left_48px"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="?attr/colorOnSurface"
             tools:ignore="HardcodedText" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ellipsize="marquee"
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/statistics_title"
-            style="@style/MainTitleCenterTextView"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            style="@style/MainTitleCenterTextView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <Space
+            android:layout_width="56dp"
+            android:layout_height="1dp" />
+
+    </LinearLayout>
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/statistics_tab_layout"

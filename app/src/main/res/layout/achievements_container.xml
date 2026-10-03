@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_achievement"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="4dp"
     android:layout_marginHorizontal="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_marginVertical="4dp"
+    style="@style/Card">
 
     <LinearLayout
         android:id="@+id/achievement_container"
@@ -45,18 +44,20 @@
                     android:id="@+id/achievement_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
                     android:maxLines="3"
                     android:ellipsize="end"
-                    android:layout_marginBottom="4dp"
-                    style="@style/MainTitleTextView"/>
+                    style="@style/MainTitleTextView" />
 
                 <TextView
                     android:id="@+id/achievement_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
-                    style="@style/BodyTextView"/>
+                    style="@style/BodyTextView" />
+
             </LinearLayout>
+
         </LinearLayout>
 
         <TextView
@@ -65,8 +66,7 @@
             android:layout_height="wrap_content"
             android:text="@string/achievement_last"
             android:alpha="0.6"
-            style="@style/BodyTextView"/>
-
+            style="@style/BodyTextView" />
 
         <TextView
             android:id="@+id/achieved_count"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="@string/achievement_achieved"
             android:alpha="0.6"
-            style="@style/BodyTextView"/>
+            style="@style/BodyTextView" />
 
     </LinearLayout>
 

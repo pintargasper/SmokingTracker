@@ -7,7 +7,7 @@ import android.content.Context
 import androidx.annotation.RequiresPermission
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
 
-class StatsQuickAddWidget : AppWidgetProvider() {
+class OnlyQuickAddWidget : AppWidgetProvider() {
 
     @RequiresPermission(value = Manifest.permission.SCHEDULE_EXACT_ALARM)
     @Override

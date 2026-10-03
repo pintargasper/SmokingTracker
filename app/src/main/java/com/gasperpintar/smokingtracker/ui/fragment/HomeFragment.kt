@@ -15,7 +15,7 @@ import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
-import com.gasperpintar.smokingtracker.utils.widget.WidgetHelper
+import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -73,6 +73,9 @@ class HomeFragment : Base<FragmentHomeBinding>(
     override fun onResume() {
         super.onResume()
         startTimer()
+        viewLifecycleOwner.lifecycleScope.launch {
+            loadHistory(updateWidgets = false)
+        }
     }
 
     @Override
@@ -117,12 +120,11 @@ class HomeFragment : Base<FragmentHomeBinding>(
         recyclerviewHistory.adapter = adapter
     }
 
-    private suspend fun loadHistory() = binding.apply {
+    private suspend fun loadHistory(updateWidgets: Boolean = true) = binding.apply {
         val state = viewModel.getState()
         lastEntry = state.lastEntry
 
-        currentDay.text =
-            LocalizationHelper.getDayOfWeekName(dayOfWeek = state.selectedDate.dayOfWeek)
+        currentDay.text = LocalizationHelper.getDayOfWeekName(dayOfWeek = state.selectedDate.dayOfWeek)
         currentDate.text = LocalizationHelper.formatDate(date = state.selectedDate)
         dailyValue.text = state.dailyCount.toString()
         weeklyValue.text = state.weeklyCount.toString()
@@ -138,7 +140,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
                 recyclerviewHistory.scrollToPosition(0)
             }
         }
-        WidgetHelper.updateAllWidgets(context = requireContext())
+        if (updateWidgets) WidgetHelper.updateAllWidgets(context = requireContext())
     }
 
     private fun startTimer() {

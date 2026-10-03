@@ -21,8 +21,8 @@ configure<ApplicationExtension> {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
         targetSdk = 37
-        versionCode = 15
-        versionName = "1.9.0"
+        versionCode = 16
+        versionName = "1.9.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -110,12 +110,16 @@ fun copyVersionFiles() {
         include("**/$version.txt")
         rename("$version.txt", "$version.md")
 
+        doFirst {
+            destination.get().asFile.deleteRecursively()
+        }
+
         doLast {
             destination.get().asFile.walkBottomUp().filter {
                 it.isDirectory && it != destination.get().asFile
             }.filter {
                 it.listFiles()?.isEmpty() == true
-            }.forEach(File::delete)
+            }.forEach(action = File::delete)
         }
     }
 

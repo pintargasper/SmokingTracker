@@ -1,0 +1,8 @@
+Bug Fixes
+
+- Added support for home screen widgets
+- Improved widget updates and refresh behavior
+- Improved system language detection and localization
+- Improved UI consistency and stability
+- Fixed widget, layout, and minor UI issues
+- Updated Slovenian and German translations
