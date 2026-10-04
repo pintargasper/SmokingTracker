@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.TimePicker
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,28 +19,27 @@ import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEnti
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
-import com.gasperpintar.smokingtracker.databinding.CalculatorResultPopupBinding
-import com.gasperpintar.smokingtracker.databinding.ChangelogPopupBinding
-import com.gasperpintar.smokingtracker.databinding.CostContainerBinding
-import com.gasperpintar.smokingtracker.databinding.CostsPopupBinding
-import com.gasperpintar.smokingtracker.databinding.CurrencyPopupBinding
-import com.gasperpintar.smokingtracker.databinding.DeletePopupBinding
-import com.gasperpintar.smokingtracker.databinding.DialogDatePickerBinding
-import com.gasperpintar.smokingtracker.databinding.DownloadPopupBinding
-import com.gasperpintar.smokingtracker.databinding.EditPopupBinding
-import com.gasperpintar.smokingtracker.databinding.EndDayPopupBinding
-import com.gasperpintar.smokingtracker.databinding.InsertPopupBinding
-import com.gasperpintar.smokingtracker.databinding.LanguagePopupBinding
-import com.gasperpintar.smokingtracker.databinding.NotificationsPopupBinding
-import com.gasperpintar.smokingtracker.databinding.SaveNotePopupBinding
-import com.gasperpintar.smokingtracker.databinding.ThemePopupBinding
-import com.gasperpintar.smokingtracker.databinding.UploadPopupBinding
-import com.gasperpintar.smokingtracker.databinding.WidgetPopupBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerCostBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentChangelogBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentCostsBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentCurrencyBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentDatePickerBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentEditBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentEndDayBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentInsertBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentLanguageBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentNotificationsBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentRestoreBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentResultBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentThemeBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentWidgetsBinding
 import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
+import com.gasperpintar.smokingtracker.utils.TimeHelper.toLocalDate
+import com.gasperpintar.smokingtracker.utils.TimeHelper.toLocalTime
 import io.noties.markwon.AbstractMarkwonPlugin
 import io.noties.markwon.Markwon
 import io.noties.markwon.core.MarkwonTheme
@@ -57,20 +58,26 @@ object DialogManager {
 
     fun showInsertDialog(
         context: FragmentActivity,
-        onConfirm: (isLent: Boolean) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = InsertPopupBinding::inflate) {
-        binding.add.setOnClickListener {
-            onConfirm(binding.lentCheckbox.isChecked)
-            dismiss()
+        onSuccess: (Boolean) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentInsertBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.message.isGone = true
+            binding.title.setText(R.string.insert_popup)
+            binding.dialogConfirm.isVisible = true
+            binding.confirm.setText(R.string.popup_add)
+            binding.confirm.setOnClickListener {
+                onSuccess(lentCheckbox.isChecked)
+                dismiss()
+            }
         }
     }
 
     fun showEditDialog(
         context: FragmentActivity,
         entry: HistoryEntry,
-        onConfirm: (newDateTime: LocalDateTime, isLent: Boolean) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = EditPopupBinding::inflate) {
-        binding.run {
+        onSuccess: (LocalDateTime, Boolean) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentEditBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
             lentCheckbox.isChecked = entry.isLent
             timePicker.is24Hour = DateFormat.is24HourFormat(context)
 
@@ -80,16 +87,14 @@ object DialogManager {
                 timePicker.minute = dateTime.minute
             }
 
-            confirm.setOnClickListener {
-                val selectedDateTime = LocalDateTime.of(
-                    datePicker.year,
-                    datePicker.month + 1,
-                    datePicker.dayOfMonth,
-                    timePicker.hour,
-                    timePicker.minute,
-                    LocalDateTime.now().second
-                )
-                onConfirm(selectedDateTime, lentCheckbox.isChecked)
+            binding.message.isGone = true
+            binding.title.setText(R.string.edit_popup_message)
+            binding.dialogConfirm.isVisible = true
+            binding.confirm.setOnClickListener {
+                val selectedDateTime = LocalDateTime.of(datePicker.toLocalDate(), timePicker.toLocalTime())
+                    .withSecond(entry.createdAt.second)
+
+                onSuccess(selectedDateTime, lentCheckbox.isChecked)
                 dismiss()
             }
         }
@@ -97,10 +102,13 @@ object DialogManager {
 
     fun showDeleteDialog(
         context: FragmentActivity,
-        onConfirm: () -> Unit
-    ) = BaseDialog.show(context, bindingInflater = DeletePopupBinding::inflate) {
+        onSuccess: () -> Unit
+    ) = BaseDialog.show(context = context) {
+        binding.message.isGone = true
+        binding.title.setText(R.string.delete_popup_message)
+        binding.dialogConfirm.isVisible = true
         binding.confirm.setOnClickListener {
-            onConfirm()
+            onSuccess()
             dismiss()
         }
     }
@@ -108,13 +116,16 @@ object DialogManager {
     fun showThemeDialog(
         context: FragmentActivity,
         selectedTheme: Int,
-        onThemeSelected: (Int) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = ThemePopupBinding::inflate) {
-        binding.run {
+        onSuccess: (Int) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentThemeBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.setText(R.string.theme_popup)
+            binding.message.setText(R.string.theme_popup_info)
+
             listOf(checkboxSystem, checkboxLightTheme, checkboxDarkTheme).forEachIndexed { index, checkbox ->
                 checkbox.isChecked = selectedTheme == index
                 checkbox.setOnClickListener {
-                    onThemeSelected(index)
+                    onSuccess(index)
                     dismiss()
                 }
             }
@@ -125,13 +136,16 @@ object DialogManager {
         context: FragmentActivity,
         selectedLanguage: String,
         onLanguageSelected: (String) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = LanguagePopupBinding::inflate) {
-        binding.run {
-            val languages = context.resources.getStringArray(R.array.language_values)
+    ) = BaseDialog.show(context = context) {
+        DialogContentLanguageBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.setText(R.string.language_popup)
+            binding.message.setText(R.string.language_popup_info)
 
-            listOf(checkboxSystem, checkboxGerman, checkboxEnglish, checkboxFrench, checkboxHungarian,
-                checkboxSlovenian, checkboxSerbianCyrillicScript, checkboxSerbianLatinScript, checkboxUkrainian,
-                checkboxChineseSimplified, checkboxChineseTraditional
+            val languages = context.resources.getStringArray(R.array.language_values)
+            listOf(
+                checkboxSystem, checkboxGerman, checkboxEnglish, checkboxFrench, checkboxHungarian,
+                checkboxSlovenian, checkboxSerbianCyrillicScript, checkboxSerbianLatinScript,
+                checkboxUkrainian, checkboxChineseTraditional, checkboxChineseSimplified
             ).forEachIndexed { index, checkbox ->
                 checkbox.isChecked = selectedLanguage == languages[index]
                 checkbox.setOnClickListener {
@@ -146,10 +160,12 @@ object DialogManager {
         context: FragmentActivity,
         settings: SettingsEntity,
         notificationsSettings: NotificationsSettingsEntity,
-        onSettingsSelected: (SettingsEntity) -> Unit,
-        onNotificationSettingsSelected: (NotificationsSettingsEntity) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = NotificationsPopupBinding::inflate) {
-        binding.run {
+        onSuccess: (SettingsEntity, NotificationsSettingsEntity) -> Unit,
+    ) = BaseDialog.show(context = context) {
+        DialogContentNotificationsBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.setText(R.string.notifications_popup)
+            binding.message.setText(R.string.notifications_popup_info)
+
             var currentNotificationSettings = notificationsSettings
             var currentSettings = settings
 
@@ -161,19 +177,19 @@ object DialogManager {
                 checkbox.isChecked = initialValue
                 checkbox.setOnCheckedChangeListener { _, isChecked ->
                     currentNotificationSettings = update(currentNotificationSettings, isChecked)
-                    onNotificationSettingsSelected(currentNotificationSettings)
+                    onSuccess(currentSettings, currentNotificationSettings)
                 }
             }
 
-            bindCheckbox(checkboxSystem, initialValue = currentNotificationSettings.system) { ns, c -> ns.copy(system = c) }
-            bindCheckbox(checkboxProgress, initialValue = currentNotificationSettings.progress) { ns, c -> ns.copy(progress = c) }
-            bindCheckbox(checkboxAchievements, initialValue = currentNotificationSettings.achievements) { ns, c -> ns.copy(achievements = c) }
+            bindCheckbox(checkboxSystem, currentNotificationSettings.system) { ns, c -> ns.copy(system = c) }
+            bindCheckbox(checkboxProgress, currentNotificationSettings.progress) { ns, c -> ns.copy(progress = c) }
+            bindCheckbox(checkboxAchievements, currentNotificationSettings.achievements) { ns, c -> ns.copy(achievements = c) }
 
             spinnerProgressFrequency.apply {
                 setText(context.resources.getStringArray(R.array.frequency_options)[currentSettings.frequency], false)
                 setOnItemClickListener { _, _, position, _ ->
                     currentSettings = currentSettings.copy(frequency = position)
-                    onSettingsSelected(currentSettings)
+                    onSuccess(currentSettings, currentNotificationSettings)
                 }
             }
         }
@@ -182,15 +198,18 @@ object DialogManager {
     fun showEndDayDialog(
         context: FragmentActivity,
         settings: SettingsEntity,
-        onTimeSelected: (Int) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = EndDayPopupBinding::inflate) {
-        binding.run {
+        onSuccess: (Int) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentEndDayBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
             timePicker.is24Hour = DateFormat.is24HourFormat(context)
             timePicker.hour = settings.dayEndMinutes / 60
             timePicker.minute = settings.dayEndMinutes % 60
 
-            confirm.setOnClickListener {
-                onTimeSelected(timePicker.hour * 60 + timePicker.minute)
+            binding.title.setText(R.string.settings_general_day_end_hour)
+            binding.message.setText(R.string.settings_general_day_end_hour_description)
+            binding.dialogConfirm.isVisible = true
+            binding.confirm.setOnClickListener {
+                onSuccess(timePicker.hour * 60 + timePicker.minute)
                 dismiss()
             }
         }
@@ -198,44 +217,50 @@ object DialogManager {
 
     fun showWidgetsDialog(
         context: FragmentActivity,
-        onWidgetSelected: (widgetType: Widget) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = WidgetPopupBinding::inflate) {
-        binding.run {
-            widget1.setOnClickListener { onWidgetSelected(Widget.ONLY_QUICK_ADD) }
-            widget2.setOnClickListener { onWidgetSelected(Widget.QUICK_ADD) }
-            widget3.setOnClickListener { onWidgetSelected(Widget.STATS) }
-            widget4.setOnClickListener { onWidgetSelected(Widget.STATS_QUICK_ADD) }
+        onSuccess: (Widget) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentWidgetsBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.setText(R.string.settings_general_widgets)
+            binding.message.setText(R.string.settings_general_widgets_description)
+
+            listOf(widget1 to Widget.ONLY_QUICK_ADD, widget2 to Widget.QUICK_ADD, widget3 to Widget.STATS, widget4 to Widget.STATS_QUICK_ADD).forEach { (button, widget) ->
+                button.setOnClickListener {
+                    onSuccess(widget)
+                    dismiss()
+                }
+            }
         }
     }
 
     fun showCurrencyDialog(
         context: FragmentActivity,
         settings: SettingsEntity,
-        onCurrencySelected: (currency: String, customCurrency: String) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = CurrencyPopupBinding::inflate) {
-        binding.run {
+        onSuccess: (String, String) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentCurrencyBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.setText(R.string.currency_popup)
+            binding.message.setText(R.string.currency_popup_info)
             inputCustomCurrency.setText(settings.customCurrency)
 
-            fun selectAndClose(currencyValue: String) {
-                onCurrencySelected(currencyValue, inputCustomCurrency.text.toString().trim())
+            fun select(currencyValue: String) {
+                onSuccess(currencyValue, inputCustomCurrency.text.toString().trim())
                 dismiss()
             }
 
             val currencyMap = mapOf(checkboxEuro to "€", checkboxDollar to "$", checkboxPound to "£")
             val activeCheckbox = currencyMap.entries.firstOrNull { it.value == settings.currency }?.key ?: checkboxCustom
-            activeCheckbox.isChecked = true
 
+            activeCheckbox.isChecked = true
             currencyMap.forEach { (checkbox, value) ->
                 checkbox.setOnClickListener {
                     editTextError.visibility = View.GONE
-                    selectAndClose(currencyValue = value)
+                    select(currencyValue = value)
                 }
             }
 
             checkboxCustom.setOnClickListener {
                 editTextError.visibility = View.GONE
-                val customVal = inputCustomCurrency.text.toString().trim()
-                customVal.takeIf { it.isNotEmpty() }?.let(block = ::selectAndClose) ?: run {
+                inputCustomCurrency.text.toString().trim().takeIf { it.isNotEmpty() }?.let(block = ::select) ?: run {
                     checkboxCustom.isChecked = false
                     editTextError.visibility = View.VISIBLE
                     inputCustomCurrency.requestFocus()
@@ -258,16 +283,17 @@ object DialogManager {
     fun showCostsDialog(
         context: FragmentActivity,
         currency: String,
-        onDelete: suspend (CostEntry) -> Unit,
-        onCostAdded: suspend (CostEntity) -> Unit,
-        onRefresh: suspend () -> List<CostEntry>
-    ) = BaseDialog.show(context, bindingInflater = CostsPopupBinding::inflate) {
-        binding.run {
+        onSuccess: suspend (CostEntry?, CostEntity?, List<CostEntry>?) -> List<CostEntry>
+    ) = BaseDialog.show(context = context) {
+        DialogContentCostsBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.setText(R.string.costs_popup)
+            binding.message.setText(R.string.costs_popup_info)
+            binding.dialogConfirm.isVisible = true
+
             var startDate: Calendar? = null
             var endDate: Calendar? = null
-            val decimalFormat = DecimalFormat("0.00#")
 
-            lateinit var adapter: Adapter<CostEntry, CostContainerBinding>
+            lateinit var adapter: Adapter<CostEntry, ContainerCostBinding>
 
             fun formatDate(date: LocalDate): String {
                 return when (date) {
@@ -277,13 +303,13 @@ object DialogManager {
             }
 
             suspend fun refreshData() {
-                adapter.submitList(onRefresh()) {
+                adapter.submitList(onSuccess(null, null, null)) {
                     recyclerviewCostPeriods.scrollToPosition(0)
                 }
             }
 
             adapter = Adapter(
-                bindingFactory = CostContainerBinding::inflate,
+                bindingFactory = ContainerCostBinding::inflate,
                 onBind = { costEntry ->
                     dateLabel.text = context.getString(
                         R.string.cost_format,
@@ -292,18 +318,18 @@ object DialogManager {
                     )
                     priceLabel.text = context.getString(
                         R.string.cost_price,
-                        decimalFormat.format(costEntry.price),
+                        DecimalFormat("0.00#").format(costEntry.price),
                         currency
                     )
-
                     delete.setOnClickListener {
                         context.lifecycleScope.launch {
-                            onDelete(costEntry)
+                            onSuccess(costEntry, null, null)
                             refreshData()
                         }
                     }
                 }
             )
+
             recyclerviewCostPeriods.apply {
                 layoutManager = LinearLayoutManager(context)
                 this.adapter = adapter
@@ -314,42 +340,46 @@ object DialogManager {
             }
 
             listOf(inputStartDate to true, inputEndDate to false).forEach { (inputField, isStartDate) ->
-                inputField.apply {
-                    setOnClickListener {
-                        showDatePickerDialog(context) { selectedDate ->
-                            val (start, end, formattedText) = TimeHelper.applySelectedDate(
-                                startDate,
-                                endDate,
-                                selectedDate = selectedDate,
-                                isStartDate = isStartDate
-                            )
-                            startDate = start
-                            endDate = end
-                            setText(formattedText)
-                        }
+                inputField.setOnClickListener {
+                    showDatePickerDialog(context) { selectedDate ->
+                        val (start, end, formattedText) = TimeHelper.applySelectedDate(
+                            startDate,
+                            endDate,
+                            selectedDate = selectedDate,
+                            isStartDate = isStartDate
+                        )
+
+                        startDate = start
+                        endDate = end
+                        inputField.setText(formattedText)
                     }
                 }
             }
 
-            confirm.setOnClickListener {
+            binding.confirm.setOnClickListener {
                 val start = TimeHelper.toLocalDateTime(calendar = startDate ?: Calendar.getInstance())
                 val end = TimeHelper.toLocalDateTime(calendar = endDate ?: Calendar.getInstance())
 
                 context.lifecycleScope.launch {
-                    onCostAdded(
+                    onSuccess(
+                        null,
                         CostEntity(
                             id = 0L,
                             startDate = start,
                             endDate = end.takeIf { it.toLocalDate() != LocalDate.now() }
                                 ?: end.toLocalDate().atTime(23, 59, 59),
                             price = inputPackPrice.text.toString().toDoubleOrNull() ?: 0.0
-                        )
+                        ),
+                        null
                     )
+
                     refreshData()
 
                     startDate = null
                     endDate = null
-                    listOf(inputStartDate, inputEndDate, inputPackPrice).forEach { it.text.clear() }
+                    listOf(inputStartDate, inputEndDate, inputPackPrice).forEach {
+                        it.text.clear()
+                    }
                 }
             }
         }
@@ -357,48 +387,59 @@ object DialogManager {
 
     fun showBackupDialog(
         context: FragmentActivity,
-        onDownload: () -> Unit
-    ) = BaseDialog.show(context, bindingInflater = DownloadPopupBinding::inflate) {
-        binding.download.setOnClickListener {
-            onDownload()
+        onSuccess: () -> Unit
+    ) = BaseDialog.show(context = context) {
+        binding.title.setText(R.string.backup_popup)
+        binding.message.setText(R.string.backup_popup_description)
+        binding.dialogConfirm.isVisible = true
+        binding.confirm.setText(R.string.popup_backup)
+        binding.confirm.setOnClickListener {
+            onSuccess()
             dismiss()
         }
     }
 
     fun showRestoreDialog(
         context: FragmentActivity,
-        onOpenFile: () -> Unit,
-        onConfirm: () -> Unit,
-        onDismiss: () -> Unit,
-        onViewCreated: (TextView) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = UploadPopupBinding::inflate) {
-        binding.run {
-            onViewCreated(textSelectedFile)
+        onSuccess: (Unit?, Unit?, Unit?, TextView?) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentRestoreBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.setText(R.string.restore_popup)
+            binding.message.setText(R.string.restore_popup_info)
+            binding.dialogConfirm.isVisible = true
 
+            onSuccess(null, null, null, textSelectedFile)
             textSelectedFile.text = context.getString(
                 R.string.restore_popup_file,
                 context.getString(R.string.restore_popup_file_none)
             )
 
-            openFile.setOnClickListener { onOpenFile() }
-            confirm.setOnClickListener {
+            openFile.setOnClickListener {
+                onSuccess(Unit, null, null, null)
+            }
+
+            binding.confirm.setOnClickListener {
                 if (textSelectedFile.tag is Uri) {
-                    onConfirm()
+                    onSuccess(null, Unit, null, null)
                     dismiss()
                 }
             }
-        }
 
-        dialog.setOnDismissListener {
-            onDismiss()
+            dialog.setOnDismissListener {
+                onSuccess(null, null, Unit, null)
+            }
         }
     }
 
     fun showDatePickerDialog(
         context: FragmentActivity,
-        onDateSelected: (Calendar) -> Unit
-    ) = BaseDialog.show(context, bindingInflater = DialogDatePickerBinding::inflate) {
-        binding.run {
+        onSuccess: (Calendar) -> Unit
+    ) = BaseDialog.show(context = context) {
+        DialogContentDatePickerBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.isGone = true
+            binding.message.isGone = true
+            binding.dialogConfirm.isVisible = true
+
             val selectedDate = Calendar.getInstance()
 
             customCalendarView.date = selectedDate.timeInMillis
@@ -406,8 +447,8 @@ object DialogManager {
                 selectedDate.set(year, month, dayOfMonth)
             }
 
-            confirm.setOnClickListener {
-                onDateSelected(selectedDate)
+            binding.confirm.setOnClickListener {
+                onSuccess(selectedDate)
                 dismiss()
             }
         }
@@ -415,92 +456,113 @@ object DialogManager {
 
     fun showResultDialog(
         context: FragmentActivity,
-        totalCost: Double,
-        totalTimeMinutes: Int,
-        totalCigarettes: Int,
-        currencyUnit: String,
+        values: Pair<Triple<Double, Int, Int>, String>,
         formatTime: (Int) -> String
-    ) = BaseDialog.show(context, bindingInflater = CalculatorResultPopupBinding::inflate) {
-        binding.run {
-            val averageCostPerCigarette = totalCigarettes.takeIf { it > 0 }?.let { totalCost / it } ?: 0.0
+    ) = BaseDialog.show(context = context) {
+        DialogContentResultBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.message.isGone = true
+            binding.title.setText(R.string.calculator_result)
+
+            val (result, currencyUnit) = values
+            val (total, totalTimeMinutes, totalCigarettes) = result
+
+            val averageCostPerCigarette = totalCigarettes.takeIf { it > 0 }?.let { total / it } ?: 0.0
             val totalHours = totalTimeMinutes / 60.0
-            val averageCostPerHour = totalHours.takeIf { it > 0 }?.let { totalCost / it } ?: 0.0
+            val averageCost = totalHours.takeIf { it > 0 }?.let { total / it } ?: 0.0
 
             val decimalFormatTwo = DecimalFormat("0.00")
             val decimalFormatThree = DecimalFormat("0.000")
 
-            fun formatPrice(amount: Double, format: DecimalFormat): String {
+            fun formatPrice(
+                amount: Double,
+                format: DecimalFormat
+            ): String {
                 return context.getString(R.string.cost_price, format.format(amount), currencyUnit)
             }
 
-            popupResultTotalCosts.text = formatPrice(amount = totalCost, format = decimalFormatTwo)
-            popupResultCostPerCigarette.text = formatPrice(amount = averageCostPerCigarette, format = decimalFormatThree)
-            popupResultAverageCostPerHour.text = formatPrice(amount = averageCostPerHour, format = decimalFormatTwo)
-            popupResultTimeSpent.text = formatTime(totalTimeMinutes)
+            totalCosts.text = formatPrice(total, decimalFormatTwo)
+            costPerCigarette.text = formatPrice(averageCostPerCigarette, decimalFormatThree)
+            averageCostPerHour.text = formatPrice(averageCost, decimalFormatTwo)
+            timeSpent.text = formatTime(totalTimeMinutes)
         }
     }
 
     fun showLoadingDialog(
         context: FragmentActivity
-    ): LoadingDialog = LoadingDialog(context).apply {
-        show()
+    ): LoadingDialog {
+        return LoadingDialog(context).also(block = LoadingDialog::show)
     }
 
     fun showSaveNoteDialog(
         context: FragmentActivity,
-        onSave: () -> Unit,
-        onClose: () -> Unit = {}
-    ) = BaseDialog.show(context, bindingInflater = SaveNotePopupBinding::inflate) {
-        binding.run {
-            save.setOnClickListener {
-                dismiss()
-                onSave()
-            }
+        onSuccess: (Boolean, Boolean) -> Unit
+    ) = BaseDialog.show(context = context) {
+        binding.message.isGone = true
+        binding.title.setText(R.string.note_popup_save)
+        binding.dialogConfirm.isVisible = true
 
-            close.setOnClickListener {
-                dismiss()
-                onClose()
-            }
+        binding.confirm.setText(R.string.popup_save)
+        binding.confirm.setOnClickListener {
+            onSuccess(true, false)
+            dismiss()
+        }
+
+        binding.close.setOnClickListener {
+            onSuccess(false, true)
+            dismiss()
         }
     }
 
     fun showChangelogDialog(
         context: FragmentActivity,
-    ) = BaseDialog.show(context, bindingInflater = ChangelogPopupBinding::inflate) {
-        setCancelable(false)
+    ) = BaseDialog.show(context = context) {
+        DialogContentChangelogBinding.inflate(context.layoutInflater, binding.dialogContent, true).apply {
+            binding.title.isGone = true
+            binding.message.isGone = true
+            setCancelable(false)
 
-        val locale = LocalizationHelper.getLocale()
-        val languageTag = locale.toLanguageTag()
-        val language = locale.language
+            val locale = LocalizationHelper.getLocale()
+            val languageTag = locale.toLanguageTag()
+            val language = locale.language
 
-        runCatching {
-            val version = context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            runCatching {
+                val version = context.packageManager
+                    .getPackageInfo(context.packageName, 0)
+                    .versionName
 
-            val directories = context.assets.list("changelogs") ?: emptyArray()
-            val changelogFile = "v$version.md"
+                val directories = context.assets.list("changelogs") ?: emptyArray()
+                val changelogFile = "v$version.md"
 
-            val directory = sequenceOf(languageTag, language)
-                .plus(directories.filter { it.startsWith(prefix = "$language-") })
-                .firstOrNull { directory -> changelogFile in (context.assets.list("changelogs/$directory") ?: emptyArray()) }
-                ?: "en-US"
+                val directory = sequenceOf(languageTag, language)
+                    .plus(elements = directories.filter {
+                        it.startsWith("$language-")
+                    }).firstOrNull { directory ->
+                        changelogFile in (context.assets.list("changelogs/$directory")
+                            ?: emptyArray())
+                    } ?: "en-US"
 
-            val content = context.assets
-                .open("changelogs/$directory/$changelogFile")
-                .bufferedReader()
-                .use { it.readText() }
+                val content = context.assets
+                    .open("changelogs/$directory/$changelogFile")
+                    .bufferedReader()
+                    .use { it.readText() }
 
-            Markwon.builder(context)
-                .usePlugin(LinkifyPlugin.create())
-                .usePlugin(object : AbstractMarkwonPlugin() {
-                    override fun configureTheme(builder: MarkwonTheme.Builder) {
-                        builder.headingBreakHeight(0)
-                    }
-                })
-                .build()
-                .setMarkdown(binding.changelogText, content)
-            binding.changelogText.movementMethod = LinkMovementMethod.getInstance()
-        }.onFailure {
-            binding.changelogText.text = ""
+                Markwon.builder(context)
+                    .usePlugin(LinkifyPlugin.create())
+                    .usePlugin(
+                        object : AbstractMarkwonPlugin() {
+                            override fun configureTheme(
+                                builder: MarkwonTheme.Builder
+                            ) {
+                                builder.headingBreakHeight(0)
+                            }
+                        }
+                    )
+                    .build()
+                    .setMarkdown(changelogText, content)
+                changelogText.movementMethod = LinkMovementMethod.getInstance()
+            }.onFailure {
+                changelogText.text = ""
+            }
         }
     }
 }

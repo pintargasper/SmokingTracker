@@ -1,25 +1,25 @@
 package com.gasperpintar.smokingtracker.ui.dialog
 
-import android.view.LayoutInflater
-import android.view.View
 import androidx.fragment.app.FragmentActivity
-import androidx.viewbinding.ViewBinding
-import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.databinding.DialogBaseBinding
 
-abstract class BaseDialog<B : ViewBinding>(
-    protected val activity: FragmentActivity,
-    bindingInflater: (LayoutInflater) -> B
+abstract class BaseDialog(
+    protected val activity: FragmentActivity
 ) {
-    internal val binding: B = bindingInflater(activity.layoutInflater)
-    internal val dialog = RoundedDialog(context = activity).apply { setView(binding.root) }
+    internal val binding: DialogBaseBinding = DialogBaseBinding.inflate(activity.layoutInflater)
+    internal val dialog = RoundedDialog(context = activity).apply {
+        setView(binding.root)
+    }
 
     init {
-        binding.root.findViewById<View>(R.id.close)?.setOnClickListener { dismiss() }
+        binding.close.setOnClickListener {
+            dismiss()
+        }
     }
 
     internal abstract fun setup()
 
-    internal open fun show() {
+    open fun show() {
         setup()
         dialog.show()
     }
@@ -34,14 +34,13 @@ abstract class BaseDialog<B : ViewBinding>(
     }
 
     companion object {
-        internal inline fun <B : ViewBinding> show(
+        inline fun show(
             context: FragmentActivity,
-            noinline bindingInflater: (LayoutInflater) -> B,
-            crossinline block: BaseDialog<B>.() -> Unit
+            crossinline block: BaseDialog.() -> Unit
         ) {
-            object : BaseDialog<B>(activity = context, bindingInflater) {
+            object : BaseDialog(activity = context) {
                 override fun setup() = block()
-            }.apply { show() }
+            }.show()
         }
     }
 }

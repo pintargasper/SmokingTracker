@@ -16,13 +16,7 @@ class Adapter<T : Identifiable, B : ViewBinding>(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder<B> {
-        return ViewHolder(
-            binding = bindingFactory(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+        return ViewHolder(binding = bindingFactory(LayoutInflater.from(parent.context), parent, false))
     }
 
     @Override

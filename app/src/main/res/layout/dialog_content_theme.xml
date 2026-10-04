@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/theme_inner_options_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    tools:ignore="TextSizeCheck">
+
+    <LinearLayout
+        android:id="@+id/theme_options_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <CheckBox
+            android:id="@+id/checkbox_system"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_popup_check_box_system"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
+
+        <CheckBox
+            android:id="@+id/checkbox_light_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_popup_check_box_light_theme"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_dark_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/theme_popup_check_box_dark_theme"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="VisualLintButtonSize" />
+
+    </LinearLayout>
+
+</ScrollView>
