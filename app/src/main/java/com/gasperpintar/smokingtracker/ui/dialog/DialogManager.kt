@@ -226,7 +226,6 @@ object DialogManager {
             listOf(widget1 to Widget.ONLY_QUICK_ADD, widget2 to Widget.QUICK_ADD, widget3 to Widget.STATS, widget4 to Widget.STATS_QUICK_ADD).forEach { (button, widget) ->
                 button.setOnClickListener {
                     onSuccess(widget)
-                    dismiss()
                 }
             }
         }
