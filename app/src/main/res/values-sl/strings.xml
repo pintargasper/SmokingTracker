@@ -299,4 +299,12 @@
     <string name="about_contributors_hungarian">Prevod v madžarščino</string>
     <string name="settings_general_day_end_hour">Ura zaključka dneva</string>
     <string name="about_contributors_code">Prispevek kode</string>
+    <string name="settings_general_widgets">Pripomočki</string>
+    <string name="settings_general_widgets_description">Dodaj pripomočke na začetni zaslon</string>
+    <string name="popup_add">Dodaj</string>
+    <string name="widgets_popup_stats_description">Oglejte si statistiko kajenja</string>
+    <string name="widgets_popup_stats_quick_add_description">Oglejte si statistiko in hitro dodajte cigareto</string>
+    <string name="widgets_popup_quick_add_description">Hitro dodajte cigareto</string>
+    <string name="widgets_popup_only_quick_add_description">Hitro dodajte cigareto z enim dotikom</string>
+    <string name="widget_only_quick_add">Samo hitri vnos</string>
 </resources>

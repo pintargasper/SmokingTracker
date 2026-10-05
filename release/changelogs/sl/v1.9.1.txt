@@ -1,0 +1,32 @@
+## Kaj je novega
+
+- Dodana podpora za dodajanje pripomočkov začetnega zaslona neposredno iz aplikacije
+- Izboljšani pripomočki začetnega zaslona in njihovo vedenje pri posodabljanju
+- Izboljšano osveževanje podatkov začetnega zaslona po posodobitvah pripomočkov
+- Izboljšano samodejno zaznavanje jezika sistema
+- Izboljšana lokalizacija aplikacije in obravnavanje jezika
+
+## Izboljšave
+
+- Izboljšana splošna stabilnost in zanesljivost aplikacije
+- Izboljšana funkcionalnost pripomočkov in obravnavanje posodobitev
+- Izboljšana doslednost med zasloni in postavitvami aplikacij
+- Izboljšana doslednost in vzdrževanje uporabniškega vmesnika aplikacije
+- Izboljšana združljivost z različnimi sistemskimi jeziki in lokalnimi nastavitvami
+
+## Popravki napak
+
+- Odpravljene težave s posodabljanjem in osveževanjem pripomočkov
+- Odpravljeno samodejno zaznavanje jezika sistema
+- Odpravljene različne nedoslednosti uporabniškega vmesnika in postavitve
+- Izboljšana zanesljivost posodabljanja pripomočkov
+
+## Sodelujoči
+
+Hvala vsem, ki ste prispevali k tej izdaji, vključno s kodo, prevodi, testiranjem, dokumentacijo in povratnimi informacijami.
+
+[Ogled sodelujočih](https://github.com/pintargasper/SmokingTracker/graphs/contributors)
+
+## Celotne opombe ob izdaji
+
+Za več podrobnosti o tej izdaji glejte [celotne opombe ob izdaji na GitHubu](https://github.com/pintargasper/SmokingTracker/releases/tag/v1.9.1).
