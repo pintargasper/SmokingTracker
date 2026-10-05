@@ -9,7 +9,7 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
-import com.gasperpintar.smokingtracker.databinding.HistoryContainerBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerHistoryBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
@@ -35,7 +35,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
     private var lastEntry: HistoryEntity? = null
     private var timerJob: Job? = null
 
-    private lateinit var adapter: Adapter<HistoryEntry, HistoryContainerBinding>
+    private lateinit var adapter: Adapter<HistoryEntry, ContainerHistoryBinding>
 
     @Override
     override fun initialize() = binding.apply {
@@ -92,7 +92,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
 
     private fun setupAdapter() = binding.apply {
         adapter = Adapter(
-            bindingFactory = HistoryContainerBinding::inflate,
+            bindingFactory = ContainerHistoryBinding::inflate,
             onBind = { historyEntry ->
                 timerLabel.text = historyEntry.timerLabel
                 lent.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE

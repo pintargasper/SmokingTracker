@@ -22,8 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
-            android:gravity="center_vertical"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="@string/notes_add"
             style="@style/SpecialTitleTextView"
             tools:ignore="VisualLintSystemUi" />
@@ -50,14 +50,14 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card_add_note"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="8dp"
-            android:layout_marginBottom="8dp"
             style="@style/Card">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -154,8 +154,8 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
                     android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="8dp"
                     style="@style/Card">
 
                     <Button

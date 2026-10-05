@@ -57,10 +57,7 @@ class CalculatorActivity : Base<ActivityCalculatorBinding>(
     private fun showResultDialog(state: CalculatorState) {
         DialogManager.showResultDialog(
             context = this,
-            totalCost = state.totalCost,
-            totalTimeMinutes = state.totalTimeMinutes,
-            totalCigarettes = state.totalCigarettes,
-            currencyUnit = state.currency,
+            values = Triple(state.totalCost, state.totalTimeMinutes, state.totalCigarettes) to state.currency,
             formatTime = { minutes ->
                 TimeHelper.formatTime(resources = resources, totalMinutes = minutes)
             }

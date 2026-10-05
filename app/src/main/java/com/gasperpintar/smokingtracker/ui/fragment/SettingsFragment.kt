@@ -69,32 +69,24 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         updateUi(state = state)
 
         themeLayout.setOnClickListener {
-            DialogManager.showThemeDialog(
-                context = requireActivity(),
-                selectedTheme = state.settings.theme,
-                onThemeSelected = { theme ->
-                    lifecycleScope.launch {
-                        state.settings = state.settings.copy(theme = theme)
-                        viewModel.updateSettings(state.settings)
-                        Application().applyTheme(themeId = theme)
-                        updateUi(state = state)
-                    }
+            DialogManager.showThemeDialog(context = requireActivity(), selectedTheme = state.settings.theme) { theme ->
+                lifecycleScope.launch {
+                    state.settings = state.settings.copy(theme = theme)
+                    viewModel.updateSettings(state.settings)
+                    Application().applyTheme(themeId = theme)
+                    updateUi(state = state)
                 }
-            )
+            }
         }
 
         languageLayout.setOnClickListener {
-            DialogManager.showLanguageDialog(
-                context = requireActivity(),
-                selectedLanguage = state.settings.language,
-                onLanguageSelected = { language ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        state.settings = state.settings.copy(language = language)
-                        viewModel.updateSettings(state.settings)
-                        requireActivity().recreate()
-                    }
+            DialogManager.showLanguageDialog(context = requireActivity(), selectedLanguage = state.settings.language) { language ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    state.settings = state.settings.copy(language = language)
+                    viewModel.updateSettings(state.settings)
+                    requireActivity().recreate()
                 }
-            )
+            }
         }
 
         notificationsLayout.setOnClickListener {
@@ -108,77 +100,65 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             DialogManager.showNotificationsDialog(
                 context = requireActivity(),
                 settings = state.settings,
-                notificationsSettings = state.notificationsSettings,
-                onSettingsSelected = { updatedSettings ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        state.settings = updatedSettings
-                        viewModel.updateSettings(updatedSettings)
-                    }
-                },
-                onNotificationSettingsSelected = { updatedNotificationSettings ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        state.notificationsSettings = updatedNotificationSettings
-                        viewModel.updateNotificationSettings(updatedNotificationSettings)
-                    }
+                notificationsSettings = state.notificationsSettings
+            ) { updatedSettings, updatedNotificationSettings ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    state.settings = updatedSettings
+                    state.notificationsSettings = updatedNotificationSettings
+
+                    viewModel.updateSettings(updatedSettings)
+                    viewModel.updateNotificationSettings(updatedNotificationSettings)
                 }
-            )
+            }
         }
 
         dayEndLayout.setOnClickListener {
-            DialogManager.showEndDayDialog(
-                context = requireActivity(),
-                settings = state.settings,
-                onTimeSelected = { dayEndMinutes ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        state.settings = state.settings.copy(dayEndMinutes = dayEndMinutes)
-                        viewModel.updateSettings(state.settings)
-                        requireActivity().recreate()
-                    }
+            DialogManager.showEndDayDialog(context = requireActivity(), settings = state.settings) { dayEndMinutes ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    state.settings = state.settings.copy(dayEndMinutes = dayEndMinutes)
+                    viewModel.updateSettings(state.settings)
+                    requireActivity().recreate()
                 }
-            )
+            }
         }
 
         widgetsLayout.setOnClickListener {
-            DialogManager.showWidgetsDialog(
-                context = requireActivity(),
-                onWidgetSelected = { widget ->
-                    val appWidgetManager = AppWidgetManager.getInstance(requireContext())
-                    if (!appWidgetManager.isRequestPinAppWidgetSupported) return@showWidgetsDialog
+            DialogManager.showWidgetsDialog(context = requireActivity()) { widget ->
+                val appWidgetManager = AppWidgetManager.getInstance(requireContext())
+                if (!appWidgetManager.isRequestPinAppWidgetSupported) return@showWidgetsDialog
 
-                    val provider = when (widget) {
-                        Widget.ONLY_QUICK_ADD -> ComponentName(requireContext(), OnlyQuickAddWidget::class.java)
-                        Widget.QUICK_ADD -> ComponentName(requireContext(), QuickAddWidget::class.java)
-                        Widget.STATS -> ComponentName(requireContext(), StatsWidget::class.java)
-                        Widget.STATS_QUICK_ADD -> ComponentName(requireContext(), StatsQuickAddWidget::class.java)
-                    }
-                    appWidgetManager.requestPinAppWidget(provider, null, null)
+                val provider = when (widget) {
+                    Widget.ONLY_QUICK_ADD -> ComponentName(requireContext(), OnlyQuickAddWidget::class.java)
+                    Widget.QUICK_ADD -> ComponentName(requireContext(), QuickAddWidget::class.java)
+                    Widget.STATS -> ComponentName(requireContext(), StatsWidget::class.java)
+                    Widget.STATS_QUICK_ADD -> ComponentName(requireContext(), StatsQuickAddWidget::class.java)
                 }
-            )
+                appWidgetManager.requestPinAppWidget(provider, null, null)
+            }
         }
 
         currencyLayout.setOnClickListener {
             viewLifecycleOwner.lifecycleScope.launch {
-                DialogManager.showCurrencyDialog(
-                    context = requireActivity(),
-                    settings = state.settings,
-                    onCurrencySelected = { currency, custom ->
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            state.settings = state.settings.copy(currency = currency, customCurrency = custom)
-                            viewModel.updateSettings(state.settings)
-                        }
+                DialogManager.showCurrencyDialog(context = requireActivity(), settings = state.settings) { currency, custom ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        state.settings = state.settings.copy(currency = currency, customCurrency = custom)
+                        viewModel.updateSettings(state.settings)
                     }
-                )
+                }
             }
         }
 
         costsLayout.setOnClickListener {
             DialogManager.showCostsDialog(
                 context = requireActivity(),
-                currency = state.settings.currency,
-                onDelete = viewModel::deleteCost,
-                onCostAdded = { viewModel.addCost(CostEntry.fromEntity(it)) },
-                onRefresh = { viewModel.getState().costs }
-            )
+                currency = state.settings.currency
+            ) { entry, entity, _ ->
+                when {
+                    entry != null -> viewModel.deleteCost(entry)
+                    entity != null -> viewModel.addCost(CostEntry.fromEntity(entity))
+                }
+                viewModel.getState().costs
+            }
         }
 
         val links = mapOf(
@@ -215,21 +195,22 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         }
 
         restoreLayout.setOnClickListener {
-            DialogManager.showRestoreDialog(
-                context = requireActivity(),
-                onOpenFile = { importDocumentLauncher.launch(arrayOf(mimeExcel)) },
-                onConfirm = ::restoreFile,
-                onDismiss = {
-                    if (::selectedFile.isInitialized) {
-                        selectedFile.text = getString(R.string.restore_popup_file_none)
-                        selectedFile.tag = null
+            DialogManager.showRestoreDialog(context = requireActivity()) { openFile, confirm, dismiss, textView ->
+                when {
+                    openFile != null -> importDocumentLauncher.launch(arrayOf(mimeExcel))
+                    confirm != null -> restoreFile()
+                    dismiss != null -> {
+                        if (::selectedFile.isInitialized) {
+                            selectedFile.text = getString(R.string.restore_popup_file_none)
+                            selectedFile.tag = null
+                        }
                     }
-                },
-                onViewCreated = { textView ->
-                    selectedFile = textView
-                    selectedFile.text = getString(R.string.restore_popup_file_none)
+                    textView != null -> {
+                        selectedFile = textView
+                        selectedFile.text = getString(R.string.restore_popup_file_none)
+                    }
                 }
-            )
+            }
         }
     }
 

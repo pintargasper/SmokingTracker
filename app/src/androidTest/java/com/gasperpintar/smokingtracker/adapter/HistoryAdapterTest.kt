@@ -7,7 +7,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.activity.MainActivity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
-import com.gasperpintar.smokingtracker.databinding.HistoryContainerBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerHistoryBinding
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
@@ -28,8 +28,8 @@ class HistoryAdapterTest {
             var clickedEditEntry: HistoryEntry? = null
             var clickedDeleteEntry: HistoryEntry? = null
 
-            val adapter = Adapter<HistoryEntry, HistoryContainerBinding>(
-                bindingFactory = HistoryContainerBinding::inflate,
+            val adapter = Adapter<HistoryEntry, ContainerHistoryBinding>(
+                bindingFactory = ContainerHistoryBinding::inflate,
                 onBind = { historyEntry ->
                     timerLabel.text = historyEntry.timerLabel
                     lent.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
@@ -60,7 +60,7 @@ class HistoryAdapterTest {
             val viewHolder = adapter.createViewHolder(recyclerView, 0)
             adapter.bindViewHolder(viewHolder, 0)
 
-            val binding = HistoryContainerBinding.bind(viewHolder.itemView)
+            val binding = ContainerHistoryBinding.bind(viewHolder.itemView)
 
             assertEquals("00:10:00", binding.timerLabel.text.toString())
             assertEquals(View.VISIBLE, binding.lent.visibility)

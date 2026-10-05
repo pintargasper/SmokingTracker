@@ -10,7 +10,7 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.AchievementViewModel
-import com.gasperpintar.smokingtracker.databinding.AchievementsContainerBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerAchievementsBinding
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.AchievementCategory
@@ -34,7 +34,7 @@ class AchievementsFragment : Base<FragmentAchievementsBinding>(
     }
 
     private lateinit var achievementType: AchievementCategory
-    private lateinit var adapter: Adapter<AchievementEntry, AchievementsContainerBinding>
+    private lateinit var adapter: Adapter<AchievementEntry, ContainerAchievementsBinding>
 
     @Override
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,7 +55,7 @@ class AchievementsFragment : Base<FragmentAchievementsBinding>(
 
     private fun setupAdapter() = binding.apply {
         adapter = Adapter(
-            bindingFactory = AchievementsContainerBinding::inflate,
+            bindingFactory = ContainerAchievementsBinding::inflate,
             onBind = { achievementEntry ->
                 achievementTitle.text = getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
                 achievementMessage.text = getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)

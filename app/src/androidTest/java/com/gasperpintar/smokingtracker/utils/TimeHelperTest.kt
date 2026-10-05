@@ -1,6 +1,8 @@
 package com.gasperpintar.smokingtracker.utils
 
 import android.content.Context
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.R
@@ -9,7 +11,9 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.Duration
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 @RunWith(value = AndroidJUnit4::class)
 class TimeHelperTest {
@@ -74,5 +78,32 @@ class TimeHelperTest {
         val actual = TimeHelper.getDurationString(resources = context.resources, start = start, end = end)
 
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun datePickerToLocalDateConvertsCorrectly() {
+        val datePicker = DatePicker(context).apply {
+            updateDate(2025, 11, 31)
+        }
+
+        val actual = with(receiver = TimeHelper) {
+            datePicker.toLocalDate()
+        }
+
+        assertEquals(LocalDate.of(2025, 12, 31), actual)
+    }
+
+    @Test
+    fun timePickerToLocalTimeConvertsCorrectly() {
+        val timePicker = TimePicker(context).apply {
+            hour = 15
+            minute = 30
+        }
+
+        val actual = with(receiver = TimeHelper) {
+            timePicker.toLocalTime()
+        }
+
+        assertEquals(LocalTime.of(15, 30), actual)
     }
 }

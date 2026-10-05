@@ -65,28 +65,29 @@ class NoteFragment : Base<FragmentNoteBinding>(
     }
 
     private fun saveNote(close: Boolean = false) = binding.apply {
-        DialogManager.showSaveNoteDialog(
-            context = requireActivity(),
-            onSave = {
+        DialogManager.showSaveNoteDialog(context = requireActivity()) { save, closed ->
+            if (save) {
                 val title = inputTitle.text.toString().trim()
                 val content = inputContent.text.toString().trim()
                 val mood = sliderEmotion.value.toInt()
 
                 viewLifecycleOwner.lifecycleScope.launch {
                     val now = LocalDateTime.now()
-                    viewModel.save(NoteEntity(
-                        id = existingNote?.id ?: 0L,
-                        title = title,
-                        content = content,
-                        mood = mood,
-                        createdAt = existingNote?.createdAt ?: now,
-                        updatedAt = now
-                    ))
+                    viewModel.save(
+                        NoteEntity(
+                            id = existingNote?.id ?: 0L,
+                            title = title,
+                            content = content,
+                            mood = mood,
+                            createdAt = existingNote?.createdAt ?: now,
+                            updatedAt = now
+                        )
+                    )
                     (requireActivity() as? NotesActivity)?.loadNotes()
                     parentFragmentManager.popBackStack()
                 }
-            },
-            onClose = { if (close) parentFragmentManager.popBackStack() }
-        )
+            }
+            if (closed && close) parentFragmentManager.popBackStack()
+        }
     }
 }

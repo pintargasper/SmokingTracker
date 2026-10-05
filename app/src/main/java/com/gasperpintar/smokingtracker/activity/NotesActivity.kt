@@ -10,7 +10,7 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityNotesBinding
-import com.gasperpintar.smokingtracker.databinding.NoteContainerBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerNoteBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
@@ -26,7 +26,7 @@ class NotesActivity : Base<ActivityNotesBinding>(
         ModelFactory(container = appContainer)
     }
 
-    private lateinit var adapter: Adapter<NoteEntry, NoteContainerBinding>
+    private lateinit var adapter: Adapter<NoteEntry, ContainerNoteBinding>
 
     @Override
     override fun initialize() = binding.apply {
@@ -47,7 +47,7 @@ class NotesActivity : Base<ActivityNotesBinding>(
 
     private fun setupAdapter() = binding.apply {
         adapter = Adapter(
-            bindingFactory = NoteContainerBinding::inflate,
+            bindingFactory = ContainerNoteBinding::inflate,
             onBind = { noteEntry ->
                 emotionIcon.setImageResource(noteEntry.moodIcon)
                 titleLabel.text = noteEntry.title
@@ -58,15 +58,12 @@ class NotesActivity : Base<ActivityNotesBinding>(
                 }
 
                 delete.setOnClickListener {
-                    DialogManager.showDeleteDialog(
-                        context = this@NotesActivity,
-                        onConfirm = {
-                            lifecycleScope.launch {
-                                viewModel.delete(noteEntry)
-                                loadNotes()
-                            }
+                    DialogManager.showDeleteDialog(context = this@NotesActivity) {
+                        lifecycleScope.launch {
+                            viewModel.delete(noteEntry)
+                            loadNotes()
                         }
-                    )
+                    }
                 }
             }
         )

@@ -1,6 +1,8 @@
 package com.gasperpintar.smokingtracker.utils
 
 import android.content.res.Resources
+import android.widget.DatePicker
+import android.widget.TimePicker
 import com.gasperpintar.smokingtracker.R
 import java.time.DayOfWeek
 import java.time.Duration
@@ -175,6 +177,14 @@ object TimeHelper {
             .toLocalDate()
             .let { LocalizationHelper.formatDate(it) }
         return Triple(start, end, date)
+    }
+
+    fun DatePicker.toLocalDate(): LocalDate {
+        return LocalDate.of(year, month + 1, dayOfMonth)
+    }
+
+    fun TimePicker.toLocalTime(): LocalTime {
+        return LocalTime.of(hour, minute)
     }
 
     private fun getDayEndTime(dayEndMinutes: Int): LocalTime {

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/language_inner_options_container"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:fillViewport="true"
+    tools:ignore="TextSizeCheck">
+
+    <LinearLayout
+        android:id="@+id/language_options_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp">
+
+        <CheckBox
+            android:id="@+id/checkbox_system"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/language_popup_check_box_system"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
+
+        <CheckBox
+            android:id="@+id/checkbox_german"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Deutsch"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_english"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="English"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_french"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Français"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_hungarian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Magyar"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_slovenian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Slovenščina"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_serbian_cyrillic_script"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Српски"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_serbian_latin_script"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Srpski"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_ukrainian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Українська"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_chinese_traditional"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="繁體中文"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+        <CheckBox
+            android:id="@+id/checkbox_chinese_simplified"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="简体中文"
+            android:maxWidth="300dp"
+            style="@style/CheckBox"
+            tools:ignore="HardcodedText,VisualLintButtonSize" />
+
+    </LinearLayout>
+
+</ScrollView>
