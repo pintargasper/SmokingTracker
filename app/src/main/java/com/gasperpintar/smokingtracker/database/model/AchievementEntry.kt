@@ -9,6 +9,7 @@ import com.gasperpintar.smokingtracker.type.AchievementUnit
 import java.time.LocalDateTime
 
 data class AchievementEntry(
+    @get:Override
     override val id: Long,
     val image: String,
     val value: Int,

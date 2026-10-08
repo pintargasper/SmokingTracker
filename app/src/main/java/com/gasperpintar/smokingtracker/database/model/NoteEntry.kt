@@ -6,6 +6,7 @@ import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import java.time.LocalDateTime
 
 data class NoteEntry(
+    @get:Override
     override val id: Long,
     val title: String,
     val content: String,

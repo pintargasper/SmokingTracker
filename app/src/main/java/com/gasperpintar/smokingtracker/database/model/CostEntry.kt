@@ -5,6 +5,7 @@ import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import java.time.LocalDateTime
 
 data class CostEntry(
+    @get:Override
     override val id: Long,
     val startDate: LocalDateTime,
     val endDate: LocalDateTime,

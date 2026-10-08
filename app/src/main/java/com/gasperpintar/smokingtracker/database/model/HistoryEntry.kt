@@ -6,6 +6,7 @@ import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.time.LocalDateTime
 
 data class HistoryEntry(
+    @get:Override
     override val id: Long,
     val isLent: Boolean,
     val createdAt: LocalDateTime,

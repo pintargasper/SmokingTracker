@@ -5,18 +5,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
 import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker.ui.container.BaseContainer
 
 class Adapter<T : Identifiable, B : ViewBinding>(
-    private val bindingFactory: (LayoutInflater, ViewGroup, Boolean) -> B,
-    private val onBind: B.(T) -> Unit
+    private val createViewHolder: (LayoutInflater, ViewGroup) -> ViewHolder<B>,
+    private val onBind: BaseContainer.(B, T) -> Unit
 ) : ListAdapter<T, ViewHolder<B>>(Callback()) {
 
     @Override
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder<B> {
-        return ViewHolder(binding = bindingFactory(LayoutInflater.from(parent.context), parent, false))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<B> {
+        return createViewHolder(LayoutInflater.from(parent.context), parent)
     }
 
     @Override
@@ -24,6 +22,6 @@ class Adapter<T : Identifiable, B : ViewBinding>(
         holder: ViewHolder<B>,
         position: Int
     ) {
-        holder.binding.onBind(getItem(position))
+        holder.container.onBind(holder.binding, getItem(position))
     }
 }

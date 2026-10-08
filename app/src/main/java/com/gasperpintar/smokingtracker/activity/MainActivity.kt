@@ -77,6 +77,7 @@ class MainActivity : Base<ActivityMainBinding>(
         )
 
         mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            @Override
             override fun onPageSelected(position: Int) {
                 binding.navView.menu[position].isChecked = true
             }
@@ -126,6 +127,7 @@ class MainActivity : Base<ActivityMainBinding>(
 
     private fun setupNavigation() {
         onBackPressedDispatcher.addCallback(owner = this, onBackPressedCallback = object : OnBackPressedCallback(enabled = true) {
+            @Override
             override fun handleOnBackPressed() = when {
                 binding.mainViewPager.currentItem != 0 ->
                     binding.mainViewPager.setCurrentItem(0, false)

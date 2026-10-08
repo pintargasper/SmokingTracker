@@ -10,9 +10,10 @@ import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityNotesBinding
-import com.gasperpintar.smokingtracker.databinding.ContainerNoteBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerContentNoteBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
+import com.gasperpintar.smokingtracker.ui.container.ContainerManager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.NoteFragment
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ class NotesActivity : Base<ActivityNotesBinding>(
         ModelFactory(container = appContainer)
     }
 
-    private lateinit var adapter: Adapter<NoteEntry, ContainerNoteBinding>
+    private lateinit var adapter: Adapter<NoteEntry, ContainerContentNoteBinding>
 
     @Override
     override fun initialize() = binding.apply {
@@ -46,23 +47,14 @@ class NotesActivity : Base<ActivityNotesBinding>(
     }
 
     private fun setupAdapter() = binding.apply {
-        adapter = Adapter(
-            bindingFactory = ContainerNoteBinding::inflate,
-            onBind = { noteEntry ->
-                emotionIcon.setImageResource(noteEntry.moodIcon)
-                titleLabel.text = noteEntry.title
-                contentLabel.text = noteEntry.content
-
-                root.setOnClickListener {
-                    openNote(noteId = noteEntry.id)
-                }
-
-                delete.setOnClickListener {
-                    DialogManager.showDeleteDialog(context = this@NotesActivity) {
-                        lifecycleScope.launch {
-                            viewModel.delete(noteEntry)
-                            loadNotes()
-                        }
+        adapter = ContainerManager.createNoteAdapter(
+            context = this@NotesActivity,
+            onOpen = { entry -> openNote(noteId = entry.id) },
+            onDelete = { entry ->
+                DialogManager.showDeleteDialog(context = this@NotesActivity) {
+                    lifecycleScope.launch {
+                        viewModel.delete(note = entry)
+                        loadNotes()
                     }
                 }
             }
