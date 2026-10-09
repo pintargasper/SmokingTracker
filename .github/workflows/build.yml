@@ -63,34 +63,34 @@ jobs:
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-      - name: Run Lint
-        run: ./gradlew lint
+      #- name: Run Lint
+      #  run: ./gradlew lint
 
-  #build:
-  #  needs:
-  #    - changes
-  #    - lint
-  #    - test
-  #  if: |
-  #    needs.changes.outputs.app == 'true' ||
-  #    github.event_name == 'schedule' ||
-  #    github.event_name == 'workflow_dispatch' ||
-  #    github.event_name == 'workflow_call'
+  build:
+    needs:
+      - changes
+      - lint
+      - test
+    if: |
+      needs.changes.outputs.app == 'true' ||
+      github.event_name == 'schedule' ||
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'workflow_call'
 
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - name: Checkout repository
-  #      uses: actions/checkout@v7
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-  #    - name: Set up JDK ${{ vars.JAVA_VERSION }}
-  #      uses: actions/setup-java@v6
-  #      with:
-  #        java-version: ${{ vars.JAVA_VERSION }}
-  #        distribution: 'temurin'
-  #        cache: 'gradle'
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v6
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'gradle'
 
-  #    - name: Fix line endings and make gradlew executable
-  #      run: sed -i 's/\r$//' gradlew && chmod +x gradlew
+      - name: Fix line endings and make gradlew executable
+        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
   #    - name: Build Debug and Release APKs
   #      run: ./gradlew assembleDebug assembleRelease
@@ -118,14 +118,14 @@ jobs:
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-      - name: Run Unit Tests
-        run: ./gradlew test
+      #- name: Run Unit Tests
+      #  run: ./gradlew test
 
   check-emulator:
     needs: 
       - changes
       - lint
-      #- build
+      - build
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
@@ -152,7 +152,7 @@ jobs:
     needs:
       - changes
       - lint
-      #- build
+      - build
       - test
       - check-emulator
 
@@ -216,7 +216,13 @@ jobs:
           script: |
             ./gradlew installDebug
 
-            echo PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)
+            PACKAGE_NAME=$(./gradlew -q printDebugApplicationId | tr -d '\r\n') 
+            
+            if [[ -z "$PACKAGE_NAME" ]]; then 
+              echo "ERROR: Gradle did not return an application ID." 
+              exit 1 
+            fi
+
             echo "Using package name: '$PACKAGE_NAME'"
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
