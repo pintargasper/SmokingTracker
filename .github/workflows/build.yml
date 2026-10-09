@@ -219,8 +219,8 @@ jobs:
             ./gradlew installDebug
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
-            adb shell run-as "$PACKAGE_NAME" sh -c "mkdir -p files"
-            adb shell run-as "$PACKAGE_NAME" sh -c "cp /data/local/tmp/dummy_data.xlsx files/dummy_data.xlsx"
+            adb shell run-as "$PACKAGE_NAME" mkdir -p "/data/user/0/$PACKAGE_NAME/files"
+            adb shell run-as "$PACKAGE_NAME" cp /data/local/tmp/dummy_data.xlsx "/data/user/0/$PACKAGE_NAME/files/dummy_data.xlsx"
             adb shell rm /data/local/tmp/dummy_data.xlsx
 
             ./gradlew connectedDebugAndroidTest
