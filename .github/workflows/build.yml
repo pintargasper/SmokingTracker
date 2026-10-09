@@ -63,8 +63,8 @@ jobs:
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-      #- name: Run Lint
-      #  run: ./gradlew lint
+      - name: Run Lint
+        run: ./gradlew lint
 
   build:
     needs:
@@ -92,8 +92,8 @@ jobs:
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-  #    - name: Build Debug and Release APKs
-  #      run: ./gradlew assembleDebug assembleRelease
+      - name: Build Debug and Release APKs
+        run: ./gradlew assembleDebug assembleRelease
 
   test:
     needs: changes
@@ -118,8 +118,8 @@ jobs:
       - name: Fix line endings and make gradlew executable
         run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-      #- name: Run Unit Tests
-      #  run: ./gradlew test
+      - name: Run Unit Tests
+        run: ./gradlew test
 
   check-emulator:
     needs: 
@@ -226,4 +226,10 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            echo "Using package name: '$PACKAGE_NAME'"
+            ./gradlew installDebug
+
+            adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
+            adb shell "run-as $PACKAGE_NAME sh -c 'mkdir -p files && cp /data/local/tmp/dummy_data.xlsx files/dummy_data.xlsx'"
+            adb shell rm /data/local/tmp/dummy_data.xlsx
+
+            ./gradlew connectedDebugAndroidTest
