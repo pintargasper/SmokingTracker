@@ -214,20 +214,6 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            ./gradlew installDebug
 
             PACKAGE_NAME=$(./gradlew -q printDebugApplicationId | tr -d '\r\n') 
-            
-            if [[ -z "$PACKAGE_NAME" ]]; then 
-              echo "ERROR: Gradle did not return an application ID." 
-              exit 1 
-            fi
-
             echo "Using package name: '$PACKAGE_NAME'"
-
-            adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
-            adb shell run-as "$PACKAGE_NAME" mkdir -p "/data/user/0/$PACKAGE_NAME/files"
-            adb shell run-as "$PACKAGE_NAME" cp /data/local/tmp/dummy_data.xlsx "/data/user/0/$PACKAGE_NAME/files/dummy_data.xlsx"
-            adb shell rm /data/local/tmp/dummy_data.xlsx
-
-            ./gradlew connectedDebugAndroidTest
