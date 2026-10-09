@@ -214,30 +214,14 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            set -euo pipefail
-
             ./gradlew installDebug
 
-            PACKAGE_NAME=$(adb shell pm list packages -3 \
-              | sed 's/^package://' \
-              | grep -E '^[^ ]+\.debug$' \
-              | head -n 1 \
-              | tr -d '\r')
-
-            if [ -z "$PACKAGE_NAME" ]; then
-              echo "ERROR: Could not determine the installed debug package name."
-              adb shell pm list packages -3
-              exit 1
-            fi
-
+            echo PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)
             echo "Using package name: '$PACKAGE_NAME'"
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
-
-            adb shell "run-as $PACKAGE_NAME mkdir -p files"
-
-            adb shell "run-as $PACKAGE_NAME cp /data/local/tmp/dummy_data.xlsx files/dummy_data.xlsx"
-
+            adb shell run-as "$PACKAGE_NAME" mkdir -p "/data/user/0/$PACKAGE_NAME/files"
+            adb shell run-as "$PACKAGE_NAME" cp /data/local/tmp/dummy_data.xlsx "/data/user/0/$PACKAGE_NAME/files/dummy_data.xlsx"
             adb shell rm /data/local/tmp/dummy_data.xlsx
 
             ./gradlew connectedDebugAndroidTest
