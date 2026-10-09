@@ -89,9 +89,7 @@ configure<ApplicationExtension> {
 
     sourceSets {
         getByName("main") {
-            assets.directories.add(
-                layout.buildDirectory.dir("changelogs/").get().asFile.path
-            )
+            assets.directories.add(layout.buildDirectory.dir("changelogs/").get().asFile.path)
         }
     }
 }

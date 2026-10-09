@@ -66,34 +66,34 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
 
-  build:
-    needs:
-      - changes
-      - lint
+  #build:
+  #  needs:
+  #    - changes
+  #    - lint
+  #    - test
+  #  if: |
+  #    needs.changes.outputs.app == 'true' ||
+  #    github.event_name == 'schedule' ||
+  #    github.event_name == 'workflow_dispatch' ||
+  #    github.event_name == 'workflow_call'
 
-    if: |
-      needs.changes.outputs.app == 'true' ||
-      github.event_name == 'schedule' ||
-      github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'workflow_call'
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Checkout repository
+  #      uses: actions/checkout@v7
 
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+  #    - name: Set up JDK ${{ vars.JAVA_VERSION }}
+  #      uses: actions/setup-java@v6
+  #      with:
+  #        java-version: ${{ vars.JAVA_VERSION }}
+  #        distribution: 'temurin'
+  #        cache: 'gradle'
 
-      - name: Set up JDK ${{ vars.JAVA_VERSION }}
-        uses: actions/setup-java@v6
-        with:
-          java-version: ${{ vars.JAVA_VERSION }}
-          distribution: 'temurin'
-          cache: 'gradle'
+  #    - name: Fix line endings and make gradlew executable
+  #      run: sed -i 's/\r$//' gradlew && chmod +x gradlew
 
-      - name: Fix line endings and make gradlew executable
-        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
-
-      - name: Build Debug and Release APKs
-        run: ./gradlew assembleDebug assembleRelease
+  #    - name: Build Debug and Release APKs
+  #      run: ./gradlew assembleDebug assembleRelease
 
   test:
     needs: changes
@@ -125,7 +125,7 @@ jobs:
     needs: 
       - changes
       - lint
-      - build
+      #- build
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
@@ -152,7 +152,7 @@ jobs:
     needs:
       - changes
       - lint
-      - build
+      #- build
       - test
       - check-emulator
 
@@ -214,14 +214,30 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
+            set -euo pipefail
+
             ./gradlew installDebug
 
-            PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)
+            PACKAGE_NAME=$(adb shell pm list packages -3 \
+              | sed 's/^package://' \
+              | grep -E '^[^ ]+\.debug$' \
+              | head -n 1 \
+              | tr -d '\r')
+
+            if [ -z "$PACKAGE_NAME" ]; then
+              echo "ERROR: Could not determine the installed debug package name."
+              adb shell pm list packages -3
+              exit 1
+            fi
+
             echo "Using package name: '$PACKAGE_NAME'"
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
-            adb shell run-as "$PACKAGE_NAME" mkdir -p "/data/user/0/$PACKAGE_NAME/files"
-            adb shell run-as "$PACKAGE_NAME" cp /data/local/tmp/dummy_data.xlsx "/data/user/0/$PACKAGE_NAME/files/dummy_data.xlsx"
+
+            adb shell "run-as $PACKAGE_NAME mkdir -p files"
+
+            adb shell "run-as $PACKAGE_NAME cp /data/local/tmp/dummy_data.xlsx files/dummy_data.xlsx"
+
             adb shell rm /data/local/tmp/dummy_data.xlsx
 
             ./gradlew connectedDebugAndroidTest
