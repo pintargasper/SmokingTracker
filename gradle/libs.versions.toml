@@ -1,6 +1,7 @@
 [versions]
 agp = "9.4.1"
 ksp = "2.3.12"
+dlr = "3.1.4"
 gson = "2.14.0"
 coreKtx = "1.19.1"
 junit = "4.13.2"
@@ -46,3 +47,4 @@ markwon-linkify = { module = "io.noties.markwon:linkify", version.ref = "markwon
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+dlr = { id = "com.github.jk1.dependency-license-report", version.ref = "dlr" }

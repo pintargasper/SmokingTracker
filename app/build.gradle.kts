@@ -3,7 +3,7 @@ import com.android.build.api.dsl.ApplicationExtension
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
-    id("com.github.jk1.dependency-license-report") version "3.1.4"
+    alias(libs.plugins.dlr)
 }
 
 kotlin {
@@ -97,6 +97,8 @@ configure<ApplicationExtension> {
 }
 
 tasks {
+    printApplicationId(buildType = "debug")
+    printApplicationId(buildType = "release")
     copyVersionFiles()
 }
 
