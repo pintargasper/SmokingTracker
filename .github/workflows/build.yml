@@ -214,9 +214,10 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)
-
             ./gradlew installDebug
+
+            PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)
+            echo "Using package name: '$PACKAGE_NAME'"
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
             adb shell run-as "$PACKAGE_NAME" mkdir -p "/data/user/0/$PACKAGE_NAME/files"
