@@ -205,8 +205,6 @@ jobs:
       - name: Get Debug Application ID
         shell: bash
         run: |
-          set -euo pipefail
-
           PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)
 
           if [[ -z "$PACKAGE_NAME" ]]; then
@@ -215,7 +213,6 @@ jobs:
           fi
 
           echo "PACKAGE_NAME=$PACKAGE_NAME" >> "$GITHUB_ENV"
-          echo "Application ID: $PACKAGE_NAME"
 
       - name: Run Instrumented Tests for (${{ matrix.name }})
         uses: ReactiveCircus/android-emulator-runner@v2
@@ -229,4 +226,4 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            ""
+            echo "Using package name: '$PACKAGE_NAME'"
