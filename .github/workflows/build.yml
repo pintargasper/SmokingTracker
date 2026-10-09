@@ -214,8 +214,10 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
+            bash -c '
+              set -e
 
-            ./gradlew -q printDebugApplicationId
-
-            PACKAGE_NAME=$(./gradlew -q printDebugApplicationId | tr -d '\r\n') 
-            echo "Using package name: '$PACKAGE_NAME'"
+              PACKAGE_NAME=$(./gradlew -q printDebugApplicationId) 
+              echo "Using package name: $PACKAGE_NAME"
+      
+            '
