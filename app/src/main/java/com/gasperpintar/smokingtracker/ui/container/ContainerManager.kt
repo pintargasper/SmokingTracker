@@ -114,7 +114,8 @@ object ContainerManager {
         context: FragmentActivity,
         onOpen: (NoteEntry) -> Unit,
         onDelete: (NoteEntry) -> Unit
-    ) = BaseContainer.create<NoteEntry, ContainerContentNoteBinding>(context = context,
+    ) = BaseContainer.create<NoteEntry, ContainerContentNoteBinding>(
+        context = context,
         inflate = ContainerContentNoteBinding::inflate) { binding, noteEntry ->
 
         binding.emotionIcon.setImageResource(noteEntry.moodIcon)
