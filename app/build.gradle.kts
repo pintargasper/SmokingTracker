@@ -100,6 +100,15 @@ tasks {
     copyVersionFiles()
 }
 
+fun printApplicationId(buildType: String) {
+    tasks.register<DefaultTask>(name = "print${buildType.replaceFirstChar { it.uppercase() }}ApplicationId") {
+        description = "Prints the applicationId of the $buildType build variant"
+        doLast {
+            println(android.defaultConfig.applicationId + android.buildTypes.getByName(buildType).applicationIdSuffix.orEmpty())
+        }
+    }
+}
+
 fun copyVersionFiles() {
     val version = "v${android.defaultConfig.versionName}"
     val source = rootProject.file("release/changelogs")
