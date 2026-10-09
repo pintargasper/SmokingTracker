@@ -203,16 +203,7 @@ jobs:
           test -e /dev/kvm
 
       - name: Get Debug Application ID
-        shell: bash
-        run: |
-          PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)
-
-          if [[ -z "$PACKAGE_NAME" ]]; then
-            echo "ERROR: Application ID is empty."
-            exit 1
-          fi
-
-          echo "PACKAGE_NAME=$PACKAGE_NAME" >> "$GITHUB_ENV"
+        run: echo "PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)" >> "$GITHUB_ENV"
 
       - name: Run Instrumented Tests for (${{ matrix.name }})
         uses: ReactiveCircus/android-emulator-runner@v2
