@@ -215,5 +215,7 @@ jobs:
           disable-animations: true
           script: |
 
+            ./gradlew -q printDebugApplicationId
+
             PACKAGE_NAME=$(./gradlew -q printDebugApplicationId | tr -d '\r\n') 
             echo "Using package name: '$PACKAGE_NAME'"
