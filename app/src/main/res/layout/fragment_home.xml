@@ -273,7 +273,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_no_entries"
-                android:gravity="center"
                 style="@style/MainTitleCenterTextView" />
 
             <TextView
@@ -281,7 +280,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_no_entries_message"
-                android:gravity="center"
                 style="@style/BodyTextView" />
 
         </LinearLayout>

@@ -155,7 +155,6 @@ jobs:
       - build
       - test
       - check-emulator
-
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||

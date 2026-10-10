@@ -125,6 +125,8 @@
     <string name="notes_emotions_neutral">Neutral</string>
     <string name="notes_emotions_good">Good</string>
     <string name="notes_emotions_very_good">Very good</string>
+    <string name="notes_no_entries">No notes found</string>
+    <string name="notes_no_entries_message">Click the + button to create your first note</string>
 
     <string name="cost_price">Cost: %1$s %2$s</string>
     <string name="cost_delete">Delete record</string>

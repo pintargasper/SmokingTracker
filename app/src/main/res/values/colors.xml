@@ -16,4 +16,7 @@
 
     <color name="success">#4CAF50</color>
     <color name="links">#64B5F6</color>
+
+    <color name="sentiment_yellow">#F2D335</color>
+    <color name="sentiment_brown">#795548</color>
 </resources>

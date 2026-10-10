@@ -2,7 +2,6 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -36,7 +35,6 @@
             android:background="@android:color/transparent"
             android:contentDescription="Close"
             android:src="@drawable/close_48px"
-            app:tint="?attr/colorOnSurface"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
@@ -45,7 +43,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:focusableInTouchMode="true"
+        android:overScrollMode="ifContentScrolls"
+        android:scrollbars="vertical">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card_add_note"
@@ -130,7 +132,8 @@
                 <EditText
                     android:id="@+id/input_title"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
                     android:layout_marginBottom="8dp"
                     android:autofillHints="title"
                     android:hint="@string/notes_title"
@@ -143,11 +146,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:minHeight="48dp"
+                    android:minHeight="144dp"
+                    android:gravity="top|start"
                     android:autofillHints="description"
-                    android:gravity="top"
                     android:hint="@string/notes_content"
-                    android:inputType="textMultiLine"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="ifContentScrolls"
                     style="@style/EditText"
                     tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 

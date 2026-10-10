@@ -1,6 +1,7 @@
 package com.gasperpintar.smokingtracker.activity
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
@@ -43,7 +44,10 @@ class NotesActivity : Base<ActivityNotesBinding>(
             finish()
         }
         setupAdapter()
-        loadNotes()
+
+        lifecycleScope.launch {
+            loadNotes()
+        }
     }
 
     private fun setupAdapter() = binding.apply {
@@ -63,9 +67,13 @@ class NotesActivity : Base<ActivityNotesBinding>(
         recyclerviewNotes.adapter = adapter
     }
 
-    fun loadNotes() = binding.apply {
-        lifecycleScope.launch {
-            adapter.submitList(viewModel.getState().notes) {
+    suspend fun loadNotes() = binding.apply {
+        val state = viewModel.getState()
+        state.notes.let {
+            recyclerviewNotes.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
+            layoutEmptyNotes.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+
+            adapter.submitList(state.notes) {
                 recyclerviewNotes.scrollToPosition(0)
             }
         }

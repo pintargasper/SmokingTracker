@@ -34,7 +34,8 @@
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/more_tools_notes"
-            style="@style/MainTitleCenterTextView" />
+            style="@style/MainTitleCenterTextView"
+            tools:ignore="VisualLintSystemUi" />
 
         <Space
             android:layout_width="56dp"
@@ -55,6 +56,31 @@
             android:padding="12dp"
             android:paddingBottom="96dp" />
 
+        <LinearLayout
+            android:id="@+id/layout_empty_notes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/empty_notes_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notes_no_entries"
+                style="@style/MainTitleCenterTextView" />
+
+            <TextView
+                android:id="@+id/empty_notes_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/notes_no_entries_message"
+                style="@style/BodyTextView" />
+
+        </LinearLayout>
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_add_note"
             android:layout_width="wrap_content"
@@ -68,7 +94,7 @@
             app:pressedTranslationZ="0dp"
             app:rippleColor="@android:color/transparent"
             app:tint="?attr/colorOnPrimary"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText,ClassNameCheck" />
 
         <FrameLayout
             android:id="@+id/fragment_container"
