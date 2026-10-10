@@ -1,14 +1,15 @@
 package com.gasperpintar.smokingtracker.adapter
 
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.activity.MainActivity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
-import com.gasperpintar.smokingtracker.databinding.ContainerHistoryBinding
-import com.gasperpintar.smokingtracker.ui.adapter.Adapter
+import com.gasperpintar.smokingtracker.ui.container.ContainerManager
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertSame
 import org.junit.Rule
@@ -28,20 +29,10 @@ class HistoryAdapterTest {
             var clickedEditEntry: HistoryEntry? = null
             var clickedDeleteEntry: HistoryEntry? = null
 
-            val adapter = Adapter<HistoryEntry, ContainerHistoryBinding>(
-                bindingFactory = ContainerHistoryBinding::inflate,
-                onBind = { historyEntry ->
-                    timerLabel.text = historyEntry.timerLabel
-                    lent.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
-
-                    edit.setOnClickListener {
-                        clickedEditEntry = historyEntry
-                    }
-
-                    delete.setOnClickListener {
-                        clickedDeleteEntry = historyEntry
-                    }
-                }
+            val adapter = ContainerManager.createHistoryAdapter(
+                context = activity,
+                onEdit = { historyEntry -> clickedEditEntry = historyEntry },
+                onDelete = { historyEntry -> clickedDeleteEntry = historyEntry }
             )
 
             val recyclerView = RecyclerView(activity).apply {
@@ -55,20 +46,26 @@ class HistoryAdapterTest {
                 createdAt = LocalDateTime.of(2025, 12, 31, 10, 0),
                 timerLabel = "00:10:00"
             )
+
             adapter.submitList(listOf(historyEntry))
 
             val viewHolder = adapter.createViewHolder(recyclerView, 0)
             adapter.bindViewHolder(viewHolder, 0)
 
-            val binding = ContainerHistoryBinding.bind(viewHolder.itemView)
+            val itemView = viewHolder.itemView
 
-            assertEquals("00:10:00", binding.timerLabel.text.toString())
-            assertEquals(View.VISIBLE, binding.lent.visibility)
+            val timerLabel: TextView = itemView.findViewById(R.id.timer_label)
+            val lent: View = itemView.findViewById(R.id.lent)
+            val edit: View = itemView.findViewById(R.id.edit)
+            val delete: View = itemView.findViewById(R.id.delete)
 
-            binding.edit.performClick()
+            assertEquals("00:10:00", timerLabel.text.toString())
+            assertEquals(View.VISIBLE, lent.visibility)
+
+            edit.performClick()
             assertSame(historyEntry, clickedEditEntry)
 
-            binding.delete.performClick()
+            delete.performClick()
             assertSame(historyEntry, clickedDeleteEntry)
         }
     }
