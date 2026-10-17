@@ -1,0 +1,24 @@
+## Kaj je novega
+
+- Odpravljena težava, zaradi katere so lahko velike zaslonske tipkovnice med pisanjem nove beležke prekrile polja za vnos besedila
+- Izboljšana izkušnja pisanja beležk na mobilnih napravah
+
+## Izboljšave
+
+- Izboljšano delovanje postavitve za vnos beležk ob prikazu zaslonske tipkovnice
+- Izboljšana stabilnost in vzdržljivost aplikacije
+
+## Popravki napak
+
+- Odpravljeno krčenje polj za vnos besedila pri uporabi velikih zaslonskih tipkovnic
+- Izboljšana uporabnost zaslona za ustvarjanje novih beležk pri različnih velikostih tipkovnice
+
+## Sodelavci
+
+Hvala vsem, ki ste prispevali k tej izdaji, vključno s kodo, prevodi, testiranjem, dokumentacijo in povratnimi informacijami.
+
+[Oglejte si sodelavce](https://github.com/pintargasper/SmokingTracker/graphs/contributors)
+
+## Celotne opombe ob izdaji
+
+Za več podrobnosti o tej izdaji si oglejte [celotne opombe ob izdaji na GitHubu](https://github.com/pintargasper/SmokingTracker/releases/tag/v1.9.2).
