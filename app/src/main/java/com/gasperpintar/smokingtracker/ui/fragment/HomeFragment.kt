@@ -9,9 +9,10 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
-import com.gasperpintar.smokingtracker.databinding.ContainerHistoryBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
+import com.gasperpintar.smokingtracker.ui.container.ContainerManager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -35,7 +36,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
     private var lastEntry: HistoryEntity? = null
     private var timerJob: Job? = null
 
-    private lateinit var adapter: Adapter<HistoryEntry, ContainerHistoryBinding>
+    private lateinit var adapter: Adapter<HistoryEntry, ContainerContentHistoryBinding>
 
     @Override
     override fun initialize() = binding.apply {
@@ -61,6 +62,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
                 loadHistory()
             }
         }
+
         setupAdapter()
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -91,27 +93,21 @@ class HomeFragment : Base<FragmentHomeBinding>(
     }
 
     private fun setupAdapter() = binding.apply {
-        adapter = Adapter(
-            bindingFactory = ContainerHistoryBinding::inflate,
-            onBind = { historyEntry ->
-                timerLabel.text = historyEntry.timerLabel
-                lent.visibility = if (historyEntry.isLent) View.VISIBLE else View.GONE
-
-                edit.setOnClickListener {
-                    DialogManager.showEditDialog(context = requireActivity(), entry = historyEntry) { newDateTime, isLent ->
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            viewModel.update(entry = historyEntry, dateTime = newDateTime, isLent = isLent)
-                            loadHistory()
-                        }
+        adapter = ContainerManager.createHistoryAdapter(
+            context = requireActivity(),
+            onEdit = { entry ->
+                DialogManager.showEditDialog(context = requireActivity(), entry = entry) { newDateTime, isLent ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.update(entry, newDateTime, isLent)
+                        loadHistory()
                     }
                 }
-
-                delete.setOnClickListener {
-                    DialogManager.showDeleteDialog(context = requireActivity()) {
-                        viewLifecycleOwner.lifecycleScope.launch {
-                            viewModel.delete(entry = historyEntry)
-                            loadHistory()
-                        }
+            },
+            onDelete = { entry ->
+                DialogManager.showDeleteDialog(context = requireActivity()) {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.delete(entry)
+                        loadHistory()
                     }
                 }
             }

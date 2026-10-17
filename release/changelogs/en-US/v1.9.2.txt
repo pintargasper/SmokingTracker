@@ -1,0 +1,24 @@
+## What's new
+
+- Fixed an issue where large on screen keyboards could hide note text fields while writing a new note
+- Improved the note-taking experience on mobile devices
+
+## Improvements
+
+- Improved note input layout behavior when the on-screen keyboard is displayed
+- Improved application stability and maintainability
+
+## Bug fixes
+
+- Fixed note text fields collapsing when using large on screen keyboards
+- Improved the usability of the new note screen with different keyboard sizes
+
+## Contributors
+
+Thanks to everyone who contributed to this release, including code, translations, testing, documentation, and feedback.
+
+[View contributors](https://github.com/pintargasper/SmokingTracker/graphs/contributors)
+
+## Full Release Notes
+
+For more details about this release, see the [full release notes on GitHub](https://github.com/pintargasper/SmokingTracker/releases/tag/v1.9.2).

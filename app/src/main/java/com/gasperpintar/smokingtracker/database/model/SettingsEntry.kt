@@ -4,6 +4,7 @@ import com.gasperpintar.smokingtracker._interface.Identifiable
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 
 data class SettingsEntry (
+    @get:Override
     override val id: Long,
     val theme: Int,
     val language: String,
