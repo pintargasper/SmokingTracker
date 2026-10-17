@@ -41,8 +41,10 @@ configure<ApplicationExtension> {
     buildTypes {
         getByName("debug") {
             isDebuggable = true
-            applicationIdSuffix = ".debug"
-            versionNameSuffix = "-debug"
+            if (System.getenv("CI") == null) {
+                applicationIdSuffix = ".debug"
+                versionNameSuffix = "-debug"
+            }
         }
 
         getByName("release") {
