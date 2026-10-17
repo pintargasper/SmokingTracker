@@ -252,6 +252,8 @@
 
     <string name="note_popup_save">Save note?</string>
 
+    <string name="changelog_popup_error">Unable to display the changelog. You can view it on GitHub instead</string>
+
     <string name="day_today">Today</string>
 
     <string name="notification_title">Progress reminder</string>

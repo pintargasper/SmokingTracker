@@ -491,13 +491,17 @@ object DialogManager {
         val language = locale.language
 
         runCatching {
-            val version = context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            val version = context.packageManager
+                .getPackageInfo(context.packageName, 0)
+                .versionName?.removeSuffix(suffix = "-debug")
+                ?: error("Unable to determine app version")
+
             val directories = context.assets.list("changelogs") ?: emptyArray()
             val changelogFile = "v$version.md"
 
             val directory = sequenceOf(languageTag, language)
                 .plus(elements = directories.filter {
-                    it.startsWith("$language-")
+                    it.startsWith(prefix = "$language-")
                 }).firstOrNull { directory ->
                     changelogFile in (context.assets.list("changelogs/$directory") ?: emptyArray())
                 } ?: "en-US"
@@ -523,7 +527,7 @@ object DialogManager {
                 .setMarkdown(content.changelogText, changelogContent)
             content.changelogText.movementMethod = LinkMovementMethod.getInstance()
         }.onFailure {
-            content.changelogText.text = ""
+            content.changelogText.text = context.getString(R.string.changelog_popup_error)
         }
     }
 }
