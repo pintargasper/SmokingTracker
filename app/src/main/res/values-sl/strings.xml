@@ -309,4 +309,5 @@
     <string name="widget_only_quick_add">Samo hitri vnos</string>
     <string name="notes_no_entries">Ni najdenih zapiskov</string>
     <string name="notes_no_entries_message">Kliknite gumb +, da ustvarite svoj prvi zapisek</string>
+    <string name="changelog_popup_error">Seznama sprememb ni mogoče prikazati. Namesto tega si ga lahko ogledate na GitHubu</string>
 </resources>
