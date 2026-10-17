@@ -15,7 +15,7 @@ clear_previous_screenshots(true)
 
 output_directory('fastlane/metadata/android')
 
-app_package_name('com.gasperpintar.smokingtracker')
+app_package_name('com.gasperpintar.smokingtracker.debug')
 use_tests_in_classes(['com.gasperpintar.smokingtracker.ScreenshotTest'])
 
 app_apk_path('app/build/outputs/apk/debug/app-debug.apk') 
