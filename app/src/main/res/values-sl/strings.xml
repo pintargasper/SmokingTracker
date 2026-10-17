@@ -307,4 +307,6 @@
     <string name="widgets_popup_quick_add_description">Hitro dodajte cigareto</string>
     <string name="widgets_popup_only_quick_add_description">Hitro dodajte cigareto z enim dotikom</string>
     <string name="widget_only_quick_add">Samo hitri vnos</string>
+    <string name="notes_no_entries">Ni najdenih zapiskov</string>
+    <string name="notes_no_entries_message">Kliknite gumb +, da ustvarite svoj prvi zapisek</string>
 </resources>
