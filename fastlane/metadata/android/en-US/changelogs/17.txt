@@ -1,0 +1,6 @@
+Bug Fixes
+
+- Fixed note text fields collapsing when using large on-screen keyboards
+- Improved note-taking experience on mobile devices
+- Improved note input layout behavior with different keyboard sizes
+- Improved UI layout consistency

@@ -32,7 +32,7 @@ class NoteFragment : Base<FragmentNoteBinding>(
         noteId = arguments?.getLong("note_id") ?: -1L
 
         val closeAction = { saveNote(close = true) }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { closeAction() }
+        requireActivity().onBackPressedDispatcher.addCallback(owner = viewLifecycleOwner) { closeAction() }
 
         close.setOnClickListener { closeAction() }
         save.setOnClickListener { saveNote() }
@@ -47,8 +47,7 @@ class NoteFragment : Base<FragmentNoteBinding>(
                 2 -> getString(R.string.notes_emotions_bad)
                 3 -> getString(R.string.notes_emotions_neutral)
                 4 -> getString(R.string.notes_emotions_good)
-                5 -> getString(R.string.notes_emotions_very_good)
-                else -> ""
+                else -> getString(R.string.notes_emotions_very_good)
             }
         }
         showContent()

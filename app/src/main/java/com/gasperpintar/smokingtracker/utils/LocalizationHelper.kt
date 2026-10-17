@@ -41,6 +41,16 @@ object LocalizationHelper {
     }
 
     fun formatDate(
+        context: Context,
+        date: LocalDate
+    ): String {
+        return when (date) {
+            LocalDate.now() -> context.getString(R.string.day_today)
+            else -> formatDate(date = date)
+        }
+    }
+
+    fun formatDate(
         date: LocalDate,
         style: FormatStyle = FormatStyle.LONG
     ): String {

@@ -157,16 +157,16 @@ class ScreenshotTest {
             ?: return "system"
 
         return when {
-            languageTag.startsWith("de") -> "de"
-            languageTag.startsWith("en") -> "en"
-            languageTag.startsWith("fr") -> "fr"
-            languageTag.startsWith("hu") -> "hu"
-            languageTag.startsWith("sl") -> "sl"
-            languageTag.startsWith("sr-Latn") -> "sr-Latn"
-            languageTag.startsWith("sr-Cyrl") -> "sr-Cyrl"
-            languageTag.startsWith("uk") -> "uk"
-            languageTag.startsWith("zh-Hans") -> "zh-Hans"
-            languageTag.startsWith("zh-Hant") -> "zh-Hant"
+            languageTag.startsWith(prefix = "de") -> "de"
+            languageTag.startsWith(prefix = "en") -> "en"
+            languageTag.startsWith(prefix = "fr") -> "fr"
+            languageTag.startsWith(prefix = "hu") -> "hu"
+            languageTag.startsWith(prefix = "sl") -> "sl"
+            languageTag.startsWith(prefix = "sr-Latn") -> "sr-Latn"
+            languageTag.startsWith(prefix = "sr-Cyrl") -> "sr-Cyrl"
+            languageTag.startsWith(prefix = "uk") -> "uk"
+            languageTag.startsWith(prefix = "zh-Hans") -> "zh-Hans"
+            languageTag.startsWith(prefix = "zh-Hant") -> "zh-Hant"
             else -> "system"
         }
     }
@@ -178,12 +178,12 @@ class ScreenshotTest {
             ?: return "€"
 
         return when {
-            languageTag.startsWith("en") -> "$"
-            languageTag.startsWith("hu") -> "Ft"
-            languageTag.startsWith("sr") -> "дин."
-            languageTag.startsWith("uk") -> "₴"
-            languageTag.startsWith("zh-Hans") -> "¥"
-            languageTag.startsWith("zh-Hant") -> "¥"
+            languageTag.startsWith(prefix = "en") -> "$"
+            languageTag.startsWith(prefix = "hu") -> "Ft"
+            languageTag.startsWith(prefix = "sr") -> "дин."
+            languageTag.startsWith(prefix = "uk") -> "₴"
+            languageTag.startsWith(prefix = "zh-Hans") -> "¥"
+            languageTag.startsWith(prefix = "zh-Hant") -> "¥"
             else -> "€"
         }
     }

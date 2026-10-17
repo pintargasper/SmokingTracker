@@ -3,7 +3,7 @@ import com.android.build.api.dsl.ApplicationExtension
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.ksp)
-    id("com.github.jk1.dependency-license-report") version "3.1.4"
+    alias(libs.plugins.dlr)
 }
 
 kotlin {
@@ -21,8 +21,8 @@ configure<ApplicationExtension> {
         applicationId = "com.gasperpintar.smokingtracker"
         minSdk = 26
         targetSdk = 37
-        versionCode = 16
-        versionName = "1.9.1"
+        versionCode = 17
+        versionName = "1.9.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -41,6 +41,10 @@ configure<ApplicationExtension> {
     buildTypes {
         getByName("debug") {
             isDebuggable = true
+            if (System.getenv("CI") == null) {
+                applicationIdSuffix = ".debug"
+                versionNameSuffix = "-debug"
+            }
         }
 
         getByName("release") {
@@ -87,15 +91,24 @@ configure<ApplicationExtension> {
 
     sourceSets {
         getByName("main") {
-            assets.directories.add(
-                layout.buildDirectory.dir("changelogs/").get().asFile.path
-            )
+            assets.directories.add(layout.buildDirectory.dir("changelogs/").get().asFile.path)
         }
     }
 }
 
 tasks {
+    printApplicationId(buildType = "debug")
+    printApplicationId(buildType = "release")
     copyVersionFiles()
+}
+
+fun printApplicationId(buildType: String) {
+    tasks.register<DefaultTask>(name = "print${buildType.replaceFirstChar { it.uppercase() }}ApplicationId") {
+        description = "Prints the applicationId of the $buildType build variant"
+        doLast {
+            println(android.defaultConfig.applicationId + android.buildTypes.getByName(buildType).applicationIdSuffix.orEmpty())
+        }
+    }
 }
 
 fun copyVersionFiles() {

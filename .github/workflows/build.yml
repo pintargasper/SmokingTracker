@@ -70,7 +70,7 @@ jobs:
     needs:
       - changes
       - lint
-
+      - test
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
@@ -155,7 +155,6 @@ jobs:
       - build
       - test
       - check-emulator
-
     if: |
       needs.changes.outputs.app == 'true' ||
       github.event_name == 'schedule' ||
@@ -202,6 +201,9 @@ jobs:
           ls -l /dev/kvm
           test -e /dev/kvm
 
+      - name: Get Debug Application ID
+        run: echo "PACKAGE_NAME=$(./gradlew -q printDebugApplicationId)" >> "$GITHUB_ENV"
+
       - name: Run Instrumented Tests for (${{ matrix.name }})
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
@@ -214,12 +216,10 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu off -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-
             ./gradlew installDebug
 
             adb push tools/scripts/dummy_data/dummy_data.xlsx /data/local/tmp/dummy_data.xlsx
-            adb shell run-as com.gasperpintar.smokingtracker mkdir -p /data/user/0/com.gasperpintar.smokingtracker/files
-            adb shell run-as com.gasperpintar.smokingtracker cp /data/local/tmp/dummy_data.xlsx /data/user/0/com.gasperpintar.smokingtracker/files/dummy_data.xlsx
+            adb shell "run-as $PACKAGE_NAME sh -c 'mkdir -p files && cp /data/local/tmp/dummy_data.xlsx files/dummy_data.xlsx'"
             adb shell rm /data/local/tmp/dummy_data.xlsx
 
             ./gradlew connectedDebugAndroidTest
