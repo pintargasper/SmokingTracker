@@ -1,0 +1,6 @@
+Popravki napak
+
+- Odpravljena napaka, zaradi katere so se polja z besedilom zapiskov skrčila pri uporabi velikih zaslonskih tipkovnic
+- Izboljšana izkušnja beleženja zapiskov na mobilnih napravah
+- Izboljšano vedenje postavitve vnosa zapiskov z različnimi velikostmi tipkovnic
+- Izboljšana doslednost postavitve uporabniškega vmesnika
