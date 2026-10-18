@@ -1,0 +1,228 @@
+name: Publish Release
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: Release version
+        type: string
+        required: true
+      release_sha:
+        description: Commit SHA prepared for release
+        type: string
+        required: true
+    secrets:
+      keystore_base64:
+        required: true
+      keystore_password:
+        required: true
+      key_alias:
+        required: true
+      key_password:
+        required: true
+      service_account_json:
+        required: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      METADATA_PATH: '/tmp/gplay_metadata'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.release_sha }}
+
+      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+        uses: actions/setup-java@v6
+        with:
+          java-version: ${{ vars.JAVA_VERSION }}
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ vars.RUBY_VERSION }}
+
+      - name: Set up Fastlane
+        run: sudo gem install fastlane
+
+      - name: Extract Version Code
+        run: |
+          echo "VERSION_CODE=$(grep -oP 'versionCode\s*=\s*\K[0-9]+' app/build.gradle.kts | head -1)" >> "$GITHUB_ENV"
+
+      - name: Check changelog
+        run: |
+          CHANGELOG="fastlane/metadata/android/en-US/changelogs/${VERSION_CODE}.txt"
+
+          if [ ! -s "$CHANGELOG" ]; then
+            echo "ERROR: Changelog not found:"
+            echo "$CHANGELOG"
+            exit 1
+          fi
+
+          echo "Changelog found:"
+          cat "$CHANGELOG"
+
+      - name: Decode signing keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.keystore_base64 }}
+        run: |
+          base64 --decode <<< "$KEYSTORE_BASE64" > "$RUNNER_TEMP/release.keystore"
+
+      - name: Fix line endings and make gradlew executable
+        run: sed -i 's/\r$//' gradlew && chmod +x gradlew
+
+      - name: Build signed APK and AAB
+        env:
+          ORG_GRADLE_PROJECT_KEYSTORE_FILE: ${{ runner.temp }}/release.keystore
+          ORG_GRADLE_PROJECT_KEYSTORE_PASSWORD: ${{ secrets.keystore_password }}
+          ORG_GRADLE_PROJECT_KEY_ALIAS: ${{ secrets.key_alias }}
+          ORG_GRADLE_PROJECT_KEY_PASSWORD: ${{ secrets.key_password }}
+        run: |
+          ./gradlew assembleRelease bundleRelease
+
+      - name: Verify APK and AAB
+        run: |
+          APK="app/build/outputs/apk/release/app-release.apk"
+          AAB="app/build/outputs/bundle/release/app-release.aab"
+
+          if [ ! -s "$APK" ]; then
+            echo "ERROR: APK not found at $APK"
+            exit 1
+          fi
+
+          if [ ! -s "$AAB" ]; then
+            echo "ERROR: AAB not found at $AAB"
+            exit 1
+          fi
+
+          echo "APK and AAB successfully built."
+
+      - name: Rename APK
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          mv app/build/outputs/apk/release/app-release.apk \
+            "app/build/outputs/apk/release/smoking-tracker.${VERSION}.apk"
+
+      - name: Upload APK to draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release upload "${VERSION}" \
+            "app/build/outputs/apk/release/smoking-tracker.${VERSION}.apk"
+
+      - name: Prepare metadata for Google Play
+        run: |
+          mkdir -p "$METADATA_PATH"
+          cp -r fastlane/metadata/android/* "$METADATA_PATH"
+
+          cd "$METADATA_PATH"
+          [ -d "hu" ] && mv hu hu-HU || true
+          [ -d "zh-Hans" ] && mv zh-Hans zh-CN || true
+          [ -d "zh-Hant" ] && mv zh-Hant zh-TW || true
+
+          rm -rf sr-Latn
+          if [ -d "sr-Cyrl" ]; then
+            if [ -d "sr" ]; then
+              rm -rf sr-Cyrl
+            else
+              echo "Renaming sr-Cyrl to sr..."
+              mv sr-Cyrl sr
+            fi
+          fi
+
+          for lang_dir in */; do
+            if [ -d "$lang_dir" ]; then
+              for text_file in "title.txt" "short_description.txt" "full_description.txt"; do
+                if [ ! -s "${lang_dir}${text_file}" ]; then
+                  echo "Creating fallback ${text_file} for ${lang_dir}"
+                  cp "en-US/${text_file}" "${lang_dir}${text_file}" 2>/dev/null || true
+                fi
+              done
+
+              mkdir -p "${lang_dir}changelogs"
+              if [ ! -f "${lang_dir}changelogs/${VERSION_CODE}.txt" ]; then
+                cp "en-US/changelogs/${VERSION_CODE}.txt" "${lang_dir}changelogs/${VERSION_CODE}.txt" 2>/dev/null || true
+              fi
+            fi
+          done
+
+          KEEP_IMAGES=("1.png" "2.png" "3.png" "4.png" "5.png" "7.png" "9.png" "12.png")
+
+          shopt -s nullglob
+          for lang_dir in */; do
+            SCREENSHOT_DIR="${lang_dir}images/phoneScreenshots"
+
+            if [ -d "$SCREENSHOT_DIR" ]; then
+              cd "$SCREENSHOT_DIR"
+
+              for index in "${!KEEP_IMAGES[@]}"; do
+                old_file="${KEEP_IMAGES[$index]}"
+                if [ -f "$old_file" ]; then
+                  mv "$old_file" "temp_$((index + 1)).png"
+                fi
+              done
+
+              for file in *; do
+                if [[ "$file" != temp_*.png ]]; then
+                  rm -f "$file"
+                fi
+              done
+
+              for temp_file in temp_*.png; do
+                final_name="${temp_file#temp_}"
+                mv "$temp_file" "$final_name"
+              done
+
+              cd "$METADATA_PATH"
+            fi
+          done
+
+      - name: Create Google Play credentials
+        env:
+          SERVICE_ACCOUNT_JSON: ${{ secrets.service_account_json }}
+        run: |
+          cat <<< "$SERVICE_ACCOUNT_JSON" > "$RUNNER_TEMP/service-account.json"
+
+      - name: Upload to Google Play
+        env:
+          GOOGLE_PLAY_JSON: ${{ runner.temp }}/service-account.json
+          VERSION_CODE: ${{ env.VERSION_CODE }}
+        run: fastlane android playstore
+
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+        run: |
+          gh release edit "${VERSION}" \
+            --draft=false \
+            --latest
+
+      - name: Remove signing files
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/release.keystore" ]; then
+            echo "Keystore exists. Removing..."
+            rm -f "$RUNNER_TEMP/release.keystore"
+          fi
+
+          if [ -f "$RUNNER_TEMP/service-account.json" ]; then
+            echo "Google Play credentials exist. Removing..."
+            rm -f "$RUNNER_TEMP/service-account.json"
+          fi
+
+          if [ -f "$RUNNER_TEMP/release.keystore" ] || [ -f "$RUNNER_TEMP/service-account.json" ]; then
+            echo "ERROR: Signing files still exist!"
+            exit 1
+          else
+            echo "Signing files successfully removed."
+          fi

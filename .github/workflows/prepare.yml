@@ -1,0 +1,73 @@
+name: Prepare Release
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: Release version
+        type: string
+        required: true
+      pull_request_number:
+        description: Screenshot PR number
+        type: string
+        required: true
+    outputs:
+      release_sha:
+        description: Commit SHA prepared for release
+        value: ${{ jobs.prepare.outputs.release_sha }}
+    secrets:
+      client_id:
+        required: true
+      private_key:
+        required: true
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    environment: screenshot-review
+    permissions:
+      contents: write
+      pull-requests: write
+    outputs:
+      release_sha: ${{ steps.get_sha.outputs.release_sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Generate App Token for Bypass
+        id: generate_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ secrets.client_id }}
+          private-key: ${{ secrets.private_key }}
+
+      - name: Merge screenshot Pull Request
+        env:
+          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
+          PR_NUMBER: ${{ inputs.pull_request_number }}
+        run: |
+          gh pr merge "$PR_NUMBER" \
+            --squash \
+            --delete-branch \
+            --admin
+
+      - name: Get release commit
+        id: get_sha
+        env:
+          GH_TOKEN: ${{ steps.generate_token.outputs.token }}
+        run: |
+          git fetch origin master
+          echo "release_sha=$(git rev-parse origin/master)" >> "$GITHUB_OUTPUT"
+
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          RELEASE_SHA: ${{ steps.get_sha.outputs.release_sha }}
+        run: |
+          gh release create "${VERSION}" \
+            --target "$RELEASE_SHA" \
+            --draft \
+            --title "${VERSION}" \
+            --notes-file "release/notes/${VERSION}.md"
