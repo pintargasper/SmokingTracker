@@ -24,7 +24,7 @@ on:
 jobs:
   prepare:
     runs-on: ubuntu-latest
-    environment: screenshot-review
+    environment: review
     permissions:
       contents: write
       pull-requests: write

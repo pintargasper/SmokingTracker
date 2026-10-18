@@ -1,10 +1,10 @@
 # Workflows
 
-This directory contains GitHub Actions workflows used to automate building, testing, and maintaining the SmokingTracker Android application
+This directory contains GitHub Actions workflows used to automate building, testing, releasing, and maintaining the SmokingTracker Android application.
 
 ## `build.yml`
 
-GitHub Actions workflow for building and testing the SmokingTracker Android application
+GitHub Actions workflow for building and testing the SmokingTracker Android application.
 
 - Runs on pushes to any branch
 - Runs on pull requests targeting any branch
@@ -14,18 +14,18 @@ GitHub Actions workflow for building and testing the SmokingTracker Android appl
 - Runs local unit tests
 - Generates dummy data for instrumented testing
 - Tests the application on Android API levels 26 and 34
-- Uses Android Emulator with KVM hardware acceleration
+- Uses an Android Emulator with KVM hardware acceleration
 - Installs the generated Debug APK on the emulator
 - Imports generated dummy data into the application
 - Runs instrumented Android tests
 
 ### Usage
 
-The workflow runs automatically when changes are pushed to `master` or when a pull request targets `master`.
+The workflow runs automatically when changes are pushed or when a pull request is opened or updated, according to the configured triggers.
 
 It can also be started manually from the GitHub Actions interface using **Run workflow**.
 
-The workflow uses the following Android API levels for instrumented tests
+The workflow uses the following Android API levels for instrumented tests.
 
 ```text
 API 26
@@ -37,12 +37,12 @@ API 34
 - Keep the build and test process compatible with the configured GitHub Actions environment
 - Update the Android API level matrix when support requirements change
 - Keep unit tests independent of the Android emulator whenever possible
-- Use `dummy_data.py` for generating test data instead of manually creating test data
+- Use `dummy_data.py` to generate test data instead of creating it manually
 - Ensure changes to test data generation remain compatible with instrumented tests
 
 ## `fastlane.yml`
 
-GitHub Actions workflow for automatically generating and updating Fastlane screenshots
+GitHub Actions workflow for generating and updating Fastlane screenshots.
 
 - Runs manually using GitHub Actions
 - Generates dummy data for consistent screenshot content
@@ -53,7 +53,7 @@ GitHub Actions workflow for automatically generating and updating Fastlane scree
 - Generates screenshots using Fastlane Screengrab
 - Crops screenshots using `image_cropper.py`
 - Removes generated HTML files that are not required in the repository
-- Creates a pull request containing the updated Fastlane screenshots
+- Creates a pull request containing the updated screenshots
 
 ### Usage
 
@@ -75,7 +75,7 @@ The workflow creates a pull request containing the updated screenshots instead o
 ### Guidelines
 
 - Use the workflow whenever updated application screenshots are required
-- Keep screenshot generation deterministic by using the generated dummy data
+- Keep screenshot generation deterministic by using generated dummy data
 - Do not manually modify generated screenshots when they can be regenerated using the workflow
 - Keep screenshot dimensions and density consistent with the configured emulator
 - Review the generated pull request before merging screenshot updates
@@ -92,11 +92,9 @@ GitHub Actions workflow for automatically updating and approving pull requests c
 
 ### Usage
 
-The workflow runs automatically after changes are pushed to the `master` branch.
+The workflow runs automatically after changes are pushed to the `master` branch. No manual action is required.
 
-No manual action is required.
-
-The workflow currently handles pull requests created by:
+The workflow currently handles pull requests created by
 
 ```text
 dependabot
@@ -113,33 +111,52 @@ github-actions[bot]
 
 ## `release.yml`
 
-GitHub Actions workflow for validating, building, and publishing a new application release
+Main GitHub Actions workflow for validating, building, and publishing a new application release. It orchestrates the reusable workflows `build.yml`, `fastlane.yml`, `prepare.yml`, and `publish.yml`.
 
 - Runs manually using GitHub Actions
 - Requires the release version as a workflow input
-- Verifies that the release version matches the application's versionName
-- Verifies that the versionCode is greater than the previous version
-- Verifies that release notes and the application changelog exist for the specified version
-- Runs the build workflow
-- Runs the Fastlane workflow to update screenshots
-- Merges the generated screenshot pull request
+- Validates the version format (`vX.Y.Z`)
+- Verifies that the release version matches the application's `versionName`
+- Verifies that the current `versionCode` is greater than the previous release's `versionCode`
+- Checks that the version-specific release notes and application changelog exist
+- Runs the build and test workflow
+- Runs the Fastlane screenshot workflow
+- Merges the generated screenshot pull request using a GitHub App token
+- Waits for the `review` environment's configured protection rules before executing the preparation job
+- Determines the commit SHA to be released
 - Creates a draft GitHub release using the version-specific release notes
+- Runs the publishing workflow against the prepared release commit
 - Builds the signed Release APK and AAB
 - Verifies that the generated APK and AAB exist
-- Uploads the signed APK to the GitHub draft release
-- Validates the Google Play changelog for the current versionCode
+- Uploads the signed APK to the draft GitHub release
+- Validates the Google Play changelog for the current `versionCode`
 - Prepares Fastlane metadata for Google Play
 - Applies Google Play locale mappings and metadata fallbacks
 - Processes and normalizes Fastlane screenshots
 - Uploads the application to Google Play using Fastlane
 - Publishes the GitHub release after a successful Google Play upload
-- Removes signing credentials from the GitHub Actions runner after the workflow completes
+- Removes signing credentials from the GitHub Actions runner after the publishing job completes
+
+### Reusable workflows
+
+The release process is divided into separate workflows:
+
+| Workflow       | Responsibility                                                                                            |
+|----------------|-----------------------------------------------------------------------------------------------------------|
+| `build.yml`    | Builds the application and runs tests                                                                     |
+| `fastlane.yml` | Generates screenshots and creates a screenshot pull request                                               |
+| `prepare.yml`  | Merges the screenshot pull request, determines the release commit, and creates a draft GitHub release     |
+| `publish.yml`  | Builds signed artifacts, uploads the APK and application to Google Play, and publishes the GitHub release |
 
 ### Usage
 
-tart the workflow manually from the GitHub Actions interface using Run workflow.
+Start `release.yml` manually from the GitHub Actions interface using **Run workflow**.
 
-The workflow requires the release version in the following format: vX.Y.Z
+The workflow requires the release version in the following format
+
+```text
+vX.Y.Z
+```
 
 For each release, the corresponding version directory must contain:
 
@@ -152,9 +169,10 @@ release/
             |__vX.Y.Z.txt
 ```
 
-notes.md contains the GitHub Release notes, while changelog.md contains the user-facing changelog used by the application.
+- `release/notes/vX.Y.Z.md` contains the GitHub release notes
+- `release/changelogs/en-US/vX.Y.Z.txt` contains the user-facing application changelog
 
-The workflow also requires a Fastlane changelog for the application's versionCode:
+The workflow also requires a Fastlane changelog matching the application's `versionCode`:
 
 ```text
 fastlane/
@@ -165,32 +183,33 @@ fastlane/
                 |__ <versionCode>.txt
 ```
 
-The release process runs in the following order:
+The release process runs in the following order
 
 ```text
-1. Validate release
-2. Build and test
-3. Generate screenshots
-4. Merge screenshot PR
-5. Create draft GitHub release
-6. Build signed APK/AAB
-7. Upload APK
-8. Upload to Google Play
-9. Publish GitHub release
+1. Validate release version and required files
+2. Build and test the application
+3. Generate screenshots and create a screenshot pull request
+4. Execute the preparation job after the review environment's protection rules are satisfied
+5. Merge the screenshot pull request
+6. Determine the release commit and create a draft GitHub release
+7. Build and verify the signed APK and AAB
+8. Upload the APK to the draft GitHub release
+9. Prepare Google Play metadata and upload the application
+10. Publish the GitHub release
+11. Remove signing credentials from the runner
 ```
 
 ### Guidelines
 
-- Update the application versionName and versionCode before creating a release
-- Use the vX.Y.Z format for the workflow release input
-- Create release/notes/vX.Y.Z.md for every release
-- Create release/changelogs/\<language>/vX.Y.Z.txt for every release
+- Update `versionName` and `versionCode` before creating a release
+- Use the `vX.Y.Z` format for the workflow release input
+- Create `release/notes/vX.Y.Z.md` for every release
+- Create the corresponding application changelog under `release/changelogs/<language>/`
 - Keep the GitHub release notes and application changelog appropriate for their respective purposes
-- Add the corresponding Fastlane changelog using the application's versionCode
+- Add the Fastlane changelog corresponding to the application's `versionCode`
 - Do not reuse a previous version's release notes or changelog
-- Review the generated screenshot pull request before allowing the release workflow to continue
-- Keep signing credentials in GitHub Secrets and never commit them to the repository
+- Review the generated screenshot pull request before allowing the preparation job to proceed
 - Do not publish a release manually before the workflow has completed successfully
 - Ensure the Google Play upload succeeds before publishing the GitHub release
-- Keep the release workflow permissions limited to the operations it performs
-- Ensure signing credentials are removed from the runner after the release process
+- Keep workflow permissions limited to the operations each job performs
+- Ensure signing credentials are removed from the runner after the publishing job completes
