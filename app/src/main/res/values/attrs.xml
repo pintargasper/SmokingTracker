@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <attr name="appTextAppearanceStyle" format="reference" />
     <attr name="appTitleStyle" format="reference" />
