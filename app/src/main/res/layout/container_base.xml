@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="3dp"
     android:layout_marginHorizontal="5dp"
-    style="@style/Card">
+    style="?appCardStyle">
 
     <FrameLayout
         android:id="@+id/container_content"

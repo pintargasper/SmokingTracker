@@ -21,7 +21,7 @@
             android:layout_marginBottom="3dp"
             android:layout_marginHorizontal="8dp"
             android:text="@string/statistics_title_cigarettes_section"
-            style="@style/MainTitleTextView"
+            style="?appTitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <androidx.cardview.widget.CardView
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +41,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_max_cigarettes"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="0"
-                        style="@style/BodyTextView"
+                        style="?appBodyStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
@@ -65,7 +65,7 @@
                         android:layout_gravity="center_vertical"
                         android:gravity="end"
                         android:text="@string/statistics_logged"
-                        style="@style/SubBodyTextView" />
+                        style="?appCaptionStyle" />
 
                 </LinearLayout>
 
@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_min_cigarettes"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="0"
-                        style="@style/BodyTextView"
+                        style="?appBodyStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
@@ -114,7 +114,7 @@
                         android:layout_gravity="center_vertical"
                         android:gravity="end"
                         android:text="@string/statistics_logged"
-                        style="@style/SubBodyTextView" />
+                        style="?appCaptionStyle" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_avg_cigarettes"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:id="@+id/text_average_cigarettes"
@@ -146,7 +146,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="0"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +169,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_cigarettes"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:id="@+id/text_total_cigarettes"
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="0"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -188,7 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_first_entry"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:id="@+id/text_since_first_entry"
@@ -208,7 +208,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="0"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -220,7 +220,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -232,7 +232,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_longest_streak"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:id="@+id/text_longest_streak"
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="0"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -252,7 +252,7 @@
             android:layout_marginBottom="3dp"
             android:layout_marginHorizontal="8dp"
             android:text="@string/statistics_title_money_section"
-            style="@style/MainTitleTextView" />
+            style="?appTitleStyle" />
 
         <TextView
             android:id="@+id/statistics_title_instructions"
@@ -261,14 +261,14 @@
             android:text="@string/statistics_title_money_section_instructions"
             android:gravity="start"
             android:visibility="gone"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -280,7 +280,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_spent"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:id="@+id/text_total_spent"
@@ -288,7 +288,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="0 €"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -299,7 +299,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -311,7 +311,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_spent_today"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:id="@+id/today_spent"
@@ -319,7 +319,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="0 €"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -330,7 +330,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -342,7 +342,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_spent_month"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:id="@+id/month_spent"
@@ -350,7 +350,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="0 €"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -361,7 +361,7 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="5dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -373,7 +373,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_most_expensive"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -387,7 +387,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="0 €"
-                        style="@style/BodyTextView"
+                        style="?appBodyStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
@@ -397,7 +397,7 @@
                         android:layout_gravity="center_vertical"
                         android:gravity="end"
                         android:text="@string/statistics_logged"
-                        style="@style/SubBodyTextView" />
+                        style="?appCaptionStyle" />
 
                 </LinearLayout>
 

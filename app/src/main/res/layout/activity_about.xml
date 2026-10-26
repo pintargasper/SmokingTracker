@@ -29,13 +29,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/settings_about"
-            style="@style/MainTitleCenterTextView"
+            style="?appTitleSpecialStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <Space
@@ -59,7 +54,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -80,8 +75,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/application_name"
-                        android:textAlignment="center"
-                        style="@style/MainTitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:id="@+id/app_tagline"
@@ -89,16 +83,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="@string/application_tagline"
-                        android:textAlignment="center"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                     <TextView
                         android:id="@+id/app_version"
-                        style="@style/SubtitleTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/about_version" />
+                        android:layout_marginTop="5dp"
+                        android:text="@string/about_version"
+                        style="?appCaptionStyle"/>
 
                 </LinearLayout>
 
@@ -110,14 +103,14 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_view"
-                style="@style/MainTitleTextView" />
+                style="?appTitleStyle" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/github_layout"
@@ -134,14 +127,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="GitHub"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_github"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -152,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/f_droid_layout"
@@ -169,14 +162,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="F-Droid"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_f_droid"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -187,7 +180,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/izzy_on_droid_layout"
@@ -204,14 +197,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="IzzyOnDroid"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_izzy_on_droid"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -223,7 +216,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginBottom="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/open_apk_layout"
@@ -240,14 +233,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="OpenAPK"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_open_apk"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -258,7 +251,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_contributors"
-                style="@style/MainTitleTextView" />
+                style="?appTitleStyle" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -266,14 +259,14 @@
                 android:layout_marginBottom="3dp"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_contributors_description"
-                style="@style/BodyTextView" />
+                style="?appBodyStyle"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_1_layout"
@@ -290,20 +283,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="pintargasper"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_code"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_slovenian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -314,7 +307,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_2_layout"
@@ -328,18 +321,18 @@
                     tools:ignore="TouchTargetSizeCheck">
 
                     <TextView
-                        style="@style/SubtitleTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="anzepintar"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="HardcodedText"
+                        style="?appSubtitleStyle" />
 
                     <TextView
-                        style="@style/BodyTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_code" />
+                        android:text="@string/about_contributors_code"
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -350,7 +343,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_3_layout"
@@ -367,14 +360,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="mrtaxi"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_ukrainian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -385,7 +378,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_4_layout"
@@ -402,14 +395,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="jocixlinux-sys"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_serbian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -420,7 +413,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_5_layout"
@@ -437,14 +430,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="iaaanneed"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_russian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -455,7 +448,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_6_layout"
@@ -472,14 +465,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="ywnzzl"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_simplified"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -490,7 +483,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_7_layout"
@@ -507,20 +500,20 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="acidefluorhydrique"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_traditional"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_simplified"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -531,7 +524,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_8_layout"
@@ -548,14 +541,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="nrob81"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_hungarian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
@@ -573,6 +566,6 @@
         android:layout_marginBottom="24dp"
         android:gravity="center"
         android:text="@string/about_created_by"
-        style="@style/SubtitleTextView" />
+        style="?appSubtitleStyle" />
 
 </LinearLayout>

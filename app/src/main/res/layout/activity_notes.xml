@@ -2,7 +2,6 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +18,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
+            android:background="@color/transparent"
             android:contentDescription="Back to previous screen"
             android:src="@drawable/arrow_circle_left_48px"
             tools:ignore="HardcodedText" />
@@ -34,7 +33,7 @@
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/more_tools_notes"
-            style="@style/MainTitleCenterTextView"
+            style="?appTitleSpecialStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <Space
@@ -70,14 +69,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notes_no_entries"
-                style="@style/MainTitleCenterTextView" />
+                style="?appTitleStyle" />
 
             <TextView
                 android:id="@+id/empty_notes_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/notes_no_entries_message"
-                style="@style/BodyTextView" />
+                style="?appBodyStyle" />
 
         </LinearLayout>
 
@@ -89,11 +88,7 @@
             android:layout_margin="16dp"
             android:contentDescription="Add Note"
             android:src="@drawable/add_2_48px"
-            android:stateListAnimator="@null"
-            app:backgroundTint="?attr/colorPrimary"
-            app:pressedTranslationZ="0dp"
-            app:rippleColor="@android:color/transparent"
-            app:tint="?attr/colorOnPrimary"
+            style="?appFabStyle"
             tools:ignore="HardcodedText,ClassNameCheck" />
 
         <FrameLayout

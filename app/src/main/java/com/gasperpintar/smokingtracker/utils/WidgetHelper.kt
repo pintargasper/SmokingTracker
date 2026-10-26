@@ -147,7 +147,7 @@ object WidgetHelper {
                         }
 
                         setTextViewText(R.id.widget_add_new_entry, localizedContext.getString(R.string.insert_popup))
-                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.primary))
+                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_primary))
                         setBoolean(R.id.widget_add_new_entry, "setEnabled", true)
 
                         setOnClickPendingIntent(R.id.widget_add_new_entry, getBroadcastPendingIntent(context, ACTION_ADD_NEW_ENTRY))
@@ -178,7 +178,7 @@ object WidgetHelper {
 
                     RemoteViews(context.packageName, layoutId).apply {
                         setTextViewText(R.id.widget_add_new_entry, "✓")
-                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.success))
+                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_success))
                         setBoolean(R.id.widget_add_new_entry, "setEnabled", false)
 
                         if (widgetClass == OnlyQuickAddWidget::class.java) {

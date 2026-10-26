@@ -20,7 +20,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/more_progress"
-            style="@style/MainTitleTextView"
+            style="?appTitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <androidx.cardview.widget.CardView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/statistics_layout"
@@ -61,13 +61,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_progress_statistics"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_progress_statistics_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/achievements_layout"
@@ -113,13 +113,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_progress_achievements"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_progress_achievements_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -134,14 +134,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/more_tools"
-            style="@style/MainTitleTextView" />
+            style="?appTitleStyle" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/calculator_layout"
@@ -174,13 +174,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_tools_calculator"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_tools_calculator_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -193,7 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/notes_layout"
@@ -226,13 +226,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_tools_notes"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_tools_notes_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 

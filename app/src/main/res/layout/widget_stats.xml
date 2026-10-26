@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     android:weightSum="3"
     android:padding="16dp"
-    android:background="@color/surface">
+    android:background="@color/legacy_surface">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/home_daily"
-            android:textColor="@color/primary"
+            android:textColor="@color/legacy_primary"
             android:singleLine="true" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9"
-            android:textColor="@color/primary"
+            android:textColor="@color/legacy_primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
     </LinearLayout>
@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/home_weekly"
-            android:textColor="@color/primary"
+            android:textColor="@color/legacy_primary"
             android:singleLine="true" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="114"
-            android:textColor="@color/primary"
+            android:textColor="@color/legacy_primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
     </LinearLayout>
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/home_monthly"
-            android:textColor="@color/primary"
+            android:textColor="@color/legacy_primary"
             android:singleLine="true" />
 
         <TextView
@@ -87,7 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="145"
-            android:textColor="@color/primary"
+            android:textColor="@color/legacy_primary"
             android:textSize="18sp"
             tools:ignore="HardcodedText" />
     </LinearLayout>

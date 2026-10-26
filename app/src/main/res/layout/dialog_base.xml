@@ -6,7 +6,7 @@
     android:id="@+id/dialog_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/Card">
+    style="?appCardStyle">
 
     <LinearLayout
         android:id="@+id/dialog_layout"
@@ -22,7 +22,7 @@
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
-            style="@style/MainTitleCenterTextView"
+            style="?appTitleCenterStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
         <FrameLayout
             android:id="@+id/dialog_content"
@@ -54,14 +54,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:visibility="gone"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <Button
                     android:id="@+id/confirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/popup_confirm"
-                    style="@style/Button"
+                    style="?appButtonStyle"
                     tools:ignore="VisualLintButtonSize" />
 
             </androidx.cardview.widget.CardView>
@@ -70,14 +70,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <Button
                     android:id="@+id/close"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/popup_close"
-                    style="@style/Button"
+                    style="?appButtonStyle"
                     tools:ignore="VisualLintButtonSize" />
 
             </androidx.cardview.widget.CardView>

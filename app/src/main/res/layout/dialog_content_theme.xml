@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="@string/theme_popup_check_box_system"
             android:maxWidth="300dp"
-            style="@style/CheckBox"
+            style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
 
         <CheckBox
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="@string/theme_popup_check_box_light_theme"
             android:maxWidth="300dp"
-            style="@style/CheckBox"
+            style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize" />
 
         <CheckBox
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/theme_popup_check_box_dark_theme"
             android:maxWidth="300dp"
-            style="@style/CheckBox"
+            style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>

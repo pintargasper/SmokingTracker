@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
                     android:text="@string/statistics_forecast"
-                    style="@style/MainTitleCenterTextView" />
+                    style="?appTitleStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/forecast_graph_view"
@@ -45,7 +45,7 @@
                     android:layout_marginTop="8dp"
                     android:padding="4dp"
                     android:text="@string/statistics_forecast_info"
-                    style="@style/BodyTextView" />
+                    style="?appBodyStyle" />
 
             </LinearLayout>
 

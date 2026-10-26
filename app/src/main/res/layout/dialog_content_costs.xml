@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/calculator_from"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
         <EditText
             android:id="@+id/input_start_date"
@@ -39,7 +39,7 @@
             android:autofillHints="@string/calculator_start_date"
             android:inputType="date"
             android:layout_marginHorizontal="8dp"
-            style="@style/EditText"
+            style="?appEditTextStyle"
             tools:ignore="VisualLintTextFieldSize" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="@string/calculator_to"
             android:layout_marginEnd="8dp"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
         <EditText
             android:id="@+id/input_end_date"
@@ -60,7 +60,7 @@
             android:hint="@string/calculator_end_date"
             android:autofillHints="@string/calculator_end_date"
             android:inputType="date"
-            style="@style/EditText"
+            style="?appEditTextStyle"
             tools:ignore="VisualLintTextFieldSize" />
 
     </LinearLayout>
@@ -72,7 +72,7 @@
         android:text="@string/costs_popup"
         android:layout_marginTop="12dp"
         android:layout_marginBottom="4dp"
-        style="@style/SubtitleTextView" />
+        style="?appSubtitleStyle" />
 
     <EditText
         android:id="@+id/input_pack_price"
@@ -82,6 +82,6 @@
         android:hint="0.00"
         android:autofillHints="0.00"
         tools:ignore="HardcodedText,VisualLintTextFieldSize"
-        style="@style/EditText" />
+        style="?appEditTextStyle" />
 
 </LinearLayout>

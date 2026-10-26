@@ -19,7 +19,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
+            android:background="@color/transparent"
             android:contentDescription="Back to previous screen"
             android:src="@drawable/arrow_circle_left_48px"
             tools:ignore="HardcodedText" />
@@ -34,7 +34,7 @@
             android:gravity="center"
             android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/more_tools_calculator"
-            style="@style/MainTitleCenterTextView"
+            style="?appTitleSpecialStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <Space
@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -74,7 +74,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/calculator_per_day"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <EditText
                         android:id="@+id/input_daily_cigarettes"
@@ -84,7 +84,7 @@
                         android:autofillHints="0"
                         android:hint="0"
                         android:inputType="number"
-                        style="@style/EditText"
+                        style="?appEditTextStyle"
                         tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                     <TextView
@@ -93,7 +93,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/calculator_per_pack"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <EditText
                         android:id="@+id/input_cigarettes_per_pack"
@@ -103,7 +103,7 @@
                         android:autofillHints="20"
                         android:hint="20"
                         android:inputType="number"
-                        style="@style/EditText"
+                        style="?appEditTextStyle"
                         tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                     <TextView
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/calculator_price"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <EditText
                         android:id="@+id/input_pack_price"
@@ -122,7 +122,7 @@
                         android:autofillHints="0.00"
                         android:hint="0.00"
                         android:inputType="numberDecimal"
-                        style="@style/EditText"
+                        style="?appEditTextStyle"
                         tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                     <TextView
@@ -131,7 +131,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/calculator_period"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <LinearLayout
                         android:id="@+id/layout_date_range_picker"
@@ -147,7 +147,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:text="@string/calculator_from"
-                            style="@style/BodyTextView" />
+                            style="?appBodyStyle" />
 
                         <EditText
                             android:id="@+id/input_start_date"
@@ -159,7 +159,7 @@
                             android:focusable="false"
                             android:hint="@string/calculator_start_date"
                             android:inputType="date"
-                            style="@style/EditText"
+                            style="?appEditTextStyle"
                             tools:ignore="VisualLintTextFieldSize" />
 
                         <TextView
@@ -169,7 +169,7 @@
                             android:layout_marginStart="8dp"
                             android:layout_marginEnd="8dp"
                             android:text="@string/calculator_to"
-                            style="@style/BodyTextView" />
+                            style="?appBodyStyle" />
 
                         <EditText
                             android:id="@+id/input_end_date"
@@ -181,7 +181,7 @@
                             android:focusable="false"
                             android:hint="@string/calculator_end_date"
                             android:inputType="date"
-                            style="@style/EditText"
+                            style="?appEditTextStyle"
                             tools:ignore="VisualLintTextFieldSize" />
 
                     </LinearLayout>
@@ -192,14 +192,14 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginBottom="8dp"
-                        style="@style/Card">
+                        style="?appCardStyle">
 
                         <Button
                             android:id="@+id/button_calculate"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/calculator_calculate"
-                            style="@style/Button"
+                            style="?appButtonStyle"
                             tools:ignore="VisualLintButtonSize" />
 
                     </androidx.cardview.widget.CardView>

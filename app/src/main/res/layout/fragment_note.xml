@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/notes_add"
-            style="@style/SpecialTitleTextView"
+            style="?appTitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <ImageButton
@@ -55,7 +55,7 @@
             android:layout_height="match_parent"
             android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                     android:autofillHints="title"
                     android:hint="@string/notes_title"
                     android:inputType="text"
-                    style="@style/EditText"
+                    style="?appEditTextStyle"
                     tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                 <EditText
@@ -153,7 +153,7 @@
                     android:inputType="textMultiLine|textCapSentences"
                     android:scrollbars="vertical"
                     android:overScrollMode="ifContentScrolls"
-                    style="@style/EditText"
+                    style="?appEditTextStyle"
                     tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
                 <androidx.cardview.widget.CardView
@@ -161,14 +161,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
-                    style="@style/Card">
+                    style="?appCardStyle">
 
                     <Button
                         android:id="@+id/save"
-                        style="@style/Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/popup_save"
+                        style="?appButtonStyle"
                         tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
                 </androidx.cardview.widget.CardView>

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_daily"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_daily"
@@ -66,7 +66,7 @@
                         android:layout_height="48dp"
                         android:text="%02d.%02d.%04d"
                         tools:ignore="HardcodedText,TextSizeCheck"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
                     <ImageButton
                         android:id="@+id/next_day_daily"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_weekly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_weekly"
@@ -134,7 +134,7 @@
                         android:layout_height="48dp"
                         android:text="%1$d.%2$d/%3$d.%4$d %5$d"
                         tools:ignore="HardcodedText,TextSizeCheck"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
                     <ImageButton
                         android:id="@+id/next_day_weekly"
@@ -155,7 +155,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_monthly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_monthly"
@@ -202,7 +202,7 @@
                         android:layout_height="48dp"
                         android:text="%1$s %2$d"
                         tools:ignore="HardcodedText"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
                     <ImageButton
                         android:id="@+id/next_day_monthly"
@@ -224,7 +224,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/graph_yearly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_yearly"
@@ -271,7 +271,7 @@
                         android:layout_height="48dp"
                         android:text="%1$d"
                         tools:ignore="HardcodedText"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
                     <ImageButton
                         android:id="@+id/next_day_yearly"

@@ -38,14 +38,14 @@
                 android:layout_marginBottom="4dp"
                 android:maxLines="3"
                 android:ellipsize="end"
-                style="@style/MainTitleTextView" />
+                style="?appTitleStyle" />
 
             <TextView
                 android:id="@+id/achievement_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                style="@style/BodyTextView" />
+                style="?appBodyStyle" />
 
         </LinearLayout>
 
@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:text="@string/achievement_last"
         android:alpha="0.6"
-        style="@style/BodyTextView" />
+        style="?appBodyStyle" />
 
     <TextView
         android:id="@+id/achieved_count"
@@ -65,6 +65,6 @@
         android:layout_height="wrap_content"
         android:text="@string/achievement_achieved"
         android:alpha="0.6"
-        style="@style/BodyTextView" />
+        style="?appBodyStyle" />
 
 </LinearLayout>

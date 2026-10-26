@@ -14,8 +14,8 @@
         android:padding="8dp"
         android:text="What's new in this version"
         android:textIsSelectable="true"
-        android:textColorLink="@color/links"
-        style="@style/BodyTextView"
+        android:textColorLink="@color/legacy_links"
+        style="?appBodyStyle"
         tools:ignore="HardcodedText,VisualLintSystemUi" />
 
 </androidx.core.widget.NestedScrollView>

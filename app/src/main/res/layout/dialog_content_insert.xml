@@ -15,7 +15,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:text="@string/insert_popup_lent"
-        style="@style/BodyTextView"
+        style="?appBodyStyle"
         tools:ignore="VisualLintSystemUi" />
 
     <CheckBox
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        style="@style/CheckBox"
+        style="?appCheckBoxStyle"
         tools:ignore="VisualLintSystemUi" />
 
 </LinearLayout>

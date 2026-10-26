@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="@string/notifications_popup_check_box_system"
             android:maxWidth="300dp"
-            style="@style/CheckBox"
+            style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
 
         <LinearLayout
@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/notifications_popup_check_box_progress"
-                style="@style/CheckBox"
+                style="?appCheckBoxStyle"
                 tools:ignore="VisualLintButtonSize" />
 
             <LinearLayout
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/notifications_popup_frequency_label"
                     android:labelFor="@+id/spinner_progress_frequency"
-                    style="@style/BodyTextView" />
+                    style="?appBodyStyle" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="150dp"
@@ -76,7 +76,7 @@
                         android:inputType="none"
                         app:simpleItems="@array/frequency_options"
                         tools:ignore="LabelFor"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="300dp"
             android:text="@string/notifications_popup_check_box_achievements"
-            style="@style/CheckBox"
+            style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginHorizontal="16dp"
-        style="@style/Card">
+        style="?appCardStyle">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="%1$02d:%2$02d:%3$02d"
-                style="@style/SpecialTitleTextView"
+                style="?appTitleSpecialStyle"
                 tools:ignore="HardcodedText" />
 
             <TextView
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/home_timer_message"
                 android:gravity="center"
-                style="@style/BodyTextView" />
+                style="?appBodyStyle" />
 
         </LinearLayout>
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                     android:text="@string/home_daily"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <View
                     android:layout_width="match_parent"
@@ -86,7 +86,7 @@
                     android:text="0"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -111,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_weekly"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <View
                     android:layout_width="match_parent"
@@ -125,7 +125,7 @@
                     android:text="0"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -152,7 +152,7 @@
                     android:text="@string/home_monthly"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <View
                     android:layout_width="match_parent"
@@ -166,7 +166,7 @@
                     android:text="0"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    style="@style/BodyTextView"
+                    style="?appBodyStyle"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -180,7 +180,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
-        style="@style/Card">
+        style="?appCardStyle">
 
         <LinearLayout
             android:id="@+id/day_navigation"
@@ -215,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:text="Day"
                     android:gravity="center"
-                    style="@style/SubtitleTextView"
+                    style="?appSubtitleStyle"
                     tools:ignore="HardcodedText" />
 
                 <TextView
@@ -225,7 +225,7 @@
                     android:text="%1$02d.%2$02d.%3$d"
                     android:gravity="center"
                     android:layout_marginTop="-5dp"
-                    style="@style/MainTitleCenterTextView"
+                    style="?appTitleStyle"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -251,7 +251,7 @@
         android:layout_weight="1"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
-        style="@style/Card">
+        style="?appCardStyle">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_history"
@@ -273,14 +273,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_no_entries"
-                style="@style/MainTitleCenterTextView" />
+                style="?appTitleStyle" />
 
             <TextView
                 android:id="@+id/empty_history_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/home_no_entries_message"
-                style="@style/BodyTextView" />
+                style="?appBodyStyle" />
 
         </LinearLayout>
 
@@ -292,7 +292,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
         android:layout_gravity="center_horizontal"
-        style="@style/Card">
+        style="?appCardStyle">
 
         <Button
             android:id="@+id/button_add_entry"
@@ -300,7 +300,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/home_next_day"
             android:text="@string/home_add_entry"
-            style="@style/Button" />
+            style="?appButtonStyle" />
 
     </androidx.cardview.widget.CardView>
 

@@ -31,7 +31,7 @@
             android:gravity="start|center_vertical"
             android:maxLines="1"
             android:text="Title"
-            style="@style/SubtitleTextView"
+            style="?appSubtitleStyle"
             tools:ignore="HardcodedText,VisualLintSystemUi" />
 
         <TextView
@@ -41,6 +41,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Content"
+            style="?appBodyStyle"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
@@ -49,8 +50,8 @@
         android:id="@+id/delete"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/cost_delete"
-        android:src="@drawable/delete_48px" />
+        android:src="@drawable/delete_48px"
+        style="?appImageButtonStyle" />
 
 </LinearLayout>

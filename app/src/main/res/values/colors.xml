@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <resources>
-    <color name="primary">#000000</color>
-    <color name="on_primary">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
-    <color name="secondary">#000000</color>
-    <color name="on_secondary">#FFFFFF</color>
+    <!-- Legacy -->
+    <color name="legacy_primary">#000000</color>
+    <color name="legacy_on_primary">#FFFFFF</color>
 
-    <color name="background">#FFFFFF</color>
-    <color name="on_background">#000000</color>
-    <color name="surface">#FFFFFF</color>
-    <color name="on_surface">#000000</color>
+    <color name="legacy_secondary">#000000</color>
+    <color name="legacy_on_secondary">#FFFFFF</color>
 
-    <color name="error">#B00020</color>
-    <color name="on_error">#FFFFFF</color>
+    <color name="legacy_background">#FFFFFF</color>
+    <color name="legacy_on_background">#000000</color>
+    <color name="legacy_surface">#FFFFFF</color>
+    <color name="legacy_on_surface">#000000</color>
 
-    <color name="success">#4CAF50</color>
-    <color name="links">#64B5F6</color>
+    <color name="legacy_error">#B00020</color>
+    <color name="legacy_on_error">#FFFFFF</color>
+    <color name="legacy_success">#4CAF50</color>
+    <color name="legacy_links">#64B5F6</color>
 
-    <!--<color name="sentiment_yellow">#F2D335</color>-->
-    <color name="sentiment_yellow">#FFFFFF</color>
-    <!--<color name="sentiment_brown">#795548</color>-->
-    <color name="sentiment_brown">#000000</color>
+    <color name="legacy_sentiment_yellow">#F2D335</color>
+    <color name="legacy_sentiment_brown">#795548</color>
 </resources>

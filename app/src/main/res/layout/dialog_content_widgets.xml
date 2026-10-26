@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/widget_only_quick_add"
-                    style="@style/SubtitleTextView"
+                    style="?appSubtitleStyle"
                     tools:ignore="VisualLintSystemUi" />
 
                 <TextView
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/widgets_popup_only_quick_add_description"
-                    style="@style/BodyTextView" />
+                    style="?appBodyStyle" />
 
             </LinearLayout>
 
@@ -47,7 +47,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_marginHorizontal="16dp"
                 android:padding="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <Button
                     android:id="@+id/widget_1"
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/popup_add"
-                    style="@style/Button"
+                    style="?appButtonStyle"
                     tools:ignore="DuplicateSpeakableTextCheck,VisualLintSystemUi" />
 
             </androidx.cardview.widget.CardView>
@@ -79,14 +79,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/widget_quick_add"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/widgets_popup_quick_add_description"
-                    style="@style/BodyTextView" />
+                    style="?appBodyStyle" />
 
             </LinearLayout>
 
@@ -96,7 +96,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_marginHorizontal="16dp"
                 android:padding="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <Button
                     android:id="@+id/widget_2"
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/popup_add"
-                    style="@style/Button" />
+                    style="?appButtonStyle" />
 
             </androidx.cardview.widget.CardView>
 
@@ -127,14 +127,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/widget_stats"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/widgets_popup_stats_description"
-                    style="@style/BodyTextView" />
+                    style="?appBodyStyle" />
 
             </LinearLayout>
 
@@ -144,7 +144,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_marginHorizontal="16dp"
                 android:padding="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <Button
                     android:id="@+id/widget_3"
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/popup_add"
-                    style="@style/Button"
+                    style="?appButtonStyle"
                     tools:ignore="TextContrastCheck" />
 
             </androidx.cardview.widget.CardView>
@@ -176,14 +176,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/widget_stats_quick_add"
-                    style="@style/SubtitleTextView" />
+                    style="?appSubtitleStyle" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:text="@string/widgets_popup_stats_quick_add_description"
-                    style="@style/BodyTextView" />
+                    style="?appBodyStyle" />
 
             </LinearLayout>
 
@@ -193,7 +193,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_marginHorizontal="16dp"
                 android:padding="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <Button
                     android:id="@+id/widget_4"
@@ -201,7 +201,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/popup_add"
-                    style="@style/Button" />
+                    style="?appButtonStyle" />
 
             </androidx.cardview.widget.CardView>
 

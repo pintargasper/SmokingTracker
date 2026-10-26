@@ -20,7 +20,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/settings_general"
-            style="@style/MainTitleTextView"
+            style="?appTitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <androidx.cardview.widget.CardView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/theme_layout"
@@ -62,13 +62,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_theme"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:id="@+id/theme_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/language_layout"
@@ -112,13 +112,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_language"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:id="@+id/language_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -131,7 +131,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/notifications_layout"
@@ -164,13 +164,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_notifications"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_general_notifications_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -183,7 +183,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/day_end_layout"
@@ -216,13 +216,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_day_end_hour"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_general_day_end_hour_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -235,7 +235,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/widgets_layout"
@@ -268,13 +268,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_widgets"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_general_widgets_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -289,14 +289,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/settings_finance"
-            style="@style/MainTitleTextView" />
+            style="?appTitleStyle" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/currency_layout"
@@ -329,13 +329,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_finance_currency"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_finance_currency_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -348,7 +348,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/costs_layout"
@@ -381,13 +381,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_finance_costs"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_finance_costs_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -402,14 +402,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/settings_data"
-            style="@style/MainTitleTextView" />
+            style="?appTitleStyle" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/backup_layout"
@@ -443,13 +443,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_data_backup"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_data_backup_text"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -462,7 +462,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/restore_layout"
@@ -495,13 +495,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_data_restore"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_data_restore_text"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -516,14 +516,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/settings_about"
-            style="@style/MainTitleTextView" />
+            style="?appTitleStyle" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/about_layout"
@@ -556,13 +556,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_about"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_about_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -575,7 +575,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/website_layout"
@@ -605,14 +605,14 @@
                     android:orientation="vertical">
 
                     <TextView
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_about_website" />
 
                     <TextView
-                        style="@style/BodyTextView"
+                        style="?appBodyStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_about_website_description" />
@@ -628,7 +628,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/changelog_layout"
@@ -661,13 +661,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_about_changelog"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_about_changelog_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -682,14 +682,14 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/settings_support"
-            style="@style/MainTitleTextView" />
+            style="?appTitleStyle" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/translate_layout"
@@ -722,13 +722,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_support_translations"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_support_translations_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
@@ -741,7 +741,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/privacy_policy_layout"
@@ -774,13 +774,13 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_support_privacy_policy"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_support_privacy_policy_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 

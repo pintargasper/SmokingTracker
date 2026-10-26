@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <attr name="appTextAppearanceStyle" format="reference" />
+    <attr name="appTitleStyle" format="reference" />
+    <attr name="appTitleCenterStyle" format="reference" />
+    <attr name="appTitleStartStyle" format="reference" />
+    <attr name="appTitleSpecialStyle" format="reference" />
+    <attr name="appSubtitleStyle" format="reference" />
+    <attr name="appBodyStyle" format="reference" />
+    <attr name="appCaptionStyle" format="reference" />
+
+    <attr name="appButtonStyle" format="reference" />
+    <attr name="appImageButtonStyle" format="reference" />
+    <attr name="appEditTextStyle" format="reference" />
+    <attr name="appCheckBoxStyle" format="reference" />
+    <attr name="appCardStyle" format="reference" />
+    <attr name="appTabStyle" format="reference" />
+    <attr name="appFabStyle" format="reference" />
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <!-- Legacy -->
+    <color name="legacy_primary">#FFFFFF</color>
+    <color name="legacy_on_primary">#121212</color>
+
+    <color name="legacy_secondary">#BDBDBD</color>
+    <color name="legacy_on_secondary">#121212</color>
+
+    <color name="legacy_background">#121212</color>
+    <color name="legacy_on_background">#FFFFFF</color>
+    <color name="legacy_surface">#1E1E1E</color>
+    <color name="legacy_on_surface">#FFFFFF</color>
+
+    <color name="legacy_error">#CF6679</color>
+    <color name="legacy_on_error">#000000</color>
+    <color name="legacy_success">#81C784</color>
+    <color name="legacy_links">#90CAF9</color>
+
+    <color name="legacy_sentiment_yellow">#F2D335</color>
+    <color name="legacy_sentiment_brown">#A1887F</color>
+</resources>

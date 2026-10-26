@@ -55,14 +55,14 @@
             android:gravity="center_vertical"
             android:maxLines="1"
             android:ellipsize="end"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
         <CheckBox
             android:id="@+id/lent_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            style="@style/CheckBox" />
+            style="?appCheckBoxStyle" />
 
     </LinearLayout>
 

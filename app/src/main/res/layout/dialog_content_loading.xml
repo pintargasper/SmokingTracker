@@ -13,7 +13,7 @@
         android:gravity="center"
         android:maxLines="2"
         android:ellipsize="end"
-        style="@style/BodyTextView" />
+        style="?appBodyStyle" />
 
     <ProgressBar
         android:id="@+id/popup_progress_bar"

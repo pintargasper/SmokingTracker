@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
+    android:paddingStart="8dp"
+    android:paddingEnd="0dp"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -20,7 +22,7 @@
             android:layout_height="wrap_content"
             android:gravity="start|center_vertical"
             android:text="dd/MM/yyyy - dd/MM/yyyy"
-            style="@style/SubtitleTextView"
+            style="?appSubtitleStyle"
             tools:ignore="HardcodedText,VisualLintSystemUi" />
 
         <TextView
@@ -29,6 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/cost_price"
             android:alpha="1"
+            style="?appBodyStyle"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
@@ -38,8 +41,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/cost_delete"
-        android:src="@drawable/delete_48px" />
+        android:src="@drawable/delete_48px"
+        style="?appImageButtonStyle" />
 
 </LinearLayout>

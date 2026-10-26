@@ -1,60 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="MainTitleCenterTextView" parent="Widget.AppCompat.TextView">
+    <!-- Legacy -->
+    <style name="Legacy.TextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Legacy.TextAppearance.Title" parent="Legacy.TextAppearance">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
-        <item name="android:gravity">center</item>
         <item name="android:ellipsize">end</item>
     </style>
-    <style name="MainTitleTextView" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
+
+    <style name="Legacy.TextAppearance.Title.Center" parent="Legacy.TextAppearance.Title">
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="Legacy.TextAppearance.Title.Start" parent="Legacy.TextAppearance.Title">
         <item name="android:gravity">start</item>
-        <item name="android:ellipsize">end</item>
     </style>
-    <style name="SpecialTitleTextView" parent="Widget.AppCompat.TextView">
+
+    <style name="Legacy.TextAppearance.Title.Special" parent="Legacy.TextAppearance.Title.Center">
         <item name="android:textSize">20sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
-        <item name="android:gravity">center</item>
-        <item name="android:ellipsize">end</item>
     </style>
-    <style name="SubtitleTextView" parent="Widget.AppCompat.TextView">
+
+    <style name="Legacy.TextAppearance.Subtitle" parent="Legacy.TextAppearance">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
-    <style name="BodyTextView" parent="Widget.AppCompat.TextView">
+
+    <style name="Legacy.TextAppearance.Body" parent="Legacy.TextAppearance">
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
-    <style name="SubBodyTextView" parent="Widget.AppCompat.TextView">
+
+    <style name="Legacy.TextAppearance.Caption" parent="Legacy.TextAppearance">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
-    <style name="Button" parent="Widget.MaterialComponents.Button.TextButton">
+
+    <style name="Legacy.Component.Button" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">16sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAllCaps">false</item>
     </style>
-    <style name="EditText" parent="Widget.AppCompat.EditText">
+
+    <style name="Legacy.Component.ImageButton" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:scaleType">center</item>
+    </style>
+
+    <style name="Legacy.Component.EditText" parent="Widget.AppCompat.EditText">
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">16sp</item>
         <item name="android:background">@drawable/edit_text_underline</item>
         <item name="android:padding">8dp</item>
         <item name="android:textAppearance">?attr/textAppearanceBody1</item>
     </style>
-    <style name="CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+
+    <style name="Legacy.Component.CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:textSize">16sp</item>
         <item name="android:buttonTint">?attr/colorPrimary</item>
         <item name="android:textAllCaps">false</item>
     </style>
-    <style name="Card">
+
+    <style name="Legacy.Component.Card" parent="CardView">
         <item name="cardCornerRadius">12dp</item>
         <item name="cardElevation">4dp</item>
+    </style>
+
+    <style name="Legacy.Component.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="android:background">@color/legacy_background</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabIndicatorColor">?attr/colorPrimary</item>
+        <item name="tabSelectedTextColor">?attr/colorPrimary</item>
+        <item name="tabTextColor">?attr/colorOnSurface</item>
+    </style>
+
+    <style name="Legacy.Component.Fab" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="tint">?attr/colorOnPrimary</item>
+        <item name="pressedTranslationZ">0dp</item>
+        <item name="rippleColor">@color/transparent</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 </resources>
