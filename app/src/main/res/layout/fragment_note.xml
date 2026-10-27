@@ -31,9 +31,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
             android:contentDescription="Close"
             android:src="@drawable/close_48px"
+            style="?appImageButtonStyle"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
@@ -155,22 +155,15 @@
                     style="?appEditTextStyle"
                     tools:ignore="HardcodedText,VisualLintTextFieldSize" />
 
-                <androidx.cardview.widget.CardView
+                <Button
+                    android:id="@+id/save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
-                    style="?appCardStyle">
-
-                    <Button
-                        android:id="@+id/save"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/popup_save"
-                        style="?appButtonStyle"
-                        tools:ignore="VisualLintButtonSize,TextContrastCheck" />
-
-                </androidx.cardview.widget.CardView>
+                    android:text="@string/popup_save"
+                    style="?appButtonStyle"
+                    tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
             </LinearLayout>
 

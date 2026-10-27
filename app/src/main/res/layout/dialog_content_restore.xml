@@ -19,23 +19,13 @@
         style="?appBodyStyle"
         tools:ignore="VisualLintSystemUi" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_open_file_button"
+    <Button
+        android:id="@+id/open_file"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        style="?appCardStyle">
-
-        <Button
-            android:id="@+id/open_file"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/popup_select"
-            style="?appButtonStyle"
-            tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
-
-    </androidx.cardview.widget.CardView>
+        android:text="@string/popup_select"
+        style="?appButtonStyle"
+        tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
 
 </LinearLayout>

@@ -206,8 +206,7 @@
                     android:layout_height="48dp"
                     android:contentDescription="@string/home_previous_day"
                     android:src="@drawable/arrow_circle_left_48px"
-                    android:padding="0dp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="?appImageButtonStyle"
                     app:tint="?attr/colorOnSurface" />
 
                 <LinearLayout
@@ -245,8 +244,7 @@
                     android:layout_height="48dp"
                     android:contentDescription="@string/home_next_day"
                     android:src="@drawable/arrow_circle_right_48px"
-                    android:padding="0dp"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="?appImageButtonStyle"
                     app:tint="?attr/colorOnSurface"
                     tools:ignore="DuplicateSpeakableTextCheck" />
 
@@ -297,24 +295,16 @@
 
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_button_add_entry"
+        <Button
+            android:id="@+id/button_add_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"
-            style="?appCardStyle">
-
-            <Button
-                android:id="@+id/button_add_entry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="@string/home_next_day"
-                android:text="@string/home_add_entry"
-                style="?appButtonStyle" />
-
-        </androidx.cardview.widget.CardView>
+            android:contentDescription="@string/home_next_day"
+            android:text="@string/home_add_entry"
+            style="?appButtonStyle" />
 
     </LinearLayout>
 

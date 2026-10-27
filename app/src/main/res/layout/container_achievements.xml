@@ -34,7 +34,6 @@
                 android:id="@+id/achievement_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:maxLines="3"
                 android:ellipsize="end"
                 style="?appTitleStyle" />

@@ -36,24 +36,30 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Legacy.Component.Button" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+    <style name="Legacy.Component.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">?colorPrimary</item>
         <item name="android:textSize">16sp</item>
         <item name="android:singleLine">true</item>
         <item name="android:textAllCaps">false</item>
+        <item name="backgroundTint">?colorSurface</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:minHeight">55dp</item>
+        <item name="android:layout_marginHorizontal">8dp</item>
     </style>
 
     <style name="Legacy.Component.ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
         <item name="android:scaleType">center</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:tint">?colorPrimary</item>
     </style>
 
     <style name="Legacy.Component.EditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?colorOnSurface</item>
         <item name="android:textSize">16sp</item>
         <item name="android:background">@drawable/edit_text_underline</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textAppearance">?attr/textAppearanceBody1</item>
+        <item name="android:textAppearance">?textAppearanceBody1</item>
     </style>
 
     <style name="Legacy.Component.CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">

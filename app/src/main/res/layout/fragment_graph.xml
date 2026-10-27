@@ -54,9 +54,9 @@
                         android:id="@+id/previous_day_daily"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_daily"
                         android:src="@drawable/arrow_circle_left_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                     <TextView
@@ -71,9 +71,9 @@
                         android:id="@+id/next_day_daily"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_daily"
                         android:src="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                 </LinearLayout>
@@ -122,9 +122,9 @@
                         android:id="@+id/previous_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_weakly"
                         android:src="@drawable/arrow_circle_left_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                     <TextView
@@ -139,9 +139,9 @@
                         android:id="@+id/next_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_weakly"
                         android:src="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                 </LinearLayout>
@@ -190,9 +190,9 @@
                         android:id="@+id/previous_day_monthly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_monthly"
                         android:src="@drawable/arrow_circle_left_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                     <TextView
@@ -207,9 +207,9 @@
                         android:id="@+id/next_day_monthly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_monthly"
                         android:src="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                 </LinearLayout>
@@ -259,9 +259,9 @@
                         android:id="@+id/previous_day_yearly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_yearly"
                         android:src="@drawable/arrow_circle_left_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                     <TextView
@@ -276,9 +276,9 @@
                         android:id="@+id/next_day_yearly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_yearly"
                         android:src="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
                 </LinearLayout>

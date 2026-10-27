@@ -40,24 +40,15 @@
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <Button
+                android:id="@+id/widget_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="16dp"
-                android:padding="8dp"
-                style="?appCardStyle">
-
-                <Button
-                    android:id="@+id/widget_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/popup_add"
-                    style="?appButtonStyle"
-                    tools:ignore="DuplicateSpeakableTextCheck,VisualLintSystemUi" />
-
-            </androidx.cardview.widget.CardView>
+                android:text="@string/popup_add"
+                style="?appButtonStyle"
+                tools:ignore="DuplicateSpeakableTextCheck,VisualLintSystemUi" />
 
         </LinearLayout>
 
@@ -89,23 +80,14 @@
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <Button
+                android:id="@+id/widget_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
                 android:layout_marginHorizontal="16dp"
-                android:padding="8dp"
-                style="?appCardStyle">
-
-                <Button
-                    android:id="@+id/widget_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/popup_add"
-                    style="?appButtonStyle" />
-
-            </androidx.cardview.widget.CardView>
+                android:layout_gravity="center"
+                android:text="@string/popup_add"
+                style="?appButtonStyle" />
 
         </LinearLayout>
 
@@ -137,24 +119,15 @@
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <Button
+                android:id="@+id/widget_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="16dp"
-                android:padding="8dp"
-                style="?appCardStyle">
-
-                <Button
-                    android:id="@+id/widget_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/popup_add"
-                    style="?appButtonStyle"
-                    tools:ignore="TextContrastCheck" />
-
-            </androidx.cardview.widget.CardView>
+                android:text="@string/popup_add"
+                style="?appButtonStyle"
+                tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
 
@@ -186,23 +159,14 @@
 
             </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <Button
+                android:id="@+id/widget_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="8dp"
+                android:layout_gravity="center"
                 android:layout_marginHorizontal="16dp"
-                android:padding="8dp"
-                style="?appCardStyle">
-
-                <Button
-                    android:id="@+id/widget_4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/popup_add"
-                    style="?appButtonStyle" />
-
-            </androidx.cardview.widget.CardView>
+                android:text="@string/popup_add"
+                style="?appButtonStyle" />
 
         </LinearLayout>
 

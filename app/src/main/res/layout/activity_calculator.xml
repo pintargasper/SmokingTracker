@@ -18,9 +18,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:background="@color/transparent"
             android:contentDescription="Back to previous screen"
             android:src="@drawable/arrow_circle_left_48px"
+            style="?appImageButtonStyle"
             tools:ignore="HardcodedText" />
 
         <TextView
@@ -185,23 +185,13 @@
 
                     </LinearLayout>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_button_calculate"
+                    <Button
+                        android:id="@+id/button_calculate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginBottom="8dp"
-                        style="?appCardStyle">
-
-                        <Button
-                            android:id="@+id/button_calculate"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/calculator_calculate"
-                            style="?appButtonStyle"
-                            tools:ignore="VisualLintButtonSize" />
-
-                    </androidx.cardview.widget.CardView>
+                        android:text="@string/calculator_calculate"
+                        style="?appButtonStyle"
+                        tools:ignore="VisualLintButtonSize" />
 
                 </LinearLayout>
 

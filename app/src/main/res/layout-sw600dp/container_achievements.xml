@@ -28,19 +28,12 @@
             android:id="@+id/achievement_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:layout_marginBottom="4dp"
             style="?appTitleStyle" />
 
         <TextView
             android:id="@+id/achievement_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13sp"
-            android:ellipsize="end"
             style="?appBodyStyle" />
 
     </LinearLayout>

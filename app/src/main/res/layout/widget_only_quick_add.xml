@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="5dp"
     android:gravity="center"
-    android:background="@color/legacy_surface">
+    android:background="@color/widget">
 
     <ImageButton
         android:id="@+id/widget_add_new_entry_button"

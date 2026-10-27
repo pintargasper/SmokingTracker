@@ -47,39 +47,22 @@
             android:layout_marginHorizontal="8dp"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/dialog_confirm"
+            <Button
+                android:id="@+id/confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
+                android:text="@string/popup_confirm"
                 android:visibility="gone"
-                style="?appCardStyle">
+                style="?appButtonStyle"
+                tools:ignore="VisualLintButtonSize" />
 
-                <Button
-                    android:id="@+id/confirm"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/popup_confirm"
-                    style="?appButtonStyle"
-                    tools:ignore="VisualLintButtonSize" />
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
+            <Button
+                android:id="@+id/close"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                style="?appCardStyle">
-
-                <Button
-                    android:id="@+id/close"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/popup_close"
-                    style="?appButtonStyle"
-                    tools:ignore="VisualLintButtonSize" />
-
-            </androidx.cardview.widget.CardView>
+                android:text="@string/popup_close"
+                style="?appButtonStyle"
+                tools:ignore="VisualLintButtonSize" />
 
         </LinearLayout>
 
