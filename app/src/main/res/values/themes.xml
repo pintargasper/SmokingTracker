@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.SmokingTracker.Base"
-        parent="Theme.MaterialComponents.DayNight.NoActionBar">
-
+    <style name="Theme.SmokingTracker.Base" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="appTextAppearanceStyle">@style/Legacy.TextAppearance</item>
         <item name="appTitleStyle">@style/Legacy.TextAppearance.Title</item>
         <item name="appTitleCenterStyle">@style/Legacy.TextAppearance.Title.Center</item>
@@ -11,42 +9,73 @@
         <item name="appSubtitleStyle">@style/Legacy.TextAppearance.Subtitle</item>
         <item name="appBodyStyle">@style/Legacy.TextAppearance.Body</item>
         <item name="appCaptionStyle">@style/Legacy.TextAppearance.Caption</item>
-
         <item name="appButtonStyle">@style/Legacy.Component.Button</item>
         <item name="appImageButtonStyle">@style/Legacy.Component.ImageButton</item>
+        <item name="appImageStyle">@style/Legacy.Component.Image</item>
+        <item name="appTextInputLayoutStyle">@style/Legacy.Component.TextInputLayout</item>
         <item name="appEditTextStyle">@style/Legacy.Component.EditText</item>
         <item name="appCheckBoxStyle">@style/Legacy.Component.CheckBox</item>
         <item name="appCardStyle">@style/Legacy.Component.Card</item>
         <item name="appTabStyle">@style/Legacy.Component.TabLayout</item>
         <item name="appFabStyle">@style/Legacy.Component.Fab</item>
+        <item name="appSliderStyle">@style/Legacy.Component.Slider</item>
+        <item name="appDropdownStyle">@style/Legacy.Component.Dropdown</item>
     </style>
 
-    <style name="Theme.SmokingTracker.Legacy"
-        parent="Theme.SmokingTracker.Base">
+    <style name="Theme.SmokingTracker.Legacy" parent="Theme.SmokingTracker.Base">
+        <item name="android:colorBackground">@color/legacy_background_color</item>
+        <item name="colorSurface">@color/legacy_surface_color</item>
+
+        <item name="colorPrimary">@color/legacy_primary</item>
+        <item name="colorOnPrimary">@color/legacy_on_primary</item>
+
+        <item name="appMenuBackground">@color/legacy_background</item>
+        <item name="appMenuIconTint">@color/legacy_on_background</item>
+        <item name="appMenuTextColor">@color/legacy_on_background</item>
+        <item name="appMenuActive">@color/legacy_on_background</item>
 
         <item name="android:statusBarColor">@color/legacy_background</item>
         <item name="android:navigationBarColor">@color/legacy_background</item>
         <item name="android:windowLightStatusBar">true</item>
 
-        <item name="colorPrimary">@color/legacy_primary</item>
-        <item name="colorPrimaryVariant">@color/legacy_primary</item>
-        <item name="colorOnPrimary">@color/legacy_on_primary</item>
-
-        <item name="colorSecondary">@color/legacy_secondary</item>
-        <item name="colorSecondaryVariant">@color/legacy_secondary</item>
-        <item name="colorOnSecondary">@color/legacy_on_secondary</item>
-
-        <item name="android:colorBackground">@color/legacy_background</item>
-        <item name="colorOnBackground">@color/legacy_on_background</item>
-        <item name="colorSurface">@color/legacy_surface</item>
-        <item name="colorOnSurface">@color/legacy_on_surface</item>
-
         <item name="colorError">@color/legacy_error</item>
         <item name="colorOnError">@color/legacy_on_error</item>
 
-        <item name="colorControlNormal">@color/legacy_on_surface</item>
-        <item name="colorSwitchThumbNormal">@color/legacy_surface</item>
+        <item name="appButtonText">@color/legacy_button_text</item>
+        <item name="appButtonBackground">@color/legacy_button_background</item>
 
-        <item name="colorAccent">@color/legacy_primary</item>
+        <item name="appImageButtonIconTint">@color/legacy_image_button_icon_tint</item>
+        <item name="appImageButtonBackground">@color/legacy_image_button_background_tint</item>
+
+        <item name="appTextInputLayoutBoxColor">@color/legacy_text_input_layout_box_color</item>
+        <item name="appTextInputLayoutBoxBackground">@color/legacy_text_input_layout_box_background</item>
+
+        <item name="appEditTextColor">@color/legacy_edit_text_color</item>
+
+        <item name="appCheckBoxColor">@color/legacy_checkbox_color</item>
+        <item name="appCheckBoxTint">@color/legacy_checkbox_tint</item>
+
+        <item name="appCardBackground">@color/legacy_card_background</item>
+
+        <item name="appTabLayoutColor">@color/legacy_tab_layout_color</item>
+        <item name="appTabLayoutBackground">@color/legacy_tab_layout_background</item>
+        <item name="appTabLayoutIndicator">@color/legacy_tab_layout_indicator</item>
+
+        <item name="appFabTint">@color/legacy_fab_tint</item>
+        <item name="appFabBackgroundTint">@color/legacy_fab_background_tint</item>
+
+        <item name="appSliderThumbActive">@color/legacy_slider_thumb_active</item>
+        <item name="appSliderThumbInactive">@color/legacy_slider_thumb_inactive</item>
+        <item name="appSliderTrackActive">@color/legacy_slider_track_active</item>
+        <item name="appSliderTrackInactive">@color/legacy_slider_track_inactive</item>
+        <item name="appSliderHaloColor">@color/legacy_slider_halo_color</item>
+        <item name="appSliderTickActive">@color/legacy_slider_tick_active</item>
+        <item name="appSliderTickInactive">@color/legacy_slider_tick_inactive</item>
+
+        <item name="appDropdownColor">@color/legacy_dropdown_color</item>
+        <item name="appDropdownBackgroundTint">@color/legacy_dropdown_background_tint</item>
+        <item name="appDropdownActiveBackground">@color/legacy_dropdown_active_background</item>
+        <item name="appDropdownHoverBackground">@color/legacy_dropdown_hover_background</item>
     </style>
+
 </resources>

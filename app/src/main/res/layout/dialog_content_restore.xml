@@ -12,18 +12,18 @@
         android:id="@+id/text_selected_file"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
         android:text="@string/restore_popup_file"
         android:ellipsize="end"
         android:singleLine="true"
         style="?appBodyStyle"
         tools:ignore="VisualLintSystemUi" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/open_file"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
+        android:layout_weight="0.2"
         android:text="@string/popup_select"
         style="?appButtonStyle"
         tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />

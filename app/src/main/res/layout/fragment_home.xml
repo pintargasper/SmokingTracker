@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_counter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
         android:id="@+id/layout_timeline"
@@ -50,7 +50,7 @@
         android:orientation="horizontal"
         android:weightSum="3">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -89,9 +89,9 @@
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -128,9 +128,9 @@
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -169,16 +169,16 @@
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_day_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
+        android:layout_marginBottom="8dp"
         style="?appCardStyle">
 
         <LinearLayout
@@ -190,14 +190,13 @@
             android:gravity="center_vertical"
             android:padding="8dp">
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/previous_day"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:contentDescription="@string/home_previous_day"
-                android:src="@drawable/arrow_circle_left_48px"
-                style="?appImageButtonStyle"
-                app:tint="?attr/colorOnSurface" />
+                app:icon="@drawable/arrow_circle_left_48px"
+                style="?appImageButtonStyle" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -228,26 +227,24 @@
 
             </LinearLayout>
 
-            <ImageButton
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/next_day"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:contentDescription="@string/home_next_day"
-                android:src="@drawable/arrow_circle_right_48px"
-                style="?appImageButtonStyle"
-                app:tint="?attr/colorOnSurface"
-                tools:ignore="DuplicateSpeakableTextCheck" />
+                app:icon="@drawable/arrow_circle_right_48px"
+                tools:ignore="DuplicateSpeakableTextCheck"
+                style="?appImageButtonStyle" />
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_recyclerview_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginVertical="8dp"
         style="?appCardStyle">
 
         <androidx.recyclerview.widget.RecyclerView
@@ -281,15 +278,15 @@
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add_entry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
-        android:layout_gravity="center_horizontal"
         android:contentDescription="@string/home_next_day"
         android:text="@string/home_add_entry"
         style="?appButtonStyle" />

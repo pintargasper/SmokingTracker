@@ -61,21 +61,22 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     app:hintEnabled="false"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    app:endIconMode="dropdown_menu"
+                    style="?appTextInputLayoutStyle">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/spinner_progress_frequency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:focusable="false"
-                        android:clickable="false"
+                        android:clickable="true"
                         android:cursorVisible="false"
                         android:inputType="none"
                         app:simpleItems="@array/frequency_options"
                         tools:ignore="LabelFor"
-                        style="?appBodyStyle" />
+                        style="?appDropdownStyle" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 

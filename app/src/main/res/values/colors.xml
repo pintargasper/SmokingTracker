@@ -1,25 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
-    <color name="widget">#FFFFFFFF</color>
+
+    <color name="widget_background">#FFFFFF</color>
+    <color name="widget">#000000</color>
 
     <!-- Legacy -->
-    <color name="legacy_primary">#000000</color>
-    <color name="legacy_on_primary">#FFFFFF</color>
+    <color name="legacy_primary">#FFFFFF</color>
+    <color name="legacy_on_primary">#000000</color>
 
-    <color name="legacy_secondary">#000000</color>
-    <color name="legacy_on_secondary">#FFFFFF</color>
+    <color name="legacy_background_color">#FFFFFF</color>
+    <color name="legacy_surface_color">#FFFFFF</color>
 
     <color name="legacy_background">#FFFFFF</color>
     <color name="legacy_on_background">#000000</color>
-    <color name="legacy_surface">#FFFFFF</color>
-    <color name="legacy_on_surface">#000000</color>
+
+    <color name="legacy_button_text">#000000</color>
+    <color name="legacy_button_background">#FFFFFF</color>
+
+    <color name="legacy_image_button_icon_tint">#000000</color>
+    <color name="legacy_image_button_background_tint">#FFFFFF</color>
+
+    <color name="legacy_text_input_layout_box_color">#000000</color>
+    <color name="legacy_text_input_layout_box_background">#FFFFFF</color>
+
+    <color name="legacy_edit_text_color">#000000</color>
+
+    <color name="legacy_checkbox_color">#000000</color>
+    <color name="legacy_checkbox_tint">#000000</color>
+
+    <color name="legacy_card_background">#FFFFFF</color>
+
+    <color name="legacy_tab_layout_color">#000000</color>
+    <color name="legacy_tab_layout_background">#FFFFFF</color>
+    <color name="legacy_tab_layout_indicator">#000000</color>
+
+    <color name="legacy_fab_tint">#000000</color>
+    <color name="legacy_fab_background_tint">#FFFFFF</color>
+
+    <color name="legacy_slider_thumb_active">#000000</color>
+    <color name="legacy_slider_thumb_inactive">#000000</color>
+    <color name="legacy_slider_track_active">#000000</color>
+    <color name="legacy_slider_track_inactive">#FFFFFF</color>
+    <color name="legacy_slider_halo_color">@color/transparent</color>
+    <color name="legacy_slider_tick_active">#000000</color>
+    <color name="legacy_slider_tick_inactive">#000000</color>
+
+    <color name="legacy_dropdown_color">#000000</color>
+    <color name="legacy_dropdown_background_tint">#FFFFFF</color>
+    <color name="legacy_dropdown_active_background">#FFFFFF</color>
+    <color name="legacy_dropdown_hover_background">#FFFFFF</color>
 
     <color name="legacy_error">#B00020</color>
     <color name="legacy_on_error">#FFFFFF</color>
     <color name="legacy_success">#4CAF50</color>
     <color name="legacy_links">#64B5F6</color>
-
     <color name="legacy_sentiment_yellow">#F2D335</color>
     <color name="legacy_sentiment_brown">#795548</color>
 </resources>

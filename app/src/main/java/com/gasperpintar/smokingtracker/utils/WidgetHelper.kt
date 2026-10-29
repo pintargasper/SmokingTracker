@@ -147,7 +147,7 @@ object WidgetHelper {
                         }
 
                         setTextViewText(R.id.widget_add_new_entry, localizedContext.getString(R.string.insert_popup))
-                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_primary))
+                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_on_primary))
                         setBoolean(R.id.widget_add_new_entry, "setEnabled", true)
 
                         setOnClickPendingIntent(R.id.widget_add_new_entry, getBroadcastPendingIntent(context, ACTION_ADD_NEW_ENTRY))

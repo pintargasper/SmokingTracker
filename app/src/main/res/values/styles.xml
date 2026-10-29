@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <!-- Legacy -->
-    <style name="Legacy.TextAppearance" parent="TextAppearance.AppCompat">
+    <style name="Legacy.TextAppearance" parent="TextAppearance.Material3.BodyMedium">
         <item name="android:textColor">?attr/colorOnSurface</item>
     </style>
 
@@ -36,58 +37,102 @@
         <item name="android:textSize">12sp</item>
     </style>
 
-    <style name="Legacy.Component.Button" parent="Widget.MaterialComponents.Button">
-        <item name="android:textColor">?colorPrimary</item>
+    <style name="Legacy.Component.Button" parent="Widget.Material3.Button">
         <item name="android:textSize">16sp</item>
-        <item name="android:singleLine">true</item>
+        <item name="android:textColor">?appButtonText</item>
+        <item name="android:backgroundTint">?appButtonBackground</item>
         <item name="android:textAllCaps">false</item>
-        <item name="backgroundTint">?colorSurface</item>
-        <item name="cornerRadius">12dp</item>
         <item name="android:minHeight">55dp</item>
         <item name="android:layout_marginHorizontal">8dp</item>
+        <item name="android:layout_marginVertical">4dp</item>
+        <item name="android:elevation">5dp</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 
-    <style name="Legacy.Component.ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">?selectableItemBackgroundBorderless</item>
-        <item name="android:scaleType">center</item>
-        <item name="android:padding">12dp</item>
-        <item name="android:tint">?colorPrimary</item>
+    <style name="Legacy.Component.ImageButton" parent="Widget.Material3.Button.IconButton">
+        <item name="iconTint">?appImageButtonIconTint</item>
+        <!--<item name="backgroundTint">?appImageButtonBackground</item>-->
+        <item name="iconSize">48dp</item>
+        <item name="iconGravity">textStart</item>
+
+        <item name="android:insetTop">3dp</item>
+        <item name="android:insetBottom">3dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="android:layout_margin">2dp</item>
+
+        <!--<item name="android:elevation">4dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="cornerRadius">12dp</item>-->
     </style>
 
-    <style name="Legacy.Component.EditText" parent="Widget.AppCompat.EditText">
-        <item name="android:textColor">?colorOnSurface</item>
+    <style name="Legacy.Component.Image" parent="Legacy.Component.ImageButton">
+        <item name="iconTint">@null</item>
+    </style>
+
+    <style name="Legacy.Component.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">?appTextInputLayoutBoxColor</item>
+        <item name="boxBackgroundColor">?appTextInputLayoutBoxBackground</item>
+        <item name="hintTextColor">?appTextInputLayoutBoxColor</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="android:minHeight">48dp</item>
+    </style>
+
+    <style name="Legacy.Component.EditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:textColor">?editTextColor</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:background">@drawable/edit_text_underline</item>
-        <item name="android:padding">8dp</item>
-        <item name="android:textAppearance">?textAppearanceBody1</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingVertical">8dp</item>
+        <item name="android:paddingHorizontal">12dp</item>
     </style>
 
-    <style name="Legacy.Component.CheckBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+    <style name="Legacy.Component.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="android:textColor">?appCheckBoxColor</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:buttonTint">?attr/colorPrimary</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="buttonTint">?appCheckBoxTint</item>
     </style>
 
-    <style name="Legacy.Component.Card" parent="CardView">
+    <style name="Legacy.Component.Card" parent="Widget.Material3.CardView.Outlined">
         <item name="cardCornerRadius">12dp</item>
-        <item name="cardElevation">4dp</item>
+        <item name="cardBackgroundColor">?appCardBackground</item>
+        <item name="cardElevation">5dp</item>
+        <item name="strokeWidth">1dp</item>
     </style>
 
-    <style name="Legacy.Component.TabLayout" parent="Widget.MaterialComponents.TabLayout">
-        <item name="android:background">@color/legacy_background</item>
+    <style name="Legacy.Component.TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="background">?appTabLayoutBackground</item>
         <item name="tabMode">fixed</item>
         <item name="tabGravity">fill</item>
-        <item name="tabIndicatorColor">?attr/colorPrimary</item>
-        <item name="tabSelectedTextColor">?attr/colorPrimary</item>
-        <item name="tabTextColor">?attr/colorOnSurface</item>
+        <item name="tabIndicatorColor">?appTabLayoutIndicator</item>
+        <item name="tabSelectedTextColor">?appTabLayoutColor</item>
+        <item name="tabTextColor">?appTabLayoutColor</item>
+        <item name="tabTextAppearance">?appTitleStyle</item>
     </style>
 
-    <style name="Legacy.Component.Fab" parent="Widget.MaterialComponents.FloatingActionButton">
-        <item name="backgroundTint">?attr/colorPrimary</item>
-        <item name="tint">?attr/colorOnPrimary</item>
-        <item name="pressedTranslationZ">0dp</item>
-        <item name="rippleColor">@color/transparent</item>
-        <item name="android:stateListAnimator">@null</item>
+    <style name="Legacy.Component.Fab" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">?appFabBackgroundTint</item>
+        <item name="tint">?appFabTint</item>
+    </style>
+
+    <style name="Legacy.Component.Slider" parent="Widget.Material3.Slider">
+        <item name="thumbColor">?appSliderThumbActive</item>
+        <item name="thumbStrokeColor">?appSliderThumbInactive</item>
+        <item name="trackColorActive">?appSliderTrackActive</item>
+        <item name="trackColorInactive">?appSliderTrackInactive</item>
+        <item name="haloColor">?appSliderHaloColor</item>
+        <item name="tickColorActive">?appSliderTickActive</item>
+        <item name="tickColorInactive">?appSliderTickInactive</item>
+    </style>
+
+    <style name="Legacy.Component.Dropdown" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
+        <item name="android:textColor">?appDropdownColor</item>
+        <item name="dropDownBackgroundTint">?appDropdownBackgroundTint</item>
+        <item name="simpleItemSelectedColor">?appDropdownBackgroundTint</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingHorizontal">12dp</item>
+        <item name="android:paddingVertical">8dp</item>
     </style>
 </resources>

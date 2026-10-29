@@ -22,7 +22,7 @@
             style="?appTitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -44,8 +44,8 @@
 
                 <ImageView
                     android:id="@+id/image_theme"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_theme"
                     android:src="@drawable/light_mode_48px" />
@@ -71,9 +71,9 @@
 
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -94,8 +94,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_language"
                     android:src="@drawable/language_48px" />
@@ -123,9 +123,9 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -146,8 +146,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_notifications"
                     android:src="@drawable/notification_settings_48px" />
@@ -175,9 +175,9 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -198,8 +198,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_day_end_hour"
                     android:src="@drawable/partly_cloudy_night_48px" />
@@ -227,9 +227,9 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -250,8 +250,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_widgets"
                     android:src="@drawable/widgets_48px" />
@@ -279,7 +279,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -290,7 +290,7 @@
             android:text="@string/settings_finance"
             style="?appTitleStyle" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -311,8 +311,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_finance_currency"
                     android:src="@drawable/currency_exchange_48px" />
@@ -340,9 +340,9 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -363,8 +363,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_finance_costs"
                     android:src="@drawable/payments_48px" />
@@ -392,7 +392,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -403,7 +403,7 @@
             android:text="@string/settings_data"
             style="?appTitleStyle" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -424,8 +424,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_data_backup"
                     android:src="@drawable/download_48px"
@@ -454,9 +454,9 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -477,8 +477,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_data_restore"
                     android:src="@drawable/upload_48px" />
@@ -506,7 +506,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -517,7 +517,7 @@
             android:text="@string/settings_about"
             style="?appTitleStyle" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -528,18 +528,19 @@
                 android:id="@+id/about_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="55dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center_vertical"
+                android:minHeight="55dp"
                 android:orientation="horizontal"
+                android:paddingVertical="12dp"
                 android:paddingStart="5dp"
                 android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
+                tools:ignore="TouchTargetSizeCheck">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_about"
                     android:src="@drawable/info_48px" />
@@ -551,25 +552,25 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="?appSubtitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:text="@string/settings_about"
-                        style="?appSubtitleStyle" />
+                        android:text="@string/settings_about" />
 
                     <TextView
+                        style="?appBodyStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings_about_description"
-                        style="?appBodyStyle" />
+                        android:text="@string/settings_about_description" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -591,8 +592,8 @@
                 tools:ignore="TouchTargetSizeCheck">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_about_website"
                     android:src="@drawable/public_48px" />
@@ -620,9 +621,9 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -643,8 +644,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_about_changelog"
                     android:src="@drawable/history_48px" />
@@ -672,7 +673,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:layout_width="wrap_content"
@@ -683,7 +684,7 @@
             android:text="@string/settings_support"
             style="?appTitleStyle" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -704,8 +705,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_support_translations"
                     android:src="@drawable/translate_48px" />
@@ -733,9 +734,9 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -756,8 +757,8 @@
                 android:paddingVertical="12dp">
 
                 <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_support_privacy_policy"
                     android:src="@drawable/policy_48px" />
@@ -785,7 +786,7 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

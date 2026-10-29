@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
@@ -13,42 +13,44 @@
         android:layout_height="48dp"
         android:layout_weight="1"
         android:layout_marginEnd="5dp"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingHorizontal="10dp"
         android:gravity="center_vertical"
         android:text="00:00"
         style="?appSubtitleStyle"
         tools:ignore="HardcodedText,VisualLintSystemUi" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/lent"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="5dp"
         android:padding="4dp"
         android:contentDescription="@string/home_lent"
-        android:src="@drawable/hand_package_48px"
         android:visibility="visible"
+        app:icon="@drawable/hand_package_48px"
+        tools:ignore="VisualLintSystemUi"
         style="?appImageButtonStyle" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/edit"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="5dp"
         android:padding="4dp"
         android:contentDescription="@string/home_edit"
-        android:src="@drawable/edit_48px"
+        app:icon="@drawable/edit_48px"
+        tools:ignore="VisualLintSystemUi"
         style="?appImageButtonStyle" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/delete"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="5dp"
         android:padding="4dp"
         android:contentDescription="@string/home_delete"
-        android:src="@drawable/delete_48px"
+        app:icon="@drawable/delete_48px"
+        tools:ignore="VisualLintSystemUi"
         style="?appImageButtonStyle" />
 
 </LinearLayout>

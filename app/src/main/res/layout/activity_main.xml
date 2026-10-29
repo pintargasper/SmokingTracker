@@ -20,9 +20,10 @@
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="?attr/colorOnSurface"
-        app:itemTextColor="?attr/colorOnSurface"
+        android:background="?appMenuBackground"
+        app:itemIconTint="?appMenuIconTint"
+        app:itemTextColor="?appMenuTextColor"
+        app:itemActiveIndicatorStyle="?appMenuActive"
         app:menu="@menu/bottom_nav_menu"
         tools:ignore="VisualLintBottomNav" />
 

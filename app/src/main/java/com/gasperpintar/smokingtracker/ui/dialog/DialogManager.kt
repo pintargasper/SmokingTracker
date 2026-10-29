@@ -351,7 +351,7 @@ object DialogManager {
                 endDate = null
 
                 listOf(content.inputStartDate, content.inputEndDate, content.inputPackPrice).forEach {
-                    it.text.clear()
+                    it.text?.clear()
                 }
             }
         }

@@ -63,20 +63,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/currency_check_box_custom"
-                android:maxWidth="300dp"
                 style="?appCheckBoxStyle"
                 tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-            <EditText
-                android:id="@+id/input_custom_currency"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
                 android:hint="@string/currency_check_box_edit_description"
-                android:autofillHints="none"
-                android:inputType="text"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp" />
+                style="?appTextInputLayoutStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_custom_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:autofillHints="none"
+                    android:inputType="text"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    style="?appEditTextStyle" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.ui.container
 
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R

@@ -8,8 +8,8 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
-import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBinding
+import com.gasperpintar.smokingtracker.databinding.FragmentHomeBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.container.ContainerManager

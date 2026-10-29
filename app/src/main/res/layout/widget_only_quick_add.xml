@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="5dp"
     android:gravity="center"
-    android:background="@color/widget">
+    android:background="@color/widget_background">
 
     <ImageButton
         android:id="@+id/widget_add_new_entry_button"

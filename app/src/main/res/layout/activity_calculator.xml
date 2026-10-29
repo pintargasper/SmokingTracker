@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -13,15 +13,15 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:contentDescription="Back to previous screen"
-            android:src="@drawable/arrow_circle_left_48px"
+            app:icon="@drawable/arrow_circle_left_48px"
             style="?appImageButtonStyle"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText,VisualLintSystemUi" />
 
         <TextView
             android:layout_width="0dp"
@@ -54,7 +54,7 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_calculator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,64 +68,83 @@
                     android:padding="16dp">
 
                     <TextView
-                        android:id="@+id/text_daily_cigarettes"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/calculator_per_day"
                         style="?appSubtitleStyle" />
 
-                    <EditText
-                        android:id="@+id/input_daily_cigarettes"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:autofillHints="0"
                         android:hint="0"
-                        android:inputType="number"
-                        style="?appEditTextStyle"
-                        tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                        style="?appTextInputLayoutStyle"
+                        tools:ignore="HardcodedText">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_daily_cigarettes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            style="?appEditTextStyle"
+                            tools:ignore="VisualLintTextFieldSize" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:id="@+id/text_cigarettes_per_pack"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/calculator_per_pack"
                         style="?appSubtitleStyle" />
 
-                    <EditText
-                        android:id="@+id/input_cigarettes_per_pack"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:autofillHints="20"
                         android:hint="20"
-                        android:inputType="number"
-                        style="?appEditTextStyle"
-                        tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                        style="?appTextInputLayoutStyle"
+                        tools:ignore="HardcodedText">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_cigarettes_per_pack"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:autofillHints="20"
+                            style="?appEditTextStyle"
+                            tools:ignore="VisualLintTextFieldSize" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:id="@+id/text_pack_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@string/calculator_price"
                         style="?appSubtitleStyle" />
 
-                    <EditText
-                        android:id="@+id/input_pack_price"
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="48dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:autofillHints="0.00"
                         android:hint="0.00"
-                        android:inputType="numberDecimal"
-                        style="?appEditTextStyle"
-                        tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                        style="?appTextInputLayoutStyle"
+                        tools:ignore="HardcodedText">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_pack_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal"
+                            android:autofillHints="0.00"
+                            style="?appEditTextStyle"
+                            tools:ignore="VisualLintTextFieldSize" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <TextView
-                        android:id="@+id/text_period"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
@@ -133,7 +152,6 @@
                         style="?appSubtitleStyle" />
 
                     <LinearLayout
-                        android:id="@+id/layout_date_range_picker"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
@@ -141,28 +159,34 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/text_start_date_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:text="@string/calculator_from"
                             style="?appBodyStyle" />
 
-                        <EditText
-                            android:id="@+id/input_start_date"
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="0dp"
-                            android:layout_height="48dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:autofillHints="@string/calculator_start_date"
-                            android:clickable="true"
-                            android:focusable="false"
                             android:hint="@string/calculator_start_date"
-                            android:inputType="date"
-                            style="?appEditTextStyle"
-                            tools:ignore="VisualLintTextFieldSize" />
+                            style="?appTextInputLayoutStyle"
+                            tools:ignore="VisualLintTextFieldSize">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_start_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="@string/calculator_start_date"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:inputType="date"
+                                style="?appEditTextStyle"
+                                tools:ignore="VisualLintTextFieldSize" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView
-                            android:id="@+id/text_end_date_label"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -170,22 +194,30 @@
                             android:text="@string/calculator_to"
                             style="?appBodyStyle" />
 
-                        <EditText
-                            android:id="@+id/input_end_date"
+                        <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="0dp"
-                            android:layout_height="48dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:autofillHints="@string/calculator_end_date"
-                            android:clickable="true"
-                            android:focusable="false"
                             android:hint="@string/calculator_end_date"
-                            android:inputType="date"
-                            style="?appEditTextStyle"
-                            tools:ignore="VisualLintTextFieldSize" />
+                            style="?appTextInputLayoutStyle"
+                            tools:ignore="VisualLintTextFieldSize">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/input_end_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:autofillHints="@string/calculator_end_date"
+                                android:clickable="true"
+                                android:focusable="false"
+                                android:inputType="date"
+                                style="?appEditTextStyle"
+                                tools:ignore="VisualLintTextFieldSize" />
+
+                        </com.google.android.material.textfield.TextInputLayout>
 
                     </LinearLayout>
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/button_calculate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -195,7 +227,7 @@
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 

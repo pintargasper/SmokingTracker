@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?attr/colorSurface"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -48,11 +48,11 @@
         android:overScrollMode="ifContentScrolls"
         android:scrollbars="vertical">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_add_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginVertical="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="8dp"
             style="?appCardStyle">
 
@@ -126,36 +126,53 @@
                     android:value="3"
                     android:valueFrom="1"
                     android:valueTo="5"
-                    android:stepSize="1" />
+                    android:stepSize="1"
+                    style="?appSliderStyle" />
 
-                <EditText
-                    android:id="@+id/input_title"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
                     android:layout_marginBottom="8dp"
-                    android:autofillHints="title"
                     android:hint="@string/notes_title"
-                    android:inputType="text"
-                    style="?appEditTextStyle"
-                    tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                    style="?appTextInputLayoutStyle"
+                    tools:ignore="HardcodedText,VisualLintTextFieldSize">
 
-                <EditText
-                    android:id="@+id/input_content"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:autofillHints="title"
+                        android:inputType="text"
+                        style="?appEditTextStyle"
+                        tools:ignore="VisualLintTextFieldSize" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:minHeight="144dp"
-                    android:gravity="top|start"
-                    android:autofillHints="description"
                     android:hint="@string/notes_content"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:scrollbars="vertical"
-                    android:overScrollMode="ifContentScrolls"
-                    style="?appEditTextStyle"
-                    tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                    style="?appTextInputLayoutStyle"
+                    tools:ignore="HardcodedText,VisualLintTextFieldSize">
 
-                <Button
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:minHeight="144dp"
+                        android:gravity="top|start"
+                        android:autofillHints="description"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:scrollbars="vertical"
+                        android:overScrollMode="ifContentScrolls"
+                        style="?appEditTextStyle"
+                        tools:ignore="VisualLintTextFieldSize" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -163,11 +180,13 @@
                     android:layout_marginVertical="8dp"
                     android:text="@string/popup_save"
                     style="?appButtonStyle"
+                    app:backgroundTint="?appButtonBackground"
+                    app:elevationOverlayEnabled="false"
                     tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.core.widget.NestedScrollView>
 

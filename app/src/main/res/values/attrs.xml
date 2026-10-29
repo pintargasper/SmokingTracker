@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="appColorBackground" format="reference" />
+    <attr name="appColorSurface" format="reference" />
+
+    <attr name="appMenuBackground" format="reference" />
+    <attr name="appMenuIconTint" format="reference" />
+    <attr name="appMenuTextColor" format="reference" />
+    <attr name="appMenuActive" format="reference" />
+
     <attr name="appTextAppearanceStyle" format="reference" />
     <attr name="appTitleStyle" format="reference" />
     <attr name="appTitleCenterStyle" format="reference" />
@@ -8,12 +16,51 @@
     <attr name="appSubtitleStyle" format="reference" />
     <attr name="appBodyStyle" format="reference" />
     <attr name="appCaptionStyle" format="reference" />
-
     <attr name="appButtonStyle" format="reference" />
     <attr name="appImageButtonStyle" format="reference" />
+    <attr name="appImageStyle" format="reference" />
+    <attr name="appTextInputLayoutStyle" format="reference" />
     <attr name="appEditTextStyle" format="reference" />
     <attr name="appCheckBoxStyle" format="reference" />
     <attr name="appCardStyle" format="reference" />
     <attr name="appTabStyle" format="reference" />
     <attr name="appFabStyle" format="reference" />
+    <attr name="appSliderStyle" format="reference" />
+    <attr name="appDropdownStyle" format="reference" />
+
+    <attr name="appButtonText" format="reference" />
+    <attr name="appButtonBackground" format="reference" />
+
+    <attr name="appImageButtonIconTint" format="reference" />
+    <attr name="appImageButtonBackground" format="reference" />
+
+    <attr name="appTextInputLayoutBoxColor" format="reference" />
+    <attr name="appTextInputLayoutBoxBackground" format="reference" />
+
+    <attr name="appEditTextColor" format="reference" />
+
+    <attr name="appCheckBoxColor" format="reference" />
+    <attr name="appCheckBoxTint" format="reference" />
+
+    <attr name="appCardBackground" format="reference" />
+
+    <attr name="appTabLayoutColor" format="reference" />
+    <attr name="appTabLayoutBackground" format="reference" />
+    <attr name="appTabLayoutIndicator" format="reference" />
+
+    <attr name="appFabTint" format="reference" />
+    <attr name="appFabBackgroundTint" format="reference" />
+
+    <attr name="appSliderThumbActive" format="reference" />
+    <attr name="appSliderThumbInactive" format="reference" />
+    <attr name="appSliderTrackActive" format="reference" />
+    <attr name="appSliderTrackInactive" format="reference" />
+    <attr name="appSliderHaloColor" format="reference" />
+    <attr name="appSliderTickActive" format="reference" />
+    <attr name="appSliderTickInactive" format="reference" />
+
+    <attr name="appDropdownColor" format="reference" />
+    <attr name="appDropdownBackgroundTint" format="reference" />
+    <attr name="appDropdownActiveBackground" format="reference" />
+    <attr name="appDropdownHoverBackground" format="reference" />
 </resources>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_vertical"
     android:paddingStart="8dp"
     android:paddingEnd="0dp"
@@ -35,13 +35,13 @@
 
     </LinearLayout>
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/delete"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="8dp"
         android:contentDescription="@string/cost_delete"
-        android:src="@drawable/delete_48px"
-        style="?appImageButtonStyle" />
+        app:icon="@drawable/delete_48px"
+        style="?appImageButtonStyle"
+        tools:ignore="VisualLintSystemUi" />
 
 </LinearLayout>
