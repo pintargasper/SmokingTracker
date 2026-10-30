@@ -27,6 +27,7 @@
     <attr name="appFabStyle" format="reference" />
     <attr name="appSliderStyle" format="reference" />
     <attr name="appDropdownStyle" format="reference" />
+    <attr name="appProgressBarStyle" format="reference" />
 
     <attr name="appButtonText" format="reference" />
     <attr name="appButtonBackground" format="reference" />
@@ -41,6 +42,7 @@
 
     <attr name="appCheckBoxColor" format="reference" />
     <attr name="appCheckBoxTint" format="reference" />
+    <attr name="appCheckBoxIconTint" format="reference" />
 
     <attr name="appCardBackground" format="reference" />
 

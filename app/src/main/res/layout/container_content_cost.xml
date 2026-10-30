@@ -15,7 +15,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/date_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
             style="?appSubtitleStyle"
             tools:ignore="HardcodedText,VisualLintSystemUi" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/price_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

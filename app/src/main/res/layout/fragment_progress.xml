@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -42,12 +42,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_progress_statistics"
-                    android:src="@drawable/query_stats_48px" />
+                    android:src="@drawable/query_stats_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -55,14 +56,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_progress_statistics"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_progress_statistics_description"
@@ -94,12 +95,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_progress_achievements"
-                    android:src="@drawable/trophy_48px" />
+                    android:src="@drawable/trophy_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -107,14 +109,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_progress_achievements"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_progress_achievements_description"
@@ -126,7 +128,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -155,12 +157,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_tools_calculator"
-                    android:src="@drawable/calculate_48px" />
+                    android:src="@drawable/calculate_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -168,14 +171,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_tools_calculator"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_tools_calculator_description"
@@ -207,12 +210,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_tools_notes"
-                    android:src="@drawable/book_48px" />
+                    android:src="@drawable/book_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -220,14 +224,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_tools_notes"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_tools_notes_description"

@@ -27,7 +27,7 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_daily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                         style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_daily"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
@@ -95,7 +95,7 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_weekly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -127,7 +127,7 @@
                         style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_weekly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
@@ -163,7 +163,7 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_monthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
                         style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_monthly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
@@ -231,7 +231,7 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_yearly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
                         style="?appImageButtonStyle"
                         app:tint="?attr/colorOnSurface" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_yearly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"

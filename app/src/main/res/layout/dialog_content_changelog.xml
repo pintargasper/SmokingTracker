@@ -6,7 +6,7 @@
     android:layout_height="300dp"
     android:fillViewport="true">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/changelog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

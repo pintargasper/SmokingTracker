@@ -20,11 +20,16 @@
         <item name="appFabStyle">@style/Legacy.Component.Fab</item>
         <item name="appSliderStyle">@style/Legacy.Component.Slider</item>
         <item name="appDropdownStyle">@style/Legacy.Component.Dropdown</item>
+        <item name="appProgressBarStyle">@style/Legacy.Component.ProgressBar</item>
     </style>
 
     <style name="Theme.SmokingTracker.Legacy" parent="Theme.SmokingTracker.Base">
-        <item name="android:colorBackground">@color/legacy_background_color</item>
-        <item name="colorSurface">@color/legacy_surface_color</item>
+        <item name="android:statusBarColor">@color/legacy_background</item>
+        <item name="android:navigationBarColor">@color/legacy_background</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <item name="android:colorBackground">@color/legacy_background</item>
+        <item name="colorSurface">@color/legacy_on_background</item>
 
         <item name="colorPrimary">@color/legacy_primary</item>
         <item name="colorOnPrimary">@color/legacy_on_primary</item>
@@ -33,10 +38,6 @@
         <item name="appMenuIconTint">@color/legacy_on_background</item>
         <item name="appMenuTextColor">@color/legacy_on_background</item>
         <item name="appMenuActive">@color/legacy_on_background</item>
-
-        <item name="android:statusBarColor">@color/legacy_background</item>
-        <item name="android:navigationBarColor">@color/legacy_background</item>
-        <item name="android:windowLightStatusBar">true</item>
 
         <item name="colorError">@color/legacy_error</item>
         <item name="colorOnError">@color/legacy_on_error</item>
@@ -54,6 +55,7 @@
 
         <item name="appCheckBoxColor">@color/legacy_checkbox_color</item>
         <item name="appCheckBoxTint">@color/legacy_checkbox_tint</item>
+        <item name="appCheckBoxIconTint">@color/legacy_checkbox_icon_tint</item>
 
         <item name="appCardBackground">@color/legacy_card_background</item>
 
@@ -77,5 +79,4 @@
         <item name="appDropdownActiveBackground">@color/legacy_dropdown_active_background</item>
         <item name="appDropdownHoverBackground">@color/legacy_dropdown_hover_background</item>
     </style>
-
 </resources>

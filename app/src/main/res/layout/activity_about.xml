@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -22,9 +22,9 @@
             android:contentDescription="Back to previous screen"
             app:icon="@drawable/arrow_circle_left_48px"
             style="?appImageButtonStyle"
-            tools:ignore="HardcodedText" />
+            tools:ignore="HardcodedText,VisualLintSystemUi" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -62,21 +62,21 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/app_icon"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:contentDescription="@string/application_name"
                         android:src="@mipmap/ic_launcher" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/application_name"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/app_tagline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
                         android:text="@string/application_tagline"
                         style="?appBodyStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/app_version"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
@@ -121,7 +121,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -129,7 +129,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_github"
@@ -156,7 +156,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -164,7 +164,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_f_droid"
@@ -191,7 +191,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -199,7 +199,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_izzy_on_droid"
@@ -227,7 +227,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -235,7 +235,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_open_apk"
@@ -245,14 +245,14 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_contributors"
                 style="?appTitleStyle" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
@@ -277,7 +277,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -285,13 +285,13 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_code"
                         style="?appBodyStyle"/>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_slovenian"
@@ -319,7 +319,7 @@
                     android:padding="12dp"
                     tools:ignore="TouchTargetSizeCheck">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -327,7 +327,7 @@
                         tools:ignore="HardcodedText"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_code"
@@ -354,7 +354,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -362,7 +362,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_ukrainian"
@@ -389,7 +389,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -397,7 +397,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_serbian"
@@ -424,7 +424,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -432,7 +432,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_russian"
@@ -459,7 +459,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -467,7 +467,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_simplified"
@@ -494,7 +494,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -502,13 +502,13 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_traditional"
                         style="?appBodyStyle"/>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_simplified"
@@ -535,7 +535,7 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -543,7 +543,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_hungarian"
@@ -557,7 +557,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/created_by"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

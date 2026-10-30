@@ -16,7 +16,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,16 +25,17 @@
             style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_german"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Deutsch"
             android:maxWidth="300dp"
+            android:checked="true"
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_english"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,7 +44,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_french"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +53,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_hungarian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +62,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_slovenian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +71,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_serbian_cyrillic_script"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +80,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_serbian_latin_script"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,7 +89,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_ukrainian"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -97,7 +98,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_chinese_traditional"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -106,7 +107,7 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_chinese_simplified"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

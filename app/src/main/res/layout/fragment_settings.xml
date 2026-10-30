@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -42,13 +41,14 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/image_theme"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_theme"
-                    android:src="@drawable/light_mode_48px" />
+                    android:src="@drawable/light_mode_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -56,14 +56,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_theme"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/theme_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -93,12 +93,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_language"
-                    android:src="@drawable/language_48px" />
+                    android:src="@drawable/language_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -106,14 +107,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_language"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/language_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -145,12 +146,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_notifications"
-                    android:src="@drawable/notification_settings_48px" />
+                    android:src="@drawable/notification_settings_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -158,14 +160,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_notifications"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_general_notifications_description"
@@ -197,12 +199,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_day_end_hour"
-                    android:src="@drawable/partly_cloudy_night_48px" />
+                    android:src="@drawable/partly_cloudy_night_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -210,14 +213,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_day_end_hour"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_general_day_end_hour_description"
@@ -249,12 +252,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_widgets"
-                    android:src="@drawable/widgets_48px" />
+                    android:src="@drawable/widgets_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -262,14 +266,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_general_widgets"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_general_widgets_description"
@@ -281,7 +285,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -310,12 +314,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_finance_currency"
-                    android:src="@drawable/currency_exchange_48px" />
+                    android:src="@drawable/currency_exchange_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -323,14 +328,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_finance_currency"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_finance_currency_description"
@@ -362,12 +367,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_finance_costs"
-                    android:src="@drawable/payments_48px" />
+                    android:src="@drawable/payments_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -375,14 +381,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_finance_costs"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_finance_costs_description"
@@ -394,7 +400,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -423,13 +429,14 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_data_backup"
                     android:src="@drawable/download_48px"
-                    tools:ignore="ImageContrastCheck" />
+                    tools:ignore="ImageContrastCheck"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -437,14 +444,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_data_backup"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_data_backup_text"
@@ -476,12 +483,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_data_restore"
-                    android:src="@drawable/upload_48px" />
+                    android:src="@drawable/upload_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -489,14 +497,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_data_restore"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_data_restore_text"
@@ -508,7 +516,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -538,12 +546,13 @@
                 android:paddingEnd="12dp"
                 tools:ignore="TouchTargetSizeCheck">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_about"
-                    android:src="@drawable/info_48px" />
+                    android:src="@drawable/info_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -551,14 +560,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         style="?appSubtitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_about" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         style="?appBodyStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -591,12 +600,13 @@
                 android:paddingEnd="12dp"
                 tools:ignore="TouchTargetSizeCheck">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_about_website"
-                    android:src="@drawable/public_48px" />
+                    android:src="@drawable/public_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -604,14 +614,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         style="?appSubtitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_about_website" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         style="?appBodyStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -643,12 +653,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_about_changelog"
-                    android:src="@drawable/history_48px" />
+                    android:src="@drawable/history_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -656,14 +667,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_about_changelog"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_about_changelog_description"
@@ -675,7 +686,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -704,12 +715,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_support_translations"
-                    android:src="@drawable/translate_48px" />
+                    android:src="@drawable/translate_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -717,14 +729,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_support_translations"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_support_translations_description"
@@ -756,12 +768,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_support_privacy_policy"
-                    android:src="@drawable/policy_48px" />
+                    android:src="@drawable/policy_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -769,14 +782,14 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/settings_support_privacy_policy"
                         style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_support_privacy_policy_description"

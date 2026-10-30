@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.activity
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -38,6 +39,10 @@ class NotesActivity : Base<ActivityNotesBinding>(
                 .add(R.id.fragment_container, NoteFragment())
                 .addToBackStack("AddNote")
                 .commit()
+        }
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            binding.fragmentContainer.isVisible = supportFragmentManager.backStackEntryCount > 0
         }
 
         buttonBack.setOnClickListener {
@@ -85,10 +90,11 @@ class NotesActivity : Base<ActivityNotesBinding>(
                 putLong("note_id", noteId)
             }
         }
+        binding.fragmentContainer.visibility = View.VISIBLE
 
         supportFragmentManager.beginTransaction()
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .add(R.id.fragment_container, fragment)
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack("EditNote")
             .commit()
     }

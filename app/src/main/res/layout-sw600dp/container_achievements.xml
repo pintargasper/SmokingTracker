@@ -8,10 +8,10 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image_achievement"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="@string/achievements_icon"
         android:src="@mipmap/ic_launcher"
         android:scaleType="centerInside" />
@@ -24,13 +24,13 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/achievement_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?appTitleStyle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/achievement_message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
         android:layout_marginStart="6dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/last_achieved"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,20 +53,20 @@
             style="?appBodyStyle"
             tools:ignore="VisualLintSystemUi" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_last_achieved_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/achieved_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/achievement_achieved"
             style="?appBodyStyle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/text_achieved_count_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
@@ -36,7 +36,7 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_max_cigarettes"
@@ -48,7 +48,7 @@
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/text_max_cigarettes"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                         style="?appBodyStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/text_max_cigarettes_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_min_cigarettes"
@@ -97,7 +97,7 @@
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/text_min_cigarettes"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -106,7 +106,7 @@
                         style="?appBodyStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/text_min_cigarettes_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -133,13 +133,13 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_avg_cigarettes"
                     style="?appSubtitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/text_average_cigarettes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,13 +164,13 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_cigarettes"
                     style="?appSubtitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/text_total_cigarettes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -195,13 +195,13 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_first_entry"
                     style="?appSubtitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/text_since_first_entry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -227,13 +227,13 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_longest_streak"
                     style="?appSubtitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/text_longest_streak"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -245,7 +245,7 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="3dp"
@@ -253,7 +253,7 @@
             android:text="@string/statistics_title_money_section"
             style="?appTitleStyle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/statistics_title_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -275,13 +275,13 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_spent"
                     style="?appSubtitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/text_total_spent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -306,13 +306,13 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_spent_today"
                     style="?appSubtitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/today_spent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -337,13 +337,13 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_total_spent_month"
                     style="?appSubtitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/month_spent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -368,7 +368,7 @@
                 android:orientation="vertical"
                 android:padding="12dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/statistics_most_expensive"
@@ -380,7 +380,7 @@
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/most_expensive_day"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -389,7 +389,7 @@
                         style="?appBodyStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/most_expensive_day_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

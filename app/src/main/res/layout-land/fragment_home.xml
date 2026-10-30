@@ -27,7 +27,7 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/timer_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                     style="?appTitleSpecialStyle"
                     tools:ignore="HardcodedText" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/timer_message"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                         android:layout_height="1dp"
                         android:background="?attr/colorOnSurface" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/daily_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                         android:layout_height="1dp"
                         android:background="?attr/colorOnSurface" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/weekly_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
                         android:layout_height="1dp"
                         android:background="?attr/colorOnSurface" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/monthly_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
                     android:orientation="vertical"
                     android:gravity="center">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -225,7 +225,7 @@
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -270,19 +270,19 @@
                 android:orientation="vertical"
                 android:gravity="center"
                 android:padding="24dp"
-                android:visibility="gone">
+                android:visibility="visible">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/empty_history_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/home_no_entries"
                     android:gravity="center"
                     style="?appTitleStyle" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/empty_history_message"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/home_no_entries_message"
                     android:gravity="center"

@@ -45,7 +45,7 @@
         android:gravity="center_vertical"
         android:layout_marginTop="16dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/lent_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:ellipsize="end"
             style="?appBodyStyle" />
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/lent_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

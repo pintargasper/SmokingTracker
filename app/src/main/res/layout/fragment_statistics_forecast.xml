@@ -24,7 +24,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_forecast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="240dp" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/forecast_info_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <!-- Legacy -->
     <style name="Legacy.TextAppearance" parent="TextAppearance.Material3.BodyMedium">
-        <item name="android:textColor">?attr/colorOnSurface</item>
+        <item name="android:textColor">?colorOnSurface</item>
     </style>
 
     <style name="Legacy.TextAppearance.Title" parent="Legacy.TextAppearance">
@@ -51,7 +50,6 @@
 
     <style name="Legacy.Component.ImageButton" parent="Widget.Material3.Button.IconButton">
         <item name="iconTint">?appImageButtonIconTint</item>
-        <!--<item name="backgroundTint">?appImageButtonBackground</item>-->
         <item name="iconSize">48dp</item>
         <item name="iconGravity">textStart</item>
 
@@ -61,13 +59,14 @@
         <item name="android:insetRight">0dp</item>
         <item name="android:layout_margin">2dp</item>
 
-        <!--<item name="android:elevation">4dp</item>
+        <!--<item name="backgroundTint">?appImageButtonBackground</item>
+        <item name="android:elevation">4dp</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="cornerRadius">12dp</item>-->
     </style>
 
-    <style name="Legacy.Component.Image" parent="Legacy.Component.ImageButton">
-        <item name="iconTint">@null</item>
+    <style name="Legacy.Component.Image" parent="Widget.Material3.ImageView.ListItem.LeadingIcon">
+        <item name="tint">?appImageButtonIconTint</item>
     </style>
 
     <style name="Legacy.Component.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
@@ -82,7 +81,8 @@
     </style>
 
     <style name="Legacy.Component.EditText" parent="Widget.Material3.TextInputEditText.OutlinedBox">
-        <item name="android:textColor">?editTextColor</item>
+        <item name="android:textColor">?appEditTextColor</item>
+        <item name="android:textColorHint">?appEditTextColor</item>
         <item name="android:textSize">16sp</item>
         <item name="android:minHeight">48dp</item>
         <item name="android:paddingVertical">8dp</item>
@@ -93,6 +93,7 @@
         <item name="android:textColor">?appCheckBoxColor</item>
         <item name="android:textSize">16sp</item>
         <item name="buttonTint">?appCheckBoxTint</item>
+        <item name="buttonIconTint">?appCheckBoxIconTint</item>
     </style>
 
     <style name="Legacy.Component.Card" parent="Widget.Material3.CardView.Outlined">
@@ -103,7 +104,7 @@
     </style>
 
     <style name="Legacy.Component.TabLayout" parent="Widget.Material3.TabLayout">
-        <item name="background">?appTabLayoutBackground</item>
+        <item name="android:background">?appTabLayoutBackground</item>
         <item name="tabMode">fixed</item>
         <item name="tabGravity">fill</item>
         <item name="tabIndicatorColor">?appTabLayoutIndicator</item>
@@ -130,9 +131,17 @@
     <style name="Legacy.Component.Dropdown" parent="Widget.Material3.AutoCompleteTextView.OutlinedBox">
         <item name="android:textColor">?appDropdownColor</item>
         <item name="dropDownBackgroundTint">?appDropdownBackgroundTint</item>
-        <item name="simpleItemSelectedColor">?appDropdownBackgroundTint</item>
+        <item name="simpleItemSelectedColor">?appDropdownActiveBackground</item>
         <item name="android:textSize">16sp</item>
         <item name="android:paddingHorizontal">12dp</item>
         <item name="android:paddingVertical">8dp</item>
+    </style>
+
+    <style name="Legacy.Component.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
+        <item name="indicatorColor">@color/legacy_progress_indicator</item>
+        <item name="trackColor">@color/legacy_progress_track</item>
+        <item name="trackThickness">20dp</item>
+        <item name="trackCornerRadius">0dp</item>
+        <item name="trackStopIndicatorSize">0dp</item>
     </style>
 </resources>
