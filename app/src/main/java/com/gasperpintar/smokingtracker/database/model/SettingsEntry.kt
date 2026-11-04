@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker.database.model
 
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 
 data class SettingsEntry (
@@ -12,7 +12,7 @@ data class SettingsEntry (
     val currency: String,
     val customCurrency: String,
     val dayEndMinutes: Int
-): Identifiable {
+): IIdentifiable {
     companion object {
         fun fromEntity(
             entity: SettingsEntity

@@ -2,7 +2,7 @@ package com.gasperpintar.smokingtracker.database.model
 
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
@@ -21,7 +21,7 @@ data class AchievementEntry(
     val notify: Boolean,
     val category: AchievementCategory,
     val unit: AchievementUnit
-): Identifiable {
+): IIdentifiable {
     companion object {
         fun fromEntity(
             entity: AchievementEntity

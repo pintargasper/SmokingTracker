@@ -133,7 +133,8 @@
     <string name="cost_format" translatable="false">%1$s - %2$s</string>
 
     <string name="settings_general">General</string>
-    <string name="settings_general_theme">Theme</string>
+    <string name="settings_general_theme">Appearance</string>
+    <string name="settings_general_appearance_description">Customize the look and feel of the app</string>
     <string name="settings_general_language">Language</string>
     <string name="settings_general_notifications">Notifications</string>
     <string name="settings_general_notifications_description">Stay informed with notifications and alerts</string>
@@ -166,6 +167,15 @@
     <string name="settings_support_translations_description">Translate this app on your language using Weblate</string>
     <string name="settings_support_privacy_policy">Privacy Policy</string>
     <string name="settings_support_privacy_policy_description">View Privacy Policy</string>
+
+    <string name="settings_appearance_theme">Theme</string>
+    <string name="settings_appearance_theme_system">System</string>
+    <string name="settings_appearance_theme_light">Light</string>
+    <string name="settings_appearance_theme_dark">Dark</string>
+    <string name="settings_appearance_scheme">Color sheme</string>
+    <string name="settings_appearance_scheme_system">System</string>
+    <string name="settings_appearance_scheme_legacy">Legacy</string>
+    <string name="settings_appearance_scheme_sky">Sky</string>
 
     <string name="about_view">View on</string>
     <string name="about_view_github">View the source code, report issues, and contribute to the project</string>
@@ -207,12 +217,6 @@
     <string name="language_popup">Select language</string>
     <string name="language_popup_info">Choose your preferred language</string>
     <string name="language_popup_check_box_system">System</string>
-
-    <string name="theme_popup">Select theme</string>
-    <string name="theme_popup_info">Choose your preferred theme</string>
-    <string name="theme_popup_check_box_system">System</string>
-    <string name="theme_popup_check_box_light_theme">Light theme</string>
-    <string name="theme_popup_check_box_dark_theme">Dark theme</string>
 
     <string name="notifications_popup">Notifications</string>
     <string name="notifications_popup_info">Choose your notification preference</string>

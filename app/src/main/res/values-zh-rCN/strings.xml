@@ -69,11 +69,10 @@
     <string name="language_popup">选择语言</string>
     <string name="language_popup_info">选择你偏好的语言</string>
     <string name="language_popup_check_box_system">跟随系统</string>
-    <string name="theme_popup">选择主题</string>
-    <string name="theme_popup_info">选择你偏好的主题</string>
-    <string name="theme_popup_check_box_system">跟随系统</string>
-    <string name="theme_popup_check_box_light_theme">浅色</string>
-    <string name="theme_popup_check_box_dark_theme">深色</string>
+    <string name="settings_appearance_theme">选择主题</string>
+    <string name="settings_appearance_theme_system">跟随系统</string>
+    <string name="settings_appearance_theme_light">浅色</string>
+    <string name="settings_appearance_theme_dark">深色</string>
     <string name="notifications_popup">通知</string>
     <string name="notifications_popup_info">设置通知偏好</string>
     <string name="notifications_popup_check_box_system">跟随系统</string>

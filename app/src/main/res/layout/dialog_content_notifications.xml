@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,13 +16,13 @@
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_system"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/notifications_popup_check_box_system"
             android:maxWidth="300dp"
-            style="@style/CheckBox"
+            style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
 
         <LinearLayout
@@ -34,13 +33,13 @@
             android:paddingTop="4dp"
             android:paddingBottom="4dp">
 
-            <CheckBox
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkbox_progress"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/notifications_popup_check_box_progress"
-                style="@style/CheckBox"
+                style="?appCheckBoxStyle"
                 tools:ignore="VisualLintButtonSize" />
 
             <LinearLayout
@@ -50,33 +49,34 @@
                 android:layout_marginEnd="8dp"
                 android:orientation="vertical">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/label_frequency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/notifications_popup_frequency_label"
                     android:labelFor="@+id/spinner_progress_frequency"
-                    style="@style/BodyTextView" />
+                    style="?appBodyStyle" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     app:hintEnabled="false"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    app:endIconMode="dropdown_menu"
+                    style="?appTextInputLayoutStyle">
 
-                    <AutoCompleteTextView
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/spinner_progress_frequency"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:maxLines="2"
                         android:ellipsize="end"
                         android:focusable="false"
-                        android:clickable="false"
+                        android:clickable="true"
                         android:cursorVisible="false"
                         android:inputType="none"
                         app:simpleItems="@array/frequency_options"
                         tools:ignore="LabelFor"
-                        style="@style/BodyTextView" />
+                        style="?appDropdownStyle" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,13 +84,13 @@
 
         </LinearLayout>
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkbox_achievements"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxWidth="300dp"
             android:text="@string/notifications_popup_check_box_achievements"
-            style="@style/CheckBox"
+            style="?appCheckBoxStyle"
             tools:ignore="VisualLintButtonSize" />
 
     </LinearLayout>

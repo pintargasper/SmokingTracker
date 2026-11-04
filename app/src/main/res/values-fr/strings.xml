@@ -77,11 +77,10 @@
     <string name="language_popup">Sélectionner une langue</string>
     <string name="language_popup_info">Choisissez votre langue préférée</string>
     <string name="language_popup_check_box_system">Système</string>
-    <string name="theme_popup">Sélectionner un thème</string>
-    <string name="theme_popup_info">Choisissez votre thème préféré</string>
-    <string name="theme_popup_check_box_system">Système</string>
-    <string name="theme_popup_check_box_light_theme">Thème clair</string>
-    <string name="theme_popup_check_box_dark_theme">Thème sombre</string>
+    <string name="settings_appearance_theme">Sélectionner un thème</string>
+    <string name="settings_appearance_theme_system">Système</string>
+    <string name="settings_appearance_theme_light">Thème clair</string>
+    <string name="settings_appearance_theme_dark">Thème sombre</string>
     <string name="notifications_popup">Notifications</string>
     <string name="notifications_popup_check_box_system">Système</string>
     <string name="notifications_popup_check_box_progress">Rappel des progrès</string>

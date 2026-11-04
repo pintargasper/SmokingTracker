@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/achievement_container"
@@ -15,10 +14,10 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_achievement"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:contentDescription="@string/achievements_icon"
             android:src="@mipmap/ic_launcher"
             android:scaleType="centerInside" />
@@ -31,40 +30,39 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/achievement_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:maxLines="3"
                 android:ellipsize="end"
-                style="@style/MainTitleTextView" />
+                style="?appTitleStyle" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/achievement_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                style="@style/BodyTextView" />
+                style="?appBodyStyle" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/last_achieved"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/achievement_last"
         android:alpha="0.6"
-        style="@style/BodyTextView" />
+        style="?appBodyStyle" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/achieved_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/achievement_achieved"
         android:alpha="0.6"
-        style="@style/BodyTextView" />
+        style="?appBodyStyle" />
 
 </LinearLayout>

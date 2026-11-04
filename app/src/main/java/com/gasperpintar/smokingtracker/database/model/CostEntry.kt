@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker.database.model
 
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import java.time.LocalDateTime
 
@@ -10,7 +10,7 @@ data class CostEntry(
     val startDate: LocalDateTime,
     val endDate: LocalDateTime,
     val price: Double,
-): Identifiable {
+): IIdentifiable {
 
     companion object {
 

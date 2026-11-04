@@ -1,41 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.AboutFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_back"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:background="@android:color/transparent"
             android:contentDescription="Back to previous screen"
-            android:src="@drawable/arrow_circle_left_48px"
-            tools:ignore="HardcodedText" />
+            style="?appImageButtonStyle"
+            app:icon="@drawable/arrow_circle_left_48px"
+            tools:ignore="HardcodedText,VisualLintSystemUi" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ellipsize="marquee"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center"
-            android:marqueeRepeatLimit="marquee_forever"
             android:text="@string/settings_about"
-            style="@style/MainTitleCenterTextView"
+            style="?appTitleSpecialStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <Space
@@ -55,11 +48,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -68,56 +61,54 @@
                     android:orientation="vertical"
                     android:padding="24dp">
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/app_icon"
                         android:layout_width="96dp"
                         android:layout_height="96dp"
                         android:contentDescription="@string/application_name"
                         android:src="@mipmap/ic_launcher" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@string/application_name"
-                        android:textAlignment="center"
-                        style="@style/MainTitleTextView" />
+                        style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/app_tagline"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="@string/application_tagline"
-                        android:textAlignment="center"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/app_version"
-                        style="@style/SubtitleTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/about_version" />
+                        android:layout_marginTop="5dp"
+                        android:text="@string/about_version"
+                        style="?appCaptionStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_view"
-                style="@style/MainTitleTextView" />
+                style="?appTitleStyle" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/github_layout"
@@ -129,30 +120,30 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="GitHub"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_github"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/f_droid_layout"
@@ -164,30 +155,30 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="F-Droid"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_f_droid"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/izzy_on_droid_layout"
@@ -199,31 +190,31 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="IzzyOnDroid"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_izzy_on_droid"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginBottom="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/open_apk_layout"
@@ -235,45 +226,45 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="OpenAPK"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_view_open_apk"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_contributors"
-                style="@style/MainTitleTextView" />
+                style="?appTitleStyle" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="3dp"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_contributors_description"
-                style="@style/BodyTextView" />
+                style="?appBodyStyle"/>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_1_layout"
@@ -285,36 +276,36 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="pintargasper"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_code"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_slovenian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_2_layout"
@@ -327,30 +318,30 @@
                     android:padding="12dp"
                     tools:ignore="TouchTargetSizeCheck">
 
-                    <TextView
-                        style="@style/SubtitleTextView"
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="anzepintar"
-                        tools:ignore="HardcodedText" />
+                        tools:ignore="HardcodedText"
+                        style="?appSubtitleStyle" />
 
-                    <TextView
-                        style="@style/BodyTextView"
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_code" />
+                        android:text="@string/about_contributors_code"
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_3_layout"
@@ -362,30 +353,30 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="mrtaxi"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_ukrainian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_4_layout"
@@ -397,30 +388,30 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="jocixlinux-sys"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_serbian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_5_layout"
@@ -432,30 +423,30 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="iaaanneed"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_russian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_6_layout"
@@ -467,30 +458,30 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="ywnzzl"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_simplified"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_7_layout"
@@ -502,36 +493,36 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="acidefluorhydrique"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_traditional"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_chinese_simplified"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="5dp"
                 android:layout_marginHorizontal="8dp"
-                style="@style/Card">
+                style="?appCardStyle">
 
                 <LinearLayout
                     android:id="@+id/contributor_8_layout"
@@ -543,29 +534,29 @@
                     android:orientation="vertical"
                     android:padding="12dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="nrob81"
-                        style="@style/SubtitleTextView"
+                        style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/about_contributors_hungarian"
-                        style="@style/BodyTextView"/>
+                        style="?appBodyStyle"/>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/created_by"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -573,6 +564,6 @@
         android:layout_marginBottom="24dp"
         android:gravity="center"
         android:text="@string/about_created_by"
-        style="@style/SubtitleTextView" />
+        style="?appSubtitleStyle" />
 
 </LinearLayout>

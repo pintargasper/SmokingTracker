@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    tools:context="ui.fragment.GraphFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_graph_daily"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,13 +27,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_daily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_daily"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_daily"
@@ -51,43 +50,41 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_daily"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_daily"
-                        android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        style="?appImageButtonStyle"
+                        app:icon="@drawable/arrow_circle_left_48px" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_daily"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
                         android:text="%02d.%02d.%04d"
                         tools:ignore="HardcodedText,TextSizeCheck"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_daily"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_daily"
-                        android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        style="?appImageButtonStyle"
+                        app:icon="@drawable/arrow_circle_right_48px" />
 
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_graph_weekly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -96,13 +93,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_weekly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_weekly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_weekly"
@@ -119,43 +116,41 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_weakly"
-                        android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_left_48px"
+                        style="?appImageButtonStyle"/>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_weekly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
                         android:text="%1$d.%2$d/%3$d.%4$d %5$d"
                         tools:ignore="HardcodedText,TextSizeCheck"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_weakly"
-                        android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle"/>
 
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_graph_monthly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,13 +159,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_monthly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_monthly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_monthly"
@@ -187,44 +182,42 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_monthly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_monthly"
-                        android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        style="?appImageButtonStyle"
+                        app:icon="@drawable/arrow_circle_left_48px" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_monthly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
                         android:text="%1$s %2$d"
                         tools:ignore="HardcodedText"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_monthly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_monthly"
                         android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle" />
 
                 </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_graph_yearly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="16dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -233,13 +226,13 @@
                 android:gravity="center_horizontal"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/graph_yearly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/graph_yearly"
                     android:layout_marginBottom="8dp"
-                    style="@style/SpecialTitleTextView" />
+                    style="?appTitleSpecialStyle" />
 
                 <com.gasperpintar.smokingtracker.ui.view.GraphView
                     android:id="@+id/graph_view_yearly"
@@ -256,37 +249,35 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_yearly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_previous_day_yearly"
-                        android:src="@drawable/arrow_circle_left_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        style="?appImageButtonStyle"
+                        app:icon="@drawable/arrow_circle_left_48px" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_yearly"
                         android:layout_width="180dp"
                         android:layout_height="48dp"
                         android:text="%1$d"
                         tools:ignore="HardcodedText"
-                        style="@style/MainTitleCenterTextView" />
+                        style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_yearly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:background="@android:color/transparent"
                         android:contentDescription="@string/graph_next_day_yearly"
-                        android:src="@drawable/arrow_circle_right_48px"
-                        app:tint="?attr/colorOnSurface" />
+                        style="?appImageButtonStyle"
+                        app:icon="@drawable/arrow_circle_right_48px" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

@@ -15,7 +15,7 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.activity.MainActivity
+import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.provider.OnlyQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
@@ -147,7 +147,7 @@ object WidgetHelper {
                         }
 
                         setTextViewText(R.id.widget_add_new_entry, localizedContext.getString(R.string.insert_popup))
-                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.primary))
+                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_on_primary))
                         setBoolean(R.id.widget_add_new_entry, "setEnabled", true)
 
                         setOnClickPendingIntent(R.id.widget_add_new_entry, getBroadcastPendingIntent(context, ACTION_ADD_NEW_ENTRY))
@@ -178,7 +178,7 @@ object WidgetHelper {
 
                     RemoteViews(context.packageName, layoutId).apply {
                         setTextViewText(R.id.widget_add_new_entry, "✓")
-                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.success))
+                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_success))
                         setBoolean(R.id.widget_add_new_entry, "setEnabled", false)
 
                         if (widgetClass == OnlyQuickAddWidget::class.java) {

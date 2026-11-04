@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.viewbinding.ViewBinding
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.ui.container.BaseContainer
 
-class Adapter<T : Identifiable, B : ViewBinding>(
+class Adapter<T : IIdentifiable, B : ViewBinding>(
     private val createViewHolder: (LayoutInflater, ViewGroup) -> ViewHolder<B>,
     private val onBind: BaseContainer.(B, T) -> Unit
 ) : ListAdapter<T, ViewHolder<B>>(Callback()) {

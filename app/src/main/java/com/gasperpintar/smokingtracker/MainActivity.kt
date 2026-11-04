@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.activity
+package com.gasperpintar.smokingtracker
 
 import android.content.SharedPreferences
 import android.view.View
@@ -8,12 +8,13 @@ import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import androidx.viewpager2.widget.ViewPager2
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
@@ -21,7 +22,7 @@ import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
 import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
-import com.gasperpintar.smokingtracker.ui.fragment.ProgressFragment
+import com.gasperpintar.smokingtracker.ui.fragment.MoreFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 import com.gasperpintar.smokingtracker.utils.Permissions
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
@@ -46,6 +47,7 @@ class MainActivity : Base<ActivityMainBinding>(
 
         setupPager()
         setupNavigation()
+        setupSubNavigation()
 
         val isFirstRun = handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
         if (!isFirstRun && state.isNewVersion) DialogManager.showChangelogDialog(context = this)
@@ -70,10 +72,19 @@ class MainActivity : Base<ActivityMainBinding>(
         }
     }
 
+    fun openSubFragment(fragment: Fragment, tag: String = fragment::class.java.simpleName) {
+        if (supportFragmentManager.backStackEntryCount > 0) return
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.subFragmentContainer.id, fragment, tag)
+            addToBackStack(tag)
+        }
+    }
+
     private fun setupPager() = binding.apply {
         mainViewPager.adapter = Pager(
             this@MainActivity,
-            listOf(::HomeFragment, ::GraphFragment, ::ProgressFragment, ::SettingsFragment)
+            listOf(::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)
         )
 
         mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
@@ -87,6 +98,38 @@ class MainActivity : Base<ActivityMainBinding>(
             binding.mainViewPager.setCurrentItem(binding.navView.menu.children.indexOf(it), false)
             true
         }
+    }
+
+    private fun setupNavigation() {
+        onBackPressedDispatcher.addCallback(
+            owner = this,
+            onBackPressedCallback = object : OnBackPressedCallback(enabled = true) {
+                @Override
+                override fun handleOnBackPressed() {
+                    when {
+                        supportFragmentManager.backStackEntryCount > 0 -> supportFragmentManager.popBackStack()
+                        binding.mainViewPager.currentItem != 0 -> binding.mainViewPager.setCurrentItem(0, false)
+                        else -> {
+                            isEnabled = false
+                            onBackPressedDispatcher.onBackPressed()
+                        }
+                    }
+                }
+            }
+        )
+    }
+
+    private fun setupSubNavigation() {
+        supportFragmentManager.addOnBackStackChangedListener {
+            updateSubNavigationVisibility()
+        }
+        updateSubNavigationVisibility()
+    }
+
+    private fun updateSubNavigationVisibility() {
+        val isSubPageVisible = supportFragmentManager.backStackEntryCount > 0
+        binding.mainContent.visibility = if (isSubPageVisible) View.GONE else View.VISIBLE
+        binding.subFragmentContainer.visibility = if (isSubPageVisible) View.VISIBLE else View.GONE
     }
 
     private fun handleNotifications(sharedPreferences: SharedPreferences): Boolean {
@@ -123,19 +166,5 @@ class MainActivity : Base<ActivityMainBinding>(
                 ExistingPeriodicWorkPolicy.KEEP,
                 workRequest
             )
-    }
-
-    private fun setupNavigation() {
-        onBackPressedDispatcher.addCallback(owner = this, onBackPressedCallback = object : OnBackPressedCallback(enabled = true) {
-            @Override
-            override fun handleOnBackPressed() = when {
-                binding.mainViewPager.currentItem != 0 ->
-                    binding.mainViewPager.setCurrentItem(0, false)
-                else -> {
-                    isEnabled = false
-                    onBackPressedDispatcher.onBackPressed()
-                }
-            }
-        })
     }
 }

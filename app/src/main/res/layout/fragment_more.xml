@@ -1,34 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    android:fillViewport="true"
-    android:fitsSystemWindows="true">
+    tools:context=".ui.fragment.MoreFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/more_progress"
-            style="@style/MainTitleTextView"
+            style="?appTitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/statistics_layout"
@@ -43,12 +41,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_progress_statistics"
-                    android:src="@drawable/query_stats_48px" />
+                    android:src="@drawable/query_stats_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -56,31 +55,31 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_progress_statistics"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_progress_statistics_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/achievements_layout"
@@ -95,12 +94,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_progress_achievements"
-                    android:src="@drawable/trophy_48px" />
+                    android:src="@drawable/trophy_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -108,40 +108,40 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_progress_achievements"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_progress_achievements_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
             android:text="@string/more_tools"
-            style="@style/MainTitleTextView" />
+            style="?appTitleStyle" />
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/calculator_layout"
@@ -156,12 +156,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_tools_calculator"
-                    android:src="@drawable/calculate_48px" />
+                    android:src="@drawable/calculate_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -169,31 +170,31 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_tools_calculator"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_tools_calculator_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginVertical="5dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:id="@+id/notes_layout"
@@ -208,12 +209,13 @@
                 android:paddingEnd="12dp"
                 android:paddingVertical="12dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/more_tools_notes"
-                    android:src="@drawable/book_48px" />
+                    android:src="@drawable/book_48px"
+                    style="?appImageStyle" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -221,24 +223,24 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
                         android:text="@string/more_tools_notes"
-                        style="@style/SubtitleTextView" />
+                        style="?appSubtitleStyle" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/more_tools_notes_description"
-                        style="@style/BodyTextView" />
+                        style="?appBodyStyle" />
 
                 </LinearLayout>
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

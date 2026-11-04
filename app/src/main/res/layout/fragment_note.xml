@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="ui.fragment.note.NoteFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +14,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -24,7 +23,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/notes_add"
-            style="@style/SpecialTitleTextView"
+            style="?appTitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
         <ImageButton
@@ -32,9 +31,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
             android:contentDescription="Close"
             android:src="@drawable/close_48px"
+            style="?appImageButtonStyle"
             tools:ignore="HardcodedText" />
 
     </LinearLayout>
@@ -49,13 +48,13 @@
         android:overScrollMode="ifContentScrolls"
         android:scrollbars="vertical">
 
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_add_note"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginVertical="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_marginHorizontal="8dp"
-            style="@style/Card">
+            style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,7 +62,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/text_emotion_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,7 +75,7 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -84,7 +83,7 @@
                         android:src="@drawable/sentiment_frustrated_48px"
                         tools:ignore="HardcodedText" />
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -92,7 +91,7 @@
                         android:src="@drawable/sentiment_dissatisfied_48px"
                         tools:ignore="HardcodedText" />
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -100,7 +99,7 @@
                         android:src="@drawable/sentiment_neutral_48px"
                         tools:ignore="HardcodedText" />
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -108,7 +107,7 @@
                         android:src="@drawable/sentiment_satisfied_48px"
                         tools:ignore="HardcodedText" />
 
-                    <ImageView
+                    <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="0dp"
                         android:layout_height="40dp"
                         android:layout_weight="1"
@@ -127,55 +126,67 @@
                     android:value="3"
                     android:valueFrom="1"
                     android:valueTo="5"
-                    android:stepSize="1" />
+                    android:stepSize="1"
+                    style="?appSliderStyle" />
 
-                <EditText
-                    android:id="@+id/input_title"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="48dp"
                     android:layout_marginBottom="8dp"
-                    android:autofillHints="title"
                     android:hint="@string/notes_title"
-                    android:inputType="text"
-                    style="@style/EditText"
-                    tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                    style="?appTextInputLayoutStyle"
+                    tools:ignore="HardcodedText,VisualLintTextFieldSize">
 
-                <EditText
-                    android:id="@+id/input_content"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="48dp"
+                        android:autofillHints="title"
+                        android:inputType="text"
+                        style="?appEditTextStyle"
+                        tools:ignore="VisualLintTextFieldSize" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:minHeight="144dp"
-                    android:gravity="top|start"
-                    android:autofillHints="description"
                     android:hint="@string/notes_content"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:scrollbars="vertical"
-                    android:overScrollMode="ifContentScrolls"
-                    style="@style/EditText"
-                    tools:ignore="HardcodedText,VisualLintTextFieldSize" />
+                    style="?appTextInputLayoutStyle"
+                    tools:ignore="HardcodedText,VisualLintTextFieldSize">
 
-                <androidx.cardview.widget.CardView
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/input_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:minHeight="144dp"
+                        android:gravity="top|start"
+                        android:autofillHints="description"
+                        android:inputType="textMultiLine|textCapSentences"
+                        android:scrollbars="vertical"
+                        android:overScrollMode="ifContentScrolls"
+                        style="?appEditTextStyle"
+                        tools:ignore="VisualLintTextFieldSize" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/save"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
-                    style="@style/Card">
-
-                    <Button
-                        android:id="@+id/save"
-                        style="@style/Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/popup_save"
-                        tools:ignore="VisualLintButtonSize,TextContrastCheck" />
-
-                </androidx.cardview.widget.CardView>
+                    android:text="@string/popup_save"
+                    style="?appButtonStyle"
+                    app:backgroundTint="?appButtonBackground"
+                    app:elevationOverlayEnabled="false"
+                    tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.core.widget.NestedScrollView>
 

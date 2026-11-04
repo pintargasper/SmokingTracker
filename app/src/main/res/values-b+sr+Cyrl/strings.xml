@@ -69,11 +69,10 @@
     <string name="language_popup">Изаберите језик</string>
     <string name="language_popup_info">Изаберите свој жељени језик</string>
     <string name="language_popup_check_box_system">Систем</string>
-    <string name="theme_popup">Изаберите тему</string>
-    <string name="theme_popup_info">Изаберите своју жељену тему</string>
-    <string name="theme_popup_check_box_system">Систем</string>
-    <string name="theme_popup_check_box_light_theme">Светла тема</string>
-    <string name="theme_popup_check_box_dark_theme">Тамна тема</string>
+    <string name="settings_appearance_theme">Изаберите тему</string>
+    <string name="settings_appearance_theme_system">Систем</string>
+    <string name="settings_appearance_theme_light">Светла тема</string>
+    <string name="settings_appearance_theme_dark">Тамна тема</string>
     <string name="notifications_popup">Обавештења</string>
     <string name="notifications_popup_info">Изаберите своја жељена обавештења</string>
     <string name="notifications_popup_check_box_system">Систем</string>

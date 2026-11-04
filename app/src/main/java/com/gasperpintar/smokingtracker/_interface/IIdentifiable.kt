@@ -1,5 +1,5 @@
 package com.gasperpintar.smokingtracker._interface
 
-interface Identifiable {
+interface IIdentifiable {
     val id: Long
 }
