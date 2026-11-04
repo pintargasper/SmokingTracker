@@ -12,12 +12,6 @@ import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.gasperpintar.smokingtracker.activity.AboutActivity
-import com.gasperpintar.smokingtracker.activity.AchievementsActivity
-import com.gasperpintar.smokingtracker.activity.CalculatorActivity
-import com.gasperpintar.smokingtracker.activity.MainActivity
-import com.gasperpintar.smokingtracker.activity.NotesActivity
-import com.gasperpintar.smokingtracker.activity.StatisticsActivity
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
@@ -27,6 +21,11 @@ import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.ui.fragment.AboutFragment
+import com.gasperpintar.smokingtracker.ui.fragment.CalculatorFragment
+import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementFragment
+import com.gasperpintar.smokingtracker.ui.fragment.note.NotesFragment
+import com.gasperpintar.smokingtracker.ui.fragment.statistics.StatisticsFragment
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -57,6 +56,7 @@ class ScreenshotTest {
     fun setup() {
         context = ApplicationProvider.getApplicationContext()
         database = Provider.getDatabase(context = context.applicationContext)
+
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
@@ -70,37 +70,33 @@ class ScreenshotTest {
         setTestCurrency()
     }
 
-    @Test fun captureAllScreenshots() {
+    @Test
+    fun captureAllScreenshots() {
         ActivityScenario.launch(MainActivity::class.java).use { scenario ->
             scenario.recreate()
-
             captureScreenshot(name = "1")
 
             listOf("2", "3", "4").forEach {
                 onView(withId(R.id.main_view_pager)).perform(swipeLeft())
-                captureScreenshot(name = it,
-                    delayMs = if (it == "2") 10_000 else 1_500
-                )
+                captureScreenshot(name = it, delayMs = if (it == "2") 10_000 else 1_500)
             }
-        }
 
-        ActivityScenario.launch(StatisticsActivity::class.java).use {
-            captureScreenshot(name = "5", 3_000)
+            openSubFragment(scenario = scenario, fragment = StatisticsFragment())
+            captureScreenshot(name = "5", delayMs = 3_000)
+
             onView(withId(R.id.statistics_view_pager)).perform(swipeLeft())
-            captureScreenshot(name = "6", 10_000)
-        }
+            captureScreenshot(name = "6", delayMs = 10_000)
 
-        ActivityScenario.launch(AchievementsActivity::class.java).use {
+            openSubFragment(scenario = scenario, fragment = AchievementFragment())
             captureScreenshot(name = "7")
+
             onView(withId(R.id.achievements_view_pager)).perform(swipeLeft())
             captureScreenshot(name = "8")
-        }
 
-        ActivityScenario.launch(CalculatorActivity::class.java).use {
+            openSubFragment(scenario = scenario, fragment = CalculatorFragment())
             captureScreenshot(name = "9")
-        }
 
-        ActivityScenario.launch(NotesActivity::class.java).use {
+            openSubFragment(scenario = scenario, fragment = NotesFragment())
             captureScreenshot(name = "10")
 
             runCatching {
@@ -108,16 +104,38 @@ class ScreenshotTest {
                     .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
                 captureScreenshot(name = "11")
             }
-        }
 
-        ActivityScenario.launch(AboutActivity::class.java).use {
-            captureScreenshot(name = "12")
+            openSubFragment(scenario = scenario, fragment = AboutFragment())
+            captureScreenshot(name = "12", delayMs = 3_000)
         }
+    }
+
+    private fun openSubFragment(
+        scenario: ActivityScenario<MainActivity>,
+        fragment: androidx.fragment.app.Fragment
+    ) {
+        scenario.onActivity { activity ->
+            if (activity.supportFragmentManager.backStackEntryCount > 0) {
+                activity.supportFragmentManager.popBackStackImmediate()
+            }
+            activity.openSubFragment(fragment)
+        }
+        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
     }
 
     private fun importDummyData() = runBlocking {
         val file = File(context.filesDir, "dummy_data.xlsx")
-        check(value = file.exists()) { "Dummy data file not found: ${file.absolutePath}" }
+
+        // Local use: Copy dummy data from test assets to the application's internal storage androidTest/assets/dummy_data.xlsx
+        /*InstrumentationRegistry.getInstrumentation().context.assets.open("dummy_data.xlsx").use { input ->
+            file.outputStream().use { output ->
+                input.copyTo(out = output)
+            }
+        }*/
+
+        check(value = file.exists()) {
+            "Dummy data file not found: ${file.absolutePath}"
+        }
 
         Manager.uploadFile(
             context = context,
@@ -188,7 +206,10 @@ class ScreenshotTest {
         }
     }
 
-    private fun captureScreenshot(name: String, delayMs: Long = 1500) {
+    private fun captureScreenshot(
+        name: String,
+        delayMs: Long = 1_500
+    ) {
         Thread.sleep(delayMs)
         Screengrab.screenshot(name)
     }

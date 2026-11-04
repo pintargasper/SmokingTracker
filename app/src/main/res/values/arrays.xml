@@ -28,12 +28,6 @@
         <item>简体中文</item>
     </string-array>
 
-    <string-array name="theme_names">
-        <item>@string/theme_popup_check_box_system</item>
-        <item>@string/theme_popup_check_box_light_theme</item>
-        <item>@string/theme_popup_check_box_dark_theme</item>
-    </string-array>
-
     <string-array name="frequency_options">
         <item>@string/notifications_popup_frequency_default</item>
         <item>@string/notifications_popup_frequency_daily</item>

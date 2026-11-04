@@ -91,11 +91,10 @@
     <string name="language_popup">選擇語言</string>
     <string name="language_popup_info">選擇您偏好的語言</string>
     <string name="language_popup_check_box_system">系統默認語言</string>
-    <string name="theme_popup">選擇主題</string>
-    <string name="theme_popup_info">選擇您偏好的主題</string>
-    <string name="theme_popup_check_box_system">系統默認主題</string>
-    <string name="theme_popup_check_box_light_theme">淺色主題</string>
-    <string name="theme_popup_check_box_dark_theme">深色主題</string>
+    <string name="settings_appearance_theme">選擇主題</string>
+    <string name="settings_appearance_theme_system">系統默認主題</string>
+    <string name="settings_appearance_theme_light">淺色主題</string>
+    <string name="settings_appearance_theme_dark">深色主題</string>
     <string name="notifications_popup">通知</string>
     <string name="notifications_popup_info">選擇您的通知偏好設定</string>
     <string name="notifications_popup_check_box_system">系統默認主題</string>

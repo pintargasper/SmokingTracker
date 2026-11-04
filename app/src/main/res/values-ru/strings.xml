@@ -27,7 +27,7 @@
     <string name="insert_popup_add">Добавить</string>
     <string name="delete_popup_message">Удалить эту запись навсегда?</string>
     <string name="language_popup">Выберите язык</string>
-    <string name="theme_popup">Выберите тему</string>
+    <string name="settings_appearance_theme">Выберите тему</string>
     <string name="navigation_settings">Настройки</string>
     <string name="home_add_entry">Добавить запись</string>
     <string name="graph_weekly">Обзор за неделю (%1$d)</string>
@@ -41,12 +41,12 @@
     <string name="settings_data_backup">Бэкап</string>
     <string name="settings_data_backup_text">Бэкап своих данных на устройство</string>
     <string name="settings_general_notifications_description">Будьте в курсе благодаря уведомлениям и оповещениям</string>
-    <string name="theme_popup_info">Выберите предпочтительную тему</string>
+
     <string name="settings_general_notifications">Оповещения</string>
     <string name="notifications_popup_frequency_label">Как часто</string>
     <string name="graph_view_info">Не хватает данных для отображения графика</string>
     <string name="language_popup_info">Выберите предпочтительный язык</string>
-    <string name="theme_popup_check_box_dark_theme">Темная тема</string>
+    <string name="settings_appearance_theme_dark">Темная тема</string>
     <string name="more_tools_calculator">Калькулятор</string>
     <string name="home_edit">Редактировать</string>
     <string name="insert_popup">Добавить запись</string>
@@ -67,8 +67,8 @@
     <string name="home_delete">Удалить запись</string>
     <string name="settings_general_theme">Тема</string>
     <string name="settings_general_language">Язык</string>
-    <string name="theme_popup_check_box_system">Системная</string>
-    <string name="theme_popup_check_box_light_theme">Светлая тема</string>
+    <string name="settings_appearance_theme_system">Системная</string>
+    <string name="settings_appearance_theme_light">Светлая тема</string>
     <string name="notifications_popup_check_box_progress">Напоминание о прогрессе</string>
     <string name="home_daily">За день</string>
     <string name="home_weekly">За неделю</string>

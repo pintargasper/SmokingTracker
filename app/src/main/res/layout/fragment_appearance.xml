@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@string/theme_popup"
+                android:text="@string/settings_appearance_theme"
                 style="?appTitleStyle" />
 
             <HorizontalScrollView
@@ -88,7 +88,7 @@
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginEnd="5dp"
-                                android:contentDescription="@string/theme_popup_check_box_system"
+                                android:contentDescription="@string/settings_appearance_theme_system"
                                 android:src="@drawable/settings_48px"
                                 style="?appImageStyle" />
 
@@ -101,8 +101,8 @@
                                 <com.google.android.material.textview.MaterialTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:contentDescription="@string/theme_popup_check_box_system"
-                                    android:text="@string/theme_popup_check_box_system"
+                                    android:contentDescription="@string/settings_appearance_theme_system"
+                                    android:text="@string/settings_appearance_theme_system"
                                     style="?appSubtitleStyle" />
 
                             </LinearLayout>
@@ -138,7 +138,7 @@
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginEnd="5dp"
-                                android:contentDescription="@string/theme_popup_check_box_light_theme"
+                                android:contentDescription="@string/settings_appearance_theme_light"
                                 android:src="@drawable/light_mode_48px"
                                 style="?appImageStyle" />
 
@@ -146,8 +146,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:contentDescription="@string/theme_popup_check_box_light_theme"
-                                android:text="@string/theme_popup_check_box_light_theme"
+                                android:contentDescription="@string/settings_appearance_theme_light"
+                                android:text="@string/settings_appearance_theme_light"
                                 style="?appSubtitleStyle" />
 
                             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -180,7 +180,7 @@
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
                                 android:layout_marginEnd="5dp"
-                                android:contentDescription="@string/theme_popup_check_box_dark_theme"
+                                android:contentDescription="@string/settings_appearance_theme_dark"
                                 android:src="@drawable/dark_mode_48px"
                                 style="?appImageStyle" />
 
@@ -188,8 +188,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:contentDescription="@string/theme_popup_check_box_dark_theme"
-                                android:text="@string/theme_popup_check_box_dark_theme"
+                                android:contentDescription="@string/settings_appearance_theme_dark"
+                                android:text="@string/settings_appearance_theme_dark"
                                 style="?appSubtitleStyle" />
 
                             <com.google.android.material.radiobutton.MaterialRadioButton

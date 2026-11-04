@@ -69,11 +69,10 @@
     <string name="language_popup">Wähle die Sprache aus</string>
     <string name="language_popup_info">Wähle deine bevorzugte Sprache aus</string>
     <string name="language_popup_check_box_system">System</string>
-    <string name="theme_popup">Wähle das Thema aus</string>
-    <string name="theme_popup_info">Wähle das bevorzugte Thema aus</string>
-    <string name="theme_popup_check_box_system">System</string>
-    <string name="theme_popup_check_box_light_theme">Helles Design</string>
-    <string name="theme_popup_check_box_dark_theme">Dunkles Design</string>
+    <string name="settings_appearance_theme">Wähle das Thema aus</string>
+    <string name="settings_appearance_theme_system">System</string>
+    <string name="settings_appearance_theme_light">Helles Design</string>
+    <string name="settings_appearance_theme_dark">Dunkles Design</string>
     <string name="notifications_popup">Benachrichtigungen</string>
     <string name="notifications_popup_info">Wähle aus, welche Benachrichtigungen du bekommen möchtest</string>
     <string name="notifications_popup_check_box_system">System</string>
