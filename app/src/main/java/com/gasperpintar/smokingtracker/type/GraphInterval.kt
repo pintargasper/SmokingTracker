@@ -5,5 +5,5 @@ enum class GraphInterval {
     DAILY,
     WEEKLY,
     MONTHLY,
-    YEARLY
+    YEARLY;
 }

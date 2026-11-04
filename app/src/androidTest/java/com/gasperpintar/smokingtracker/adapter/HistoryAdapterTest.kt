@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.activity.MainActivity
+import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.ui.container.ContainerManager
 import org.junit.Assert.assertEquals

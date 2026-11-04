@@ -31,7 +31,6 @@ import com.gasperpintar.smokingtracker.databinding.DialogContentLanguageBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentNotificationsBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentRestoreBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentResultBinding
-import com.gasperpintar.smokingtracker.databinding.DialogContentThemeBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentWidgetsBinding
 import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
@@ -64,7 +63,7 @@ object DialogManager {
     ) = BaseDialog.show(context = context, inflate = DialogContentInsertBinding::inflate) { content ->
         binding.message.isGone = true
         binding.title.setText(R.string.insert_popup)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
         binding.confirm.setText(R.string.popup_add)
 
         binding.confirm.setOnClickListener {
@@ -89,7 +88,7 @@ object DialogManager {
 
         binding.message.isGone = true
         binding.title.setText(R.string.edit_popup_message)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
 
         binding.confirm.setOnClickListener {
             val selectedDateTime = LocalDateTime.of(
@@ -108,27 +107,10 @@ object DialogManager {
     ) = BaseDialog.show(context = context) {
         binding.message.isGone = true
         binding.title.setText(R.string.delete_popup_message)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
         binding.confirm.setOnClickListener {
             onSuccess()
             dismiss()
-        }
-    }
-
-    fun showThemeDialog(
-        context: FragmentActivity,
-        selectedTheme: Int,
-        onSuccess: (Int) -> Unit
-    ) = BaseDialog.show(context = context, inflate = DialogContentThemeBinding::inflate) { content ->
-        binding.title.setText(R.string.theme_popup)
-        binding.message.setText(R.string.theme_popup_info)
-
-        listOf(content.checkboxSystem, content.checkboxLightTheme, content.checkboxDarkTheme).forEachIndexed { index, checkbox ->
-            checkbox.isChecked = selectedTheme == index
-            checkbox.setOnClickListener {
-                onSuccess(index)
-                dismiss()
-            }
         }
     }
 
@@ -203,7 +185,7 @@ object DialogManager {
 
         binding.title.setText(R.string.settings_general_day_end_hour)
         binding.message.setText(R.string.settings_general_day_end_hour_description)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
 
         binding.confirm.setOnClickListener {
             onSuccess(content.timePicker.hour * 60 + content.timePicker.minute)
@@ -285,7 +267,7 @@ object DialogManager {
     ) = BaseDialog.show(context = context, inflate = DialogContentCostsBinding::inflate) { content ->
         binding.title.setText(R.string.costs_popup)
         binding.message.setText(R.string.costs_popup_info)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
 
         var startDate: Calendar? = null
         var endDate: Calendar? = null
@@ -351,7 +333,7 @@ object DialogManager {
                 endDate = null
 
                 listOf(content.inputStartDate, content.inputEndDate, content.inputPackPrice).forEach {
-                    it.text.clear()
+                    it.text?.clear()
                 }
             }
         }
@@ -363,7 +345,7 @@ object DialogManager {
     ) = BaseDialog.show(context = context) {
         binding.title.setText(R.string.backup_popup)
         binding.message.setText(R.string.backup_popup_description)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
         binding.confirm.setText(R.string.popup_backup)
         binding.confirm.setOnClickListener {
             onSuccess()
@@ -377,7 +359,7 @@ object DialogManager {
     ) = BaseDialog.show(context = context, inflate = DialogContentRestoreBinding::inflate) { content ->
         binding.title.setText(R.string.restore_popup)
         binding.message.setText(R.string.restore_popup_info)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
 
         onSuccess(null, null, null, content.textSelectedFile)
 
@@ -408,7 +390,7 @@ object DialogManager {
     ) = BaseDialog.show(context = context, inflate = DialogContentDatePickerBinding::inflate) { content ->
         binding.title.isGone = true
         binding.message.isGone = true
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
 
         val selectedDate = Calendar.getInstance()
         content.customCalendarView.date = selectedDate.timeInMillis
@@ -465,7 +447,7 @@ object DialogManager {
     ) = BaseDialog.show(context = context) {
         binding.message.isGone = true
         binding.title.setText(R.string.note_popup_save)
-        binding.dialogConfirm.isVisible = true
+        binding.confirm.isVisible = true
 
         binding.confirm.setText(R.string.popup_save)
         binding.confirm.setOnClickListener {

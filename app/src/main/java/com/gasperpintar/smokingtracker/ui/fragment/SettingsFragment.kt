@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
@@ -13,9 +12,9 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.gasperpintar.smokingtracker.activity.AboutActivity
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
@@ -55,7 +54,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         setupLaunchers()
 
         aboutLayout.setOnClickListener {
-            startActivity(Intent(requireContext(), AboutActivity::class.java))
+            (requireActivity() as MainActivity).openSubFragment(fragment = AboutFragment())
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -69,14 +68,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         updateUi(state = state)
 
         themeLayout.setOnClickListener {
-            DialogManager.showThemeDialog(context = requireActivity(), selectedTheme = state.settings.theme) { theme ->
-                lifecycleScope.launch {
-                    state.settings = state.settings.copy(theme = theme)
-                    viewModel.updateSettings(state.settings)
-                    Application().applyTheme(themeId = theme)
-                    updateUi(state = state)
-                }
-            }
+            (requireActivity() as MainActivity).openSubFragment(fragment = AppearanceFragment())
         }
 
         languageLayout.setOnClickListener {
@@ -173,10 +165,8 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
     }
 
     private fun updateUi(state: SettingsState) = binding.apply {
-        imageTheme.setImageResource(updateThemeIcon(state.settings.theme))
-        themeService.text = resources.getStringArray(R.array.theme_names)[state.settings.theme]
         languageService.text = resources.getStringArray(R.array.language_names)
-            .getOrElse(resources.getStringArray(R.array.language_values)
+            .getOrElse(index = resources.getStringArray(R.array.language_values)
                 .indexOf(state.settings.language)
             ) { "system" }
     }
@@ -227,14 +217,6 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         exportDocumentLauncher = registerForActivityResult(ActivityResultContracts.CreateDocument(mimeExcel)) { uri ->
             uri?.let { exportFile(fileUri = it) }
         }
-    }
-
-    private fun updateThemeIcon(theme: Int): Int {
-        val isNight = theme == 2 || (theme != 1 &&
-                (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) ==
-                Configuration.UI_MODE_NIGHT_YES)
-        return if (isNight) R.drawable.dark_mode_48px
-        else R.drawable.light_mode_48px
     }
 
     private fun restoreFile() {

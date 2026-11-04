@@ -4,5 +4,5 @@ enum class Widget {
     ONLY_QUICK_ADD,
     QUICK_ADD,
     STATS,
-    STATS_QUICK_ADD
+    STATS_QUICK_ADD;
 }

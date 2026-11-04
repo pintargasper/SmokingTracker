@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import com.gasperpintar.smokingtracker.di.Container
+import com.gasperpintar.smokingtracker.type.Theme
 import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
@@ -18,12 +19,7 @@ class Application : Application() {
     }
 
     fun applyTheme(themeId: Int) {
-        when (themeId) {
-            0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            else -> Unit
-        }
+        AppCompatDelegate.setDefaultNightMode(Theme.fromValue(themeId).themeId)
     }
 
     fun applyLanguage(context: Context): String {

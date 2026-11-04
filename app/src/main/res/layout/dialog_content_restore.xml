@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,34 +8,24 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/text_selected_file"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.7"
+        android:layout_weight="0.8"
         android:text="@string/restore_popup_file"
         android:ellipsize="end"
         android:singleLine="true"
-        style="@style/BodyTextView"
+        style="?appBodyStyle"
         tools:ignore="VisualLintSystemUi" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_open_file_button"
-        android:layout_width="0dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/open_file"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        style="@style/Card">
-
-        <Button
-            android:id="@+id/open_file"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/popup_select"
-            style="@style/Button"
-            tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
-
-    </androidx.cardview.widget.CardView>
+        android:layout_weight="0.2"
+        android:text="@string/popup_select"
+        style="?appButtonStyle"
+        tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
 
 </LinearLayout>

@@ -7,7 +7,7 @@ import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 
-interface Container {
+interface IContainer {
     val achievementRepository: AchievementRepository
     val costsRepository: CostsRepository
     val historyRepository: HistoryRepository

@@ -67,11 +67,10 @@
     <string name="language_popup">Обери мову</string>
     <string name="language_popup_info">Оберіть бажану мову</string>
     <string name="language_popup_check_box_system">Системна</string>
-    <string name="theme_popup">Виберіть тему</string>
-    <string name="theme_popup_info">Виберіть бажану тему</string>
-    <string name="theme_popup_check_box_system">Системна</string>
-    <string name="theme_popup_check_box_light_theme">Світла тема</string>
-    <string name="theme_popup_check_box_dark_theme">Темна тема</string>
+    <string name="settings_appearance_theme">Виберіть тему</string>
+    <string name="settings_appearance_theme_system">Системна</string>
+    <string name="settings_appearance_theme_light">Світла тема</string>
+    <string name="settings_appearance_theme_dark">Темна тема</string>
     <string name="notifications_popup">Повідомлення</string>
     <string name="notifications_popup_info">Обери, як хочеш отримувати сповіщення</string>
     <string name="notifications_popup_check_box_system">Системна</string>

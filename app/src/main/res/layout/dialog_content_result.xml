@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,20 +12,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_total_costs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:text="@string/calculator_result_total"
-            style="@style/SubtitleTextView"
+            style="?appSubtitleStyle"
             tools:ignore="VisualLintSystemUi" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/total_costs"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
     </LinearLayout>
 
@@ -37,19 +36,19 @@
         android:layout_marginTop="8dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_cost_per_cigarette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:text="@string/calculator_result_cost"
-            style="@style/SubtitleTextView" />
+            style="?appSubtitleStyle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/cost_per_cigarette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
     </LinearLayout>
 
@@ -60,19 +59,19 @@
         android:layout_marginTop="8dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_average_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:text="@string/calculator_result_average_cost"
-            style="@style/SubtitleTextView" />
+            style="?appSubtitleStyle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/average_cost_per_hour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
     </LinearLayout>
 
@@ -83,19 +82,19 @@
         android:layout_marginTop="8dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_time_spent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:text="@string/calculator_result_time_spent"
-            style="@style/SubtitleTextView" />
+            style="?appSubtitleStyle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/time_spent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
     </LinearLayout>
 
@@ -113,20 +112,20 @@
         android:layout_marginTop="8dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_average_time_per_cigarette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:text="@string/calculator_result_average_time"
-            style="@style/SubtitleTextView" />
+            style="?appSubtitleStyle" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/popup_result_average_time_per_cigarette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/calculator_result_estimated_time"
-            style="@style/BodyTextView" />
+            style="?appBodyStyle" />
 
     </LinearLayout>
 

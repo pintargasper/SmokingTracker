@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,15 +6,15 @@
     android:layout_height="300dp"
     android:fillViewport="true">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/changelog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:text="What's new in this version"
         android:textIsSelectable="true"
-        android:textColorLink="@color/links"
-        style="@style/BodyTextView"
+        android:textColorLink="@color/legacy_links"
+        style="?appBodyStyle"
         tools:ignore="HardcodedText,VisualLintSystemUi" />
 
 </androidx.core.widget.NestedScrollView>

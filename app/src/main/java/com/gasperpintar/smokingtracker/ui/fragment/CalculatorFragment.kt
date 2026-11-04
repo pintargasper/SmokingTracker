@@ -1,21 +1,24 @@
-package com.gasperpintar.smokingtracker.activity
+package com.gasperpintar.smokingtracker.ui.fragment
 
-import androidx.activity.viewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.viewmodel.CalculatorViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.CalculatorState
-import com.gasperpintar.smokingtracker.databinding.ActivityCalculatorBinding
+import com.gasperpintar.smokingtracker.databinding.FragmentCalculatorBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.launch
 
-class CalculatorActivity : Base<ActivityCalculatorBinding>(
-    bindingInflater = ActivityCalculatorBinding::inflate
+class CalculatorFragment : Base<FragmentCalculatorBinding>(
+    bindingInflater = FragmentCalculatorBinding::inflate
 ) {
 
-    private val appContainer by lazy { (application as Application).container }
+    private val appContainer by lazy {
+        (requireActivity().application as Application).container
+    }
+
     private val viewModel: CalculatorViewModel by viewModels {
         ModelFactory(container = appContainer)
     }
@@ -23,26 +26,28 @@ class CalculatorActivity : Base<ActivityCalculatorBinding>(
     @Override
     override fun initialize() = binding.apply {
         inputStartDate.setOnClickListener {
-            DialogManager.showDatePickerDialog(context = this@CalculatorActivity) { date ->
-                inputStartDate.setText( viewModel.setStartDate(date))
+            DialogManager.showDatePickerDialog(context = requireActivity()) { date ->
+                inputStartDate.setText(viewModel.setStartDate(date))
             }
         }
 
         inputEndDate.setOnClickListener {
-            DialogManager.showDatePickerDialog(context = this@CalculatorActivity) { date ->
-                inputEndDate.setText( viewModel.setEndDate(date))
+            DialogManager.showDatePickerDialog(context = requireActivity()) { date ->
+                inputEndDate.setText(viewModel.setEndDate(date))
             }
         }
 
         buttonBack.setOnClickListener {
-            finish()
+            parentFragmentManager.popBackStack()
         }
 
         buttonCalculate.setOnClickListener {
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 calculate()
             }
         }
+
+        showContent()
     }
 
     private suspend fun calculate() = binding.apply {
@@ -56,7 +61,7 @@ class CalculatorActivity : Base<ActivityCalculatorBinding>(
 
     private fun showResultDialog(state: CalculatorState) {
         DialogManager.showResultDialog(
-            context = this,
+            context = requireActivity(),
             values = Triple(state.totalCost, state.totalTimeMinutes, state.totalCigarettes) to state.currency,
             formatTime = { minutes ->
                 TimeHelper.formatTime(resources = resources, totalMinutes = minutes)

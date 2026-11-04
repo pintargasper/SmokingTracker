@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_container"
     android:layout_width="match_parent"
@@ -7,7 +6,7 @@
     android:orientation="vertical"
     android:padding="5dp"
     android:gravity="center"
-    android:background="@color/surface">
+    android:background="@color/widget_background">
 
     <ImageButton
         android:id="@+id/widget_add_new_entry_button"
@@ -27,7 +26,7 @@
         android:gravity="center"
         android:textSize="32sp"
         android:textStyle="bold"
-        android:textColor="@color/success"
+        android:textColor="@color/legacy_success"
         android:visibility="gone" />
 
 </LinearLayout>

@@ -1,32 +1,29 @@
-package com.gasperpintar.smokingtracker.activity
+package com.gasperpintar.smokingtracker.ui.fragment
 
 import androidx.core.content.pm.PackageInfoCompat
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.databinding.ActivityAboutBinding
+import com.gasperpintar.smokingtracker.databinding.FragmentAboutBinding
 import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 
-class AboutActivity : Base<ActivityAboutBinding>(
-    bindingInflater = ActivityAboutBinding::inflate
+class AboutFragment : Base<FragmentAboutBinding>(
+    bindingInflater = FragmentAboutBinding::inflate
 ) {
 
     @Override
     override fun initialize() = binding.apply {
         buttonBack.setOnClickListener {
-            finish()
+            parentFragmentManager.popBackStack()
         }
 
-        val packageInfo = packageManager.getPackageInfo(packageName, 0)
+        val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
         val versionName = packageInfo.versionName ?: getString(R.string.about_version_unknown)
         val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo)
 
-        appVersion.text = getString(
-            R.string.about_version,
-            versionName,
-            versionCode
-        )
+        appVersion.text = getString(R.string.about_version, versionName, versionCode)
         createdBy.text = getString(R.string.about_created_by, "Gašper Pintar")
 
         setupLinks()
+        showContent()
     }
 
     private fun setupLinks() = binding.apply {
@@ -45,7 +42,7 @@ class AboutActivity : Base<ActivityAboutBinding>(
             contributor8Layout to "https://github.com/nrob81"
         ).forEach { (view, url) ->
             view.setOnClickListener {
-                this@AboutActivity.openUrl(url)
+                requireContext().openUrl(url)
             }
         }
     }

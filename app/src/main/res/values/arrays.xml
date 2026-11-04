@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="language_values">
         <item>system</item>
@@ -25,12 +26,6 @@
         <item>Українська</item>
         <item>繁體中文</item>
         <item>简体中文</item>
-    </string-array>
-
-    <string-array name="theme_names">
-        <item>@string/theme_popup_check_box_system</item>
-        <item>@string/theme_popup_check_box_light_theme</item>
-        <item>@string/theme_popup_check_box_dark_theme</item>
     </string-array>
 
     <string-array name="frequency_options">

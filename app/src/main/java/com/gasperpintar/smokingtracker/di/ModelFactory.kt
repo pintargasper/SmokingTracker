@@ -56,21 +56,15 @@ class ModelFactory(
             }
 
             modelClass.isAssignableFrom(CalculatorViewModel::class.java) -> {
-                CalculatorViewModel(
-                    settingsRepository = container.settingsRepository,
-                ) as T
+                CalculatorViewModel(settingsRepository = container.settingsRepository) as T
             }
 
             modelClass.isAssignableFrom(AchievementViewModel::class.java) -> {
-                AchievementViewModel(
-                    achievementRepository = container.achievementRepository
-                ) as T
+                AchievementViewModel(achievementRepository = container.achievementRepository) as T
             }
 
             modelClass.isAssignableFrom(NotesViewModel::class.java) -> {
-                NotesViewModel(
-                    notesRepository = container.notesRepository
-                ) as T
+                NotesViewModel(notesRepository = container.notesRepository) as T
             }
 
             modelClass.isAssignableFrom(BasicViewModel::class.java) -> {
