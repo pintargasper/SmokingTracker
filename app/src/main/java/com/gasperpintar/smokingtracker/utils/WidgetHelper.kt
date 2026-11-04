@@ -15,7 +15,7 @@ import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.activity.MainActivity
+import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.provider.OnlyQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget

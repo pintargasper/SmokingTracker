@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.viewbinding.ViewBinding
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.databinding.ContainerBaseBinding
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.adapter.ViewHolder
@@ -16,7 +16,7 @@ abstract class BaseContainer(
     internal val binding: ContainerBaseBinding = ContainerBaseBinding.inflate(activity.layoutInflater, parent, false)
 
     companion object {
-        internal inline fun <T : Identifiable, B : ViewBinding> create(
+        internal inline fun <T : IIdentifiable, B : ViewBinding> create(
             context: FragmentActivity,
             crossinline inflate: (LayoutInflater, ViewGroup, Boolean) -> B,
             noinline onBind: BaseContainer.(B, T) -> Unit

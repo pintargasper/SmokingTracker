@@ -1,31 +1,32 @@
-package com.gasperpintar.smokingtracker.activity
+package com.gasperpintar.smokingtracker.ui.fragment.achievements
 
-import android.os.Bundle
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.databinding.ActivityAchievementsBinding
+import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
-import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementsFragment
+import com.gasperpintar.smokingtracker.ui.fragment.Base
 import com.google.android.material.tabs.TabLayoutMediator
 
-class AchievementsActivity : Base<ActivityAchievementsBinding>(
-    bindingInflater = ActivityAchievementsBinding::inflate
+class AchievementFragment : Base<FragmentAchievementsBinding>(
+    bindingInflater = FragmentAchievementsBinding::inflate
 ) {
 
     @Override
     override fun initialize() = binding.apply {
         buttonBack.setOnClickListener {
-            finish()
+            parentFragmentManager.popBackStack()
         }
+
         setupPager()
+        showContent()
     }
 
     private fun setupPager() = binding.apply {
         achievementsViewPager.adapter = Pager(
-            this@AchievementsActivity,
-            listOf(
-                { createAchievementsFragment(AchievementCategory.SMOKE_FREE_TIME) },
-                { createAchievementsFragment(AchievementCategory.CIGARETTES_AVOIDED) }
+            this@AchievementFragment,
+            creators = listOf(
+                { AchievementListFragment.newInstance(achievementType = AchievementCategory.SMOKE_FREE_TIME) },
+                { AchievementListFragment.newInstance(achievementType = AchievementCategory.CIGARETTES_AVOIDED) }
             )
         )
 
@@ -38,13 +39,5 @@ class AchievementsActivity : Base<ActivityAchievementsBinding>(
                 }
             )
         }.attach()
-    }
-
-    private fun createAchievementsFragment(
-        achievementType: AchievementCategory
-    ) = AchievementsFragment().apply {
-        arguments = Bundle().apply {
-            putString("achievement_type", achievementType.name)
-        }
     }
 }

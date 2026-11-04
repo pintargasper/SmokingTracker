@@ -1,11 +1,11 @@
-package com.gasperpintar.smokingtracker.activity
+package com.gasperpintar.smokingtracker
 
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
-import com.gasperpintar.smokingtracker.Application
+import com.gasperpintar.smokingtracker.type.ColorScheme
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 
 abstract class Base<VB : ViewBinding>(
@@ -15,12 +15,14 @@ abstract class Base<VB : ViewBinding>(
     private var _binding: VB? = null
     protected val binding get() = _binding!!
 
+    private lateinit var application: Application
+
     @Override
     override fun attachBaseContext(
         newBase: Context
     ) {
-        val repository = (newBase.applicationContext as Application).container.settingsRepository
-        val localizedContext = LocalizationHelper.getLocalizedContext(context = newBase, settingsRepository = repository)
+        application = newBase.applicationContext as Application
+        val localizedContext = LocalizationHelper.getLocalizedContext(context = newBase, settingsRepository = application.container.settingsRepository)
         super.attachBaseContext(localizedContext)
     }
 
@@ -28,6 +30,13 @@ abstract class Base<VB : ViewBinding>(
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
+        // TODO add implementation to the database (@AppearanceFragment.kt)
+        // val colorScheme = runBlocking { application.container.settingsRepository.get()?.colorScheme }
+        // setTheme(ColorScheme.fromName(name = colorScheme).themeResId)
+
+        val colorSchemes = listOf("SYSTEM", "LEGACY", "SKY")
+        setTheme(ColorScheme.fromName(name = colorSchemes.random()).themeResId)
+
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)
         setContentView(binding.root)

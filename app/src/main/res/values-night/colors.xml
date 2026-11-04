@@ -43,7 +43,7 @@
     <color name="legacy_tab_layout_indicator">@color/legacy_gray_dark</color>
 
     <color name="legacy_fab_tint">@color/legacy_white</color>
-    <color name="legacy_fab_background_tint">@color/legacy_off_white</color>
+    <color name="legacy_fab_background_tint">@color/legacy_gray_light</color>
 
     <color name="legacy_slider_thumb_active">@color/legacy_white</color>
     <color name="legacy_slider_thumb_inactive">@color/legacy_gray_medium</color>

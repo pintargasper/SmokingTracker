@@ -17,18 +17,13 @@
         android:theme="@style/Theme.SmokingTracker.Legacy"
         tools:targetApi="37">
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.StatisticsActivity" />
-        <activity android:name=".activity.CalculatorActivity" />
-        <activity android:name=".activity.AchievementsActivity" />
-        <activity android:name=".activity.NotesActivity" />
-        <activity android:name=".activity.AboutActivity" />
         <receiver
             android:name=".provider.WidgetReceiver"
             android:exported="false" />

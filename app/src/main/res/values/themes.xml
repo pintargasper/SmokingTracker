@@ -79,4 +79,14 @@
         <item name="appDropdownActiveBackground">@color/legacy_dropdown_active_background</item>
         <item name="appDropdownHoverBackground">@color/legacy_dropdown_hover_background</item>
     </style>
+
+    <style name="Theme.SmokingTracker.System" parent="Theme.SmokingTracker.Legacy">
+        <item name="appButtonText">@color/system_button_text</item>
+        <item name="appButtonBackground">@color/system_button_background</item>
+    </style>
+
+    <style name="Theme.SmokingTracker.Sky" parent="Theme.SmokingTracker.Legacy">
+        <item name="appButtonText">@color/sky_button_text</item>
+        <item name="appButtonBackground">@color/sky_button_background</item>
+    </style>
 </resources>

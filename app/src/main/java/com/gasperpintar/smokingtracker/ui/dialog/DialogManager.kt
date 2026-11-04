@@ -31,7 +31,6 @@ import com.gasperpintar.smokingtracker.databinding.DialogContentLanguageBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentNotificationsBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentRestoreBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentResultBinding
-import com.gasperpintar.smokingtracker.databinding.DialogContentThemeBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentWidgetsBinding
 import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
@@ -112,23 +111,6 @@ object DialogManager {
         binding.confirm.setOnClickListener {
             onSuccess()
             dismiss()
-        }
-    }
-
-    fun showThemeDialog(
-        context: FragmentActivity,
-        selectedTheme: Int,
-        onSuccess: (Int) -> Unit
-    ) = BaseDialog.show(context = context, inflate = DialogContentThemeBinding::inflate) { content ->
-        binding.title.setText(R.string.theme_popup)
-        binding.message.setText(R.string.theme_popup_info)
-
-        listOf(content.checkboxSystem, content.checkboxLightTheme, content.checkboxDarkTheme).forEachIndexed { index, checkbox ->
-            checkbox.isChecked = selectedTheme == index
-            checkbox.setOnClickListener {
-                onSuccess(index)
-                dismiss()
-            }
         }
     }
 

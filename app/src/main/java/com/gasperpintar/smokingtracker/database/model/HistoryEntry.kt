@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker.database.model
 
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import java.time.LocalDateTime
@@ -11,7 +11,7 @@ data class HistoryEntry(
     val isLent: Boolean,
     val createdAt: LocalDateTime,
     val timerLabel: String
-): Identifiable {
+): IIdentifiable {
     companion object {
         fun fromEntity(
             entity: HistoryEntity

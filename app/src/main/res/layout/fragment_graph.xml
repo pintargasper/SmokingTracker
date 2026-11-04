@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    tools:context="ui.fragment.GraphFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,14 +50,13 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_daily"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_previous_day_daily"
-                        android:src="@drawable/arrow_circle_left_48px"
                         style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_left_48px" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_daily"
@@ -67,14 +66,13 @@
                         tools:ignore="HardcodedText,TextSizeCheck"
                         style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_daily"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_next_day_daily"
-                        android:src="@drawable/arrow_circle_right_48px"
                         style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_right_48px" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -118,14 +116,13 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_previous_day_weakly"
-                        android:src="@drawable/arrow_circle_left_48px"
-                        style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_left_48px"
+                        style="?appImageButtonStyle"/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_weekly"
@@ -135,14 +132,13 @@
                         tools:ignore="HardcodedText,TextSizeCheck"
                         style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_next_day_weakly"
-                        android:src="@drawable/arrow_circle_right_48px"
-                        style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -186,14 +182,13 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_monthly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_previous_day_monthly"
-                        android:src="@drawable/arrow_circle_left_48px"
                         style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_left_48px" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_monthly"
@@ -203,14 +198,14 @@
                         tools:ignore="HardcodedText"
                         style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_monthly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_next_day_monthly"
                         android:src="@drawable/arrow_circle_right_48px"
-                        style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_right_48px"
+                        style="?appImageButtonStyle" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -254,14 +249,13 @@
                     android:layout_marginBottom="8dp"
                     android:padding="4dp">
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/previous_day_yearly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_previous_day_yearly"
-                        android:src="@drawable/arrow_circle_left_48px"
                         style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_left_48px" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date_yearly"
@@ -271,14 +265,13 @@
                         tools:ignore="HardcodedText"
                         style="?appTitleCenterStyle" />
 
-                    <ImageButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/next_day_yearly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:contentDescription="@string/graph_next_day_yearly"
-                        android:src="@drawable/arrow_circle_right_48px"
                         style="?appImageButtonStyle"
-                        app:tint="?attr/colorOnSurface" />
+                        app:icon="@drawable/arrow_circle_right_48px" />
 
                 </LinearLayout>
 

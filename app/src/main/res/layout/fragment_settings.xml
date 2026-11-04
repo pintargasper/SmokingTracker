@@ -42,12 +42,11 @@
                 android:paddingVertical="12dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/image_theme"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/settings_general_theme"
-                    android:src="@drawable/light_mode_48px"
+                    android:src="@drawable/palette_48px"
                     style="?appImageStyle" />
 
                 <LinearLayout
@@ -64,13 +63,15 @@
                         style="?appSubtitleStyle" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/theme_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/settings_general_appearance_description"
                         style="?appBodyStyle" />
 
                 </LinearLayout>
+
             </LinearLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView

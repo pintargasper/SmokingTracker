@@ -1,7 +1,7 @@
 package com.gasperpintar.smokingtracker.database.model
 
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import java.time.LocalDateTime
 
@@ -13,7 +13,7 @@ data class NoteEntry(
     val mood: Int,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime
-): Identifiable {
+): IIdentifiable {
     val moodIcon: Int
         get() = when (mood) {
             1 -> R.drawable.sentiment_frustrated_48px

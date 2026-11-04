@@ -73,4 +73,18 @@
 
     <color name="legacy_sentiment_yellow">@color/legacy_yellow</color>
     <color name="legacy_sentiment_brown">@color/legacy_brown</color>
+
+    <!-- System -->
+    <color name="system_white">#FFFFFF</color>
+    <color name="system_orange">#B95000</color>
+
+    <color name="system_button_text">@color/system_white</color>
+    <color name="system_button_background">@color/system_orange</color>
+
+    <!-- Sky -->
+    <color name="sky_white">#FFFFFF</color>
+    <color name="sky_blue">#1565C0</color>
+
+    <color name="sky_button_text">@color/sky_white</color>
+    <color name="sky_button_background">@color/sky_blue</color>
 </resources>

@@ -17,7 +17,9 @@ class Application : Application() {
         container
     }
 
-    fun applyTheme(themeId: Int) {
+    fun applyTheme(
+        themeId: Int
+    ) {
         when (themeId) {
             0 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
             1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

@@ -2,9 +2,9 @@ package com.gasperpintar.smokingtracker.ui.adapter
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
-import com.gasperpintar.smokingtracker._interface.Identifiable
+import com.gasperpintar.smokingtracker._interface.IIdentifiable
 
-class Callback<T : Identifiable> : DiffUtil.ItemCallback<T>() {
+class Callback<T : IIdentifiable> : DiffUtil.ItemCallback<T>() {
 
     @Override
     override fun areItemsTheSame(
