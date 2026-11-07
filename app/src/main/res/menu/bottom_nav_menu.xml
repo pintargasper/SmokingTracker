@@ -2,9 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_minimal_home"
         android:icon="@drawable/home_48px"
         android:title="@string/navigation_home" />
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/history_48px"
+        android:title="@string/navigation_advanced" />
 
     <item
         android:id="@+id/navigation_graph"

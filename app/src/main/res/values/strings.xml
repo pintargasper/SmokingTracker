@@ -4,11 +4,12 @@
     <string name="application_tagline">Track. Analyze. Progress.</string>
 
     <string name="navigation_home">Home</string>
+    <string name="navigation_advanced">Advanced</string>
     <string name="navigation_graph">Graph</string>
     <string name="navigation_more">More</string>
     <string name="navigation_settings">Settings</string>
 
-    <string name="home_timer_message">Time past after last cigarette</string>
+    <string name="home_timer_message">Time since your last cigarette</string>
     <string name="home_timer_day">d</string>
     <string name="home_timer_hour">h</string>
     <string name="home_timer_minute">m</string>
@@ -19,11 +20,17 @@
     <string name="home_previous_day">Previous day</string>
     <string name="home_next_day">Next day</string>
     <string name="home_add_entry">Add new entry</string>
+    <string name="home_add_cigarette">Add cigarette</string>
     <string name="home_lent">Lent record</string>
     <string name="home_edit">Edit record</string>
     <string name="home_delete">Delete record</string>
     <string name="home_no_entries">No entries found for this day</string>
     <string name="home_no_entries_message">Click the \"Add new entry\" button to add a new entry</string>
+    <string name="home_cigarettes_today">Cigarettes today</string>
+    <string name="home_no_smoked_entries">No cigarette recorded yet</string>
+    <string name="home_add_success">Cigarette added</string>
+    <string name="home_add_error">Could not add the cigarette. Please try again.</string>
+    <string name="home_load_error">Could not load your data. Please try again.</string>
 
     <string name="graph_daily">Daily Overview (%1$d)</string>
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
