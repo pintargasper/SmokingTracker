@@ -12,6 +12,7 @@ import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
@@ -136,12 +137,12 @@ class HomeViewModelTest {
     fun minimalStateHandlesEmptyAndLentOnlyHistory() = runBlocking {
         val now = LocalDateTime.of(2026, 1, 2, 12, 0)
 
-        assertEquals(null, viewModel.getMinimalState(now).lastEntry)
+        assertNull(viewModel.getMinimalState(now).lastEntry)
         assertEquals(0, viewModel.getMinimalState(now).smokedToday)
 
         historyDao.insert(entity = HistoryEntity(id = 0, lent = 1, createdAt = now.minusHours(1)))
 
-        assertEquals(null, viewModel.getMinimalState(now).lastEntry)
+        assertNull(viewModel.getMinimalState(now).lastEntry)
         assertEquals(0, viewModel.getMinimalState(now).smokedToday)
     }
 

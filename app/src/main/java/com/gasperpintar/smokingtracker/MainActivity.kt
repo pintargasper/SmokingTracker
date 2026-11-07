@@ -22,6 +22,7 @@ import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
 import com.gasperpintar.smokingtracker.ui.fragment.HomeFragment
+import com.gasperpintar.smokingtracker.ui.fragment.MinimalHomeFragment
 import com.gasperpintar.smokingtracker.ui.fragment.MoreFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 import com.gasperpintar.smokingtracker.utils.Permissions
@@ -84,7 +85,7 @@ class MainActivity : Base<ActivityMainBinding>(
     private fun setupPager() = binding.apply {
         mainViewPager.adapter = Pager(
             this@MainActivity,
-            listOf(::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)
+            listOf(::MinimalHomeFragment, ::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)
         )
 
         mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
