@@ -36,6 +36,7 @@
                 app:autoSizeMaxTextSize="48sp"
                 app:autoSizeMinTextSize="24sp"
                 app:autoSizeStepGranularity="2sp"
+                app:lineHeight="40sp"
                 app:autoSizeTextType="uniform"
                 tools:text="00:42:18" />
 
@@ -46,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="@string/home_elapsed_time_label" />
+                android:text="@string/home_timer_message" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,10 +68,11 @@
                 android:maxLines="2"
                 android:minHeight="0dp"
                 android:padding="16dp"
-                android:text="@string/home_add_cigarette"
+                android:text="@string/home_add_entry"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:cornerRadius="24dp" />
+                app:cornerRadius="24dp"
+                tools:ignore="VisualLintButtonSize" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,6 +108,8 @@
                 android:layout_marginTop="8dp"
                 android:gravity="center"
                 android:text="@string/home_cigarettes_today" />
+
         </LinearLayout>
     </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>

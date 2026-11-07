@@ -37,9 +37,9 @@ class MinimalHomeFragmentTest {
     fun setup() = runBlocking {
         context = ApplicationProvider.getApplicationContext()
         val database = Provider.getDatabase(context)
-        historyRepository = HistoryRepository(database.historyDao())
+        historyRepository = HistoryRepository(historyDao = database.historyDao())
         historyRepository.deleteAll()
-        val settingsRepository = SettingsRepository(database.settingsDao())
+        val settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         settingsRepository.upsert(
             settingsRepository.get()?.copy(dayEndMinutes = 0)
                 ?: SettingsEntity.default().copy(dayEndMinutes = 0)
@@ -49,9 +49,10 @@ class MinimalHomeFragmentTest {
             .putBoolean("first_run", false)
             .commit()
         val instrumentation = InstrumentationRegistry.getInstrumentation()
-        instrumentation.uiAutomation.executeShellCommand(
-            "pm grant ${instrumentation.targetContext.packageName} android.permission.POST_NOTIFICATIONS"
-        ).close()
+        val packageName = instrumentation.targetContext.packageName
+        instrumentation.uiAutomation
+            .executeShellCommand("pm grant $packageName android.permission.POST_NOTIFICATIONS")
+            .close()
     }
 
     @Test

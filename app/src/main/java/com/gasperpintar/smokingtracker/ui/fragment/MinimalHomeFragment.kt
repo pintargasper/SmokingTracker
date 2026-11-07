@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
+import kotlin.time.Duration.Companion.milliseconds
 
 class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
     bindingInflater = FragmentMinimalHomeBinding::inflate
@@ -40,7 +41,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
         binding.buttonAddCigarette.setOnClickListener { viewModel.insertNow() }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            viewLifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
                 launch { viewModel.historyChanges.collect { refreshHome() } }
                 launch {
                     viewModel.isAdding.collect { isAdding ->
@@ -61,14 +62,14 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewLifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
                 while (isActive) {
                     val now = LocalDateTime.now()
                     if (currentDay != null && currentDay != TimeHelper.dayDate(now, dayEndMinutes)) {
                         refreshHome()
                     }
                     updateElapsedTime(now)
-                    delay(1_000)
+                    delay(duration = 1_000.milliseconds)
                 }
             }
         }
