@@ -4,38 +4,53 @@ import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.time.LocalDateTime
 
 class HistoryRepository(
     private val historyDao: HistoryDao
 ) {
+    private val _changes = MutableStateFlow(0L)
+    val changes: StateFlow<Long> = _changes.asStateFlow()
+
     suspend fun insert(
         entry: HistoryEntity
     ) {
         historyDao.insert(entity = entry)
+        notifyChanged()
     }
 
     suspend fun insertAll(
         entries: List<HistoryEntity>
     ) {
         historyDao.insertAll(entities = entries)
+        notifyChanged()
     }
 
     suspend fun update(
         entry: HistoryEntity
     ) {
         historyDao.update(entity = entry)
+        notifyChanged()
     }
 
     suspend fun delete(
         entry: HistoryEntity
     ) {
         historyDao.delete(entity = entry)
+        notifyChanged()
     }
 
     suspend fun deleteAll() {
         historyDao.deleteAll()
         historyDao.resetAutoIncrement()
+        notifyChanged()
+    }
+
+    private fun notifyChanged() {
+        _changes.value += 1
     }
 
     suspend fun getLast(): HistoryEntity? {
@@ -56,6 +71,10 @@ class HistoryRepository(
         start: LocalDateTime, end: LocalDateTime
     ): Int {
         return historyDao.getCountBetween(start = start, end = end)
+    }
+
+    suspend fun getSmokedCountBetween(start: LocalDateTime, end: LocalDateTime): Int {
+        return historyDao.getSmokedCountBetween(start = start, end = end)
     }
 
     suspend fun getAverageCigarettesPerDay(): Double {
