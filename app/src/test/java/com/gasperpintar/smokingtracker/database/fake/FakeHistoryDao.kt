@@ -13,6 +13,14 @@ class FakeHistoryDao : FakeDao<HistoryEntity>(
     var averagePerDay = 0.0
     var maxPerDay: CigarettesPerDay? = null
     var minPerDay: CigarettesPerDay? = null
+    var insertFailure: Throwable? = null
+    var insertHook: suspend () -> Unit = {}
+
+    override suspend fun insert(entity: HistoryEntity) {
+        insertHook()
+        insertFailure?.let { throw it }
+        super<FakeDao>.insert(entity)
+    }
 
     @Override
     override suspend fun deleteAll() {
@@ -37,6 +45,11 @@ class FakeHistoryDao : FakeDao<HistoryEntity>(
     @Override
     override suspend fun getCountBetween(start: LocalDateTime, end: LocalDateTime): Int {
         return getBetween(start = start, end = end).size
+    }
+
+    @Override
+    override suspend fun getSmokedCountBetween(start: LocalDateTime, end: LocalDateTime): Int {
+        return getBetween(start = start, end = end).count { it.lent == 0 }
     }
 
     @Override

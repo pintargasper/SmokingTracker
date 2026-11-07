@@ -22,13 +22,14 @@ class HomeViewModelTest {
     private val now = LocalDateTime.now()
     private lateinit var historyDao: FakeHistoryDao
     private lateinit var achievementDao: FakeAchievementDao
+    private lateinit var settingsDao: FakeSettingsDao
     private lateinit var viewModel: HomeViewModel
 
     @Before
     fun setup() = runBlocking {
         historyDao = FakeHistoryDao()
         achievementDao = FakeAchievementDao()
-        val settingsDao = FakeSettingsDao()
+        settingsDao = FakeSettingsDao()
         settingsDao.insert(entity = SettingsEntity.default())
 
         viewModel = HomeViewModel(
@@ -108,6 +109,40 @@ class HomeViewModelTest {
 
         assertEquals(today.minusDays(1), previousState.selectedDate)
         assertEquals(1, previousState.dailyCount)
+    }
+
+    @Test
+    fun minimalStateUsesSmokedOnlyCurrentAppDayAndLatestSmokedEntry() = runBlocking {
+        settingsDao.update(entity = settingsDao.get()!!.copy(dayEndMinutes = 120))
+        val now = LocalDateTime.of(2026, 1, 2, 1, 30)
+        listOf(
+            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 1, 1, 59)),
+            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 1, 12, 0)),
+            HistoryEntity(id = 0, lent = 1, createdAt = LocalDateTime.of(2026, 1, 1, 13, 0)),
+            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 2, 1, 0)),
+            HistoryEntity(id = 0, lent = 1, createdAt = LocalDateTime.of(2026, 1, 2, 1, 15))
+        ).forEach { historyDao.insert(entity = it) }
+        viewModel.getState()
+        viewModel.previousDay()
+
+        val state = viewModel.getMinimalState(now)
+
+        assertEquals(2, state.smokedToday)
+        assertEquals(LocalDateTime.of(2026, 1, 2, 1, 0), state.lastEntry?.createdAt)
+        assertEquals(120, state.dayEndMinutes)
+    }
+
+    @Test
+    fun minimalStateHandlesEmptyAndLentOnlyHistory() = runBlocking {
+        val now = LocalDateTime.of(2026, 1, 2, 12, 0)
+
+        assertEquals(null, viewModel.getMinimalState(now).lastEntry)
+        assertEquals(0, viewModel.getMinimalState(now).smokedToday)
+
+        historyDao.insert(entity = HistoryEntity(id = 0, lent = 1, createdAt = now.minusHours(1)))
+
+        assertEquals(null, viewModel.getMinimalState(now).lastEntry)
+        assertEquals(0, viewModel.getMinimalState(now).smokedToday)
     }
 
     private suspend fun insertHistory(): Triple<HistoryEntity, HistoryEntity, HistoryEntity> {
