@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
-            android:padding="8dp">
+            android:padding="16dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_add_cigarette"
@@ -67,7 +67,7 @@
                 android:maxLines="2"
                 android:minHeight="0dp"
                 android:padding="24dp"
-                android:text="@string/home_add_entry"
+                android:text="@string/home_add_cigarette"
                 android:textSize="32sp"
                 android:textStyle="bold"
                 app:cornerRadius="24dp"

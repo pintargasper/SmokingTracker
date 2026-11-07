@@ -68,7 +68,7 @@
                 android:maxLines="2"
                 android:minHeight="0dp"
                 android:padding="16dp"
-                android:text="@string/home_add_entry"
+                android:text="@string/home_add_cigarette"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:cornerRadius="24dp"
