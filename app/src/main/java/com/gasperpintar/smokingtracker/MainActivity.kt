@@ -164,8 +164,8 @@ class MainActivity : Base<ActivityMainBinding>(
         WorkManager.getInstance(context = this)
             .enqueueUniquePeriodicWork(
                 uniqueWorkName = "smoking_notification_work",
-                existingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.KEEP,
-                workRequest = workRequest
+                ExistingPeriodicWorkPolicy.KEEP,
+                workRequest
             )
     }
 }
