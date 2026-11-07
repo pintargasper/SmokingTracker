@@ -16,6 +16,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: read
 
 jobs:
   changes:
@@ -53,10 +54,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+      - name: Set up JDK ${{ vars.JAVA_VERSION || '21' }}
         uses: actions/setup-java@v6
         with:
-          java-version: ${{ vars.JAVA_VERSION }}
+          java-version: ${{ vars.JAVA_VERSION || '21' }}
           distribution: 'temurin'
           cache: 'gradle'
 
@@ -82,10 +83,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+      - name: Set up JDK ${{ vars.JAVA_VERSION || '21' }}
         uses: actions/setup-java@v6
         with:
-          java-version: ${{ vars.JAVA_VERSION }}
+          java-version: ${{ vars.JAVA_VERSION || '21' }}
           distribution: 'temurin'
           cache: 'gradle'
 
@@ -108,10 +109,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+      - name: Set up JDK ${{ vars.JAVA_VERSION || '21' }}
         uses: actions/setup-java@v6
         with:
-          java-version: ${{ vars.JAVA_VERSION }}
+          java-version: ${{ vars.JAVA_VERSION || '21' }}
           distribution: 'temurin'
           cache: 'gradle'
 
@@ -143,9 +144,9 @@ jobs:
           if [ "${{ github.event_name }}" = "schedule" ] ||
             [ "${{ github.event_name }}" = "workflow_dispatch" ] ||
             [ "${{ github.event_name }}" = "workflow_call" ]; then
-            echo 'matrix={"include":[{"name":"API ${{ vars.ANDROID_API_TARGET }}","api-level":${{ vars.ANDROID_API_TARGET }},"target":"aosp_atd"},{"name":"API ${{ vars.ANDROID_API_MIN }}","api-level":${{ vars.ANDROID_API_MIN }},"target":"default"}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"include":[{"name":"API ${{ vars.ANDROID_API_TARGET || '34' }}","api-level":${{ vars.ANDROID_API_TARGET || '34' }},"target":"aosp_atd"},{"name":"API ${{ vars.ANDROID_API_MIN || '26' }}","api-level":${{ vars.ANDROID_API_MIN || '26' }},"target":"default"}]}' >> "$GITHUB_OUTPUT"
           else
-            echo 'matrix={"include":[{"name":"API ${{ vars.ANDROID_API_TARGET }}","api-level":${{ vars.ANDROID_API_TARGET }},"target":"aosp_atd"}]}' >> "$GITHUB_OUTPUT"
+            echo 'matrix={"include":[{"name":"API ${{ vars.ANDROID_API_TARGET || '34' }}","api-level":${{ vars.ANDROID_API_TARGET || '34' }},"target":"aosp_atd"}]}' >> "$GITHUB_OUTPUT"
           fi
 
   androidTest:
@@ -173,7 +174,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: ${{ vars.PYTHON_VERSION }}
+          python-version: ${{ vars.PYTHON_VERSION || '3.14' }}
 
       - name: Install Python dependencies
         run: pip install openpyxl
@@ -181,10 +182,10 @@ jobs:
       - name: Generate dummy data
         run: python tools/scripts/dummy_data.py
 
-      - name: Set up JDK ${{ vars.JAVA_VERSION }}
+      - name: Set up JDK ${{ vars.JAVA_VERSION || '21' }}
         uses: actions/setup-java@v6
         with:
-          java-version: ${{ vars.JAVA_VERSION }}
+          java-version: ${{ vars.JAVA_VERSION || '21' }}
           distribution: 'temurin'
           cache: 'gradle'
 
