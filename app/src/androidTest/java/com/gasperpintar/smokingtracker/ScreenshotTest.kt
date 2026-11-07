@@ -76,37 +76,37 @@ class ScreenshotTest {
             scenario.recreate()
             captureScreenshot(name = "1")
 
-            listOf("2", "3", "4").forEach {
+            listOf("2", "3", "4", "5").forEach {
                 onView(withId(R.id.main_view_pager)).perform(swipeLeft())
-                captureScreenshot(name = it, delayMs = if (it == "2") 10_000 else 1_500)
+                captureScreenshot(name = it, delayMs = if (it == "3") 10_000 else 1_500)
             }
 
             openSubFragment(scenario = scenario, fragment = StatisticsFragment())
-            captureScreenshot(name = "5", delayMs = 3_000)
+            captureScreenshot(name = "6", delayMs = 3_000)
 
             onView(withId(R.id.statistics_view_pager)).perform(swipeLeft())
-            captureScreenshot(name = "6", delayMs = 10_000)
+            captureScreenshot(name = "7", delayMs = 10_000)
 
             openSubFragment(scenario = scenario, fragment = AchievementFragment())
-            captureScreenshot(name = "7")
-
-            onView(withId(R.id.achievements_view_pager)).perform(swipeLeft())
             captureScreenshot(name = "8")
 
-            openSubFragment(scenario = scenario, fragment = CalculatorFragment())
+            onView(withId(R.id.achievements_view_pager)).perform(swipeLeft())
             captureScreenshot(name = "9")
 
-            openSubFragment(scenario = scenario, fragment = NotesFragment())
+            openSubFragment(scenario = scenario, fragment = CalculatorFragment())
             captureScreenshot(name = "10")
+
+            openSubFragment(scenario = scenario, fragment = NotesFragment())
+            captureScreenshot(name = "11")
 
             runCatching {
                 onView(withId(R.id.recyclerview_notes))
                     .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-                captureScreenshot(name = "11")
+                captureScreenshot(name = "12")
             }
 
             openSubFragment(scenario = scenario, fragment = AboutFragment())
-            captureScreenshot(name = "12", delayMs = 3_000)
+            captureScreenshot(name = "13", delayMs = 3_000)
         }
     }
 
