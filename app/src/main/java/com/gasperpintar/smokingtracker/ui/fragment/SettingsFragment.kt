@@ -27,6 +27,7 @@ import com.gasperpintar.smokingtracker.provider.StatsWidget
 import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
@@ -114,6 +115,17 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             }
         }
 
+        elapsedTimeWarningLayout.setOnClickListener {
+            DialogManager.showElapsedTimeWarningDialog(
+                context = requireActivity(),
+                warningMinutes = ElapsedTimeSettings.getWarningMinutes(requireContext())
+            ) { warningMinutes ->
+                if (ElapsedTimeSettings.setWarningMinutes(requireContext(), warningMinutes)) {
+                    elapsedTimeWarningValue.text = getString(R.string.settings_elapsed_time_warning_value, warningMinutes)
+                }
+            }
+        }
+
         widgetsLayout.setOnClickListener {
             DialogManager.showWidgetsDialog(context = requireActivity()) { widget ->
                 val appWidgetManager = AppWidgetManager.getInstance(requireContext())
@@ -169,6 +181,10 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             .getOrElse(index = resources.getStringArray(R.array.language_values)
                 .indexOf(state.settings.language)
             ) { "system" }
+        elapsedTimeWarningValue.text = getString(
+            R.string.settings_elapsed_time_warning_value,
+            ElapsedTimeSettings.getWarningMinutes(requireContext())
+        )
     }
 
     private fun setupDataManagement() = binding.apply {

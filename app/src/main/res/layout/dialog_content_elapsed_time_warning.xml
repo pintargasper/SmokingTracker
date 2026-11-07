@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/warning_minutes_input_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/settings_elapsed_time_warning_minutes_hint"
+    style="?appTextInputLayoutStyle">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/input_warning_minutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="none"
+        android:inputType="number"
+        android:maxLength="5"
+        android:selectAllOnFocus="true"
+        style="?appEditTextStyle" />
+
+</com.google.android.material.textfield.TextInputLayout>

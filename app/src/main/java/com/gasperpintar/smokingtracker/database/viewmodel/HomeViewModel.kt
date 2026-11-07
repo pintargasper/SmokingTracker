@@ -1,13 +1,24 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.HomeState
+import com.gasperpintar.smokingtracker.database.viewmodel.state.MinimalHomeState
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.TimeHelper
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -20,6 +31,13 @@ class HomeViewModel(
     private var selectedDate: LocalDate? = null
     private var endMinutes: Int? = null
     private var lastEntry: HistoryEntity? = null
+    private val insertMutex = Mutex()
+    private val _isAdding = MutableStateFlow(false)
+    private val _addEvents = MutableSharedFlow<Boolean>(extraBufferCapacity = 1)
+
+    val historyChanges = historyRepository.changes
+    val isAdding: StateFlow<Boolean> = _isAdding.asStateFlow()
+    val addEvents: SharedFlow<Boolean> = _addEvents.asSharedFlow()
 
     fun previousDay() {
         selectedDate = selectedDate!!.minusDays(1)
@@ -42,7 +60,6 @@ class HomeViewModel(
         }
         lastEntry = historyRepository.getLast()
 
-
         val (startOfDay, endOfDay) = TimeHelper.getDay(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
         val historyEntities = historyRepository.getBetween(start = startOfDay, end = endOfDay)
 
@@ -63,6 +80,35 @@ class HomeViewModel(
             weeklyCount = weeklyCount,
             monthlyCount = monthlyCount
         )
+    }
+
+    suspend fun getMinimalState(now: LocalDateTime = LocalDateTime.now()): MinimalHomeState {
+        val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
+        val today = TimeHelper.dayDate(dateTime = now, dayEndMinutes = dayEndMinutes)
+        val (startOfDay, endOfDay) = TimeHelper.getDay(date = today, dayEndMinutes = dayEndMinutes)
+        return MinimalHomeState(
+            lastEntry = historyRepository.getLast(),
+            smokedToday = historyRepository.getSmokedCountBetween(start = startOfDay, end = endOfDay),
+            dayEndMinutes = dayEndMinutes
+        )
+    }
+
+    fun insertNow() {
+        if (!insertMutex.tryLock()) return
+        viewModelScope.launch {
+            _isAdding.value = true
+            try {
+                insert(isLent = false)
+                _addEvents.emit(true)
+            } catch (cancelled: CancellationException) {
+                throw cancelled
+            } catch (_: Exception) {
+                _addEvents.emit(false)
+            } finally {
+                _isAdding.value = false
+                insertMutex.unlock()
+            }
+        }
     }
 
     suspend fun insert(

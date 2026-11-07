@@ -25,6 +25,7 @@ import com.gasperpintar.smokingtracker.databinding.DialogContentCostsBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentCurrencyBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentDatePickerBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentEditBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentElapsedTimeWarningBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentEndDayBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentInsertBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentLanguageBinding
@@ -36,6 +37,7 @@ import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.ui.container.ContainerManager
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper.toLocalDate
@@ -189,6 +191,31 @@ object DialogManager {
 
         binding.confirm.setOnClickListener {
             onSuccess(content.timePicker.hour * 60 + content.timePicker.minute)
+            dismiss()
+        }
+    }
+
+    fun showElapsedTimeWarningDialog(
+        context: FragmentActivity,
+        warningMinutes: Int,
+        onSuccess: (Int) -> Unit
+    ) = BaseDialog.show(context = context, inflate = DialogContentElapsedTimeWarningBinding::inflate) { content ->
+        binding.title.setText(R.string.settings_general_elapsed_time_warning)
+        binding.message.setText(R.string.settings_general_elapsed_time_warning_description)
+        binding.confirm.isVisible = true
+
+        content.inputWarningMinutes.setText(warningMinutes.toString())
+        content.inputWarningMinutes.setSelection(content.inputWarningMinutes.text?.length ?: 0)
+
+        binding.confirm.setOnClickListener {
+            val minutes = content.inputWarningMinutes.text.toString().toIntOrNull()
+            if (minutes == null || minutes !in ElapsedTimeSettings.MIN_WARNING_MINUTES..ElapsedTimeSettings.MAX_WARNING_MINUTES) {
+                content.warningMinutesInputLayout.error = context.getString(R.string.settings_elapsed_time_warning_error)
+                return@setOnClickListener
+            }
+
+            content.warningMinutesInputLayout.error = null
+            onSuccess(minutes)
             dismiss()
         }
     }

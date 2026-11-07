@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="navigation_advanced">Advanced</string>
+    <string name="home_elapsed_time_label">Time since your last cigarette</string>
+    <string name="home_add_cigarette">Add cigarette</string>
+    <string name="home_cigarettes_today">Cigarettes today</string>
+    <string name="home_no_smoked_entries">No cigarette recorded yet</string>
+    <string name="home_add_success">Cigarette added</string>
+    <string name="home_add_error">Could not add the cigarette. Please try again.</string>
+    <string name="home_load_error">Could not load your data. Please try again.</string>
+    <string name="settings_general_elapsed_time_warning">Elapsed-time warning</string>
+    <string name="settings_general_elapsed_time_warning_description">Highlight the Minimal Home timer when it reaches this limit</string>
+    <string name="settings_elapsed_time_warning_value">%1$d min</string>
+    <string name="settings_elapsed_time_warning_minutes_hint">Minutes (1–10,080)</string>
+    <string name="settings_elapsed_time_warning_error">Enter a value from 1 to 10,080 minutes.</string>
+</resources>
