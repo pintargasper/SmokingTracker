@@ -156,7 +156,7 @@ class MappersTest {
         }
 
         val (row, column) = row(headers = listOf("Language"), values = listOf(42))
-        assertEquals("system", Mappers.parseSettings(row, column))
+        assertEquals("system", Mappers.parseSettings(row, column).language)
     }
 
     @Test
