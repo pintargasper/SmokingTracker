@@ -437,7 +437,6 @@ object DialogManager {
         formatTime: (Int) -> String
     ) = BaseDialog.show(context = context, inflate = DialogContentResultBinding::inflate) { content ->
         binding.message.isGone = true
-        binding.title.isGone = true
         binding.title.setText(R.string.calculator_result)
 
         val (result, currencyUnit) = values
@@ -459,6 +458,7 @@ object DialogManager {
 
         content.totalCosts.text = formatPrice(total, decimalFormatTwo)
         content.costPerCigarette.text = formatPrice(averageCostPerCigarette, decimalFormatThree)
+        content.averageCostPerHour.text = formatPrice(averageCost, decimalFormatTwo)
         content.timeSpent.text = formatTime(totalTimeMinutes)
     }
 
