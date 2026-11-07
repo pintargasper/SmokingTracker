@@ -20,6 +20,7 @@ import com.gasperpintar.smokingtracker.database.repository.NotificationsSettings
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import com.gasperpintar.smokingtracker.utils.manager.Mappers
 import kotlinx.coroutines.runBlocking
@@ -59,10 +60,12 @@ class ManagerTest {
             NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
         costsRepository = CostsRepository(costDao = database.costsDao())
         notesRepository = NotesRepository(notesDao = database.notesDao())
+        ElapsedTimeSettings.setWarningMinutes(context, ElapsedTimeSettings.DEFAULT_WARNING_MINUTES)
     }
 
     @After
     fun teardown() {
+        ElapsedTimeSettings.setWarningMinutes(context, ElapsedTimeSettings.DEFAULT_WARNING_MINUTES)
         TestProvider.closeDatabase()
     }
 
@@ -70,6 +73,7 @@ class ManagerTest {
     fun backupDataToWorkbook() {
         runBlocking {
             val (file, uri) = temporaryFile()
+            ElapsedTimeSettings.setWarningMinutes(context, 120)
 
             backup(fileUri = uri)
 
@@ -77,7 +81,16 @@ class ManagerTest {
             assertTrue(file.length() > 0)
 
             FileInputStream(file).use { XSSFWorkbook(it).use { workbook ->
-                assertTrue(workbook.numberOfSheets > 0)
+                assertEquals(
+                    listOf("History", "Achievements", "Costs", "Notes", "Settings", "NotificationsSettings", "AdditionalSettings"),
+                    (0 until workbook.numberOfSheets).map(workbook::getSheetName)
+                )
+                val additionalSettings = workbook.getSheet("AdditionalSettings")
+                assertEquals(
+                    Mappers.ADDITIONAL_SETTINGS_HEADERS.single(),
+                    additionalSettings.getRow(0).getCell(0).stringCellValue
+                )
+                assertEquals(120.0, additionalSettings.getRow(1).getCell(0).numericCellValue, 0.0)
             }}
             file.delete()
         }
@@ -156,16 +169,46 @@ class ManagerTest {
             notificationsRepository.insert(
                 settings = NotificationsSettingsEntity(id = 0, system = false, achievements = true, progress = false)
             )
+            ElapsedTimeSettings.setWarningMinutes(context, 240)
 
             val expected = snapshot()
             val (file, uri) = temporaryFile()
 
             backup(fileUri = uri)
             clearDatabase()
+            ElapsedTimeSettings.setWarningMinutes(context, ElapsedTimeSettings.DEFAULT_WARNING_MINUTES)
             restore(fileUri = uri)
 
             assertEquals(expected, snapshot())
             file.delete()
+        }
+    }
+
+    @Test
+    fun restoreFromLegacySixSheetWorkbookPreservesAdditionalSettings() {
+        runBlocking {
+            ElapsedTimeSettings.setWarningMinutes(context, 120)
+
+            restore(fileUri = uploadWorkbook())
+
+            assertEquals(120, ElapsedTimeSettings.getWarningMinutes(context))
+        }
+    }
+
+    @Test
+    fun restoreImportsOptionalAdditionalSettingsSheet() {
+        runBlocking {
+            val fileUri = writeWorkbook { workbook ->
+                workbook.sheet(
+                    name = "AdditionalSettings",
+                    headers = Mappers.ADDITIONAL_SETTINGS_HEADERS,
+                    values = listOf(1_440)
+                )
+            }
+
+            restore(fileUri = fileUri)
+
+            assertEquals(1_440, ElapsedTimeSettings.getWarningMinutes(context))
         }
     }
 
@@ -259,7 +302,8 @@ class ManagerTest {
             costsRepository.getAll().map { it.copy(id = 0) },
             notesRepository.getAll().map { it.copy(id = 0) },
             settingsRepository.get()?.copy(id = 0),
-            notificationsRepository.get()?.copy(id = 0)
+            notificationsRepository.get()?.copy(id = 0),
+            ElapsedTimeSettings.getWarningMinutes(context)
         )
     }
 
