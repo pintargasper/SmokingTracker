@@ -80,7 +80,7 @@ class MinimalHomeFragmentTest {
 
             scenario.onActivity { activity ->
                 val menu = activity.findViewById<BottomNavigationView>(R.id.nav_view).menu
-                val actualIds = (0 until menu.size).map { menu.getItem(it).itemId }
+                val actualIds = (0 until menu.size()).map { menu.getItem(it).itemId }
                 assertEquals(
                     listOf(
                         R.id.navigation_minimal_home,
