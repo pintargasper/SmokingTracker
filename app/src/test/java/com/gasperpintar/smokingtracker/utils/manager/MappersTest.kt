@@ -14,6 +14,7 @@ import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getHeaderColumnMap
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.import
+import com.gasperpintar.smokingtracker.utils.manager.Mappers.toAdditionalSettingsExcelRow
 import com.gasperpintar.smokingtracker.utils.manager.Mappers.toExcelRow
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -155,7 +156,7 @@ class MappersTest {
         }
 
         val (row, column) = row(headers = listOf("Language"), values = listOf(42))
-        assertEquals("system", Mappers.parseSettings(row, column).language)
+        assertEquals("system", Mappers.parseSettings(row, column))
     }
 
     @Test
@@ -177,6 +178,30 @@ class MappersTest {
     }
 
     @Test
+    fun additionalSettingsRoundTripIsCorrect() {
+        val actual = roundTrip(
+            headers = Mappers.ADDITIONAL_SETTINGS_HEADERS,
+            data = listOf(120),
+            mapper = { it.toAdditionalSettingsExcelRow() }
+        ) { row, column, _ ->
+            Mappers.parseAdditionalSettings(row, column)
+        }
+
+        assertEquals(listOf(120), actual)
+    }
+
+    @Test
+    fun additionalSettingsRejectsValuesOutsideSupportedRange() {
+        listOf(0, 10_081).forEach { value ->
+            val (row, column) = row(
+                headers = Mappers.ADDITIONAL_SETTINGS_HEADERS,
+                values = listOf(value)
+            )
+            assertNull(Mappers.parseAdditionalSettings(row, column))
+        }
+    }
+
+    @Test
     fun headersMatchExportedColumns() {
         assertEquals(Mappers.HISTORY_HEADERS.size, HistoryEntity(id = 0, lent = 0, createdAt = createdAt).toExcelRow(formatter).size)
         assertEquals(Mappers.ACHIEVEMENTS_HEADERS.size, achievement(index = 0).toExcelRow(formatter).size)
@@ -184,6 +209,7 @@ class MappersTest {
         assertEquals(Mappers.NOTES_HEADERS.size, NoteEntity(id = 0, title = "", content = "", mood = 3, createdAt = createdAt, updatedAt = createdAt).toExcelRow(formatter).size)
         assertEquals(Mappers.SETTINGS_HEADERS.size, SettingsEntity.default().toExcelRow().size)
         assertEquals(Mappers.NOTIF_SETTINGS_HEADERS.size, NotificationsSettingsEntity.default().toExcelRow().size)
+        assertEquals(Mappers.ADDITIONAL_SETTINGS_HEADERS.size, 60.toAdditionalSettingsExcelRow().size)
     }
 
     private fun <T, R> roundTrip(

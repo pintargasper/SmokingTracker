@@ -11,6 +11,7 @@ import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.parseDateTime
 import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.usermodel.Row
@@ -24,6 +25,7 @@ object Mappers {
     val NOTES_HEADERS = listOf("Title", "Content", "Mood", "CreatedAt", "UpdatedAt")
     val SETTINGS_HEADERS = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency", "DayEndMinutes")
     val NOTIF_SETTINGS_HEADERS = listOf("System", "Achievements", "Progress")
+    val ADDITIONAL_SETTINGS_HEADERS = listOf("ElapsedTimeWarningMinutes")
 
     fun parseHistory(
         row: Row,
@@ -119,6 +121,16 @@ object Mappers {
         )
     }
 
+    fun parseAdditionalSettings(
+        row: Row,
+        col: Map<String, Int>
+    ): Int? {
+        val minutes = col["ElapsedTimeWarningMinutes"]?.let { index ->
+            row.getCell(index)?.numericCellValue?.toInt()
+        } ?: return null
+        return minutes.takeIf { it in ElapsedTimeSettings.MIN_WARNING_MINUTES..ElapsedTimeSettings.MAX_WARNING_MINUTES }
+    }
+
     fun HistoryEntity.toExcelRow(formatter: DateTimeFormatter): List<Any?> {
         return listOf(lent, createdAt.format(formatter))
     }
@@ -141,5 +153,9 @@ object Mappers {
 
     fun NotificationsSettingsEntity.toExcelRow(): List<Any?> {
         return listOf(system, achievements, progress)
+    }
+
+    fun Int.toAdditionalSettingsExcelRow(): List<Any?> {
+        return listOf(this)
     }
 }
