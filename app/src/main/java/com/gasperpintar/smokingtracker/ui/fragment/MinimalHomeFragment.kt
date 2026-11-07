@@ -1,5 +1,6 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
+import android.content.res.ColorStateList
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -10,8 +11,10 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentMinimalHomeBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -35,9 +38,12 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
     private var dayEndMinutes = 0
     private var currentDay: LocalDate? = null
     private var refreshJob: Job? = null
+    private var warningMinutes = ElapsedTimeSettings.DEFAULT_WARNING_MINUTES
+    private lateinit var defaultTimerTextColors: ColorStateList
 
     @Override
     override fun initialize() {
+        defaultTimerTextColors = binding.timerLabel.textColors
         binding.buttonAddCigarette.setOnClickListener { viewModel.insertNow() }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -88,6 +94,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
                 val state = viewModel.getMinimalState()
                 lastEntry = state.lastEntry
                 dayEndMinutes = state.dayEndMinutes
+                warningMinutes = ElapsedTimeSettings.getWarningMinutes(requireContext())
                 currentDay = TimeHelper.dayDate(LocalDateTime.now(), dayEndMinutes)
                 binding.todayCount.text = state.smokedToday.toString()
                 updateElapsedTime(LocalDateTime.now())
@@ -110,6 +117,14 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
             getString(R.string.home_no_smoked_entries)
         } else {
             TimeHelper.formatDuration(resources = resources, duration = duration)
+        }
+        val showWarning = duration?.let { ElapsedTimeSettings.isWarningElapsed(it, warningMinutes) } == true
+        if (showWarning) {
+            binding.timerLabel.setTextColor(
+                MaterialColors.getColor(binding.timerLabel, com.google.android.material.R.attr.colorError)
+            )
+        } else {
+            binding.timerLabel.setTextColor(defaultTimerTextColors)
         }
     }
 }
