@@ -241,6 +241,60 @@
             style="?appCardStyle">
 
             <LinearLayout
+                android:id="@+id/elapsed_time_warning_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="55dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="5dp"
+                android:paddingEnd="12dp"
+                android:paddingVertical="12dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="5dp"
+                    android:contentDescription="@string/settings_general_elapsed_time_warning"
+                    android:src="@drawable/history_48px"
+                    style="?appImageStyle" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:text="@string/settings_general_elapsed_time_warning"
+                        style="?appSubtitleStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/elapsed_time_warning_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="60 min"
+                        style="?appBodyStyle" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="5dp"
+            style="?appCardStyle">
+
+            <LinearLayout
                 android:id="@+id/widgets_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -784,6 +838,7 @@
                     android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
+                        style="?appSubtitleStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
@@ -791,10 +846,10 @@
                         style="?appSubtitleStyle" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        style="?appBodyStyle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings_support_privacy_policy_description"
-                        style="?appBodyStyle" />
+                        android:text="@string/settings_support_privacy_policy_description" />
 
                 </LinearLayout>
 
