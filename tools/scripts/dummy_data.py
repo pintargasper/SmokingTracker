@@ -319,7 +319,9 @@ def generate_settings() -> dict:
         "Frequency": randint(0, 2),
         "Currency": "€",
         "CustomCurrency": "",
-        "DayEndMinutes": 0
+        "DayEndMinutes": 0,
+        "ElapsedTimeWarningMinutes": 420,
+        "colorScheme": "SYSTEM",
     }
 
 

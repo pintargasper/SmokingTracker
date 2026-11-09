@@ -20,6 +20,7 @@ import com.gasperpintar.smokingtracker.database.repository.NotificationsSettings
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.type.ColorScheme
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import com.gasperpintar.smokingtracker.utils.manager.Mappers
 import kotlinx.coroutines.runBlocking
@@ -161,11 +162,22 @@ class ManagerTest {
                 )
             )
             settingsRepository.insert(
-                settings = SettingsEntity(id = 0, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90, elapsedTimeWarningMinutes = 240)
+                settings = SettingsEntity(
+                    id = 0, theme = 2,
+                    language = "sl",
+                    frequency = 1,
+                    currency = "$",
+                    customCurrency = "CHF",
+                    dayEndMinutes = 90,
+                    elapsedTimeWarningMinutes = 240,
+                    colorScheme = ColorScheme.SYSTEM.name
+                )
             )
-            notificationsRepository.insert(
-                settings = NotificationsSettingsEntity(id = 0, system = false, achievements = true, progress = false)
-            )
+            notificationsRepository.insert(settings = NotificationsSettingsEntity(
+                id = 0, system = false,
+                achievements = true,
+                progress = false
+            ))
             val expected = snapshot()
             val (file, uri) = temporaryFile()
 
@@ -181,9 +193,7 @@ class ManagerTest {
     @Test
     fun restoreFromLegacySettingsSheetPreservesElapsedTimeWarning() {
         runBlocking {
-            settingsRepository.insert(
-                settings = SettingsEntity.default().copy(elapsedTimeWarningMinutes = 120)
-            )
+            settingsRepository.insert(settings = SettingsEntity.default().copy(elapsedTimeWarningMinutes = 120))
 
             restore(fileUri = uploadWorkbook())
 
@@ -337,7 +347,7 @@ class ManagerTest {
 
             workbook.sheet(name = "Costs", headers = Mappers.COSTS_HEADERS, values = listOf(4.5, "2026-01-01 00:00:00", "2026-01-02 00:00:00"))
             workbook.sheet(name = "Notes", headers = Mappers.NOTES_HEADERS, values = listOf("Test", "Smoking note", 3, "2026-01-01 10:00:00", "2026-01-01 11:00:00"))
-            workbook.sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS.dropLast(1), values = listOf(1, 2, 5, "€", "", 0))
+            workbook.sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS.dropLast(1), values = listOf(1, 2, 5, "€", "", 0, 120, ColorScheme.SYSTEM.name))
             workbook.sheet(name = "NotificationsSettings", headers = Mappers.NOTIF_SETTINGS_HEADERS, values = listOf(true, true, false))
         }
     }

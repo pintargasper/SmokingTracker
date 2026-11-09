@@ -120,14 +120,18 @@ class MinimalHomeFragmentTest {
             onView(withId(R.id.input_warning_minutes)).perform(replaceText("0"), closeSoftKeyboard())
             onView(withId(R.id.confirm)).perform(click())
             assertEquals(0, awaitElapsedTimeWarning(expected = 0))
-            onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText("0 min")))
+            onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText(
+                context.resources.getQuantityString(R.plurals.time_minutes, 0, 0)
+            )))
 
             onView(withId(R.id.elapsed_time_warning_layout)).perform(scrollTo(), click())
             onView(withId(R.id.input_warning_minutes)).perform(replaceText("120"), closeSoftKeyboard())
             onView(withId(R.id.confirm)).perform(click())
 
             assertEquals(120, awaitElapsedTimeWarning(expected = 120))
-            onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText("120 min")))
+            onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText(
+                context.resources.getQuantityString(R.plurals.time_minutes, 120, 120)
+            )))
         }
     }
 
