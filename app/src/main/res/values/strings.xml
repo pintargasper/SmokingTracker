@@ -85,7 +85,7 @@
     <string name="achievement_congrats_six_days_message">Fantastic! Your effort is paying off, keep going</string>
     <string name="achievement_congrats_one_week_message">Outstanding! You have reached a major milestone</string>
     <string name="achievement_congrats_two_weeks_message">Excellent! Two weeks of dedication is no small feat</string>
-    <string name="achievement_congrats_three_weeks_message">Incredible! Your consistency shows your determination</string>
+    <string name="achievement_congrats_three_weeks_message">Incredible! Three weeks of consistency shows your determination</string>
     <string name="achievement_congrats_one_month_message">Fantastic! One month of dedication shows real commitment</string>
     <string name="achievement_congrats_three_months_message">Your consistency and effort are building unstoppable momentum</string>
     <string name="achievement_congrats_six_months_message">Half a year of perseverance proves your determination and resilience are unmatched</string>
@@ -100,8 +100,8 @@
     <string name="achievement_congrats_twenty_message">Great start! Every effort is paving the way to victory</string>
     <string name="achievement_congrats_two_hundred_message">Strong progress! Your focus is building unstoppable momentum</string>
     <string name="achievement_congrats_four_hundred_message">Remarkable! Your persistence is truly paying off</string>
-    <string name="achievement_congrats_six_hundred_message">Exceptional work! Your determination is making a real difference</string>
-    <string name="achievement_congrats_eight_hundred_message">Incredible! Your determination and resilience are unmatched</string>
+    <string name="achievement_congrats_six_hundred_message">Exceptional work! You are mastering the journey step by step</string>
+    <string name="achievement_congrats_eight_hundred_message">Incredible! Your determination is making a real difference</string>
     <string name="achievement_congrats_thousand_message">Legendary achievement! Your dedication and resilience are unmatched</string>
 
     <string name="calculator_per_day">Cigarettes per day</string>
