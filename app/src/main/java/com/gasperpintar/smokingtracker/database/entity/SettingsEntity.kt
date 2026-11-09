@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 
 @Entity(tableName = "settings")
 data class SettingsEntity(
@@ -20,7 +21,10 @@ data class SettingsEntity(
     val customCurrency: String,
 
     @ColumnInfo(defaultValue = "0")
-    val dayEndMinutes: Int
+    val dayEndMinutes: Int,
+
+    @ColumnInfo(defaultValue = "60")
+    val elapsedTimeWarningMinutes: Int
 ) {
     companion object {
         fun default(
@@ -34,7 +38,8 @@ data class SettingsEntity(
                 frequency = 0,
                 currency = currency,
                 customCurrency = "",
-                dayEndMinutes = 0
+                dayEndMinutes = 0,
+                elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
             )
         }
     }
