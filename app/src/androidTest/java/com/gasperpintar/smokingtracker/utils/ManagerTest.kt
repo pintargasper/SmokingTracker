@@ -70,6 +70,9 @@ class ManagerTest {
     fun backupDataToWorkbook() {
         runBlocking {
             val (file, uri) = temporaryFile()
+            settingsRepository.insert(
+                settings = SettingsEntity.default().copy(elapsedTimeWarningMinutes = 120)
+            )
 
             backup(fileUri = uri)
 
@@ -77,7 +80,14 @@ class ManagerTest {
             assertTrue(file.length() > 0)
 
             FileInputStream(file).use { XSSFWorkbook(it).use { workbook ->
-                assertTrue(workbook.numberOfSheets > 0)
+                assertEquals(
+                    listOf("History", "Achievements", "Costs", "Notes", "Settings", "NotificationsSettings"),
+                    (0 until workbook.numberOfSheets).map(workbook::getSheetName)
+                )
+                val settings = workbook.getSheet("Settings")
+                val warningColumn = Mappers.SETTINGS_HEADERS.indexOf("ElapsedTimeWarningMinutes")
+                assertEquals("ElapsedTimeWarningMinutes", settings.getRow(0).getCell(warningColumn).stringCellValue)
+                assertEquals(120.0, settings.getRow(1).getCell(warningColumn).numericCellValue, 0.0)
             }}
             file.delete()
         }
@@ -151,12 +161,11 @@ class ManagerTest {
                 )
             )
             settingsRepository.insert(
-                settings = SettingsEntity(id = 0, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90)
+                settings = SettingsEntity(id = 0, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90, elapsedTimeWarningMinutes = 240)
             )
             notificationsRepository.insert(
                 settings = NotificationsSettingsEntity(id = 0, system = false, achievements = true, progress = false)
             )
-
             val expected = snapshot()
             val (file, uri) = temporaryFile()
 
@@ -166,6 +175,36 @@ class ManagerTest {
 
             assertEquals(expected, snapshot())
             file.delete()
+        }
+    }
+
+    @Test
+    fun restoreFromLegacySettingsSheetPreservesElapsedTimeWarning() {
+        runBlocking {
+            settingsRepository.insert(
+                settings = SettingsEntity.default().copy(elapsedTimeWarningMinutes = 120)
+            )
+
+            restore(fileUri = uploadWorkbook())
+
+            assertEquals(120, settingsRepository.get()?.elapsedTimeWarningMinutes)
+        }
+    }
+
+    @Test
+    fun restoreImportsElapsedTimeWarningFromSettingsSheet() {
+        runBlocking {
+            val fileUri = writeWorkbook { workbook ->
+                workbook.sheet(
+                    name = "Settings",
+                    headers = Mappers.SETTINGS_HEADERS,
+                    values = listOf(1, "en", 0, "€", "", 0, 1_440)
+                )
+            }
+
+            restore(fileUri = fileUri)
+
+            assertEquals(1_440, settingsRepository.get()?.elapsedTimeWarningMinutes)
         }
     }
 
@@ -298,7 +337,7 @@ class ManagerTest {
 
             workbook.sheet(name = "Costs", headers = Mappers.COSTS_HEADERS, values = listOf(4.5, "2026-01-01 00:00:00", "2026-01-02 00:00:00"))
             workbook.sheet(name = "Notes", headers = Mappers.NOTES_HEADERS, values = listOf("Test", "Smoking note", 3, "2026-01-01 10:00:00", "2026-01-01 11:00:00"))
-            workbook.sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS, values = listOf(1, 2, 5, "€", ""))
+            workbook.sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS.dropLast(1), values = listOf(1, 2, 5, "€", "", 0))
             workbook.sheet(name = "NotificationsSettings", headers = Mappers.NOTIF_SETTINGS_HEADERS, values = listOf(true, true, false))
         }
     }

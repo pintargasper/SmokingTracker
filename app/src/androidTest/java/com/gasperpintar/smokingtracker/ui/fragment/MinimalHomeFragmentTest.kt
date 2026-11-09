@@ -5,6 +5,9 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.closeSoftKeyboard
+import androidx.test.espresso.action.ViewActions.replaceText
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -18,6 +21,7 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -32,6 +36,7 @@ class MinimalHomeFragmentTest {
 
     private lateinit var context: Context
     private lateinit var historyRepository: HistoryRepository
+    private lateinit var settingsRepository: SettingsRepository
 
     @Before
     fun setup() = runBlocking {
@@ -39,10 +44,12 @@ class MinimalHomeFragmentTest {
         val database = Provider.getDatabase(context)
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         historyRepository.deleteAll()
-        val settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+        settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
         settingsRepository.upsert(
-            settingsRepository.get()?.copy(dayEndMinutes = 0)
-                ?: SettingsEntity.default().copy(dayEndMinutes = 0)
+            settingsRepository.get()?.copy(
+                dayEndMinutes = 0,
+                elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
+            ) ?: SettingsEntity.default().copy(dayEndMinutes = 0)
         )
         context.getSharedPreferences("settings", Context.MODE_PRIVATE)
             .edit()
@@ -98,6 +105,30 @@ class MinimalHomeFragmentTest {
             onView(withId(R.id.button_add_entry)).check(matches(isDisplayed()))
         }
     }
+    @Test
+    fun elapsedTimeThresholdSupportsDisablingAndPersistsValidValue() {
+        ActivityScenario.launch(MainActivity::class.java).use {
+            onView(withId(R.id.navigation_settings)).perform(click())
+            onView(withId(R.id.elapsed_time_warning_layout)).perform(scrollTo(), click())
+
+            onView(withId(R.id.input_warning_minutes)).perform(replaceText("10081"), closeSoftKeyboard())
+            onView(withId(R.id.confirm)).perform(click())
+            onView(withId(R.id.input_warning_minutes)).check(matches(isDisplayed()))
+            assertEquals(60, runBlocking { settingsRepository.get()!!.elapsedTimeWarningMinutes })
+
+            onView(withId(R.id.input_warning_minutes)).perform(replaceText("0"), closeSoftKeyboard())
+            onView(withId(R.id.confirm)).perform(click())
+            assertEquals(0, awaitElapsedTimeWarning(expected = 0))
+            onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText("0 min")))
+
+            onView(withId(R.id.elapsed_time_warning_layout)).perform(scrollTo(), click())
+            onView(withId(R.id.input_warning_minutes)).perform(replaceText("120"), closeSoftKeyboard())
+            onView(withId(R.id.confirm)).perform(click())
+
+            assertEquals(120, awaitElapsedTimeWarning(expected = 120))
+            onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText("120 min")))
+        }
+    }
 
     private fun awaitEntries(): List<HistoryEntity> {
         val deadline = System.currentTimeMillis() + 5_000
@@ -107,5 +138,15 @@ class MinimalHomeFragmentTest {
             Thread.sleep(100)
         }
         return runBlocking { historyRepository.getAll() }
+    }
+
+    private fun awaitElapsedTimeWarning(expected: Int): Int? {
+        val deadline = System.currentTimeMillis() + 5_000
+        while (System.currentTimeMillis() < deadline) {
+            val actual = runBlocking { settingsRepository.get()?.elapsedTimeWarningMinutes }
+            if (actual == expected) return actual
+            Thread.sleep(100)
+        }
+        return runBlocking { settingsRepository.get()?.elapsedTimeWarningMinutes }
     }
 }

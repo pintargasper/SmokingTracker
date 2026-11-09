@@ -114,6 +114,19 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             }
         }
 
+        elapsedTimeWarningLayout.setOnClickListener {
+            DialogManager.showElapsedTimeWarningDialog(
+                context = requireActivity(),
+                warningMinutes = state.settings.elapsedTimeWarningMinutes
+            ) { warningMinutes ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    state.settings = state.settings.copy(elapsedTimeWarningMinutes = warningMinutes)
+                    viewModel.updateSettings(state.settings)
+                    elapsedTimeWarningValue.text = getString(R.string.settings_elapsed_time_warning_value, warningMinutes)
+                }
+            }
+        }
+
         widgetsLayout.setOnClickListener {
             DialogManager.showWidgetsDialog(context = requireActivity()) { widget ->
                 val appWidgetManager = AppWidgetManager.getInstance(requireContext())
@@ -169,6 +182,10 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             .getOrElse(index = resources.getStringArray(R.array.language_values)
                 .indexOf(state.settings.language)
             ) { "system" }
+        elapsedTimeWarningValue.text = getString(
+            R.string.settings_elapsed_time_warning_value,
+            state.settings.elapsedTimeWarningMinutes
+        )
     }
 
     private fun setupDataManagement() = binding.apply {

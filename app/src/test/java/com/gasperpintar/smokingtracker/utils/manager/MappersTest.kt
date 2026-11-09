@@ -82,7 +82,7 @@ class MappersTest {
 
     @Test
     fun settingsRoundTripIsCorrect() {
-        val entity = SettingsEntity(id = 1, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90)
+        val entity = SettingsEntity(id = 1, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90, elapsedTimeWarningMinutes = 120)
 
         val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
             Mappers.parseSettings(row, column)
@@ -162,7 +162,7 @@ class MappersTest {
     fun parseSettingsUsesDefaultsForColumnsMissingInOlderBackups() {
         val (row, column) = row(headers = listOf("Theme", "Language", "Frequency", "Currency"), values = listOf(1, "en", 2, "$"))
 
-        val expected = SettingsEntity(id = 0, theme = 1, language = "en", frequency = 2, currency = "$", customCurrency = "", dayEndMinutes = 0)
+        val expected = SettingsEntity(id = 0, theme = 1, language = "en", frequency = 2, currency = "$", customCurrency = "", dayEndMinutes = 0, elapsedTimeWarningMinutes = 60)
 
         assertEquals(expected, Mappers.parseSettings(row, column))
     }
@@ -174,6 +174,32 @@ class MappersTest {
         val expected = NotificationsSettingsEntity(id = 0, system = false, achievements = true, progress = true)
 
         assertEquals(expected, Mappers.parseNotificationsSettings(row, column))
+    }
+
+    @Test
+    fun settingsWithoutElapsedTimeWarningColumnPreserveExistingValue() {
+        val (row, column) = row(
+            headers = Mappers.SETTINGS_HEADERS.dropLast(1),
+            values = listOf(0, "en", 0, "€", "", 0)
+        )
+
+        val actual = Mappers.parseSettings(row, column, elapsedTimeWarningMinutes = 120)
+
+        assertEquals(120, actual.elapsedTimeWarningMinutes)
+    }
+
+    @Test
+    fun settingsWithInvalidElapsedTimeWarningPreserveExistingValue() {
+        listOf(-1, 10_081).forEach { value ->
+            val (row, column) = row(
+                headers = Mappers.SETTINGS_HEADERS,
+                values = listOf(0, "en", 0, "€", "", 0, value)
+            )
+
+            val actual = Mappers.parseSettings(row, column, elapsedTimeWarningMinutes = 120)
+
+            assertEquals(120, actual.elapsedTimeWarningMinutes)
+        }
     }
 
     @Test

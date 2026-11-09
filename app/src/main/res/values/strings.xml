@@ -149,7 +149,11 @@
     <string name="settings_general_day_end_hour_description">Set when your day ends</string>
     <string name="settings_general_widgets">Widgets</string>
     <string name="settings_general_widgets_description">Add widgets to the home screen</string>
-
+    <string name="settings_general_elapsed_time_warning">Elapsed-time warning</string>
+    <string name="settings_general_elapsed_time_warning_description">Highlight the Minimal Home timer until it reaches this limit. Set 0 to disable</string>
+    <string name="settings_elapsed_time_warning_value">%1$d min</string>
+    <string name="settings_elapsed_time_warning_minutes_hint">Minutes (0–10,080)</string>
+    <string name="settings_elapsed_time_warning_error">Enter a value from 0 to 10,080 minutes.</string>
     <string name="settings_finance">Finance</string>
     <string name="settings_finance_currency">Currency</string>
     <string name="settings_finance_currency_description">Choose your currency. If the currency is not listed, you can enter it yourself</string>

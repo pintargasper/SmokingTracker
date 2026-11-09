@@ -83,13 +83,15 @@ class HomeViewModel(
     }
 
     suspend fun getMinimalState(now: LocalDateTime = LocalDateTime.now()): MinimalHomeState {
-        val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
+        val settings = settingsRepository.get()!!
+        val dayEndMinutes = settings.dayEndMinutes
         val today = TimeHelper.dayDate(dateTime = now, dayEndMinutes = dayEndMinutes)
         val (startOfDay, endOfDay) = TimeHelper.getDay(date = today, dayEndMinutes = dayEndMinutes)
         return MinimalHomeState(
             lastEntry = historyRepository.getLast(),
             smokedToday = historyRepository.getSmokedCountBetween(start = startOfDay, end = endOfDay),
-            dayEndMinutes = dayEndMinutes
+            dayEndMinutes = dayEndMinutes,
+            elapsedTimeWarningMinutes = settings.elapsedTimeWarningMinutes
         )
     }
 
