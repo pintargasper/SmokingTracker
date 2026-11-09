@@ -14,7 +14,6 @@ import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getHeaderColumnMap
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.import
-import com.gasperpintar.smokingtracker.utils.manager.Mappers.toAdditionalSettingsExcelRow
 import com.gasperpintar.smokingtracker.utils.manager.Mappers.toExcelRow
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
@@ -83,7 +82,7 @@ class MappersTest {
 
     @Test
     fun settingsRoundTripIsCorrect() {
-        val entity = SettingsEntity(id = 1, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90)
+        val entity = SettingsEntity(id = 1, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90, elapsedTimeWarningMinutes = 120)
 
         val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
             Mappers.parseSettings(row, column)
@@ -163,7 +162,7 @@ class MappersTest {
     fun parseSettingsUsesDefaultsForColumnsMissingInOlderBackups() {
         val (row, column) = row(headers = listOf("Theme", "Language", "Frequency", "Currency"), values = listOf(1, "en", 2, "$"))
 
-        val expected = SettingsEntity(id = 0, theme = 1, language = "en", frequency = 2, currency = "$", customCurrency = "", dayEndMinutes = 0)
+        val expected = SettingsEntity(id = 0, theme = 1, language = "en", frequency = 2, currency = "$", customCurrency = "", dayEndMinutes = 0, elapsedTimeWarningMinutes = 60)
 
         assertEquals(expected, Mappers.parseSettings(row, column))
     }
@@ -178,26 +177,28 @@ class MappersTest {
     }
 
     @Test
-    fun additionalSettingsRoundTripIsCorrect() {
-        val actual = roundTrip(
-            headers = Mappers.ADDITIONAL_SETTINGS_HEADERS,
-            data = listOf(120),
-            mapper = { it.toAdditionalSettingsExcelRow() }
-        ) { row, column, _ ->
-            Mappers.parseAdditionalSettings(row, column)
-        }
+    fun settingsWithoutElapsedTimeWarningColumnPreserveExistingValue() {
+        val (row, column) = row(
+            headers = Mappers.SETTINGS_HEADERS.dropLast(1),
+            values = listOf(0, "en", 0, "€", "", 0)
+        )
 
-        assertEquals(listOf(120), actual)
+        val actual = Mappers.parseSettings(row, column, elapsedTimeWarningMinutes = 120)
+
+        assertEquals(120, actual.elapsedTimeWarningMinutes)
     }
 
     @Test
-    fun additionalSettingsRejectsValuesOutsideSupportedRange() {
-        listOf(0, 10_081).forEach { value ->
+    fun settingsWithInvalidElapsedTimeWarningPreserveExistingValue() {
+        listOf(-1, 10_081).forEach { value ->
             val (row, column) = row(
-                headers = Mappers.ADDITIONAL_SETTINGS_HEADERS,
-                values = listOf(value)
+                headers = Mappers.SETTINGS_HEADERS,
+                values = listOf(0, "en", 0, "€", "", 0, value)
             )
-            assertNull(Mappers.parseAdditionalSettings(row, column))
+
+            val actual = Mappers.parseSettings(row, column, elapsedTimeWarningMinutes = 120)
+
+            assertEquals(120, actual.elapsedTimeWarningMinutes)
         }
     }
 
@@ -209,7 +210,6 @@ class MappersTest {
         assertEquals(Mappers.NOTES_HEADERS.size, NoteEntity(id = 0, title = "", content = "", mood = 3, createdAt = createdAt, updatedAt = createdAt).toExcelRow(formatter).size)
         assertEquals(Mappers.SETTINGS_HEADERS.size, SettingsEntity.default().toExcelRow().size)
         assertEquals(Mappers.NOTIF_SETTINGS_HEADERS.size, NotificationsSettingsEntity.default().toExcelRow().size)
-        assertEquals(Mappers.ADDITIONAL_SETTINGS_HEADERS.size, 60.toAdditionalSettingsExcelRow().size)
     }
 
     private fun <T, R> roundTrip(

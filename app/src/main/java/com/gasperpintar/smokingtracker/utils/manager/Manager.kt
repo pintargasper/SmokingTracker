@@ -12,13 +12,12 @@ import com.gasperpintar.smokingtracker.database.repository.NotificationsSettings
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.bar.DataSyncPipeline
 import com.gasperpintar.smokingtracker.ui.bar.SyncedStep
-import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getRowCount
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.import
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.importSingleRow
-import com.gasperpintar.smokingtracker.utils.manager.Mappers.toAdditionalSettingsExcelRow
 import com.gasperpintar.smokingtracker.utils.manager.Mappers.toExcelRow
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import kotlinx.coroutines.Dispatchers
@@ -47,7 +46,6 @@ object Manager {
         val notes = notesRepository.getAll()
         val settings = listOfNotNull(element = settingsRepository.get())
         val notifSettings = listOfNotNull(element = notificationsSettingsRepository.get())
-        val elapsedTimeWarningMinutes = ElapsedTimeSettings.getWarningMinutes(context)
 
         XSSFWorkbook().use { workbook ->
             DataSyncPipeline(
@@ -99,14 +97,6 @@ object Manager {
                             data = notifSettings,
                             onStepProgress = progress
                         ) { it.toExcelRow() }
-                    },
-                    SyncedStep(weight = 1) { progress ->
-                        workbook.create(
-                            name = "AdditionalSettings",
-                            headers = Mappers.ADDITIONAL_SETTINGS_HEADERS,
-                            data = listOf(elapsedTimeWarningMinutes),
-                            onStepProgress = progress
-                        ) { it.toAdditionalSettingsExcelRow() }
                     },
                     SyncedStep(weight = 5) { progress ->
                         context.contentResolver.openOutputStream(fileUri)
@@ -166,9 +156,6 @@ object Manager {
                             },
                             SyncedStep(weight = workbook.getRowCount(sheetName = "NotificationsSettings")) {
                                 importNotificationsSettingsSheet(workbook, notificationsSettingsRepository, onStepProgress = it)
-                            },
-                            SyncedStep(weight = workbook.getRowCount(sheetName = "AdditionalSettings")) {
-                                importAdditionalSettingsSheet(workbook = workbook, context = context, onStepProgress = it)
                             }
                         )
                     ).run(onProgress)
@@ -235,8 +222,11 @@ object Manager {
         repository: SettingsRepository,
         onStepProgress: (Int) -> Unit
     ) {
+        val elapsedTimeWarningMinutes = repository.get()?.elapsedTimeWarningMinutes ?: ElapsedTimeWarning.DEFAULT_MINUTES
         workbook.importSingleRow(sheetName = "Settings", onStepProgress) { row, col ->
-            val settings = runCatching { Mappers.parseSettings(row, col) }.getOrNull() ?: return@importSingleRow
+            val settings = runCatching {
+                Mappers.parseSettings(row, col, elapsedTimeWarningMinutes = elapsedTimeWarningMinutes)
+            }.getOrNull() ?: return@importSingleRow
             repository.get()?.let { repository.delete(settings = it) }
             repository.insert(settings = settings)
         }
@@ -251,17 +241,6 @@ object Manager {
             val settings = runCatching { Mappers.parseNotificationsSettings(row, col) }.getOrNull() ?: return@importSingleRow
             repository.get()?.let { repository.delete(settings = it) }
             repository.insert(settings = settings)
-        }
-    }
-
-    private fun importAdditionalSettingsSheet(
-        workbook: XSSFWorkbook,
-        context: Context,
-        onStepProgress: (Int) -> Unit
-    ) {
-        workbook.importSingleRow(sheetName = "AdditionalSettings", onStepProgress) { row, col ->
-            val minutes = runCatching { Mappers.parseAdditionalSettings(row, col) }.getOrNull() ?: return@importSingleRow
-            ElapsedTimeSettings.setWarningMinutes(context, minutes)
         }
     }
 
