@@ -27,7 +27,6 @@ import com.gasperpintar.smokingtracker.provider.StatsWidget
 import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.bar.ProgressType
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
-import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
@@ -118,9 +117,11 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         elapsedTimeWarningLayout.setOnClickListener {
             DialogManager.showElapsedTimeWarningDialog(
                 context = requireActivity(),
-                warningMinutes = ElapsedTimeSettings.getWarningMinutes(requireContext())
+                warningMinutes = state.settings.elapsedTimeWarningMinutes
             ) { warningMinutes ->
-                if (ElapsedTimeSettings.setWarningMinutes(requireContext(), warningMinutes)) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    state.settings = state.settings.copy(elapsedTimeWarningMinutes = warningMinutes)
+                    viewModel.updateSettings(state.settings)
                     elapsedTimeWarningValue.text = getString(R.string.settings_elapsed_time_warning_value, warningMinutes)
                 }
             }
@@ -183,7 +184,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             ) { "system" }
         elapsedTimeWarningValue.text = getString(
             R.string.settings_elapsed_time_warning_value,
-            ElapsedTimeSettings.getWarningMinutes(requireContext())
+            state.settings.elapsedTimeWarningMinutes
         )
     }
 

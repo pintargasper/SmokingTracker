@@ -11,7 +11,7 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentMinimalHomeBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
-import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.WidgetHelper
 import com.google.android.material.color.MaterialColors
@@ -38,7 +38,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
     private var dayEndMinutes = 0
     private var currentDay: LocalDate? = null
     private var refreshJob: Job? = null
-    private var warningMinutes = ElapsedTimeSettings.DEFAULT_WARNING_MINUTES
+    private var warningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
     private lateinit var defaultTimerTextColors: ColorStateList
 
     @Override
@@ -94,7 +94,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
                 val state = viewModel.getMinimalState()
                 lastEntry = state.lastEntry
                 dayEndMinutes = state.dayEndMinutes
-                warningMinutes = ElapsedTimeSettings.getWarningMinutes(requireContext())
+                warningMinutes = state.elapsedTimeWarningMinutes
                 currentDay = TimeHelper.dayDate(LocalDateTime.now(), dayEndMinutes)
                 binding.todayCount.text = state.smokedToday.toString()
                 updateElapsedTime(LocalDateTime.now())
@@ -118,7 +118,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
         } else {
             TimeHelper.formatDuration(resources = resources, duration = duration)
         }
-        val showWarning = duration?.let { ElapsedTimeSettings.isWarningElapsed(it, warningMinutes) } == true
+        val showWarning = duration?.let { ElapsedTimeWarning.shouldHighlight(it, warningMinutes) } == true
         if (showWarning) {
             binding.timerLabel.setTextColor(
                 MaterialColors.getColor(binding.timerLabel, androidx.appcompat.R.attr.colorError)

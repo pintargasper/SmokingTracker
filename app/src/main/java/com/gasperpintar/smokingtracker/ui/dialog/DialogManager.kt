@@ -37,7 +37,7 @@ import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.ui.container.ContainerManager
-import com.gasperpintar.smokingtracker.utils.ElapsedTimeSettings
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper.toLocalDate
@@ -209,7 +209,7 @@ object DialogManager {
 
         binding.confirm.setOnClickListener {
             val minutes = content.inputWarningMinutes.text.toString().toIntOrNull()
-            if (minutes == null || minutes !in ElapsedTimeSettings.MIN_WARNING_MINUTES..ElapsedTimeSettings.MAX_WARNING_MINUTES) {
+            if (minutes == null || !ElapsedTimeWarning.isValidMinutes(minutes)) {
                 content.warningMinutesInputLayout.error = context.getString(R.string.settings_elapsed_time_warning_error)
                 return@setOnClickListener
             }
@@ -442,9 +442,9 @@ object DialogManager {
         val (result, currencyUnit) = values
         val (total, totalTimeMinutes, totalCigarettes) = result
 
-        val averageCostPerCigarette = totalCigarettes.takeIf { it > 0 }?.let { total / it } ?: 0.0
+        val averageCost = totalCigarettes.takeIf { it > 0 }?.let { total / it } ?: 0.0
         val totalHours = totalTimeMinutes / 60.0
-        val averageCost = totalHours.takeIf { it > 0 }?.let { total / it } ?: 0.0
+        val averageCostPerHour = totalHours.takeIf { it > 0 }?.let { total / totalHours } ?: 0.0
 
         val decimalFormatTwo = DecimalFormat("0.00")
         val decimalFormatThree = DecimalFormat("0.000")
@@ -457,8 +457,8 @@ object DialogManager {
         }
 
         content.totalCosts.text = formatPrice(total, decimalFormatTwo)
-        content.costPerCigarette.text = formatPrice(averageCostPerCigarette, decimalFormatThree)
-        content.averageCostPerHour.text = formatPrice(averageCost, decimalFormatTwo)
+        content.costPerCigarette.text = formatPrice(averageCost, decimalFormatThree)
+        content.costPerHour.text = formatPrice(averageCostPerHour, decimalFormatThree)
         content.timeSpent.text = formatTime(totalTimeMinutes)
     }
 

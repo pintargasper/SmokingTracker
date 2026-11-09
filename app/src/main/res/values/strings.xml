@@ -85,7 +85,7 @@
     <string name="achievement_congrats_six_days_message">Fantastic! Your effort is paying off, keep going</string>
     <string name="achievement_congrats_one_week_message">Outstanding! You have reached a major milestone</string>
     <string name="achievement_congrats_two_weeks_message">Excellent! Two weeks of dedication is no small feat</string>
-    <string name="achievement_congrats_three_weeks_message">Incredible! Three weeks of consistency shows your determination</string>
+    <string name="achievement_congrats_three_weeks_message">Incredible! Your consistency shows your determination</string>
     <string name="achievement_congrats_one_month_message">Fantastic! One month of dedication shows real commitment</string>
     <string name="achievement_congrats_three_months_message">Your consistency and effort are building unstoppable momentum</string>
     <string name="achievement_congrats_six_months_message">Half a year of perseverance proves your determination and resilience are unmatched</string>
@@ -100,8 +100,8 @@
     <string name="achievement_congrats_twenty_message">Great start! Every effort is paving the way to victory</string>
     <string name="achievement_congrats_two_hundred_message">Strong progress! Your focus is building unstoppable momentum</string>
     <string name="achievement_congrats_four_hundred_message">Remarkable! Your persistence is truly paying off</string>
-    <string name="achievement_congrats_six_hundred_message">Exceptional work! You are mastering the journey step by step</string>
-    <string name="achievement_congrats_eight_hundred_message">Incredible! Your determination is making a real difference</string>
+    <string name="achievement_congrats_six_hundred_message">Exceptional work! Your determination is making a real difference</string>
+    <string name="achievement_congrats_eight_hundred_message">Incredible! Your determination and resilience are unmatched</string>
     <string name="achievement_congrats_thousand_message">Legendary achievement! Your dedication and resilience are unmatched</string>
 
     <string name="calculator_per_day">Cigarettes per day</string>
@@ -150,10 +150,10 @@
     <string name="settings_general_widgets">Widgets</string>
     <string name="settings_general_widgets_description">Add widgets to the home screen</string>
     <string name="settings_general_elapsed_time_warning">Elapsed-time warning</string>
-    <string name="settings_general_elapsed_time_warning_description">Highlight the Minimal Home timer when it reaches this limit</string>
+    <string name="settings_general_elapsed_time_warning_description">Highlight the Minimal Home timer until it reaches this limit. Set 0 to disable</string>
     <string name="settings_elapsed_time_warning_value">%1$d min</string>
-    <string name="settings_elapsed_time_warning_minutes_hint">Minutes (1–10,080)</string>
-    <string name="settings_elapsed_time_warning_error">Enter a value from 1 to 10,080 minutes.</string>
+    <string name="settings_elapsed_time_warning_minutes_hint">Minutes (0–10,080)</string>
+    <string name="settings_elapsed_time_warning_error">Enter a value from 0 to 10,080 minutes.</string>
     <string name="settings_finance">Finance</string>
     <string name="settings_finance_currency">Currency</string>
     <string name="settings_finance_currency_description">Choose your currency. If the currency is not listed, you can enter it yourself</string>
