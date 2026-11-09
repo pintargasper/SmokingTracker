@@ -16,10 +16,11 @@ class FakeHistoryDao : FakeDao<HistoryEntity>(
     var insertFailure: Throwable? = null
     var insertHook: suspend () -> Unit = {}
 
+    @Override
     override suspend fun insert(entity: HistoryEntity) {
         insertHook()
         insertFailure?.let { throw it }
-        super<FakeDao>.insert(entity)
+        super.insert(entity)
     }
 
     @Override
@@ -39,7 +40,7 @@ class FakeHistoryDao : FakeDao<HistoryEntity>(
 
     @Override
     override suspend fun getBetween(start: LocalDateTime, end: LocalDateTime): List<HistoryEntity> {
-        return items.filter { it.createdAt >= start && it.createdAt < end }.sortedByDescending { it.createdAt }
+        return items.filter { it.createdAt in start..<end }.sortedByDescending { it.createdAt }
     }
 
     @Override

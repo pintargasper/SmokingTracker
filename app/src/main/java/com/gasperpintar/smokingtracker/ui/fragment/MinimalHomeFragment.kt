@@ -118,6 +118,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
         } else {
             TimeHelper.formatDuration(resources = resources, duration = duration)
         }
+
         val showWarning = duration?.let { ElapsedTimeWarning.shouldHighlight(it, warningMinutes) } == true
         if (showWarning) {
             binding.timerLabel.setTextColor(

@@ -12,7 +12,6 @@ import com.gasperpintar.smokingtracker.database.repository.NotificationsSettings
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.bar.DataSyncPipeline
 import com.gasperpintar.smokingtracker.ui.bar.SyncedStep
-import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getRowCount
@@ -222,11 +221,8 @@ object Manager {
         repository: SettingsRepository,
         onStepProgress: (Int) -> Unit
     ) {
-        val elapsedTimeWarningMinutes = repository.get()?.elapsedTimeWarningMinutes ?: ElapsedTimeWarning.DEFAULT_MINUTES
         workbook.importSingleRow(sheetName = "Settings", onStepProgress) { row, col ->
-            val settings = runCatching {
-                Mappers.parseSettings(row, col, elapsedTimeWarningMinutes = elapsedTimeWarningMinutes)
-            }.getOrNull() ?: return@importSingleRow
+            val settings = runCatching { Mappers.parseSettings(row, col) }.getOrNull() ?: return@importSingleRow
             repository.get()?.let { repository.delete(settings = it) }
             repository.insert(settings = settings)
         }

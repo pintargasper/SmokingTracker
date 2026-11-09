@@ -122,7 +122,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                 viewLifecycleOwner.lifecycleScope.launch {
                     state.settings = state.settings.copy(elapsedTimeWarningMinutes = warningMinutes)
                     viewModel.updateSettings(state.settings)
-                    elapsedTimeWarningValue.text = getString(R.string.settings_elapsed_time_warning_value, warningMinutes)
+                    elapsedTimeWarningValue.text = requireContext().resources.getQuantityString(R.plurals.time_minutes, warningMinutes, warningMinutes)
                 }
             }
         }
@@ -182,8 +182,10 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             .getOrElse(index = resources.getStringArray(R.array.language_values)
                 .indexOf(state.settings.language)
             ) { "system" }
-        elapsedTimeWarningValue.text = getString(
-            R.string.settings_elapsed_time_warning_value,
+
+        elapsedTimeWarningValue.text = requireContext().resources.getQuantityString(
+            R.plurals.time_minutes,
+            state.settings.elapsedTimeWarningMinutes,
             state.settings.elapsedTimeWarningMinutes
         )
     }

@@ -11,6 +11,7 @@ import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.type.ColorScheme
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.parseDateTime
 import org.apache.poi.ss.usermodel.CellType
@@ -23,7 +24,7 @@ object Mappers {
     val ACHIEVEMENTS_HEADERS = listOf("Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id")
     val COSTS_HEADERS = listOf("Price", "StartDate", "EndDate")
     val NOTES_HEADERS = listOf("Title", "Content", "Mood", "CreatedAt", "UpdatedAt")
-    val SETTINGS_HEADERS = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency", "DayEndMinutes", "ElapsedTimeWarningMinutes")
+    val SETTINGS_HEADERS = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency", "DayEndMinutes", "ElapsedTimeWarningMinutes", "ColorScheme")
     val NOTIF_SETTINGS_HEADERS = listOf("System", "Achievements", "Progress")
 
     fun parseHistory(
@@ -88,8 +89,7 @@ object Mappers {
 
     fun parseSettings(
         row: Row,
-        col: Map<String, Int>,
-        elapsedTimeWarningMinutes: Int = ElapsedTimeWarning.DEFAULT_MINUTES
+        col: Map<String, Int>
     ): SettingsEntity {
         val language = col["Language"]?.let { index ->
             row.getCell(index)?.let {
@@ -100,7 +100,7 @@ object Mappers {
 
         val warningMinutes = col["ElapsedTimeWarningMinutes"]?.let { index ->
             row.getCell(index)?.numericCellValue?.toInt()
-        }?.takeIf(ElapsedTimeWarning::isValidMinutes) ?: elapsedTimeWarningMinutes
+        }?.takeIf(predicate = ElapsedTimeWarning::isValidMinutes) ?: ElapsedTimeWarning.DEFAULT_MINUTES
 
         return SettingsEntity(
             id = 0,
@@ -110,7 +110,8 @@ object Mappers {
             currency = col["Currency"]?.let { index -> row.getCell(index)?.stringCellValue } ?: "€",
             customCurrency = col["CustomCurrency"]?.let { index -> row.getCell(index)?.stringCellValue }.orEmpty(),
             dayEndMinutes = col["DayEndMinutes"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
-            elapsedTimeWarningMinutes = warningMinutes
+            elapsedTimeWarningMinutes = warningMinutes,
+            colorScheme = col["ColorScheme"]?.let { index -> row.getCell(index)?.stringCellValue } ?: ColorScheme.SYSTEM.name
         )
     }
 
@@ -143,11 +144,10 @@ object Mappers {
     }
 
     fun SettingsEntity.toExcelRow(): List<Any?> {
-        return listOf(theme, language, frequency, currency, customCurrency, dayEndMinutes, elapsedTimeWarningMinutes)
+        return listOf(theme, language, frequency, currency, customCurrency, dayEndMinutes, elapsedTimeWarningMinutes, colorScheme)
     }
 
     fun NotificationsSettingsEntity.toExcelRow(): List<Any?> {
         return listOf(system, achievements, progress)
     }
-
 }

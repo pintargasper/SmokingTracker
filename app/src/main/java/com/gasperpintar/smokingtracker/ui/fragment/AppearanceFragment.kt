@@ -44,7 +44,7 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
             }
 
             colorScheme.forEachIndexed { index, radio ->
-                radio.isChecked = state.settings.theme == index
+                radio.isChecked = ColorScheme.entries[index] == ColorScheme.fromName(state.settings.colorScheme)
                 radio.setOnClickListener {
                     selectColorScheme(state = state, radios = colorScheme, scheme = ColorScheme.entries[index])
                 }
@@ -82,11 +82,10 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
         radios: List<AppCompatRadioButton>,
         scheme: ColorScheme
     ) {
-        // TODO TODO add implementation to the database (@Base.kt)
-        // if (scheme.fromName(state.settings.colorScheme) == scheme) return
+        if (ColorScheme.fromName(state.settings.colorScheme) == scheme) return
         viewLifecycleOwner.lifecycleScope.launch {
-            // state.settings = state.settings.copy(colorScheme = scheme.name)
-            // viewModel.updateSettings(state.settings)
+            state.settings = state.settings.copy(colorScheme = scheme.name)
+            viewModel.updateSettings(state.settings)
 
             radios.forEachIndexed { index, radio ->
                 radio.isChecked = ColorScheme.entries[index] == scheme

@@ -105,6 +105,7 @@ class MinimalHomeFragmentTest {
             onView(withId(R.id.button_add_entry)).check(matches(isDisplayed()))
         }
     }
+
     @Test
     fun elapsedTimeThresholdSupportsDisablingAndPersistsValidValue() {
         ActivityScenario.launch(MainActivity::class.java).use {

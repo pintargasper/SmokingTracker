@@ -10,6 +10,7 @@ class StatisticsFragment : Base<FragmentStatisticsBinding>(
     bindingInflater = FragmentStatisticsBinding::inflate
 ) {
 
+    @Override
     override fun initialize() = binding.apply {
         buttonBack.setOnClickListener {
             parentFragmentManager.popBackStack()

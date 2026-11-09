@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "f9598f7181224cf32b32227f185f88cb",
+    "identityHash": "3f2da1136cb196bbedc6fd5b139bc6a5",
     "entities": [
       {
         "tableName": "achievements",
@@ -113,7 +113,7 @@
       },
       {
         "tableName": "settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` TEXT NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL DEFAULT '€', `customCurrency` TEXT NOT NULL DEFAULT '', `dayEndMinutes` INTEGER NOT NULL DEFAULT 0, `elapsedTimeWarningMinutes` INTEGER NOT NULL DEFAULT 60)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` TEXT NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL DEFAULT '€', `customCurrency` TEXT NOT NULL DEFAULT '', `dayEndMinutes` INTEGER NOT NULL DEFAULT 0, `elapsedTimeWarningMinutes` INTEGER NOT NULL DEFAULT 60, `colorScheme` TEXT NOT NULL DEFAULT 'SYSTEM')",
         "fields": [
           {
             "fieldPath": "id",
@@ -166,6 +166,13 @@
             "affinity": "INTEGER",
             "notNull": true,
             "defaultValue": "60"
+          },
+          {
+            "fieldPath": "colorScheme",
+            "columnName": "colorScheme",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'SYSTEM'"
           }
         ],
         "primaryKey": {
@@ -298,7 +305,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f9598f7181224cf32b32227f185f88cb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3f2da1136cb196bbedc6fd5b139bc6a5')"
     ]
   }
 }
