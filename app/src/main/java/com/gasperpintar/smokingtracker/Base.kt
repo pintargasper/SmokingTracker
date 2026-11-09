@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.viewbinding.ViewBinding
 import com.gasperpintar.smokingtracker.type.ColorScheme
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
+import kotlinx.coroutines.runBlocking
 
 abstract class Base<VB : ViewBinding>(
     private val bindingInflater: (LayoutInflater) -> VB
@@ -30,12 +31,8 @@ abstract class Base<VB : ViewBinding>(
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
-        // TODO add implementation to the database (@AppearanceFragment.kt)
-        // val colorScheme = runBlocking { application.container.settingsRepository.get()?.colorScheme }
-        // setTheme(ColorScheme.fromName(name = colorScheme).themeResId)
-
-        val colorSchemes = listOf("SYSTEM", "LEGACY", "SKY")
-        setTheme(ColorScheme.fromName(name = colorSchemes.random()).themeResId)
+        val colorScheme = runBlocking { application.container.settingsRepository.get()?.colorScheme }
+        setTheme(ColorScheme.fromName(name = colorScheme).themeResId)
 
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)

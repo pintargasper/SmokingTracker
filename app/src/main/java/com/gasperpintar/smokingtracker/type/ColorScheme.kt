@@ -13,7 +13,7 @@ enum class ColorScheme(
         fun fromName(name: String?): ColorScheme {
             return entries.firstOrNull {
                 it.name.equals(other = name, ignoreCase = true)
-            } ?: LEGACY
+            } ?: SYSTEM
         }
     }
 }

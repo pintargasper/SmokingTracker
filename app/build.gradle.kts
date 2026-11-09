@@ -171,6 +171,6 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.screengrab)
     androidTestImplementation(libs.androidx.espresso.contrib)
+    androidTestImplementation(libs.screengrab)
 }

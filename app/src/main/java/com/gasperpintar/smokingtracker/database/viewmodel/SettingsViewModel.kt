@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.database.viewmodel
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
@@ -70,7 +71,7 @@ class SettingsViewModel(
         onError: () -> Unit = {}
     ) {
         try {
-            Manager.uploadFile(
+            Manager.restore(
                 context = context,
                 fileUri = fileUri,
                 achievementRepository = achievementRepository,
@@ -80,6 +81,10 @@ class SettingsViewModel(
                 costsRepository = costsRepository,
                 notesRepository = notesRepository,
                 onProgress = onProgress
+            )
+
+            (context.applicationContext as? Application)?.applyTheme(
+                themeId = settingsRepository.get()?.theme ?: 0
             )
 
             val lastSmoke = historyRepository.getLast()
@@ -105,7 +110,7 @@ class SettingsViewModel(
         onError: () -> Unit = {}
     ) {
         try {
-            Manager.downloadFile(
+            Manager.export(
                 context = context,
                 fileUri = fileUri,
                 achievementRepository = achievementRepository,

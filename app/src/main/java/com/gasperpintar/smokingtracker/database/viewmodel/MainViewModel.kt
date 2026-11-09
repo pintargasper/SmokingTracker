@@ -40,10 +40,7 @@ class MainViewModel(
         settingsRepository.get() ?: SettingsEntity.default(language = Application().applyLanguage(context = context)).also {
             settingsRepository.insert(settings = it)
         }
-
-        return MainState(
-            isNewVersion = handleAppVersioning(context = context)
-        )
+        return MainState(isNewVersion = handleAppVersioning(context = context))
     }
 
     private suspend fun handleAppVersioning(

@@ -11,6 +11,8 @@ import com.gasperpintar.smokingtracker.type.AchievementIcon
 import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.type.ColorScheme
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getHeaderColumnMap
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.import
@@ -82,7 +84,16 @@ class MappersTest {
 
     @Test
     fun settingsRoundTripIsCorrect() {
-        val entity = SettingsEntity(id = 1, theme = 2, language = "sl", frequency = 1, currency = "$", customCurrency = "CHF", dayEndMinutes = 90, elapsedTimeWarningMinutes = 120)
+        val entity = SettingsEntity(
+            id = 1,
+            theme = 2,
+            language = "sl",
+            frequency = 1, currency = "$",
+            customCurrency = "CHF",
+            dayEndMinutes = 90,
+            elapsedTimeWarningMinutes = 120,
+            colorScheme = ColorScheme.SYSTEM.name
+        )
 
         val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
             Mappers.parseSettings(row, column)
@@ -162,7 +173,16 @@ class MappersTest {
     fun parseSettingsUsesDefaultsForColumnsMissingInOlderBackups() {
         val (row, column) = row(headers = listOf("Theme", "Language", "Frequency", "Currency"), values = listOf(1, "en", 2, "$"))
 
-        val expected = SettingsEntity(id = 0, theme = 1, language = "en", frequency = 2, currency = "$", customCurrency = "", dayEndMinutes = 0, elapsedTimeWarningMinutes = 60)
+        val expected = SettingsEntity(
+            id = 0, theme = 1,
+            language = "en",
+            frequency = 2,
+            currency = "$",
+            customCurrency = "",
+            dayEndMinutes = 0,
+            elapsedTimeWarningMinutes = 60,
+            colorScheme = ColorScheme.SYSTEM.name
+        )
 
         assertEquals(expected, Mappers.parseSettings(row, column))
     }
@@ -176,16 +196,22 @@ class MappersTest {
         assertEquals(expected, Mappers.parseNotificationsSettings(row, column))
     }
 
+
     @Test
     fun settingsWithoutElapsedTimeWarningColumnPreserveExistingValue() {
+        val headers = Mappers.SETTINGS_HEADERS.filterNot {
+            it == "ElapsedTimeWarningMinutes"
+        }
+
         val (row, column) = row(
-            headers = Mappers.SETTINGS_HEADERS.dropLast(1),
-            values = listOf(0, "en", 0, "€", "", 0)
+            headers = headers,
+            values = listOf(0, "en", 0, "€", "", 0, ColorScheme.SYSTEM.name)
         )
 
-        val actual = Mappers.parseSettings(row, column, elapsedTimeWarningMinutes = 120)
+        val actual = Mappers.parseSettings(row = row, col = column)
 
-        assertEquals(120, actual.elapsedTimeWarningMinutes)
+        assertEquals(ElapsedTimeWarning.DEFAULT_MINUTES, actual.elapsedTimeWarningMinutes)
+        assertEquals(ColorScheme.SYSTEM.name, actual.colorScheme)
     }
 
     @Test
@@ -193,12 +219,13 @@ class MappersTest {
         listOf(-1, 10_081).forEach { value ->
             val (row, column) = row(
                 headers = Mappers.SETTINGS_HEADERS,
-                values = listOf(0, "en", 0, "€", "", 0, value)
+                values = listOf(0, "en", 0, "€", "", 0, value, ColorScheme.SYSTEM.name)
             )
 
-            val actual = Mappers.parseSettings(row, column, elapsedTimeWarningMinutes = 120)
+            val actual = Mappers.parseSettings(row = row, col = column)
 
-            assertEquals(120, actual.elapsedTimeWarningMinutes)
+            assertEquals(ElapsedTimeWarning.DEFAULT_MINUTES, actual.elapsedTimeWarningMinutes)
+            assertEquals(ColorScheme.SYSTEM.name, actual.colorScheme)
         }
     }
 
