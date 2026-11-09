@@ -442,9 +442,9 @@ object DialogManager {
         val (result, currencyUnit) = values
         val (total, totalTimeMinutes, totalCigarettes) = result
 
-        val averageCost = totalCigarettes.takeIf { it > 0 }?.let { total / it } ?: 0.0
+        val averageCostPerCigarette = totalCigarettes.takeIf { it > 0 }?.let { total / it } ?: 0.0
         val totalHours = totalTimeMinutes / 60.0
-        val averageCostPerHour = totalHours.takeIf { it > 0 }?.let { total / totalHours } ?: 0.0
+        val averageCost = totalHours.takeIf { it > 0 }?.let { total / it } ?: 0.0
 
         val decimalFormatTwo = DecimalFormat("0.00")
         val decimalFormatThree = DecimalFormat("0.000")
@@ -457,8 +457,8 @@ object DialogManager {
         }
 
         content.totalCosts.text = formatPrice(total, decimalFormatTwo)
-        content.costPerCigarette.text = formatPrice(averageCost, decimalFormatThree)
-        content.costPerHour.text = formatPrice(averageCostPerHour, decimalFormatThree)
+        content.costPerCigarette.text = formatPrice(averageCostPerCigarette, decimalFormatThree)
+        content.averageCostPerHour.text = formatPrice(averageCost, decimalFormatTwo)
         content.timeSpent.text = formatTime(totalTimeMinutes)
     }
 
