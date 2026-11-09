@@ -274,7 +274,7 @@ class ManagerTest {
     }
 
     private suspend fun backup(fileUri: Uri) {
-        Manager.downloadFile(
+        Manager.export(
             context = context,
             fileUri = fileUri,
             achievementRepository = achievementRepository,
@@ -288,7 +288,7 @@ class ManagerTest {
     }
 
     private suspend fun restore(fileUri: Uri) {
-        Manager.uploadFile(
+        Manager.restore(
             context = context,
             fileUri = fileUri,
             achievementRepository = achievementRepository,

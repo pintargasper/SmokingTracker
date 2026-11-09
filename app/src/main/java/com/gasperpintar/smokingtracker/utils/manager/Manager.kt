@@ -28,7 +28,7 @@ object Manager {
 
     private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
-    suspend fun downloadFile(
+    suspend fun export(
         context: Context,
         fileUri: Uri,
         achievementRepository: AchievementRepository,
@@ -120,7 +120,7 @@ object Manager {
         fileUri
     }
 
-    suspend fun uploadFile(
+    suspend fun restore(
         context: Context,
         fileUri: Uri,
         achievementRepository: AchievementRepository,

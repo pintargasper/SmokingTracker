@@ -137,7 +137,7 @@ class ScreenshotTest {
             "Dummy data file not found: ${file.absolutePath}"
         }
 
-        Manager.uploadFile(
+        Manager.restore(
             context = context,
             fileUri = Uri.fromFile(file),
             achievementRepository = achievementRepository,
