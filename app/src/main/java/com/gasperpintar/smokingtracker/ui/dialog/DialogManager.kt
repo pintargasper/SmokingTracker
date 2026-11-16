@@ -453,7 +453,7 @@ object DialogManager {
             amount: Double,
             format: DecimalFormat
         ): String {
-            return context.getString(R.string.cost_price, format.format(amount), currencyUnit)
+            return "${format.format(amount)} $currencyUnit"
         }
 
         content.totalCosts.text = formatPrice(total, decimalFormatTwo)

@@ -104,10 +104,13 @@
     <string name="achievement_congrats_eight_hundred_message">Incredible! Your determination is making a real difference</string>
     <string name="achievement_congrats_thousand_message">Legendary achievement! Your dedication and resilience are unmatched</string>
 
+    <string name="calculator_consumption">Consumption details</string>
+    <string name="calculator_consumption_details">Enter your daily consumption and pack price</string>
     <string name="calculator_per_day">Cigarettes per day</string>
     <string name="calculator_per_pack">Cigarettes per pack</string>
     <string name="calculator_price">Price per pack</string>
     <string name="calculator_period">Select period</string>
+    <string name="calculator_period_details">Select the period for your calculation</string>
     <string name="calculator_from">From:</string>
     <string name="calculator_start_date">Start date</string>
     <string name="calculator_to">To:</string>

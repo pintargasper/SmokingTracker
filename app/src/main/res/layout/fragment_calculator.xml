@@ -42,11 +42,12 @@
 
     </LinearLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_calculator"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        style="?appCardStyle">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,182 +55,166 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_calculator"
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?appCardStyle">
+                android:text="@string/calculator_consumption"
+                style="?appSubtitleStyle" />
 
-                <LinearLayout
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calculator_consumption_details"
+                style="?appBodyStyle" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/calculator_per_day"
+                style="?appTextInputLayoutStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_daily_cigarettes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+                    android:inputType="number"
+                    style="?appEditTextStyle"
+                    tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/calculator_per_pack"
+                style="?appTextInputLayoutStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_cigarettes_per_pack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    style="?appEditTextStyle"
+                    tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/calculator_price"
+                style="?appTextInputLayoutStyle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_pack_price"
+                    style="?appEditTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:inputType="numberDecimal"
+                    tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calculator_period"
+                style="?appSubtitleStyle" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calculator_period_details"
+                style="?appBodyStyle"
+                tools:ignore="HardcodedText" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="@string/calculator_per_day"
-                        style="?appSubtitleStyle" />
+                        android:text="@string/calculator_from"
+                        style="?appBodyStyle" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:hint="0"
-                        style="?appTextInputLayoutStyle"
-                        tools:ignore="HardcodedText">
+                        android:hint="@string/calculator_start_date"
+                        style="?appTextInputLayoutStyle">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_daily_cigarettes"
-                            style="?appEditTextStyle"
+                            android:id="@+id/input_start_date"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:inputType="date"
+                            style="?appEditTextStyle"
                             tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
                     </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="@string/calculator_per_pack"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:hint="20"
-                        style="?appTextInputLayoutStyle"
-                        tools:ignore="HardcodedText">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_cigarettes_per_pack"
-                            style="?appEditTextStyle"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="20"
-                            android:inputType="number"
-                            tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="@string/calculator_price"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:hint="0.00"
-                        style="?appTextInputLayoutStyle"
-                        tools:ignore="HardcodedText">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/input_pack_price"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints="0.00"
-                            android:inputType="numberDecimal"
-                            style="?appEditTextStyle"
-                            tools:ignore="VisualLintTextFieldSize" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:text="@string/calculator_period"
-                        style="?appSubtitleStyle" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/calculator_from"
-                            style="?appBodyStyle" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="@string/calculator_start_date"
-                            style="?appTextInputLayoutStyle"
-                            tools:ignore="VisualLintTextFieldSize">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/input_start_date"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="@string/calculator_start_date"
-                                android:clickable="true"
-                                android:focusable="false"
-                                android:inputType="date"
-                                style="?appEditTextStyle"
-                                tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:text="@string/calculator_to"
-                            style="?appBodyStyle" />
-
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="@string/calculator_end_date"
-                            style="?appTextInputLayoutStyle"
-                            tools:ignore="VisualLintTextFieldSize">
-
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/input_end_date"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:autofillHints="@string/calculator_end_date"
-                                android:clickable="true"
-                                android:focusable="false"
-                                android:inputType="date"
-                                style="?appEditTextStyle"
-                                tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
-
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                    </LinearLayout>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/button_calculate"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/calculator_calculate"
-                        style="?appButtonStyle"
-                        tools:ignore="VisualLintButtonSize" />
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+                <Space
+                    android:layout_width="12dp"
+                    android:layout_height="1dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/calculator_to"
+                        style="?appBodyStyle" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/calculator_end_date"
+                        style="?appTextInputLayoutStyle">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/input_end_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:clickable="true"
+                            android:focusable="false"
+                            android:inputType="date"
+                            style="?appEditTextStyle"
+                            tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_calculate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calculator_calculate"
+                style="?appButtonStyle"
+                tools:ignore="VisualLintButtonSize" />
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
