@@ -47,7 +47,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="16dp"
                 android:text="@string/popup_add"
-                style="?appButtonStyle"
+                style="?appButtonTextFilledStyle"
                 tools:ignore="DuplicateSpeakableTextCheck,VisualLintSystemUi" />
 
         </LinearLayout>
@@ -87,7 +87,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_gravity="center"
                 android:text="@string/popup_add"
-                style="?appButtonStyle" />
+                style="?appButtonTextFilledStyle" />
 
         </LinearLayout>
 
@@ -126,7 +126,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="16dp"
                 android:text="@string/popup_add"
-                style="?appButtonStyle"
+                style="?appButtonTextFilledStyle"
                 tools:ignore="TextContrastCheck" />
 
         </LinearLayout>
@@ -166,7 +166,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="16dp"
                 android:text="@string/popup_add"
-                style="?appButtonStyle" />
+                style="?appButtonTextFilledStyle" />
 
         </LinearLayout>
 

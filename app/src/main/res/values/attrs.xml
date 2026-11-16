@@ -17,6 +17,8 @@
     <attr name="appBodyStyle" format="reference" />
     <attr name="appCaptionStyle" format="reference" />
     <attr name="appButtonStyle" format="reference" />
+    <attr name="appButtonTextStyle" format="reference" />
+    <attr name="appButtonTextFilledStyle" format="reference" />
     <attr name="appImageButtonStyle" format="reference" />
     <attr name="appImageStyle" format="reference" />
     <attr name="appTextInputLayoutStyle" format="reference" />
@@ -28,9 +30,15 @@
     <attr name="appSliderStyle" format="reference" />
     <attr name="appDropdownStyle" format="reference" />
     <attr name="appProgressBarStyle" format="reference" />
+    <attr name="appCalendarStyle" format="reference" />
+
+    <attr name="appCalendarOverlay" format="reference" />
 
     <attr name="appButtonText" format="reference" />
     <attr name="appButtonBackground" format="reference" />
+
+    <attr name="appTextButtonText" format="reference" />
+    <attr name="appTextButtonTextBackground" format="reference" />
 
     <attr name="appImageButtonIconTint" format="reference" />
     <attr name="appImageButtonBackground" format="reference" />
@@ -65,4 +73,17 @@
     <attr name="appDropdownBackgroundTint" format="reference" />
     <attr name="appDropdownActiveBackground" format="reference" />
     <attr name="appDropdownHoverBackground" format="reference" />
+
+    <attr name="appProgressBarIndicator" format="reference" />
+    <attr name="appProgressBarTrack" format="reference" />
+
+    <attr name="appCalendarBackground" format="reference" />
+    <attr name="appCalendarWeekDayAppearance" format="reference" />
+    <attr name="appCalendarDateAppearance" format="reference" />
+
+    <attr name="appCalendarWeekDayColor" format="reference" />
+    <attr name="appCalendarDateColor" format="reference" />
+
+    <attr name="appCalendarActivatedColor" format="reference" />
+    <attr name="appCalendarInverseColor" format="reference" />
 </resources>

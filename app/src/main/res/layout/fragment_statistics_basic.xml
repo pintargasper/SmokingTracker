@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
     tools:context=".ui.fragment.statistics.BasicFragment">
 
     <LinearLayout
@@ -255,9 +254,10 @@
             android:id="@+id/statistics_title_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
             android:text="@string/statistics_title_money_section_instructions"
             android:gravity="start"
-            android:visibility="gone"
+            android:visibility="visible"
             style="?appBodyStyle" />
 
         <com.google.android.material.card.MaterialCardView

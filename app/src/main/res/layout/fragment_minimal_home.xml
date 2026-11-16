@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
     android:fillViewport="true">
 
     <LinearLayout
@@ -60,7 +59,6 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_add_cigarette"
-                style="?appButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="8dp"
@@ -70,7 +68,7 @@
                 android:text="@string/home_add_cigarette"
                 android:textSize="32sp"
                 android:textStyle="bold"
-                app:cornerRadius="24dp"
+                style="?appButtonStyle"
                 tools:ignore="VisualLintButtonSize" />
         </LinearLayout>
 

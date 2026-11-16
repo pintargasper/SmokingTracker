@@ -13,7 +13,7 @@
         <item name="colorPrimary">@color/legacy_primary</item>
         <item name="colorOnPrimary">@color/legacy_on_primary</item>
 
-        <item name="appMenuBackground">@color/legacy_background</item>
+        <item name="appMenuBackground">@color/legacy_menu_background</item>
         <item name="appMenuIconTint">@color/legacy_on_background</item>
         <item name="appMenuTextColor">@color/legacy_on_background</item>
         <item name="appMenuActive">@color/legacy_on_background</item>
@@ -23,6 +23,9 @@
 
         <item name="appButtonText">@color/legacy_button_text</item>
         <item name="appButtonBackground">@color/legacy_button_background</item>
+
+        <item name="appTextButtonText">@color/legacy_button_text_text</item>
+        <item name="appTextButtonTextBackground">@color/legacy_button_text_background</item>
 
         <item name="appImageButtonIconTint">@color/legacy_image_button_icon_tint</item>
         <item name="appImageButtonBackground">@color/legacy_image_button_background_tint</item>
@@ -57,5 +60,14 @@
         <item name="appDropdownBackgroundTint">@color/legacy_dropdown_background_tint</item>
         <item name="appDropdownActiveBackground">@color/legacy_dropdown_active_background</item>
         <item name="appDropdownHoverBackground">@color/legacy_dropdown_hover_background</item>
+
+        <item name="appProgressBarIndicator">@color/legacy_progress_indicator</item>
+        <item name="appProgressBarTrack">@color/legacy_progress_track</item>
+
+        <item name="appCalendarBackground">@color/legacy_calendar_background</item>
+        <item name="appCalendarWeekDayColor">@color/legacy_calendar_week_day</item>
+        <item name="appCalendarDateColor">@color/legacy_calendar_date</item>
+        <item name="appCalendarActivatedColor">@color/legacy_calendar_activated</item>
+        <item name="appCalendarInverseColor">@color/legacy_calendar_inverse</item>
     </style>
 </resources>

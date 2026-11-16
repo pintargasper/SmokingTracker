@@ -43,26 +43,25 @@
             android:id="@+id/dialog_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/popup_confirm"
-                android:visibility="gone"
-                style="?appButtonStyle"
-                tools:ignore="VisualLintButtonSize" />
+            android:layout_marginTop="16dp"
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/close"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_close"
-                style="?appButtonStyle"
-                tools:ignore="VisualLintButtonSize" />
+                style="?appButtonTextStyle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/popup_confirm"
+                android:visibility="gone"
+                style="?appButtonTextFilledStyle" />
 
         </LinearLayout>
 

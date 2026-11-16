@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    style="?appCardStyle"
+    android:orientation="vertical"
     tools:ignore="VisualLintBounds">
 
-    <LinearLayout
+    <CalendarView
+        android:id="@+id/custom_calendar_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="300dp"
+        android:showWeekNumber="false"
+        android:theme="?appCalendarOverlay"
+        style="?appCalendarStyle" />
 
-        <CalendarView
-            android:id="@+id/custom_calendar_view"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:showWeekNumber="false" />
-
-    </LinearLayout>
-
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>
