@@ -22,9 +22,7 @@ class AchievementListFragment @JvmOverloads constructor(
 ) {
 
     private val viewModel: AchievementViewModel by viewModels {
-        ModelFactory(
-            container = (requireActivity().application as Application).container
-        )
+        ModelFactory(container = (requireActivity().application as Application).container)
     }
 
     private lateinit var achievementType: AchievementCategory

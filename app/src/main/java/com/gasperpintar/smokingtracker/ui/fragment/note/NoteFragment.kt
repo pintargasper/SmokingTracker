@@ -23,9 +23,7 @@ class NoteFragment @JvmOverloads constructor(
 ) {
 
     private val viewModel: NotesViewModel by viewModels {
-        ModelFactory(
-            container = (requireActivity().application as Application).container
-        )
+        ModelFactory(container = (requireActivity().application as Application).container)
     }
 
     private var noteId: Long = -1L

@@ -10,7 +10,6 @@
         android:id="@+id/label_total_costs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:text="@string/calculator_result_total"
         style="?appSubtitleStyle"
         tools:ignore="VisualLintSystemUi" />
@@ -19,13 +18,13 @@
         android:id="@+id/total_costs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="?appTitleSpecialStyle" />
+        style="?appTitleSpecialStyle"
+        tools:ignore="VisualLintSystemUi" />
 
     <View
         android:id="@+id/view_divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="4dp"
         android:background="?attr/colorOutline" />
 
@@ -110,7 +109,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingVertical="12dp">
+        android:paddingTop="12dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_average_time_per_cigarette"

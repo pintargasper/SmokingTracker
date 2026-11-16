@@ -20,6 +20,10 @@ class StatisticsFragment : Base<FragmentStatisticsBinding>(
         showContent()
     }
 
+    fun setOuterPagerSwipeEnabled(enabled: Boolean) {
+        binding.statisticsViewPager.isUserInputEnabled = enabled
+    }
+
     private fun setupPager() = binding.apply {
         statisticsViewPager.adapter = Pager(
             this@StatisticsFragment,

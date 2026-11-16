@@ -14,9 +14,7 @@ class ForecastFragment : Base<FragmentStatisticsForecastBinding>(
 ) {
 
     private val viewModel: ForecastViewModel by viewModels {
-        ModelFactory(
-            container = (requireActivity().application as Application).container
-        )
+        ModelFactory(container = (requireActivity().application as Application).container)
     }
 
     @Override
