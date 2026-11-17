@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.ui
+package com.gasperpintar.smokingtracker.ui.view
 
 import android.content.Context
 import android.text.TextUtils

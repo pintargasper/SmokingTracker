@@ -9,6 +9,7 @@ import com.gasperpintar.smokingtracker.databinding.FragmentCalculatorBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.TimeHelper
+import com.gasperpintar.smokingtracker.utils.ViewHelper
 import kotlinx.coroutines.launch
 
 class CalculatorFragment : Base<FragmentCalculatorBinding>(
@@ -42,11 +43,11 @@ class CalculatorFragment : Base<FragmentCalculatorBinding>(
         }
 
         buttonCalculate.setOnClickListener {
+            ViewHelper.hideKeyboardAndClearFocus(view = root)
             viewLifecycleOwner.lifecycleScope.launch {
                 calculate()
             }
         }
-
         showContent()
     }
 
