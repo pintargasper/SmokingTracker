@@ -16,7 +16,8 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.database.specifications.SettingsDeleteColumn
+import com.gasperpintar.smokingtracker.database.specifications.ColorScheme
+import com.gasperpintar.smokingtracker.database.specifications.DeleteColumn
 
 @Database(
     entities = [
@@ -29,13 +30,13 @@ import com.gasperpintar.smokingtracker.database.specifications.SettingsDeleteCol
     ],
     version = 8,
     autoMigrations = [
-        AutoMigration(from = 1, to = 2, spec = SettingsDeleteColumn::class),
+        AutoMigration(from = 1, to = 2, spec = DeleteColumn::class),
         // AutoMigration (from = 2, to = 3) MANUALLY HANDLED
         // AutoMigration (from = 3, to = 4) MANUALLY HANDLED
         // AutoMigration (from = 4, to = 5) MANUALLY HANDLED
         AutoMigration (from = 5, to = 6),
         // AutoMigration (from = 6, to = 7) MANUALLY HANDLED
-        AutoMigration(from = 7, to = 8)
+        AutoMigration(from = 7, to = 8, spec = ColorScheme::class)
     ],
     exportSchema = true
 )

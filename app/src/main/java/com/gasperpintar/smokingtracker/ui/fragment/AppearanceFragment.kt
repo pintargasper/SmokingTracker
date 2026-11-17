@@ -1,14 +1,17 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import androidx.appcompat.widget.AppCompatRadioButton
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
+import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.databinding.FragmentAppearanceBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.ColorScheme
+import com.gasperpintar.smokingtracker.type.StartPage
 import kotlinx.coroutines.launch
 
 class AppearanceFragment : Base<FragmentAppearanceBinding>(
@@ -27,70 +30,86 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
 
         viewLifecycleOwner.lifecycleScope.launch {
             val state = viewModel.getState()
-            val theme = listOf(systemThemeRadio, lightThemeRadio, darkThemeRadio)
-            val colorScheme = listOf(systemSchemeRadio, legacySchemeRadio, skySchemeRadio)
 
-            theme.forEachIndexed { index, radio ->
-                radio.isChecked = state.settings.theme == index
-                radio.setOnClickListener {
-                    selectTheme(state = state, radios = theme, theme = index)
+            setupDropdown(
+                dropdown = themeDropdown,
+                options = R.array.appearance_theme_options,
+                selectedIndex = state.settings.theme
+            ) { selectTheme(state, theme = it) }
+
+            setupDropdown(
+                dropdown = schemeDropdown,
+                options = R.array.appearance_scheme_options,
+                selectedIndex = ColorScheme.entries.indexOf(ColorScheme.fromName(state.settings.colorScheme))
+            ) { position ->
+                ColorScheme.entries.getOrNull(index = position)?.let {
+                    selectColorScheme(state, scheme = it)
                 }
             }
 
-            listOf(systemTheme, lightTheme, darkTheme).forEachIndexed { index, card ->
-                card.setOnClickListener {
-                    selectTheme(state = state, radios = theme, theme = index)
+            setupDropdown(
+                dropdown = startPageDropdown,
+                options = R.array.appearance_start_page_options,
+                selectedIndex = StartPage.entries.indexOf(StartPage.fromName(state.settings.startPage))
+            ) { position ->
+                StartPage.entries.getOrNull(index = position)?.let {
+                    selectStartPage(state, startPage = it)
                 }
             }
-
-            colorScheme.forEachIndexed { index, radio ->
-                radio.isChecked = ColorScheme.entries[index] == ColorScheme.fromName(state.settings.colorScheme)
-                radio.setOnClickListener {
-                    selectColorScheme(state = state, radios = colorScheme, scheme = ColorScheme.entries[index])
-                }
-            }
-
-            listOf(systemScheme, legacyScheme, skyScheme).forEachIndexed { index, card ->
-                card.setOnClickListener {
-                    selectColorScheme(state = state, radios = colorScheme, scheme = ColorScheme.entries[index])
-                }
-            }
-
             showContent()
+        }
+    }
+
+    private fun setupDropdown(
+        dropdown: AutoCompleteTextView,
+        options: Int,
+        selectedIndex: Int,
+        onSelected: (Int) -> Unit
+    ) {
+        val items = resources.getStringArray(options)
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, items)
+
+        dropdown.apply {
+            setAdapter(adapter)
+            setText(items[selectedIndex.coerceIn(range = items.indices)], false)
+            setOnItemClickListener { _, _, position, _ ->
+                onSelected(position)
+            }
         }
     }
 
     private fun selectTheme(
         state: SettingsState,
-        radios: List<AppCompatRadioButton>,
         theme: Int
     ) {
         if (state.settings.theme == theme) return
         viewLifecycleOwner.lifecycleScope.launch {
             state.settings = state.settings.copy(theme = theme)
             viewModel.updateSettings(state.settings)
-
             (requireActivity().application as Application).applyTheme(themeId = theme)
-            radios.forEachIndexed { index, radio ->
-                radio.isChecked = index == theme
-            }
         }
     }
 
     private fun selectColorScheme(
         state: SettingsState,
-        radios: List<AppCompatRadioButton>,
         scheme: ColorScheme
     ) {
         if (ColorScheme.fromName(state.settings.colorScheme) == scheme) return
         viewLifecycleOwner.lifecycleScope.launch {
             state.settings = state.settings.copy(colorScheme = scheme.name)
             viewModel.updateSettings(state.settings)
-
-            radios.forEachIndexed { index, radio ->
-                radio.isChecked = ColorScheme.entries[index] == scheme
-            }
             requireActivity().recreate()
+        }
+    }
+
+    private fun selectStartPage(
+        state: SettingsState,
+        startPage: StartPage
+    ) {
+        if (StartPage.fromName(state.settings.startPage) == startPage) return
+        viewLifecycleOwner.lifecycleScope.launch {
+            state.settings = state.settings.copy(startPage = startPage.name)
+            viewModel.updateSettings(state.settings)
         }
     }
 }

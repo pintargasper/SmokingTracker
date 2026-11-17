@@ -12,6 +12,7 @@ import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.type.ColorScheme
+import com.gasperpintar.smokingtracker.type.StartPage
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.parseDateTime
 import org.apache.poi.ss.usermodel.CellType
@@ -24,7 +25,7 @@ object Mappers {
     val ACHIEVEMENTS_HEADERS = listOf("Value", "Times", "LastAchieved", "Reset", "Notify", "Category", "Unit", "Id")
     val COSTS_HEADERS = listOf("Price", "StartDate", "EndDate")
     val NOTES_HEADERS = listOf("Title", "Content", "Mood", "CreatedAt", "UpdatedAt")
-    val SETTINGS_HEADERS = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency", "DayEndMinutes", "ElapsedTimeWarningMinutes", "ColorScheme")
+    val SETTINGS_HEADERS = listOf("Theme", "Language", "Frequency", "Currency", "CustomCurrency", "DayEndMinutes", "ElapsedTimeWarningMinutes", "ColorScheme", "StartPage")
     val NOTIF_SETTINGS_HEADERS = listOf("System", "Achievements", "Progress")
 
     fun parseHistory(
@@ -111,7 +112,8 @@ object Mappers {
             customCurrency = col["CustomCurrency"]?.let { index -> row.getCell(index)?.stringCellValue }.orEmpty(),
             dayEndMinutes = col["DayEndMinutes"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
             elapsedTimeWarningMinutes = warningMinutes,
-            colorScheme = col["ColorScheme"]?.let { index -> row.getCell(index)?.stringCellValue } ?: ColorScheme.SYSTEM.name
+            colorScheme = col["ColorScheme"]?.let { index -> row.getCell(index)?.stringCellValue } ?: ColorScheme.SYSTEM.name,
+            startPage = col["StartPage"]?.let { index -> row.getCell(index)?.stringCellValue } ?: StartPage.HOME.name
         )
     }
 
@@ -144,7 +146,7 @@ object Mappers {
     }
 
     fun SettingsEntity.toExcelRow(): List<Any?> {
-        return listOf(theme, language, frequency, currency, customCurrency, dayEndMinutes, elapsedTimeWarningMinutes, colorScheme)
+        return listOf(theme, language, frequency, currency, customCurrency, dayEndMinutes, elapsedTimeWarningMinutes, colorScheme, startPage)
     }
 
     fun NotificationsSettingsEntity.toExcelRow(): List<Any?> {

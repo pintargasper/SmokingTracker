@@ -189,6 +189,7 @@
     <string name="settings_appearance_scheme_system">System</string>
     <string name="settings_appearance_scheme_legacy">Legacy</string>
     <string name="settings_appearance_scheme_sky">Sky</string>
+    <string name="settings_appearance_start_page">Start page</string>
 
     <string name="about_view">View on</string>
     <string name="about_view_github">View the source code, report issues, and contribute to the project</string>

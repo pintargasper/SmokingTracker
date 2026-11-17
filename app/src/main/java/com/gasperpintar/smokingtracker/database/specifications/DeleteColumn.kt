@@ -11,4 +11,4 @@ import androidx.room.migration.AutoMigrationSpec
         )
     ]
 )
-class SettingsDeleteColumn : AutoMigrationSpec
+class DeleteColumn : AutoMigrationSpec
