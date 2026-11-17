@@ -12,6 +12,7 @@ import com.gasperpintar.smokingtracker.type.AchievementMessage
 import com.gasperpintar.smokingtracker.type.AchievementTitle
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.type.ColorScheme
+import com.gasperpintar.smokingtracker.type.StartPage
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getHeaderColumnMap
@@ -92,7 +93,8 @@ class MappersTest {
             customCurrency = "CHF",
             dayEndMinutes = 90,
             elapsedTimeWarningMinutes = 120,
-            colorScheme = ColorScheme.SYSTEM.name
+            colorScheme = ColorScheme.SYSTEM.name,
+            startPage = StartPage.HOME.name
         )
 
         val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
@@ -181,7 +183,8 @@ class MappersTest {
             customCurrency = "",
             dayEndMinutes = 0,
             elapsedTimeWarningMinutes = 60,
-            colorScheme = ColorScheme.SYSTEM.name
+            colorScheme = ColorScheme.SYSTEM.name,
+            startPage = StartPage.HOME.name
         )
 
         assertEquals(expected, Mappers.parseSettings(row, column))

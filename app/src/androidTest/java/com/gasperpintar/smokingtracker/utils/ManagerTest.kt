@@ -21,6 +21,7 @@ import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.AchievementCategory
 import com.gasperpintar.smokingtracker.type.AchievementUnit
 import com.gasperpintar.smokingtracker.type.ColorScheme
+import com.gasperpintar.smokingtracker.type.StartPage
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import com.gasperpintar.smokingtracker.utils.manager.Mappers
 import kotlinx.coroutines.runBlocking
@@ -170,7 +171,8 @@ class ManagerTest {
                     customCurrency = "CHF",
                     dayEndMinutes = 90,
                     elapsedTimeWarningMinutes = 240,
-                    colorScheme = ColorScheme.SYSTEM.name
+                    colorScheme = ColorScheme.SYSTEM.name,
+                    startPage = StartPage.HOME.name
                 )
             )
             notificationsRepository.insert(settings = NotificationsSettingsEntity(
