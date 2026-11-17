@@ -18,6 +18,7 @@ import androidx.work.WorkManager
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
+import com.gasperpintar.smokingtracker.type.StartPage
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
@@ -35,9 +36,8 @@ class MainActivity : Base<ActivityMainBinding>(
     bindingInflater = ActivityMainBinding::inflate
 ) {
 
-    private val appContainer by lazy { (application as Application).container }
     private val viewModel: MainViewModel by viewModels {
-        ModelFactory(container = appContainer)
+        ModelFactory(container = (application as Application).container)
     }
 
     var permissionsHelper: Permissions = Permissions(activity = this)
@@ -46,7 +46,7 @@ class MainActivity : Base<ActivityMainBinding>(
     override fun initialize() {
         val state = runBlocking { viewModel.getState(context = this@MainActivity) }
 
-        setupPager()
+        setupPager(startPage = state.startPage)
         setupNavigation()
         setupSubNavigation()
 
@@ -82,21 +82,24 @@ class MainActivity : Base<ActivityMainBinding>(
         }
     }
 
-    private fun setupPager() = binding.apply {
+    private fun setupPager(startPage: StartPage) = binding.apply {
         mainViewPager.adapter = Pager(
             this@MainActivity,
-            listOf(::MinimalHomeFragment, ::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)
+            creators = listOf(::MinimalHomeFragment, ::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)
         )
+
+        mainViewPager.setCurrentItem(startPage.ordinal, false)
+        navView.menu[startPage.ordinal].isChecked = true
 
         mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             @Override
             override fun onPageSelected(position: Int) {
-                binding.navView.menu[position].isChecked = true
+                navView.menu[position].isChecked = true
             }
         })
 
         navView.setOnItemSelectedListener {
-            binding.mainViewPager.setCurrentItem(binding.navView.menu.children.indexOf(it), false)
+            mainViewPager.setCurrentItem(navView.menu.children.indexOf(element = it), false)
             true
         }
     }

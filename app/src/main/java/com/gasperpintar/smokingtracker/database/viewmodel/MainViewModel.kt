@@ -12,6 +12,7 @@ import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.MainState
+import com.gasperpintar.smokingtracker.type.StartPage
 import com.gasperpintar.smokingtracker.utils.JsonHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -40,7 +41,11 @@ class MainViewModel(
         settingsRepository.get() ?: SettingsEntity.default(language = Application().applyLanguage(context = context)).also {
             settingsRepository.insert(settings = it)
         }
-        return MainState(isNewVersion = handleAppVersioning(context = context))
+
+        return MainState(
+            isNewVersion = handleAppVersioning(context = context),
+            startPage = StartPage.fromName(settingsRepository.get()?.startPage ?: StartPage.HOME.name)
+        )
     }
 
     private suspend fun handleAppVersioning(
