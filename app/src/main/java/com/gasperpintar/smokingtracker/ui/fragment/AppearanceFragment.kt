@@ -1,6 +1,5 @@
 package com.gasperpintar.smokingtracker.ui.fragment
 
-import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -67,10 +66,7 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
         onSelected: (Int) -> Unit
     ) {
         val items = resources.getStringArray(options)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, items)
-
         dropdown.apply {
-            setAdapter(adapter)
             setText(items[selectedIndex.coerceIn(range = items.indices)], false)
             setOnItemClickListener { _, _, position, _ ->
                 onSelected(position)

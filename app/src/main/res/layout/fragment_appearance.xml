@@ -88,6 +88,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:saveEnabled="false"
                         app:hintEnabled="false"
                         app:endIconMode="dropdown_menu"
                         style="?appTextInputLayoutStyle">
@@ -102,8 +103,8 @@
                             android:clickable="true"
                             android:cursorVisible="false"
                             android:inputType="none"
+                            android:saveEnabled="false"
                             app:simpleItems="@array/appearance_theme_options"
-                            tools:ignore="LabelFor"
                             style="?appDropdownStyle" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -142,6 +143,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:saveEnabled="false"
                         app:hintEnabled="false"
                         app:endIconMode="dropdown_menu"
                         style="?appTextInputLayoutStyle">
@@ -156,8 +158,8 @@
                             android:clickable="true"
                             android:cursorVisible="false"
                             android:inputType="none"
+                            android:saveEnabled="false"
                             app:simpleItems="@array/appearance_scheme_options"
-                            tools:ignore="LabelFor"
                             style="?appDropdownStyle" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -197,6 +199,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:saveEnabled="false"
                         app:hintEnabled="false"
                         app:endIconMode="dropdown_menu"
                         style="?appTextInputLayoutStyle">
@@ -211,8 +214,8 @@
                             android:clickable="true"
                             android:cursorVisible="false"
                             android:inputType="none"
+                            android:saveEnabled="false"
                             app:simpleItems="@array/appearance_start_page_options"
-                            tools:ignore="LabelFor"
                             style="?appDropdownStyle" />
 
                     </com.google.android.material.textfield.TextInputLayout>

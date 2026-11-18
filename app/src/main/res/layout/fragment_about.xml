@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="8dp">
+        android:paddingTop="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -51,45 +51,50 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginHorizontal="8dp"
                 style="?appCardStyle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:padding="24dp">
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/app_icon"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
                         android:contentDescription="@string/application_name"
                         android:src="@mipmap/ic_launcher" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/application_name"
-                        style="?appSubtitleStyle" />
+                        android:layout_weight="1"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/app_tagline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@string/application_tagline"
-                        style="?appBodyStyle" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/application_name"
+                            style="?appSubtitleStyle" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/app_version"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/about_version"
-                        style="?appCaptionStyle"/>
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/app_tagline"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/application_tagline"
+                            style="?appBodyStyle" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/app_version"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/about_version"
+                            style="?appCaptionStyle" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -98,459 +103,58 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginHorizontal="8dp"
                 android:text="@string/about_view"
-                style="?appTitleStyle" />
+                style="?appTitleStyle"
+                tools:ignore="VisualLintSystemUi" />
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/platforms_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/platforms_page_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/github_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="GitHub"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_view_github"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/f_droid_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="F-Droid"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_view_f_droid"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/izzy_on_droid_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="IzzyOnDroid"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_view_izzy_on_droid"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/open_apk_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="OpenAPK"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_view_open_apk"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:gravity="center"
+                android:text="1 / 4"
+                style="?appCaptionStyle"
+                tools:ignore="HardcodedText" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="8dp"
                 android:text="@string/about_contributors"
+                android:layout_marginHorizontal="8dp"
                 style="?appTitleStyle" />
 
             <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
+                android:id="@+id/about_contributors_description"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginHorizontal="8dp"
                 android:text="@string/about_contributors_description"
-                style="?appBodyStyle"/>
+                android:layout_marginHorizontal="8dp"
+                style="?appBodyStyle" />
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/contributors_view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/contributors_page_indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_1_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="pintargasper"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_code"
-                        style="?appBodyStyle"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_slovenian"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_2_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp"
-                    tools:ignore="TouchTargetSizeCheck">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="anzepintar"
-                        tools:ignore="HardcodedText"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_code"
-                        style="?appBodyStyle" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_3_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="mrtaxi"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_ukrainian"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_4_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="jocixlinux-sys"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_serbian"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_5_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="iaaanneed"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_russian"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_6_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="ywnzzl"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_chinese_simplified"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_7_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="acidefluorhydrique"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_chinese_traditional"
-                        style="?appBodyStyle"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_chinese_simplified"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginHorizontal="8dp"
-                style="?appCardStyle">
-
-                <LinearLayout
-                    android:id="@+id/contributor_8_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:minHeight="55dp"
-                    android:orientation="vertical"
-                    android:padding="12dp">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="nrob81"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/about_contributors_hungarian"
-                        style="?appBodyStyle"/>
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:gravity="center"
+                android:text="1 / 8"
+                style="?appCaptionStyle"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

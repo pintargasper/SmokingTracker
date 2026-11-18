@@ -3,6 +3,8 @@ package com.gasperpintar.smokingtracker.ui.fragment
 import androidx.core.content.pm.PackageInfoCompat
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.databinding.FragmentAboutBinding
+import com.gasperpintar.smokingtracker.databinding.ItemAboutPageBinding
+import com.gasperpintar.smokingtracker.ui.adapter.PageAdapter
 import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 
 class AboutFragment : Base<FragmentAboutBinding>(
@@ -22,28 +24,92 @@ class AboutFragment : Base<FragmentAboutBinding>(
         appVersion.text = getString(R.string.about_version, versionName, versionCode)
         createdBy.text = getString(R.string.about_created_by, "Gašper Pintar")
 
-        setupLinks()
+        setupPagers()
         showContent()
     }
 
-    private fun setupLinks() = binding.apply {
-        mapOf(
-            githubLayout to "https://github.com/pintargasper/SmokingTracker",
-            fDroidLayout to "https://f-droid.org/packages/com.gasperpintar.smokingtracker",
-            izzyOnDroidLayout to "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker",
-            openApkLayout to "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/",
-            contributor1Layout to "https://github.com/pintargasper",
-            contributor2Layout to "https://github.com/anzepintar",
-            contributor3Layout to "https://github.com/mrtaxi",
-            contributor4Layout to "https://github.com/jocixlinux-sys",
-            contributor5Layout to "https://github.com/iaanneed",
-            contributor6Layout to "https://github.com/ywnzzl",
-            contributor7Layout to "https://github.com/acidefluorhydrique",
-            contributor8Layout to "https://github.com/nrob81"
-        ).forEach { (view, url) ->
-            view.setOnClickListener {
+    private fun setupPagers() = binding.apply {
+        val platforms = listOf(
+            PageAdapter.Page(
+                title = "GitHub",
+                value = "github.com/pintargasper/SmokingTracker",
+                url = "https://github.com/pintargasper/SmokingTracker"
+            ),
+            PageAdapter.Page(
+                title = "F-Droid",
+                value = "f-droid.org",
+                url = "https://f-droid.org/packages/com.gasperpintar.smokingtracker"
+            ),
+            PageAdapter.Page(
+                title = "IzzyOnDroid",
+                value = "apt.izzysoft.de",
+                url = "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
+            ),
+            PageAdapter.Page(
+                title = "OpenAPK",
+                value = "openapk.net",
+                url = "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/"
+            )
+        )
+
+        val contributors = listOf(
+            PageAdapter.Page(
+                title = "pintargasper",
+                value = "${getString(R.string.about_contributors_code)}, ${getString(R.string.about_contributors_slovenian)}",
+                url = "https://github.com/pintargasper"
+            ),
+            PageAdapter.Page(
+                title = "anzepintar",
+                value = getString(R.string.about_contributors_code),
+                url = "https://github.com/anzepintar"
+            ),
+            PageAdapter.Page(
+                title = "mlnzigzag",
+                value = getString(R.string.about_contributors_code),
+                url = "https://github.com/mlnzigzag"
+            ),
+            PageAdapter.Page(
+                title = "mrtaxi",
+                value = getString(R.string.about_contributors_ukrainian),
+                url = "https://github.com/mrtaxi"
+            ),
+            PageAdapter.Page(
+                title = "jocixlinux-sys",
+                value = getString(R.string.about_contributors_serbian),
+                url = "https://github.com/jocixlinux-sys"
+            ),
+            PageAdapter.Page(
+                title = "iaaanneed",
+                value = getString(R.string.about_contributors_russian),
+                url = "https://github.com/iaaanneed"
+            ),
+            PageAdapter.Page(
+                title = "ywnzzl",
+                value = getString(R.string.about_contributors_chinese_simplified),
+                url = "https://github.com/ywnzzl"
+            ),
+            PageAdapter.Page(
+                title = "acidefluorhydrique",
+                value = "${getString(R.string.about_contributors_chinese_traditional)}, ${getString(R.string.about_contributors_chinese_simplified)}",
+                url = "https://github.com/acidefluorhydrique"
+            ),
+            PageAdapter.Page(
+                title = "nrob81",
+                value = getString(R.string.about_contributors_hungarian),
+                url = "https://github.com/nrob81"
+            )
+        )
+
+        PageAdapter.setupPager(pager = platformsViewPager, indicator = platformsPageIndicator,
+            pages = platforms, bindingInflater = ItemAboutPageBinding::inflate, onPageClick = { url ->
                 requireContext().openUrl(url)
             }
-        }
+        )
+
+        PageAdapter.setupPager(pager = contributorsViewPager, indicator = contributorsPageIndicator,
+            pages = contributors, bindingInflater = ItemAboutPageBinding::inflate, onPageClick = { url ->
+                requireContext().openUrl(url)
+            }
+        )
     }
 }

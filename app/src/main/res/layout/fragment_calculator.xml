@@ -163,10 +163,10 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/input_start_date"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="55dp"
                                 android:clickable="true"
                                 android:focusable="false"
-                                android:inputType="date"
+                                android:inputType="none"
                                 style="?appEditTextStyle"
                                 tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
@@ -199,10 +199,10 @@
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/input_end_date"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="55dp"
                                 android:clickable="true"
                                 android:focusable="false"
-                                android:inputType="date"
+                                android:inputType="none"
                                 style="?appEditTextStyle"
                                 tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
