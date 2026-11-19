@@ -127,11 +127,11 @@ class ScreenshotTest {
         val file = File(context.filesDir, "dummy_data.xlsx")
 
         // Local use: Copy dummy data from test assets to the application's internal storage androidTest/assets/dummy_data.xlsx
-        InstrumentationRegistry.getInstrumentation().context.assets.open("dummy_data.xlsx").use { input ->
+        /*InstrumentationRegistry.getInstrumentation().context.assets.open("dummy_data.xlsx").use { input ->
             file.outputStream().use { output ->
                 input.copyTo(out = output)
             }
-        }
+        }*/
 
         check(value = file.exists()) {
             "Dummy data file not found: ${file.absolutePath}"
