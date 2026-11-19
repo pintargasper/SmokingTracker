@@ -41,6 +41,22 @@ data class AchievementEntry(
         }
     }
 
+    fun toEntity(): AchievementEntity {
+        return AchievementEntity(
+            id = id,
+            image = image,
+            value = value,
+            title = title,
+            message = message,
+            times = times,
+            lastAchieved = lastAchieved,
+            reset = reset,
+            notify = notify,
+            category = category,
+            unit = unit
+        )
+    }
+
     fun getDisplayText(
         context: Context
     ): String {

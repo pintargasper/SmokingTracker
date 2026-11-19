@@ -4,15 +4,15 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
 import com.gasperpintar.smokingtracker.utils.manager.Manager
@@ -22,15 +22,15 @@ class SettingsViewModel(
     private val achievementRepository: AchievementRepository,
     private val historyRepository: HistoryRepository,
     private val settingsRepository: SettingsRepository,
-    private val notificationsSettingsRepository: NotificationsSettingsRepository,
+    private val notificationsRepository: NotificationsRepository,
     private val costsRepository: CostsRepository,
     private val notesRepository: NotesRepository
 ): ViewModel() {
 
     suspend fun getState(): SettingsState {
         val settings = settingsRepository.get()
-        val notificationsSettings = notificationsSettingsRepository.get()
-        val costs = costsRepository.getAll().map(transform = CostEntry::fromEntity)
+        val notificationsSettings = notificationsRepository.get()
+        val costs = costsRepository.getAll()
 
         return SettingsState(
             settings = settings!!,
@@ -40,27 +40,27 @@ class SettingsViewModel(
     }
 
     suspend fun updateSettings(
-        settings: SettingsEntity
+        settings: SettingsEntry
     ) {
         settingsRepository.update(settings = settings)
     }
 
     suspend fun updateNotificationSettings(
-        settings: NotificationsSettingsEntity
+        settings: NotificationsEntry
     ) {
-        notificationsSettingsRepository.update(settings = settings)
+        notificationsRepository.update(settings = settings)
     }
 
     suspend fun addCost(
         cost: CostEntry
     ) {
-        costsRepository.insert(entry = cost.toEntity())
+        costsRepository.insert(entry = cost)
     }
 
     suspend fun deleteCost(
         cost: CostEntry
     ) {
-        costsRepository.delete(entry = cost.toEntity())
+        costsRepository.delete(entry = cost)
     }
 
     suspend fun restoreFile(
@@ -77,7 +77,7 @@ class SettingsViewModel(
                 achievementRepository = achievementRepository,
                 historyRepository = historyRepository,
                 settingsRepository = settingsRepository,
-                notificationsSettingsRepository = notificationsSettingsRepository,
+                notificationsRepository = notificationsRepository,
                 costsRepository = costsRepository,
                 notesRepository = notesRepository,
                 onProgress = onProgress
@@ -93,7 +93,7 @@ class SettingsViewModel(
                     context = context,
                     historyRepository = historyRepository,
                     achievementRepository = achievementRepository,
-                    notificationsSettingsRepository = notificationsSettingsRepository
+                    notificationsRepository = notificationsRepository
                 ).evaluate(lastSmokeTime = lastSmoke.createdAt, now = LocalDateTime.now())
             }
             onFinished()
@@ -116,7 +116,7 @@ class SettingsViewModel(
                 achievementRepository = achievementRepository,
                 historyRepository = historyRepository,
                 settingsRepository = settingsRepository,
-                notificationsSettingsRepository = notificationsSettingsRepository,
+                notificationsRepository = notificationsRepository,
                 costsRepository = costsRepository,
                 notesRepository = notesRepository,
                 onProgress = onProgress

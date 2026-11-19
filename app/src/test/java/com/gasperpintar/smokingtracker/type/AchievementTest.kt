@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker.type
 
-import com.gasperpintar.smokingtracker.model.AchievementEntry
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import org.junit.Assert.assertEquals
@@ -11,11 +11,11 @@ import java.io.File
 
 class AchievementTest {
 
-    private lateinit var achievements: Map<Achievement.Category, List<AchievementEntry>>
+    private lateinit var achievements: Map<Achievement.Category, List<AchievementJson>>
 
     @Before
     fun setup() {
-        val type = object : TypeToken<Map<Achievement.Category, List<AchievementEntry>>>() {}.type
+        val type = object : TypeToken<Map<Achievement.Category, List<AchievementJson>>>() {}.type
         achievements = File("src/main/res/raw/achievements.json").bufferedReader().use { Gson().fromJson(it, type) }
     }
 

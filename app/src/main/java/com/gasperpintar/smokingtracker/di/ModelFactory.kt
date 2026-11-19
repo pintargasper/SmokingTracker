@@ -25,7 +25,7 @@ class ModelFactory(
                     achievementRepository = container.achievementRepository,
                     costsRepository = container.costsRepository,
                     settingsRepository = container.settingsRepository,
-                    notificationsSettingsRepository = container.notificationsSettingsRepository
+                    notificationsRepository = container.notificationsRepository
                 ) as T
             }
 
@@ -50,7 +50,7 @@ class ModelFactory(
                     costsRepository = container.costsRepository,
                     historyRepository = container.historyRepository,
                     notesRepository = container.notesRepository,
-                    notificationsSettingsRepository = container.notificationsSettingsRepository,
+                    notificationsRepository = container.notificationsRepository,
                     settingsRepository = container.settingsRepository
                 ) as T
             }

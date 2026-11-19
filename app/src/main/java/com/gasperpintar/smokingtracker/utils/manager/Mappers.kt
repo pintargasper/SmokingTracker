@@ -1,11 +1,11 @@
 package com.gasperpintar.smokingtracker.utils.manager
 
-import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.database.entity.CostEntity
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.NoteEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.NoteEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.type.Achievement
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
@@ -27,10 +27,10 @@ object Mappers {
         row: Row,
         col: Map<String, Int>,
         formatter: DateTimeFormatter
-    ): HistoryEntity? {
+    ): HistoryEntry? {
         val lent = col["Lent"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: return null
         val createdAt = col["CreatedAt"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
-        return HistoryEntity(id = 0, lent = lent, createdAt = createdAt)
+        return HistoryEntry(id = 0, isLent = lent > 0, createdAt = createdAt, timerLabel = "")
     }
 
     fun parseAchievement(
@@ -38,12 +38,12 @@ object Mappers {
         col: Map<String, Int>,
         index: Int,
         formatter: DateTimeFormatter
-    ): AchievementEntity? {
+    ): AchievementEntry? {
         val enumIndex = index.coerceIn(0, Achievement.Icon.entries.lastIndex)
         val lastAchieved = col["LastAchieved"]?.let { columnIndex -> row.parseDateTime(columnIndex, formatter) }
 
         return runCatching {
-            AchievementEntity(
+            AchievementEntry(
                 id = 0,
                 image = Achievement.Icon.entries[enumIndex].name,
                 value = col["Value"]?.let { columnIndex -> row.getCell(columnIndex)?.numericCellValue?.toInt() } ?: 0,
@@ -63,30 +63,30 @@ object Mappers {
         row: Row,
         col: Map<String, Int>,
         formatter: DateTimeFormatter
-    ): CostEntity? {
+    ): CostEntry? {
         val price = col["Price"]?.let { index -> row.getCell(index)?.numericCellValue } ?: return null
         val startDate = col["StartDate"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
         val endDate = col["EndDate"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
-        return CostEntity(id = 0, price = price, startDate = startDate, endDate = endDate)
+        return CostEntry(id = 0, price = price, startDate = startDate, endDate = endDate)
     }
 
     fun parseNote(
         row: Row,
         col: Map<String, Int>,
         formatter: DateTimeFormatter
-    ): NoteEntity? {
+    ): NoteEntry? {
         val title = col["Title"]?.let { index -> row.getCell(index)?.stringCellValue } ?: return null
         val content = col["Content"]?.let { index -> row.getCell(index)?.stringCellValue }.orEmpty()
         val mood = col["Mood"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: return null
         val createdAt = col["CreatedAt"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
         val updatedAt = col["UpdatedAt"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
-        return NoteEntity(id = 0, title = title, content = content, mood = mood, createdAt = createdAt, updatedAt = updatedAt)
+        return NoteEntry(id = 0, title = title, content = content, mood = mood, createdAt = createdAt, updatedAt = updatedAt)
     }
 
     fun parseSettings(
         row: Row,
         col: Map<String, Int>
-    ): SettingsEntity {
+    ): SettingsEntry {
         val language = col["Language"]?.let { index ->
             row.getCell(index)?.let {
                 if (it.cellType == CellType.STRING) it.stringCellValue
@@ -100,7 +100,7 @@ object Mappers {
             ?: ElapsedTimeWarning.DEFAULT_MINUTES
 
 
-        return SettingsEntity(
+        return SettingsEntry(
             id = 0,
             theme = col["Theme"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
             language = language,
@@ -117,8 +117,8 @@ object Mappers {
     fun parseNotificationsSettings(
         row: Row,
         col: Map<String, Int>
-    ): NotificationsSettingsEntity {
-        return NotificationsSettingsEntity(
+    ): NotificationsEntry {
+        return NotificationsEntry(
             id = 0,
             system = col["System"]?.let { index -> row.getCell(index)?.booleanCellValue } ?: true,
             achievements = col["Achievements"]?.let { index -> row.getCell(index)?.booleanCellValue } ?: true,
@@ -126,27 +126,35 @@ object Mappers {
         )
     }
 
-    fun HistoryEntity.toExcelRow(formatter: DateTimeFormatter): List<Any?> {
-        return listOf(lent, createdAt.format(formatter))
+    fun HistoryEntry.toExcelRow(
+        formatter: DateTimeFormatter
+    ): List<Any?> {
+        return listOf(if (isLent) 1 else 0, createdAt.format(formatter))
     }
 
-    fun AchievementEntity.toExcelRow(formatter: DateTimeFormatter): List<Any?> {
+    fun AchievementEntry.toExcelRow(
+        formatter: DateTimeFormatter
+    ): List<Any?> {
         return listOf(value, times, lastAchieved?.format(formatter).orEmpty(), reset, notify, category.name, unit.name, id)
     }
 
-    fun CostEntity.toExcelRow(formatter: DateTimeFormatter): List<Any?> {
+    fun CostEntry.toExcelRow(
+        formatter: DateTimeFormatter
+    ): List<Any?> {
         return listOf(price, startDate.format(formatter), endDate.format(formatter))
     }
 
-    fun NoteEntity.toExcelRow(formatter: DateTimeFormatter): List<Any?> {
+    fun NoteEntry.toExcelRow(
+        formatter: DateTimeFormatter
+    ): List<Any?> {
         return listOf(title, content, mood, createdAt.format(formatter), updatedAt.format(formatter))
     }
 
-    fun SettingsEntity.toExcelRow(): List<Any?> {
+    fun SettingsEntry.toExcelRow(): List<Any?> {
         return listOf(theme, language, frequency, currency, customCurrency, dayEndMinutes, elapsedTimeWarningMinutes, colorScheme, startPage)
     }
 
-    fun NotificationsSettingsEntity.toExcelRow(): List<Any?> {
+    fun NotificationsEntry.toExcelRow(): List<Any?> {
         return listOf(system, achievements, progress)
     }
 }

@@ -1,11 +1,11 @@
 package com.gasperpintar.smokingtracker.utils.manager
 
-import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.database.entity.CostEntity
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.NoteEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.NoteEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.type.Achievement
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
@@ -42,8 +42,8 @@ class MappersTest {
     @Test
     fun historyRoundTripIsCorrect() {
         val entities = listOf(
-            HistoryEntity(id = 7, lent = 1, createdAt = createdAt),
-            HistoryEntity(id = 8, lent = 0, createdAt = createdAt.plusHours(1))
+            HistoryEntry(id = 7, isLent = true, createdAt = createdAt),
+            HistoryEntry(id = 8, isLent = false, createdAt = createdAt.plusHours(1))
         )
 
         val actual = roundTrip(headers = Mappers.HISTORY_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, _ ->
@@ -55,7 +55,7 @@ class MappersTest {
 
     @Test
     fun costRoundTripIsCorrect() {
-        val entities = listOf(CostEntity(id = 3, startDate = createdAt, endDate = createdAt.plusDays(30), price = 0.275))
+        val entities = listOf(CostEntry(id = 3, startDate = createdAt, endDate = createdAt.plusDays(30), price = 0.275))
 
         val actual = roundTrip(headers = Mappers.COSTS_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, _ ->
             Mappers.parseCost(row, column, formatter)
@@ -67,8 +67,8 @@ class MappersTest {
     @Test
     fun noteRoundTripIsCorrect() {
         val entities = listOf(
-            NoteEntity(id = 1, title = "Opomba č", content = "Vsebina\nv dveh vrsticah", mood = 5, createdAt = createdAt, updatedAt = createdAt.plusMinutes(5)),
-            NoteEntity(id = 2, title = "Empty", content = "", mood = 1, createdAt = createdAt, updatedAt = createdAt)
+            NoteEntry(id = 1, title = "Note ", content = "Content\nin two lines", mood = 5, createdAt = createdAt, updatedAt = createdAt.plusMinutes(5)),
+            NoteEntry(id = 2, title = "Empty", content = "", mood = 1, createdAt = createdAt, updatedAt = createdAt)
         )
 
         val actual = roundTrip(headers = Mappers.NOTES_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, _ ->
@@ -80,7 +80,7 @@ class MappersTest {
 
     @Test
     fun settingsRoundTripIsCorrect() {
-        val entity = SettingsEntity(
+        val entity = SettingsEntry(
             id = 1,
             theme = 2,
             language = "sl",
@@ -101,7 +101,7 @@ class MappersTest {
 
     @Test
     fun notificationsSettingsRoundTripIsCorrect() {
-        val entity = NotificationsSettingsEntity(id = 1, system = false, achievements = true, progress = false)
+        val entity = NotificationsEntry(id = 1, system = false, achievements = true, progress = false)
 
         val actual = roundTrip(headers = Mappers.NOTIF_SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
             Mappers.parseNotificationsSettings(row, column)
@@ -170,7 +170,7 @@ class MappersTest {
     fun parseSettingsUsesDefaultsForColumnsMissingInOlderBackups() {
         val (row, column) = row(headers = listOf("Theme", "Language", "Frequency", "Currency"), values = listOf(1, "en", 2, "$"))
 
-        val expected = SettingsEntity(
+        val expected = SettingsEntry(
             id = 0, theme = 1,
             language = "en",
             frequency = 2,
@@ -189,7 +189,7 @@ class MappersTest {
     fun parseNotificationsSettingsEnablesMissingColumns() {
         val (row, column) = row(headers = listOf("System"), values = listOf(false))
 
-        val expected = NotificationsSettingsEntity(id = 0, system = false, achievements = true, progress = true)
+        val expected = NotificationsEntry(id = 0, system = false, achievements = true, progress = true)
 
         assertEquals(expected, Mappers.parseNotificationsSettings(row, column))
     }
@@ -229,12 +229,12 @@ class MappersTest {
 
     @Test
     fun headersMatchExportedColumns() {
-        assertEquals(Mappers.HISTORY_HEADERS.size, HistoryEntity(id = 0, lent = 0, createdAt = createdAt).toExcelRow(formatter).size)
+        assertEquals(Mappers.HISTORY_HEADERS.size, HistoryEntry(id = 0, isLent = false, createdAt = createdAt).toExcelRow(formatter).size)
         assertEquals(Mappers.ACHIEVEMENTS_HEADERS.size, achievement(index = 0).toExcelRow(formatter).size)
-        assertEquals(Mappers.COSTS_HEADERS.size, CostEntity(id = 0, startDate = createdAt, endDate = createdAt, price = 0.0).toExcelRow(formatter).size)
-        assertEquals(Mappers.NOTES_HEADERS.size, NoteEntity(id = 0, title = "", content = "", mood = 3, createdAt = createdAt, updatedAt = createdAt).toExcelRow(formatter).size)
-        assertEquals(Mappers.SETTINGS_HEADERS.size, SettingsEntity.default().toExcelRow().size)
-        assertEquals(Mappers.NOTIF_SETTINGS_HEADERS.size, NotificationsSettingsEntity.default().toExcelRow().size)
+        assertEquals(Mappers.COSTS_HEADERS.size, CostEntry(id = 0, startDate = createdAt, endDate = createdAt, price = 0.0).toExcelRow(formatter).size)
+        assertEquals(Mappers.NOTES_HEADERS.size, NoteEntry(id = 0, title = "", content = "", mood = 3, createdAt = createdAt, updatedAt = createdAt).toExcelRow(formatter).size)
+        assertEquals(Mappers.SETTINGS_HEADERS.size, SettingsEntry.default().toExcelRow().size)
+        assertEquals(Mappers.NOTIF_SETTINGS_HEADERS.size, NotificationsEntry.default().toExcelRow().size)
     }
 
     private fun <T, R> roundTrip(
@@ -262,8 +262,8 @@ class MappersTest {
         return row to sheet.getHeaderColumnMap()!!
     }
 
-    private fun achievement(index: Int): AchievementEntity {
-        return AchievementEntity(
+    private fun achievement(index: Int): AchievementEntry {
+        return AchievementEntry(
             id = 0,
             image = Achievement.Icon.entries[index].name,
             value = index + 1,

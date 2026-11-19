@@ -14,12 +14,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.fragment.AboutFragment
 import com.gasperpintar.smokingtracker.ui.fragment.CalculatorFragment
@@ -48,7 +48,7 @@ class ScreenshotTest {
     private lateinit var achievementRepository: AchievementRepository
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
-    private lateinit var notificationsSettingsRepository: NotificationsSettingsRepository
+    private lateinit var notificationsRepository: NotificationsRepository
     private lateinit var costsRepository: CostsRepository
     private lateinit var notesRepository: NotesRepository
 
@@ -60,7 +60,7 @@ class ScreenshotTest {
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        notificationsRepository = NotificationsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
         costsRepository = CostsRepository(costDao = database.costsDao())
         notesRepository = NotesRepository(notesDao = database.notesDao())
 
@@ -127,11 +127,11 @@ class ScreenshotTest {
         val file = File(context.filesDir, "dummy_data.xlsx")
 
         // Local use: Copy dummy data from test assets to the application's internal storage androidTest/assets/dummy_data.xlsx
-        /*InstrumentationRegistry.getInstrumentation().context.assets.open("dummy_data.xlsx").use { input ->
+        InstrumentationRegistry.getInstrumentation().context.assets.open("dummy_data.xlsx").use { input ->
             file.outputStream().use { output ->
                 input.copyTo(out = output)
             }
-        }*/
+        }
 
         check(value = file.exists()) {
             "Dummy data file not found: ${file.absolutePath}"
@@ -143,7 +143,7 @@ class ScreenshotTest {
             achievementRepository = achievementRepository,
             historyRepository = historyRepository,
             settingsRepository = settingsRepository,
-            notificationsSettingsRepository = notificationsSettingsRepository,
+            notificationsRepository = notificationsRepository,
             costsRepository = costsRepository,
             notesRepository = notesRepository,
             onProgress = {}
@@ -160,12 +160,12 @@ class ScreenshotTest {
 
     private fun setTestLanguage() = runBlocking {
         val language = getDefaultLanguageIndex()
-        settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntity.default(language = language))
+        settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntry.default(language = language))
     }
 
     private fun setTestCurrency() = runBlocking {
         val currency = getDefaultCurrency()
-        settingsRepository.upsert(settingsRepository.get()?.copy(currency = currency) ?: SettingsEntity.default(currency = currency))
+        settingsRepository.upsert(settingsRepository.get()?.copy(currency = currency) ?: SettingsEntry.default(currency = currency))
     }
 
     private fun getDefaultLanguageIndex(): String {

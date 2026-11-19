@@ -8,7 +8,7 @@ import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.ui.bar.DataSync
 import com.gasperpintar.smokingtracker.utils.FileHelper
@@ -33,7 +33,7 @@ object Manager {
         achievementRepository: AchievementRepository,
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
-        notificationsSettingsRepository: NotificationsSettingsRepository,
+        notificationsRepository: NotificationsRepository,
         costsRepository: CostsRepository,
         notesRepository: NotesRepository,
         onProgress: (Int) -> Unit
@@ -43,7 +43,7 @@ object Manager {
         val costs = costsRepository.getAll()
         val notes = notesRepository.getAll()
         val settings = listOfNotNull(element = settingsRepository.get())
-        val notifSettings = listOfNotNull(element = notificationsSettingsRepository.get())
+        val notifSettings = listOfNotNull(element = notificationsRepository.get())
 
         XSSFWorkbook().use { workbook ->
             DataSync(
@@ -113,7 +113,7 @@ object Manager {
                 FileHelper.getFileName(context, fileUri)
             ),
             notificationId = 1002,
-            notificationsEnabled = notificationsSettingsRepository.get()?.system ?: true,
+            notificationsEnabled = notificationsRepository.get()?.system ?: true,
             fileUri = fileUri
         )
         fileUri
@@ -125,12 +125,12 @@ object Manager {
         achievementRepository: AchievementRepository,
         historyRepository: HistoryRepository,
         settingsRepository: SettingsRepository,
-        notificationsSettingsRepository: NotificationsSettingsRepository,
+        notificationsRepository: NotificationsRepository,
         costsRepository: CostsRepository,
         notesRepository: NotesRepository,
         onProgress: (Int) -> Unit
     ) = withContext(Dispatchers.IO) {
-        val notificationsEnabled = notificationsSettingsRepository.get()?.system ?: true
+        val notificationsEnabled = notificationsRepository.get()?.system ?: true
         var success = false
         try {
             context.contentResolver.openInputStream(fileUri)?.use { stream ->
@@ -153,7 +153,7 @@ object Manager {
                                 importSettingsSheet(workbook = workbook, repository = settingsRepository, onStepProgress = it)
                             },
                             DataSync.SyncedStep(weight = workbook.getRowCount(sheetName = "NotificationsSettings")) {
-                                importNotificationsSettingsSheet(workbook, notificationsSettingsRepository, onStepProgress = it)
+                                importNotificationsSettingsSheet(workbook, notificationsRepository, onStepProgress = it)
                             }
                         )
                     ).run(onProgress)
@@ -229,7 +229,7 @@ object Manager {
 
     private suspend fun importNotificationsSettingsSheet(
         workbook: XSSFWorkbook,
-        repository: NotificationsSettingsRepository,
+        repository: NotificationsRepository,
         onStepProgress: (Int) -> Unit
     ) {
         workbook.importSingleRow(sheetName = "NotificationsSettings", onStepProgress) { row, col ->

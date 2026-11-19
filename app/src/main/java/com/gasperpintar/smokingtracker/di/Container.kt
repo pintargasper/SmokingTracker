@@ -7,7 +7,7 @@ import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 
 class Container(context: Context): IContainer {
@@ -35,7 +35,7 @@ class Container(context: Context): IContainer {
     )
 
     @get:Override
-    override val notificationsSettingsRepository = NotificationsSettingsRepository(
+    override val notificationsRepository = NotificationsRepository(
         notificationsSettingsDao = database.notificationsSettingsDao()
     )
 

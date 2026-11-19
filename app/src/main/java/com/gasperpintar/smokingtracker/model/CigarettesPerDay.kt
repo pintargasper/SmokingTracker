@@ -1,4 +1,4 @@
-package com.gasperpintar.smokingtracker.database.model
+package com.gasperpintar.smokingtracker.model
 
 data class CigarettesPerDay(
    val dailySum: Int,

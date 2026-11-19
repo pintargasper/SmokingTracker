@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.gasperpintar.smokingtracker.type.Appearance
-import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 
 @Entity(tableName = "settings")
 data class SettingsEntity(
@@ -32,25 +31,4 @@ data class SettingsEntity(
 
     @ColumnInfo(defaultValue = "HOME")
     val startPage: Appearance.StartPage
-) {
-
-    companion object {
-        fun default(
-            language: String = "system",
-            currency: String = "€"
-        ): SettingsEntity {
-            return SettingsEntity(
-                id = 0L,
-                theme = 0,
-                language = language,
-                frequency = 0,
-                currency = currency,
-                customCurrency = "",
-                dayEndMinutes = 0,
-                elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES,
-                colorScheme = Appearance.ColorScheme.SYSTEM,
-                startPage = Appearance.StartPage.HOME
-            )
-        }
-    }
-}
+)

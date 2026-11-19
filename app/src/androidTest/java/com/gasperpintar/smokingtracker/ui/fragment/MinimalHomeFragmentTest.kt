@@ -17,8 +17,8 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
@@ -49,7 +49,7 @@ class MinimalHomeFragmentTest {
             settingsRepository.get()?.copy(
                 dayEndMinutes = 0,
                 elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
-            ) ?: SettingsEntity.default().copy(dayEndMinutes = 0)
+            ) ?: SettingsEntry.default().copy(dayEndMinutes = 0)
         )
         context.getSharedPreferences("settings", Context.MODE_PRIVATE)
             .edit()
@@ -72,7 +72,7 @@ class MinimalHomeFragmentTest {
             val entries = awaitEntries()
 
             assertEquals(1, entries.size)
-            assertEquals(0, entries.single().lent)
+            assertEquals(false, entries.single().isLent)
             assertTrue(entries.single().createdAt >= before)
             assertTrue(entries.single().createdAt <= LocalDateTime.now().plusSeconds(2))
             onView(withId(R.id.today_count)).check(matches(withText("1")))
@@ -135,7 +135,7 @@ class MinimalHomeFragmentTest {
         }
     }
 
-    private fun awaitEntries(): List<HistoryEntity> {
+    private fun awaitEntries(): List<HistoryEntry> {
         val deadline = System.currentTimeMillis() + 5_000
         while (System.currentTimeMillis() < deadline) {
             val entries = runBlocking { historyRepository.getAll() }

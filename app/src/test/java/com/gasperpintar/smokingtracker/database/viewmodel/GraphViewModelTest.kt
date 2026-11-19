@@ -1,9 +1,9 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.fake.FakeHistoryDao
 import com.gasperpintar.smokingtracker.database.fake.FakeSettingsDao
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.GraphState
@@ -25,7 +25,7 @@ class GraphViewModelTest {
     fun setup() = runBlocking {
         historyDao = FakeHistoryDao()
         settingsDao = FakeSettingsDao()
-        settingsDao.insert(entity = SettingsEntity.default())
+        settingsDao.insert(entity = SettingsEntry.default().toEntity())
 
         viewModel = GraphViewModel(
             historyRepository = HistoryRepository(historyDao = historyDao),

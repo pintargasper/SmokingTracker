@@ -14,11 +14,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.entity.CostEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.databinding.ContainerContentCostBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentChangelogBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentCostsBinding
@@ -141,9 +140,9 @@ object DialogManager {
 
     fun showNotificationsDialog(
         context: FragmentActivity,
-        settings: SettingsEntity,
-        notificationsSettings: NotificationsSettingsEntity,
-        onSuccess: (SettingsEntity, NotificationsSettingsEntity) -> Unit,
+        settings: SettingsEntry,
+        notificationsSettings: NotificationsEntry,
+        onSuccess: (SettingsEntry, NotificationsEntry) -> Unit,
     ) = BaseDialog.show(context = context, inflate = DialogContentNotificationsBinding::inflate) { content ->
         binding.title.setText(R.string.notifications_popup)
         binding.message.setText(R.string.notifications_popup_info)
@@ -154,7 +153,7 @@ object DialogManager {
         fun bindCheckbox(
             checkbox: CheckBox,
             initialValue: Boolean,
-            update: (NotificationsSettingsEntity, Boolean) -> NotificationsSettingsEntity
+            update: (NotificationsEntry, Boolean) -> NotificationsEntry
         ) {
             checkbox.isChecked = initialValue
             checkbox.setOnCheckedChangeListener { _, isChecked ->
@@ -178,7 +177,7 @@ object DialogManager {
 
     fun showEndDayDialog(
         context: FragmentActivity,
-        settings: SettingsEntity,
+        settings: SettingsEntry,
         onSuccess: (Int) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentEndDayBinding::inflate) { content ->
         content.timePicker.is24Hour = DateFormat.is24HourFormat(context)
@@ -241,7 +240,7 @@ object DialogManager {
 
     fun showCurrencyDialog(
         context: FragmentActivity,
-        settings: SettingsEntity,
+        settings: SettingsEntry,
         onSuccess: (String, String) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentCurrencyBinding::inflate) { content ->
         binding.title.setText(R.string.currency_popup)
@@ -290,7 +289,7 @@ object DialogManager {
     fun showCostsDialog(
         context: FragmentActivity,
         currency: String,
-        onSuccess: suspend (CostEntry?, CostEntity?, List<CostEntry>?) -> List<CostEntry>
+        onSuccess: suspend (CostEntry?, CostEntry?, List<CostEntry>?) -> List<CostEntry>
     ) = BaseDialog.show(context = context, inflate = DialogContentCostsBinding::inflate) { content ->
         binding.title.setText(R.string.costs_popup)
         binding.message.setText(R.string.costs_popup_info)
@@ -345,7 +344,7 @@ object DialogManager {
             context.lifecycleScope.launch {
                 onSuccess(
                     null,
-                    CostEntity(
+                    CostEntry(
                         id = 0L,
                         startDate = start,
                         endDate = end.takeIf { it.toLocalDate() != LocalDate.now() }

@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.entity.NoteEntity
+import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentNoteBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
@@ -27,7 +27,7 @@ class NoteFragment @JvmOverloads constructor(
     }
 
     private var noteId: Long = -1L
-    private var existingNote: NoteEntity? = null
+    private var existingNote: NoteEntry? = null
     private var isSaving = false
 
     @Override
@@ -105,7 +105,7 @@ class NoteFragment @JvmOverloads constructor(
                     try {
                         val now = LocalDateTime.now()
                         viewModel.save(
-                            NoteEntity(
+                            NoteEntry(
                                 id = existingNote?.id ?: 0L,
                                 title = title,
                                 content = content,

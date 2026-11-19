@@ -5,12 +5,12 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
-import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.type.Achievement
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -39,14 +39,14 @@ class AchievementEvaluatorTest {
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
 
-        val notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
-        notificationsSettingsRepository.insert(settings = NotificationsSettingsEntity.default().copy(achievements = false))
+        val notificationsRepository = NotificationsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        notificationsRepository.insert(settings = NotificationsEntry.default(achievements = false))
 
         evaluator = AchievementEvaluator(
             context = context,
             historyRepository = historyRepository,
             achievementRepository = achievementRepository,
-            notificationsSettingsRepository = notificationsSettingsRepository
+            notificationsRepository = notificationsRepository
         )
     }
 
@@ -108,7 +108,9 @@ class AchievementEvaluatorTest {
     fun evaluateUnlocksCigarettesAvoidedUsingDailyAverage() = runBlocking {
         insertAchievement(value = 20, unit = Achievement.Unit.CIGARETTES, category = Achievement.Category.CIGARETTES_AVOIDED)
         listOf(lastSmokeTime.minusDays(2), lastSmokeTime.minusDays(1)).forEach { day ->
-            repeat(times = 10) { historyRepository.insert(entry = HistoryEntity(id = 0, lent = 0, createdAt = day.plusMinutes(it.toLong()))) }
+            repeat(times = 10) {
+                historyRepository.insert(entry = HistoryEntry(id = 0, isLent = false, createdAt = day.plusMinutes(it.toLong()), timerLabel = ""))
+            }
         }
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(47))
@@ -143,7 +145,7 @@ class AchievementEvaluatorTest {
     ) {
         achievementRepository.insert(
             entries = listOf(
-                AchievementEntity(
+                AchievementEntry(
                     id = 0,
                     image = "W1D",
                     value = value,

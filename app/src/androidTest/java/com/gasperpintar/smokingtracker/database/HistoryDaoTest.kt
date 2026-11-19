@@ -4,7 +4,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
+import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.After

@@ -16,10 +16,7 @@ import java.time.LocalDateTime
 class Worker(
     context: Context,
     workerParams: WorkerParameters,
-) : CoroutineWorker(
-    appContext = context,
-    workerParams
-) {
+) : CoroutineWorker(appContext = context, workerParams) {
 
     private val container by lazy {
         (applicationContext as Application).container
@@ -35,14 +32,14 @@ class Worker(
 
         val lastHistory = container.historyRepository.getLast()
         val settings = container.settingsRepository.get()
-        val notifications = container.notificationsSettingsRepository.get()
+        val notifications = container.notificationsRepository.get()
 
         if (lastHistory != null) {
             AchievementEvaluator(
                 context = applicationContext,
                 historyRepository = container.historyRepository,
                 achievementRepository = container.achievementRepository,
-                notificationsSettingsRepository = container.notificationsSettingsRepository
+                notificationsRepository = container.notificationsRepository
             ).evaluate(lastSmokeTime = lastHistory.createdAt, now = now)
         }
 

@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker.model
 
-data class AchievementEntry(
+data class AchievementJson(
     val icon: String,
     val value: Int,
     val title: String,

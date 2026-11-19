@@ -1,9 +1,6 @@
 package com.gasperpintar.smokingtracker.database
 
-import com.gasperpintar.smokingtracker.type.Achievement
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
-import org.junit.Assert.assertThrows
 import org.junit.Test
 import java.time.LocalDateTime
 
@@ -38,33 +35,5 @@ class ConvertersTest {
         ).map { converters.fromLocalDateTime(date = it) }
 
         assertEquals(formatted, formatted.sorted())
-    }
-
-    @Test
-    fun achievementCategoryRoundTripIsCorrect() {
-        Achievement.Category.entries.forEach {
-            assertEquals(it, converters.toAchievementCategory(value = converters.fromAchievementCategory(category = it)))
-        }
-    }
-
-    @Test
-    fun achievementUnitRoundTripIsCorrect() {
-        Achievement.Unit.entries.forEach {
-            assertEquals(it, converters.toAchievementUnit(value = converters.fromAchievementUnit(unit = it)))
-        }
-    }
-
-    @Test
-    fun enumConvertersKeepNullValues() {
-        assertNull(converters.fromAchievementCategory(category = null))
-        assertNull(converters.toAchievementCategory(value = null))
-        assertNull(converters.fromAchievementUnit(unit = null))
-        assertNull(converters.toAchievementUnit(value = null))
-    }
-
-    @Test
-    fun enumConvertersRejectUnknownNames() {
-        assertThrows(IllegalArgumentException::class.java) { converters.toAchievementCategory(value = "UNKNOWN") }
-        assertThrows(IllegalArgumentException::class.java) { converters.toAchievementUnit(value = "UNKNOWN") }
     }
 }

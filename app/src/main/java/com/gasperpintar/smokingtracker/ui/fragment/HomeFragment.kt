@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBinding
@@ -33,7 +32,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
         ModelFactory(container = (requireActivity().application as Application).container)
     }
 
-    private var lastEntry: HistoryEntity? = null
+    private var lastEntry: HistoryEntry? = null
     private var timerJob: Job? = null
 
     private lateinit var adapter: Adapter<HistoryEntry, ContainerContentHistoryBinding>
@@ -155,7 +154,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
     }
 
     private fun updateTimerLabel(
-        entry: HistoryEntity?
+        entry: HistoryEntry?
     ) = binding.apply {
         val duration = entry?.createdAt?.let { createdAt ->
             Duration.between(createdAt, LocalDateTime.now())

@@ -2,9 +2,9 @@ package com.gasperpintar.smokingtracker.utils
 
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.model.AboutEntry
-import com.gasperpintar.smokingtracker.model.AchievementEntry
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.*
 import com.gasperpintar.smokingtracker.ui.adapter.ItemAdapter
@@ -15,18 +15,20 @@ import com.google.gson.reflect.TypeToken
 class JsonHelper(
     private val achievementRepository: AchievementRepository? = null
 ) {
-    suspend fun initializeAchievements(context: Context) {
+    suspend fun initializeAchievements(
+        context: Context
+    ) {
         val existing = achievementRepository?.getAll()
 
-        val rawData: Map<Achievement.Category, List<AchievementEntry>> = context.resources
+        val rawData: Map<Achievement.Category, List<AchievementJson>> = context.resources
             .openRawResource(R.raw.achievements).bufferedReader().use {
-                Gson().fromJson(it, object : TypeToken<Map<Achievement.Category, List<AchievementEntry>>>() {}.type)
+                Gson().fromJson(it, object : TypeToken<Map<Achievement.Category, List<AchievementJson>>>() {}.type)
             }
 
         val newEntries = rawData.flatMap { (category, entries) ->
             entries.filter { entry -> existing?.none { it.category == category && it.title == entry.title }
                 ?: return@flatMap emptyList() }.map { entry ->
-                AchievementEntity(
+                AchievementEntry(
                     id = 0,
                     image = entry.icon.uppercase(),
                     value = entry.value,

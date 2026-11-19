@@ -5,11 +5,11 @@ import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.MainState
 import com.gasperpintar.smokingtracker.type.Appearance
@@ -22,7 +22,7 @@ class MainViewModel(
     private val achievementRepository: AchievementRepository,
     private val costsRepository: CostsRepository,
     private val settingsRepository: SettingsRepository,
-    private val notificationsSettingsRepository: NotificationsSettingsRepository
+    private val notificationsRepository: NotificationsRepository
 ): ViewModel() {
 
     init {
@@ -34,11 +34,11 @@ class MainViewModel(
     suspend fun getState(
         context: Context
     ): MainState {
-        notificationsSettingsRepository.get() ?: NotificationsSettingsEntity.default().also {
-            notificationsSettingsRepository.insert(settings = it)
+        notificationsRepository.get() ?: NotificationsEntry.default().also {
+            notificationsRepository.insert(settings = it)
         }
 
-        settingsRepository.get() ?: SettingsEntity.default(language = Application().applyLanguage(context = context)).also {
+        settingsRepository.get() ?: SettingsEntry.default(language = Application().applyLanguage(context = context)).also {
             settingsRepository.insert(settings = it)
         }
 

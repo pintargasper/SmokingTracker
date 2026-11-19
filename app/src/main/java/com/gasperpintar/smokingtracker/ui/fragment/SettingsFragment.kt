@@ -15,7 +15,6 @@ import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.MainActivity
-import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
@@ -154,13 +153,10 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         }
 
         costsLayout.setOnClickListener {
-            DialogManager.showCostsDialog(
-                context = requireActivity(),
-                currency = state.settings.currency
-            ) { entry, entity, _ ->
+            DialogManager.showCostsDialog(context = requireActivity(), currency = state.settings.currency) { entry1, entry2, _ ->
                 when {
-                    entry != null -> viewModel.deleteCost(entry)
-                    entity != null -> viewModel.addCost(CostEntry.fromEntity(entity))
+                    entry1 != null -> viewModel.deleteCost(entry1)
+                    entry2 != null -> viewModel.addCost(entry2)
                 }
                 viewModel.getState().costs
             }

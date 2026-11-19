@@ -10,9 +10,15 @@ data class HistoryEntry(
     override val id: Long,
     val isLent: Boolean,
     val createdAt: LocalDateTime,
-    val timerLabel: String
+    val timerLabel: String = ""
 ): IIdentifiable {
     companion object {
+        fun default(isLent: Boolean) = HistoryEntry(
+            id = 0L,
+            isLent = isLent,
+            createdAt = LocalDateTime.now(),
+        )
+
         fun fromEntity(
             entity: HistoryEntity
         ): HistoryEntry {

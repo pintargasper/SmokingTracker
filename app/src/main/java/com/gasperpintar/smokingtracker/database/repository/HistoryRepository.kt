@@ -1,8 +1,7 @@
 package com.gasperpintar.smokingtracker.database.repository
 
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
-import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,34 +11,34 @@ import java.time.LocalDateTime
 class HistoryRepository(
     private val historyDao: HistoryDao
 ) {
-    private val _changes = MutableStateFlow(0L)
+    private val _changes = MutableStateFlow(value = 0L)
     val changes: StateFlow<Long> = _changes.asStateFlow()
 
     suspend fun insert(
-        entry: HistoryEntity
+        entry: HistoryEntry
     ) {
-        historyDao.insert(entity = entry)
+        historyDao.insert(entity = entry.toEntity())
         notifyChanged()
     }
 
     suspend fun insertAll(
-        entries: List<HistoryEntity>
+        entries: List<HistoryEntry>
     ) {
-        historyDao.insertAll(entities = entries)
+        historyDao.insertAll(entities = entries.map(transform = HistoryEntry::toEntity))
         notifyChanged()
     }
 
     suspend fun update(
-        entry: HistoryEntity
+        entry: HistoryEntry
     ) {
-        historyDao.update(entity = entry)
+        historyDao.update(entity = entry.toEntity())
         notifyChanged()
     }
 
     suspend fun delete(
-        entry: HistoryEntity
+        entry: HistoryEntry
     ) {
-        historyDao.delete(entity = entry)
+        historyDao.delete(entity = entry.toEntity())
         notifyChanged()
     }
 
@@ -53,18 +52,19 @@ class HistoryRepository(
         _changes.value += 1
     }
 
-    suspend fun getLast(): HistoryEntity? {
-        return historyDao.getLast()
+    suspend fun getLast(): HistoryEntry? {
+        return historyDao.getLast()?.let(block = HistoryEntry::fromEntity)
     }
 
-    suspend fun getAll(): List<HistoryEntity> {
-        return historyDao.getAll()
+    suspend fun getAll(): List<HistoryEntry> {
+        return historyDao.getAll().map(transform = HistoryEntry::fromEntity)
     }
 
     suspend fun getBetween(
-        start: LocalDateTime, end: LocalDateTime
-    ): List<HistoryEntity> {
-        return historyDao.getBetween(start = start, end = end)
+        start: LocalDateTime,
+        end: LocalDateTime
+    ): List<HistoryEntry> {
+        return historyDao.getBetween(start = start, end = end).map(transform = HistoryEntry::fromEntity)
     }
 
     suspend fun getCountBetween(
@@ -73,7 +73,10 @@ class HistoryRepository(
         return historyDao.getCountBetween(start = start, end = end)
     }
 
-    suspend fun getSmokedCountBetween(start: LocalDateTime, end: LocalDateTime): Int {
+    suspend fun getSmokedCountBetween(
+        start: LocalDateTime,
+        end: LocalDateTime
+    ): Int {
         return historyDao.getSmokedCountBetween(start = start, end = end)
     }
 
@@ -98,6 +101,6 @@ class HistoryRepository(
     }
 
     suspend fun getEntries(date: LocalDateTime): List<HistoryEntry> {
-        return getBetween(start = date.minusMonths(12), end = date).map(transform = HistoryEntry::fromEntity)
+        return getBetween(start = date.minusMonths(12), end = date)
     }
 }

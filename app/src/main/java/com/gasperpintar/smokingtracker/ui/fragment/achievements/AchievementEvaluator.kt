@@ -2,11 +2,10 @@ package com.gasperpintar.smokingtracker.ui.fragment.achievements
 
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.type.Achievement
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import java.time.LocalDateTime
@@ -15,13 +14,16 @@ class AchievementEvaluator(
     private val context: Context,
     private val historyRepository: HistoryRepository,
     private val achievementRepository: AchievementRepository,
-    private val notificationsSettingsRepository: NotificationsSettingsRepository
+    private val notificationsRepository: NotificationsRepository
 ) {
 
-    suspend fun evaluate(lastSmokeTime: LocalDateTime, now: LocalDateTime) {
+    suspend fun evaluate(
+        lastSmokeTime: LocalDateTime,
+        now: LocalDateTime
+    ) {
         val achievements = achievementRepository.getAll().ifEmpty { return }
         val averageCigarettesPerDay = historyRepository.getAverageCigarettesPerDay()
-        val notifyEnabled = notificationsSettingsRepository.get()?.achievements == true
+        val notifyEnabled = notificationsRepository.get()?.achievements == true
         if (notifyEnabled) Notifications.createNotificationChannel(context)
 
         achievements.forEach { achievement ->
@@ -47,8 +49,10 @@ class AchievementEvaluator(
         }
     }
 
-    private fun sendNotification(achievement: AchievementEntity) {
-        val text = AchievementEntry.fromEntity(achievement).getDisplayText(context)
+    private fun sendNotification(
+        achievement: AchievementEntry
+    ) {
+        val text = achievement.getDisplayText(context)
         val resId = if (achievement.unit == Achievement.Unit.CIGARETTES) R.string.notification_achievement_unlocked_content_cigarettes
         else R.string.notification_achievement_unlocked_content_time
 

@@ -14,7 +14,7 @@ import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
+import com.gasperpintar.smokingtracker.database.entity.NotificationsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.specifications.ColorScheme
 import com.gasperpintar.smokingtracker.database.specifications.DeleteColumn
@@ -24,7 +24,7 @@ import com.gasperpintar.smokingtracker.database.specifications.DeleteColumn
         AchievementEntity::class,
         HistoryEntity::class,
         SettingsEntity::class,
-        NotificationsSettingsEntity::class,
+        NotificationsEntity::class,
         CostEntity::class,
         NoteEntity::class
     ],

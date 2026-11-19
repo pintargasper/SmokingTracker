@@ -11,12 +11,4 @@ data class HistoryEntity(
     val id: Long,
     val lent: Int,
     val createdAt: LocalDateTime
-) {
-    companion object {
-        fun default(isLent: Boolean) = HistoryEntity(
-            id = 0L,
-            lent = if (isLent) 1 else 0,
-            createdAt = LocalDateTime.now()
-        )
-    }
-}
+)

@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -53,7 +53,7 @@ class LocalizationHelperTest {
 
         assertTrue("English language must exist in language values", english == "en")
 
-        settingsRepository.insert(settings = SettingsEntity.default(language = english ?: languageEnglish))
+        settingsRepository.insert(settings = SettingsEntry.default(language = english ?: languageEnglish))
 
         val actual = LocalizationHelper.getLocalizedContext(context, settingsRepository).resources.configuration.locales[0].language
 
@@ -118,7 +118,7 @@ class LocalizationHelperTest {
 
     @Test
     fun formatMoneyFormatsValueWithConfiguredCurrency() = runBlocking {
-        settingsRepository.insert(settings = SettingsEntity.default(language = languageSystem).copy(currency = "$"))
+        settingsRepository.insert(settings = SettingsEntry.default(language = languageSystem).copy(currency = "$"))
 
         val expected = "${DecimalFormat("0.00#").format(12.5)} $"
         val actual = LocalizationHelper.formatMoney(settingsRepository = settingsRepository, value = 12.5)
@@ -128,7 +128,7 @@ class LocalizationHelperTest {
 
     @Test
     fun formatMoneyFormatsValueWithThreeDecimalPlaces() = runBlocking {
-        settingsRepository.insert(settings = SettingsEntity.default(language = languageSystem).copy(currency = "€"))
+        settingsRepository.insert(settings = SettingsEntry.default(language = languageSystem).copy(currency = "€"))
 
         val expected = "${DecimalFormat("0.00#").format(12.30)} €"
         val actual = LocalizationHelper.formatMoney(settingsRepository = settingsRepository, value = 12.30)

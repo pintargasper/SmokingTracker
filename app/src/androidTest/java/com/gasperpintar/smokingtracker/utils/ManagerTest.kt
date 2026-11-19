@@ -7,16 +7,16 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
-import com.gasperpintar.smokingtracker.database.entity.CostEntity
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.NoteEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.NoteEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.type.Achievement
 import com.gasperpintar.smokingtracker.type.Appearance
@@ -44,7 +44,7 @@ class ManagerTest {
     private lateinit var achievementRepository: AchievementRepository
     private lateinit var historyRepository: HistoryRepository
     private lateinit var settingsRepository: SettingsRepository
-    private lateinit var notificationsRepository: NotificationsSettingsRepository
+    private lateinit var notificationsRepository: NotificationsRepository
     private lateinit var costsRepository: CostsRepository
     private lateinit var notesRepository: NotesRepository
 
@@ -55,8 +55,7 @@ class ManagerTest {
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        notificationsRepository =
-            NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        notificationsRepository = NotificationsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
         costsRepository = CostsRepository(costDao = database.costsDao())
         notesRepository = NotesRepository(notesDao = database.notesDao())
     }
@@ -70,9 +69,7 @@ class ManagerTest {
     fun backupDataToWorkbook() {
         runBlocking {
             val (file, uri) = temporaryFile()
-            settingsRepository.insert(
-                settings = SettingsEntity.default().copy(elapsedTimeWarningMinutes = 120)
-            )
+            settingsRepository.insert(settings = SettingsEntry.default().copy(elapsedTimeWarningMinutes = 120))
 
             backup(fileUri = uri)
 
@@ -112,7 +109,7 @@ class ManagerTest {
             assertTrue("Settings should exist", settings != null)
             assertTrue("Notifications settings should exist", notifications != null)
 
-            assertEquals(1, histories.first().lent)
+            assertEquals(true, histories.first().isLent)
 
             val achievement = achievements.first()
             assertEquals(9, achievement.value)
@@ -143,25 +140,25 @@ class ManagerTest {
             }
             historyRepository.insertAll(
                 entries = listOf(
-                    HistoryEntity(id = 0, lent = 0, createdAt = createdAt),
-                    HistoryEntity(id = 0, lent = 1, createdAt = createdAt.plusHours(1)),
-                    HistoryEntity(id = 0, lent = 0, createdAt = createdAt.plusDays(1))
+                    HistoryEntry(id = 0, isLent = false, createdAt = createdAt),
+                    HistoryEntry(id = 0, isLent = true, createdAt = createdAt.plusHours(1)),
+                    HistoryEntry(id = 0, isLent = false, createdAt = createdAt.plusDays(1))
                 )
             )
             costsRepository.insertAll(
                 entries = listOf(
-                    CostEntity(id = 0, startDate = createdAt.minusDays(30), endDate = createdAt, price = 0.25),
-                    CostEntity(id = 0, startDate = createdAt, endDate = createdAt.plusDays(30), price = 0.3)
+                    CostEntry(id = 0, startDate = createdAt.minusDays(30), endDate = createdAt, price = 0.25),
+                    CostEntry(id = 0, startDate = createdAt, endDate = createdAt.plusDays(30), price = 0.3)
                 )
             )
             notesRepository.insertAll(
                 entries = listOf(
-                    NoteEntity(id = 0, title = "First", content = "Smoking note", mood = 5, createdAt = createdAt, updatedAt = createdAt.plusMinutes(5)),
-                    NoteEntity(id = 0, title = "Second", content = "", mood = 1, createdAt = createdAt.plusDays(1), updatedAt = createdAt.plusDays(1))
+                    NoteEntry(id = 0, title = "First", content = "Smoking note", mood = 5, createdAt = createdAt, updatedAt = createdAt.plusMinutes(5)),
+                    NoteEntry(id = 0, title = "Second", content = "", mood = 1, createdAt = createdAt.plusDays(1), updatedAt = createdAt.plusDays(1))
                 )
             )
             settingsRepository.insert(
-                settings = SettingsEntity(
+                settings = SettingsEntry(
                     id = 0, theme = 2,
                     language = "sl",
                     frequency = 1,
@@ -173,7 +170,7 @@ class ManagerTest {
                     startPage = Appearance.StartPage.HOME
                 )
             )
-            notificationsRepository.insert(settings = NotificationsSettingsEntity(
+            notificationsRepository.insert(settings = NotificationsEntry(
                 id = 0, system = false,
                 achievements = true,
                 progress = false
@@ -193,7 +190,7 @@ class ManagerTest {
     @Test
     fun restoreFromLegacySettingsSheetPreservesElapsedTimeWarning() {
         runBlocking {
-            settingsRepository.insert(settings = SettingsEntity.default().copy(elapsedTimeWarningMinutes = 120))
+            settingsRepository.insert(settings = SettingsEntry.default().copy(elapsedTimeWarningMinutes = 120))
 
             restore(fileUri = uploadWorkbook())
 
@@ -221,7 +218,7 @@ class ManagerTest {
     @Test
     fun restoreFromInvalidFileKeepsExistingData() {
         runBlocking {
-            historyRepository.insert(entry = HistoryEntity(id = 0, lent = 0, createdAt = createdAt))
+            historyRepository.insert(entry = HistoryEntry(id = 0, isLent = false, createdAt = createdAt))
             val (file, uri) = temporaryFile()
             file.writeText("not a workbook")
 
@@ -260,7 +257,7 @@ class ManagerTest {
     @Test
     fun restoreWithMalformedSettingsKeepsExistingSettings() {
         runBlocking {
-            settingsRepository.insert(settings = SettingsEntity.default(currency = "$"))
+            settingsRepository.insert(settings = SettingsEntry.default(currency = "$"))
             val fileUri = writeWorkbook { workbook ->
                 workbook.sheet(name = "History", headers = Mappers.HISTORY_HEADERS, values = listOf(0, "2026-01-01 12:00:00"))
                 workbook.sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS, values = listOf("dark", "en", 0, "€", "", 0))
@@ -280,7 +277,7 @@ class ManagerTest {
             achievementRepository = achievementRepository,
             historyRepository = historyRepository,
             settingsRepository = settingsRepository,
-            notificationsSettingsRepository = notificationsRepository,
+            notificationsRepository = notificationsRepository,
             costsRepository = costsRepository,
             notesRepository = notesRepository,
             onProgress = {}
@@ -294,7 +291,7 @@ class ManagerTest {
             achievementRepository = achievementRepository,
             historyRepository = historyRepository,
             settingsRepository = settingsRepository,
-            notificationsSettingsRepository = notificationsRepository,
+            notificationsRepository = notificationsRepository,
             costsRepository = costsRepository,
             notesRepository = notesRepository,
             onProgress = {}

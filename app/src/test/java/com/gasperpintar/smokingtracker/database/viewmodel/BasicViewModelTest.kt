@@ -2,11 +2,11 @@ package com.gasperpintar.smokingtracker.database.viewmodel
 
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.fake.FakeCostsDao
 import com.gasperpintar.smokingtracker.database.fake.FakeHistoryDao
 import com.gasperpintar.smokingtracker.database.fake.FakeSettingsDao
-import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
+import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
@@ -32,7 +32,7 @@ class BasicViewModelTest {
         historyDao = FakeHistoryDao()
         costsDao = FakeCostsDao()
         settingsDao = FakeSettingsDao()
-        settingsDao.insert(entity = SettingsEntity.default())
+        settingsDao.insert(entity = SettingsEntry.default().toEntity())
 
         viewModel = BasicViewModel(
             historyRepository = HistoryRepository(historyDao = historyDao),
