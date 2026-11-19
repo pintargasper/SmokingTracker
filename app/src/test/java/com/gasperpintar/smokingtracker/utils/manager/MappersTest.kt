@@ -6,13 +6,8 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementIcon
-import com.gasperpintar.smokingtracker.type.AchievementMessage
-import com.gasperpintar.smokingtracker.type.AchievementTitle
-import com.gasperpintar.smokingtracker.type.AchievementUnit
-import com.gasperpintar.smokingtracker.type.ColorScheme
-import com.gasperpintar.smokingtracker.type.StartPage
+import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getHeaderColumnMap
@@ -93,8 +88,8 @@ class MappersTest {
             customCurrency = "CHF",
             dayEndMinutes = 90,
             elapsedTimeWarningMinutes = 120,
-            colorScheme = ColorScheme.SYSTEM.name,
-            startPage = StartPage.HOME.name
+            colorScheme = Appearance.ColorScheme.SYSTEM,
+            startPage = Appearance.StartPage.HOME
         )
 
         val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
@@ -133,21 +128,21 @@ class MappersTest {
     fun parseAchievementClampsIndexToLastResource() {
         val (row, column) = row(
             headers = Mappers.ACHIEVEMENTS_HEADERS,
-            values = listOf(1, 0, "", true, true, AchievementCategory.CIGARETTES_AVOIDED.name, AchievementUnit.CIGARETTES.name, 1)
+            values = listOf(1, 0, "", true, true, Achievement.Category.CIGARETTES_AVOIDED.name, Achievement.Unit.CIGARETTES.name, 1)
         )
 
         val actual = Mappers.parseAchievement(row, column, index = 100, formatter = formatter)
 
-        assertEquals(AchievementIcon.entries.last().name, actual?.image)
-        assertEquals(AchievementTitle.entries.last().name, actual?.title)
-        assertEquals(AchievementMessage.entries.last().name, actual?.message)
+        assertEquals(Achievement.Icon.entries.last().name, actual?.image)
+        assertEquals(Achievement.Title.entries.last().name, actual?.title)
+        assertEquals(Achievement.Message.entries.last().name, actual?.message)
     }
 
     @Test
     fun parseAchievementReturnsNullForInvalidCategory() {
         val (row, column) = row(
             headers = Mappers.ACHIEVEMENTS_HEADERS,
-            values = listOf(1, 0, "", true, true, "UNKNOWN", AchievementUnit.DAYS.name, 1)
+            values = listOf(1, 0, "", true, true, "UNKNOWN", Achievement.Unit.DAYS.name, 1)
         )
 
         assertNull(Mappers.parseAchievement(row, column, index = 0, formatter = formatter))
@@ -155,7 +150,7 @@ class MappersTest {
 
     @Test
     fun parseAchievementReturnsNullWithoutCategory() {
-        val (row, column) = row(headers = listOf("Value", "Unit"), values = listOf(1, AchievementUnit.DAYS.name))
+        val (row, column) = row(headers = listOf("Value", "Unit"), values = listOf(1, Achievement.Unit.DAYS.name))
 
         assertNull(Mappers.parseAchievement(row, column, index = 0, formatter = formatter))
     }
@@ -183,8 +178,8 @@ class MappersTest {
             customCurrency = "",
             dayEndMinutes = 0,
             elapsedTimeWarningMinutes = 60,
-            colorScheme = ColorScheme.SYSTEM.name,
-            startPage = StartPage.HOME.name
+            colorScheme = Appearance.ColorScheme.SYSTEM,
+            startPage = Appearance.StartPage.HOME
         )
 
         assertEquals(expected, Mappers.parseSettings(row, column))
@@ -208,13 +203,13 @@ class MappersTest {
 
         val (row, column) = row(
             headers = headers,
-            values = listOf(0, "en", 0, "€", "", 0, ColorScheme.SYSTEM.name)
+            values = listOf(0, "en", 0, "€", "", 0, Appearance.ColorScheme.SYSTEM.name)
         )
 
         val actual = Mappers.parseSettings(row = row, col = column)
 
         assertEquals(ElapsedTimeWarning.DEFAULT_MINUTES, actual.elapsedTimeWarningMinutes)
-        assertEquals(ColorScheme.SYSTEM.name, actual.colorScheme)
+        assertEquals(Appearance.ColorScheme.SYSTEM, actual.colorScheme)
     }
 
     @Test
@@ -222,13 +217,13 @@ class MappersTest {
         listOf(-1, 10_081).forEach { value ->
             val (row, column) = row(
                 headers = Mappers.SETTINGS_HEADERS,
-                values = listOf(0, "en", 0, "€", "", 0, value, ColorScheme.SYSTEM.name)
+                values = listOf(0, "en", 0, "€", "", 0, value, Appearance.ColorScheme.SYSTEM.name)
             )
 
             val actual = Mappers.parseSettings(row = row, col = column)
 
             assertEquals(ElapsedTimeWarning.DEFAULT_MINUTES, actual.elapsedTimeWarningMinutes)
-            assertEquals(ColorScheme.SYSTEM.name, actual.colorScheme)
+            assertEquals(Appearance.ColorScheme.SYSTEM, actual.colorScheme)
         }
     }
 
@@ -270,16 +265,16 @@ class MappersTest {
     private fun achievement(index: Int): AchievementEntity {
         return AchievementEntity(
             id = 0,
-            image = AchievementIcon.entries[index].name,
+            image = Achievement.Icon.entries[index].name,
             value = index + 1,
-            title = AchievementTitle.entries[index].name,
-            message = AchievementMessage.entries[index].name,
+            title = Achievement.Title.entries[index].name,
+            message = Achievement.Message.entries[index].name,
             times = 0,
             lastAchieved = null,
             reset = true,
             notify = true,
-            category = AchievementCategory.SMOKE_FREE_TIME,
-            unit = AchievementUnit.DAYS
+            category = Achievement.Category.SMOKE_FREE_TIME,
+            unit = Achievement.Unit.DAYS
         )
     }
 }

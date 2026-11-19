@@ -169,8 +169,8 @@ class ManagerTest {
                     customCurrency = "CHF",
                     dayEndMinutes = 90,
                     elapsedTimeWarningMinutes = 240,
-                    colorScheme = Appearance.ColorScheme.SYSTEM.name,
-                    startPage = Appearance.StartPage.HOME.name
+                    colorScheme = Appearance.ColorScheme.SYSTEM,
+                    startPage = Appearance.StartPage.HOME
                 )
             )
             notificationsRepository.insert(settings = NotificationsSettingsEntity(

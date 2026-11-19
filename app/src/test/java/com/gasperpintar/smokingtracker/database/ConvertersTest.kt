@@ -1,7 +1,6 @@
 package com.gasperpintar.smokingtracker.database
 
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.type.Achievement
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertThrows
@@ -43,14 +42,14 @@ class ConvertersTest {
 
     @Test
     fun achievementCategoryRoundTripIsCorrect() {
-        AchievementCategory.entries.forEach {
+        Achievement.Category.entries.forEach {
             assertEquals(it, converters.toAchievementCategory(value = converters.fromAchievementCategory(category = it)))
         }
     }
 
     @Test
     fun achievementUnitRoundTripIsCorrect() {
-        AchievementUnit.entries.forEach {
+        Achievement.Unit.entries.forEach {
             assertEquals(it, converters.toAchievementUnit(value = converters.fromAchievementUnit(unit = it)))
         }
     }
