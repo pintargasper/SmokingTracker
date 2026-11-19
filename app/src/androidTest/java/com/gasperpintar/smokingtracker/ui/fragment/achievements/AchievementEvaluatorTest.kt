@@ -11,8 +11,7 @@ import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEnti
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.type.Achievement
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -58,7 +57,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateUnlocksSmokeFreeAchievementAfterRequiredTime() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = Achievement.Unit.DAYS)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(25))
 
@@ -71,7 +70,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateDoesNotUnlockBeforeRequiredTime() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = Achievement.Unit.DAYS)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(23))
 
@@ -83,7 +82,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateIsIdempotentForSameLastSmoke() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = Achievement.Unit.DAYS)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(25))
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(30))
@@ -93,7 +92,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateUnlocksAgainAfterNewCigarette() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = Achievement.Unit.DAYS)
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(25))
 
         val nextSmokeTime = lastSmokeTime.plusDays(2)
@@ -107,7 +106,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateUnlocksCigarettesAvoidedUsingDailyAverage() = runBlocking {
-        insertAchievement(value = 20, unit = AchievementUnit.CIGARETTES, category = AchievementCategory.CIGARETTES_AVOIDED)
+        insertAchievement(value = 20, unit = Achievement.Unit.CIGARETTES, category = Achievement.Category.CIGARETTES_AVOIDED)
         listOf(lastSmokeTime.minusDays(2), lastSmokeTime.minusDays(1)).forEach { day ->
             repeat(times = 10) { historyRepository.insert(entry = HistoryEntity(id = 0, lent = 0, createdAt = day.plusMinutes(it.toLong()))) }
         }
@@ -123,7 +122,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateSkipsCigarettesAvoidedWithoutHistory() = runBlocking {
-        insertAchievement(value = 20, unit = AchievementUnit.CIGARETTES, category = AchievementCategory.CIGARETTES_AVOIDED)
+        insertAchievement(value = 20, unit = Achievement.Unit.CIGARETTES, category = Achievement.Category.CIGARETTES_AVOIDED)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusYears(1))
 
@@ -139,8 +138,8 @@ class AchievementEvaluatorTest {
 
     private suspend fun insertAchievement(
         value: Int,
-        unit: AchievementUnit,
-        category: AchievementCategory = AchievementCategory.SMOKE_FREE_TIME
+        unit: Achievement.Unit,
+        category: Achievement.Category = Achievement.Category.SMOKE_FREE_TIME
     ) {
         achievementRepository.insert(
             entries = listOf(

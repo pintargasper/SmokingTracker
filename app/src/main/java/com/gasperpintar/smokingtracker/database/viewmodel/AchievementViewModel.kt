@@ -4,14 +4,14 @@ import androidx.lifecycle.ViewModel
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.AchievementState
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.type.Achievement
 
 class AchievementViewModel(
     private val achievementRepository: AchievementRepository
 ) : ViewModel() {
 
     suspend fun getState(
-        category: AchievementCategory
+        category: Achievement.Category
     ): AchievementState {
         val achievements = achievementRepository.getAll()
             .map(transform = AchievementEntry::fromEntity)

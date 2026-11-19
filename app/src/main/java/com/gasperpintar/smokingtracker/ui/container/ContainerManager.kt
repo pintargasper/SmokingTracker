@@ -2,7 +2,6 @@ package com.gasperpintar.smokingtracker.ui.container
 
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
@@ -14,9 +13,7 @@ import com.gasperpintar.smokingtracker.databinding.ContainerAchievementsBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentCostBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentNoteBinding
-import com.gasperpintar.smokingtracker.type.AchievementIcon
-import com.gasperpintar.smokingtracker.type.AchievementMessage
-import com.gasperpintar.smokingtracker.type.AchievementTitle
+import com.gasperpintar.smokingtracker.type.Achievement
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatDate
 import java.text.DecimalFormat
 
@@ -76,8 +73,8 @@ object ContainerManager {
         binding.root.isClickable = false
         binding.root.isFocusable = false
 
-        binding.achievementTitle.text = context.getString(AchievementTitle.valueOf(achievementEntry.title).stringResource)
-        binding.achievementMessage.text = context.getString(AchievementMessage.valueOf(achievementEntry.message).stringResource)
+        binding.achievementTitle.text = context.getString(Achievement.Title.valueOf(achievementEntry.title).stringResource)
+        binding.achievementMessage.text = context.getString(Achievement.Message.valueOf(achievementEntry.message).stringResource)
 
         binding.lastAchieved.text =
             achievementEntry.lastAchieved
@@ -94,7 +91,7 @@ object ContainerManager {
 
         binding.achievedCount.text = context.getString(R.string.achievement_achieved, achievedTimesText)
         binding.imageAchievement.setImageResource(
-            AchievementIcon.valueOf(achievementEntry.image).drawableResource
+            Achievement.Icon.valueOf(achievementEntry.image).drawableResource
         )
 
         when (achievementEntry.times) {

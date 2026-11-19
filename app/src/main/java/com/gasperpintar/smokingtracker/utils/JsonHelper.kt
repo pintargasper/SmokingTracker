@@ -3,11 +3,11 @@ package com.gasperpintar.smokingtracker.utils
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.database.model.AboutEntry
-import com.gasperpintar.smokingtracker.database.model.AchievementJsonEntry
+import com.gasperpintar.smokingtracker.model.AboutEntry
+import com.gasperpintar.smokingtracker.model.AchievementEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.*
-import com.gasperpintar.smokingtracker.ui.adapter.PageAdapter
+import com.gasperpintar.smokingtracker.ui.adapter.ItemAdapter
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
@@ -18,9 +18,9 @@ class JsonHelper(
     suspend fun initializeAchievements(context: Context) {
         val existing = achievementRepository?.getAll()
 
-        val rawData: Map<AchievementCategory, List<AchievementJsonEntry>> = context.resources
+        val rawData: Map<Achievement.Category, List<AchievementEntry>> = context.resources
             .openRawResource(R.raw.achievements).bufferedReader().use {
-                Gson().fromJson(it, object : TypeToken<Map<AchievementCategory, List<AchievementJsonEntry>>>() {}.type)
+                Gson().fromJson(it, object : TypeToken<Map<Achievement.Category, List<AchievementEntry>>>() {}.type)
             }
 
         val newEntries = rawData.flatMap { (category, entries) ->
@@ -37,7 +37,7 @@ class JsonHelper(
                     reset = true,
                     notify = true,
                     category = category,
-                    unit = if (category == AchievementCategory.CIGARETTES_AVOIDED) AchievementUnit.CIGARETTES else enumValueOf(name = entry.unit)
+                    unit = if (category == Achievement.Category.CIGARETTES_AVOIDED) Achievement.Unit.CIGARETTES else enumValueOf(name = entry.unit)
                 )
             }
         }
@@ -47,7 +47,7 @@ class JsonHelper(
         }
     }
 
-    fun initializeAbout(context: Context): Pair<List<PageAdapter.Page>, List<PageAdapter.Page>> {
+    fun initializeAbout(context: Context): Pair<List<ItemAdapter.Item>, List<ItemAdapter.Item>> {
         val gson = Gson()
         val rawData: Map<String, JsonElement> = context.resources.openRawResource(R.raw.about)
             .bufferedReader().use {
@@ -58,12 +58,12 @@ class JsonHelper(
         val platforms: List<AboutEntry> = gson.fromJson(rawData["platforms"], type)
         val contributors: List<AboutEntry> = gson.fromJson(rawData["contributors"], type)
 
-        val platformPages = platforms.map { platform ->
-            PageAdapter.Page(title = platform.title, value = platform.value.orEmpty(), url = platform.url)
+        val platformItems = platforms.map { platform ->
+            ItemAdapter.Item(title = platform.title, value = platform.value.orEmpty(), url = platform.url)
         }
 
-        val contributorPages = contributors.map { contributor ->
-            PageAdapter.Page(
+        val contributorItems = contributors.map { contributor ->
+            ItemAdapter.Item(
                 title = contributor.title,
                 value = contributor.contributions.orEmpty().joinToString(separator = ", ") {
                     context.getString(it.stringResource)
@@ -71,6 +71,6 @@ class JsonHelper(
                 url = contributor.url
             )
         }
-        return platformPages to contributorPages
+        return platformItems to contributorItems
     }
 }

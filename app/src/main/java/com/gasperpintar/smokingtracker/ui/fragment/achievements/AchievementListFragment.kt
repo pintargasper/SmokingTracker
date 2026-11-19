@@ -9,14 +9,14 @@ import com.gasperpintar.smokingtracker.database.viewmodel.AchievementViewModel
 import com.gasperpintar.smokingtracker.databinding.ContainerAchievementsBinding
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsListBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
-import com.gasperpintar.smokingtracker.type.AchievementCategory
+import com.gasperpintar.smokingtracker.type.Achievement
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.container.ContainerManager
 import com.gasperpintar.smokingtracker.ui.fragment.Base
 import kotlinx.coroutines.launch
 
 class AchievementListFragment @JvmOverloads constructor(
-    private val initialAchievementType: AchievementCategory = AchievementCategory.CIGARETTES_AVOIDED
+    private val initialAchievementType: Achievement.Category = Achievement.Category.CIGARETTES_AVOIDED
 ) : Base<FragmentAchievementsListBinding>(
     bindingInflater = FragmentAchievementsListBinding::inflate
 ) {
@@ -25,12 +25,12 @@ class AchievementListFragment @JvmOverloads constructor(
         ModelFactory(container = (requireActivity().application as Application).container)
     }
 
-    private lateinit var achievementType: AchievementCategory
+    private lateinit var achievementType: Achievement.Category
     private lateinit var adapter: Adapter<AchievementEntry, ContainerAchievementsBinding>
 
     @Override
     override fun initialize() {
-        achievementType = AchievementCategory.valueOf(
+        achievementType = Achievement.Category.valueOf(
             arguments?.getString(ARG_ACHIEVEMENT_TYPE, initialAchievementType.name) ?: initialAchievementType.name
         )
 
@@ -61,7 +61,7 @@ class AchievementListFragment @JvmOverloads constructor(
 
         @JvmStatic
         fun newInstance(
-            achievementType: AchievementCategory
+            achievementType: Achievement.Category
         ) = AchievementListFragment(initialAchievementType = achievementType).apply {
             arguments = android.os.Bundle().apply {
                 putString(ARG_ACHIEVEMENT_TYPE, achievementType.name)

@@ -6,16 +6,16 @@ import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
-class DataSyncPipelineTest {
+class DataSyncTest {
 
     @Test
     fun runMapsStepProgressByWeight() = runBlocking {
         val progress = mutableListOf<Int>()
 
-        DataSyncPipeline(
+        DataSync(
             steps = listOf(
-                SyncedStep(weight = 1) { it(100) },
-                SyncedStep(weight = 3) { it(50) }
+                DataSync.SyncedStep(weight = 1) { it(100) },
+                DataSync.SyncedStep(weight = 3) { it(50) }
             )
         ).run { progress += it }
 
@@ -26,9 +26,9 @@ class DataSyncPipelineTest {
     fun runReportsMonotonicProgressWithinBounds() = runBlocking {
         val progress = mutableListOf<Int>()
 
-        DataSyncPipeline(
+        DataSync(
             steps = listOf(2, 5, 1).map { weight ->
-                SyncedStep(weight = weight) { onStepProgress ->
+                DataSync.SyncedStep(weight = weight) { onStepProgress ->
                     listOf(0, 50, 100).forEach(onStepProgress)
                 }
             }
@@ -43,9 +43,9 @@ class DataSyncPipelineTest {
     fun runExecutesStepsInOrder() = runBlocking {
         val executed = mutableListOf<String>()
 
-        DataSyncPipeline(
+        DataSync(
             steps = listOf("first", "second", "third").map { name ->
-                SyncedStep(weight = 1) { executed += name }
+                DataSync.SyncedStep(weight = 1) { executed += name }
             }
         ).run {}
 
@@ -56,7 +56,7 @@ class DataSyncPipelineTest {
     fun runWithoutStepsReportsCompletion() = runBlocking {
         val progress = mutableListOf<Int>()
 
-        DataSyncPipeline(steps = emptyList()).run { progress += it }
+        DataSync(steps = emptyList()).run { progress += it }
 
         assertEquals(listOf(100), progress)
     }
@@ -66,8 +66,8 @@ class DataSyncPipelineTest {
         val progress = mutableListOf<Int>()
         var executed = false
 
-        DataSyncPipeline(
-            steps = listOf(SyncedStep(weight = 0) { executed = true })
+        DataSync(
+            steps = listOf(DataSync.SyncedStep(weight = 0) { executed = true })
         ).run { progress += it }
 
         assertFalse(executed)

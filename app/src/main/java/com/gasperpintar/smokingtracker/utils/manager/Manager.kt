@@ -10,8 +10,7 @@ import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
-import com.gasperpintar.smokingtracker.ui.bar.DataSyncPipeline
-import com.gasperpintar.smokingtracker.ui.bar.SyncedStep
+import com.gasperpintar.smokingtracker.ui.bar.DataSync
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.getRowCount
@@ -47,9 +46,9 @@ object Manager {
         val notifSettings = listOfNotNull(element = notificationsSettingsRepository.get())
 
         XSSFWorkbook().use { workbook ->
-            DataSyncPipeline(
+            DataSync(
                 steps = listOf(
-                    SyncedStep(weight = history.size.coerceAtLeast(minimumValue = 1)) { progress ->
+                    DataSync.SyncedStep(weight = history.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
                             name = "History",
                             headers = Mappers.HISTORY_HEADERS,
@@ -57,7 +56,7 @@ object Manager {
                             onStepProgress = progress
                         ) { it.toExcelRow(dateFormatter) }
                     },
-                    SyncedStep(weight = achievements.size.coerceAtLeast(minimumValue = 1)) { progress ->
+                    DataSync.SyncedStep(weight = achievements.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
                             name = "Achievements",
                             headers = Mappers.ACHIEVEMENTS_HEADERS,
@@ -65,7 +64,7 @@ object Manager {
                             onStepProgress = progress
                         ) { it.toExcelRow(dateFormatter) }
                     },
-                    SyncedStep(weight = costs.size.coerceAtLeast(minimumValue = 1)) { progress ->
+                    DataSync.SyncedStep(weight = costs.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
                             name = "Costs",
                             headers = Mappers.COSTS_HEADERS,
@@ -73,7 +72,7 @@ object Manager {
                             onStepProgress = progress
                         ) { it.toExcelRow(dateFormatter) }
                     },
-                    SyncedStep(weight = notes.size.coerceAtLeast(minimumValue = 1)) { progress ->
+                    DataSync.SyncedStep(weight = notes.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
                             name = "Notes",
                             headers = Mappers.NOTES_HEADERS,
@@ -81,7 +80,7 @@ object Manager {
                             onStepProgress = progress
                         ) { it.toExcelRow(dateFormatter) }
                     },
-                    SyncedStep(weight = settings.size.coerceAtLeast(minimumValue = 1)) { progress ->
+                    DataSync.SyncedStep(weight = settings.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
                             name = "Settings",
                             headers = Mappers.SETTINGS_HEADERS,
@@ -89,7 +88,7 @@ object Manager {
                             onStepProgress = progress
                         ) { it.toExcelRow() }
                     },
-                    SyncedStep(weight = notifSettings.size.coerceAtLeast(minimumValue = 1)) { progress ->
+                    DataSync.SyncedStep(weight = notifSettings.size.coerceAtLeast(minimumValue = 1)) { progress ->
                         workbook.create(
                             name = "NotificationsSettings",
                             headers = Mappers.NOTIF_SETTINGS_HEADERS,
@@ -97,7 +96,7 @@ object Manager {
                             onStepProgress = progress
                         ) { it.toExcelRow() }
                     },
-                    SyncedStep(weight = 5) { progress ->
+                    DataSync.SyncedStep(weight = 5) { progress ->
                         context.contentResolver.openOutputStream(fileUri)
                             ?.use(block = workbook::write)
                         progress(100)
@@ -136,24 +135,24 @@ object Manager {
         try {
             context.contentResolver.openInputStream(fileUri)?.use { stream ->
                 XSSFWorkbook(stream).use { workbook ->
-                    DataSyncPipeline(
+                    DataSync(
                         steps = listOf(
-                            SyncedStep(weight = workbook.getRowCount(sheetName = "History")) {
+                            DataSync.SyncedStep(weight = workbook.getRowCount(sheetName = "History")) {
                                 importHistorySheet(workbook, historyRepository, onStepProgress = it)
                             },
-                            SyncedStep(weight = workbook.getRowCount(sheetName = "Achievements")) {
+                            DataSync.SyncedStep(weight = workbook.getRowCount(sheetName = "Achievements")) {
                                 importAchievementSheet(workbook, achievementRepository, onStepProgress = it)
                             },
-                            SyncedStep(weight = workbook.getRowCount(sheetName = "Costs")) {
+                            DataSync.SyncedStep(weight = workbook.getRowCount(sheetName = "Costs")) {
                                 importCostsSheet(workbook, costsRepository, onStepProgress = it)
                             },
-                            SyncedStep(weight = workbook.getRowCount(sheetName = "Notes")) {
+                            DataSync.SyncedStep(weight = workbook.getRowCount(sheetName = "Notes")) {
                                 importNotesSheet(workbook, notesRepository, onStepProgress = it)
                             },
-                            SyncedStep(weight = workbook.getRowCount(sheetName = "Settings")) {
+                            DataSync.SyncedStep(weight = workbook.getRowCount(sheetName = "Settings")) {
                                 importSettingsSheet(workbook = workbook, repository = settingsRepository, onStepProgress = it)
                             },
-                            SyncedStep(weight = workbook.getRowCount(sheetName = "NotificationsSettings")) {
+                            DataSync.SyncedStep(weight = workbook.getRowCount(sheetName = "NotificationsSettings")) {
                                 importNotificationsSettingsSheet(workbook, notificationsSettingsRepository, onStepProgress = it)
                             }
                         )

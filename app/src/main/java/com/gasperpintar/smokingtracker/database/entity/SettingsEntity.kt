@@ -3,8 +3,7 @@ package com.gasperpintar.smokingtracker.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gasperpintar.smokingtracker.type.ColorScheme
-import com.gasperpintar.smokingtracker.type.StartPage
+import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 
 @Entity(tableName = "settings")
@@ -29,10 +28,10 @@ data class SettingsEntity(
     val elapsedTimeWarningMinutes: Int,
 
     @ColumnInfo(defaultValue = "SYSTEM")
-    val colorScheme: String,
+    val colorScheme: Appearance.ColorScheme,
 
     @ColumnInfo(defaultValue = "HOME")
-    val startPage: String
+    val startPage: Appearance.StartPage
 ) {
 
     companion object {
@@ -49,8 +48,8 @@ data class SettingsEntity(
                 customCurrency = "",
                 dayEndMinutes = 0,
                 elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES,
-                colorScheme = ColorScheme.SYSTEM.name,
-                startPage = StartPage.HOME.name
+                colorScheme = Appearance.ColorScheme.SYSTEM,
+                startPage = Appearance.StartPage.HOME
             )
         }
     }

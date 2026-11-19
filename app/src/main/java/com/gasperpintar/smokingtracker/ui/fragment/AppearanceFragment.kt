@@ -9,8 +9,7 @@ import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.databinding.FragmentAppearanceBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
-import com.gasperpintar.smokingtracker.type.ColorScheme
-import com.gasperpintar.smokingtracker.type.StartPage
+import com.gasperpintar.smokingtracker.type.Appearance
 import kotlinx.coroutines.launch
 
 class AppearanceFragment : Base<FragmentAppearanceBinding>(
@@ -39,9 +38,9 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
             setupDropdown(
                 dropdown = schemeDropdown,
                 options = R.array.appearance_scheme_options,
-                selectedIndex = ColorScheme.entries.indexOf(ColorScheme.fromName(state.settings.colorScheme))
+                selectedIndex = Appearance.ColorScheme.entries.indexOf(state.settings.colorScheme)
             ) { position ->
-                ColorScheme.entries.getOrNull(index = position)?.let {
+                Appearance.ColorScheme.entries.getOrNull(index = position)?.let {
                     selectColorScheme(state, scheme = it)
                 }
             }
@@ -49,9 +48,9 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
             setupDropdown(
                 dropdown = startPageDropdown,
                 options = R.array.appearance_start_page_options,
-                selectedIndex = StartPage.entries.indexOf(StartPage.fromName(state.settings.startPage))
+                selectedIndex = Appearance.StartPage.entries.indexOf(state.settings.startPage)
             ) { position ->
-                StartPage.entries.getOrNull(index = position)?.let {
+                Appearance.StartPage.entries.getOrNull(index = position)?.let {
                     selectStartPage(state, startPage = it)
                 }
             }
@@ -88,11 +87,11 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
 
     private fun selectColorScheme(
         state: SettingsState,
-        scheme: ColorScheme
+        scheme: Appearance.ColorScheme
     ) {
-        if (ColorScheme.fromName(state.settings.colorScheme) == scheme) return
+        if (state.settings.colorScheme == scheme) return
         viewLifecycleOwner.lifecycleScope.launch {
-            state.settings = state.settings.copy(colorScheme = scheme.name)
+            state.settings = state.settings.copy(colorScheme = scheme)
             viewModel.updateSettings(state.settings)
             requireActivity().recreate()
         }
@@ -100,11 +99,11 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
 
     private fun selectStartPage(
         state: SettingsState,
-        startPage: StartPage
+        startPage: Appearance.StartPage
     ) {
-        if (StartPage.fromName(state.settings.startPage) == startPage) return
+        if (state.settings.startPage == startPage) return
         viewLifecycleOwner.lifecycleScope.launch {
-            state.settings = state.settings.copy(startPage = startPage.name)
+            state.settings = state.settings.copy(startPage = startPage)
             viewModel.updateSettings(state.settings)
         }
     }

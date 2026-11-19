@@ -1,6 +1,11 @@
 package com.gasperpintar.smokingtracker.ui.bar
 
-class DataSyncPipeline(private val steps: List<SyncedStep>) {
+class DataSync(private val steps: List<SyncedStep>) {
+
+    data class SyncedStep(
+        val weight: Int,
+        val action: suspend (onStepProgress: (Int) -> Unit) -> Unit
+    )
 
     suspend fun run(onProgress: (Int) -> Unit) {
         val totalWeight = steps.sumOf { it.weight.toDouble() }.takeIf { it > 0 } ?: return onProgress(100)

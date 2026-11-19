@@ -3,8 +3,8 @@ package com.gasperpintar.smokingtracker.ui.fragment
 import androidx.core.content.pm.PackageInfoCompat
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.databinding.FragmentAboutBinding
-import com.gasperpintar.smokingtracker.databinding.ItemAboutPageBinding
-import com.gasperpintar.smokingtracker.ui.adapter.PageAdapter
+import com.gasperpintar.smokingtracker.databinding.ItemAboutBinding
+import com.gasperpintar.smokingtracker.ui.adapter.ItemAdapter
 import com.gasperpintar.smokingtracker.utils.JsonHelper
 import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 
@@ -32,21 +32,21 @@ class AboutFragment : Base<FragmentAboutBinding>(
     private fun setupPagers() = binding.apply {
         val (platforms, contributors) = JsonHelper().initializeAbout(context = requireContext())
 
-        PageAdapter.setupPager(
+        ItemAdapter.setupPager(
             pager = platformsViewPager,
             indicator = platformsPageIndicator,
-            pages = platforms,
-            bindingInflater = ItemAboutPageBinding::inflate,
+            items = platforms,
+            bindingInflater = ItemAboutBinding::inflate,
             onPageClick = { url ->
                 requireContext().openUrl(url)
             }
         )
 
-        PageAdapter.setupPager(
+        ItemAdapter.setupPager(
             pager = contributorsViewPager,
             indicator = contributorsPageIndicator,
-            pages = contributors,
-            bindingInflater = ItemAboutPageBinding::inflate,
+            items = contributors,
+            bindingInflater = ItemAboutBinding::inflate,
             onPageClick = { url ->
                 requireContext().openUrl(url)
             }

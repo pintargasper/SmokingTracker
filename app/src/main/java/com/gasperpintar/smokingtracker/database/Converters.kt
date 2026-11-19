@@ -2,8 +2,7 @@ package com.gasperpintar.smokingtracker.database
 
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.type.Achievement
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -28,7 +27,7 @@ class Converters {
 
     @TypeConverter
     fun fromAchievementCategory(
-        category: AchievementCategory?
+        category: Achievement.Category?
     ): String? {
         return category?.name
     }
@@ -36,15 +35,15 @@ class Converters {
     @TypeConverter
     fun toAchievementCategory(
         value: String?
-    ): AchievementCategory? {
+    ): Achievement.Category? {
         return value?.let {
-            AchievementCategory.valueOf(value = it)
+            Achievement.Category.valueOf(value = it)
         }
     }
 
     @TypeConverter
     fun fromAchievementUnit(
-        unit: AchievementUnit?
+        unit: Achievement.Unit?
     ): String? {
         return unit?.name
     }
@@ -52,9 +51,9 @@ class Converters {
     @TypeConverter
     fun toAchievementUnit(
         value: String?
-    ): AchievementUnit? {
+    ): Achievement.Unit? {
         return value?.let {
-            AchievementUnit.valueOf(value = it)
+            Achievement.Unit.valueOf(value = it)
         }
     }
 }

@@ -6,13 +6,8 @@ import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
 import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementIcon
-import com.gasperpintar.smokingtracker.type.AchievementMessage
-import com.gasperpintar.smokingtracker.type.AchievementTitle
-import com.gasperpintar.smokingtracker.type.AchievementUnit
-import com.gasperpintar.smokingtracker.type.ColorScheme
-import com.gasperpintar.smokingtracker.type.StartPage
+import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.parseDateTime
 import org.apache.poi.ss.usermodel.CellType
@@ -44,22 +39,22 @@ object Mappers {
         index: Int,
         formatter: DateTimeFormatter
     ): AchievementEntity? {
-        val enumIndex = index.coerceIn(0, AchievementIcon.entries.lastIndex)
+        val enumIndex = index.coerceIn(0, Achievement.Icon.entries.lastIndex)
         val lastAchieved = col["LastAchieved"]?.let { columnIndex -> row.parseDateTime(columnIndex, formatter) }
 
         return runCatching {
             AchievementEntity(
                 id = 0,
-                image = AchievementIcon.entries[enumIndex].name,
+                image = Achievement.Icon.entries[enumIndex].name,
                 value = col["Value"]?.let { columnIndex -> row.getCell(columnIndex)?.numericCellValue?.toInt() } ?: 0,
-                title = AchievementTitle.entries[enumIndex].name,
-                message = AchievementMessage.entries[enumIndex].name,
+                title = Achievement.Title.entries[enumIndex].name,
+                message = Achievement.Message.entries[enumIndex].name,
                 times = col["Times"]?.let { columnIndex -> row.getCell(columnIndex)?.numericCellValue?.toLong() } ?: 0L,
                 lastAchieved = lastAchieved,
                 reset = col["Reset"]?.let { columnIndex -> row.getCell(columnIndex)?.booleanCellValue } ?: false,
                 notify = col["Notify"]?.let { columnIndex -> row.getCell(columnIndex)?.booleanCellValue } ?: false,
-                category = col["Category"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { AchievementCategory.valueOf(it) } ?: return@runCatching null,
-                unit = col["Unit"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { AchievementUnit.valueOf(it) } ?: return@runCatching null
+                category = col["Category"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { Achievement.Category.valueOf(it) } ?: return@runCatching null,
+                unit = col["Unit"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { Achievement.Unit.valueOf(it) } ?: return@runCatching null
             )
         }.getOrNull()
     }
@@ -101,7 +96,9 @@ object Mappers {
 
         val warningMinutes = col["ElapsedTimeWarningMinutes"]?.let { index ->
             row.getCell(index)?.numericCellValue?.toInt()
-        }?.takeIf(predicate = ElapsedTimeWarning::isValidMinutes) ?: ElapsedTimeWarning.DEFAULT_MINUTES
+        }?.takeIf(predicate = ElapsedTimeWarning::isValidMinutes)
+            ?: ElapsedTimeWarning.DEFAULT_MINUTES
+
 
         return SettingsEntity(
             id = 0,
@@ -112,8 +109,8 @@ object Mappers {
             customCurrency = col["CustomCurrency"]?.let { index -> row.getCell(index)?.stringCellValue }.orEmpty(),
             dayEndMinutes = col["DayEndMinutes"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
             elapsedTimeWarningMinutes = warningMinutes,
-            colorScheme = col["ColorScheme"]?.let { index -> row.getCell(index)?.stringCellValue } ?: ColorScheme.SYSTEM.name,
-            startPage = col["StartPage"]?.let { index -> row.getCell(index)?.stringCellValue } ?: StartPage.HOME.name
+            colorScheme = col["ColorScheme"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { Appearance.ColorScheme.valueOf(it) } ?: Appearance.ColorScheme.SYSTEM,
+            startPage = col["StartPage"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { Appearance.StartPage.valueOf(it) } ?: Appearance.StartPage.HOME
         )
     }
 

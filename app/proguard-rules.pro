@@ -1,6 +1,6 @@
--keepclassmembers enum com.gasperpintar.smokingtracker.type.AchievementCategory { *; }
+-keepclassmembers enum com.gasperpintar.smokingtracker.type.Achievement$Category { *; }
 
--keep class com.gasperpintar.smokingtracker.database.model.AchievementJsonEntry { *; }
+-keep class com.gasperpintar.smokingtracker.model.AchievementEntry { *; }
 
 -keep class org.apache.poi.schemas.ooxml.system.ooxml.TypeSystemHolder { *; }
 

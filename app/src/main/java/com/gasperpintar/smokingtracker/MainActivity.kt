@@ -18,7 +18,7 @@ import androidx.work.WorkManager
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
-import com.gasperpintar.smokingtracker.type.StartPage
+import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
@@ -82,7 +82,7 @@ class MainActivity : Base<ActivityMainBinding>(
         }
     }
 
-    private fun setupPager(startPage: StartPage) = binding.apply {
+    private fun setupPager(startPage: Appearance.StartPage) = binding.apply {
         mainViewPager.adapter = Pager(
             this@MainActivity,
             creators = listOf(::MinimalHomeFragment, ::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)

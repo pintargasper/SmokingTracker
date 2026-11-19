@@ -10,9 +10,9 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.viewmodel.BasicViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsBasicBinding
-import com.gasperpintar.smokingtracker.databinding.ItemStatisticsPageBinding
+import com.gasperpintar.smokingtracker.databinding.ItemStatisticsBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
-import com.gasperpintar.smokingtracker.ui.adapter.PageAdapter
+import com.gasperpintar.smokingtracker.ui.adapter.ItemAdapter
 import com.gasperpintar.smokingtracker.ui.fragment.Base
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -48,31 +48,31 @@ class BasicFragment : Base<FragmentStatisticsBasicBinding>(
         val fallback = resources.getQuantityString(R.plurals.time_minutes, 0, 0)
 
         val cigarettes = listOf(
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_max_cigarettes),
                 value = state.maxCigarettes.toString(),
                 caption = LocalizationHelper.formatLoggedDate(resources, state.maxCigarettesDate)
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_min_cigarettes),
                 value = state.minCigarettes.toString(),
                 caption = LocalizationHelper.formatLoggedDate(resources, state.minCigarettesDate)
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_avg_cigarettes),
                 value = "%.2f".format(Locale.getDefault(), state.averageCigarettes)
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_total_cigarettes),
                 value = state.totalCigarettes.toString()
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_first_entry),
                 value = state.firstRecordDate?.let {
                     TimeHelper.getDurationString(resources, start = it)
                 } ?: fallback
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_longest_streak),
                 value = state.longestStreak?.let { (start, end) ->
                     TimeHelper.getDurationString(resources, start, end)
@@ -81,19 +81,19 @@ class BasicFragment : Base<FragmentStatisticsBasicBinding>(
         )
 
         val money = listOf(
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_total_spent),
                 value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.totalSpent)
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_total_spent_today),
                 value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.todaySpent)
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_total_spent_month),
                 value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.monthSpent)
             ),
-            PageAdapter.Page(
+            ItemAdapter.Item(
                 title = getString(R.string.statistics_most_expensive),
                 value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.mostExpensiveDaySpent),
                 caption = LocalizationHelper.formatLoggedDate(resources, state.mostExpensiveDay)
@@ -101,8 +101,8 @@ class BasicFragment : Base<FragmentStatisticsBasicBinding>(
         )
         statisticsTitleInstructions.isVisible = !state.hasCosts
 
-        PageAdapter.setupPager(pager = cigarettesViewPager, indicator = cigarettesPageIndicator, pages = cigarettes, bindingInflater = ItemStatisticsPageBinding::inflate)
-        PageAdapter.setupPager(pager = moneyViewPager, indicator = moneyPageIndicator, pages = money, bindingInflater = ItemStatisticsPageBinding::inflate)
+        ItemAdapter.setupPager(pager = cigarettesViewPager, indicator = cigarettesPageIndicator, items = cigarettes, bindingInflater = ItemStatisticsBinding::inflate)
+        ItemAdapter.setupPager(pager = moneyViewPager, indicator = moneyPageIndicator, items = money, bindingInflater = ItemStatisticsBinding::inflate)
         setupNestedPagerTouch(cigarettesViewPager)
         setupNestedPagerTouch(moneyViewPager)
     }

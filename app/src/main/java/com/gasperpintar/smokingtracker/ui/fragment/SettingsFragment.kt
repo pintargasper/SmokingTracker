@@ -25,7 +25,7 @@ import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
 import com.gasperpintar.smokingtracker.type.Widget
-import com.gasperpintar.smokingtracker.ui.bar.ProgressType
+import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
@@ -245,7 +245,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
 
         val uri = selectedFile.tag as? Uri ?: return
         val dialog = DialogManager.showLoadingDialog(context = requireActivity()).apply {
-            setProgressType(ProgressType.RESTORE)
+            setProgressType(LoadingDialog.ProgressType.RESTORE)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -279,7 +279,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
 
     private fun exportFile(fileUri: Uri, onFinished: () -> Unit = {}) {
         val dialog = DialogManager.showLoadingDialog(context = requireActivity()).apply {
-            setProgressType(ProgressType.BACKUP)
+            setProgressType(LoadingDialog.ProgressType.BACKUP)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

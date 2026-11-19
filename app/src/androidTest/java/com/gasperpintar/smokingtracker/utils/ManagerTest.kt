@@ -18,10 +18,8 @@ import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
-import com.gasperpintar.smokingtracker.type.ColorScheme
-import com.gasperpintar.smokingtracker.type.StartPage
+import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import com.gasperpintar.smokingtracker.utils.manager.Mappers
 import kotlinx.coroutines.runBlocking
@@ -171,8 +169,8 @@ class ManagerTest {
                     customCurrency = "CHF",
                     dayEndMinutes = 90,
                     elapsedTimeWarningMinutes = 240,
-                    colorScheme = ColorScheme.SYSTEM.name,
-                    startPage = StartPage.HOME.name
+                    colorScheme = Appearance.ColorScheme.SYSTEM.name,
+                    startPage = Appearance.StartPage.HOME.name
                 )
             )
             notificationsRepository.insert(settings = NotificationsSettingsEntity(
@@ -344,12 +342,12 @@ class ManagerTest {
             workbook.sheet(
                 name = "Achievements",
                 headers = Mappers.ACHIEVEMENTS_HEADERS,
-                values = listOf(9, 2, "", true, true, AchievementCategory.entries.first().name, AchievementUnit.entries.first().name, 1)
+                values = listOf(9, 2, "", true, true, Achievement.Category.entries.first().name, Achievement.Unit.entries.first().name, 1)
             )
 
             workbook.sheet(name = "Costs", headers = Mappers.COSTS_HEADERS, values = listOf(4.5, "2026-01-01 00:00:00", "2026-01-02 00:00:00"))
             workbook.sheet(name = "Notes", headers = Mappers.NOTES_HEADERS, values = listOf("Test", "Smoking note", 3, "2026-01-01 10:00:00", "2026-01-01 11:00:00"))
-            workbook.sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS.dropLast(1), values = listOf(1, 2, 5, "€", "", 0, 120, ColorScheme.SYSTEM.name))
+            workbook.sheet(name = "Settings", headers = Mappers.SETTINGS_HEADERS.dropLast(1), values = listOf(1, 2, 5, "€", "", 0, 120, Appearance.ColorScheme.SYSTEM.name))
             workbook.sheet(name = "NotificationsSettings", headers = Mappers.NOTIF_SETTINGS_HEADERS, values = listOf(true, true, false))
         }
     }
