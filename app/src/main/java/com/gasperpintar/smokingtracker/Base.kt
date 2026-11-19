@@ -32,7 +32,7 @@ abstract class Base<VB : ViewBinding>(
         savedInstanceState: Bundle?
     ) {
         val colorScheme = runBlocking { application.container.settingsRepository.get()?.colorScheme }
-        setTheme(ColorScheme.fromName(name = colorScheme).themeResId)
+        setTheme(ColorScheme.fromName(name = colorScheme).themeResourceId)
 
         super.onCreate(savedInstanceState)
         _binding = bindingInflater.invoke(layoutInflater)

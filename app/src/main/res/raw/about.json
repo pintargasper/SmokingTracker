@@ -1,0 +1,91 @@
+{
+  "platforms": [
+    {
+      "title": "GitHub",
+      "value": "github.com/pintargasper/SmokingTracker",
+      "url": "https://github.com/pintargasper/SmokingTracker"
+    },
+    {
+      "title": "F-Droid",
+      "value": "f-droid.org",
+      "url": "https://f-droid.org/packages/com.gasperpintar.smokingtracker"
+    },
+    {
+      "title": "IzzyOnDroid",
+      "value": "apt.izzysoft.de",
+      "url": "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
+    },
+    {
+      "title": "OpenAPK",
+      "value": "openapk.net",
+      "url": "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/"
+    }
+  ],
+  "contributors": [
+    {
+      "title": "pintargasper",
+      "contributions": [
+        "CODE",
+        "SLOVENIAN"
+      ],
+      "url": "https://github.com/pintargasper"
+    },
+    {
+      "title": "anzepintar",
+      "contributions": [
+        "CODE"
+      ],
+      "url": "https://github.com/anzepintar"
+    },
+    {
+      "title": "mlnzigzag",
+      "contributions": [
+        "CODE"
+      ],
+      "url": "https://github.com/mlnzigzag"
+    },
+    {
+      "title": "mrtaxi",
+      "contributions": [
+        "UKRAINIAN"
+      ],
+      "url": "https://github.com/mrtaxi"
+    },
+    {
+      "title": "jocixlinux-sys",
+      "contributions": [
+        "SERBIAN"
+      ],
+      "url": "https://github.com/jocixlinux-sys"
+    },
+    {
+      "title": "iaaanneed",
+      "contributions": [
+        "RUSSIAN"
+      ],
+      "url": "https://github.com/iaaanneed"
+    },
+    {
+      "title": "ywnzzl",
+      "contributions": [
+        "CHINESE_SIMPLIFIED"
+      ],
+      "url": "https://github.com/ywnzzl"
+    },
+    {
+      "title": "acidefluorhydrique",
+      "contributions": [
+        "CHINESE_TRADITIONAL",
+        "CHINESE_SIMPLIFIED"
+      ],
+      "url": "https://github.com/acidefluorhydrique"
+    },
+    {
+      "title": "nrob81",
+      "contributions": [
+        "HUNGARIAN"
+      ],
+      "url": "https://github.com/nrob81"
+    }
+  ]
+}

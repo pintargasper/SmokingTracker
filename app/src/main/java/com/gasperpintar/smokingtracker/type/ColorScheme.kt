@@ -3,11 +3,11 @@ package com.gasperpintar.smokingtracker.type
 import com.gasperpintar.smokingtracker.R
 
 enum class ColorScheme(
-    val themeResId: Int
+    val themeResourceId: Int
 ) {
-    SYSTEM(themeResId = R.style.Theme_SmokingTracker_System),
-    LEGACY(themeResId = R.style.Theme_SmokingTracker_Legacy),
-    SKY(themeResId = R.style.Theme_SmokingTracker_Sky);
+    SYSTEM(themeResourceId = R.style.Theme_SmokingTracker_System),
+    LEGACY(themeResourceId = R.style.Theme_SmokingTracker_Legacy),
+    SKY(themeResourceId = R.style.Theme_SmokingTracker_Sky);
 
     companion object {
         fun fromName(name: String?): ColorScheme {
