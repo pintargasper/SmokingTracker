@@ -7,13 +7,15 @@
     android:layout_height="wrap_content"
     style="?appCardStyle">
 
-    <LinearLayout
+    <com.gasperpintar.smokingtracker.ui.view.FocusAwareLayout
         android:id="@+id/dialog_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingVertical="8dp"
-        android:paddingHorizontal="16dp">
+        android:paddingHorizontal="16dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title"
@@ -65,6 +67,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </com.gasperpintar.smokingtracker.ui.view.FocusAwareLayout>
 
 </com.google.android.material.card.MaterialCardView>

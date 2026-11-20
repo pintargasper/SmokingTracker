@@ -1,7 +1,3 @@
--keepclassmembers enum com.gasperpintar.smokingtracker.type.Achievement$Category { *; }
-
--keep class com.gasperpintar.smokingtracker.model.AchievementEntry { *; }
-
 -keep class org.apache.poi.schemas.ooxml.system.ooxml.TypeSystemHolder { *; }
 
 -keep class org.openxmlformats.schemas.officeDocument.x2006.extendedProperties.impl.CTPropertiesImpl { <init>(...); }

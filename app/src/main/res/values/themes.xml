@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.SmokingTracker.Base" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="appError">@color/legacy_error</item>
+        <item name="appSuccess">@color/legacy_success</item>
+        <item name="appLinks">@color/legacy_links</item>
+
         <item name="appTextAppearanceStyle">@style/Legacy.TextAppearance</item>
         <item name="appTitleStyle">@style/Legacy.TextAppearance.Title</item>
         <item name="appTitleCenterStyle">@style/Legacy.TextAppearance.Title.Center</item>
@@ -38,16 +42,13 @@
         <item name="android:colorBackground">@color/legacy_background</item>
         <item name="colorSurface">@color/legacy_on_background</item>
 
-        <item name="colorPrimary">@color/legacy_primary</item>
+        <item name="colorPrimary">@color/legacy_blue</item>
         <item name="colorOnPrimary">@color/legacy_on_primary</item>
 
         <item name="appMenuBackground">@color/legacy_menu_background</item>
         <item name="appMenuIconTint">@color/legacy_on_background</item>
         <item name="appMenuTextColor">@color/legacy_on_background</item>
         <item name="appMenuActive">@color/legacy_on_background</item>
-
-        <item name="colorError">@color/legacy_error</item>
-        <item name="colorOnError">@color/legacy_on_error</item>
 
         <item name="appButtonText">@color/legacy_button_text</item>
         <item name="appButtonBackground">@color/legacy_button_background</item>

@@ -18,9 +18,6 @@
         <item name="appMenuTextColor">@color/legacy_on_background</item>
         <item name="appMenuActive">@color/legacy_on_background</item>
 
-        <item name="colorError">@color/legacy_error</item>
-        <item name="colorOnError">@color/legacy_on_error</item>
-
         <item name="appButtonText">@color/legacy_button_text</item>
         <item name="appButtonBackground">@color/legacy_button_background</item>
 

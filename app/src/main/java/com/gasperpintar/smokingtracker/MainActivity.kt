@@ -1,6 +1,6 @@
 package com.gasperpintar.smokingtracker
 
-import android.content.SharedPreferences
+import android.content.Intent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
@@ -46,12 +46,26 @@ class MainActivity : Base<ActivityMainBinding>(
     override fun initialize() {
         val state = runBlocking { viewModel.getState(context = this@MainActivity) }
 
+        val fromOnboarding = intent.getBooleanExtra("onboarding_completed", false)
+        val sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
+        val isFirstRun = sharedPreferences.getBoolean("first_run", true)
+
+        if (isFirstRun) {
+            sharedPreferences.edit {
+                putBoolean("first_run", false)
+            }
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish()
+            return
+        }
+
         setupPager(startPage = state.startPage)
         setupNavigation()
         setupSubNavigation()
 
-        val isFirstRun = handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
-        if (!isFirstRun && state.isNewVersion) DialogManager.showChangelogDialog(context = this)
+        if (fromOnboarding) handleNotifications()
+
+        if (state.isNewVersion) DialogManager.showChangelogDialog(context = this)
     }
 
     @Override
@@ -136,25 +150,18 @@ class MainActivity : Base<ActivityMainBinding>(
         binding.subFragmentContainer.visibility = if (isSubPageVisible) View.VISIBLE else View.GONE
     }
 
-    private fun handleNotifications(sharedPreferences: SharedPreferences): Boolean {
-        val isFirstRun = sharedPreferences.getBoolean("first_run", true)
-        when {
-            isFirstRun -> {
-                permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
-                    if (isGranted) {
-                        Notifications.createNotificationChannel(context = this)
-                        scheduleNotificationWorker()
-                    }
+    private fun handleNotifications() {
+        if (permissionsHelper.isNotificationPermissionGranted) {
+            Notifications.createNotificationChannel(context = this)
+            scheduleNotificationWorker()
+        } else {
+            permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
+                if (isGranted) {
+                    Notifications.createNotificationChannel(context = this)
+                    scheduleNotificationWorker()
                 }
-                sharedPreferences.edit { putBoolean("first_run", false) }
-            }
-
-            permissionsHelper.isNotificationPermissionGranted -> {
-                Notifications.createNotificationChannel(context = this)
-                scheduleNotificationWorker()
             }
         }
-        return isFirstRun
     }
 
     private fun scheduleNotificationWorker() {

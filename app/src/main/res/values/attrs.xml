@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="appError" format="reference" />
+    <attr name="appSuccess" format="reference" />
+    <attr name="appLinks" format="reference" />
+
     <attr name="appColorBackground" format="reference" />
     <attr name="appColorSurface" format="reference" />
 

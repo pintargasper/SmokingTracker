@@ -3,7 +3,6 @@ package com.gasperpintar.smokingtracker.ui.dialog
 import android.net.Uri
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
-import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.TimePicker
@@ -206,14 +205,19 @@ object DialogManager {
         content.inputWarningMinutes.setText(warningMinutes.toString())
         content.inputWarningMinutes.setSelection(content.inputWarningMinutes.text?.length ?: 0)
 
+        content.inputWarningMinutes.doAfterTextChanged { text ->
+            val minutes = text.toString().toIntOrNull()
+            val isValid = minutes != null && ElapsedTimeWarning.isValidMinutes(minutes)
+            content.warningMinutesInputLayout.error = if (isValid) null
+            else context.getString(R.string.settings_elapsed_time_warning_error)
+        }
+
         binding.confirm.setOnClickListener {
             val minutes = content.inputWarningMinutes.text.toString().toIntOrNull()
             if (minutes == null || !ElapsedTimeWarning.isValidMinutes(minutes)) {
                 content.warningMinutesInputLayout.error = context.getString(R.string.settings_elapsed_time_warning_error)
                 return@setOnClickListener
             }
-
-            content.warningMinutesInputLayout.error = null
             onSuccess(minutes)
             dismiss()
         }
@@ -260,28 +264,25 @@ object DialogManager {
 
         currencyMap.forEach { (checkbox, value) ->
             checkbox.setOnClickListener {
-                content.editTextError.visibility = View.GONE
+                content.customCurrencyInput.error = null
                 select(currencyValue = value)
             }
         }
 
         content.checkboxCustom.setOnClickListener {
-            content.editTextError.visibility = View.GONE
             content.inputCustomCurrency.text.toString().trim().takeIf { it.isNotEmpty() }?.let(block = ::select) ?: run {
+                content.customCurrencyInput.error = context.getString(R.string.currency_text_error)
                 content.checkboxCustom.isChecked = false
-                content.editTextError.visibility = View.VISIBLE
-                content.inputCustomCurrency.requestFocus()
             }
         }
 
         content.inputCustomCurrency.doAfterTextChanged { text ->
-            if (!text.isNullOrBlank()) content.editTextError.visibility = View.GONE
+            if (!text.isNullOrBlank()) content.customCurrencyInput.error = null
         }
 
         content.inputCustomCurrency.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && content.inputCustomCurrency.text?.isNotBlank() == true) {
                 content.checkboxCustom.isChecked = true
-                content.editTextError.visibility = View.GONE
             }
         }
     }

@@ -26,8 +26,8 @@ class StatisticsFragment : Base<FragmentStatisticsBinding>(
 
     private fun setupPager() = binding.apply {
         statisticsViewPager.adapter = Pager(
-            this@StatisticsFragment,
-            listOf(
+            fragment = this@StatisticsFragment,
+            creators = listOf(
                 { BasicFragment() },
                 { ForecastFragment() }
             )

@@ -120,12 +120,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
         }
 
         val showWarning = duration?.let { ElapsedTimeWarning.shouldHighlight(it, warningMinutes) } == true
-        if (showWarning) {
-            binding.timerLabel.setTextColor(
-                MaterialColors.getColor(binding.timerLabel, androidx.appcompat.R.attr.colorError)
-            )
-        } else {
-            binding.timerLabel.setTextColor(defaultTimerTextColors)
-        }
+        if (showWarning) binding.timerLabel.setTextColor(MaterialColors.getColor(binding.timerLabel, R.attr.appError))
+        else binding.timerLabel.setTextColor(defaultTimerTextColors)
     }
 }

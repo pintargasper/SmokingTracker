@@ -3,7 +3,7 @@ package com.gasperpintar.smokingtracker.utils
 import android.content.Context
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
-import com.gasperpintar.smokingtracker.model.AboutEntry
+import com.gasperpintar.smokingtracker.model.AboutJson
 import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.type.*
@@ -56,9 +56,9 @@ class JsonHelper(
                 gson.fromJson(it, object : TypeToken<Map<String, JsonElement>>() {}.type)
             }
 
-        val type = object : TypeToken<List<AboutEntry>>() {}.type
-        val platforms: List<AboutEntry> = gson.fromJson(rawData["platforms"], type)
-        val contributors: List<AboutEntry> = gson.fromJson(rawData["contributors"], type)
+        val type = object : TypeToken<List<AboutJson>>() {}.type
+        val platforms: List<AboutJson> = gson.fromJson(rawData["platforms"], type)
+        val contributors: List<AboutJson> = gson.fromJson(rawData["contributors"], type)
 
         val platformItems = platforms.map { platform ->
             ItemAdapter.Item(title = platform.title, value = platform.value.orEmpty(), url = platform.url)

@@ -73,7 +73,6 @@
     <color name="legacy_calendar_inverse">@color/legacy_gray_dark</color>
 
     <color name="legacy_error">@color/legacy_red</color>
-    <color name="legacy_on_error">@color/legacy_dark</color>
     <color name="legacy_success">@color/legacy_green</color>
     <color name="legacy_links">@color/legacy_blue</color>
 

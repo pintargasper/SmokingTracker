@@ -81,7 +81,6 @@
                             style="?appSubtitleStyle" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/app_tagline"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/application_tagline"

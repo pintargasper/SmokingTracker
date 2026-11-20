@@ -23,7 +23,7 @@ class AchievementFragment : Base<FragmentAchievementsBinding>(
 
     private fun setupPager() = binding.apply {
         achievementsViewPager.adapter = Pager(
-            this@AchievementFragment,
+            fragment = this@AchievementFragment,
             creators = listOf(
                 { AchievementListFragment.newInstance(achievementType = Achievement.Category.SMOKE_FREE_TIME) },
                 { AchievementListFragment.newInstance(achievementType = Achievement.Category.CIGARETTES_AVOIDED) }
