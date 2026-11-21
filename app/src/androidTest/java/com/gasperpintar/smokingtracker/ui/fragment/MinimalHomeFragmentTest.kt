@@ -21,7 +21,9 @@ import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -51,10 +53,10 @@ class MinimalHomeFragmentTest {
                 elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
             ) ?: SettingsEntry.default().copy(dayEndMinutes = 0)
         )
-        context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-            .edit()
-            .putBoolean("first_run", false)
-            .commit()
+
+        PreferencesHelper.with(context = context, name = Preferences.Name.SETTINGS)
+            .put(key = Preferences.Key.FIRST_RUN, value = false)
+
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val packageName = instrumentation.targetContext.packageName
         instrumentation.uiAutomation

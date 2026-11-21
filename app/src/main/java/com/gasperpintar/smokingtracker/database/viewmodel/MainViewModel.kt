@@ -1,7 +1,6 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import android.content.Context
-import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gasperpintar.smokingtracker.Application
@@ -13,7 +12,9 @@ import com.gasperpintar.smokingtracker.database.repository.NotificationsReposito
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.MainState
 import com.gasperpintar.smokingtracker.type.Appearance
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.utils.JsonHelper
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -51,14 +52,14 @@ class MainViewModel(
     private suspend fun handleAppVersioning(
         context: Context
     ): Boolean {
-        val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val versionName = context.packageManager.getPackageInfo(context.packageName, 0).versionName
-        val lastVersionName = sharedPreferences.getString("last_version_name", null)
+        val preferences = PreferencesHelper.with(context = context, name = Preferences.Name.SETTINGS)
+        val versionName = requireNotNull(context.packageManager.getPackageInfo(context.packageName, 0).versionName)
+        val lastVersionName = preferences.get<String?>(key = Preferences.Key.LAST_VERSION_NAME, defaultValue = null)
 
         val isNewVersion = versionName != lastVersionName
         if (isNewVersion) {
             JsonHelper(achievementRepository = achievementRepository).initializeAchievements(context = context)
-            sharedPreferences.edit { putString("last_version_name", versionName) }
+            preferences.put(key = Preferences.Key.LAST_VERSION_NAME, value = versionName)
         }
         return isNewVersion
     }

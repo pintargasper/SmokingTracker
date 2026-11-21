@@ -42,7 +42,7 @@
         <item name="android:colorBackground">@color/legacy_background</item>
         <item name="colorSurface">@color/legacy_on_background</item>
 
-        <item name="colorPrimary">@color/legacy_blue</item>
+        <item name="colorPrimary">@color/legacy_primary</item>
         <item name="colorOnPrimary">@color/legacy_on_primary</item>
 
         <item name="appMenuBackground">@color/legacy_menu_background</item>

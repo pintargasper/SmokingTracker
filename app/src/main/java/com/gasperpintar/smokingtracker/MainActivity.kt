@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.core.view.get
 import androidx.core.view.size
@@ -19,6 +18,7 @@ import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.Appearance
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
@@ -27,6 +27,7 @@ import com.gasperpintar.smokingtracker.ui.fragment.MinimalHomeFragment
 import com.gasperpintar.smokingtracker.ui.fragment.MoreFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 import com.gasperpintar.smokingtracker.utils.Permissions
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.runBlocking
@@ -47,16 +48,14 @@ class MainActivity : Base<ActivityMainBinding>(
         val state = runBlocking { viewModel.getState(context = this@MainActivity) }
 
         val fromOnboarding = intent.getBooleanExtra("onboarding_completed", false)
-        val sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE)
-        val isFirstRun = sharedPreferences.getBoolean("first_run", true)
 
-        if (isFirstRun) {
-            sharedPreferences.edit {
-                putBoolean("first_run", false)
+        PreferencesHelper.with(context = this, name = Preferences.Name.SETTINGS).let { preferences ->
+            if (preferences.get(key = Preferences.Key.FIRST_RUN, defaultValue = true)) {
+                preferences.put(key = Preferences.Key.FIRST_RUN, false)
+                startActivity(Intent(this, OnboardingActivity::class.java))
+                finish()
+                return
             }
-            startActivity(Intent(this, OnboardingActivity::class.java))
-            finish()
-            return
         }
 
         setupPager(startPage = state.startPage)
@@ -64,7 +63,6 @@ class MainActivity : Base<ActivityMainBinding>(
         setupSubNavigation()
 
         if (fromOnboarding) handleNotifications()
-
         if (state.isNewVersion) DialogManager.showChangelogDialog(context = this)
     }
 
