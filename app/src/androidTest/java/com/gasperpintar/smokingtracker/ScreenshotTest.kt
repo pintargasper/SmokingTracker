@@ -21,11 +21,13 @@ import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.ui.fragment.AboutFragment
 import com.gasperpintar.smokingtracker.ui.fragment.CalculatorFragment
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementFragment
 import com.gasperpintar.smokingtracker.ui.fragment.note.NotesFragment
 import com.gasperpintar.smokingtracker.ui.fragment.statistics.StatisticsFragment
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -68,6 +70,8 @@ class ScreenshotTest {
         importDummyData()
         setTestLanguage()
         setTestCurrency()
+
+        PreferencesHelper.with(context = context, name = Preferences.Name.SETTINGS).put(key = Preferences.Key.FIRST_RUN, false)
     }
 
     @Test
