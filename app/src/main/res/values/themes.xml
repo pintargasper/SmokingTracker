@@ -28,15 +28,15 @@
         <item name="appDropdownStyle">@style/Legacy.Component.Dropdown</item>
         <item name="appProgressBarStyle">@style/Legacy.Component.ProgressBar</item>
         <item name="appCalendarStyle">@style/Legacy.Component.Calendar</item>
-
         <item name="appCalendarOverlay">@style/Legacy.ThemeOverlay.Calendar</item>
         <item name="appCalendarWeekDayAppearance">@style/Legacy.Component.Calendar.WeekDay</item>
         <item name="appCalendarDateAppearance">@style/Legacy.Component.Calendar.Date</item>
+        <item name="appTimePickerStyle">@style/Legacy.Component.TimePicker</item>
     </style>
 
     <style name="Theme.SmokingTracker.Legacy" parent="Theme.SmokingTracker.Base">
         <item name="android:statusBarColor">@color/legacy_background</item>
-        <item name="android:navigationBarColor">@color/legacy_menu_background</item>
+        <item name="android:navigationBarColor">@color/legacy_background</item>
         <item name="android:windowLightStatusBar">true</item>
 
         <item name="android:colorBackground">@color/legacy_background</item>
@@ -98,6 +98,12 @@
         <item name="appCalendarDateColor">@color/legacy_calendar_date</item>
         <item name="appCalendarActivatedColor">@color/legacy_calendar_activated</item>
         <item name="appCalendarInverseColor">@color/legacy_calendar_inverse</item>
+
+        <item name="appTimePickerHeaderBackground">@color/legacy_time_picker_header_background</item>
+        <item name="appTimePickerNumbersBackground">@color/legacy_time_picker_numbers_background</item>
+        <item name="appTimePickerNumbersTextColor">@color/legacy_time_picker_numbers_text</item>
+        <item name="appTimePickerNumbersInnerTextColor">@color/legacy_time_picker_numbers_inner_text</item>
+        <item name="appTimePickerNumbersSelector">@color/legacy_time_picker_numbers_selector</item>
     </style>
 
     <style name="Theme.SmokingTracker.System" parent="Theme.SmokingTracker.Legacy">

@@ -72,6 +72,12 @@
     <color name="legacy_calendar_activated">@color/legacy_gray</color>
     <color name="legacy_calendar_inverse">@color/legacy_gray_dark</color>
 
+    <color name="legacy_time_picker_header_background">@color/legacy_light_gray</color>
+    <color name="legacy_time_picker_numbers_background">@color/legacy_off_white</color>
+    <color name="legacy_time_picker_numbers_text">@color/legacy_white</color>
+    <color name="legacy_time_picker_numbers_inner_text">@color/legacy_gray_medium</color>
+    <color name="legacy_time_picker_numbers_selector">@color/legacy_gray</color>
+
     <color name="legacy_error">@color/legacy_red</color>
     <color name="legacy_success">@color/legacy_green</color>
     <color name="legacy_links">@color/legacy_blue</color>

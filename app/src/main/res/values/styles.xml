@@ -180,4 +180,13 @@
         <item name="android:colorControlActivated">?appCalendarActivatedColor</item>
         <item name="android:textColorPrimaryInverse">?appCalendarInverseColor</item>
     </style>
+
+    <style name="Legacy.Component.TimePicker" parent="@android:style/Widget.Material.TimePicker">
+        <item name="android:headerBackground">?appTimePickerHeaderBackground</item>
+        <item name="android:numbersTextColor">?appTimePickerNumbersTextColor</item>
+        <item name="android:numbersInnerTextColor">?appTimePickerNumbersInnerTextColor</item>
+        <item name="android:numbersSelectorColor">?appTimePickerNumbersSelector</item>
+        <item name="android:numbersBackgroundColor">?appTimePickerNumbersBackground</item>
+        <item name="android:timePickerMode">clock</item>
+    </style>
 </resources>

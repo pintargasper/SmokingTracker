@@ -35,6 +35,7 @@
     <attr name="appDropdownStyle" format="reference" />
     <attr name="appProgressBarStyle" format="reference" />
     <attr name="appCalendarStyle" format="reference" />
+    <attr name="appTimePickerStyle" format="reference" />
 
     <attr name="appCalendarOverlay" format="reference" />
 
@@ -90,4 +91,10 @@
 
     <attr name="appCalendarActivatedColor" format="reference" />
     <attr name="appCalendarInverseColor" format="reference" />
+
+    <attr name="appTimePickerHeaderBackground" format="reference" />
+    <attr name="appTimePickerNumbersBackground" format="reference" />
+    <attr name="appTimePickerNumbersTextColor" format="reference" />
+    <attr name="appTimePickerNumbersInnerTextColor" format="reference" />
+    <attr name="appTimePickerNumbersSelector" format="reference" />
 </resources>
