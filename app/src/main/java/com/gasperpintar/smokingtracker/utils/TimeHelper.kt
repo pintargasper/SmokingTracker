@@ -152,6 +152,10 @@ object TimeHelper {
         ).joinToString(separator = " ")
     }
 
+    fun toLocalDate(calendar: Calendar): LocalDate{
+        return calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+    }
+
     fun toLocalDateTime(calendar: Calendar): LocalDateTime {
         return calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
     }

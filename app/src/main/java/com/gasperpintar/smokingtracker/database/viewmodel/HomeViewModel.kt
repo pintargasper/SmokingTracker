@@ -46,6 +46,10 @@ class HomeViewModel(
         selectedDate = selectedDate!!.plusDays(1)
     }
 
+    fun selectDate(date: LocalDate) {
+        selectedDate = date
+    }
+
     suspend fun getState(): HomeState {
         val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
         if (selectedDate == null) selectedDate = TimeHelper.dayDate(dayEndMinutes)

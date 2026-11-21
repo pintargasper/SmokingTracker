@@ -2,6 +2,10 @@ package com.gasperpintar.smokingtracker.ui.container
 
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.gasperpintar.smokingtracker.R
@@ -12,6 +16,7 @@ import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.databinding.ContainerAchievementsBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentCostBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBinding
+import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryOptionsBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentNoteBinding
 import com.gasperpintar.smokingtracker.type.Achievement
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatDate
@@ -25,19 +30,29 @@ object ContainerManager {
         onDelete: (HistoryEntry) -> Unit
     ) = BaseContainer.create<HistoryEntry, ContainerContentHistoryBinding>(
         context = context,
-        inflate = ContainerContentHistoryBinding::inflate) { binding, entry ->
-
+        inflate = ContainerContentHistoryBinding::inflate
+    ) { binding, entry ->
         binding.timerLabel.text = entry.timerLabel
         binding.lent.isVisible = entry.isLent
 
-        binding.edit.setOnClickListener {
-            onEdit(entry)
-        }
+        binding.more.setOnClickListener { view ->
+            val optionsBinding = ContainerContentHistoryOptionsBinding.inflate(LayoutInflater.from(context), binding.root, false)
+            optionsBinding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            PopupWindow(optionsBinding.root, optionsBinding.root.measuredWidth, optionsBinding.root.measuredHeight, true).apply {
+                optionsBinding.historyOptionEdit.setOnClickListener {
+                    onEdit(entry)
+                    dismiss()
+                }
 
-        binding.delete.setOnClickListener {
-            onDelete(entry)
+                optionsBinding.historyOptionDelete.setOnClickListener {
+                    onDelete(entry)
+                    dismiss()
+                }
+                showAsDropDown(view, 0, 0, Gravity.END)
+            }
         }
     }
+
 
     fun createCostAdapter(
         context: FragmentActivity,
@@ -45,7 +60,8 @@ object ContainerManager {
         onSuccess: (CostEntry) -> Unit
     ) = BaseContainer.create<CostEntry, ContainerContentCostBinding>(
         context = context,
-        inflate = ContainerContentCostBinding::inflate) { binding, costEntry ->
+        inflate = ContainerContentCostBinding::inflate
+    ) { binding, costEntry ->
 
         binding.dateLabel.text = context.getString(
             R.string.cost_format,
@@ -68,7 +84,8 @@ object ContainerManager {
         context: FragmentActivity
     ) = BaseContainer.create<AchievementEntry, ContainerAchievementsBinding>(
         context = context,
-        inflate = ContainerAchievementsBinding::inflate) { binding, achievementEntry ->
+        inflate = ContainerAchievementsBinding::inflate
+    ) { binding, achievementEntry ->
 
         binding.root.isClickable = false
         binding.root.isFocusable = false

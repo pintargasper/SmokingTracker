@@ -26,31 +26,20 @@
         android:layout_marginEnd="5dp"
         android:padding="4dp"
         android:contentDescription="@string/home_lent"
-        android:visibility="visible"
+        android:visibility="gone"
         app:icon="@drawable/hand_package_48px"
         tools:ignore="VisualLintSystemUi"
         style="?appImageButtonStyle" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/edit"
+        android:id="@+id/more"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="5dp"
         android:padding="4dp"
-        android:contentDescription="@string/home_edit"
-        app:icon="@drawable/edit_48px"
-        tools:ignore="VisualLintSystemUi"
-        style="?appImageButtonStyle" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/delete"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="5dp"
-        android:padding="4dp"
-        android:contentDescription="@string/home_delete"
-        app:icon="@drawable/delete_48px"
-        tools:ignore="VisualLintSystemUi"
+        android:contentDescription="More options"
+        app:icon="@drawable/more_vert_48px"
+        tools:ignore="HardcodedText,VisualLintSystemUi"
         style="?appImageButtonStyle" />
 
 </LinearLayout>

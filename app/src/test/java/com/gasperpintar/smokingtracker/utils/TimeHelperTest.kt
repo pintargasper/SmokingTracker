@@ -164,6 +164,19 @@ class TimeHelperTest {
     }
 
     @Test
+    fun toLocalDateConvertsCalendarCorrectly() {
+        val calendar = Calendar.getInstance().apply {
+            timeZone = TimeZone.getTimeZone("UTC")
+            set(2025, Calendar.DECEMBER, 31, 15, 30, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        val expected = calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+
+        assertEquals(expected, TimeHelper.toLocalDate(calendar))
+    }
+
+    @Test
     fun toLocalDateTimeConvertsCalendarCorrectly() {
         val calendar = Calendar.getInstance().apply {
             timeZone = TimeZone.getTimeZone("UTC")
