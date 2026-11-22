@@ -11,6 +11,7 @@ import com.gasperpintar.smokingtracker.ui.adapter.ItemAdapter
 import com.google.gson.Gson
 import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
+import java.util.Locale.getDefault
 
 class JsonHelper(
     private val achievementRepository: AchievementRepository? = null
@@ -68,7 +69,7 @@ class JsonHelper(
             ItemAdapter.Item(
                 title = contributor.title,
                 value = contributor.contributions.orEmpty().joinToString(separator = ", ") {
-                    context.getString(it.stringResource)
+                    context.getString(it.stringResource).lowercase(locale = getDefault())
                 },
                 url = contributor.url
             )

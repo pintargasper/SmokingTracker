@@ -13,7 +13,7 @@
         android:paddingVertical="4dp">
 
         <LinearLayout
-            android:id="@+id/history_option_edit"
+            android:id="@+id/history_edit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"
@@ -39,7 +39,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/history_option_delete"
+            android:id="@+id/history_delete"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:gravity="center_vertical"

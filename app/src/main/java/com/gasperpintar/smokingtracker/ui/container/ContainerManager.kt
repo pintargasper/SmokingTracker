@@ -39,12 +39,12 @@ object ContainerManager {
             val optionsBinding = ContainerContentHistoryOptionsBinding.inflate(LayoutInflater.from(context), binding.root, false)
             optionsBinding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
             PopupWindow(optionsBinding.root, optionsBinding.root.measuredWidth, optionsBinding.root.measuredHeight, true).apply {
-                optionsBinding.historyOptionEdit.setOnClickListener {
+                optionsBinding.historyEdit.setOnClickListener {
                     onEdit(entry)
                     dismiss()
                 }
 
-                optionsBinding.historyOptionDelete.setOnClickListener {
+                optionsBinding.historyDelete.setOnClickListener {
                     onDelete(entry)
                     dismiss()
                 }
@@ -52,7 +52,6 @@ object ContainerManager {
             }
         }
     }
-
 
     fun createCostAdapter(
         context: FragmentActivity,

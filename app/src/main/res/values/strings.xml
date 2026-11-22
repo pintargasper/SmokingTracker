@@ -63,6 +63,8 @@
     <string name="more_progress">Progress</string>
     <string name="more_progress_statistics">Statistics</string>
     <string name="more_progress_statistics_description">Detailed insights and trends of your usage over time</string>
+    <string name="more_progress_insights">Insights</string>
+    <string name="more_progress_insights_description">Discover insights into your progress</string>
     <string name="more_progress_achievements">Achievements</string>
     <string name="more_progress_achievements_description">Track your milestones and celebrate your progress</string>
     <string name="more_tools">Tools</string>
