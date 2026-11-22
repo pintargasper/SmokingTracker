@@ -1,9 +1,8 @@
-<CalendarView xmlns:android="http://schemas.android.com/apk/res/android"
+<DatePicker xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/custom_calendar_view"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
-    android:showWeekNumber="false"
-    android:theme="?appCalendarOverlay"
-    style="?appCalendarStyle"
-    tools:ignore="VisualLintBounds" />
+    android:layout_height="wrap_content"
+    android:theme="?appDatePickerOverlay"
+    style="?appDatePickerStyle"
+    tools:ignore="VisualLintBounds,VisualLintSystemUi" />

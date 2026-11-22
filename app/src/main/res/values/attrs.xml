@@ -18,6 +18,7 @@
     <attr name="appTitleStartStyle" format="reference" />
     <attr name="appTitleSpecialStyle" format="reference" />
     <attr name="appSubtitleStyle" format="reference" />
+    <attr name="appBigBodyStyle" format="reference" />
     <attr name="appBodyStyle" format="reference" />
     <attr name="appCaptionStyle" format="reference" />
     <attr name="appButtonStyle" format="reference" />
@@ -34,10 +35,10 @@
     <attr name="appSliderStyle" format="reference" />
     <attr name="appDropdownStyle" format="reference" />
     <attr name="appProgressBarStyle" format="reference" />
-    <attr name="appCalendarStyle" format="reference" />
     <attr name="appTimePickerStyle" format="reference" />
+    <attr name="appDatePickerStyle" format="reference" />
 
-    <attr name="appCalendarOverlay" format="reference" />
+    <attr name="appDatePickerOverlay" format="reference" />
 
     <attr name="appButtonText" format="reference" />
     <attr name="appButtonBackground" format="reference" />
@@ -82,15 +83,9 @@
     <attr name="appProgressBarIndicator" format="reference" />
     <attr name="appProgressBarTrack" format="reference" />
 
-    <attr name="appCalendarBackground" format="reference" />
-    <attr name="appCalendarWeekDayAppearance" format="reference" />
-    <attr name="appCalendarDateAppearance" format="reference" />
-
-    <attr name="appCalendarWeekDayColor" format="reference" />
-    <attr name="appCalendarDateColor" format="reference" />
-
-    <attr name="appCalendarActivatedColor" format="reference" />
-    <attr name="appCalendarInverseColor" format="reference" />
+    <attr name="appDatePickerBackground" format="reference" />
+    <attr name="appDatePickerActivatedColor" format="reference" />
+    <attr name="appDatePickerInverseColor" format="reference" />
 
     <attr name="appTimePickerHeaderBackground" format="reference" />
     <attr name="appTimePickerNumbersBackground" format="reference" />

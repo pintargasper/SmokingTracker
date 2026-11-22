@@ -27,14 +27,18 @@ class CalculatorFragment : Base<FragmentCalculatorBinding>(
     @Override
     override fun initialize() = binding.apply {
         inputStartDate.setOnClickListener {
-            DialogManager.showDatePickerDialog(context = requireActivity()) { date ->
-                inputStartDate.setText(viewModel.setStartDate(date))
+            viewLifecycleOwner.lifecycleScope.launch {
+                DialogManager.showDatePickerDialog(context = requireActivity(), initialDate = viewModel.getStartDate()) { date ->
+                    inputStartDate.setText(viewModel.setStartDate(date))
+                }
             }
         }
 
         inputEndDate.setOnClickListener {
-            DialogManager.showDatePickerDialog(context = requireActivity()) { date ->
-                inputEndDate.setText(viewModel.setEndDate(date))
+            viewLifecycleOwner.lifecycleScope.launch {
+                DialogManager.showDatePickerDialog(context = requireActivity(), initialDate = viewModel.getEndDate()) { date ->
+                    inputEndDate.setText(viewModel.setEndDate(date))
+                }
             }
         }
 

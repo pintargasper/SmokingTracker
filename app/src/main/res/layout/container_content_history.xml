@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/more"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -29,17 +30,6 @@
         android:visibility="gone"
         app:icon="@drawable/hand_package_48px"
         tools:ignore="VisualLintSystemUi"
-        style="?appImageButtonStyle" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/more"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="5dp"
-        android:padding="4dp"
-        android:contentDescription="More options"
-        app:icon="@drawable/more_vert_48px"
-        tools:ignore="HardcodedText,VisualLintSystemUi"
         style="?appImageButtonStyle" />
 
 </LinearLayout>

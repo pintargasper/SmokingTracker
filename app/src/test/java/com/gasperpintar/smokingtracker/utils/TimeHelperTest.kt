@@ -164,6 +164,37 @@ class TimeHelperTest {
     }
 
     @Test
+    fun fromLocalDateConvertsLocalDateToCalendarCorrectly() {
+        val localDate = LocalDate.of(2025, 12, 31)
+        val result = TimeHelper.fromLocalDate(localDate)
+
+        assertEquals(2025, result.get(Calendar.YEAR))
+        assertEquals(Calendar.DECEMBER, result.get(Calendar.MONTH))
+        assertEquals(31, result.get(Calendar.DAY_OF_MONTH))
+    }
+
+    @Test
+    fun fromLocalDateSetsTimeToMidnight() {
+        val localDate = LocalDate.of(2025, 12, 31)
+        val result = TimeHelper.fromLocalDate(localDate)
+
+        assertEquals(0, result.get(Calendar.HOUR_OF_DAY))
+        assertEquals(0, result.get(Calendar.MINUTE))
+        assertEquals(0, result.get(Calendar.SECOND))
+        assertEquals(0, result.get(Calendar.MILLISECOND))
+    }
+
+    @Test
+    fun fromLocalDateHandlesLeapYearCorrectly() {
+        val localDate = LocalDate.of(2024, 2, 29)
+        val result = TimeHelper.fromLocalDate(localDate)
+
+        assertEquals(2024, result.get(Calendar.YEAR))
+        assertEquals(Calendar.FEBRUARY, result.get(Calendar.MONTH))
+        assertEquals(29, result.get(Calendar.DAY_OF_MONTH))
+    }
+
+    @Test
     fun toLocalDateConvertsCalendarCorrectly() {
         val calendar = Calendar.getInstance().apply {
             timeZone = TimeZone.getTimeZone("UTC")

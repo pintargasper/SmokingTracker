@@ -11,6 +11,7 @@
         <item name="appTitleStartStyle">@style/Legacy.TextAppearance.Title.Start</item>
         <item name="appTitleSpecialStyle">@style/Legacy.TextAppearance.Title.Special</item>
         <item name="appSubtitleStyle">@style/Legacy.TextAppearance.Subtitle</item>
+        <item name="appBigBodyStyle">@style/Legacy.TextAppearance.BigBody</item>
         <item name="appBodyStyle">@style/Legacy.TextAppearance.Body</item>
         <item name="appCaptionStyle">@style/Legacy.TextAppearance.Caption</item>
         <item name="appButtonStyle">@style/Legacy.Component.Button</item>
@@ -27,11 +28,9 @@
         <item name="appSliderStyle">@style/Legacy.Component.Slider</item>
         <item name="appDropdownStyle">@style/Legacy.Component.Dropdown</item>
         <item name="appProgressBarStyle">@style/Legacy.Component.ProgressBar</item>
-        <item name="appCalendarStyle">@style/Legacy.Component.Calendar</item>
-        <item name="appCalendarOverlay">@style/Legacy.ThemeOverlay.Calendar</item>
-        <item name="appCalendarWeekDayAppearance">@style/Legacy.Component.Calendar.WeekDay</item>
-        <item name="appCalendarDateAppearance">@style/Legacy.Component.Calendar.Date</item>
         <item name="appTimePickerStyle">@style/Legacy.Component.TimePicker</item>
+        <item name="appDatePickerStyle">@style/Legacy.Component.DatePicker</item>
+        <item name="appDatePickerOverlay">@style/Legacy.ThemeOverlay.DatePicker</item>
     </style>
 
     <style name="Theme.SmokingTracker.Legacy" parent="Theme.SmokingTracker.Base">
@@ -93,11 +92,9 @@
         <item name="appProgressBarIndicator">@color/legacy_progress_indicator</item>
         <item name="appProgressBarTrack">@color/legacy_progress_track</item>
 
-        <item name="appCalendarBackground">@color/legacy_calendar_background</item>
-        <item name="appCalendarWeekDayColor">@color/legacy_calendar_week_day</item>
-        <item name="appCalendarDateColor">@color/legacy_calendar_date</item>
-        <item name="appCalendarActivatedColor">@color/legacy_calendar_activated</item>
-        <item name="appCalendarInverseColor">@color/legacy_calendar_inverse</item>
+        <item name="appDatePickerBackground">@color/legacy_date_picker_background</item>
+        <item name="appDatePickerActivatedColor">@color/legacy_date_picker_activated</item>
+        <item name="appDatePickerInverseColor">@color/legacy_date_picker_inverse</item>
 
         <item name="appTimePickerHeaderBackground">@color/legacy_time_picker_header_background</item>
         <item name="appTimePickerNumbersBackground">@color/legacy_time_picker_numbers_background</item>

@@ -28,6 +28,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Legacy.TextAppearance.BigBody" parent="Legacy.TextAppearance">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="Legacy.TextAppearance.Body" parent="Legacy.TextAppearance">
         <item name="android:textSize">14sp</item>
     </style>
@@ -162,23 +166,14 @@
         <item name="trackStopIndicatorSize">0dp</item>
     </style>
 
-    <style name="Legacy.Component.Calendar" parent="Widget.Material3.MaterialCalendar">
-        <item name="android:background">?appCalendarBackground</item>
-        <item name="android:weekDayTextAppearance">?appCalendarWeekDayAppearance</item>
-        <item name="android:dateTextAppearance">?appCalendarDateAppearance</item>
+    <style name="Legacy.Component.DatePicker" parent="@android:style/Widget.Material.DatePicker">
+        <item name="android:headerBackground">?appDatePickerBackground</item>
+        <item name="android:datePickerMode">calendar</item>
     </style>
 
-    <style name="Legacy.Component.Calendar.WeekDay" parent="Legacy.Component.Calendar">
-        <item name="android:textColor">?appCalendarWeekDayColor</item>
-    </style>
-
-    <style name="Legacy.Component.Calendar.Date" parent="Legacy.Component.Calendar">
-        <item name="android:textColor">?appCalendarDateColor</item>
-    </style>
-
-    <style name="Legacy.ThemeOverlay.Calendar" parent="">
-        <item name="android:colorControlActivated">?appCalendarActivatedColor</item>
-        <item name="android:textColorPrimaryInverse">?appCalendarInverseColor</item>
+    <style name="Legacy.ThemeOverlay.DatePicker" parent="">
+        <item name="android:colorControlActivated">?appDatePickerActivatedColor</item>
+        <item name="android:textColorPrimaryInverse">?appDatePickerInverseColor</item>
     </style>
 
     <style name="Legacy.Component.TimePicker" parent="@android:style/Widget.Material.TimePicker">
@@ -189,4 +184,5 @@
         <item name="android:numbersBackgroundColor">?appTimePickerNumbersBackground</item>
         <item name="android:timePickerMode">clock</item>
     </style>
+
 </resources>

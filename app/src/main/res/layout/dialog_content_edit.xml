@@ -10,7 +10,6 @@
         android:id="@+id/scroll_date_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fillViewport="true"
         tools:ignore="ScrollViewSize">
 
         <LinearLayout

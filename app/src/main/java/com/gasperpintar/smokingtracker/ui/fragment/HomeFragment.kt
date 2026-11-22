@@ -63,10 +63,13 @@ class HomeFragment : Base<FragmentHomeBinding>(
         }
 
         binding.cardDatePicker.setOnClickListener {
-            DialogManager.showDatePickerDialog(context = requireActivity()) { date ->
-                viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val date = viewModel.getState().selectedDate
+                DialogManager.showDatePickerDialog(context = requireActivity(), initialDate = TimeHelper.fromLocalDate(date)) { date ->
                     viewModel.selectDate(TimeHelper.toLocalDate(calendar = date))
-                    loadHistory()
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        loadHistory()
+                    }
                 }
             }
         }

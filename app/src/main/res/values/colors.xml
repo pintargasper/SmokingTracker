@@ -71,11 +71,9 @@
     <color name="legacy_progress_indicator">@color/legacy_gray_dark</color>
     <color name="legacy_progress_track">@color/legacy_gray</color>
 
-    <color name="legacy_calendar_background">@color/legacy_white</color>
-    <color name="legacy_calendar_week_day">@color/legacy_dark</color>
-    <color name="legacy_calendar_date">@color/legacy_gray_dark</color>
-    <color name="legacy_calendar_activated">@color/legacy_gray</color>
-    <color name="legacy_calendar_inverse">@color/legacy_gray_dark</color>
+    <color name="legacy_date_picker_background">@color/legacy_white</color>
+    <color name="legacy_date_picker_activated">@color/legacy_gray</color>
+    <color name="legacy_date_picker_inverse">@color/legacy_gray_dark</color>
 
     <color name="legacy_time_picker_header_background">@color/legacy_white</color>
     <color name="legacy_time_picker_numbers_background">@color/legacy_off_white</color>

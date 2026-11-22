@@ -19,13 +19,12 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp"
-            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/edit_48px"
                 style="?appImageStyle" />
 
@@ -34,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/home_edit"
-                style="?appBodyStyle"
+                style="?appBigBodyStyle"
                 tools:ignore="VisualLintSystemUi" />
 
         </LinearLayout>
@@ -46,13 +45,12 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp"
-            android:background="?attr/selectableItemBackground"
             android:clickable="true"
             android:focusable="true">
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:src="@drawable/delete_48px"
                 style="?appImageStyle" />
 
@@ -61,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:text="@string/home_delete"
-                style="?appBodyStyle" />
+                style="?appBigBodyStyle" />
 
         </LinearLayout>
 

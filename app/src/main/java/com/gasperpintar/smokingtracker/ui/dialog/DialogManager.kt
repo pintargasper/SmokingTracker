@@ -323,7 +323,8 @@ object DialogManager {
 
         listOf(content.inputStartDate to true, content.inputEndDate to false).forEach { (inputField, isStartDate) ->
             inputField.setOnClickListener {
-                showDatePickerDialog(context) { selectedDate ->
+                val initialDate = if (isStartDate) startDate ?: Calendar.getInstance() else endDate ?: Calendar.getInstance()
+                showDatePickerDialog(context = context, initialDate = initialDate) { selectedDate ->
                     val (start, end, formattedText) = TimeHelper.applySelectedDate(
                         startDate,
                         endDate,
@@ -413,20 +414,27 @@ object DialogManager {
 
     fun showDatePickerDialog(
         context: FragmentActivity,
+        initialDate: Calendar = Calendar.getInstance(),
         onSuccess: (Calendar) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentDatePickerBinding::inflate) { content ->
         binding.title.isGone = true
         binding.message.isGone = true
         binding.confirm.isVisible = true
 
-        val selectedDate = Calendar.getInstance()
-        content.customCalendarView.date = selectedDate.timeInMillis
-        content.customCalendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            selectedDate.set(year, month, dayOfMonth)
+        val datePicker = content.customCalendarView
+        val selectedDate = initialDate.clone() as Calendar
+
+        val year = selectedDate.get(Calendar.YEAR)
+        val month = selectedDate.get(Calendar.MONTH)
+        val day = selectedDate.get(Calendar.DAY_OF_MONTH)
+
+        datePicker.init(year, month, day) { _, selectedYear, selectedMonth, selectedDay ->
+            selectedDate.set(selectedYear, selectedMonth, selectedDay, 0, 0, 0)
+            selectedDate.set(Calendar.MILLISECOND, 0)
         }
 
         binding.confirm.setOnClickListener {
-            onSuccess(selectedDate)
+            onSuccess(selectedDate.clone() as Calendar)
             dismiss()
         }
     }
