@@ -1,16 +1,15 @@
-package com.gasperpintar.smokingtracker.ui.fragment.statistics
+package com.gasperpintar.smokingtracker.ui.fragment
 
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.viewmodel.ForecastViewModel
-import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsForecastBinding
+import com.gasperpintar.smokingtracker.databinding.FragmentForecastBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
-import com.gasperpintar.smokingtracker.ui.fragment.Base
 import kotlinx.coroutines.launch
 
-class ForecastFragment : Base<FragmentStatisticsForecastBinding>(
-    bindingInflater = FragmentStatisticsForecastBinding::inflate
+class ForecastFragment : Base<FragmentForecastBinding>(
+    bindingInflater = FragmentForecastBinding::inflate
 ) {
 
     private val viewModel: ForecastViewModel by viewModels {
@@ -19,6 +18,10 @@ class ForecastFragment : Base<FragmentStatisticsForecastBinding>(
 
     @Override
     override fun initialize() {
+        binding.buttonBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             loadForecast()
             showContent()

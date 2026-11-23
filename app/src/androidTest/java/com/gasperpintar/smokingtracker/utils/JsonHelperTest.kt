@@ -6,7 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -53,10 +53,10 @@ class JsonHelperTest {
     fun initializeAchievementsSetsCorrectUnitsForCategories() = runBlocking {
         jsonHelper.initializeAchievements(context)
 
-        val achievements = achievementRepository.getAll().filter { it.category == Achievement.Category.CIGARETTES_AVOIDED }
+        val achievements = achievementRepository.getAll().filter { it.category == AchievementJson.Category.CIGARETTES_AVOIDED }
 
         assertTrue(achievements.isNotEmpty())
-        assertTrue(achievements.all { it.unit == Achievement.Unit.CIGARETTES })
+        assertTrue(achievements.all { it.unit == AchievementJson.Unit.CIGARETTES })
     }
 
     @Test

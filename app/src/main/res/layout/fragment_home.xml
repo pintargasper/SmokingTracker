@@ -218,20 +218,22 @@
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_day"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Day"
                         android:gravity="center"
+                        android:textAlignment="center"
                         android:importantForAccessibility="no"
                         style="?appSubtitleStyle"
                         tools:ignore="HardcodedText" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/current_date"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="%1$02d.%2$02d.%3$d"
                         android:gravity="center"
+                        android:textAlignment="center"
                         android:layout_marginTop="-5dp"
                         android:importantForAccessibility="no"
                         style="?appTitleStyle"

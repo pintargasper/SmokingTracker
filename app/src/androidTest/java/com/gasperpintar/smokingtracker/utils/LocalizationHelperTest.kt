@@ -117,6 +117,30 @@ class LocalizationHelperTest {
     }
 
     @Test
+    fun formatPercentageFormatsIntegerValue() {
+        val expected = "35%"
+        val actual = LocalizationHelper.formatPercentage(value = 35.0)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatPercentageFormatsDecimalValue() {
+        val expected = DecimalFormat("0.##").format(35.75) + "%"
+        val actual = LocalizationHelper.formatPercentage(value = 35.75)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatPercentageRemovesUnnecessaryDecimalPlaces() {
+        val expected = "35%"
+        val actual = LocalizationHelper.formatPercentage(value = 35.00)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun formatMoneyFormatsValueWithConfiguredCurrency() = runBlocking {
         settingsRepository.insert(settings = SettingsEntry.default(language = languageSystem).copy(currency = "$"))
 

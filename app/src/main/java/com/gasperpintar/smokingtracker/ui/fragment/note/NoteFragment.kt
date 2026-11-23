@@ -134,9 +134,11 @@ class NoteFragment @JvmOverloads constructor(
 
         @JvmStatic
         @JvmOverloads
-        fun newInstance(noteId: Long = -1L) = NoteFragment().apply {
-            arguments = Bundle().apply {
-                putLong(ARG_NOTE_ID, noteId)
+        fun newInstance(noteId: Long = -1L): NoteFragment {
+            return NoteFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_NOTE_ID, noteId)
+                }
             }
         }
     }

@@ -62,9 +62,9 @@
 
     <string name="more_progress">Progress</string>
     <string name="more_progress_statistics">Statistics</string>
-    <string name="more_progress_statistics_description">Detailed insights and trends of your usage over time</string>
+    <string name="more_progress_statistics_description">Detailed statistics about your habits, consumption and spending over time</string>
     <string name="more_progress_insights">Insights</string>
-    <string name="more_progress_insights_description">Discover insights into your progress</string>
+    <string name="more_progress_insights_description">Explore future trends and predicted patterns based on your habits</string>
     <string name="more_progress_achievements">Achievements</string>
     <string name="more_progress_achievements_description">Track your milestones and celebrate your progress</string>
     <string name="more_tools">Tools</string>
@@ -322,6 +322,18 @@
     <string name="statistics_most_expensive">Most expensive day</string>
     <string name="statistics_logged">Logged: %1$s</string>
     <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>
+    <string name="statistics_triggers">Triggers</string>
+    <string name="statistics_triggers_description">Understand the situations and habits that trigger your smoking</string>
+    <string name="statistics_most_common_trigger">Most common trigger</string>
+    <string name="statistics_triggers_empty">No triggers data available yet</string>
+
+    <string name="trigger_stress">Stress</string>
+    <string name="trigger_coffee">Coffee</string>
+    <string name="trigger_alcohol">Alcohol</string>
+    <string name="trigger_boredom">Boredom</string>
+    <string name="trigger_social">Social situations</string>
+    <string name="trigger_after_meal">After a meal</string>
+    <string name="trigger_habit">Habit</string>
 
     <string name="loading_bar_backup">Backing up…</string>
     <string name="loading_bar_restore">Restoring…</string>

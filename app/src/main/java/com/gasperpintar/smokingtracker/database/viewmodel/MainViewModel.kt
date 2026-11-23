@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.TriggerRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.MainState
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.type.Preferences
@@ -23,7 +24,8 @@ class MainViewModel(
     private val achievementRepository: AchievementRepository,
     private val costsRepository: CostsRepository,
     private val settingsRepository: SettingsRepository,
-    private val notificationsRepository: NotificationsRepository
+    private val notificationsRepository: NotificationsRepository,
+    private val triggerRepository: TriggerRepository
 ): ViewModel() {
 
     init {
@@ -58,7 +60,9 @@ class MainViewModel(
 
         val isNewVersion = versionName != lastVersionName
         if (isNewVersion) {
-            JsonHelper(achievementRepository = achievementRepository).initializeAchievements(context = context)
+            val jsonHelper = JsonHelper(achievementRepository = achievementRepository, triggerRepository = triggerRepository)
+            jsonHelper.initializeAchievements(context = context)
+            jsonHelper.initializeTriggers(context = context)
             preferences.put(key = Preferences.Key.LAST_VERSION_NAME, value = versionName)
         }
         return isNewVersion

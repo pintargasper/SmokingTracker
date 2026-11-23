@@ -2,7 +2,7 @@ package com.gasperpintar.smokingtracker.ui.fragment.achievements
 
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.databinding.FragmentAchievementsBinding
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.fragment.Base
 import com.google.android.material.tabs.TabLayoutMediator
@@ -25,8 +25,8 @@ class AchievementFragment : Base<FragmentAchievementsBinding>(
         achievementsViewPager.adapter = Pager(
             fragment = this@AchievementFragment,
             creators = listOf(
-                { AchievementListFragment.newInstance(achievementType = Achievement.Category.SMOKE_FREE_TIME) },
-                { AchievementListFragment.newInstance(achievementType = Achievement.Category.CIGARETTES_AVOIDED) }
+                { AchievementListFragment.newInstance(achievementType = AchievementJson.Category.SMOKE_FREE_TIME) },
+                { AchievementListFragment.newInstance(achievementType = AchievementJson.Category.CIGARETTES_AVOIDED) }
             )
         )
 

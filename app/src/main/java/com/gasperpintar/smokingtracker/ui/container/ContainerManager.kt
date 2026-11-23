@@ -18,7 +18,7 @@ import com.gasperpintar.smokingtracker.databinding.ContainerContentCostBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryOptionsBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentNoteBinding
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatDate
 import java.text.DecimalFormat
 
@@ -89,8 +89,8 @@ object ContainerManager {
         binding.root.isClickable = false
         binding.root.isFocusable = false
 
-        binding.achievementTitle.text = context.getString(Achievement.Title.valueOf(achievementEntry.title).stringResource)
-        binding.achievementMessage.text = context.getString(Achievement.Message.valueOf(achievementEntry.message).stringResource)
+        binding.achievementTitle.text = context.getString(AchievementJson.Title.valueOf(achievementEntry.title).stringResource)
+        binding.achievementMessage.text = context.getString(AchievementJson.Message.valueOf(achievementEntry.message).stringResource)
 
         binding.lastAchieved.text =
             achievementEntry.lastAchieved
@@ -107,7 +107,7 @@ object ContainerManager {
 
         binding.achievedCount.text = context.getString(R.string.achievement_achieved, achievedTimesText)
         binding.imageAchievement.setImageResource(
-            Achievement.Icon.valueOf(achievementEntry.image).drawableResource
+            AchievementJson.Icon.valueOf(achievementEntry.image).drawableResource
         )
 
         when (achievementEntry.times) {

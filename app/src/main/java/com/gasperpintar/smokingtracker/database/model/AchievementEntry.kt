@@ -4,7 +4,7 @@ import android.content.Context
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import java.time.LocalDateTime
 
 data class AchievementEntry(
@@ -18,8 +18,8 @@ data class AchievementEntry(
     val lastAchieved: LocalDateTime?,
     val reset: Boolean,
     val notify: Boolean,
-    val category: Achievement.Category,
-    val unit: Achievement.Unit
+    val category: AchievementJson.Category,
+    val unit: AchievementJson.Unit
 ): IIdentifiable {
     companion object {
         fun fromEntity(
@@ -61,12 +61,12 @@ data class AchievementEntry(
         context: Context
     ): String {
         val resource = when (unit) {
-            Achievement.Unit.HOURS -> R.plurals.time_hours
-            Achievement.Unit.DAYS -> R.plurals.time_days
-            Achievement.Unit.WEEKS -> R.plurals.time_weeks
-            Achievement.Unit.MONTHS -> R.plurals.time_months
-            Achievement.Unit.YEARS -> R.plurals.time_years
-            Achievement.Unit.CIGARETTES -> R.plurals.cigarettes_count
+            AchievementJson.Unit.HOURS -> R.plurals.time_hours
+            AchievementJson.Unit.DAYS -> R.plurals.time_days
+            AchievementJson.Unit.WEEKS -> R.plurals.time_weeks
+            AchievementJson.Unit.MONTHS -> R.plurals.time_months
+            AchievementJson.Unit.YEARS -> R.plurals.time_years
+            AchievementJson.Unit.CIGARETTES -> R.plurals.cigarettes_count
         }
         return context.resources.getQuantityString(resource, value, value)
     }

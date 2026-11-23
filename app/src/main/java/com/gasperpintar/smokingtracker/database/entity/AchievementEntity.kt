@@ -2,7 +2,7 @@ package com.gasperpintar.smokingtracker.database.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import java.time.LocalDateTime
 
 @Entity(tableName = "achievements")
@@ -18,6 +18,6 @@ data class AchievementEntity(
     val lastAchieved: LocalDateTime?,
     val reset: Boolean,
     val notify: Boolean,
-    val category: Achievement.Category,
-    val unit: Achievement.Unit
+    val category: AchievementJson.Category,
+    val unit: AchievementJson.Unit
 )

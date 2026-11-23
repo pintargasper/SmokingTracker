@@ -9,38 +9,30 @@ import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.TriggerRepository
 
 class Container(context: Context): IContainer {
 
     private val database = Provider.getDatabase(context = context)
 
     @get:Override
-    override val achievementRepository = AchievementRepository(
-        achievementDao = database.achievementDao()
-    )
+    override val achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
 
     @get:Override
-    override val costsRepository = CostsRepository(
-        costDao = database.costsDao()
-    )
+    override val costsRepository = CostsRepository(costDao = database.costsDao())
 
     @get:Override
-    override val historyRepository = HistoryRepository(
-        historyDao = database.historyDao()
-    )
+    override val historyRepository = HistoryRepository(historyDao = database.historyDao())
 
     @get:Override
-    override val notesRepository = NotesRepository(
-        notesDao = database.notesDao()
-    )
+    override val notesRepository = NotesRepository(notesDao = database.notesDao())
 
     @get:Override
-    override val notificationsRepository = NotificationsRepository(
-        notificationsSettingsDao = database.notificationsSettingsDao()
-    )
+    override val notificationsRepository = NotificationsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
 
     @get:Override
-    override val settingsRepository = SettingsRepository(
-        settingsDao = database.settingsDao()
-    )
+    override val settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
+
+    @get:Override
+    override val triggerRepository = TriggerRepository(triggerDao = database.triggerDao())
 }

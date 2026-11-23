@@ -6,7 +6,7 @@ import com.gasperpintar.smokingtracker.database.model.AchievementEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import java.time.LocalDateTime
 
@@ -28,8 +28,8 @@ class AchievementEvaluator(
 
         achievements.forEach { achievement ->
             val seconds = when (achievement.category) {
-                Achievement.Category.SMOKE_FREE_TIME -> achievement.unit.toSeconds(achievement.value)
-                Achievement.Category.CIGARETTES_AVOIDED -> averageCigarettesPerDay.takeIf { it > 0 }?.let { (achievement.value / it * 86400).toLong() }
+                AchievementJson.Category.SMOKE_FREE_TIME -> achievement.unit.toSeconds(achievement.value)
+                AchievementJson.Category.CIGARETTES_AVOIDED -> averageCigarettesPerDay.takeIf { it > 0 }?.let { (achievement.value / it * 86400).toLong() }
             } ?: return@forEach
 
             val unlockDate = lastSmokeTime.plusSeconds(seconds).takeIf { !now.isBefore(it) } ?: return@forEach
@@ -53,7 +53,7 @@ class AchievementEvaluator(
         achievement: AchievementEntry
     ) {
         val text = achievement.getDisplayText(context)
-        val resId = if (achievement.unit == Achievement.Unit.CIGARETTES) R.string.notification_achievement_unlocked_content_cigarettes
+        val resId = if (achievement.unit == AchievementJson.Unit.CIGARETTES) R.string.notification_achievement_unlocked_content_cigarettes
         else R.string.notification_achievement_unlocked_content_time
 
         Notifications.sendNotification(

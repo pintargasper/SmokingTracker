@@ -18,7 +18,7 @@ import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import com.gasperpintar.smokingtracker.utils.manager.Mappers
@@ -339,7 +339,7 @@ class ManagerTest {
             workbook.sheet(
                 name = "Achievements",
                 headers = Mappers.ACHIEVEMENTS_HEADERS,
-                values = listOf(9, 2, "", true, true, Achievement.Category.entries.first().name, Achievement.Unit.entries.first().name, 1)
+                values = listOf(9, 2, "", true, true, AchievementJson.Category.entries.first().name, AchievementJson.Unit.entries.first().name, 1)
             )
 
             workbook.sheet(name = "Costs", headers = Mappers.COSTS_HEADERS, values = listOf(4.5, "2026-01-01 00:00:00", "2026-01-02 00:00:00"))

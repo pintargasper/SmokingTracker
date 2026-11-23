@@ -6,7 +6,7 @@ import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
 import com.gasperpintar.smokingtracker.database.model.SettingsEntry
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.parseDateTime
@@ -39,22 +39,22 @@ object Mappers {
         index: Int,
         formatter: DateTimeFormatter
     ): AchievementEntry? {
-        val enumIndex = index.coerceIn(0, Achievement.Icon.entries.lastIndex)
+        val enumIndex = index.coerceIn(0, AchievementJson.Icon.entries.lastIndex)
         val lastAchieved = col["LastAchieved"]?.let { columnIndex -> row.parseDateTime(columnIndex, formatter) }
 
         return runCatching {
             AchievementEntry(
                 id = 0,
-                image = Achievement.Icon.entries[enumIndex].name,
+                image = AchievementJson.Icon.entries[enumIndex].name,
                 value = col["Value"]?.let { columnIndex -> row.getCell(columnIndex)?.numericCellValue?.toInt() } ?: 0,
-                title = Achievement.Title.entries[enumIndex].name,
-                message = Achievement.Message.entries[enumIndex].name,
+                title = AchievementJson.Title.entries[enumIndex].name,
+                message = AchievementJson.Message.entries[enumIndex].name,
                 times = col["Times"]?.let { columnIndex -> row.getCell(columnIndex)?.numericCellValue?.toLong() } ?: 0L,
                 lastAchieved = lastAchieved,
                 reset = col["Reset"]?.let { columnIndex -> row.getCell(columnIndex)?.booleanCellValue } ?: false,
                 notify = col["Notify"]?.let { columnIndex -> row.getCell(columnIndex)?.booleanCellValue } ?: false,
-                category = col["Category"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { Achievement.Category.valueOf(it) } ?: return@runCatching null,
-                unit = col["Unit"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { Achievement.Unit.valueOf(it) } ?: return@runCatching null
+                category = col["Category"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { AchievementJson.Category.valueOf(it) } ?: return@runCatching null,
+                unit = col["Unit"]?.let { columnIndex -> row.getCell(columnIndex)?.stringCellValue }?.let { AchievementJson.Unit.valueOf(it) } ?: return@runCatching null
             )
         }.getOrNull()
     }

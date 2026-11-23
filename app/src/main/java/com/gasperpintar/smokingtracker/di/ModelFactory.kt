@@ -11,6 +11,7 @@ import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
+import com.gasperpintar.smokingtracker.database.viewmodel.TriggerViewModel
 
 class ModelFactory(
     private val container: Container
@@ -25,7 +26,8 @@ class ModelFactory(
                     achievementRepository = container.achievementRepository,
                     costsRepository = container.costsRepository,
                     settingsRepository = container.settingsRepository,
-                    notificationsRepository = container.notificationsRepository
+                    notificationsRepository = container.notificationsRepository,
+                    triggerRepository = container.triggerRepository
                 ) as T
             }
 
@@ -80,6 +82,10 @@ class ModelFactory(
                     historyRepository = container.historyRepository,
                     settingsRepository = container.settingsRepository
                 ) as T
+            }
+
+            modelClass.isAssignableFrom(TriggerViewModel::class.java) -> {
+                TriggerViewModel(triggerRepository = container.triggerRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

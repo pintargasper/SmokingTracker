@@ -6,7 +6,7 @@ import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
 import com.gasperpintar.smokingtracker.database.model.SettingsEntry
-import com.gasperpintar.smokingtracker.type.Achievement
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
@@ -128,21 +128,21 @@ class MappersTest {
     fun parseAchievementClampsIndexToLastResource() {
         val (row, column) = row(
             headers = Mappers.ACHIEVEMENTS_HEADERS,
-            values = listOf(1, 0, "", true, true, Achievement.Category.CIGARETTES_AVOIDED.name, Achievement.Unit.CIGARETTES.name, 1)
+            values = listOf(1, 0, "", true, true, AchievementJson.Category.CIGARETTES_AVOIDED.name, AchievementJson.Unit.CIGARETTES.name, 1)
         )
 
         val actual = Mappers.parseAchievement(row, column, index = 100, formatter = formatter)
 
-        assertEquals(Achievement.Icon.entries.last().name, actual?.image)
-        assertEquals(Achievement.Title.entries.last().name, actual?.title)
-        assertEquals(Achievement.Message.entries.last().name, actual?.message)
+        assertEquals(AchievementJson.Icon.entries.last().name, actual?.image)
+        assertEquals(AchievementJson.Title.entries.last().name, actual?.title)
+        assertEquals(AchievementJson.Message.entries.last().name, actual?.message)
     }
 
     @Test
     fun parseAchievementReturnsNullForInvalidCategory() {
         val (row, column) = row(
             headers = Mappers.ACHIEVEMENTS_HEADERS,
-            values = listOf(1, 0, "", true, true, "UNKNOWN", Achievement.Unit.DAYS.name, 1)
+            values = listOf(1, 0, "", true, true, "UNKNOWN", AchievementJson.Unit.DAYS.name, 1)
         )
 
         assertNull(Mappers.parseAchievement(row, column, index = 0, formatter = formatter))
@@ -150,7 +150,7 @@ class MappersTest {
 
     @Test
     fun parseAchievementReturnsNullWithoutCategory() {
-        val (row, column) = row(headers = listOf("Value", "Unit"), values = listOf(1, Achievement.Unit.DAYS.name))
+        val (row, column) = row(headers = listOf("Value", "Unit"), values = listOf(1, AchievementJson.Unit.DAYS.name))
 
         assertNull(Mappers.parseAchievement(row, column, index = 0, formatter = formatter))
     }
@@ -265,16 +265,16 @@ class MappersTest {
     private fun achievement(index: Int): AchievementEntry {
         return AchievementEntry(
             id = 0,
-            image = Achievement.Icon.entries[index].name,
+            image = AchievementJson.Icon.entries[index].name,
             value = index + 1,
-            title = Achievement.Title.entries[index].name,
-            message = Achievement.Message.entries[index].name,
+            title = AchievementJson.Title.entries[index].name,
+            message = AchievementJson.Message.entries[index].name,
             times = 0,
             lastAchieved = null,
             reset = true,
             notify = true,
-            category = Achievement.Category.SMOKE_FREE_TIME,
-            unit = Achievement.Unit.DAYS
+            category = AchievementJson.Category.SMOKE_FREE_TIME,
+            unit = AchievementJson.Unit.DAYS
         )
     }
 }

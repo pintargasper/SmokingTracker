@@ -161,8 +161,7 @@
     <style name="Legacy.Component.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
         <item name="indicatorColor">?appProgressBarIndicator</item>
         <item name="trackColor">?appProgressBarTrack</item>
-        <item name="trackThickness">20dp</item>
-        <item name="trackCornerRadius">0dp</item>
+        <item name="trackCornerRadius">5dp</item>
         <item name="trackStopIndicatorSize">0dp</item>
     </style>
 
