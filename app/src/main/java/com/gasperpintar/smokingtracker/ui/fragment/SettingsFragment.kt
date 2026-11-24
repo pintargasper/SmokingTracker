@@ -57,12 +57,12 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            setupSettings()
+            setup()
             showContent()
         }
     }
 
-    private suspend fun setupSettings() = binding.apply {
+    private suspend fun setup() = binding.apply {
         val state = viewModel.getState()
         updateUi(state = state)
 
@@ -103,27 +103,8 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             }
         }
 
-        dayEndLayout.setOnClickListener {
-            DialogManager.showEndDayDialog(context = requireActivity(), settings = state.settings) { dayEndMinutes ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    state.settings = state.settings.copy(dayEndMinutes = dayEndMinutes)
-                    viewModel.updateSettings(state.settings)
-                    requireActivity().recreate()
-                }
-            }
-        }
-
-        elapsedTimeWarningLayout.setOnClickListener {
-            DialogManager.showElapsedTimeWarningDialog(
-                context = requireActivity(),
-                warningMinutes = state.settings.elapsedTimeWarningMinutes
-            ) { warningMinutes ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    state.settings = state.settings.copy(elapsedTimeWarningMinutes = warningMinutes)
-                    viewModel.updateSettings(state.settings)
-                    elapsedTimeWarningValue.text = requireContext().resources.getQuantityString(R.plurals.time_minutes, warningMinutes, warningMinutes)
-                }
-            }
+        trackingLayout.setOnClickListener {
+            (requireActivity() as MainActivity).openSubFragment(fragment = TrackingFragment())
         }
 
         widgetsLayout.setOnClickListener {
@@ -163,8 +144,6 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         }
 
         val links = mapOf(
-            websiteLayout to "https://gasperpintar.com/smoking-tracker",
-            changelogLayout to "https://github.com/pintargasper/SmokingTracker/releases",
             translateLayout to "https://translate.gasperpintar.com/projects/smokingtracker",
             privacyPolicyLayout to "https://gasperpintar.com/smoking-tracker/privacy-policy"
         )
@@ -178,12 +157,6 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             .getOrElse(index = resources.getStringArray(R.array.language_values)
                 .indexOf(state.settings.language)
             ) { "system" }
-
-        elapsedTimeWarningValue.text = requireContext().resources.getQuantityString(
-            R.plurals.time_minutes,
-            state.settings.elapsedTimeWarningMinutes,
-            state.settings.elapsedTimeWarningMinutes
-        )
     }
 
     private fun setupDataManagement() = binding.apply {

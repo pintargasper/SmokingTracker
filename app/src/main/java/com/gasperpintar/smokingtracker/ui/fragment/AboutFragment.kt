@@ -25,8 +25,19 @@ class AboutFragment : Base<FragmentAboutBinding>(
         appVersion.text = getString(R.string.about_version, versionName, versionCode)
         createdBy.text = getString(R.string.about_created_by, "Gašper Pintar")
 
+        setup()
         setupPagers()
         showContent()
+    }
+
+    private fun setup() = binding.apply {
+        val links = mapOf(
+            websiteLayout to "https://gasperpintar.com/smoking-tracker",
+            changelogLayout to "https://github.com/pintargasper/SmokingTracker/releases",
+        )
+        links.forEach { (view, url) ->
+            view.setOnClickListener { requireContext().openUrl(url) }
+        }
     }
 
     private fun setupPagers() = binding.apply {

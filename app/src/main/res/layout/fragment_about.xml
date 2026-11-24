@@ -155,6 +155,123 @@
                 style="?appCaptionStyle"
                 tools:ignore="HardcodedText" />
 
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginHorizontal="8dp"
+                android:text="@string/about_other"
+                style="?appTitleStyle"
+                tools:ignore="VisualLintSystemUi" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:id="@+id/website_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:minHeight="55dp"
+                    android:orientation="horizontal"
+                    android:paddingVertical="12dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="12dp"
+                    tools:ignore="TouchTargetSizeCheck">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/settings_about_website"
+                        android:src="@drawable/public_48px"
+                        style="?appImageStyle" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="?appSubtitleStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/settings_about_website" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="?appBodyStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_about_website_description" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:id="@+id/changelog_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="55dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="12dp"
+                    android:paddingVertical="12dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/settings_about_changelog"
+                        android:src="@drawable/history_48px"
+                        style="?appImageStyle" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/settings_about_changelog"
+                            style="?appSubtitleStyle" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_about_changelog_description"
+                            style="?appBodyStyle" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

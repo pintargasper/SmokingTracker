@@ -30,6 +30,7 @@ import com.gasperpintar.smokingtracker.databinding.DialogContentLanguageBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentNotificationsBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentRestoreBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentResultBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentTriggersBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentWidgetsBinding
 import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Widget
@@ -233,6 +234,26 @@ object DialogManager {
                 return@setOnClickListener
             }
             onSuccess(minutes)
+            dismiss()
+        }
+    }
+
+    fun showTriggersDialog(
+        context: FragmentActivity,
+        defaultTrigger: TriggerJson.Type,
+        onSuccess: (TriggerJson.Type) -> Unit
+    ) = BaseDialog.show(context = context, inflate = DialogContentTriggersBinding::inflate) { content ->
+        binding.title.setText(R.string.tracking_trigger)
+        binding.message.setText(R.string.tracking_trigger_description)
+        binding.confirm.isVisible = true
+
+        content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(defaultTrigger.name).stringResource), false)
+
+        binding.confirm.setOnClickListener {
+            val trigger = TriggerJson.Title.entries.firstOrNull {
+                context.getString(it.stringResource) == content.triggerDropdown.text.toString()
+            }?.let { TriggerJson.Type.valueOf(it.name) } ?: TriggerJson.Type.NO_REASON
+            onSuccess(trigger)
             dismiss()
         }
     }

@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:labelFor="@+id/trigger_dropdown"
         android:text="@string/statistics_triggers_description"
-        style="?appBodyStyle" />
+        style="?appBodyStyle"
+        tools:ignore="VisualLintSystemUi" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/trigger_input_layout"
@@ -30,6 +31,9 @@
             android:maxLines="1"
             android:ellipsize="end"
             android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:cursorVisible="false"
             android:dropDownHeight="200dp"
             app:simpleItems="@array/trigger_options"
             style="?appDropdownStyle"
