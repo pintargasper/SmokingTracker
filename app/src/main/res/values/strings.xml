@@ -45,6 +45,7 @@
     <string name="home_add_success">Cigarette added</string>
     <string name="home_add_error">Could not add the cigarette. Please try again.</string>
     <string name="home_load_error">Could not load your data. Please try again.</string>
+    <string name="home_first_today">First of the day</string>
 
     <string name="graph_daily">Daily Overview (%1$d)</string>
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
@@ -323,9 +324,9 @@
     <string name="statistics_logged">Logged: %1$s</string>
     <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>
     <string name="statistics_triggers">Triggers</string>
-    <string name="statistics_triggers_description">Understand the situations and habits that trigger your smoking</string>
+    <string name="statistics_triggers_description">What caused the need?</string>
     <string name="statistics_most_common_trigger">Most common trigger</string>
-    <string name="statistics_triggers_empty">No triggers data available yet</string>
+    <string name="statistics_triggers_empty">No data available yet</string>
 
     <string name="trigger_stress">Stress</string>
     <string name="trigger_coffee">Coffee</string>
@@ -334,6 +335,7 @@
     <string name="trigger_social">Social situations</string>
     <string name="trigger_after_meal">After a meal</string>
     <string name="trigger_habit">Habit</string>
+    <string name="trigger_no_reason">No reason</string>
 
     <string name="loading_bar_backup">Backing up…</string>
     <string name="loading_bar_restore">Restoring…</string>

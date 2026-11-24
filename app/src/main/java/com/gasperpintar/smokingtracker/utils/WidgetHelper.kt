@@ -167,7 +167,7 @@ object WidgetHelper {
         CoroutineScope(context = Dispatchers.IO).launch {
             try {
                 val container = (context.applicationContext as Application).container
-                container.historyRepository.insert(entry = HistoryEntry.default(isLent = false))
+                container.historyRepository.insert(entry = HistoryEntry.default(isLent = false, trigger =  container.settingsRepository.get()!!.defaultTrigger))
                 container.achievementRepository.resetAll(state = true)
                 updateAllWidgets(context)
 

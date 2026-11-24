@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -144,6 +145,6 @@ class BasicViewModelTest {
     }
 
     private suspend fun insertHistory(vararg dates: LocalDateTime) {
-        dates.forEach { historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = it)) }
+        dates.forEach { historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = it, trigger = TriggerJson.Type.NO_REASON)) }
     }
 }

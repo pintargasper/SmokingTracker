@@ -6,6 +6,7 @@
     { "type": "BOREDOM" },
     { "type": "SOCIAL" },
     { "type": "AFTER_MEAL" },
-    { "type": "HABIT" }
+    { "type": "HABIT" },
+    { "type": "NO_REASON" }
   ]
 }

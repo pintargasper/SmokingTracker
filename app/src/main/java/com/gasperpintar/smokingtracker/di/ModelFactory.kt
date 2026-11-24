@@ -85,7 +85,10 @@ class ModelFactory(
             }
 
             modelClass.isAssignableFrom(TriggerViewModel::class.java) -> {
-                TriggerViewModel(triggerRepository = container.triggerRepository) as T
+                TriggerViewModel(
+                    triggerRepository = container.triggerRepository,
+                    historyRepository = container.historyRepository
+                ) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }

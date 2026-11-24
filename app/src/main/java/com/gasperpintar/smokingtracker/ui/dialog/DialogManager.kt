@@ -31,6 +31,7 @@ import com.gasperpintar.smokingtracker.databinding.DialogContentNotificationsBin
 import com.gasperpintar.smokingtracker.databinding.DialogContentRestoreBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentResultBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentWidgetsBinding
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
@@ -59,15 +60,22 @@ object DialogManager {
 
     fun showInsertDialog(
         context: FragmentActivity,
-        onSuccess: (Boolean) -> Unit
+        onSuccess: (Boolean, TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentInsertBinding::inflate) { content ->
+
         binding.message.isGone = true
         binding.title.setText(R.string.insert_popup)
         binding.confirm.isVisible = true
         binding.confirm.setText(R.string.popup_add)
 
+        content.triggerDropdown.setText(context.getString(R.string.trigger_no_reason), false)
+
         binding.confirm.setOnClickListener {
-            onSuccess(content.lentCheckbox.isChecked)
+            val trigger = TriggerJson.Title.entries.firstOrNull {
+                context.getString(it.stringResource) == content.triggerDropdown.text.toString()
+            }?.let { TriggerJson.Type.valueOf(it.name) } ?: TriggerJson.Type.NO_REASON
+
+            onSuccess(content.lentCheckbox.isChecked, trigger)
             dismiss()
         }
     }
@@ -75,7 +83,7 @@ object DialogManager {
     fun showEditDialog(
         context: FragmentActivity,
         entry: HistoryEntry,
-        onSuccess: (LocalDateTime, Boolean) -> Unit
+        onSuccess: (LocalDateTime, Boolean, TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentEditBinding::inflate) { content ->
         content.lentCheckbox.isChecked = entry.isLent
         content.timePicker.is24Hour = DateFormat.is24HourFormat(context)
@@ -90,13 +98,19 @@ object DialogManager {
         binding.title.setText(R.string.edit_popup_message)
         binding.confirm.isVisible = true
 
+        content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(entry.trigger.name).stringResource), false)
+
         binding.confirm.setOnClickListener {
             val selectedDateTime = LocalDateTime.of(
                 content.datePicker.toLocalDate(),
                 content.timePicker.toLocalTime()
             ).withSecond(entry.createdAt.second)
 
-            onSuccess(selectedDateTime, content.lentCheckbox.isChecked)
+            val trigger = TriggerJson.Title.entries.firstOrNull {
+                context.getString(it.stringResource) == content.triggerDropdown.text.toString()
+            }?.let { TriggerJson.Type.valueOf(it.name) } ?: TriggerJson.Type.NO_REASON
+
+            onSuccess(selectedDateTime, content.lentCheckbox.isChecked, trigger)
             dismiss()
         }
     }

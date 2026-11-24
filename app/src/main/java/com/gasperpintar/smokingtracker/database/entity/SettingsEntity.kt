@@ -3,6 +3,7 @@ package com.gasperpintar.smokingtracker.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Appearance
 
 @Entity(tableName = "settings")
@@ -30,5 +31,8 @@ data class SettingsEntity(
     val colorScheme: Appearance.ColorScheme,
 
     @ColumnInfo(defaultValue = "HOME")
-    val startPage: Appearance.StartPage
+    val startPage: Appearance.StartPage,
+
+    @ColumnInfo(defaultValue = "NO_REASON")
+    val defaultTrigger: TriggerJson.Type
 )

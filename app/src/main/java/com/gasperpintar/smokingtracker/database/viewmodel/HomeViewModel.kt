@@ -8,6 +8,7 @@ import com.gasperpintar.smokingtracker.database.viewmodel.state.MinimalHomeState
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -101,7 +102,7 @@ class HomeViewModel(
         viewModelScope.launch {
             _isAdding.value = true
             try {
-                insert(isLent = false)
+                insert(isLent = false, trigger = settingsRepository.get()!!.defaultTrigger)
                 _addEvents.emit(value = true)
             } catch (cancelled: CancellationException) {
                 throw cancelled
@@ -115,19 +116,21 @@ class HomeViewModel(
     }
 
     suspend fun insert(
-        isLent: Boolean
+        isLent: Boolean,
+        trigger: TriggerJson.Type
     ) {
         if (!isLent) achievementRepository.resetAll(state = true)
-        historyRepository.insert(entry = HistoryEntry.default(isLent = isLent))
+        historyRepository.insert(entry = HistoryEntry.default(isLent = isLent, trigger = trigger))
     }
 
     suspend fun update(
         entry: HistoryEntry,
         dateTime: LocalDateTime,
-        isLent: Boolean
+        isLent: Boolean,
+        trigger: TriggerJson.Type
     ) {
-        if (entry.id == lastEntry?.id) achievementRepository.resetAll(state = false)
-        val updatedEntry = entry.copy(createdAt = dateTime, isLent = isLent)
+        if (entry.id == lastEntry?.id && entry.createdAt != dateTime) achievementRepository.resetAll(state = false)
+        val updatedEntry = entry.copy(createdAt = dateTime, isLent = isLent, trigger = trigger)
         historyRepository.update(entry = updatedEntry)
     }
 

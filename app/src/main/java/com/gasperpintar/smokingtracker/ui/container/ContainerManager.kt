@@ -19,31 +19,54 @@ import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBindin
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryOptionsBinding
 import com.gasperpintar.smokingtracker.databinding.ContainerContentNoteBinding
 import com.gasperpintar.smokingtracker.model.AchievementJson
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper.formatDate
+import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.text.DecimalFormat
+import java.time.Duration
 
 object ContainerManager {
 
     fun createHistoryAdapter(
         context: FragmentActivity,
+        entries: () -> List<HistoryEntry>,
         onEdit: (HistoryEntry) -> Unit,
         onDelete: (HistoryEntry) -> Unit
-    ) = BaseContainer.create<HistoryEntry, ContainerContentHistoryBinding>(
-        context = context,
-        inflate = ContainerContentHistoryBinding::inflate
-    ) { binding, entry ->
+    ) = BaseContainer.create<HistoryEntry, ContainerContentHistoryBinding>(context = context, inflate = ContainerContentHistoryBinding::inflate) { binding, entry ->
         binding.timerLabel.text = entry.timerLabel
         binding.lent.isVisible = entry.isLent
 
+        binding.triggerIcon.apply {
+            isVisible = entry.trigger != TriggerJson.Type.NO_REASON
+            if (isVisible) setImageResource(TriggerJson.Icon.valueOf(entry.trigger.name).drawableResource)
+        }
+
+        val previousEntry = entries().asSequence().filter {
+            it.createdAt.toLocalDate() == entry.createdAt.toLocalDate() && it.createdAt.isBefore(entry.createdAt)
+        }.maxByOrNull { it.createdAt }
+
+        binding.intervalLabel.apply {
+            isVisible = true
+            text = previousEntry?.let {
+                TimeHelper.formatTime(
+                    resources = context.resources,
+                    totalMinutes = Duration.between(it.createdAt, entry.createdAt).toMinutes().toInt()
+                )
+            } ?: context.getString(R.string.home_first_today)
+        }
+
         binding.more.setOnClickListener { view ->
             val optionsBinding = ContainerContentHistoryOptionsBinding.inflate(LayoutInflater.from(context), binding.root, false)
-            optionsBinding.root.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+            optionsBinding.root.measure(
+                View.MeasureSpec.UNSPECIFIED,
+                View.MeasureSpec.UNSPECIFIED
+            )
+
             PopupWindow(optionsBinding.root, optionsBinding.root.measuredWidth, optionsBinding.root.measuredHeight, true).apply {
                 optionsBinding.historyEdit.setOnClickListener {
                     onEdit(entry)
                     dismiss()
                 }
-
                 optionsBinding.historyDelete.setOnClickListener {
                     onDelete(entry)
                     dismiss()
@@ -57,23 +80,18 @@ object ContainerManager {
         context: FragmentActivity,
         currency: String,
         onSuccess: (CostEntry) -> Unit
-    ) = BaseContainer.create<CostEntry, ContainerContentCostBinding>(
-        context = context,
-        inflate = ContainerContentCostBinding::inflate
+    ) = BaseContainer.create<CostEntry, ContainerContentCostBinding>(context = context, inflate = ContainerContentCostBinding::inflate
     ) { binding, costEntry ->
-
         binding.dateLabel.text = context.getString(
             R.string.cost_format,
             formatDate(context = context, date = costEntry.startDate.toLocalDate()),
             formatDate(context = context, date = costEntry.endDate.toLocalDate())
         )
-
         binding.priceLabel.text = context.getString(
             R.string.cost_price,
             DecimalFormat("0.00#").format(costEntry.price),
             currency
         )
-
         binding.delete.setOnClickListener {
             onSuccess(costEntry)
         }
@@ -81,10 +99,7 @@ object ContainerManager {
 
     fun createAchievementAdapter(
         context: FragmentActivity
-    ) = BaseContainer.create<AchievementEntry, ContainerAchievementsBinding>(
-        context = context,
-        inflate = ContainerAchievementsBinding::inflate
-    ) { binding, achievementEntry ->
+    ) = BaseContainer.create<AchievementEntry, ContainerAchievementsBinding>(context = context, inflate = ContainerAchievementsBinding::inflate) { binding, achievementEntry ->
 
         binding.root.isClickable = false
         binding.root.isFocusable = false
@@ -128,9 +143,7 @@ object ContainerManager {
         context: FragmentActivity,
         onOpen: (NoteEntry) -> Unit,
         onDelete: (NoteEntry) -> Unit
-    ) = BaseContainer.create<NoteEntry, ContainerContentNoteBinding>(
-        context = context,
-        inflate = ContainerContentNoteBinding::inflate) { binding, noteEntry ->
+    ) = BaseContainer.create<NoteEntry, ContainerContentNoteBinding>(context = context, inflate = ContainerContentNoteBinding::inflate) { binding, noteEntry ->
 
         binding.emotionIcon.setImageResource(noteEntry.moodIcon)
         binding.titleLabel.text = noteEntry.title

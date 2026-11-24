@@ -12,6 +12,7 @@ import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.model.AchievementJson
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -109,7 +110,7 @@ class AchievementEvaluatorTest {
         insertAchievement(value = 20, unit = AchievementJson.Unit.CIGARETTES, category = AchievementJson.Category.CIGARETTES_AVOIDED)
         listOf(lastSmokeTime.minusDays(2), lastSmokeTime.minusDays(1)).forEach { day ->
             repeat(times = 10) {
-                historyRepository.insert(entry = HistoryEntry(id = 0, isLent = false, createdAt = day.plusMinutes(it.toLong()), timerLabel = ""))
+                historyRepository.insert(entry = HistoryEntry(id = 0, isLent = false, createdAt = day.plusMinutes(it.toLong()), timerLabel = "", trigger = TriggerJson.Type.NO_REASON))
             }
         }
 

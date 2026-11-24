@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.utils
 
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import java.time.LocalDateTime
@@ -14,8 +15,8 @@ class HistoryEntryTest {
     @Test
     fun historyEntityToHistoryEntryConversionIsCorrect() {
         withLocale {
-            val entity = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1)
-            val expected = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30\u202fAM")
+            val entity = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1, trigger = TriggerJson.Type.NO_REASON)
+            val expected = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30\u202fAM", trigger = TriggerJson.Type.NO_REASON)
 
             assertEquals(expected, HistoryEntry.fromEntity(entity))
         }
@@ -23,8 +24,8 @@ class HistoryEntryTest {
 
     @Test
     fun historyEntryToHistoryEntityConversionIsCorrect() {
-        val entry = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30:00")
-        val expected = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1)
+        val entry = HistoryEntry(id = 1L, isLent = true, createdAt = createdAt, timerLabel = "10:30:00", trigger = TriggerJson.Type.NO_REASON)
+        val expected = HistoryEntity(id = 1L, createdAt = createdAt, lent = 1, trigger = TriggerJson.Type.NO_REASON)
 
         assertEquals(expected, entry.toEntity())
     }

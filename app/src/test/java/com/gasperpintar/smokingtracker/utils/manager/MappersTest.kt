@@ -7,6 +7,7 @@ import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
 import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.model.AchievementJson
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.create
@@ -42,8 +43,8 @@ class MappersTest {
     @Test
     fun historyRoundTripIsCorrect() {
         val entities = listOf(
-            HistoryEntry(id = 7, isLent = true, createdAt = createdAt),
-            HistoryEntry(id = 8, isLent = false, createdAt = createdAt.plusHours(1))
+            HistoryEntry(id = 7, isLent = true, createdAt = createdAt, trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntry(id = 8, isLent = false, createdAt = createdAt.plusHours(1), trigger = TriggerJson.Type.NO_REASON)
         )
 
         val actual = roundTrip(headers = Mappers.HISTORY_HEADERS, data = entities, mapper = { it.toExcelRow(formatter) }) { row, column, _ ->
@@ -89,7 +90,8 @@ class MappersTest {
             dayEndMinutes = 90,
             elapsedTimeWarningMinutes = 120,
             colorScheme = Appearance.ColorScheme.SYSTEM,
-            startPage = Appearance.StartPage.HOME
+            startPage = Appearance.StartPage.HOME,
+            defaultTrigger = TriggerJson.Type.NO_REASON
         )
 
         val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
@@ -179,7 +181,8 @@ class MappersTest {
             dayEndMinutes = 0,
             elapsedTimeWarningMinutes = 60,
             colorScheme = Appearance.ColorScheme.SYSTEM,
-            startPage = Appearance.StartPage.HOME
+            startPage = Appearance.StartPage.HOME,
+            defaultTrigger = TriggerJson.Type.NO_REASON
         )
 
         assertEquals(expected, Mappers.parseSettings(row, column))
@@ -229,7 +232,7 @@ class MappersTest {
 
     @Test
     fun headersMatchExportedColumns() {
-        assertEquals(Mappers.HISTORY_HEADERS.size, HistoryEntry(id = 0, isLent = false, createdAt = createdAt).toExcelRow(formatter).size)
+        assertEquals(Mappers.HISTORY_HEADERS.size, HistoryEntry(id = 0, isLent = false, createdAt = createdAt, trigger = TriggerJson.Type.NO_REASON).toExcelRow(formatter).size)
         assertEquals(Mappers.ACHIEVEMENTS_HEADERS.size, achievement(index = 0).toExcelRow(formatter).size)
         assertEquals(Mappers.COSTS_HEADERS.size, CostEntry(id = 0, startDate = createdAt, endDate = createdAt, price = 0.0).toExcelRow(formatter).size)
         assertEquals(Mappers.NOTES_HEADERS.size, NoteEntry(id = 0, title = "", content = "", mood = 3, createdAt = createdAt, updatedAt = createdAt).toExcelRow(formatter).size)

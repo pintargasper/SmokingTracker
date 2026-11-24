@@ -7,6 +7,7 @@ import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
 import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.model.AchievementJson
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 import com.gasperpintar.smokingtracker.utils.manager.Extensions.parseDateTime
@@ -30,7 +31,7 @@ object Mappers {
     ): HistoryEntry? {
         val lent = col["Lent"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: return null
         val createdAt = col["CreatedAt"]?.let { index -> row.parseDateTime(index, formatter) } ?: return null
-        return HistoryEntry(id = 0, isLent = lent > 0, createdAt = createdAt, timerLabel = "")
+        return HistoryEntry(id = 0, isLent = lent > 0, createdAt = createdAt, timerLabel = "", trigger = TriggerJson.Type.NO_REASON)
     }
 
     fun parseAchievement(
@@ -110,7 +111,8 @@ object Mappers {
             dayEndMinutes = col["DayEndMinutes"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
             elapsedTimeWarningMinutes = warningMinutes,
             colorScheme = col["ColorScheme"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { Appearance.ColorScheme.valueOf(it) } ?: Appearance.ColorScheme.SYSTEM,
-            startPage = col["StartPage"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { Appearance.StartPage.valueOf(it) } ?: Appearance.StartPage.HOME
+            startPage = col["StartPage"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { Appearance.StartPage.valueOf(it) } ?: Appearance.StartPage.HOME,
+            defaultTrigger = col["DefaultTrigger"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { TriggerJson.Type.valueOf(it) } ?: TriggerJson.Type.NO_REASON
         )
     }
 

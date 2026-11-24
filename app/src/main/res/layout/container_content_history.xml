@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/more"
     android:layout_width="match_parent"
@@ -8,28 +7,55 @@
     android:orientation="horizontal"
     android:gravity="center_vertical">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/timer_label"
+    <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginEnd="5dp"
-        android:paddingHorizontal="10dp"
+        android:layout_marginEnd="8dp"
+        android:orientation="vertical"
         android:gravity="center_vertical"
-        android:text="00:00"
-        style="?appSubtitleStyle"
-        tools:ignore="HardcodedText,VisualLintSystemUi" />
+        android:paddingVertical="6dp"
+        android:paddingHorizontal="10dp">
 
-    <com.google.android.material.button.MaterialButton
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/timer_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?appSubtitleStyle"
+            tools:text="14:35"
+            tools:ignore="VisualLintSystemUi" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/interval_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:visibility="gone"
+            style="?appCaptionStyle"
+            tools:text="2 h 15 min"
+            tools:visibility="visible"
+            tools:ignore="VisualLintSystemUi" />
+
+    </LinearLayout>
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/lent"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="5dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:padding="4dp"
-        android:contentDescription="@string/home_lent"
         android:visibility="gone"
-        app:icon="@drawable/hand_package_48px"
-        tools:ignore="VisualLintSystemUi"
-        style="?appImageButtonStyle" />
+        android:src="@drawable/hand_package_48px"
+        style="?appImageStyle"
+        tools:visibility="visible"
+        tools:ignore="VisualLintSystemUi" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/trigger_icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:visibility="gone"
+        style="?appImageStyle"
+        tools:src="@drawable/question_mark_48px"
+        tools:visibility="visible" />
 
 </LinearLayout>

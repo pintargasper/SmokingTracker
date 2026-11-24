@@ -14,7 +14,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@null"
-        android:scaleType="centerInside"
+        style="?appImageStyle"
         tools:src="@drawable/psychology_48px" />
 
     <LinearLayout
@@ -53,9 +53,8 @@
             android:id="@+id/trigger_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:max="100"
-            android:progress="35"
             style="?appProgressBarStyle"
             app:trackThickness="5dp"
             tools:progress="35" />

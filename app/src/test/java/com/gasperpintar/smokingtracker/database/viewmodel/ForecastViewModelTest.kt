@@ -7,6 +7,7 @@ import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.ForecastState
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.GraphInterval
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -104,7 +105,7 @@ class ForecastViewModelTest {
         val today = LocalDate.now()
         (0..4).forEach { daysBack ->
             repeat(times = 5 - daysBack) {
-                historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = today.minusDays(daysBack.toLong()).atTime(0, 0, 1)))
+                historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = today.minusDays(daysBack.toLong()).atTime(0, 0, 1), trigger = TriggerJson.Type.NO_REASON))
             }
         }
 
@@ -116,6 +117,6 @@ class ForecastViewModelTest {
     }
 
     private suspend fun insertHistory(vararg dates: LocalDateTime) {
-        dates.forEach { historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = it)) }
+        dates.forEach { historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = it, trigger = TriggerJson.Type.NO_REASON)) }
     }
 }

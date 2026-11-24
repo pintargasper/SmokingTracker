@@ -6,6 +6,7 @@ import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -110,6 +111,6 @@ class HistoryDaoTest {
     }
 
     private suspend fun insert(createdAt: LocalDateTime, lent: Boolean = false) {
-        historyDao.insert(entity = HistoryEntity(id = 0, lent = if (lent) 1 else 0, createdAt = createdAt))
+        historyDao.insert(entity = HistoryEntity(id = 0, lent = if (lent) 1 else 0, createdAt = createdAt, trigger = TriggerJson.Type.NO_REASON))
     }
 }

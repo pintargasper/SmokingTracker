@@ -19,6 +19,7 @@ import com.gasperpintar.smokingtracker.database.repository.NotesRepository
 import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.model.AchievementJson
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.manager.Manager
 import com.gasperpintar.smokingtracker.utils.manager.Mappers
@@ -140,9 +141,9 @@ class ManagerTest {
             }
             historyRepository.insertAll(
                 entries = listOf(
-                    HistoryEntry(id = 0, isLent = false, createdAt = createdAt),
-                    HistoryEntry(id = 0, isLent = true, createdAt = createdAt.plusHours(1)),
-                    HistoryEntry(id = 0, isLent = false, createdAt = createdAt.plusDays(1))
+                    HistoryEntry(id = 0, isLent = false, createdAt = createdAt, trigger = TriggerJson.Type.NO_REASON),
+                    HistoryEntry(id = 0, isLent = true, createdAt = createdAt.plusHours(1), trigger = TriggerJson.Type.NO_REASON),
+                    HistoryEntry(id = 0, isLent = false, createdAt = createdAt.plusDays(1), trigger = TriggerJson.Type.NO_REASON)
                 )
             )
             costsRepository.insertAll(
@@ -167,7 +168,8 @@ class ManagerTest {
                     dayEndMinutes = 90,
                     elapsedTimeWarningMinutes = 240,
                     colorScheme = Appearance.ColorScheme.SYSTEM,
-                    startPage = Appearance.StartPage.HOME
+                    startPage = Appearance.StartPage.HOME,
+                    defaultTrigger = TriggerJson.Type.NO_REASON
                 )
             )
             notificationsRepository.insert(settings = NotificationsEntry(
@@ -218,7 +220,7 @@ class ManagerTest {
     @Test
     fun restoreFromInvalidFileKeepsExistingData() {
         runBlocking {
-            historyRepository.insert(entry = HistoryEntry(id = 0, isLent = false, createdAt = createdAt))
+            historyRepository.insert(entry = HistoryEntry(id = 0, isLent = false, createdAt = createdAt, trigger = TriggerJson.Type.NO_REASON))
             val (file, uri) = temporaryFile()
             file.writeText("not a workbook")
 

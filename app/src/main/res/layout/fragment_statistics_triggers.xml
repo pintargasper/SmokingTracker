@@ -12,21 +12,6 @@
         android:orientation="vertical"
         android:paddingBottom="8dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:text="@string/statistics_triggers"
-            style="?appTitleStyle"
-            tools:ignore="VisualLintSystemUi" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:text="@string/statistics_triggers_description"
-            style="?appBodyStyle" />
-
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,18 +68,6 @@
             </LinearLayout>
 
         </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/triggers_empty_state"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:gravity="center"
-            android:padding="16dp"
-            android:text="@string/statistics_triggers_empty"
-            android:visibility="gone"
-            style="?appBodyStyle"
-            tools:visibility="visible" />
 
     </LinearLayout>
 

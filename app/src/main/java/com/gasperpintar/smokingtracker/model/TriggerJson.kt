@@ -29,7 +29,10 @@ data class TriggerJson(
         AFTER_MEAL,
 
         @SerializedName(value = "HABIT")
-        HABIT
+        HABIT,
+
+        @SerializedName(value = "NO_REASON")
+        NO_REASON
     }
 
     enum class Title(
@@ -41,7 +44,8 @@ data class TriggerJson(
         BOREDOM(R.string.trigger_boredom),
         SOCIAL(R.string.trigger_social),
         AFTER_MEAL(R.string.trigger_after_meal),
-        HABIT(R.string.trigger_habit)
+        HABIT(R.string.trigger_habit),
+        NO_REASON(R.string.trigger_no_reason)
     }
 
     enum class Icon(
@@ -53,6 +57,7 @@ data class TriggerJson(
         BOREDOM(R.drawable.sentiment_worried_48px),
         SOCIAL(R.drawable.groups_48px),
         AFTER_MEAL(R.drawable.restaurant_48px),
-        HABIT(R.drawable.repeat_48px)
+        HABIT(R.drawable.repeat_48px),
+        NO_REASON(R.drawable.question_mark_48px)
     }
 }

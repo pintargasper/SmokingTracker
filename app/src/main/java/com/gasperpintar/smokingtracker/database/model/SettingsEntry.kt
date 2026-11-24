@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.database.model
 
 import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Appearance
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 
@@ -16,7 +17,8 @@ data class SettingsEntry(
     val dayEndMinutes: Int,
     val elapsedTimeWarningMinutes: Int,
     val colorScheme: Appearance.ColorScheme,
-    val startPage: Appearance.StartPage
+    val startPage: Appearance.StartPage,
+    val defaultTrigger: TriggerJson.Type
 ) : IIdentifiable {
     companion object {
         fun default(
@@ -33,7 +35,8 @@ data class SettingsEntry(
                 dayEndMinutes = 0,
                 elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES,
                 colorScheme = Appearance.ColorScheme.SYSTEM,
-                startPage = Appearance.StartPage.HOME
+                startPage = Appearance.StartPage.HOME,
+                defaultTrigger = TriggerJson.Type.NO_REASON
             )
         }
 
@@ -48,7 +51,8 @@ data class SettingsEntry(
                 dayEndMinutes = entity.dayEndMinutes,
                 elapsedTimeWarningMinutes = entity.elapsedTimeWarningMinutes,
                 colorScheme = entity.colorScheme,
-                startPage = entity.startPage
+                startPage = entity.startPage,
+                defaultTrigger = entity.defaultTrigger
             )
         }
     }
@@ -64,7 +68,8 @@ data class SettingsEntry(
             dayEndMinutes = dayEndMinutes,
             elapsedTimeWarningMinutes = elapsedTimeWarningMinutes,
             colorScheme = colorScheme,
-            startPage = startPage
+            startPage = startPage,
+            defaultTrigger = defaultTrigger
         )
     }
 }
