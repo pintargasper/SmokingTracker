@@ -6,8 +6,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -54,10 +53,10 @@ class JsonHelperTest {
     fun initializeAchievementsSetsCorrectUnitsForCategories() = runBlocking {
         jsonHelper.initializeAchievements(context)
 
-        val achievements = achievementRepository.getAll().filter { it.category == AchievementCategory.CIGARETTES_AVOIDED }
+        val achievements = achievementRepository.getAll().filter { it.category == AchievementJson.Category.CIGARETTES_AVOIDED }
 
         assertTrue(achievements.isNotEmpty())
-        assertTrue(achievements.all { it.unit == AchievementUnit.CIGARETTES })
+        assertTrue(achievements.all { it.unit == AchievementJson.Unit.CIGARETTES })
     }
 
     @Test
@@ -69,5 +68,39 @@ class JsonHelperTest {
         val countAfter = achievementRepository.getAll().size
 
         assertEquals(countBefore, countAfter)
+    }
+
+    @Test
+    fun initializeAboutReturnsPlatformsAndContributors() {
+        val (platforms, contributors) = jsonHelper.initializeAbout(context)
+
+        assertTrue(platforms.isNotEmpty())
+        assertTrue(contributors.isNotEmpty())
+    }
+
+    @Test
+    fun initializeAboutReturnsValidPlatformEntries() {
+        val (platforms, _) = jsonHelper.initializeAbout(context)
+
+        assertTrue(platforms.all { it.title.isNotBlank() })
+        assertTrue(platforms.all { it.value.isNotBlank() })
+        assertTrue(platforms.all { it.url?.isNotBlank() ?: false })
+    }
+
+    @Test
+    fun initializeAboutReturnsValidContributorEntries() {
+        val (_, contributors) = jsonHelper.initializeAbout(context)
+
+        assertTrue(contributors.all { it.title.isNotBlank() })
+        assertTrue(contributors.all { it.value.isNotBlank() })
+        assertTrue(contributors.all { it.url?.isNotBlank() ?: false })
+    }
+
+    @Test
+    fun initializeAboutReturnsUniqueEntries() {
+        val (platforms, contributors) = jsonHelper.initializeAbout(context)
+
+        assertEquals(platforms.size, platforms.distinctBy { it.title }.size)
+        assertEquals(contributors.size, contributors.distinctBy { it.title }.size)
     }
 }

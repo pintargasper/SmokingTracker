@@ -4,7 +4,7 @@
     <string name="home_next_day">後一天</string>
     <string name="home_add_entry">新增項目</string>
     <string name="graph_daily">每日概覽 (%1$d)</string>
-    <string name="application_name">吸菸追蹤器</string>
+    <string name="app_name">吸菸追蹤器</string>
     <string name="home_daily">每日</string>
     <string name="home_weekly">每週</string>
     <string name="home_monthly">每月</string>
@@ -21,11 +21,11 @@
     <string name="graph_monthly">每月概覽（%1$d）</string>
     <string name="graph_yearly">每年概覽（%1$d）</string>
     <string name="graph_previous_day_daily">前一天（每日）</string>
-    <string name="graph_previous_day_weakly">前一天（每週）</string>
+    <string name="graph_previous_day_weekly">前一天（每週）</string>
     <string name="graph_previous_day_monthly">前一天（每月）</string>
     <string name="graph_previous_day_yearly">前一天（每年）</string>
     <string name="graph_next_day_daily">後一天（每日）</string>
-    <string name="graph_next_day_weakly">後一天（每週）</string>
+    <string name="graph_next_day_weekly">後一天（每週）</string>
     <string name="graph_next_day_monthly">後一天（每月）</string>
     <string name="graph_next_day_yearly">後一天（每年）</string>
     <string name="graph_view_info">沒有資料可顯示圖表</string>
@@ -38,7 +38,7 @@
     <string name="more_tools_notes_description">保存你的想法和個人備註</string>
     <string name="notes_add">增加備註</string>
     <string name="notes_edit">編輯備註</string>
-    <string name="notes_mode">心情</string>
+    <string name="notes_mood">心情</string>
     <string name="notes_title">備註標題</string>
     <string name="notes_content">備註內容</string>
     <string name="notes_emotions_very_bad">非常差</string>
@@ -60,10 +60,10 @@
     <string name="settings_general_language">語言</string>
     <string name="settings_general_notifications">通知</string>
     <string name="settings_general_notifications_description">透過通知和提醒掌握最新資訊</string>
-    <string name="settings_finance_currency">貨幣</string>
-    <string name="settings_finance_currency_description">選擇您的貨幣。如果清單中沒有列出該貨幣，您可以自行輸入</string>
-    <string name="settings_finance_costs">花費</string>
-    <string name="settings_finance_costs_description">一支香煙的成本。香煙的價格可以由時期決定</string>
+    <string name="tracker_currency">貨幣</string>
+    <string name="tracker_currency_description">選擇您的貨幣。如果清單中沒有列出該貨幣，您可以自行輸入</string>
+    <string name="tracker_costs">花費</string>
+    <string name="tracker_costs_description">一支香煙的成本。香煙的價格可以由時期決定</string>
     <string name="settings_data">數據</string>
     <string name="settings_data_backup">備份</string>
     <string name="settings_data_backup_text">將您的資料備份到您的裝置</string>
@@ -73,18 +73,18 @@
     <string name="about_version">版本 %1$s (%2$d)</string>
     <string name="about_version_unknown">未知</string>
     <string name="settings_about_website">網站</string>
-    <string name="settings_support_translations">翻譯支援</string>
-    <string name="settings_support_translations_description">使用 Weblate 將此應用程式翻譯成您的語言</string>
+    <string name="about_translations">翻譯支援</string>
+    <string name="about_translations_description">使用 Weblate 將此應用程式翻譯成您的語言</string>
     <string name="settings_about_changelog">變更日誌</string>
     <string name="settings_about_changelog_description">查看變更日誌</string>
-    <string name="settings_support_privacy_policy">隱私政策</string>
+    <string name="about_privacy_policy">隱私政策</string>
     <string name="about_contributors">貢獻者</string>
     <string name="insert_popup">新增項目</string>
     <string name="insert_popup_lent">一根借來的香菸？</string>
     <string name="insert_popup_add">添加</string>
-    <string name="popup_close">關閉</string>
-    <string name="popup_confirm">確認</string>
-    <string name="popup_save">保存</string>
+    <string name="button_close">關閉</string>
+    <string name="button_confirm">確認</string>
+    <string name="button_save">保存</string>
     <string name="edit_popup_message">日期和時間</string>
     <string name="edit_popup_lent">一根借來的香菸？</string>
     <string name="delete_popup_message">您確定要刪除此記錄嗎？</string>
@@ -100,7 +100,7 @@
     <string name="notifications_popup_check_box_system">系統默認主題</string>
     <string name="notifications_popup_check_box_progress">進度提醒</string>
     <string name="notifications_popup_check_box_achievements">成就</string>
-    <string name="application_tagline">追蹤、分析、進步</string>
+    <string name="app_tagline">追蹤、分析、進步</string>
     <string name="more_progress_statistics">統計</string>
     <string name="more_progress_statistics_description">隨時間變化的使用情況詳細洞察與趨勢</string>
     <string name="more_tools">工具</string>
@@ -118,7 +118,7 @@
     <string name="achievement_congrats_one_month">滿月探險家</string>
     <string name="achievement_congrats_three_months">三月拓荒者</string>
     <string name="achievement_congrats_six_months">半年征服者</string>
-    <string name="achievement_congrats_nine_month">九月守護者</string>
+    <string name="achievement_congrats_nine_months">九月守護者</string>
     <string name="achievement_congrats_one_year">一年先驅</string>
     <string name="achievement_congrats_one_day_message">做得好！繼續保持，再接再厲！</string>
     <string name="achievement_congrats_three_days_message">別停下來！你的每一步都證明了你的決心</string>
@@ -154,7 +154,7 @@
     <string name="calculator_start_date">開始日期</string>
     <string name="calculator_to">結束於：</string>
     <string name="calculator_end_date">結束日期</string>
-    <string name="calculator_calculate">計算</string>
+    <string name="button_calculate">計算</string>
     <string name="calculator_result">計算結果</string>
     <string name="calculator_result_total">總花費</string>
     <string name="calculator_result_time_spent">耗費時間</string>
@@ -162,11 +162,11 @@
     <string name="calculator_result_cost">每支香菸價格</string>
     <string name="calculator_result_average_time">抽 1 支香菸的平均時間</string>
     <string name="calculator_result_estimated_time">預估為 5 分鐘</string>
-    <string name="settings_finance">金融賬本</string>
+    <string name="tracker_finance">金融賬本</string>
     <string name="settings_about_description">版本、連結與更多資訊</string>
     <string name="settings_about_website_description">造訪網站以取得更多資訊</string>
     <string name="settings_support">支援與安全性</string>
-    <string name="settings_support_privacy_policy_description">查看隱私政策</string>
+    <string name="about_privacy_policy_description">查看隱私政策</string>
     <string name="about_view">前往查看</string>
     <string name="about_view_github">查看原始碼、回報問題並參與專案貢獻</string>
     <string name="about_view_f_droid">在 F-Droid 上查看應用程式</string>
@@ -180,8 +180,8 @@
     <string name="about_contributors_chinese_simplified">簡體中文翻譯</string>
     <string name="about_contributors_chinese_traditional">正體中文翻譯</string>
     <string name="about_created_by">開發者：%1$s</string>
-    <string name="popup_backup">備份</string>
-    <string name="popup_select">選擇</string>
+    <string name="button_backup">備份</string>
+    <string name="button_select">選擇</string>
     <string name="notifications_popup_frequency_label">頻率</string>
     <string name="notifications_popup_frequency_default">預設</string>
     <string name="notifications_popup_frequency_daily">每天</string>
@@ -265,7 +265,7 @@
     <plurals name="cigarettes_count">
         <item quantity="other">%d 支香菸</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="other">%d 次</item>
     </plurals>
 </resources>

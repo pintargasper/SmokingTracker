@@ -75,7 +75,6 @@
                         android:cursorVisible="false"
                         android:inputType="none"
                         app:simpleItems="@array/frequency_options"
-                        tools:ignore="LabelFor"
                         style="?appDropdownStyle" />
 
                 </com.google.android.material.textfield.TextInputLayout>

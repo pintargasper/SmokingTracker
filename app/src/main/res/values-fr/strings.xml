@@ -4,7 +4,7 @@
     <string name="home_timer_hour">h</string>
     <string name="home_timer_minute">min</string>
     <string name="home_timer_second">s</string>
-    <string name="application_name">Traqueur de tabagisme</string>
+    <string name="app_name">Traqueur de tabagisme</string>
     <string name="navigation_home">Principal</string>
     <string name="navigation_graph">Graphique</string>
     <string name="navigation_more">Analytique</string>
@@ -14,8 +14,8 @@
     <string name="notifications_popup_frequency_weekly">Hebdomadaire</string>
     <string name="backup_popup">Sauvegarder vos données</string>
     <string name="backup_popup_description">Vous recevrez une notification push de la sauvegarde de vos données</string>
-    <string name="popup_backup">Sauvegarde</string>
-    <string name="popup_select">Sélectionner</string>
+    <string name="button_backup">Sauvegarde</string>
+    <string name="button_select">Sélectionner</string>
     <string name="restore_popup">Restaurer vos données</string>
     <string name="restore_popup_info">Vous recevrez une notification push de la restauration de vos données</string>
     <string name="restore_popup_file">Fichier: %1$s</string>
@@ -32,11 +32,11 @@
     <string name="graph_monthly">Récapitulatif Mensuel (%1$d)</string>
     <string name="graph_yearly">Récapitulatif Annuel (%1$d)</string>
     <string name="graph_previous_day_daily">Jour précédent (Journalier)</string>
-    <string name="graph_previous_day_weakly">Jour précédent (Hebdomadaire)</string>
+    <string name="graph_previous_day_weekly">Jour précédent (Hebdomadaire)</string>
     <string name="graph_previous_day_monthly">Jour précédent (Mensuel)</string>
     <string name="graph_previous_day_yearly">Jour précédent (Annuel)</string>
     <string name="graph_next_day_daily">Jour suivant (Journalier)</string>
-    <string name="graph_next_day_weakly">Jour suivant (Hebdomadaire)</string>
+    <string name="graph_next_day_weekly">Jour suivant (Hebdomadaire)</string>
     <string name="graph_next_day_monthly">Jour suivant (Mensuel)</string>
     <string name="graph_next_day_yearly">Jour suivant (Annuel)</string>
     <string name="graph_view_info">Il n\'y a aucune information à afficher sur ce diagramme</string>
@@ -63,14 +63,14 @@
     <string name="about_version">Version %1$s (%2$d)</string>
     <string name="about_version_unknown">Inconnue</string>
     <string name="settings_about_website">Site internet</string>
-    <string name="settings_support_translations">Aider à la traduction</string>
-    <string name="settings_support_translations_description">Traduisez cette application dans votre langue à l\'aide de Weblate</string>
-    <string name="settings_support_privacy_policy">Smoking Tracker : Politique de Confidentialité</string>
+    <string name="about_translations">Aider à la traduction</string>
+    <string name="about_translations_description">Traduisez cette application dans votre langue à l\'aide de Weblate</string>
+    <string name="about_privacy_policy">Smoking Tracker : Politique de Confidentialité</string>
     <string name="insert_popup">Ajouter une entrée</string>
     <string name="insert_popup_lent">Une cigarette prêtée ?</string>
     <string name="insert_popup_add">Ajouter</string>
-    <string name="popup_close">Fermer</string>
-    <string name="popup_confirm">Confirmer</string>
+    <string name="button_close">Fermer</string>
+    <string name="button_confirm">Confirmer</string>
     <string name="edit_popup_message">Date et heure</string>
     <string name="edit_popup_lent">Une cigarette prêtée ?</string>
     <string name="delete_popup_message">Êtes-vous sûr de vouloir supprimer cet enregistrement ?</string>
@@ -100,7 +100,7 @@
     <string name="achievement_congrats_two_weeks">Titan de deux semaines</string>
     <string name="achievement_congrats_one_month">Explorateur du mois</string>
     <string name="achievement_congrats_six_months">Conquérant des six mois</string>
-    <string name="achievement_congrats_nine_month">Défensseur des neuf mois</string>
+    <string name="achievement_congrats_nine_months">Défensseur des neuf mois</string>
     <string name="achievement_congrats_one_year">Pionnier d\'une année</string>
     <string name="achievement_congrats_one_day_message">Félicitation ! Continue à avancer et reste constant</string>
     <string name="achievement_congrats_two_days_message">Bon travail ! Tu accumules de l\'élan et restes solide</string>
@@ -114,7 +114,7 @@
     <string name="calculator_from">Depuis :</string>
     <string name="calculator_to">Jusqu\'à :</string>
     <string name="calculator_end_date">Date de fin</string>
-    <string name="calculator_calculate">Calculer</string>
+    <string name="button_calculate">Calculer</string>
     <string name="calculator_result">Résultat du calcul</string>
     <string name="calculator_result_total">Coût total</string>
     <string name="calculator_result_time_spent">Temps passé</string>
@@ -152,7 +152,7 @@
         <item quantity="many">%d cigarettes</item>
         <item quantity="other">%d cigarettes</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="one">%d fois</item>
         <item quantity="many">%d fois</item>
         <item quantity="other">%d fois</item>

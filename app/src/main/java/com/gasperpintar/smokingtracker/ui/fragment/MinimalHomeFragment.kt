@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentMinimalHomeBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
@@ -34,7 +34,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
         ModelFactory(container = (requireActivity().application as Application).container)
     }
 
-    private var lastEntry: HistoryEntity? = null
+    private var lastEntry: HistoryEntry? = null
     private var dayEndMinutes = 0
     private var currentDay: LocalDate? = null
     private var refreshJob: Job? = null
@@ -120,12 +120,7 @@ class MinimalHomeFragment : Base<FragmentMinimalHomeBinding>(
         }
 
         val showWarning = duration?.let { ElapsedTimeWarning.shouldHighlight(it, warningMinutes) } == true
-        if (showWarning) {
-            binding.timerLabel.setTextColor(
-                MaterialColors.getColor(binding.timerLabel, androidx.appcompat.R.attr.colorError)
-            )
-        } else {
-            binding.timerLabel.setTextColor(defaultTimerTextColors)
-        }
+        if (showWarning) binding.timerLabel.setTextColor(MaterialColors.getColor(binding.timerLabel, R.attr.appError))
+        else binding.timerLabel.setTextColor(defaultTimerTextColors)
     }
 }

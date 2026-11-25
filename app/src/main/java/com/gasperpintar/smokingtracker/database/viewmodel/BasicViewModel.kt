@@ -1,8 +1,8 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.gasperpintar.smokingtracker.database.entity.CostEntity
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.database.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
@@ -45,7 +45,7 @@ class BasicViewModel(
     }
 
     private fun getLongestTime(
-        history: List<HistoryEntity>
+        history: List<HistoryEntry>
     ): Pair<LocalDateTime, LocalDateTime>? {
         val sorted = history.takeIf { it.isNotEmpty() }?.sortedBy { it.createdAt } ?: return null
         val historicalMax = sorted.zipWithNext().maxByOrNull { (previous, current) ->
@@ -59,14 +59,14 @@ class BasicViewModel(
     }
 
     private fun getTotalSpent(
-        history: List<HistoryEntity>,
-        costs: List<CostEntity>
+        history: List<HistoryEntry>,
+        costs: List<CostEntry>
     ): Double {
         return history.sumOf { resolveCostAtTime(it.createdAt, costs) }
     }
 
     private suspend fun getTodaySpent(
-        costs: List<CostEntity>,
+        costs: List<CostEntry>,
         dayEndMinutes: Int
     ): Double {
         val (start, end) = TimeHelper.getDay(date = TimeHelper.dayDate(dayEndMinutes), dayEndMinutes = dayEndMinutes)
@@ -76,7 +76,7 @@ class BasicViewModel(
     }
 
     private suspend fun getThisMonthSpent(
-        costs: List<CostEntity>,
+        costs: List<CostEntry>,
         dayEndMinutes: Int
     ): Double {
         val (start, end) = TimeHelper.getMonth(date = TimeHelper.dayDate(dayEndMinutes), dayEndMinutes = dayEndMinutes)
@@ -87,12 +87,12 @@ class BasicViewModel(
 
     private fun resolveCostAtTime(
         time: LocalDateTime,
-        costs: List<CostEntity>
+        costs: List<CostEntry>
     ): Double = costs.firstOrNull { !time.isBefore(it.startDate) && time.isBefore(it.endDate) }?.price ?: 0.0
 
     private fun getMostExpensiveDay(
-        costs: List<CostEntity>,
-        history: List<HistoryEntity>,
+        costs: List<CostEntry>,
+        history: List<HistoryEntry>,
         dayEndMinutes: Int
     ): Pair<String?, Double> {
         if (costs.isEmpty() || history.isEmpty()) return null to 0.0

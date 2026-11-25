@@ -5,7 +5,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.HomeViewModel
 import com.gasperpintar.smokingtracker.databinding.ContainerContentHistoryBinding
@@ -33,7 +32,9 @@ class HomeFragment : Base<FragmentHomeBinding>(
         ModelFactory(container = (requireActivity().application as Application).container)
     }
 
-    private var lastEntry: HistoryEntity? = null
+    private var showIntervalLabel: Boolean = false
+    private var historyEntries: List<HistoryEntry> = emptyList()
+    private var lastEntry: HistoryEntry? = null
     private var timerJob: Job? = null
 
     private lateinit var adapter: Adapter<HistoryEntry, ContainerContentHistoryBinding>
@@ -41,10 +42,12 @@ class HomeFragment : Base<FragmentHomeBinding>(
     @Override
     override fun initialize() = binding.apply {
         buttonAddEntry.setOnClickListener {
-            DialogManager.showInsertDialog(context = requireActivity()) { isLent ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.insert(isLent = isLent)
-                    loadHistory()
+            viewLifecycleOwner.lifecycleScope.launch {
+                DialogManager.showInsertDialog(context = requireActivity(), defaultTrigger = viewModel.getState().defaultTrigger) { isLent, trigger ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.insert(isLent = isLent, trigger = trigger)
+                        loadHistory()
+                    }
                 }
             }
         }
@@ -60,6 +63,18 @@ class HomeFragment : Base<FragmentHomeBinding>(
             viewModel.nextDay()
             viewLifecycleOwner.lifecycleScope.launch {
                 loadHistory()
+            }
+        }
+
+        binding.cardDatePicker.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val date = viewModel.getState().selectedDate
+                DialogManager.showDatePickerDialog(context = requireActivity(), initialDate = TimeHelper.fromLocalDate(date)) { date ->
+                    viewModel.selectDate(TimeHelper.toLocalDate(calendar = date))
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        loadHistory()
+                    }
+                }
             }
         }
 
@@ -95,10 +110,12 @@ class HomeFragment : Base<FragmentHomeBinding>(
     private fun setupAdapter() = binding.apply {
         adapter = ContainerManager.createHistoryAdapter(
             context = requireActivity(),
+            entries = { historyEntries },
+            showIntervalLabels = { showIntervalLabel },
             onEdit = { entry ->
-                DialogManager.showEditDialog(context = requireActivity(), entry = entry) { newDateTime, isLent ->
+                DialogManager.showEditDialog(context = requireActivity(), entry = entry) { newDateTime, isLent, trigger ->
                     viewLifecycleOwner.lifecycleScope.launch {
-                        viewModel.update(entry, newDateTime, isLent)
+                        viewModel.update(entry, newDateTime, isLent, trigger)
                         loadHistory()
                     }
                 }
@@ -118,6 +135,8 @@ class HomeFragment : Base<FragmentHomeBinding>(
 
     private suspend fun loadHistory(updateWidgets: Boolean = true) = binding.apply {
         val state = viewModel.getState()
+        showIntervalLabel = state.showIntervalLabel
+        historyEntries = state.history
         lastEntry = state.lastEntry
 
         currentDay.text = LocalizationHelper.getDayOfWeekName(dayOfWeek = state.selectedDate.dayOfWeek)
@@ -133,6 +152,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
             layoutEmptyHistory.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
 
             adapter.submitList(it) {
+                adapter.notifyItemRangeChanged(0, it.size)
                 recyclerviewHistory.scrollToPosition(0)
             }
         }
@@ -155,7 +175,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
     }
 
     private fun updateTimerLabel(
-        entry: HistoryEntity?
+        entry: HistoryEntry?
     ) = binding.apply {
         val duration = entry?.createdAt?.let { createdAt ->
             Duration.between(createdAt, LocalDateTime.now())

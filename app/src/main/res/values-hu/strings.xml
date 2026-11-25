@@ -4,8 +4,8 @@
     <string name="home_timer_hour">ó</string>
     <string name="home_timer_minute">p</string>
     <string name="home_timer_second">mp</string>
-    <string name="application_name">Dohányzás napló</string>
-    <string name="application_tagline">Kövesd. Elemezd. Fejlődj.</string>
+    <string name="app_name">Dohányzás napló</string>
+    <string name="app_tagline">Kövesd. Elemezd. Fejlődj.</string>
     <string name="navigation_home">Főoldal</string>
     <string name="navigation_graph">Grafikon</string>
     <string name="navigation_more">Egyéb</string>
@@ -25,11 +25,11 @@
     <string name="graph_monthly">Havi áttekintés (%1$d)</string>
     <string name="graph_yearly">Éves áttekintés (%1$d)</string>
     <string name="graph_previous_day_daily">Előző nap (Napi)</string>
-    <string name="graph_previous_day_weakly">Előző nap (Heti)</string>
+    <string name="graph_previous_day_weekly">Előző nap (Heti)</string>
     <string name="graph_previous_day_monthly">Előző nap (Havi)</string>
     <string name="graph_previous_day_yearly">Előző nap (Éves)</string>
     <string name="graph_next_day_daily">Következő nap (Napi)</string>
-    <string name="graph_next_day_weakly">Következő nap (Heti)</string>
+    <string name="graph_next_day_weekly">Következő nap (Heti)</string>
     <string name="graph_next_day_monthly">Következő nap (Havi)</string>
     <string name="graph_next_day_yearly">Következő nap (Éves)</string>
     <string name="graph_view_info">Nincs elég adat a grafikon megjelenítéséhez</string>
@@ -60,7 +60,7 @@
     <string name="achievement_congrats_one_month">Egy hónapos felfedező</string>
     <string name="achievement_congrats_three_months">Három hónapos nyomkereső</string>
     <string name="achievement_congrats_six_months">Hat hónapos hódító</string>
-    <string name="achievement_congrats_nine_month">Kilenc hónapos védelmező</string>
+    <string name="achievement_congrats_nine_months">Kilenc hónapos védelmező</string>
     <string name="achievement_congrats_one_year">Egyéves úttörő</string>
     <string name="achievements_avoided">Megspórolt cigaretták</string>
     <string name="achievement_congrats_one_day_message">Szép munka! Haladj tovább, és maradj kitartó</string>
@@ -97,7 +97,7 @@
     <string name="calculator_start_date">Kezdő dátum</string>
     <string name="calculator_to">Eddig:</string>
     <string name="calculator_end_date">Záró dátum</string>
-    <string name="calculator_calculate">Számítás</string>
+    <string name="button_calculate">Számítás</string>
     <string name="calculator_result">Számítás eredménye</string>
     <string name="calculator_result_total">Teljes költség</string>
     <string name="calculator_result_time_spent">Eltöltött idő</string>
@@ -107,7 +107,7 @@
     <string name="calculator_result_estimated_time">Becslés: 5 perc alapján</string>
     <string name="notes_add">Jegyzet hozzáadása</string>
     <string name="notes_edit">Jegyzet szerkesztése</string>
-    <string name="notes_mode">Hangulat</string>
+    <string name="notes_mood">Hangulat</string>
     <string name="notes_title">Jegyzet címe</string>
     <string name="notes_content">Jegyzet tartalma</string>
     <string name="notes_emotions_very_bad">Nagyon rossz</string>
@@ -122,11 +122,11 @@
     <string name="settings_general_language">Nyelv</string>
     <string name="settings_general_notifications">Értesítések</string>
     <string name="settings_general_notifications_description">Maradj tájékozott értesítésekkel és riasztásokkal</string>
-    <string name="settings_finance">Pénzügyek</string>
-    <string name="settings_finance_currency">Pénznem</string>
-    <string name="settings_finance_currency_description">Válaszd ki a pénznemedet. Ha a pénznem nincs a listában, magad is megadhatod</string>
-    <string name="settings_finance_costs">Költségek</string>
-    <string name="settings_finance_costs_description">Egy cigaretta ára. A cigaretta ára időszakonként is megadható</string>
+    <string name="tracker_finance">Pénzügyek</string>
+    <string name="tracker_currency">Pénznem</string>
+    <string name="tracker_currency_description">Válaszd ki a pénznemedet. Ha a pénznem nincs a listában, magad is megadhatod</string>
+    <string name="tracker_costs">Költségek</string>
+    <string name="tracker_costs_description">Egy cigaretta ára. A cigaretta ára időszakonként is megadható</string>
     <string name="settings_data">Adatok</string>
     <string name="settings_data_backup">Biztonsági mentés</string>
     <string name="settings_data_backup_text">Mentsd el az adataidat az eszközödre</string>
@@ -139,10 +139,10 @@
     <string name="settings_about_changelog">Változásnapló</string>
     <string name="settings_about_changelog_description">Változásnapló megtekintése</string>
     <string name="settings_support">Támogatás és biztonság</string>
-    <string name="settings_support_translations">Segíts a fordításban</string>
-    <string name="settings_support_translations_description">Fordítsd le az appot a saját nyelvedre a Weblate segítségével</string>
-    <string name="settings_support_privacy_policy">Adatvédelmi irányelvek</string>
-    <string name="settings_support_privacy_policy_description">Adatvédelmi irányelvek megtekintése</string>
+    <string name="about_translations">Segíts a fordításban</string>
+    <string name="about_translations_description">Fordítsd le az appot a saját nyelvedre a Weblate segítségével</string>
+    <string name="about_privacy_policy">Adatvédelmi irányelvek</string>
+    <string name="about_privacy_policy_description">Adatvédelmi irányelvek megtekintése</string>
     <string name="about_view">Elérhető itt</string>
     <string name="about_view_github">Tekintsd meg a forráskódot, jelents hibákat, és járulj hozzá a projekthez</string>
     <string name="about_view_f_droid">Az app megtekintése F-Droidon</string>
@@ -159,11 +159,11 @@
     <string name="about_version">Verzió: %1$s (%2$d)</string>
     <string name="about_version_unknown">Ismeretlen</string>
     <string name="about_created_by">Fejlesztette: %1$s</string>
-    <string name="popup_close">Bezárás</string>
-    <string name="popup_confirm">Megerősítés</string>
-    <string name="popup_save">Mentés</string>
-    <string name="popup_backup">Mentés biztonsági másolatba</string>
-    <string name="popup_select">Kiválasztás</string>
+    <string name="button_close">Bezárás</string>
+    <string name="button_confirm">Megerősítés</string>
+    <string name="button_save">Mentés</string>
+    <string name="button_backup">Mentés biztonsági másolatba</string>
+    <string name="button_select">Kiválasztás</string>
     <string name="insert_popup">Bejegyzés hozzáadása</string>
     <string name="insert_popup_lent">Kölcsönzött cigaretta?</string>
     <string name="insert_popup_add">Hozzáadás</string>
@@ -272,7 +272,7 @@
         <item quantity="one">%d cigaretta</item>
         <item quantity="other">%d cigaretta</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="one">%d alkalom</item>
         <item quantity="other">%d alkalom</item>
     </plurals>

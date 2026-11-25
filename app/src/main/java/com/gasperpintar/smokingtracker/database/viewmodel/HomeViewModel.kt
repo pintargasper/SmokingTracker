@@ -2,13 +2,13 @@ package com.gasperpintar.smokingtracker.database.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.HomeState
 import com.gasperpintar.smokingtracker.database.viewmodel.state.MinimalHomeState
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -30,9 +30,9 @@ class HomeViewModel(
 
     private var selectedDate: LocalDate? = null
     private var endMinutes: Int? = null
-    private var lastEntry: HistoryEntity? = null
+    private var lastEntry: HistoryEntry? = null
     private val insertMutex = Mutex()
-    private val _isAdding = MutableStateFlow(false)
+    private val _isAdding = MutableStateFlow(value = false)
     private val _addEvents = MutableSharedFlow<Boolean>(extraBufferCapacity = 1)
 
     val historyChanges = historyRepository.changes
@@ -47,8 +47,13 @@ class HomeViewModel(
         selectedDate = selectedDate!!.plusDays(1)
     }
 
+    fun selectDate(date: LocalDate) {
+        selectedDate = date
+    }
+
     suspend fun getState(): HomeState {
-        val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
+        val settings = settingsRepository.get()!!
+        val dayEndMinutes = settings.dayEndMinutes
         if (selectedDate == null) selectedDate = TimeHelper.dayDate(dayEndMinutes)
         if (endMinutes != dayEndMinutes) {
             selectedDate = TimeHelper.updateDayDate(
@@ -61,9 +66,7 @@ class HomeViewModel(
         lastEntry = historyRepository.getLast()
 
         val (startOfDay, endOfDay) = TimeHelper.getDay(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
-        val historyEntities = historyRepository.getBetween(start = startOfDay, end = endOfDay)
-
-        val history = historyEntities.map(transform = HistoryEntry::fromEntity)
+        val history = historyRepository.getBetween(start = startOfDay, end = endOfDay)
         val dailyCount = historyRepository.getCountBetween(start = startOfDay, end = endOfDay)
 
         val (startOfWeek, endOfWeek) = TimeHelper.getWeek(date = selectedDate!!, dayEndMinutes = dayEndMinutes)
@@ -78,7 +81,9 @@ class HomeViewModel(
             lastEntry = lastEntry,
             dailyCount = dailyCount,
             weeklyCount = weeklyCount,
-            monthlyCount = monthlyCount
+            monthlyCount = monthlyCount,
+            defaultTrigger = settings.defaultTrigger,
+            showIntervalLabel = settings.showIntervalLabel
         )
     }
 
@@ -100,12 +105,12 @@ class HomeViewModel(
         viewModelScope.launch {
             _isAdding.value = true
             try {
-                insert(isLent = false)
-                _addEvents.emit(true)
+                insert(isLent = false, trigger = settingsRepository.get()!!.defaultTrigger)
+                _addEvents.emit(value = true)
             } catch (cancelled: CancellationException) {
                 throw cancelled
             } catch (_: Exception) {
-                _addEvents.emit(false)
+                _addEvents.emit(value = false)
             } finally {
                 _isAdding.value = false
                 insertMutex.unlock()
@@ -114,26 +119,28 @@ class HomeViewModel(
     }
 
     suspend fun insert(
-        isLent: Boolean
+        isLent: Boolean,
+        trigger: TriggerJson.Type
     ) {
         if (!isLent) achievementRepository.resetAll(state = true)
-        historyRepository.insert(entry = HistoryEntity.default(isLent = isLent))
+        historyRepository.insert(entry = HistoryEntry.default(isLent = isLent, trigger = trigger))
     }
 
     suspend fun update(
         entry: HistoryEntry,
         dateTime: LocalDateTime,
-        isLent: Boolean
+        isLent: Boolean,
+        trigger: TriggerJson.Type
     ) {
-        if (entry.id == lastEntry?.id) achievementRepository.resetAll(state = false)
-        val updatedEntry = entry.copy(createdAt = dateTime, isLent = isLent)
-        historyRepository.update(entry = updatedEntry.toEntity())
+        if (entry.id == lastEntry?.id && entry.createdAt != dateTime) achievementRepository.resetAll(state = false)
+        val updatedEntry = entry.copy(createdAt = dateTime, isLent = isLent, trigger = trigger)
+        historyRepository.update(entry = updatedEntry)
     }
 
     suspend fun delete(
         entry: HistoryEntry
     ) {
         if (entry.id == lastEntry?.id) achievementRepository.resetAll(state = false)
-        historyRepository.delete(entry = entry.toEntity())
+        historyRepository.delete(entry = entry)
     }
 }

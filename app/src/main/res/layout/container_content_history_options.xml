@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    style="?appCardStyle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="4dp">
+
+        <LinearLayout
+            android:id="@+id/history_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/edit_48px"
+                style="?appImageStyle" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/home_edit"
+                style="?appBigBodyStyle"
+                tools:ignore="VisualLintSystemUi" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/history_delete"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/delete_48px"
+                style="?appImageStyle" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/home_delete"
+                style="?appBigBodyStyle" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

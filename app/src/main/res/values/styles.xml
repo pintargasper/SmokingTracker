@@ -28,6 +28,10 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Legacy.TextAppearance.BigBody" parent="Legacy.TextAppearance">
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <style name="Legacy.TextAppearance.Body" parent="Legacy.TextAppearance">
         <item name="android:textSize">14sp</item>
     </style>
@@ -46,6 +50,23 @@
         <item name="android:layout_marginVertical">4dp</item>
         <item name="android:elevation">5dp</item>
         <item name="android:stateListAnimator">@null</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <style name="Legacy.Component.Button.TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">?appTextButtonText</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:minWidth">64dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="cornerRadius">12dp</item>
+    </style>
+
+    <style name="Legacy.Component.Button.TextButton.Filled" parent="Legacy.Component.Button.TextButton">
+        <item name="android:backgroundTint">?appTextButtonTextBackground</item>
     </style>
 
     <style name="Legacy.Component.ImageButton" parent="Widget.Material3.Button.IconButton">
@@ -138,10 +159,35 @@
     </style>
 
     <style name="Legacy.Component.ProgressBar" parent="Widget.Material3.LinearProgressIndicator">
-        <item name="indicatorColor">@color/legacy_progress_indicator</item>
-        <item name="trackColor">@color/legacy_progress_track</item>
-        <item name="trackThickness">20dp</item>
-        <item name="trackCornerRadius">0dp</item>
+        <item name="indicatorColor">?appProgressBarIndicator</item>
+        <item name="trackColor">?appProgressBarTrack</item>
+        <item name="trackCornerRadius">5dp</item>
         <item name="trackStopIndicatorSize">0dp</item>
     </style>
+
+    <style name="Legacy.Component.DatePicker" parent="@android:style/Widget.Material.DatePicker">
+        <item name="android:headerBackground">?appDatePickerBackground</item>
+        <item name="android:datePickerMode">calendar</item>
+    </style>
+
+    <style name="Legacy.ThemeOverlay.DatePicker" parent="">
+        <item name="android:colorControlActivated">?appDatePickerActivatedColor</item>
+        <item name="android:textColorPrimaryInverse">?appDatePickerInverseColor</item>
+    </style>
+
+    <style name="Legacy.Component.TimePicker" parent="@android:style/Widget.Material.TimePicker">
+        <item name="android:headerBackground">?appTimePickerHeaderBackground</item>
+        <item name="android:numbersTextColor">?appTimePickerNumbersTextColor</item>
+        <item name="android:numbersInnerTextColor">?appTimePickerNumbersInnerTextColor</item>
+        <item name="android:numbersSelectorColor">?appTimePickerNumbersSelector</item>
+        <item name="android:numbersBackgroundColor">?appTimePickerNumbersBackground</item>
+        <item name="android:timePickerMode">clock</item>
+    </style>
+
+    <style name="Legacy.Component.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch" >
+        <item name="thumbTint">?appSwitchThumbTint</item>
+        <item name="trackTint">?appSwitchTrackTint</item>
+        <item name="android:background">@null</item>
+    </style>
+
 </resources>

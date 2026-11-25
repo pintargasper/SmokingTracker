@@ -10,6 +10,11 @@ class LoadingDialog(
     context: FragmentActivity
 ) : BaseDialog(activity = context) {
 
+    enum class ProgressType {
+        BACKUP,
+        RESTORE
+    }
+
     private val content = DialogContentLoadingBinding.inflate(
         context.layoutInflater,
         binding.dialogContent,

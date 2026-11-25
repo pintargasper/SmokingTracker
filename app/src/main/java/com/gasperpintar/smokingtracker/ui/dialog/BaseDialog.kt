@@ -56,7 +56,6 @@ abstract class BaseDialog(
         ) {
             object : BaseDialog(activity = context) {
                 private val content: B = inflate(context.layoutInflater, binding.dialogContent, true)
-
                 @Override
                 override fun setup() {
                     block(content)

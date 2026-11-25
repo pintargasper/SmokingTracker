@@ -12,7 +12,7 @@
     <string name="graph_weekly">Pregled nedelje (%1$d)</string>
     <string name="graph_monthly">Pregled meseca (%1$d)</string>
     <string name="graph_yearly">Pregled godine (%1$d)</string>
-    <string name="graph_previous_day_weakly">Prethodni dan (Nedeljno)</string>
+    <string name="graph_previous_day_weekly">Prethodni dan (Nedeljno)</string>
     <string name="graph_view_info">Ovde nema podataka za prikaz grafikona</string>
     <string name="home_lent">Evidencija pozajmica</string>
     <string name="home_edit">Uredi zapis</string>
@@ -29,15 +29,15 @@
     <string name="about_version">Verzija %1$s (%2$d)</string>
     <string name="about_version_unknown">Nepoznato</string>
     <string name="settings_about_website">Veb-sajt</string>
-    <string name="settings_support_translations">Pomozite u prevođenju</string>
-    <string name="settings_support_translations_description">Prevedite ovu aplikaciju na svoj jezik koristeći veb-sajt</string>
-    <string name="settings_support_privacy_policy">Praćenje Pušenja-politika privatnosti</string>
+    <string name="about_translations">Pomozite u prevođenju</string>
+    <string name="about_translations_description">Prevedite ovu aplikaciju na svoj jezik koristeći veb-sajt</string>
+    <string name="about_privacy_policy">Praćenje Pušenja-politika privatnosti</string>
     <string name="insert_popup">Dodaj unos</string>
     <string name="insert_popup_lent">Pozajmljena cigareta?</string>
     <string name="insert_popup_add">Dodaj</string>
     <string name="edit_popup_message">Datum i vreme</string>
     <string name="edit_popup_lent">Pozajmljena cigareta?</string>
-    <string name="application_name">Praćenje Pušenja</string>
+    <string name="app_name">Praćenje Pušenja</string>
     <string name="navigation_graph">Grafikon</string>
     <string name="navigation_more">Analitika</string>
     <string name="home_timer_day">d</string>
@@ -49,7 +49,7 @@
     <string name="graph_previous_day_monthly">Prethodni dan (Mesečno)</string>
     <string name="graph_previous_day_yearly">Prethodni dan (Godišnje)</string>
     <string name="graph_next_day_daily">Sledeći dan (Dnevno)</string>
-    <string name="graph_next_day_weakly">Sledeći dan (Nedeljno)</string>
+    <string name="graph_next_day_weekly">Sledeći dan (Nedeljno)</string>
     <string name="graph_next_day_monthly">Sledeći dan (Mesečno)</string>
     <string name="graph_next_day_yearly">Sledeći dan (Godišnje)</string>
     <string name="more_progress">Analitika</string>
@@ -63,8 +63,8 @@
     <string name="achievements_icon">Ikona dostignuća</string>
     <string name="settings_data_restore">Vraćanje podataka</string>
     <string name="settings_data_restore_text">Vrati svoje podatke sa uređaja</string>
-    <string name="popup_close">Zatvori</string>
-    <string name="popup_confirm">Potvrdi</string>
+    <string name="button_close">Zatvori</string>
+    <string name="button_confirm">Potvrdi</string>
     <string name="delete_popup_message">Da li ste sigurni da želite da obrišete ovaj zapis?</string>
     <string name="language_popup">Odaberi jezik</string>
     <string name="language_popup_info">Odabir željenog jezika</string>
@@ -84,8 +84,8 @@
     <string name="notifications_popup_frequency_weekly">Nedeljno</string>
     <string name="backup_popup">Napravi rezervnu kopiju podataka</string>
     <string name="backup_popup_description">Bićete obavešteni o rezervnoj kopiji podataka putem obaveštenja</string>
-    <string name="popup_backup">Rezervna kopija</string>
-    <string name="popup_select">Izaberi</string>
+    <string name="button_backup">Rezervna kopija</string>
+    <string name="button_select">Izaberi</string>
     <string name="restore_popup">Vrati rezervnu kopiju podataka</string>
     <string name="restore_popup_info">Bićete obavešteni o vraćanju podataka putem obaveštenja</string>
     <string name="restore_popup_file">Datoteka: %1$s</string>
@@ -106,7 +106,7 @@
     <string name="achievement_congrats_one_month">Istraživač meseca</string>
     <string name="achievement_congrats_three_months">Tromesečni putnik</string>
     <string name="achievement_congrats_six_months">Šestomesečni osvajač</string>
-    <string name="achievement_congrats_nine_month">Devetomesečni čuvar</string>
+    <string name="achievement_congrats_nine_months">Devetomesečni čuvar</string>
     <string name="achievement_congrats_one_year">Pionir godine</string>
     <string name="achievement_congrats_one_day_message">Bravo! Nastavi da guraš napred i ostani dosledan</string>
     <string name="achievement_congrats_two_days_message">Odlično urađeno! Nastavljaš da jačaš i da ideš napred</string>
@@ -153,7 +153,7 @@
     <string name="calculator_start_date">Datum početka</string>
     <string name="calculator_to">Do:</string>
     <string name="calculator_end_date">Datum završetka</string>
-    <string name="calculator_calculate">Izračunaj</string>
+    <string name="button_calculate">Izračunaj</string>
     <string name="calculator_result">Rezultat</string>
     <string name="calculator_result_total">Ukupni troškovi</string>
     <string name="calculator_result_time_spent">Utrošeno vreme</string>
@@ -209,7 +209,7 @@
         <item quantity="few">%d cigarete</item>
         <item quantity="other">%d cigareta</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="one">%d put</item>
         <item quantity="few">%d puta</item>
         <item quantity="other">%d puta</item>

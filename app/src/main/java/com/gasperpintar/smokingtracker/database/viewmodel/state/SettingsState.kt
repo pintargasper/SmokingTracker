@@ -1,11 +1,11 @@
 package com.gasperpintar.smokingtracker.database.viewmodel.state
 
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 
 data class SettingsState(
-    var settings: SettingsEntity,
-    var notificationsSettings: NotificationsSettingsEntity,
+    var settings: SettingsEntry,
+    var notificationsSettings: NotificationsEntry,
     val costs: List<CostEntry> = emptyList()
 )

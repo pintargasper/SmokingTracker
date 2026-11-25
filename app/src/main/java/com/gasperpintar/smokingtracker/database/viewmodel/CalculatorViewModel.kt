@@ -18,12 +18,7 @@ class CalculatorViewModel(
     fun setStartDate(
         date: Calendar
     ): String {
-        val (start, end, text) = TimeHelper.applySelectedDate(
-            startDate = startDate,
-            endDate = endDate,
-            selectedDate = date,
-            isStartDate = true
-        )
+        val (start, end, text) = TimeHelper.applySelectedDate(startDate = startDate, endDate = endDate, selectedDate = date, isStartDate = true)
         startDate = start
         endDate = end
         return text
@@ -32,15 +27,18 @@ class CalculatorViewModel(
     fun setEndDate(
         date: Calendar
     ): String {
-        val (start, end, text) = TimeHelper.applySelectedDate(
-            startDate = startDate,
-            endDate = endDate,
-            selectedDate = date,
-            isStartDate = false
-        )
+        val (start, end, text) = TimeHelper.applySelectedDate(startDate = startDate, endDate = endDate, selectedDate = date, isStartDate = false)
         startDate = start
         endDate = end
         return text
+    }
+
+    fun getStartDate(): Calendar {
+        return startDate?.clone() as? Calendar ?: Calendar.getInstance()
+    }
+
+    fun getEndDate(): Calendar {
+        return endDate?.clone() as? Calendar ?: Calendar.getInstance()
     }
 
     suspend fun getState(

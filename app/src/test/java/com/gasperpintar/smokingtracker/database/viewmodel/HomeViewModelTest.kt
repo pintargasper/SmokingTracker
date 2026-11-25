@@ -1,14 +1,15 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.fake.FakeAchievementDao
 import com.gasperpintar.smokingtracker.database.fake.FakeHistoryDao
 import com.gasperpintar.smokingtracker.database.fake.FakeSettingsDao
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -31,7 +32,7 @@ class HomeViewModelTest {
         historyDao = FakeHistoryDao()
         achievementDao = FakeAchievementDao()
         settingsDao = FakeSettingsDao()
-        settingsDao.insert(entity = SettingsEntity.default())
+        settingsDao.insert(entity = SettingsEntry.default().toEntity())
 
         viewModel = HomeViewModel(
             achievementRepository = AchievementRepository(achievementDao = achievementDao),
@@ -42,7 +43,7 @@ class HomeViewModelTest {
 
     @Test
     fun insertSmokedEntryResetsAchievements() = runBlocking {
-        viewModel.insert(isLent = false)
+        viewModel.insert(isLent = false, trigger = TriggerJson.Type.NO_REASON)
 
         assertEquals(0, historyDao.items.single().lent)
         assertEquals(listOf(true), achievementDao.resetAllCalls)
@@ -50,7 +51,7 @@ class HomeViewModelTest {
 
     @Test
     fun insertLentEntryDoesNotResetAchievements() = runBlocking {
-        viewModel.insert(isLent = true)
+        viewModel.insert(isLent = true, trigger = TriggerJson.Type.NO_REASON)
 
         assertEquals(1, historyDao.items.single().lent)
         assertTrue(achievementDao.resetAllCalls.isEmpty())
@@ -84,7 +85,7 @@ class HomeViewModelTest {
         val dateTime = now.minusHours(5)
         viewModel.getState()
 
-        viewModel.update(entry = HistoryEntry.fromEntity(entity = last), dateTime = dateTime, isLent = true)
+        viewModel.update(entry = HistoryEntry.fromEntity(entity = last), dateTime = dateTime, isLent = true, trigger = TriggerJson.Type.NO_REASON)
 
         assertEquals(listOf(false), achievementDao.resetAllCalls)
         assertEquals(last.copy(createdAt = dateTime, lent = 1), historyDao.items.single { it.id == last.id })
@@ -94,9 +95,9 @@ class HomeViewModelTest {
     fun getStateReturnsEntriesOfSelectedDay() = runBlocking {
         val today = TimeHelper.dayDate(dayEndMinutes = 0)
         listOf(
-            HistoryEntity(id = 0, lent = 0, createdAt = today.atTime(12, 0)),
-            HistoryEntity(id = 0, lent = 1, createdAt = today.atTime(13, 0)),
-            HistoryEntity(id = 0, lent = 0, createdAt = today.minusDays(1).atTime(12, 0))
+            HistoryEntity(id = 0, lent = 0, createdAt = today.atTime(12, 0), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 1, createdAt = today.atTime(13, 0), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 0, createdAt = today.minusDays(1).atTime(12, 0), trigger = TriggerJson.Type.NO_REASON)
         ).forEach { historyDao.insert(entity = it) }
 
         val state = viewModel.getState()
@@ -117,11 +118,11 @@ class HomeViewModelTest {
         settingsDao.update(entity = settingsDao.get()!!.copy(dayEndMinutes = 120, elapsedTimeWarningMinutes = 90))
         val now = LocalDateTime.of(2026, 1, 2, 1, 30)
         listOf(
-            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 1, 1, 59)),
-            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 1, 12, 0)),
-            HistoryEntity(id = 0, lent = 1, createdAt = LocalDateTime.of(2026, 1, 1, 13, 0)),
-            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 2, 1, 0)),
-            HistoryEntity(id = 0, lent = 1, createdAt = LocalDateTime.of(2026, 1, 2, 1, 15))
+            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 1, 1, 59), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 1, 12, 0), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 1, createdAt = LocalDateTime.of(2026, 1, 1, 13, 0), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 2, 1, 0), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 1, createdAt = LocalDateTime.of(2026, 1, 2, 1, 15), trigger = TriggerJson.Type.NO_REASON)
         ).forEach { historyDao.insert(entity = it) }
         viewModel.getState()
         viewModel.previousDay()
@@ -141,7 +142,7 @@ class HomeViewModelTest {
         assertNull(viewModel.getMinimalState(now).lastEntry)
         assertEquals(0, viewModel.getMinimalState(now).smokedToday)
 
-        historyDao.insert(entity = HistoryEntity(id = 0, lent = 1, createdAt = now.minusHours(1)))
+        historyDao.insert(entity = HistoryEntity(id = 0, lent = 1, createdAt = now.minusHours(1), trigger = TriggerJson.Type.NO_REASON))
 
         assertNull(viewModel.getMinimalState(now).lastEntry)
         assertEquals(0, viewModel.getMinimalState(now).smokedToday)
@@ -149,9 +150,9 @@ class HomeViewModelTest {
 
     private suspend fun insertHistory(): Triple<HistoryEntity, HistoryEntity, HistoryEntity> {
         listOf(
-            HistoryEntity(id = 0, lent = 0, createdAt = now.minusHours(2)),
-            HistoryEntity(id = 0, lent = 0, createdAt = now.minusHours(1)),
-            HistoryEntity(id = 0, lent = 1, createdAt = now.minusMinutes(30))
+            HistoryEntity(id = 0, lent = 0, createdAt = now.minusHours(2), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 0, createdAt = now.minusHours(1), trigger = TriggerJson.Type.NO_REASON),
+            HistoryEntity(id = 0, lent = 1, createdAt = now.minusMinutes(30), trigger = TriggerJson.Type.NO_REASON)
         ).forEach { historyDao.insert(entity = it) }
 
         val (first, last, lent) = historyDao.items

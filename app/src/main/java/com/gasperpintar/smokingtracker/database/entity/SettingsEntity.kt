@@ -3,8 +3,8 @@ package com.gasperpintar.smokingtracker.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.gasperpintar.smokingtracker.type.ColorScheme
-import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
+import com.gasperpintar.smokingtracker.model.TriggerJson
+import com.gasperpintar.smokingtracker.type.Appearance
 
 @Entity(tableName = "settings")
 data class SettingsEntity(
@@ -28,25 +28,14 @@ data class SettingsEntity(
     val elapsedTimeWarningMinutes: Int,
 
     @ColumnInfo(defaultValue = "SYSTEM")
-    val colorScheme: String
-) {
+    val colorScheme: Appearance.ColorScheme,
 
-    companion object {
-        fun default(
-            language: String = "system",
-            currency: String = "€"
-        ): SettingsEntity {
-            return SettingsEntity(
-                id = 0L,
-                theme = 0,
-                language = language,
-                frequency = 0,
-                currency = currency,
-                customCurrency = "",
-                dayEndMinutes = 0,
-                colorScheme = ColorScheme.SYSTEM.name,
-                elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
-            )
-        }
-    }
-}
+    @ColumnInfo(defaultValue = "HOME")
+    val startPage: Appearance.StartPage,
+
+    @ColumnInfo(defaultValue = "NO_REASON")
+    val defaultTrigger: TriggerJson.Type,
+
+    @ColumnInfo(defaultValue = "1")
+    val showIntervalLabel: Boolean
+)

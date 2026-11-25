@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">Rūkymo Seklys</string>
-    <string name="application_tagline">Sek. Analizuok. Progresuok.</string>
+    <string name="app_name">Rūkymo Seklys</string>
+    <string name="app_tagline">Sek. Analizuok. Progresuok.</string>
     <string name="navigation_home">Pradžia</string>
     <string name="navigation_more">Daugiau</string>
     <string name="navigation_settings">Nustatymai</string>
@@ -48,7 +48,7 @@
     <string name="achievement_congrats_one_month">Mėnesio žygeivis</string>
     <string name="achievement_congrats_three_months">Trijų mėnesių kelio kūrėjas</string>
     <string name="achievement_congrats_six_months">Šešių mėnesių užkariautojas</string>
-    <string name="achievement_congrats_nine_month">Devynių mėnesių nepalaužiamasis</string>
+    <string name="achievement_congrats_nine_months">Devynių mėnesių nepalaužiamasis</string>
     <string name="achievement_congrats_one_year">Metų pionierius</string>
     <string name="achievements_avoided">Nerūkytos cigaretės</string>
     <string name="achievement_congrats_one_day_message">Puikiai! Nesustokite ir laikykitės savo tikslo</string>

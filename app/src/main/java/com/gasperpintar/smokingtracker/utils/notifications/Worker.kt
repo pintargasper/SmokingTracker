@@ -1,14 +1,13 @@
 package com.gasperpintar.smokingtracker.utils.notifications
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
-import android.content.SharedPreferences
-import androidx.core.content.edit
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.ui.fragment.achievements.AchievementEvaluator
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
 import java.time.Duration
 import java.time.LocalDateTime
@@ -16,17 +15,14 @@ import java.time.LocalDateTime
 class Worker(
     context: Context,
     workerParams: WorkerParameters,
-) : CoroutineWorker(
-    appContext = context,
-    workerParams
-) {
+) : CoroutineWorker(appContext = context, workerParams) {
 
     private val container by lazy {
         (applicationContext as Application).container
     }
 
-    private val sharedPreferences: SharedPreferences by lazy {
-        applicationContext.getSharedPreferences("settings", MODE_PRIVATE)
+    private val preferences by lazy {
+        PreferencesHelper.with(context = applicationContext, name = Preferences.Name.SETTINGS)
     }
 
     @Override
@@ -35,14 +31,14 @@ class Worker(
 
         val lastHistory = container.historyRepository.getLast()
         val settings = container.settingsRepository.get()
-        val notifications = container.notificationsSettingsRepository.get()
+        val notifications = container.notificationsRepository.get()
 
         if (lastHistory != null) {
             AchievementEvaluator(
                 context = applicationContext,
                 historyRepository = container.historyRepository,
                 achievementRepository = container.achievementRepository,
-                notificationsSettingsRepository = container.notificationsSettingsRepository
+                notificationsRepository = container.notificationsRepository
             ).evaluate(lastSmokeTime = lastHistory.createdAt, now = now)
         }
 
@@ -61,7 +57,7 @@ class Worker(
             ProgressFrequency.WEEKLY -> Duration.ofDays(7).toMillis()
         }
 
-        val lastSentMillis = sharedPreferences.getLong("last_progress_notification_time", 0L)
+        val lastSentMillis = preferences.get(key = Preferences.Key.LAST_PROGRESS_NOTIFICATION_TIME, defaultValue = 0L)
         val nowMillis = System.currentTimeMillis()
 
         val shouldSend = lastSentMillis == 0L || (nowMillis - lastSentMillis >= intervalMillis)
@@ -76,7 +72,7 @@ class Worker(
                 ),
                 notificationId = 1001
             )
-            sharedPreferences.edit { putLong("last_progress_notification_time", nowMillis) }
+            preferences.put(Preferences.Key.LAST_PROGRESS_NOTIFICATION_TIME, nowMillis)
         }
     }
 }
