@@ -32,6 +32,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
         ModelFactory(container = (requireActivity().application as Application).container)
     }
 
+    private var showIntervalLabel: Boolean = false
     private var historyEntries: List<HistoryEntry> = emptyList()
     private var lastEntry: HistoryEntry? = null
     private var timerJob: Job? = null
@@ -41,10 +42,12 @@ class HomeFragment : Base<FragmentHomeBinding>(
     @Override
     override fun initialize() = binding.apply {
         buttonAddEntry.setOnClickListener {
-            DialogManager.showInsertDialog(context = requireActivity()) { isLent, trigger ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    viewModel.insert(isLent = isLent, trigger = trigger)
-                    loadHistory()
+            viewLifecycleOwner.lifecycleScope.launch {
+                DialogManager.showInsertDialog(context = requireActivity(), defaultTrigger = viewModel.getState().defaultTrigger) { isLent, trigger ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        viewModel.insert(isLent = isLent, trigger = trigger)
+                        loadHistory()
+                    }
                 }
             }
         }
@@ -108,6 +111,7 @@ class HomeFragment : Base<FragmentHomeBinding>(
         adapter = ContainerManager.createHistoryAdapter(
             context = requireActivity(),
             entries = { historyEntries },
+            showIntervalLabels = { showIntervalLabel },
             onEdit = { entry ->
                 DialogManager.showEditDialog(context = requireActivity(), entry = entry) { newDateTime, isLent, trigger ->
                     viewLifecycleOwner.lifecycleScope.launch {
@@ -131,8 +135,9 @@ class HomeFragment : Base<FragmentHomeBinding>(
 
     private suspend fun loadHistory(updateWidgets: Boolean = true) = binding.apply {
         val state = viewModel.getState()
-        lastEntry = state.lastEntry
+        showIntervalLabel = state.showIntervalLabel
         historyEntries = state.history
+        lastEntry = state.lastEntry
 
         currentDay.text = LocalizationHelper.getDayOfWeekName(dayOfWeek = state.selectedDate.dayOfWeek)
         currentDate.text = LocalizationHelper.formatDate(date = state.selectedDate)

@@ -169,7 +169,8 @@ class ManagerTest {
                     elapsedTimeWarningMinutes = 240,
                     colorScheme = Appearance.ColorScheme.SYSTEM,
                     startPage = Appearance.StartPage.HOME,
-                    defaultTrigger = TriggerJson.Type.NO_REASON
+                    defaultTrigger = TriggerJson.Type.NO_REASON,
+                    showIntervalLabel = true
                 )
             )
             notificationsRepository.insert(settings = NotificationsEntry(

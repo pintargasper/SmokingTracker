@@ -184,4 +184,10 @@
         <item name="android:timePickerMode">clock</item>
     </style>
 
+    <style name="Legacy.Component.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch" >
+        <item name="thumbTint">?appSwitchThumbTint</item>
+        <item name="trackTint">?appSwitchTrackTint</item>
+        <item name="android:background">@null</item>
+    </style>
+
 </resources>

@@ -35,8 +35,9 @@
     <attr name="appSliderStyle" format="reference" />
     <attr name="appDropdownStyle" format="reference" />
     <attr name="appProgressBarStyle" format="reference" />
-    <attr name="appTimePickerStyle" format="reference" />
     <attr name="appDatePickerStyle" format="reference" />
+    <attr name="appTimePickerStyle" format="reference" />
+    <attr name="appSwitchStyle" format="reference" />
 
     <attr name="appDatePickerOverlay" format="reference" />
 
@@ -92,4 +93,7 @@
     <attr name="appTimePickerNumbersTextColor" format="reference" />
     <attr name="appTimePickerNumbersInnerTextColor" format="reference" />
     <attr name="appTimePickerNumbersSelector" format="reference" />
+
+    <attr name="appSwitchThumbTint" format="reference" />
+    <attr name="appSwitchTrackTint" format="reference" />
 </resources>

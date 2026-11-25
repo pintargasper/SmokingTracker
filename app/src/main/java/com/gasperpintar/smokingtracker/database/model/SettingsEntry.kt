@@ -18,7 +18,8 @@ data class SettingsEntry(
     val elapsedTimeWarningMinutes: Int,
     val colorScheme: Appearance.ColorScheme,
     val startPage: Appearance.StartPage,
-    val defaultTrigger: TriggerJson.Type
+    val defaultTrigger: TriggerJson.Type,
+    val showIntervalLabel: Boolean
 ) : IIdentifiable {
     companion object {
         fun default(
@@ -36,7 +37,8 @@ data class SettingsEntry(
                 elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES,
                 colorScheme = Appearance.ColorScheme.SYSTEM,
                 startPage = Appearance.StartPage.HOME,
-                defaultTrigger = TriggerJson.Type.NO_REASON
+                defaultTrigger = TriggerJson.Type.NO_REASON,
+                showIntervalLabel = true
             )
         }
 
@@ -52,7 +54,8 @@ data class SettingsEntry(
                 elapsedTimeWarningMinutes = entity.elapsedTimeWarningMinutes,
                 colorScheme = entity.colorScheme,
                 startPage = entity.startPage,
-                defaultTrigger = entity.defaultTrigger
+                defaultTrigger = entity.defaultTrigger,
+                showIntervalLabel = entity.showIntervalLabel
             )
         }
     }
@@ -69,7 +72,8 @@ data class SettingsEntry(
             elapsedTimeWarningMinutes = elapsedTimeWarningMinutes,
             colorScheme = colorScheme,
             startPage = startPage,
-            defaultTrigger = defaultTrigger
+            defaultTrigger = defaultTrigger,
+            showIntervalLabel = showIntervalLabel
         )
     }
 }

@@ -34,5 +34,8 @@ data class SettingsEntity(
     val startPage: Appearance.StartPage,
 
     @ColumnInfo(defaultValue = "NO_REASON")
-    val defaultTrigger: TriggerJson.Type
+    val defaultTrigger: TriggerJson.Type,
+
+    @ColumnInfo(defaultValue = "1")
+    val showIntervalLabel: Boolean
 )

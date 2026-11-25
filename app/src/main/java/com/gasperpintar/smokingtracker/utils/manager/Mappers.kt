@@ -100,7 +100,6 @@ object Mappers {
         }?.takeIf(predicate = ElapsedTimeWarning::isValidMinutes)
             ?: ElapsedTimeWarning.DEFAULT_MINUTES
 
-
         return SettingsEntry(
             id = 0,
             theme = col["Theme"]?.let { index -> row.getCell(index)?.numericCellValue?.toInt() } ?: 0,
@@ -112,7 +111,8 @@ object Mappers {
             elapsedTimeWarningMinutes = warningMinutes,
             colorScheme = col["ColorScheme"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { Appearance.ColorScheme.valueOf(it) } ?: Appearance.ColorScheme.SYSTEM,
             startPage = col["StartPage"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { Appearance.StartPage.valueOf(it) } ?: Appearance.StartPage.HOME,
-            defaultTrigger = col["DefaultTrigger"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { TriggerJson.Type.valueOf(it) } ?: TriggerJson.Type.NO_REASON
+            defaultTrigger = col["DefaultTrigger"]?.let { index -> row.getCell(index)?.stringCellValue }?.let { TriggerJson.Type.valueOf(it) } ?: TriggerJson.Type.NO_REASON,
+            showIntervalLabel = col["ShowIntervalLabels"]?.let { index -> row.getCell(index)?.booleanCellValue } ?: true
         )
     }
 

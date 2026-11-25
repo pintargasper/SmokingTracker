@@ -58,18 +58,17 @@ object DialogManager {
         get() = is24HourView
         set(value) { setIs24HourView(value) }
 
-
     fun showInsertDialog(
         context: FragmentActivity,
+        defaultTrigger: TriggerJson.Type,
         onSuccess: (Boolean, TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentInsertBinding::inflate) { content ->
-
-        binding.message.isGone = true
         binding.title.setText(R.string.insert_popup)
-        binding.confirm.isVisible = true
         binding.confirm.setText(R.string.popup_add)
+        binding.message.isGone = true
+        binding.confirm.isVisible = true
 
-        content.triggerDropdown.setText(context.getString(R.string.trigger_no_reason), false)
+        content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(defaultTrigger.name).stringResource), false)
 
         binding.confirm.setOnClickListener {
             val trigger = TriggerJson.Title.entries.firstOrNull {
@@ -243,8 +242,8 @@ object DialogManager {
         defaultTrigger: TriggerJson.Type,
         onSuccess: (TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentTriggersBinding::inflate) { content ->
-        binding.title.setText(R.string.tracking_trigger)
-        binding.message.setText(R.string.tracking_trigger_description)
+        binding.title.setText(R.string.settings_trigger)
+        binding.message.setText(R.string.settings_trigger_description)
         binding.confirm.isVisible = true
 
         content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(defaultTrigger.name).stringResource), false)

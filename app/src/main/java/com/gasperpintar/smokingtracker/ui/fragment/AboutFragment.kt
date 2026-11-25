@@ -34,6 +34,8 @@ class AboutFragment : Base<FragmentAboutBinding>(
         val links = mapOf(
             websiteLayout to "https://gasperpintar.com/smoking-tracker",
             changelogLayout to "https://github.com/pintargasper/SmokingTracker/releases",
+            translateLayout to "https://translate.gasperpintar.com/projects/smokingtracker",
+            privacyPolicyLayout to "https://gasperpintar.com/smoking-tracker/privacy-policy"
         )
         links.forEach { (view, url) ->
             view.setOnClickListener { requireContext().openUrl(url) }

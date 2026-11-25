@@ -52,7 +52,8 @@ class HomeViewModel(
     }
 
     suspend fun getState(): HomeState {
-        val dayEndMinutes = settingsRepository.get()!!.dayEndMinutes
+        val settings = settingsRepository.get()!!
+        val dayEndMinutes = settings.dayEndMinutes
         if (selectedDate == null) selectedDate = TimeHelper.dayDate(dayEndMinutes)
         if (endMinutes != dayEndMinutes) {
             selectedDate = TimeHelper.updateDayDate(
@@ -80,7 +81,9 @@ class HomeViewModel(
             lastEntry = lastEntry,
             dailyCount = dailyCount,
             weeklyCount = weeklyCount,
-            monthlyCount = monthlyCount
+            monthlyCount = monthlyCount,
+            defaultTrigger = settings.defaultTrigger,
+            showIntervalLabel = settings.showIntervalLabel
         )
     }
 

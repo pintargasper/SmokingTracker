@@ -30,6 +30,7 @@ object ContainerManager {
     fun createHistoryAdapter(
         context: FragmentActivity,
         entries: () -> List<HistoryEntry>,
+        showIntervalLabels: () -> Boolean,
         onEdit: (HistoryEntry) -> Unit,
         onDelete: (HistoryEntry) -> Unit
     ) = BaseContainer.create<HistoryEntry, ContainerContentHistoryBinding>(context = context, inflate = ContainerContentHistoryBinding::inflate) { binding, entry ->
@@ -46,7 +47,7 @@ object ContainerManager {
         }.maxByOrNull { it.createdAt }
 
         binding.intervalLabel.apply {
-            isVisible = true
+            isVisible = showIntervalLabels()
             text = previousEntry?.let {
                 TimeHelper.formatTime(
                     resources = context.resources,
@@ -100,19 +101,15 @@ object ContainerManager {
     fun createAchievementAdapter(
         context: FragmentActivity
     ) = BaseContainer.create<AchievementEntry, ContainerAchievementsBinding>(context = context, inflate = ContainerAchievementsBinding::inflate) { binding, achievementEntry ->
-
         binding.root.isClickable = false
         binding.root.isFocusable = false
 
         binding.achievementTitle.text = context.getString(AchievementJson.Title.valueOf(achievementEntry.title).stringResource)
         binding.achievementMessage.text = context.getString(AchievementJson.Message.valueOf(achievementEntry.message).stringResource)
 
-        binding.lastAchieved.text =
-            achievementEntry.lastAchieved
-                ?.toLocalDate()
-                ?.let { localDate ->
-                    context.getString(R.string.achievement_last, formatDate(localDate))
-                } ?: context.getString(R.string.achievement_last, "/")
+        binding.lastAchieved.text = achievementEntry.lastAchieved?.toLocalDate()?.let { localDate ->
+            context.getString(R.string.achievement_last, formatDate(localDate))
+        } ?: context.getString(R.string.achievement_last, "/")
 
         val achievedTimesText = context.resources.getQuantityString(
             R.plurals.achievement_achieved_times,
@@ -144,7 +141,6 @@ object ContainerManager {
         onOpen: (NoteEntry) -> Unit,
         onDelete: (NoteEntry) -> Unit
     ) = BaseContainer.create<NoteEntry, ContainerContentNoteBinding>(context = context, inflate = ContainerContentNoteBinding::inflate) { binding, noteEntry ->
-
         binding.emotionIcon.setImageResource(noteEntry.moodIcon)
         binding.titleLabel.text = noteEntry.title
         binding.contentLabel.text = noteEntry.content

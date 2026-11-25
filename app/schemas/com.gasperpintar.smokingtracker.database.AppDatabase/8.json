@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "d77e16a4b5bcdea9ab21e29a8c1f33d7",
+    "identityHash": "cb5f66a6b5dfaf015a733c6e2224760e",
     "entities": [
       {
         "tableName": "achievements",
@@ -120,7 +120,7 @@
       },
       {
         "tableName": "settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` TEXT NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL DEFAULT '€', `customCurrency` TEXT NOT NULL DEFAULT '', `dayEndMinutes` INTEGER NOT NULL DEFAULT 0, `elapsedTimeWarningMinutes` INTEGER NOT NULL DEFAULT 60, `colorScheme` TEXT NOT NULL DEFAULT 'SYSTEM', `startPage` TEXT NOT NULL DEFAULT 'HOME', `defaultTrigger` TEXT NOT NULL DEFAULT 'NO_REASON')",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` TEXT NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL DEFAULT '€', `customCurrency` TEXT NOT NULL DEFAULT '', `dayEndMinutes` INTEGER NOT NULL DEFAULT 0, `elapsedTimeWarningMinutes` INTEGER NOT NULL DEFAULT 60, `colorScheme` TEXT NOT NULL DEFAULT 'SYSTEM', `startPage` TEXT NOT NULL DEFAULT 'HOME', `defaultTrigger` TEXT NOT NULL DEFAULT 'NO_REASON', `showIntervalLabel` INTEGER NOT NULL DEFAULT 1)",
         "fields": [
           {
             "fieldPath": "id",
@@ -194,6 +194,13 @@
             "affinity": "TEXT",
             "notNull": true,
             "defaultValue": "'NO_REASON'"
+          },
+          {
+            "fieldPath": "showIntervalLabel",
+            "columnName": "showIntervalLabel",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
           }
         ],
         "primaryKey": {
@@ -350,7 +357,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd77e16a4b5bcdea9ab21e29a8c1f33d7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cb5f66a6b5dfaf015a733c6e2224760e')"
     ]
   }
 }

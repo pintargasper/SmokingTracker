@@ -16,7 +16,6 @@ import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
-import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.provider.OnlyQuickAddWidget
@@ -28,7 +27,6 @@ import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDateTime
@@ -64,20 +62,9 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
 
     private suspend fun setup() = binding.apply {
         val state = viewModel.getState()
-        updateUi(state = state)
 
         themeLayout.setOnClickListener {
             (requireActivity() as MainActivity).openSubFragment(fragment = AppearanceFragment())
-        }
-
-        languageLayout.setOnClickListener {
-            DialogManager.showLanguageDialog(context = requireActivity(), selectedLanguage = state.settings.language) { language ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    state.settings = state.settings.copy(language = language)
-                    viewModel.updateSettings(state.settings)
-                    requireActivity().recreate()
-                }
-            }
         }
 
         notificationsLayout.setOnClickListener {
@@ -121,42 +108,6 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                 appWidgetManager.requestPinAppWidget(provider, null, null)
             }
         }
-
-        currencyLayout.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                DialogManager.showCurrencyDialog(context = requireActivity(), settings = state.settings) { currency, custom ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        state.settings = state.settings.copy(currency = currency, customCurrency = custom)
-                        viewModel.updateSettings(state.settings)
-                    }
-                }
-            }
-        }
-
-        costsLayout.setOnClickListener {
-            DialogManager.showCostsDialog(context = requireActivity(), currency = state.settings.currency) { entry1, entry2, _ ->
-                when {
-                    entry1 != null -> viewModel.deleteCost(entry1)
-                    entry2 != null -> viewModel.addCost(entry2)
-                }
-                viewModel.getState().costs
-            }
-        }
-
-        val links = mapOf(
-            translateLayout to "https://translate.gasperpintar.com/projects/smokingtracker",
-            privacyPolicyLayout to "https://gasperpintar.com/smoking-tracker/privacy-policy"
-        )
-        links.forEach { (view, url) ->
-            view.setOnClickListener { requireContext().openUrl(url) }
-        }
-    }
-
-    private fun updateUi(state: SettingsState) = binding.apply {
-        languageService.text = resources.getStringArray(R.array.language_names)
-            .getOrElse(index = resources.getStringArray(R.array.language_values)
-                .indexOf(state.settings.language)
-            ) { "system" }
     }
 
     private fun setupDataManagement() = binding.apply {

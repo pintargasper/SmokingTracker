@@ -15,7 +15,8 @@
         android:orientation="vertical"
         android:gravity="center_vertical"
         android:paddingVertical="6dp"
-        android:paddingHorizontal="10dp">
+        android:paddingHorizontal="10dp"
+        android:minHeight="50dp">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/timer_label"

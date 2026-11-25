@@ -81,6 +81,9 @@
     <color name="legacy_time_picker_numbers_inner_text">@color/legacy_gray_medium</color>
     <color name="legacy_time_picker_numbers_selector">@color/legacy_gray</color>
 
+    <color name="legacy_switch_thumb_tint">@color/legacy_gray_medium</color>
+    <color name="legacy_switch_track_tint">@color/legacy_gray_light</color>
+
     <color name="legacy_error">@color/legacy_red</color>
     <color name="legacy_success">@color/legacy_green</color>
     <color name="legacy_links">@color/legacy_blue</color>

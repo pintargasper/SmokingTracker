@@ -30,6 +30,7 @@
         <item name="appProgressBarStyle">@style/Legacy.Component.ProgressBar</item>
         <item name="appTimePickerStyle">@style/Legacy.Component.TimePicker</item>
         <item name="appDatePickerStyle">@style/Legacy.Component.DatePicker</item>
+        <item name="appSwitchStyle">@style/Legacy.Component.Switch</item>
         <item name="appDatePickerOverlay">@style/Legacy.ThemeOverlay.DatePicker</item>
     </style>
 
@@ -101,6 +102,9 @@
         <item name="appTimePickerNumbersTextColor">@color/legacy_time_picker_numbers_text</item>
         <item name="appTimePickerNumbersInnerTextColor">@color/legacy_time_picker_numbers_inner_text</item>
         <item name="appTimePickerNumbersSelector">@color/legacy_time_picker_numbers_selector</item>
+
+        <item name="appSwitchThumbTint">@color/legacy_switch_thumb_tint</item>
+        <item name="appSwitchTrackTint">@color/legacy_switch_track_tint</item>
     </style>
 
     <style name="Theme.SmokingTracker.System" parent="Theme.SmokingTracker.Legacy">

@@ -111,17 +111,24 @@ class MinimalHomeFragmentTest {
     @Test
     fun elapsedTimeThresholdSupportsDisablingAndPersistsValidValue() {
         ActivityScenario.launch(MainActivity::class.java).use {
+            try {
+                onView(withId(R.id.close)).check(matches(isDisplayed())).perform(click())
+            } catch (_: androidx.test.espresso.NoMatchingViewException) {
+            }
             onView(withId(R.id.navigation_settings)).perform(click())
+            onView(withId(R.id.tracking_layout)).perform(scrollTo(), click())
             onView(withId(R.id.elapsed_time_warning_layout)).perform(scrollTo(), click())
-
             onView(withId(R.id.input_warning_minutes)).perform(replaceText("10081"), closeSoftKeyboard())
             onView(withId(R.id.confirm)).perform(click())
             onView(withId(R.id.input_warning_minutes)).check(matches(isDisplayed()))
+
             assertEquals(60, runBlocking { settingsRepository.get()!!.elapsedTimeWarningMinutes })
 
             onView(withId(R.id.input_warning_minutes)).perform(replaceText("0"), closeSoftKeyboard())
             onView(withId(R.id.confirm)).perform(click())
+
             assertEquals(0, awaitElapsedTimeWarning(expected = 0))
+
             onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText(
                 context.resources.getQuantityString(R.plurals.time_minutes, 0, 0)
             )))
@@ -131,6 +138,7 @@ class MinimalHomeFragmentTest {
             onView(withId(R.id.confirm)).perform(click())
 
             assertEquals(120, awaitElapsedTimeWarning(expected = 120))
+
             onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText(
                 context.resources.getQuantityString(R.plurals.time_minutes, 120, 120)
             )))

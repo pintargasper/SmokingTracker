@@ -91,7 +91,8 @@ class MappersTest {
             elapsedTimeWarningMinutes = 120,
             colorScheme = Appearance.ColorScheme.SYSTEM,
             startPage = Appearance.StartPage.HOME,
-            defaultTrigger = TriggerJson.Type.NO_REASON
+            defaultTrigger = TriggerJson.Type.NO_REASON,
+            showIntervalLabel = true
         )
 
         val actual = roundTrip(headers = Mappers.SETTINGS_HEADERS, data = listOf(entity), mapper = { it.toExcelRow() }) { row, column, _ ->
@@ -182,7 +183,8 @@ class MappersTest {
             elapsedTimeWarningMinutes = 60,
             colorScheme = Appearance.ColorScheme.SYSTEM,
             startPage = Appearance.StartPage.HOME,
-            defaultTrigger = TriggerJson.Type.NO_REASON
+            defaultTrigger = TriggerJson.Type.NO_REASON,
+            showIntervalLabel = true
         )
 
         assertEquals(expected, Mappers.parseSettings(row, column))

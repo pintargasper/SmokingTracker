@@ -10,6 +10,7 @@ import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.databinding.FragmentAppearanceBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.type.Appearance
+import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import kotlinx.coroutines.launch
 
 class AppearanceFragment : Base<FragmentAppearanceBinding>(
@@ -27,34 +28,66 @@ class AppearanceFragment : Base<FragmentAppearanceBinding>(
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            val state = viewModel.getState()
-
-            setupDropdown(
-                dropdown = themeDropdown,
-                options = R.array.appearance_theme_options,
-                selectedIndex = state.settings.theme
-            ) { selectTheme(state, theme = it) }
-
-            setupDropdown(
-                dropdown = schemeDropdown,
-                options = R.array.appearance_scheme_options,
-                selectedIndex = Appearance.ColorScheme.entries.indexOf(state.settings.colorScheme)
-            ) { position ->
-                Appearance.ColorScheme.entries.getOrNull(index = position)?.let {
-                    selectColorScheme(state, scheme = it)
-                }
-            }
-
-            setupDropdown(
-                dropdown = startPageDropdown,
-                options = R.array.appearance_start_page_options,
-                selectedIndex = Appearance.StartPage.entries.indexOf(state.settings.startPage)
-            ) { position ->
-                Appearance.StartPage.entries.getOrNull(index = position)?.let {
-                    selectStartPage(state, startPage = it)
-                }
-            }
+            setup()
             showContent()
+        }
+    }
+
+    private suspend fun setup() {
+        val state = viewModel.getState()
+
+        setupDropdown(
+            dropdown = binding.themeDropdown,
+            options = R.array.appearance_theme_options,
+            selectedIndex = state.settings.theme
+        ) { selectTheme(state, theme = it) }
+
+        setupDropdown(
+            dropdown = binding.schemeDropdown,
+            options = R.array.appearance_scheme_options,
+            selectedIndex = Appearance.ColorScheme.entries.indexOf(state.settings.colorScheme)
+        ) { position ->
+            Appearance.ColorScheme.entries.getOrNull(index = position)?.let {
+                selectColorScheme(state, scheme = it)
+            }
+        }
+
+        setupDropdown(
+            dropdown = binding.startPageDropdown,
+            options = R.array.appearance_start_page_options,
+            selectedIndex = Appearance.StartPage.entries.indexOf(state.settings.startPage)
+        ) { position ->
+            Appearance.StartPage.entries.getOrNull(index = position)?.let {
+                selectStartPage(state, startPage = it)
+            }
+        }
+
+        binding.languageService.text = resources.getStringArray(R.array.language_names)
+            .getOrElse(index = resources.getStringArray(R.array.language_values)
+                .indexOf(state.settings.language)
+            ) { "system" }
+
+        binding.languageLayout.setOnClickListener {
+            DialogManager.showLanguageDialog(context = requireActivity(), selectedLanguage = state.settings.language) { language ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    state.settings = state.settings.copy(language = language)
+                    viewModel.updateSettings(state.settings)
+                    requireActivity().recreate()
+                }
+            }
+        }
+
+        binding.intervalLabelsSwitch.apply {
+            setOnCheckedChangeListener(null)
+            isChecked = state.settings.showIntervalLabel
+            jumpDrawablesToCurrentState()
+            setOnCheckedChangeListener { _, isChecked ->
+                if (state.settings.showIntervalLabel == isChecked) return@setOnCheckedChangeListener
+                viewLifecycleOwner.lifecycleScope.launch {
+                    state.settings = state.settings.copy(showIntervalLabel = isChecked)
+                    viewModel.updateSettings(state.settings)
+                }
+            }
         }
     }
 

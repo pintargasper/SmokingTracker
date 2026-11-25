@@ -49,7 +49,6 @@ class TrackingFragment : Base<FragmentTrackingBinding>(
                 viewLifecycleOwner.lifecycleScope.launch {
                     state.settings = state.settings.copy(dayEndMinutes = dayEndMinutes)
                     viewModel.updateSettings(state.settings)
-                    requireActivity().recreate()
                 }
             }
         }
@@ -75,6 +74,27 @@ class TrackingFragment : Base<FragmentTrackingBinding>(
                     triggerValue.text = getString(TriggerJson.Title.valueOf(defaultTrigger.name).stringResource)
                     triggerImage.setImageResource(TriggerJson.Icon.valueOf(defaultTrigger.name).drawableResource)
                 }
+            }
+        }
+
+        currencyLayout.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                DialogManager.showCurrencyDialog(context = requireActivity(), settings = state.settings) { currency, custom ->
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        state.settings = state.settings.copy(currency = currency, customCurrency = custom)
+                        viewModel.updateSettings(state.settings)
+                    }
+                }
+            }
+        }
+
+        costsLayout.setOnClickListener {
+            DialogManager.showCostsDialog(context = requireActivity(), currency = state.settings.currency) { entry1, entry2, _ ->
+                when {
+                    entry1 != null -> viewModel.deleteCost(entry1)
+                    entry2 != null -> viewModel.addCost(entry2)
+                }
+                viewModel.getState().costs
             }
         }
     }
