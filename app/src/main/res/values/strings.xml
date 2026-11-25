@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">Smoking Tracker</string>
-    <string name="application_tagline">Track. Analyze. Progress.</string>
+    <string name="app_name">Smoking Tracker</string>
+    <string name="app_tagline">Track. Analyze. Progress.</string>
 
     <string name="navigation_home">Home</string>
     <string name="navigation_advanced">Advanced</string>
@@ -52,11 +52,11 @@
     <string name="graph_monthly">Monthly Overview (%1$d)</string>
     <string name="graph_yearly">Yearly Overview (%1$d)</string>
     <string name="graph_previous_day_daily">Previous day (Daily)</string>
-    <string name="graph_previous_day_weakly">Previous day (Weekly)</string>
+    <string name="graph_previous_day_weekly">Previous day (Weekly)</string>
     <string name="graph_previous_day_monthly">Previous day (Monthly)</string>
     <string name="graph_previous_day_yearly">Previous day (Yearly)</string>
     <string name="graph_next_day_daily">Next day (Daily)</string>
-    <string name="graph_next_day_weakly">Next day (Weekly)</string>
+    <string name="graph_next_day_weekly">Next day (Weekly)</string>
     <string name="graph_next_day_monthly">Next day (Monthly)</string>
     <string name="graph_next_day_yearly">Next day (Yearly)</string>
     <string name="graph_view_info">There is no data to display the graph</string>
@@ -79,6 +79,7 @@
     <string name="achievement_last">Last achieved: %1$s</string>
     <string name="achievement_achieved">Achieved: %1$s</string>
     <string name="achievements_time">Smoke free time</string>
+    <string name="achievements_avoided">Cigarettes avoided</string>
     <string name="achievement_congrats_one_day">One day hero</string>
     <string name="achievement_congrats_two_days">Two day champion</string>
     <string name="achievement_congrats_three_days">Three day warrior</string>
@@ -91,9 +92,8 @@
     <string name="achievement_congrats_one_month">One month explorer</string>
     <string name="achievement_congrats_three_months">Three month pathfinder</string>
     <string name="achievement_congrats_six_months">Six month conqueror</string>
-    <string name="achievement_congrats_nine_month">Nine month defender</string>
+    <string name="achievement_congrats_nine_months">Nine month defender</string>
     <string name="achievement_congrats_one_year">One year pioneer</string>
-    <string name="achievements_avoided">Cigarettes avoided</string>
     <string name="achievement_congrats_one_day_message">Well done! Keep pushing forward and stay consistent</string>
     <string name="achievement_congrats_two_days_message">Great job! You are building momentum and staying strong</string>
     <string name="achievement_congrats_three_days_message">Keep it up! Every step you take shows your dedication</string>
@@ -132,8 +132,6 @@
     <string name="calculator_start_date">Start date</string>
     <string name="calculator_to">To:</string>
     <string name="calculator_end_date">End date</string>
-    <string name="calculator_calculate">Calculate</string>
-
     <string name="calculator_result">Calculation result</string>
     <string name="calculator_result_total">Total costs</string>
     <string name="calculator_result_time_spent">Time spent</string>
@@ -144,7 +142,7 @@
 
     <string name="notes_add">Add note</string>
     <string name="notes_edit">Edit note</string>
-    <string name="notes_mode">Mood</string>
+    <string name="notes_mood">Mood</string>
     <string name="notes_title">Note Title</string>
     <string name="notes_content">Note Content</string>
     <string name="notes_emotions_very_bad">Very bad</string>
@@ -170,19 +168,20 @@
     <string name="settings_general_notifications_description">Stay informed with notifications and alerts</string>
     <string name="settings_general_widgets">Widgets</string>
     <string name="settings_general_widgets_description">Add widgets to the home screen</string>
-    <string name="settings_finance">Finance</string>
-    <string name="settings_finance_currency">Currency</string>
-    <string name="settings_finance_currency_description">Choose your currency. If the currency is not listed, you can enter it yourself</string>
-    <string name="settings_finance_costs">Costs</string>
-    <string name="settings_finance_costs_description">Cost of one cigarette. The price of a cigarette can be determined by periods</string>
-    <string name="settings_general_day_end_hour">Day end hour</string>
-    <string name="settings_general_day_end_hour_description">Set when your day ends and a new one begins</string>
-    <string name="settings_general_elapsed_time_warning">Elapsed time warning</string>
-    <string name="settings_general_elapsed_time_warning_description">Highlight the timer until the selected time limit is reached. Set to 0 to disable</string>
-    <string name="settings_elapsed_time_warning_minutes_hint">Minutes (0–10,080)</string>
-    <string name="settings_elapsed_time_warning_error">Enter a value from 0 to 10,080 minutes</string>
-    <string name="settings_trigger">Default trigger</string>
-    <string name="settings_trigger_description">Choose the default reason for smoking</string>
+
+    <string name="tracker_finance">Finance</string>
+    <string name="tracker_currency">Currency</string>
+    <string name="tracker_currency_description">Choose your currency. If the currency is not listed, you can enter it yourself</string>
+    <string name="tracker_costs">Costs</string>
+    <string name="tracker_costs_description">Cost of one cigarette. The price of a cigarette can be determined by periods</string>
+    <string name="tracker_day_end_hour">Day end hour</string>
+    <string name="tracker_day_end_hour_description">Set when your day ends and a new one begins</string>
+    <string name="tracker_elapsed_time_warning">Elapsed time warning</string>
+    <string name="tracker_elapsed_time_warning_description">Highlight the timer until the selected time limit is reached. Set to 0 to disable</string>
+    <string name="tracker_elapsed_time_warning_minutes_hint">Minutes (0–10,080)</string>
+    <string name="tracker_elapsed_time_warning_error">Enter a value from 0 to 10,080 minutes</string>
+    <string name="tracker_trigger">Default trigger</string>
+    <string name="tracker_trigger_description">Choose the default reason for smoking</string>
 
     <string name="settings_data">Data</string>
     <string name="settings_data_backup">Backup</string>
@@ -198,10 +197,6 @@
     <string name="settings_about_changelog_description">View changelog</string>
 
     <string name="settings_support">Support &amp; Security</string>
-    <string name="settings_support_translations">Help Translate</string>
-    <string name="settings_support_translations_description">Translate this app on your language using Weblate</string>
-    <string name="settings_support_privacy_policy">Privacy Policy</string>
-    <string name="settings_support_privacy_policy_description">View Privacy Policy</string>
 
     <string name="settings_appearance_theme">Theme</string>
     <string name="settings_appearance_theme_system">System</string>
@@ -222,7 +217,10 @@
     <string name="about_view_izzy_on_droid">View the app on IzzyOnDroid</string>
     <string name="about_view_open_apk">View the app on OpenAPK</string>
     <string name="about_links">Links</string>
-
+    <string name="about_translations">Help Translate</string>
+    <string name="about_translations_description">Translate this app on your language using Weblate</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_privacy_policy_description">View Privacy Policy</string>
     <string name="about_contributors">Contributors</string>
     <string name="about_contributors_description">GitHub profiles</string>
     <string name="about_contributors_code">Code contribution</string>
@@ -233,19 +231,19 @@
     <string name="about_contributors_chinese_simplified">Chinese (simplified) translation</string>
     <string name="about_contributors_chinese_traditional">Chinese (traditional) translation</string>
     <string name="about_contributors_hungarian">Hungarian translation</string>
-
     <string name="about_version">Version: %1$s (%2$d)</string>
     <string name="about_version_unknown">Unknown</string>
     <string name="about_created_by">Developed by: %1$s</string>
 
-    <string name="popup_close">Close</string>
-    <string name="popup_confirm">Confirm</string>
-    <string name="popup_save">Save</string>
-    <string name="popup_backup">Backup</string>
-    <string name="popup_select">Select</string>
-    <string name="popup_add">Add</string>
-    <string name="popup_skip">Skip</string>
-    <string name="popup_continue">Continue</string>
+    <string name="button_close">Close</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="button_save">Save</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_select">Select</string>
+    <string name="button_add">Add</string>
+    <string name="button_skip">Skip</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_calculate">Calculate</string>
 
     <string name="insert_popup">Add entry</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
@@ -388,7 +386,7 @@
         <item quantity="one">%d cigarette</item>
         <item quantity="other">%d cigarettes</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="one">%d time</item>
         <item quantity="other">%d times</item>
     </plurals>

@@ -11,7 +11,7 @@
         android:id="@+id/emotion_icon"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:contentDescription="@string/notes_mode"
+        android:contentDescription="@string/notes_mood"
         android:src="@drawable/sentiment_neutral_48px" />
 
     <LinearLayout

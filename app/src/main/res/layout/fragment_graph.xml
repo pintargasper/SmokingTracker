@@ -120,7 +120,7 @@
                         android:id="@+id/previous_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/graph_previous_day_weakly"
+                        android:contentDescription="@string/graph_previous_day_weekly"
                         app:icon="@drawable/arrow_circle_left_48px"
                         style="?appImageButtonStyle"/>
 
@@ -136,7 +136,7 @@
                         android:id="@+id/next_day_weekly"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/graph_next_day_weakly"
+                        android:contentDescription="@string/graph_next_day_weekly"
                         app:icon="@drawable/arrow_circle_right_48px"
                         style="?appImageButtonStyle"/>
 

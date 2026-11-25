@@ -49,7 +49,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="5dp"
-                android:contentDescription="@string/settings_general_day_end_hour"
+                android:contentDescription="@string/tracker_day_end_hour"
                 android:src="@drawable/partly_cloudy_night_48px"
                 style="?appImageStyle" />
 
@@ -63,13 +63,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="@string/settings_general_day_end_hour"
+                    android:text="@string/tracker_day_end_hour"
                     style="?appSubtitleStyle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_general_day_end_hour_description"
+                    android:text="@string/tracker_day_end_hour_description"
                     style="?appBodyStyle" />
 
             </LinearLayout>
@@ -102,7 +102,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="5dp"
-                android:contentDescription="@string/settings_general_elapsed_time_warning"
+                android:contentDescription="@string/tracker_elapsed_time_warning"
                 android:src="@drawable/history_48px"
                 style="?appImageStyle" />
 
@@ -116,13 +116,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="@string/settings_general_elapsed_time_warning"
+                    android:text="@string/tracker_elapsed_time_warning"
                     style="?appSubtitleStyle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_general_elapsed_time_warning_description"
+                    android:text="@string/tracker_elapsed_time_warning_description"
                     style="?appBodyStyle" />
 
             </LinearLayout>
@@ -155,7 +155,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="5dp"
-                android:contentDescription="@string/settings_finance_currency"
+                android:contentDescription="@string/tracker_currency"
                 android:src="@drawable/currency_exchange_48px"
                 style="?appImageStyle" />
 
@@ -169,13 +169,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="@string/settings_finance_currency"
+                    android:text="@string/tracker_currency"
                     style="?appSubtitleStyle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_finance_currency_description"
+                    android:text="@string/tracker_currency_description"
                     style="?appBodyStyle" />
 
             </LinearLayout>
@@ -208,7 +208,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="5dp"
-                android:contentDescription="@string/settings_finance_costs"
+                android:contentDescription="@string/tracker_costs"
                 android:src="@drawable/payments_48px"
                 style="?appImageStyle" />
 
@@ -222,13 +222,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="2dp"
-                    android:text="@string/settings_finance_costs"
+                    android:text="@string/tracker_costs"
                     style="?appSubtitleStyle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/settings_finance_costs_description"
+                    android:text="@string/tracker_costs_description"
                     style="?appBodyStyle" />
 
             </LinearLayout>

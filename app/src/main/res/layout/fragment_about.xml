@@ -54,7 +54,7 @@
                 android:layout_width="72dp"
                 android:layout_height="72dp"
                 android:layout_margin="4dp"
-                android:contentDescription="@string/application_name"
+                android:contentDescription="@string/app_name"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout
@@ -66,13 +66,13 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/application_name"
+                    android:text="@string/app_name"
                     style="?appSubtitleStyle" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/application_tagline"
+                    android:text="@string/app_tagline"
                     style="?appBodyStyle" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -295,7 +295,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginEnd="5dp"
-                        android:contentDescription="@string/settings_support_translations"
+                        android:contentDescription="@string/about_translations"
                         android:src="@drawable/translate_48px"
                         style="?appImageStyle" />
 
@@ -309,13 +309,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="2dp"
-                            android:text="@string/settings_support_translations"
+                            android:text="@string/about_translations"
                             style="?appSubtitleStyle" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/settings_support_translations_description"
+                            android:text="@string/about_translations_description"
                             style="?appBodyStyle" />
 
                     </LinearLayout>
@@ -348,7 +348,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_marginEnd="5dp"
-                        android:contentDescription="@string/settings_support_privacy_policy"
+                        android:contentDescription="@string/about_privacy_policy"
                         android:src="@drawable/policy_48px"
                         style="?appImageStyle" />
 
@@ -363,13 +363,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="2dp"
-                            android:text="@string/settings_support_privacy_policy" />
+                            android:text="@string/about_privacy_policy" />
 
                         <com.google.android.material.textview.MaterialTextView
                             style="?appBodyStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/settings_support_privacy_policy_description" />
+                            android:text="@string/about_privacy_policy_description" />
 
                     </LinearLayout>
 

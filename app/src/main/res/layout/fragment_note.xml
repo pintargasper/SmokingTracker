@@ -65,7 +65,7 @@
                     android:id="@+id/text_emotion_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/notes_mode"
+                    android:text="@string/notes_mood"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
-                    android:text="@string/popup_save"
+                    android:text="@string/button_save"
                     style="?appButtonStyle"
                     app:backgroundTint="?appButtonBackground"
                     app:elevationOverlayEnabled="false"

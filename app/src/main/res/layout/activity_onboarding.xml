@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:layout_margin="5dp"
-        android:text="@string/popup_skip"
+        android:text="@string/button_skip"
         style="?appButtonTextFilledStyle"
         tools:ignore="VisualLintSystemUi" />
 
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:minWidth="130dp"
         android:layout_gravity="center_horizontal"
-        android:text="@string/popup_continue"
+        android:text="@string/button_continue"
         style="?appButtonStyle" />
 
 </LinearLayout>

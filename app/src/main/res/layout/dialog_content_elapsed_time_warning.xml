@@ -4,7 +4,7 @@
     android:id="@+id/warning_minutes_input_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:hint="@string/settings_elapsed_time_warning_minutes_hint"
+    android:hint="@string/tracker_elapsed_time_warning_minutes_hint"
     style="?appTextInputLayoutStyle">
 
     <com.google.android.material.textfield.TextInputEditText

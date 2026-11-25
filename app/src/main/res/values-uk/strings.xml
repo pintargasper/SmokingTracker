@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">Трекер Куріння</string>
+    <string name="app_name">Трекер Куріння</string>
     <string name="navigation_home">Головна</string>
     <string name="navigation_graph">Діаграма</string>
     <string name="navigation_more">Аналітика</string>
@@ -21,11 +21,11 @@
     <string name="graph_monthly">Огляд за місяць (%1$d)</string>
     <string name="graph_yearly">Огляд за рік (%1$d)</string>
     <string name="graph_previous_day_daily">Попередній період (за день)</string>
-    <string name="graph_previous_day_weakly">Попередній період (за тиждень)</string>
+    <string name="graph_previous_day_weekly">Попередній період (за тиждень)</string>
     <string name="graph_previous_day_monthly">Попередній період (за місяць)</string>
     <string name="graph_previous_day_yearly">Попередній період (за рік)</string>
     <string name="graph_next_day_daily">Наступний період (за день)</string>
-    <string name="graph_next_day_weakly">Наступний період (за тиждень)</string>
+    <string name="graph_next_day_weekly">Наступний період (за тиждень)</string>
     <string name="graph_next_day_monthly">Наступний період (за місяць)</string>
     <string name="graph_next_day_yearly">Наступний період (за рік)</string>
     <string name="graph_view_info">Немає даних для відображення графіка</string>
@@ -54,9 +54,9 @@
     <string name="settings_about">Про</string>
     <string name="about_version">Версія %1$s (%2$d)</string>
     <string name="settings_about_website">Сайт</string>
-    <string name="settings_support_translations">Допомогти з перекладом</string>
-    <string name="settings_support_translations_description">Допоможи перекласти застосунок своєю мовою у Weblate</string>
-    <string name="settings_support_privacy_policy">Smoking Tracker - Політика щодо конфіденційності</string>
+    <string name="about_translations">Допомогти з перекладом</string>
+    <string name="about_translations_description">Допоможи перекласти застосунок своєю мовою у Weblate</string>
+    <string name="about_privacy_policy">Smoking Tracker - Політика щодо конфіденційності</string>
     <string name="about_version_unknown">Невідомо</string>
     <string name="insert_popup">Додати запис</string>
     <string name="insert_popup_lent">Позичена сигарета?</string>
@@ -82,8 +82,8 @@
     <string name="notifications_popup_frequency_weekly">Щотижня</string>
     <string name="backup_popup">Створити бекап даних</string>
     <string name="backup_popup_description">Сповіщення про резервне копіювання буде надіслано через push-сповіщення</string>
-    <string name="popup_backup">Бекап</string>
-    <string name="popup_select">Обери</string>
+    <string name="button_backup">Бекап</string>
+    <string name="button_select">Обери</string>
     <string name="restore_popup">Відновити дані з бекапу</string>
     <string name="restore_popup_info">Отримаєш сповіщення про відновлення даних</string>
     <string name="restore_popup_file">Файл: %1$s</string>
@@ -104,13 +104,13 @@
     <string name="achievement_congrats_one_month">Пусічка місяця</string>
     <string name="achievement_congrats_three_months">Пусічка трьох місяців</string>
     <string name="achievement_congrats_six_months">Пан Півроку</string>
-    <string name="achievement_congrats_nine_month">Дев’ятимісячний Ідеал</string>
+    <string name="achievement_congrats_nine_months">Дев’ятимісячний Ідеал</string>
     <string name="achievement_congrats_one_year">Гетьман Одного Року</string>
     <string name="achievement_congrats_one_day_message">Гарна робота. Не зупиняйся й тримай темп</string>
     <string name="achievement_congrats_two_days_message">Вогонь! Ти вже на розгоні й тримаєшся жорстко</string>
     <string name="achievement_congrats_three_days_message">Продовжуй у тому ж дусі! Кожен крок свідчить про твою наполегливість</string>
-    <string name="popup_close">Закрити</string>
-    <string name="popup_confirm">Підтвердити</string>
+    <string name="button_close">Закрити</string>
+    <string name="button_confirm">Підтвердити</string>
     <string name="achievement_congrats_four_days_message">Вражаюче! Тримай темп і не відступай</string>
     <string name="achievement_congrats_five_days_message">Чудово! Твоя наполегливість уже дає вражаючі результати</string>
     <string name="achievement_congrats_six_days_message">Фантастично! Твої зусилля вже приносять результат, не зупиняйся</string>
@@ -140,7 +140,7 @@
     <string name="notification_download_content">Резервну копію даних успішно збережено у файлі %1$s</string>
     <string name="notification_upload_title">Рестор успішно завершено</string>
     <string name="notification_upload_content">Дані успішно відновлено</string>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="one">%d раз</item>
         <item quantity="few">%d рази</item>
         <item quantity="many">%d разів</item>
@@ -159,7 +159,7 @@
     <string name="calculator_start_date">Дата початку</string>
     <string name="calculator_to">До:</string>
     <string name="calculator_end_date">Кінцева дата</string>
-    <string name="calculator_calculate">Розрахувати</string>
+    <string name="button_calculate">Розрахувати</string>
     <string name="calculator_result">Підсумок розрахунку</string>
     <string name="calculator_result_total">Загальна вартість</string>
     <string name="calculator_result_time_spent">Тривалість</string>

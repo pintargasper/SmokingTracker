@@ -86,7 +86,7 @@ data class AchievementJson(
         MONTH1(stringResource = R.string.achievement_congrats_one_month),
         MONTH3(stringResource = R.string.achievement_congrats_three_months),
         MONTH6(stringResource = R.string.achievement_congrats_six_months),
-        MONTH9(stringResource = R.string.achievement_congrats_nine_month),
+        MONTH9(stringResource = R.string.achievement_congrats_nine_months),
         YEAR1(stringResource = R.string.achievement_congrats_one_year),
         C20(stringResource = R.string.achievement_congrats_twenty),
         C200(stringResource = R.string.achievement_congrats_two_hundred),

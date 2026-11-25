@@ -64,7 +64,7 @@ object DialogManager {
         onSuccess: (Boolean, TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentInsertBinding::inflate) { content ->
         binding.title.setText(R.string.insert_popup)
-        binding.confirm.setText(R.string.popup_add)
+        binding.confirm.setText(R.string.button_add)
         binding.message.isGone = true
         binding.confirm.isVisible = true
 
@@ -197,8 +197,8 @@ object DialogManager {
         content.timePicker.hour = settings.dayEndMinutes / 60
         content.timePicker.minute = settings.dayEndMinutes % 60
 
-        binding.title.setText(R.string.settings_general_day_end_hour)
-        binding.message.setText(R.string.settings_general_day_end_hour_description)
+        binding.title.setText(R.string.tracker_day_end_hour)
+        binding.message.setText(R.string.tracker_day_end_hour_description)
         binding.confirm.isVisible = true
 
         binding.confirm.setOnClickListener {
@@ -212,8 +212,8 @@ object DialogManager {
         warningMinutes: Int,
         onSuccess: (Int) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentElapsedTimeWarningBinding::inflate) { content ->
-        binding.title.setText(R.string.settings_general_elapsed_time_warning)
-        binding.message.setText(R.string.settings_general_elapsed_time_warning_description)
+        binding.title.setText(R.string.tracker_elapsed_time_warning)
+        binding.message.setText(R.string.tracker_elapsed_time_warning_description)
         binding.confirm.isVisible = true
 
         content.inputWarningMinutes.setText(warningMinutes.toString())
@@ -223,13 +223,13 @@ object DialogManager {
             val minutes = text.toString().toIntOrNull()
             val isValid = minutes != null && ElapsedTimeWarning.isValidMinutes(minutes)
             content.warningMinutesInputLayout.error = if (isValid) null
-            else context.getString(R.string.settings_elapsed_time_warning_error)
+            else context.getString(R.string.tracker_elapsed_time_warning_error)
         }
 
         binding.confirm.setOnClickListener {
             val minutes = content.inputWarningMinutes.text.toString().toIntOrNull()
             if (minutes == null || !ElapsedTimeWarning.isValidMinutes(minutes)) {
-                content.warningMinutesInputLayout.error = context.getString(R.string.settings_elapsed_time_warning_error)
+                content.warningMinutesInputLayout.error = context.getString(R.string.tracker_elapsed_time_warning_error)
                 return@setOnClickListener
             }
             onSuccess(minutes)
@@ -242,8 +242,8 @@ object DialogManager {
         defaultTrigger: TriggerJson.Type,
         onSuccess: (TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentTriggersBinding::inflate) { content ->
-        binding.title.setText(R.string.settings_trigger)
-        binding.message.setText(R.string.settings_trigger_description)
+        binding.title.setText(R.string.tracker_trigger)
+        binding.message.setText(R.string.tracker_trigger_description)
         binding.confirm.isVisible = true
 
         content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(defaultTrigger.name).stringResource), false)
@@ -408,7 +408,7 @@ object DialogManager {
         binding.title.setText(R.string.backup_popup)
         binding.message.setText(R.string.backup_popup_description)
         binding.confirm.isVisible = true
-        binding.confirm.setText(R.string.popup_backup)
+        binding.confirm.setText(R.string.button_backup)
         binding.confirm.setOnClickListener {
             onSuccess()
             dismiss()
@@ -518,7 +518,7 @@ object DialogManager {
         binding.title.setText(R.string.note_popup_save)
         binding.confirm.isVisible = true
 
-        binding.confirm.setText(R.string.popup_save)
+        binding.confirm.setText(R.string.button_save)
         binding.confirm.setOnClickListener {
             onSuccess(true, false)
             dismiss()

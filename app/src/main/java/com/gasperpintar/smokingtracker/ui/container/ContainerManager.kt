@@ -112,7 +112,7 @@ object ContainerManager {
         } ?: context.getString(R.string.achievement_last, "/")
 
         val achievedTimesText = context.resources.getQuantityString(
-            R.plurals.achievement_achieved_times,
+            R.plurals.achieved_times,
             achievementEntry.times.toInt(),
             achievementEntry.times
         )

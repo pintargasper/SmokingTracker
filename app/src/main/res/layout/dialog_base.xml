@@ -53,7 +53,7 @@
                 android:id="@+id/close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/popup_close"
+                android:text="@string/button_close"
                 style="?appButtonTextStyle" />
 
             <com.google.android.material.button.MaterialButton
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="@string/popup_confirm"
+                android:text="@string/button_confirm"
                 android:visibility="gone"
                 style="?appButtonTextFilledStyle" />
 

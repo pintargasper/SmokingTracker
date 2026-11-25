@@ -39,7 +39,7 @@ class TriggersFragment : Base<FragmentStatisticsTriggersBinding>(
             val title = getString(TriggerJson.Title.valueOf(trigger.type.name).stringResource)
             binding.mostCommonTriggerValue.text = title
             binding.mostCommonTriggerCount.text = resources.getQuantityString(
-                R.plurals.achievement_achieved_times,
+                R.plurals.achieved_times,
                 trigger.value,
                 trigger.value
             )
@@ -55,7 +55,7 @@ class TriggersFragment : Base<FragmentStatisticsTriggersBinding>(
             item.findViewById<MaterialTextView>(R.id.trigger_name).text = title
             item.findViewById<ShapeableImageView>(R.id.trigger_icon).setImageResource(icon)
             item.findViewById<MaterialTextView>(R.id.trigger_count).text = resources.getQuantityString(
-                R.plurals.achievement_achieved_times,
+                R.plurals.achieved_times,
                 trigger.value,
                 trigger.value
             )
