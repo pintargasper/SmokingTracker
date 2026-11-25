@@ -15,9 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.MainActivity
-import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.SettingsViewModel
-import com.gasperpintar.smokingtracker.database.viewmodel.state.SettingsState
 import com.gasperpintar.smokingtracker.databinding.FragmentSettingsBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.provider.OnlyQuickAddWidget
@@ -25,11 +23,10 @@ import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
 import com.gasperpintar.smokingtracker.type.Widget
-import com.gasperpintar.smokingtracker.ui.bar.ProgressType
+import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.FileHelper
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
-import com.gasperpintar.smokingtracker.utils.WebHelper.openUrl
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDateTime
@@ -58,27 +55,16 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            setupSettings()
+            setup()
             showContent()
         }
     }
 
-    private suspend fun setupSettings() = binding.apply {
+    private suspend fun setup() = binding.apply {
         val state = viewModel.getState()
-        updateUi(state = state)
 
         themeLayout.setOnClickListener {
             (requireActivity() as MainActivity).openSubFragment(fragment = AppearanceFragment())
-        }
-
-        languageLayout.setOnClickListener {
-            DialogManager.showLanguageDialog(context = requireActivity(), selectedLanguage = state.settings.language) { language ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    state.settings = state.settings.copy(language = language)
-                    viewModel.updateSettings(state.settings)
-                    requireActivity().recreate()
-                }
-            }
         }
 
         notificationsLayout.setOnClickListener {
@@ -104,27 +90,8 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
             }
         }
 
-        dayEndLayout.setOnClickListener {
-            DialogManager.showEndDayDialog(context = requireActivity(), settings = state.settings) { dayEndMinutes ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    state.settings = state.settings.copy(dayEndMinutes = dayEndMinutes)
-                    viewModel.updateSettings(state.settings)
-                    requireActivity().recreate()
-                }
-            }
-        }
-
-        elapsedTimeWarningLayout.setOnClickListener {
-            DialogManager.showElapsedTimeWarningDialog(
-                context = requireActivity(),
-                warningMinutes = state.settings.elapsedTimeWarningMinutes
-            ) { warningMinutes ->
-                viewLifecycleOwner.lifecycleScope.launch {
-                    state.settings = state.settings.copy(elapsedTimeWarningMinutes = warningMinutes)
-                    viewModel.updateSettings(state.settings)
-                    elapsedTimeWarningValue.text = requireContext().resources.getQuantityString(R.plurals.time_minutes, warningMinutes, warningMinutes)
-                }
-            }
+        trackingLayout.setOnClickListener {
+            (requireActivity() as MainActivity).openSubFragment(fragment = TrackingFragment())
         }
 
         widgetsLayout.setOnClickListener {
@@ -141,53 +108,6 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
                 appWidgetManager.requestPinAppWidget(provider, null, null)
             }
         }
-
-        currencyLayout.setOnClickListener {
-            viewLifecycleOwner.lifecycleScope.launch {
-                DialogManager.showCurrencyDialog(context = requireActivity(), settings = state.settings) { currency, custom ->
-                    viewLifecycleOwner.lifecycleScope.launch {
-                        state.settings = state.settings.copy(currency = currency, customCurrency = custom)
-                        viewModel.updateSettings(state.settings)
-                    }
-                }
-            }
-        }
-
-        costsLayout.setOnClickListener {
-            DialogManager.showCostsDialog(
-                context = requireActivity(),
-                currency = state.settings.currency
-            ) { entry, entity, _ ->
-                when {
-                    entry != null -> viewModel.deleteCost(entry)
-                    entity != null -> viewModel.addCost(CostEntry.fromEntity(entity))
-                }
-                viewModel.getState().costs
-            }
-        }
-
-        val links = mapOf(
-            websiteLayout to "https://gasperpintar.com/smoking-tracker",
-            changelogLayout to "https://github.com/pintargasper/SmokingTracker/releases",
-            translateLayout to "https://translate.gasperpintar.com/projects/smokingtracker",
-            privacyPolicyLayout to "https://gasperpintar.com/smoking-tracker/privacy-policy"
-        )
-        links.forEach { (view, url) ->
-            view.setOnClickListener { requireContext().openUrl(url) }
-        }
-    }
-
-    private fun updateUi(state: SettingsState) = binding.apply {
-        languageService.text = resources.getStringArray(R.array.language_names)
-            .getOrElse(index = resources.getStringArray(R.array.language_values)
-                .indexOf(state.settings.language)
-            ) { "system" }
-
-        elapsedTimeWarningValue.text = requireContext().resources.getQuantityString(
-            R.plurals.time_minutes,
-            state.settings.elapsedTimeWarningMinutes,
-            state.settings.elapsedTimeWarningMinutes
-        )
     }
 
     private fun setupDataManagement() = binding.apply {
@@ -245,7 +165,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
 
         val uri = selectedFile.tag as? Uri ?: return
         val dialog = DialogManager.showLoadingDialog(context = requireActivity()).apply {
-            setProgressType(ProgressType.RESTORE)
+            setProgressType(LoadingDialog.ProgressType.RESTORE)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -279,7 +199,7 @@ class SettingsFragment : Base<FragmentSettingsBinding>(
 
     private fun exportFile(fileUri: Uri, onFinished: () -> Unit = {}) {
         val dialog = DialogManager.showLoadingDialog(context = requireActivity()).apply {
-            setProgressType(ProgressType.BACKUP)
+            setProgressType(LoadingDialog.ProgressType.BACKUP)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

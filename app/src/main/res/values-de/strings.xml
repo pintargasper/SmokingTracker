@@ -4,7 +4,7 @@
     <string name="home_timer_hour">Std.</string>
     <string name="home_timer_minute">Min.</string>
     <string name="home_timer_second">Sek.</string>
-    <string name="application_name">Zigarettentracker</string>
+    <string name="app_name">Zigarettentracker</string>
     <string name="navigation_home">Heim</string>
     <string name="navigation_graph">Graphen</string>
     <string name="navigation_more">Analytik</string>
@@ -21,11 +21,11 @@
     <string name="graph_monthly">Übersicht monatlich (%1$d)</string>
     <string name="graph_yearly">Übersicht jährlich (%1$d)</string>
     <string name="graph_previous_day_daily">Vorheriger Tag (täglich)</string>
-    <string name="graph_previous_day_weakly">Vorheriger Tag (wöchentlich)</string>
+    <string name="graph_previous_day_weekly">Vorheriger Tag (wöchentlich)</string>
     <string name="graph_previous_day_monthly">Vorheriger Tag (monatlich)</string>
     <string name="graph_previous_day_yearly">Vorheriger Tag (jährlich)</string>
     <string name="graph_next_day_daily">Nächster Tag (täglich)</string>
-    <string name="graph_next_day_weakly">Nächster Tag (wöchentlich)</string>
+    <string name="graph_next_day_weekly">Nächster Tag (wöchentlich)</string>
     <string name="graph_next_day_monthly">Nächster Tag (monatlich)</string>
     <string name="graph_next_day_yearly">Nächster Tag (jährlich)</string>
     <string name="graph_view_info">Es gibt keine Daten zum Anzeigen eines Graphen</string>
@@ -55,14 +55,14 @@
     <string name="about_version">Version %1$s (%2$d)</string>
     <string name="about_version_unknown">Unbekannt</string>
     <string name="settings_about_website">Website</string>
-    <string name="settings_support_translations">Unterstützung bei Übersetzung</string>
-    <string name="settings_support_translations_description">Übersetze die App in deine Sprache mit Weblate</string>
-    <string name="settings_support_privacy_policy">Smoking Tracker - Datenschutzbestimmungen</string>
+    <string name="about_translations">Unterstützung bei Übersetzung</string>
+    <string name="about_translations_description">Übersetze die App in deine Sprache mit Weblate</string>
+    <string name="about_privacy_policy">Smoking Tracker - Datenschutzbestimmungen</string>
     <string name="insert_popup">Eintrag hinzufügen</string>
     <string name="insert_popup_lent">Eine verliehene Zigarette?</string>
     <string name="insert_popup_add">Hinzufügen</string>
-    <string name="popup_close">Schließen</string>
-    <string name="popup_confirm">Bestätigen</string>
+    <string name="button_close">Schließen</string>
+    <string name="button_confirm">Bestätigen</string>
     <string name="edit_popup_message">Datum und Zeit</string>
     <string name="edit_popup_lent">Eine verliehene Zigarette?</string>
     <string name="delete_popup_message">Diesen Eintrag wirklich löschen?</string>
@@ -84,8 +84,8 @@
     <string name="notifications_popup_frequency_weekly">Wöchentlich</string>
     <string name="backup_popup">Sichere deine Daten</string>
     <string name="backup_popup_description">Du wirst per Push-Benachrichtigung über die Datensicherung informiert</string>
-    <string name="popup_backup">Sicherung</string>
-    <string name="popup_select">Auswählen</string>
+    <string name="button_backup">Sicherung</string>
+    <string name="button_select">Auswählen</string>
     <string name="restore_popup">Stelle deine Daten wieder her</string>
     <string name="restore_popup_info">Du wirst per Push-Benachrichtigung über die Datenwiederherstellung informiert</string>
     <string name="restore_popup_file">Datei: %1$s</string>
@@ -106,7 +106,7 @@
     <string name="achievement_congrats_one_month">Den ersten Monat rauchfrei gelebt</string>
     <string name="achievement_congrats_three_months">Drei Monate ohne Zigarette</string>
     <string name="achievement_congrats_six_months">Sechs Monate erfolgreich dominiert</string>
-    <string name="achievement_congrats_nine_month">Neun Monate eisernen Willen bewiesen</string>
+    <string name="achievement_congrats_nine_months">Neun Monate eisernen Willen bewiesen</string>
     <string name="achievement_congrats_one_year">Ein Jahr komplett gemeistert</string>
     <string name="achievement_congrats_one_day_message">Super gemacht! Immer vorwärts und bleib standhaft</string>
     <string name="achievement_congrats_two_days_message">Großartig! Du baust Schwung auf und bleibst stark</string>
@@ -153,7 +153,7 @@
     <string name="calculator_start_date">Anfangsdatum</string>
     <string name="calculator_to">Bis:</string>
     <string name="calculator_end_date">Enddatum</string>
-    <string name="calculator_calculate">Berechnen</string>
+    <string name="button_calculate">Berechnen</string>
     <string name="calculator_result">Ergebnis</string>
     <string name="calculator_result_total">Gesamtkosten</string>
     <string name="calculator_result_time_spent">Zeit verbraucht</string>
@@ -202,7 +202,7 @@
         <item quantity="one">%d Zigarette</item>
         <item quantity="other">%d Zigaretten</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="one">%d Mal</item>
         <item quantity="other">%d Mal</item>
     </plurals>
@@ -214,7 +214,7 @@
     <string name="loading_bar_encourage_50">Zur Hälfte abgeschlossen…</string>
     <string name="loading_bar_encourage_70">Fast fertig…</string>
     <string name="loading_bar_encourage_100">Erfolgreich abgeschlossen</string>
-    <string name="application_tagline">Erfasse. Analysiere. Fortschritt.</string>
+    <string name="app_tagline">Erfasse. Analysiere. Fortschritt.</string>
     <string name="home_no_entries">Für diesen Tag sind keine Einträge vorhanden</string>
     <string name="home_no_entries_message">Klicke die \"Neuen Eintrag hinzufügen\" Schaltfläche um einen neuen Eintrag hinzuzufügen</string>
     <string name="more_tools">Werkzeuge</string>
@@ -222,7 +222,7 @@
     <string name="more_tools_notes_description">Sichere deine Gedanken und Persönlichen Notizen</string>
     <string name="notes_add">Notiz hinzufügen</string>
     <string name="notes_edit">Notiz bearbeiten</string>
-    <string name="notes_mode">Stimmung</string>
+    <string name="notes_mood">Stimmung</string>
     <string name="notes_title">Notiz Titel</string>
     <string name="notes_content">Notiz Inhalt</string>
     <string name="notes_emotions_very_bad">Sehr schlecht</string>
@@ -231,19 +231,19 @@
     <string name="notes_emotions_good">Gut</string>
     <string name="notes_emotions_very_good">Sehr gut</string>
     <string name="cost_price">Kosten: %1$s %2$s</string>
-    <string name="settings_general_day_end_hour">Tagesende</string>
-    <string name="settings_general_day_end_hour_description">Wähle wann der Tag endet</string>
-    <string name="settings_finance">Finanzen</string>
-    <string name="settings_finance_currency">Währung</string>
-    <string name="settings_finance_currency_description">Wähle deine Währung. Wenn die Währung nicht gelistet ist, kannst du sie selber eingeben</string>
-    <string name="settings_finance_costs">Kosten</string>
-    <string name="settings_finance_costs_description">Kosten einer Zigarette. Der Preis einer Zigarette kann für Zeitabschnitte gesetzt werdem</string>
+    <string name="tracker_day_end_hour">Tagesende</string>
+    <string name="tracker_day_end_hour_description">Wähle wann der Tag endet</string>
+    <string name="tracker_finance">Finanzen</string>
+    <string name="tracker_currency">Währung</string>
+    <string name="tracker_currency_description">Wähle deine Währung. Wenn die Währung nicht gelistet ist, kannst du sie selber eingeben</string>
+    <string name="tracker_costs">Kosten</string>
+    <string name="tracker_costs_description">Kosten einer Zigarette. Der Preis einer Zigarette kann für Zeitabschnitte gesetzt werdem</string>
     <string name="settings_about_description">Version, Links und mehr</string>
     <string name="settings_about_website_description">Besuche die Webseite für mehr Informationen</string>
     <string name="settings_about_changelog">Änderungshistorie</string>
     <string name="settings_about_changelog_description">Zeige Änderungshistorie</string>
     <string name="settings_support">Hilfe &amp; Sicherheit</string>
-    <string name="settings_support_privacy_policy_description">Zur Datenschutzerklärumg</string>
+    <string name="about_privacy_policy_description">Zur Datenschutzerklärumg</string>
     <string name="about_view_github">Zeige den Quellcode, melde Fehler und trage zum Projekt bei</string>
     <string name="about_view_f_droid">Zeige die Anwendung auf F-Droid</string>
     <string name="about_view_izzy_on_droid">Zeige die Anwendung auf IzzyOnDroid</string>
@@ -257,7 +257,7 @@
     <string name="about_contributors_chinese_traditional">Chinesische (traditionell) Übersetzung</string>
     <string name="about_contributors_hungarian">Ungarische Übersetzung</string>
     <string name="about_created_by">Entwickelt von: %1$s</string>
-    <string name="popup_save">Speichern</string>
+    <string name="button_save">Speichern</string>
     <string name="currency_popup">Wähle Währung</string>
     <string name="currency_popup_info">Wähle deine bevorzugte Währung</string>
     <string name="currency_check_box_euro">Euro (€)</string>

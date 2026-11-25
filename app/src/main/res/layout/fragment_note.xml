@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="ui.fragment.note.NoteFragment">
 
@@ -66,7 +65,7 @@
                     android:id="@+id/text_emotion_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/notes_mode"
+                    android:text="@string/notes_mood"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -178,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginVertical="8dp"
-                    android:text="@string/popup_save"
+                    android:text="@string/button_save"
                     style="?appButtonStyle"
                     app:backgroundTint="?appButtonBackground"
                     app:elevationOverlayEnabled="false"

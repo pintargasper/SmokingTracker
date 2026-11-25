@@ -1,0 +1,12 @@
+{
+  "triggers": [
+    { "type": "STRESS" },
+    { "type": "COFFEE" },
+    { "type": "ALCOHOL" },
+    { "type": "BOREDOM" },
+    { "type": "SOCIAL" },
+    { "type": "AFTER_MEAL" },
+    { "type": "HABIT" },
+    { "type": "NO_REASON" }
+  ]
+}

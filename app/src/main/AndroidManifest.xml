@@ -11,10 +11,10 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/application_name"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SmokingTracker.Legacy"
+        android:theme="@style/Theme.SmokingTracker.System"
         tools:targetApi="37">
         <activity
             android:name=".MainActivity"
@@ -23,6 +23,10 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".OnboardingActivity"
+            android:exported="false">
         </activity>
         <receiver
             android:name=".provider.WidgetReceiver"

@@ -7,7 +7,7 @@ import android.content.Intent
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsWidget
@@ -30,7 +30,7 @@ class WidgetHelperTest {
 
     @Before
     fun setup() = runBlocking {
-        container.settingsRepository.insert(SettingsEntity.default())
+        container.settingsRepository.insert(SettingsEntry.default())
         removePendingIntent(action = WidgetHelper.ACTION_MIDNIGHT_WIDGET_UPDATE)
         removePendingIntent(action = WidgetHelper.ACTION_ADD_NEW_ENTRY)
     }

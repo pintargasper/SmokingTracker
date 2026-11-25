@@ -108,6 +108,10 @@ object LocalizationHelper {
         } ?: ""
     }
 
+    fun formatPercentage(value: Double): String {
+        return "${DecimalFormat("0.##").format(value)}%"
+    }
+
     suspend fun formatMoney(settingsRepository: SettingsRepository, value: Double): String {
         return "${DecimalFormat("0.00#").format(value)} ${settingsRepository.get()?.currency ?: "€"}"
     }

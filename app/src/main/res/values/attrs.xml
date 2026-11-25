@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="appError" format="reference" />
+    <attr name="appSuccess" format="reference" />
+    <attr name="appLinks" format="reference" />
+
     <attr name="appColorBackground" format="reference" />
     <attr name="appColorSurface" format="reference" />
 
@@ -14,9 +18,12 @@
     <attr name="appTitleStartStyle" format="reference" />
     <attr name="appTitleSpecialStyle" format="reference" />
     <attr name="appSubtitleStyle" format="reference" />
+    <attr name="appBigBodyStyle" format="reference" />
     <attr name="appBodyStyle" format="reference" />
     <attr name="appCaptionStyle" format="reference" />
     <attr name="appButtonStyle" format="reference" />
+    <attr name="appButtonTextStyle" format="reference" />
+    <attr name="appButtonTextFilledStyle" format="reference" />
     <attr name="appImageButtonStyle" format="reference" />
     <attr name="appImageStyle" format="reference" />
     <attr name="appTextInputLayoutStyle" format="reference" />
@@ -28,9 +35,17 @@
     <attr name="appSliderStyle" format="reference" />
     <attr name="appDropdownStyle" format="reference" />
     <attr name="appProgressBarStyle" format="reference" />
+    <attr name="appDatePickerStyle" format="reference" />
+    <attr name="appTimePickerStyle" format="reference" />
+    <attr name="appSwitchStyle" format="reference" />
+
+    <attr name="appDatePickerOverlay" format="reference" />
 
     <attr name="appButtonText" format="reference" />
     <attr name="appButtonBackground" format="reference" />
+
+    <attr name="appTextButtonText" format="reference" />
+    <attr name="appTextButtonTextBackground" format="reference" />
 
     <attr name="appImageButtonIconTint" format="reference" />
     <attr name="appImageButtonBackground" format="reference" />
@@ -65,4 +80,20 @@
     <attr name="appDropdownBackgroundTint" format="reference" />
     <attr name="appDropdownActiveBackground" format="reference" />
     <attr name="appDropdownHoverBackground" format="reference" />
+
+    <attr name="appProgressBarIndicator" format="reference" />
+    <attr name="appProgressBarTrack" format="reference" />
+
+    <attr name="appDatePickerBackground" format="reference" />
+    <attr name="appDatePickerActivatedColor" format="reference" />
+    <attr name="appDatePickerInverseColor" format="reference" />
+
+    <attr name="appTimePickerHeaderBackground" format="reference" />
+    <attr name="appTimePickerNumbersBackground" format="reference" />
+    <attr name="appTimePickerNumbersTextColor" format="reference" />
+    <attr name="appTimePickerNumbersInnerTextColor" format="reference" />
+    <attr name="appTimePickerNumbersSelector" format="reference" />
+
+    <attr name="appSwitchThumbTint" format="reference" />
+    <attr name="appSwitchTrackTint" format="reference" />
 </resources>

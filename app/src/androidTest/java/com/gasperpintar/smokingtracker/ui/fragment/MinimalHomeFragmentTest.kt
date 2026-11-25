@@ -17,11 +17,13 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.gasperpintar.smokingtracker.MainActivity
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.Provider
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
@@ -31,7 +33,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.time.LocalDateTime
 
-@RunWith(AndroidJUnit4::class)
+@RunWith(value = AndroidJUnit4::class)
 class MinimalHomeFragmentTest {
 
     private lateinit var context: Context
@@ -49,12 +51,12 @@ class MinimalHomeFragmentTest {
             settingsRepository.get()?.copy(
                 dayEndMinutes = 0,
                 elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
-            ) ?: SettingsEntity.default().copy(dayEndMinutes = 0)
+            ) ?: SettingsEntry.default().copy(dayEndMinutes = 0)
         )
-        context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-            .edit()
-            .putBoolean("first_run", false)
-            .commit()
+
+        PreferencesHelper.with(context = context, name = Preferences.Name.SETTINGS)
+            .put(key = Preferences.Key.FIRST_RUN, value = false)
+
         val instrumentation = InstrumentationRegistry.getInstrumentation()
         val packageName = instrumentation.targetContext.packageName
         instrumentation.uiAutomation
@@ -72,7 +74,7 @@ class MinimalHomeFragmentTest {
             val entries = awaitEntries()
 
             assertEquals(1, entries.size)
-            assertEquals(0, entries.single().lent)
+            assertEquals(false, entries.single().isLent)
             assertTrue(entries.single().createdAt >= before)
             assertTrue(entries.single().createdAt <= LocalDateTime.now().plusSeconds(2))
             onView(withId(R.id.today_count)).check(matches(withText("1")))
@@ -109,17 +111,24 @@ class MinimalHomeFragmentTest {
     @Test
     fun elapsedTimeThresholdSupportsDisablingAndPersistsValidValue() {
         ActivityScenario.launch(MainActivity::class.java).use {
+            try {
+                onView(withId(R.id.close)).check(matches(isDisplayed())).perform(click())
+            } catch (_: androidx.test.espresso.NoMatchingViewException) {
+            }
             onView(withId(R.id.navigation_settings)).perform(click())
+            onView(withId(R.id.tracking_layout)).perform(scrollTo(), click())
             onView(withId(R.id.elapsed_time_warning_layout)).perform(scrollTo(), click())
-
             onView(withId(R.id.input_warning_minutes)).perform(replaceText("10081"), closeSoftKeyboard())
             onView(withId(R.id.confirm)).perform(click())
             onView(withId(R.id.input_warning_minutes)).check(matches(isDisplayed()))
+
             assertEquals(60, runBlocking { settingsRepository.get()!!.elapsedTimeWarningMinutes })
 
             onView(withId(R.id.input_warning_minutes)).perform(replaceText("0"), closeSoftKeyboard())
             onView(withId(R.id.confirm)).perform(click())
+
             assertEquals(0, awaitElapsedTimeWarning(expected = 0))
+
             onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText(
                 context.resources.getQuantityString(R.plurals.time_minutes, 0, 0)
             )))
@@ -129,13 +138,14 @@ class MinimalHomeFragmentTest {
             onView(withId(R.id.confirm)).perform(click())
 
             assertEquals(120, awaitElapsedTimeWarning(expected = 120))
+
             onView(withId(R.id.elapsed_time_warning_value)).perform(scrollTo()).check(matches(withText(
                 context.resources.getQuantityString(R.plurals.time_minutes, 120, 120)
             )))
         }
     }
 
-    private fun awaitEntries(): List<HistoryEntity> {
+    private fun awaitEntries(): List<HistoryEntry> {
         val deadline = System.currentTimeMillis() + 5_000
         while (System.currentTimeMillis() < deadline) {
             val entries = runBlocking { historyRepository.getAll() }

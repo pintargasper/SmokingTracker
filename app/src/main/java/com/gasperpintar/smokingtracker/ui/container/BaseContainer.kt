@@ -7,7 +7,6 @@ import androidx.viewbinding.ViewBinding
 import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.databinding.ContainerBaseBinding
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
-import com.gasperpintar.smokingtracker.ui.adapter.ViewHolder
 
 abstract class BaseContainer(
     protected val activity: FragmentActivity,
@@ -25,7 +24,7 @@ abstract class BaseContainer(
                 createViewHolder = { inflater, parent ->
                     val container = object : BaseContainer(activity = context, parent = parent) {}
                     val content = inflate(inflater, container.binding.containerContent, true)
-                    ViewHolder(binding = content, container = container)
+                    Adapter.ViewHolder(binding = content, container = container)
                 },
                 onBind = onBind
             )

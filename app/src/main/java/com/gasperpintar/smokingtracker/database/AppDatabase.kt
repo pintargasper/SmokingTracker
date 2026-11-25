@@ -10,32 +10,36 @@ import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.dao.NotesDao
 import com.gasperpintar.smokingtracker.database.dao.NotificationsSettingsDao
 import com.gasperpintar.smokingtracker.database.dao.SettingsDao
+import com.gasperpintar.smokingtracker.database.dao.TriggerDao
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
 import com.gasperpintar.smokingtracker.database.entity.CostEntity
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.entity.NoteEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
+import com.gasperpintar.smokingtracker.database.entity.NotificationsEntity
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
-import com.gasperpintar.smokingtracker.database.specifications.SettingsDeleteColumn
+import com.gasperpintar.smokingtracker.database.entity.TriggerEntity
+import com.gasperpintar.smokingtracker.database.specifications.ColorScheme
+import com.gasperpintar.smokingtracker.database.specifications.DeleteColumn
 
 @Database(
     entities = [
         AchievementEntity::class,
         HistoryEntity::class,
         SettingsEntity::class,
-        NotificationsSettingsEntity::class,
+        NotificationsEntity::class,
         CostEntity::class,
-        NoteEntity::class
+        NoteEntity::class,
+        TriggerEntity::class
     ],
     version = 8,
     autoMigrations = [
-        AutoMigration(from = 1, to = 2, spec = SettingsDeleteColumn::class),
+        AutoMigration(from = 1, to = 2, spec = DeleteColumn::class),
         // AutoMigration (from = 2, to = 3) MANUALLY HANDLED
         // AutoMigration (from = 3, to = 4) MANUALLY HANDLED
         // AutoMigration (from = 4, to = 5) MANUALLY HANDLED
         AutoMigration (from = 5, to = 6),
         // AutoMigration (from = 6, to = 7) MANUALLY HANDLED
-        AutoMigration(from = 7, to = 8)
+        AutoMigration(from = 7, to = 8, spec = ColorScheme::class)
     ],
     exportSchema = true
 )
@@ -47,4 +51,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun notificationsSettingsDao(): NotificationsSettingsDao
     abstract fun costsDao(): CostsDao
     abstract fun notesDao(): NotesDao
+    abstract fun triggerDao(): TriggerDao
 }

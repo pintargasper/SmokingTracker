@@ -3,7 +3,6 @@ package com.gasperpintar.smokingtracker.ui.dialog
 import android.net.Uri
 import android.text.format.DateFormat
 import android.text.method.LinkMovementMethod
-import android.view.View
 import android.widget.CheckBox
 import android.widget.TextView
 import android.widget.TimePicker
@@ -14,11 +13,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.entity.CostEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.model.CostEntry
 import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.databinding.ContainerContentCostBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentChangelogBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentCostsBinding
@@ -32,7 +30,9 @@ import com.gasperpintar.smokingtracker.databinding.DialogContentLanguageBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentNotificationsBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentRestoreBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentResultBinding
+import com.gasperpintar.smokingtracker.databinding.DialogContentTriggersBinding
 import com.gasperpintar.smokingtracker.databinding.DialogContentWidgetsBinding
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import com.gasperpintar.smokingtracker.type.Widget
 import com.gasperpintar.smokingtracker.ui.adapter.Adapter
 import com.gasperpintar.smokingtracker.ui.bar.LoadingDialog
@@ -58,18 +58,24 @@ object DialogManager {
         get() = is24HourView
         set(value) { setIs24HourView(value) }
 
-
     fun showInsertDialog(
         context: FragmentActivity,
-        onSuccess: (Boolean) -> Unit
+        defaultTrigger: TriggerJson.Type,
+        onSuccess: (Boolean, TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentInsertBinding::inflate) { content ->
-        binding.message.isGone = true
         binding.title.setText(R.string.insert_popup)
+        binding.confirm.setText(R.string.button_add)
+        binding.message.isGone = true
         binding.confirm.isVisible = true
-        binding.confirm.setText(R.string.popup_add)
+
+        content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(defaultTrigger.name).stringResource), false)
 
         binding.confirm.setOnClickListener {
-            onSuccess(content.lentCheckbox.isChecked)
+            val trigger = TriggerJson.Title.entries.firstOrNull {
+                context.getString(it.stringResource) == content.triggerDropdown.text.toString()
+            }?.let { TriggerJson.Type.valueOf(it.name) } ?: TriggerJson.Type.NO_REASON
+
+            onSuccess(content.lentCheckbox.isChecked, trigger)
             dismiss()
         }
     }
@@ -77,7 +83,7 @@ object DialogManager {
     fun showEditDialog(
         context: FragmentActivity,
         entry: HistoryEntry,
-        onSuccess: (LocalDateTime, Boolean) -> Unit
+        onSuccess: (LocalDateTime, Boolean, TriggerJson.Type) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentEditBinding::inflate) { content ->
         content.lentCheckbox.isChecked = entry.isLent
         content.timePicker.is24Hour = DateFormat.is24HourFormat(context)
@@ -92,13 +98,19 @@ object DialogManager {
         binding.title.setText(R.string.edit_popup_message)
         binding.confirm.isVisible = true
 
+        content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(entry.trigger.name).stringResource), false)
+
         binding.confirm.setOnClickListener {
             val selectedDateTime = LocalDateTime.of(
                 content.datePicker.toLocalDate(),
                 content.timePicker.toLocalTime()
             ).withSecond(entry.createdAt.second)
 
-            onSuccess(selectedDateTime, content.lentCheckbox.isChecked)
+            val trigger = TriggerJson.Title.entries.firstOrNull {
+                context.getString(it.stringResource) == content.triggerDropdown.text.toString()
+            }?.let { TriggerJson.Type.valueOf(it.name) } ?: TriggerJson.Type.NO_REASON
+
+            onSuccess(selectedDateTime, content.lentCheckbox.isChecked, trigger)
             dismiss()
         }
     }
@@ -141,9 +153,9 @@ object DialogManager {
 
     fun showNotificationsDialog(
         context: FragmentActivity,
-        settings: SettingsEntity,
-        notificationsSettings: NotificationsSettingsEntity,
-        onSuccess: (SettingsEntity, NotificationsSettingsEntity) -> Unit,
+        settings: SettingsEntry,
+        notificationsSettings: NotificationsEntry,
+        onSuccess: (SettingsEntry, NotificationsEntry) -> Unit,
     ) = BaseDialog.show(context = context, inflate = DialogContentNotificationsBinding::inflate) { content ->
         binding.title.setText(R.string.notifications_popup)
         binding.message.setText(R.string.notifications_popup_info)
@@ -154,7 +166,7 @@ object DialogManager {
         fun bindCheckbox(
             checkbox: CheckBox,
             initialValue: Boolean,
-            update: (NotificationsSettingsEntity, Boolean) -> NotificationsSettingsEntity
+            update: (NotificationsEntry, Boolean) -> NotificationsEntry
         ) {
             checkbox.isChecked = initialValue
             checkbox.setOnCheckedChangeListener { _, isChecked ->
@@ -178,15 +190,15 @@ object DialogManager {
 
     fun showEndDayDialog(
         context: FragmentActivity,
-        settings: SettingsEntity,
+        settings: SettingsEntry,
         onSuccess: (Int) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentEndDayBinding::inflate) { content ->
         content.timePicker.is24Hour = DateFormat.is24HourFormat(context)
         content.timePicker.hour = settings.dayEndMinutes / 60
         content.timePicker.minute = settings.dayEndMinutes % 60
 
-        binding.title.setText(R.string.settings_general_day_end_hour)
-        binding.message.setText(R.string.settings_general_day_end_hour_description)
+        binding.title.setText(R.string.tracker_day_end_hour)
+        binding.message.setText(R.string.tracker_day_end_hour_description)
         binding.confirm.isVisible = true
 
         binding.confirm.setOnClickListener {
@@ -200,22 +212,47 @@ object DialogManager {
         warningMinutes: Int,
         onSuccess: (Int) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentElapsedTimeWarningBinding::inflate) { content ->
-        binding.title.setText(R.string.settings_general_elapsed_time_warning)
-        binding.message.setText(R.string.settings_general_elapsed_time_warning_description)
+        binding.title.setText(R.string.tracker_elapsed_time_warning)
+        binding.message.setText(R.string.tracker_elapsed_time_warning_description)
         binding.confirm.isVisible = true
 
         content.inputWarningMinutes.setText(warningMinutes.toString())
         content.inputWarningMinutes.setSelection(content.inputWarningMinutes.text?.length ?: 0)
 
+        content.inputWarningMinutes.doAfterTextChanged { text ->
+            val minutes = text.toString().toIntOrNull()
+            val isValid = minutes != null && ElapsedTimeWarning.isValidMinutes(minutes)
+            content.warningMinutesInputLayout.error = if (isValid) null
+            else context.getString(R.string.tracker_elapsed_time_warning_error)
+        }
+
         binding.confirm.setOnClickListener {
             val minutes = content.inputWarningMinutes.text.toString().toIntOrNull()
             if (minutes == null || !ElapsedTimeWarning.isValidMinutes(minutes)) {
-                content.warningMinutesInputLayout.error = context.getString(R.string.settings_elapsed_time_warning_error)
+                content.warningMinutesInputLayout.error = context.getString(R.string.tracker_elapsed_time_warning_error)
                 return@setOnClickListener
             }
-
-            content.warningMinutesInputLayout.error = null
             onSuccess(minutes)
+            dismiss()
+        }
+    }
+
+    fun showTriggersDialog(
+        context: FragmentActivity,
+        defaultTrigger: TriggerJson.Type,
+        onSuccess: (TriggerJson.Type) -> Unit
+    ) = BaseDialog.show(context = context, inflate = DialogContentTriggersBinding::inflate) { content ->
+        binding.title.setText(R.string.tracker_trigger)
+        binding.message.setText(R.string.tracker_trigger_description)
+        binding.confirm.isVisible = true
+
+        content.triggerDropdown.setText(context.getString(TriggerJson.Title.valueOf(defaultTrigger.name).stringResource), false)
+
+        binding.confirm.setOnClickListener {
+            val trigger = TriggerJson.Title.entries.firstOrNull {
+                context.getString(it.stringResource) == content.triggerDropdown.text.toString()
+            }?.let { TriggerJson.Type.valueOf(it.name) } ?: TriggerJson.Type.NO_REASON
+            onSuccess(trigger)
             dismiss()
         }
     }
@@ -241,7 +278,7 @@ object DialogManager {
 
     fun showCurrencyDialog(
         context: FragmentActivity,
-        settings: SettingsEntity,
+        settings: SettingsEntry,
         onSuccess: (String, String) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentCurrencyBinding::inflate) { content ->
         binding.title.setText(R.string.currency_popup)
@@ -261,28 +298,25 @@ object DialogManager {
 
         currencyMap.forEach { (checkbox, value) ->
             checkbox.setOnClickListener {
-                content.editTextError.visibility = View.GONE
+                content.customCurrencyInput.error = null
                 select(currencyValue = value)
             }
         }
 
         content.checkboxCustom.setOnClickListener {
-            content.editTextError.visibility = View.GONE
             content.inputCustomCurrency.text.toString().trim().takeIf { it.isNotEmpty() }?.let(block = ::select) ?: run {
+                content.customCurrencyInput.error = context.getString(R.string.currency_text_error)
                 content.checkboxCustom.isChecked = false
-                content.editTextError.visibility = View.VISIBLE
-                content.inputCustomCurrency.requestFocus()
             }
         }
 
         content.inputCustomCurrency.doAfterTextChanged { text ->
-            if (!text.isNullOrBlank()) content.editTextError.visibility = View.GONE
+            if (!text.isNullOrBlank()) content.customCurrencyInput.error = null
         }
 
         content.inputCustomCurrency.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && content.inputCustomCurrency.text?.isNotBlank() == true) {
                 content.checkboxCustom.isChecked = true
-                content.editTextError.visibility = View.GONE
             }
         }
     }
@@ -290,7 +324,7 @@ object DialogManager {
     fun showCostsDialog(
         context: FragmentActivity,
         currency: String,
-        onSuccess: suspend (CostEntry?, CostEntity?, List<CostEntry>?) -> List<CostEntry>
+        onSuccess: suspend (CostEntry?, CostEntry?, List<CostEntry>?) -> List<CostEntry>
     ) = BaseDialog.show(context = context, inflate = DialogContentCostsBinding::inflate) { content ->
         binding.title.setText(R.string.costs_popup)
         binding.message.setText(R.string.costs_popup_info)
@@ -323,7 +357,8 @@ object DialogManager {
 
         listOf(content.inputStartDate to true, content.inputEndDate to false).forEach { (inputField, isStartDate) ->
             inputField.setOnClickListener {
-                showDatePickerDialog(context) { selectedDate ->
+                val initialDate = if (isStartDate) startDate ?: Calendar.getInstance() else endDate ?: Calendar.getInstance()
+                showDatePickerDialog(context = context, initialDate = initialDate) { selectedDate ->
                     val (start, end, formattedText) = TimeHelper.applySelectedDate(
                         startDate,
                         endDate,
@@ -345,7 +380,7 @@ object DialogManager {
             context.lifecycleScope.launch {
                 onSuccess(
                     null,
-                    CostEntity(
+                    CostEntry(
                         id = 0L,
                         startDate = start,
                         endDate = end.takeIf { it.toLocalDate() != LocalDate.now() }
@@ -373,7 +408,7 @@ object DialogManager {
         binding.title.setText(R.string.backup_popup)
         binding.message.setText(R.string.backup_popup_description)
         binding.confirm.isVisible = true
-        binding.confirm.setText(R.string.popup_backup)
+        binding.confirm.setText(R.string.button_backup)
         binding.confirm.setOnClickListener {
             onSuccess()
             dismiss()
@@ -413,20 +448,27 @@ object DialogManager {
 
     fun showDatePickerDialog(
         context: FragmentActivity,
+        initialDate: Calendar = Calendar.getInstance(),
         onSuccess: (Calendar) -> Unit
     ) = BaseDialog.show(context = context, inflate = DialogContentDatePickerBinding::inflate) { content ->
         binding.title.isGone = true
         binding.message.isGone = true
         binding.confirm.isVisible = true
 
-        val selectedDate = Calendar.getInstance()
-        content.customCalendarView.date = selectedDate.timeInMillis
-        content.customCalendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            selectedDate.set(year, month, dayOfMonth)
+        val datePicker = content.customCalendarView
+        val selectedDate = initialDate.clone() as Calendar
+
+        val year = selectedDate.get(Calendar.YEAR)
+        val month = selectedDate.get(Calendar.MONTH)
+        val day = selectedDate.get(Calendar.DAY_OF_MONTH)
+
+        datePicker.init(year, month, day) { _, selectedYear, selectedMonth, selectedDay ->
+            selectedDate.set(selectedYear, selectedMonth, selectedDay, 0, 0, 0)
+            selectedDate.set(Calendar.MILLISECOND, 0)
         }
 
         binding.confirm.setOnClickListener {
-            onSuccess(selectedDate)
+            onSuccess(selectedDate.clone() as Calendar)
             dismiss()
         }
     }
@@ -453,7 +495,7 @@ object DialogManager {
             amount: Double,
             format: DecimalFormat
         ): String {
-            return context.getString(R.string.cost_price, format.format(amount), currencyUnit)
+            return "${format.format(amount)} $currencyUnit"
         }
 
         content.totalCosts.text = formatPrice(total, decimalFormatTwo)
@@ -476,7 +518,7 @@ object DialogManager {
         binding.title.setText(R.string.note_popup_save)
         binding.confirm.isVisible = true
 
-        binding.confirm.setText(R.string.popup_save)
+        binding.confirm.setText(R.string.button_save)
         binding.confirm.setOnClickListener {
             onSuccess(true, false)
             dismiss()

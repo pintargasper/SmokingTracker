@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.MainActivity
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.provider.OnlyQuickAddWidget
 import com.gasperpintar.smokingtracker.provider.QuickAddWidget
 import com.gasperpintar.smokingtracker.provider.StatsQuickAddWidget
@@ -147,7 +147,7 @@ object WidgetHelper {
                         }
 
                         setTextViewText(R.id.widget_add_new_entry, localizedContext.getString(R.string.insert_popup))
-                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_on_primary))
+                        setTextColor(R.id.widget_add_new_entry, ContextCompat.getColor(context, R.color.legacy_primary))
                         setBoolean(R.id.widget_add_new_entry, "setEnabled", true)
 
                         setOnClickPendingIntent(R.id.widget_add_new_entry, getBroadcastPendingIntent(context, ACTION_ADD_NEW_ENTRY))
@@ -167,7 +167,7 @@ object WidgetHelper {
         CoroutineScope(context = Dispatchers.IO).launch {
             try {
                 val container = (context.applicationContext as Application).container
-                container.historyRepository.insert(entry = HistoryEntity.default(isLent = false))
+                container.historyRepository.insert(entry = HistoryEntry.default(isLent = false, trigger =  container.settingsRepository.get()!!.defaultTrigger))
                 container.achievementRepository.resetAll(state = true)
                 updateAllWidgets(context)
 

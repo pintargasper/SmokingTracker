@@ -1,7 +1,7 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.fake.FakeSettingsDao
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import kotlinx.coroutines.runBlocking
@@ -21,7 +21,7 @@ class CalculatorViewModelTest {
     @Before
     fun setup() = runBlocking {
         val settingsDao = FakeSettingsDao()
-        settingsDao.insert(entity = SettingsEntity.default(currency = "$"))
+        settingsDao.insert(entity = SettingsEntry.default(currency = "$").toEntity())
         viewModel = CalculatorViewModel(settingsRepository = SettingsRepository(settingsDao = settingsDao))
     }
 

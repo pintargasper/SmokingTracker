@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">吸烟记录</string>
+    <string name="app_name">吸烟记录</string>
     <string name="navigation_home">首页</string>
     <string name="navigation_graph">图表</string>
     <string name="navigation_more">进展</string>
@@ -21,11 +21,11 @@
     <string name="graph_monthly">每月概览（%1$d）</string>
     <string name="graph_yearly">每年概览（%1$d）</string>
     <string name="graph_previous_day_daily">上一天（日）</string>
-    <string name="graph_previous_day_weakly">上一天（周）</string>
+    <string name="graph_previous_day_weekly">上一天（周）</string>
     <string name="graph_previous_day_monthly">上一天（月）</string>
     <string name="graph_previous_day_yearly">上一天（年）</string>
     <string name="graph_next_day_daily">下一天（日）</string>
-    <string name="graph_next_day_weakly">下一天（周）</string>
+    <string name="graph_next_day_weekly">下一天（周）</string>
     <string name="graph_next_day_monthly">下一天（月）</string>
     <string name="graph_next_day_yearly">下一天（年）</string>
     <string name="graph_view_info">暂无数据可显示图表</string>
@@ -55,14 +55,14 @@
     <string name="about_version">版本 %1$s (%2$d)</string>
     <string name="about_version_unknown">未知</string>
     <string name="settings_about_website">网站</string>
-    <string name="settings_support_translations">参与翻译</string>
-    <string name="settings_support_translations_description">使用 Weblate 为本应用贡献翻译</string>
-    <string name="settings_support_privacy_policy">隐私政策</string>
+    <string name="about_translations">参与翻译</string>
+    <string name="about_translations_description">使用 Weblate 为本应用贡献翻译</string>
+    <string name="about_privacy_policy">隐私政策</string>
     <string name="insert_popup">添加记录</string>
     <string name="insert_popup_lent">是借出的烟？</string>
     <string name="insert_popup_add">添加</string>
-    <string name="popup_close">关闭</string>
-    <string name="popup_confirm">确认</string>
+    <string name="button_close">关闭</string>
+    <string name="button_confirm">确认</string>
     <string name="edit_popup_message">日期与时间</string>
     <string name="edit_popup_lent">是借出的烟？</string>
     <string name="delete_popup_message">确定要删除这条记录吗？</string>
@@ -84,8 +84,8 @@
     <string name="notifications_popup_frequency_weekly">每周</string>
     <string name="backup_popup">备份数据</string>
     <string name="backup_popup_description">备份完成后将通过通知告知你</string>
-    <string name="popup_backup">备份</string>
-    <string name="popup_select">选择</string>
+    <string name="button_backup">备份</string>
+    <string name="button_select">选择</string>
     <string name="restore_popup">恢复数据</string>
     <string name="restore_popup_info">恢复完成后将通过通知告知你</string>
     <string name="restore_popup_file">文件: %1$s</string>
@@ -106,7 +106,7 @@
     <string name="achievement_congrats_one_month">一月探索者</string>
     <string name="achievement_congrats_three_months">三月开拓者</string>
     <string name="achievement_congrats_six_months">半年征服者</string>
-    <string name="achievement_congrats_nine_month">九月守护者</string>
+    <string name="achievement_congrats_nine_months">九月守护者</string>
     <string name="achievement_congrats_one_year">一年先锋</string>
     <string name="achievement_congrats_one_day_message">做得好！继续坚持</string>
     <string name="achievement_congrats_two_days_message">很棒！你在积累势头、保持坚定</string>
@@ -153,7 +153,7 @@
     <string name="calculator_start_date">开始日期</string>
     <string name="calculator_to">至：</string>
     <string name="calculator_end_date">结束日期</string>
-    <string name="calculator_calculate">计算</string>
+    <string name="button_calculate">计算</string>
     <string name="calculator_result">计算结果</string>
     <string name="calculator_result_total">总花费</string>
     <string name="calculator_result_time_spent">耗时</string>
@@ -195,7 +195,7 @@
     <plurals name="cigarettes_count">
         <item quantity="other">%d 支</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="other">%d 次</item>
     </plurals>
     <string name="loading_bar_backup">正在倒车…</string>
@@ -210,7 +210,7 @@
     <string name="more_tools_notes_description">保存你的想法和个人备注</string>
     <string name="notes_add">添加备注</string>
     <string name="notes_edit">编辑备注</string>
-    <string name="notes_mode">心情</string>
+    <string name="notes_mood">心情</string>
     <string name="notes_title">备注标题</string>
     <string name="notes_content">备注内容</string>
     <string name="notes_emotions_very_bad">非常差</string>
@@ -220,14 +220,14 @@
     <string name="notes_emotions_very_good">非常好</string>
     <string name="cost_delete">删除记录</string>
     <string name="cost_price">费用：%1$s %2$s</string>
-    <string name="settings_finance_currency">货币</string>
-    <string name="settings_finance_currency_description">选择您的货币。如果列表中没有该货币，您可以自行输入它</string>
-    <string name="settings_finance_costs">花费</string>
-    <string name="settings_finance_costs_description">一支香烟的成本。香烟的价格可以按不同阶段来确定</string>
+    <string name="tracker_currency">货币</string>
+    <string name="tracker_currency_description">选择您的货币。如果列表中没有该货币，您可以自行输入它</string>
+    <string name="tracker_costs">花费</string>
+    <string name="tracker_costs_description">一支香烟的成本。香烟的价格可以按不同阶段来确定</string>
     <string name="settings_about_changelog">更新日志</string>
     <string name="settings_about_changelog_description">查看更新日志</string>
     <string name="about_contributors">贡献者</string>
-    <string name="popup_save">保存</string>
+    <string name="button_save">保存</string>
     <string name="currency_popup">选择您的货币</string>
     <string name="currency_popup_info">选择您偏好的货币</string>
     <string name="currency_check_box_euro">欧元 (€)</string>
@@ -252,13 +252,13 @@
     <string name="statistics_total_spent_today">今日总花费</string>
     <string name="statistics_total_spent_month">本月总花费</string>
     <string name="statistics_most_expensive">最昂贵的一天</string>
-    <string name="application_tagline">追踪。分析。进步。</string>
+    <string name="app_tagline">追踪。分析。进步。</string>
     <string name="more_tools">工具</string>
-    <string name="settings_finance">金融</string>
+    <string name="tracker_finance">金融</string>
     <string name="settings_about_description">版本、链接及更多内容</string>
     <string name="settings_about_website_description">访问网站以获取更多信息</string>
     <string name="settings_support">支持与安全</string>
-    <string name="settings_support_privacy_policy_description">查看隐私政策</string>
+    <string name="about_privacy_policy_description">查看隐私政策</string>
     <string name="about_view_github">查看源代码、反馈问题或参与项目贡献</string>
     <string name="about_view_f_droid">在 F-Droid 上查看应用</string>
     <string name="about_view_izzy_on_droid">在 IzzyOnDroid 上查看应用</string>

@@ -152,8 +152,27 @@ object TimeHelper {
         ).joinToString(separator = " ")
     }
 
+    fun fromLocalDate(localDate: LocalDate): Calendar {
+        return Calendar.getInstance().apply {
+            set(localDate.year, localDate.monthValue - 1, localDate.dayOfMonth, 0, 0, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+    }
+
+    fun toLocalDate(calendar: Calendar): LocalDate{
+        return calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+    }
+
     fun toLocalDateTime(calendar: Calendar): LocalDateTime {
         return calendar.time.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime()
+    }
+
+    fun DatePicker.toLocalDate(): LocalDate {
+        return LocalDate.of(year, month + 1, dayOfMonth)
+    }
+
+    fun TimePicker.toLocalTime(): LocalTime {
+        return LocalTime.of(hour, minute)
     }
 
     fun applySelectedDate(
@@ -177,14 +196,6 @@ object TimeHelper {
             .toLocalDate()
             .let { LocalizationHelper.formatDate(it) }
         return Triple(start, end, date)
-    }
-
-    fun DatePicker.toLocalDate(): LocalDate {
-        return LocalDate.of(year, month + 1, dayOfMonth)
-    }
-
-    fun TimePicker.toLocalTime(): LocalTime {
-        return LocalTime.of(hour, minute)
     }
 
     private fun getDayEndTime(dayEndMinutes: Int): LocalTime {

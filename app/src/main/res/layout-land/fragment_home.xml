@@ -69,7 +69,7 @@
                     android:gravity="center_horizontal"
                     android:padding="12dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <com.gasperpintar.smokingtracker.ui.view.MarqueeTextView
                         android:id="@+id/daily_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
                     android:gravity="center_horizontal"
                     android:padding="12dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <com.gasperpintar.smokingtracker.ui.view.MarqueeTextView
                         android:id="@+id/weekly_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
                     android:gravity="center_horizontal"
                     android:padding="12dp">
 
-                    <com.gasperpintar.smokingtracker.ui.MarqueeTextView
+                    <com.gasperpintar.smokingtracker.ui.view.MarqueeTextView
                         android:id="@+id/monthly_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -208,34 +208,50 @@
                     app:icon="@drawable/arrow_circle_left_48px"
                     style="?appImageButtonStyle" />
 
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_date_picker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minWidth="170dp"
+                    android:layout_marginVertical="4dp"
                     android:layout_marginHorizontal="8dp"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:minWidth="170dp"
+                    app:cardElevation="0dp"
+                    style="?appCardStyle">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/current_day"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Day"
+                        android:orientation="vertical"
                         android:gravity="center"
-                        style="?appSubtitleStyle"
-                        tools:ignore="HardcodedText" />
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="6dp">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/current_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="%1$02d.%2$02d.%3$d"
-                        android:gravity="center"
-                        android:layout_marginTop="-5dp"
-                        style="?appTitleStyle"
-                        tools:ignore="HardcodedText" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/current_day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Day"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:importantForAccessibility="no"
+                            style="?appSubtitleStyle"
+                            tools:ignore="HardcodedText" />
 
-                </LinearLayout>
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/current_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="%1$02d.%2$02d.%3$d"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:layout_marginTop="-5dp"
+                            android:importantForAccessibility="no"
+                            style="?appTitleStyle"
+                            tools:ignore="HardcodedText" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/next_day"
@@ -296,8 +312,6 @@
             android:id="@+id/button_add_entry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="8dp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/home_next_day"
             android:text="@string/home_add_entry"

@@ -1,33 +1,33 @@
 package com.gasperpintar.smokingtracker.database.repository
 
 import com.gasperpintar.smokingtracker.database.dao.CostsDao
-import com.gasperpintar.smokingtracker.database.entity.CostEntity
+import com.gasperpintar.smokingtracker.database.model.CostEntry
 
 class CostsRepository(
     private val costDao: CostsDao
 ) {
     suspend fun insert(
-        entry: CostEntity
+        entry: CostEntry
     ) {
-        costDao.insert(entity = entry)
+        costDao.insert(entity = entry.toEntity())
     }
 
     suspend fun insertAll(
-        entries: List<CostEntity>
+        entries: List<CostEntry>
     ) {
-        costDao.insertAll(entities = entries)
+        costDao.insertAll(entities = entries.map(transform = CostEntry::toEntity))
     }
 
     suspend fun update(
-        entry: CostEntity
+        entry: CostEntry
     ) {
-        costDao.update(entity = entry)
+        costDao.update(entity = entry.toEntity())
     }
 
     suspend fun delete(
-        entry: CostEntity
+        entry: CostEntry
     ) {
-        costDao.delete(entity = entry)
+        costDao.delete(entity = entry.toEntity())
     }
 
     suspend fun deleteAll() {
@@ -35,11 +35,11 @@ class CostsRepository(
         costDao.resetAutoIncrement()
     }
 
-    suspend fun getAll(): List<CostEntity> {
-        return costDao.getAll()
+    suspend fun getAll(): List<CostEntry> {
+        return costDao.getAll().map(transform = CostEntry::fromEntity)
     }
 
-    suspend fun getLast(): CostEntity? {
-        return costDao.getLast()
+    suspend fun getLast(): CostEntry? {
+        return costDao.getLast()?.let(block = CostEntry::fromEntity)
     }
 }

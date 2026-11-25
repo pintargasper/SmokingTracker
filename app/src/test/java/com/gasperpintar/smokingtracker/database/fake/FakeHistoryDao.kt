@@ -2,7 +2,7 @@ package com.gasperpintar.smokingtracker.database.fake
 
 import com.gasperpintar.smokingtracker.database.dao.HistoryDao
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.model.CigarettesPerDay
+import com.gasperpintar.smokingtracker.model.CigarettesPerDay
 import java.time.LocalDateTime
 
 class FakeHistoryDao : FakeDao<HistoryEntity>(

@@ -1,12 +1,13 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
 import com.gasperpintar.smokingtracker.database.fake.FakeHistoryDao
 import com.gasperpintar.smokingtracker.database.fake.FakeSettingsDao
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.GraphState
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -25,7 +26,7 @@ class GraphViewModelTest {
     fun setup() = runBlocking {
         historyDao = FakeHistoryDao()
         settingsDao = FakeSettingsDao()
-        settingsDao.insert(entity = SettingsEntity.default())
+        settingsDao.insert(entity = SettingsEntry.default().toEntity())
 
         viewModel = GraphViewModel(
             historyRepository = HistoryRepository(historyDao = historyDao),
@@ -109,6 +110,6 @@ class GraphViewModelTest {
     }
 
     private suspend fun insertHistory(vararg dates: LocalDateTime) {
-        dates.forEach { historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = it)) }
+        dates.forEach { historyDao.insert(entity = HistoryEntity(id = 0, lent = 0, createdAt = it, trigger = TriggerJson.Type.NO_REASON)) }
     }
 }

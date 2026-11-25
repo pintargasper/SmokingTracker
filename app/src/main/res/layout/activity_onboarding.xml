@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/onboarding"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="5dp"
+        android:text="@string/button_skip"
+        style="?appButtonTextFilledStyle"
+        tools:ignore="VisualLintSystemUi" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/onboarding_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/onboarding_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        style="?appTabStyle" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continues"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="130dp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/button_continue"
+        style="?appButtonStyle" />
+
+</LinearLayout>

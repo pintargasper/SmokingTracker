@@ -7,12 +7,15 @@
     android:layout_height="wrap_content"
     style="?appCardStyle">
 
-    <LinearLayout
+    <com.gasperpintar.smokingtracker.ui.view.FocusAwareLayout
         android:id="@+id/dialog_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingVertical="8dp"
+        android:paddingHorizontal="16dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title"
@@ -28,7 +31,6 @@
             android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
             android:gravity="center"
             android:maxLines="2"
             android:ellipsize="end"
@@ -43,29 +45,28 @@
             android:id="@+id/dialog_buttons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="8dp"
-            android:orientation="vertical">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/popup_confirm"
-                android:visibility="gone"
-                style="?appButtonStyle"
-                tools:ignore="VisualLintButtonSize" />
+            android:gravity="end|center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="8dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/close"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/popup_close"
-                style="?appButtonStyle"
-                tools:ignore="VisualLintButtonSize" />
+                android:text="@string/button_close"
+                style="?appButtonTextStyle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/confirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/button_confirm"
+                android:visibility="gone"
+                style="?appButtonTextFilledStyle" />
 
         </LinearLayout>
 
-    </LinearLayout>
+    </com.gasperpintar.smokingtracker.ui.view.FocusAwareLayout>
 
 </com.google.android.material.card.MaterialCardView>

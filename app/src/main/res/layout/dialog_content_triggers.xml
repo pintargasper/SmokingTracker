@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/trigger_input_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:hintEnabled="false"
+    app:endIconMode="dropdown_menu"
+    style="?appTextInputLayoutStyle">
+
+    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+        android:id="@+id/trigger_dropdown"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:inputType="none"
+        android:focusable="false"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:dropDownHeight="200dp"
+        app:simpleItems="@array/trigger_options"
+        style="?appDropdownStyle"
+        tools:ignore="VisualLintTextFieldSize,VisualLintSystemUi" />
+
+</com.google.android.material.textfield.TextInputLayout>

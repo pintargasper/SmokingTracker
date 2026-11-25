@@ -1,36 +1,36 @@
 package com.gasperpintar.smokingtracker.database.repository
 
 import com.gasperpintar.smokingtracker.database.dao.SettingsDao
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 
 class SettingsRepository(
     private val settingsDao: SettingsDao
 ) {
     suspend fun insert(
-        settings: SettingsEntity
+        settings: SettingsEntry
     ) {
-        settingsDao.insert(entity = settings)
+        settingsDao.insert(entity = settings.toEntity())
     }
 
     suspend fun update(
-        settings: SettingsEntity
+        settings: SettingsEntry
     ) {
-        settingsDao.update(entity = settings)
+        settingsDao.update(entity = settings.toEntity())
     }
 
     suspend fun upsert(
-        settings: SettingsEntity
+        settings: SettingsEntry
     ) {
-        settingsDao.upsert(entity = settings)
+        settingsDao.upsert(entity = settings.toEntity())
     }
 
     suspend fun delete(
-        settings: SettingsEntity
+        settings: SettingsEntry
     ) {
-        settingsDao.delete(entity = settings)
+        settingsDao.delete(entity = settings.toEntity())
     }
 
-    suspend fun get(): SettingsEntity? {
-        return settingsDao.get()
+    suspend fun get(): SettingsEntry? {
+        return settingsDao.get()?.let(block = SettingsEntry.Companion::fromEntity)
     }
 }
