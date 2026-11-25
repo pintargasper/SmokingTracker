@@ -9,6 +9,7 @@ import com.gasperpintar.smokingtracker.databinding.FragmentCalculatorBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.utils.TimeHelper
+import com.gasperpintar.smokingtracker.utils.ViewHelper
 import kotlinx.coroutines.launch
 
 class CalculatorFragment : Base<FragmentCalculatorBinding>(
@@ -26,14 +27,18 @@ class CalculatorFragment : Base<FragmentCalculatorBinding>(
     @Override
     override fun initialize() = binding.apply {
         inputStartDate.setOnClickListener {
-            DialogManager.showDatePickerDialog(context = requireActivity()) { date ->
-                inputStartDate.setText(viewModel.setStartDate(date))
+            viewLifecycleOwner.lifecycleScope.launch {
+                DialogManager.showDatePickerDialog(context = requireActivity(), initialDate = viewModel.getStartDate()) { date ->
+                    inputStartDate.setText(viewModel.setStartDate(date))
+                }
             }
         }
 
         inputEndDate.setOnClickListener {
-            DialogManager.showDatePickerDialog(context = requireActivity()) { date ->
-                inputEndDate.setText(viewModel.setEndDate(date))
+            viewLifecycleOwner.lifecycleScope.launch {
+                DialogManager.showDatePickerDialog(context = requireActivity(), initialDate = viewModel.getEndDate()) { date ->
+                    inputEndDate.setText(viewModel.setEndDate(date))
+                }
             }
         }
 
@@ -42,11 +47,11 @@ class CalculatorFragment : Base<FragmentCalculatorBinding>(
         }
 
         buttonCalculate.setOnClickListener {
+            ViewHelper.hideKeyboardAndClearFocus(view = root)
             viewLifecycleOwner.lifecycleScope.launch {
                 calculate()
             }
         }
-
         showContent()
     }
 

@@ -2,11 +2,11 @@ package com.gasperpintar.smokingtracker.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
+import com.gasperpintar.smokingtracker.database.entity.NotificationsEntity
 
 @Dao
-interface NotificationsSettingsDao: Base<NotificationsSettingsEntity> {
+interface NotificationsSettingsDao: Base<NotificationsEntity> {
 
     @Query(value = "SELECT * FROM notifications_settings LIMIT 1")
-    suspend fun get(): NotificationsSettingsEntity?
+    suspend fun get(): NotificationsEntity?
 }

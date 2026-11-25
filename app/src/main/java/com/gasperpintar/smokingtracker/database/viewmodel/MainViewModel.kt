@@ -1,18 +1,21 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import android.content.Context
-import androidx.core.content.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gasperpintar.smokingtracker.Application
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
-import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
+import com.gasperpintar.smokingtracker.database.model.SettingsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.CostsRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
+import com.gasperpintar.smokingtracker.database.repository.TriggerRepository
 import com.gasperpintar.smokingtracker.database.viewmodel.state.MainState
+import com.gasperpintar.smokingtracker.type.Appearance
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.utils.JsonHelper
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalTime
@@ -21,7 +24,8 @@ class MainViewModel(
     private val achievementRepository: AchievementRepository,
     private val costsRepository: CostsRepository,
     private val settingsRepository: SettingsRepository,
-    private val notificationsSettingsRepository: NotificationsSettingsRepository
+    private val notificationsRepository: NotificationsRepository,
+    private val triggerRepository: TriggerRepository
 ): ViewModel() {
 
     init {
@@ -33,27 +37,33 @@ class MainViewModel(
     suspend fun getState(
         context: Context
     ): MainState {
-        notificationsSettingsRepository.get() ?: NotificationsSettingsEntity.default().also {
-            notificationsSettingsRepository.insert(settings = it)
+        notificationsRepository.get() ?: NotificationsEntry.default().also {
+            notificationsRepository.insert(settings = it)
         }
 
-        settingsRepository.get() ?: SettingsEntity.default(language = Application().applyLanguage(context = context)).also {
+        settingsRepository.get() ?: SettingsEntry.default(language = Application().applyLanguage(context = context)).also {
             settingsRepository.insert(settings = it)
         }
-        return MainState(isNewVersion = handleAppVersioning(context = context))
+
+        return MainState(
+            isNewVersion = handleAppVersioning(context = context),
+            startPage = settingsRepository.get()?.startPage ?: Appearance.StartPage.HOME
+        )
     }
 
     private suspend fun handleAppVersioning(
         context: Context
     ): Boolean {
-        val sharedPreferences = context.getSharedPreferences("settings", Context.MODE_PRIVATE)
-        val versionName = context.packageManager.getPackageInfo(context.packageName, 0).versionName
-        val lastVersionName = sharedPreferences.getString("last_version_name", null)
+        val preferences = PreferencesHelper.with(context = context, name = Preferences.Name.SETTINGS)
+        val versionName = requireNotNull(context.packageManager.getPackageInfo(context.packageName, 0).versionName)
+        val lastVersionName = preferences.get<String?>(key = Preferences.Key.LAST_VERSION_NAME, defaultValue = null)
 
         val isNewVersion = versionName != lastVersionName
         if (isNewVersion) {
-            JsonHelper(achievementRepository = achievementRepository).initializeAchievements(context = context)
-            sharedPreferences.edit { putString("last_version_name", versionName) }
+            val jsonHelper = JsonHelper(achievementRepository = achievementRepository, triggerRepository = triggerRepository)
+            jsonHelper.initializeAchievements(context = context)
+            jsonHelper.initializeTriggers(context = context)
+            preferences.put(key = Preferences.Key.LAST_VERSION_NAME, value = versionName)
         }
         return isNewVersion
     }

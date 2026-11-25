@@ -2,8 +2,11 @@ package com.gasperpintar.smokingtracker.database.model
 
 import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.SettingsEntity
+import com.gasperpintar.smokingtracker.model.TriggerJson
+import com.gasperpintar.smokingtracker.type.Appearance
+import com.gasperpintar.smokingtracker.utils.ElapsedTimeWarning
 
-data class SettingsEntry (
+data class SettingsEntry(
     @get:Override
     override val id: Long,
     val theme: Int,
@@ -11,12 +14,35 @@ data class SettingsEntry (
     val frequency: Int,
     val currency: String,
     val customCurrency: String,
-    val dayEndMinutes: Int
-): IIdentifiable {
+    val dayEndMinutes: Int,
+    val elapsedTimeWarningMinutes: Int,
+    val colorScheme: Appearance.ColorScheme,
+    val startPage: Appearance.StartPage,
+    val defaultTrigger: TriggerJson.Type,
+    val showIntervalLabel: Boolean
+) : IIdentifiable {
     companion object {
-        fun fromEntity(
-            entity: SettingsEntity
+        fun default(
+            language: String = "system",
+            currency: String = "€"
         ): SettingsEntry {
+            return SettingsEntry(
+                id = 0L,
+                theme = 0,
+                language = language,
+                frequency = 0,
+                currency = currency,
+                customCurrency = "",
+                dayEndMinutes = 0,
+                elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES,
+                colorScheme = Appearance.ColorScheme.SYSTEM,
+                startPage = Appearance.StartPage.HOME,
+                defaultTrigger = TriggerJson.Type.NO_REASON,
+                showIntervalLabel = true
+            )
+        }
+
+        fun fromEntity(entity: SettingsEntity): SettingsEntry {
             return SettingsEntry(
                 id = entity.id,
                 theme = entity.theme,
@@ -24,8 +50,30 @@ data class SettingsEntry (
                 frequency = entity.frequency,
                 currency = entity.currency,
                 customCurrency = entity.customCurrency,
-                dayEndMinutes = entity.dayEndMinutes
+                dayEndMinutes = entity.dayEndMinutes,
+                elapsedTimeWarningMinutes = entity.elapsedTimeWarningMinutes,
+                colorScheme = entity.colorScheme,
+                startPage = entity.startPage,
+                defaultTrigger = entity.defaultTrigger,
+                showIntervalLabel = entity.showIntervalLabel
             )
         }
+    }
+
+    fun toEntity(): SettingsEntity {
+        return SettingsEntity(
+            id = id,
+            theme = theme,
+            language = language,
+            frequency = frequency,
+            currency = currency,
+            customCurrency = customCurrency,
+            dayEndMinutes = dayEndMinutes,
+            elapsedTimeWarningMinutes = elapsedTimeWarningMinutes,
+            colorScheme = colorScheme,
+            startPage = startPage,
+            defaultTrigger = defaultTrigger,
+            showIntervalLabel = showIntervalLabel
+        )
     }
 }

@@ -1,28 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/lent_label"
-        android:layout_width="0dp"
+        android:id="@+id/trigger_label"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:text="@string/insert_popup_lent"
+        android:labelFor="@+id/trigger_dropdown"
+        android:text="@string/statistics_triggers_description"
         style="?appBodyStyle"
         tools:ignore="VisualLintSystemUi" />
 
-   <com.google.android.material.checkbox.MaterialCheckBox
-        android:id="@+id/lent_checkbox"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/trigger_input_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        style="?appCheckBoxStyle"
-        tools:ignore="VisualLintSystemUi" />
+        app:hintEnabled="false"
+        app:endIconMode="dropdown_menu"
+        style="?appTextInputLayoutStyle">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/trigger_dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:inputType="none"
+            android:focusable="false"
+            android:clickable="true"
+            android:cursorVisible="false"
+            android:dropDownHeight="200dp"
+            app:simpleItems="@array/trigger_options"
+            style="?appDropdownStyle"
+            tools:ignore="VisualLintTextFieldSize" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/lent_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/insert_popup_lent"
+            style="?appBodyStyle"
+            tools:ignore="VisualLintSystemUi" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/lent_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            style="?appCheckBoxStyle"
+            tools:ignore="VisualLintSystemUi" />
+
+    </LinearLayout>
 
 </LinearLayout>

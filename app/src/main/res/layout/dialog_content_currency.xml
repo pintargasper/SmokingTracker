@@ -41,17 +41,6 @@
             style="?appCheckBoxStyle"
             tools:ignore="HardcodedText,VisualLintButtonSize" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/edit_text_error"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:text="@string/currency_text_error"
-            android:scrollHorizontally="false"
-            android:visibility="gone"
-            style="?appBodyStyle" />
-
         <LinearLayout
             android:id="@+id/custom_currency_input_container"
             android:layout_width="wrap_content"
@@ -67,6 +56,7 @@
                 tools:ignore="HardcodedText,VisualLintButtonSize" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/custom_currency_input"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/currency_check_box_edit_description"

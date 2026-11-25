@@ -1,10 +1,9 @@
 package com.gasperpintar.smokingtracker
 
-import android.content.SharedPreferences
+import android.content.Intent
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
-import androidx.core.content.edit
 import androidx.core.view.children
 import androidx.core.view.get
 import androidx.core.view.size
@@ -18,6 +17,8 @@ import androidx.work.WorkManager
 import com.gasperpintar.smokingtracker.database.viewmodel.MainViewModel
 import com.gasperpintar.smokingtracker.databinding.ActivityMainBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
+import com.gasperpintar.smokingtracker.type.Appearance
+import com.gasperpintar.smokingtracker.type.Preferences
 import com.gasperpintar.smokingtracker.ui.adapter.Pager
 import com.gasperpintar.smokingtracker.ui.dialog.DialogManager
 import com.gasperpintar.smokingtracker.ui.fragment.GraphFragment
@@ -26,6 +27,7 @@ import com.gasperpintar.smokingtracker.ui.fragment.MinimalHomeFragment
 import com.gasperpintar.smokingtracker.ui.fragment.MoreFragment
 import com.gasperpintar.smokingtracker.ui.fragment.SettingsFragment
 import com.gasperpintar.smokingtracker.utils.Permissions
+import com.gasperpintar.smokingtracker.utils.PreferencesHelper
 import com.gasperpintar.smokingtracker.utils.notifications.Notifications
 import com.gasperpintar.smokingtracker.utils.notifications.Worker
 import kotlinx.coroutines.runBlocking
@@ -35,9 +37,8 @@ class MainActivity : Base<ActivityMainBinding>(
     bindingInflater = ActivityMainBinding::inflate
 ) {
 
-    private val appContainer by lazy { (application as Application).container }
     private val viewModel: MainViewModel by viewModels {
-        ModelFactory(container = appContainer)
+        ModelFactory(container = (application as Application).container)
     }
 
     var permissionsHelper: Permissions = Permissions(activity = this)
@@ -46,12 +47,23 @@ class MainActivity : Base<ActivityMainBinding>(
     override fun initialize() {
         val state = runBlocking { viewModel.getState(context = this@MainActivity) }
 
-        setupPager()
+        val fromOnboarding = intent.getBooleanExtra("onboarding_completed", false)
+
+        PreferencesHelper.with(context = this, name = Preferences.Name.SETTINGS).let { preferences ->
+            if (preferences.get(key = Preferences.Key.FIRST_RUN, defaultValue = true)) {
+                preferences.put(key = Preferences.Key.FIRST_RUN, false)
+                startActivity(Intent(this, OnboardingActivity::class.java))
+                finish()
+                return
+            }
+        }
+
+        setupPager(startPage = state.startPage)
         setupNavigation()
         setupSubNavigation()
 
-        val isFirstRun = handleNotifications(sharedPreferences = getSharedPreferences("settings", MODE_PRIVATE))
-        if (!isFirstRun && state.isNewVersion) DialogManager.showChangelogDialog(context = this)
+        if (fromOnboarding) handleNotifications()
+        if (state.isNewVersion) DialogManager.showChangelogDialog(context = this)
     }
 
     @Override
@@ -82,21 +94,24 @@ class MainActivity : Base<ActivityMainBinding>(
         }
     }
 
-    private fun setupPager() = binding.apply {
+    private fun setupPager(startPage: Appearance.StartPage) = binding.apply {
         mainViewPager.adapter = Pager(
             this@MainActivity,
-            listOf(::MinimalHomeFragment, ::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)
+            creators = listOf(::MinimalHomeFragment, ::HomeFragment, ::GraphFragment, ::MoreFragment, ::SettingsFragment)
         )
+
+        mainViewPager.setCurrentItem(startPage.ordinal, false)
+        navView.menu[startPage.ordinal].isChecked = true
 
         mainViewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             @Override
             override fun onPageSelected(position: Int) {
-                binding.navView.menu[position].isChecked = true
+                navView.menu[position].isChecked = true
             }
         })
 
         navView.setOnItemSelectedListener {
-            binding.mainViewPager.setCurrentItem(binding.navView.menu.children.indexOf(it), false)
+            mainViewPager.setCurrentItem(navView.menu.children.indexOf(element = it), false)
             true
         }
     }
@@ -133,25 +148,18 @@ class MainActivity : Base<ActivityMainBinding>(
         binding.subFragmentContainer.visibility = if (isSubPageVisible) View.VISIBLE else View.GONE
     }
 
-    private fun handleNotifications(sharedPreferences: SharedPreferences): Boolean {
-        val isFirstRun = sharedPreferences.getBoolean("first_run", true)
-        when {
-            isFirstRun -> {
-                permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
-                    if (isGranted) {
-                        Notifications.createNotificationChannel(context = this)
-                        scheduleNotificationWorker()
-                    }
+    private fun handleNotifications() {
+        if (permissionsHelper.isNotificationPermissionGranted) {
+            Notifications.createNotificationChannel(context = this)
+            scheduleNotificationWorker()
+        } else {
+            permissionsHelper.checkAndRequestNotificationPermission { isGranted ->
+                if (isGranted) {
+                    Notifications.createNotificationChannel(context = this)
+                    scheduleNotificationWorker()
                 }
-                sharedPreferences.edit { putBoolean("first_run", false) }
-            }
-
-            permissionsHelper.isNotificationPermissionGranted -> {
-                Notifications.createNotificationChannel(context = this)
-                scheduleNotificationWorker()
             }
         }
-        return isFirstRun
     }
 
     private fun scheduleNotificationWorker() {

@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="application_name">Smoking Tracker</string>
-    <string name="application_tagline">Track. Analyze. Progress.</string>
+    <string name="app_name">Smoking Tracker</string>
+    <string name="app_tagline">Track. Analyze. Progress.</string>
 
     <string name="navigation_home">Home</string>
     <string name="navigation_advanced">Advanced</string>
     <string name="navigation_graph">Graph</string>
     <string name="navigation_more">More</string>
     <string name="navigation_settings">Settings</string>
+
+    <string name="onboarding_welcome_title">Get to know the app</string>
+    <string name="onboarding_welcome_description">Everything you need to monitor your smoking habits, track your progress and gain insights into your daily routine, all in one place</string>
+    <string name="onboarding_analytics_title">Analytics and statistics</string>
+    <string name="onboarding_analytics_description">Track your habits, progress, and achievements with clear and easy to understand statistics</string>
+    <string name="onboarding_savings_title">Track your spending</string>
+    <string name="onboarding_savings_description">See how much money you spend on cigarettes and keep track of your smoking expenses over time</string>
+    <string name="onboarding_progress_title">Personal progress</string>
+    <string name="onboarding_progress_description">Monitor your smoking habits, track your daily cigarette consumption, and see how your habits change over time</string>
+    <string name="onboarding_setup_title">Set up the app</string>
+    <string name="onboarding_setup_description">Personalize the app to match your preferences and get the most out of your experience</string>
+    <string name="onboarding_setup_tagline">Do not worry, you can change these settings at any time in the settings</string>
+    <string name="onboarding_finish_title">You\'re All Set!</string>
+    <string name="onboarding_finish_description">Everything is ready. Start tracking your smoking habits, monitor your progress, and explore your personal statistics</string>
 
     <string name="home_timer_message">Time since your last cigarette</string>
     <string name="home_timer_day">d</string>
@@ -29,26 +43,29 @@
     <string name="home_cigarettes_today">Cigarettes today</string>
     <string name="home_no_smoked_entries">No cigarette recorded yet</string>
     <string name="home_add_success">Cigarette added</string>
-    <string name="home_add_error">Could not add the cigarette. Please try again.</string>
-    <string name="home_load_error">Could not load your data. Please try again.</string>
+    <string name="home_add_error">Could not add the cigarette. Please try again</string>
+    <string name="home_load_error">Could not load your data. Please try again</string>
+    <string name="home_first_today">First of the day</string>
 
     <string name="graph_daily">Daily Overview (%1$d)</string>
     <string name="graph_weekly">Weekly Overview (%1$d)</string>
     <string name="graph_monthly">Monthly Overview (%1$d)</string>
     <string name="graph_yearly">Yearly Overview (%1$d)</string>
     <string name="graph_previous_day_daily">Previous day (Daily)</string>
-    <string name="graph_previous_day_weakly">Previous day (Weekly)</string>
+    <string name="graph_previous_day_weekly">Previous day (Weekly)</string>
     <string name="graph_previous_day_monthly">Previous day (Monthly)</string>
     <string name="graph_previous_day_yearly">Previous day (Yearly)</string>
     <string name="graph_next_day_daily">Next day (Daily)</string>
-    <string name="graph_next_day_weakly">Next day (Weekly)</string>
+    <string name="graph_next_day_weekly">Next day (Weekly)</string>
     <string name="graph_next_day_monthly">Next day (Monthly)</string>
     <string name="graph_next_day_yearly">Next day (Yearly)</string>
     <string name="graph_view_info">There is no data to display the graph</string>
 
     <string name="more_progress">Progress</string>
     <string name="more_progress_statistics">Statistics</string>
-    <string name="more_progress_statistics_description">Detailed insights and trends of your usage over time</string>
+    <string name="more_progress_statistics_description">Detailed statistics about your habits, consumption and spending over time</string>
+    <string name="more_progress_insights">Insights</string>
+    <string name="more_progress_insights_description">Explore future trends and predicted patterns based on your habits</string>
     <string name="more_progress_achievements">Achievements</string>
     <string name="more_progress_achievements_description">Track your milestones and celebrate your progress</string>
     <string name="more_tools">Tools</string>
@@ -62,6 +79,7 @@
     <string name="achievement_last">Last achieved: %1$s</string>
     <string name="achievement_achieved">Achieved: %1$s</string>
     <string name="achievements_time">Smoke free time</string>
+    <string name="achievements_avoided">Cigarettes avoided</string>
     <string name="achievement_congrats_one_day">One day hero</string>
     <string name="achievement_congrats_two_days">Two day champion</string>
     <string name="achievement_congrats_three_days">Three day warrior</string>
@@ -74,9 +92,8 @@
     <string name="achievement_congrats_one_month">One month explorer</string>
     <string name="achievement_congrats_three_months">Three month pathfinder</string>
     <string name="achievement_congrats_six_months">Six month conqueror</string>
-    <string name="achievement_congrats_nine_month">Nine month defender</string>
+    <string name="achievement_congrats_nine_months">Nine month defender</string>
     <string name="achievement_congrats_one_year">One year pioneer</string>
-    <string name="achievements_avoided">Cigarettes avoided</string>
     <string name="achievement_congrats_one_day_message">Well done! Keep pushing forward and stay consistent</string>
     <string name="achievement_congrats_two_days_message">Great job! You are building momentum and staying strong</string>
     <string name="achievement_congrats_three_days_message">Keep it up! Every step you take shows your dedication</string>
@@ -104,16 +121,17 @@
     <string name="achievement_congrats_eight_hundred_message">Incredible! Your determination is making a real difference</string>
     <string name="achievement_congrats_thousand_message">Legendary achievement! Your dedication and resilience are unmatched</string>
 
+    <string name="calculator_consumption">Consumption details</string>
+    <string name="calculator_consumption_details">Enter your daily consumption and pack price</string>
     <string name="calculator_per_day">Cigarettes per day</string>
     <string name="calculator_per_pack">Cigarettes per pack</string>
     <string name="calculator_price">Price per pack</string>
     <string name="calculator_period">Select period</string>
+    <string name="calculator_period_details">Select the period for your calculation</string>
     <string name="calculator_from">From:</string>
     <string name="calculator_start_date">Start date</string>
     <string name="calculator_to">To:</string>
     <string name="calculator_end_date">End date</string>
-    <string name="calculator_calculate">Calculate</string>
-
     <string name="calculator_result">Calculation result</string>
     <string name="calculator_result_total">Total costs</string>
     <string name="calculator_result_time_spent">Time spent</string>
@@ -124,7 +142,7 @@
 
     <string name="notes_add">Add note</string>
     <string name="notes_edit">Edit note</string>
-    <string name="notes_mode">Mood</string>
+    <string name="notes_mood">Mood</string>
     <string name="notes_title">Note Title</string>
     <string name="notes_content">Note Content</string>
     <string name="notes_emotions_very_bad">Very bad</string>
@@ -142,22 +160,28 @@
     <string name="settings_general">General</string>
     <string name="settings_general_theme">Appearance</string>
     <string name="settings_general_appearance_description">Customize the look and feel of the app</string>
+    <string name="settings_general_tracking">Tracking</string>
+    <string name="settings_general_tracking_description">Adjust how your smoking activity is tracked</string>
+    <string name="settings_general_localization">Localization</string>
     <string name="settings_general_language">Language</string>
     <string name="settings_general_notifications">Notifications</string>
     <string name="settings_general_notifications_description">Stay informed with notifications and alerts</string>
-    <string name="settings_general_day_end_hour">Day end hour</string>
-    <string name="settings_general_day_end_hour_description">Set when your day ends</string>
     <string name="settings_general_widgets">Widgets</string>
     <string name="settings_general_widgets_description">Add widgets to the home screen</string>
-    <string name="settings_general_elapsed_time_warning">Elapsed-time warning</string>
-    <string name="settings_general_elapsed_time_warning_description">Highlight the Minimal Home timer until it reaches this limit. Set 0 to disable</string>
-    <string name="settings_elapsed_time_warning_minutes_hint">Minutes (0–10,080)</string>
-    <string name="settings_elapsed_time_warning_error">Enter a value from 0 to 10,080 minutes.</string>
-    <string name="settings_finance">Finance</string>
-    <string name="settings_finance_currency">Currency</string>
-    <string name="settings_finance_currency_description">Choose your currency. If the currency is not listed, you can enter it yourself</string>
-    <string name="settings_finance_costs">Costs</string>
-    <string name="settings_finance_costs_description">Cost of one cigarette. The price of a cigarette can be determined by periods</string>
+
+    <string name="tracker_finance">Finance</string>
+    <string name="tracker_currency">Currency</string>
+    <string name="tracker_currency_description">Choose your currency. If the currency is not listed, you can enter it yourself</string>
+    <string name="tracker_costs">Costs</string>
+    <string name="tracker_costs_description">Cost of one cigarette. The price of a cigarette can be determined by periods</string>
+    <string name="tracker_day_end_hour">Day end hour</string>
+    <string name="tracker_day_end_hour_description">Set when your day ends and a new one begins</string>
+    <string name="tracker_elapsed_time_warning">Elapsed time warning</string>
+    <string name="tracker_elapsed_time_warning_description">Highlight the timer until the selected time limit is reached. Set to 0 to disable</string>
+    <string name="tracker_elapsed_time_warning_minutes_hint">Minutes (0–10,080)</string>
+    <string name="tracker_elapsed_time_warning_error">Enter a value from 0 to 10,080 minutes</string>
+    <string name="tracker_trigger">Default trigger</string>
+    <string name="tracker_trigger_description">Choose the default reason for smoking</string>
 
     <string name="settings_data">Data</string>
     <string name="settings_data_backup">Backup</string>
@@ -173,10 +197,6 @@
     <string name="settings_about_changelog_description">View changelog</string>
 
     <string name="settings_support">Support &amp; Security</string>
-    <string name="settings_support_translations">Help Translate</string>
-    <string name="settings_support_translations_description">Translate this app on your language using Weblate</string>
-    <string name="settings_support_privacy_policy">Privacy Policy</string>
-    <string name="settings_support_privacy_policy_description">View Privacy Policy</string>
 
     <string name="settings_appearance_theme">Theme</string>
     <string name="settings_appearance_theme_system">System</string>
@@ -186,13 +206,21 @@
     <string name="settings_appearance_scheme_system">System</string>
     <string name="settings_appearance_scheme_legacy">Legacy</string>
     <string name="settings_appearance_scheme_sky">Sky</string>
+    <string name="settings_appearance_start_page">Start page</string>
+    <string name="settings_appearance_history_display">History display</string>
+    <string name="settings_appearance_interval_labels">Interval labels</string>
+    <string name="settings_appearance_interval_labels_description">Show the time interval between entries</string>
 
     <string name="about_view">View on</string>
     <string name="about_view_github">View the source code, report issues, and contribute to the project</string>
     <string name="about_view_f_droid">View the app on F-Droid</string>
     <string name="about_view_izzy_on_droid">View the app on IzzyOnDroid</string>
     <string name="about_view_open_apk">View the app on OpenAPK</string>
-
+    <string name="about_links">Links</string>
+    <string name="about_translations">Help Translate</string>
+    <string name="about_translations_description">Translate this app on your language using Weblate</string>
+    <string name="about_privacy_policy">Privacy Policy</string>
+    <string name="about_privacy_policy_description">View Privacy Policy</string>
     <string name="about_contributors">Contributors</string>
     <string name="about_contributors_description">GitHub profiles</string>
     <string name="about_contributors_code">Code contribution</string>
@@ -203,17 +231,19 @@
     <string name="about_contributors_chinese_simplified">Chinese (simplified) translation</string>
     <string name="about_contributors_chinese_traditional">Chinese (traditional) translation</string>
     <string name="about_contributors_hungarian">Hungarian translation</string>
-
     <string name="about_version">Version: %1$s (%2$d)</string>
     <string name="about_version_unknown">Unknown</string>
     <string name="about_created_by">Developed by: %1$s</string>
 
-    <string name="popup_close">Close</string>
-    <string name="popup_confirm">Confirm</string>
-    <string name="popup_save">Save</string>
-    <string name="popup_backup">Backup</string>
-    <string name="popup_select">Select</string>
-    <string name="popup_add">Add</string>
+    <string name="button_close">Close</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="button_save">Save</string>
+    <string name="button_backup">Backup</string>
+    <string name="button_select">Select</string>
+    <string name="button_add">Add</string>
+    <string name="button_skip">Skip</string>
+    <string name="button_continue">Continue</string>
+    <string name="button_calculate">Calculate</string>
 
     <string name="insert_popup">Add entry</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
@@ -300,6 +330,19 @@
     <string name="statistics_most_expensive">Most expensive day</string>
     <string name="statistics_logged">Logged: %1$s</string>
     <string name="statistics_forecast_info">The more data there is, the more accurate the forecast will be</string>
+    <string name="statistics_triggers">Triggers</string>
+    <string name="statistics_triggers_description">What caused the need?</string>
+    <string name="statistics_most_common_trigger">Most common trigger</string>
+    <string name="statistics_triggers_empty">No data available yet</string>
+
+    <string name="trigger_stress">Stress</string>
+    <string name="trigger_coffee">Coffee</string>
+    <string name="trigger_alcohol">Alcohol</string>
+    <string name="trigger_boredom">Boredom</string>
+    <string name="trigger_social">Social situations</string>
+    <string name="trigger_after_meal">After a meal</string>
+    <string name="trigger_habit">Habit</string>
+    <string name="trigger_no_reason">No reason</string>
 
     <string name="loading_bar_backup">Backing up…</string>
     <string name="loading_bar_restore">Restoring…</string>
@@ -343,7 +386,7 @@
         <item quantity="one">%d cigarette</item>
         <item quantity="other">%d cigarettes</item>
     </plurals>
-    <plurals name="achievement_achieved_times">
+    <plurals name="achieved_times">
         <item quantity="one">%d time</item>
         <item quantity="other">%d times</item>
     </plurals>

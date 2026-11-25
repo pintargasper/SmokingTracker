@@ -16,12 +16,16 @@ class MoreFragment : Base<FragmentMoreBinding>(
             (requireActivity() as MainActivity).openSubFragment(fragment = StatisticsFragment())
         }
 
-        calculatorLayout.setOnClickListener {
-            (requireActivity() as MainActivity).openSubFragment(fragment = CalculatorFragment())
+        insightsLayout.setOnClickListener {
+            (requireActivity() as MainActivity).openSubFragment(fragment = ForecastFragment())
         }
 
         achievementsLayout.setOnClickListener {
             (requireActivity() as MainActivity).openSubFragment(fragment = AchievementFragment())
+        }
+
+        calculatorLayout.setOnClickListener {
+            (requireActivity() as MainActivity).openSubFragment(fragment = CalculatorFragment())
         }
 
         notesLayout.setOnClickListener {

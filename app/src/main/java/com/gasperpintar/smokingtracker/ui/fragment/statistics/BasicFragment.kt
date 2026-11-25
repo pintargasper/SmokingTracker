@@ -1,13 +1,18 @@
 package com.gasperpintar.smokingtracker.ui.fragment.statistics
 
+import android.view.MotionEvent
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker.database.viewmodel.BasicViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentStatisticsBasicBinding
+import com.gasperpintar.smokingtracker.databinding.ItemStatisticsBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
+import com.gasperpintar.smokingtracker.ui.adapter.ItemAdapter
 import com.gasperpintar.smokingtracker.ui.fragment.Base
 import com.gasperpintar.smokingtracker.utils.LocalizationHelper
 import com.gasperpintar.smokingtracker.utils.TimeHelper
@@ -19,9 +24,7 @@ class BasicFragment : Base<FragmentStatisticsBasicBinding>(
 ) {
 
     private val viewModel: BasicViewModel by viewModels {
-        ModelFactory(
-            container = (requireActivity().application as Application).container
-        )
+        ModelFactory(container = (requireActivity().application as Application).container)
     }
 
     @Override
@@ -32,34 +35,95 @@ class BasicFragment : Base<FragmentStatisticsBasicBinding>(
         }
     }
 
+    @Override
+    override fun onDestroyView() {
+        (parentFragment as? StatisticsFragment)?.setOuterPagerSwipeEnabled(true)
+        super.onDestroyView()
+    }
+
     private suspend fun loadStatistics() = binding.apply {
-        val settingsRepository = (requireActivity().application as Application).container.settingsRepository
-        val fallbackDuration = resources.getQuantityString(R.plurals.time_minutes, 0, 0)
-
+        val container = (requireActivity().application as Application).container
+        val settings = container.settingsRepository
         val state = viewModel.getState()
-        textMaxCigarettes.text = state.maxCigarettes.toString()
-        textMaxCigarettesDate.text = LocalizationHelper.formatLoggedDate(resources, day = state.maxCigarettesDate)
+        val fallback = resources.getQuantityString(R.plurals.time_minutes, 0, 0)
 
-        textMinCigarettes.text = state.minCigarettes.toString()
-        textMinCigarettesDate.text = LocalizationHelper.formatLoggedDate(resources, day = state.minCigarettesDate)
+        val cigarettes = listOf(
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_max_cigarettes),
+                value = state.maxCigarettes.toString(),
+                caption = LocalizationHelper.formatLoggedDate(resources, state.maxCigarettesDate)
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_min_cigarettes),
+                value = state.minCigarettes.toString(),
+                caption = LocalizationHelper.formatLoggedDate(resources, state.minCigarettesDate)
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_avg_cigarettes),
+                value = "%.2f".format(Locale.getDefault(), state.averageCigarettes)
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_total_cigarettes),
+                value = state.totalCigarettes.toString()
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_first_entry),
+                value = state.firstRecordDate?.let {
+                    TimeHelper.getDurationString(resources, start = it)
+                } ?: fallback
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_longest_streak),
+                value = state.longestStreak?.let { (start, end) ->
+                    TimeHelper.getDurationString(resources, start, end)
+                } ?: fallback
+            )
+        )
 
-        textAverageCigarettes.text = String.format(Locale.getDefault(), "%.2f", state.averageCigarettes)
-        textTotalCigarettes.text = state.totalCigarettes.toString()
-
-        textSinceFirstEntry.text = state.firstRecordDate?.let {
-            TimeHelper.getDurationString(resources = resources, start = it)
-        } ?: fallbackDuration
-
-        textLongestStreak.text = state.longestStreak?.let { (start, end) ->
-            TimeHelper.getDurationString(resources = resources, start = start, end = end)
-        } ?: fallbackDuration
-
+        val money = listOf(
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_total_spent),
+                value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.totalSpent)
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_total_spent_today),
+                value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.todaySpent)
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_total_spent_month),
+                value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.monthSpent)
+            ),
+            ItemAdapter.Item(
+                title = getString(R.string.statistics_most_expensive),
+                value = LocalizationHelper.formatMoney(settingsRepository = settings, value = state.mostExpensiveDaySpent),
+                caption = LocalizationHelper.formatLoggedDate(resources, state.mostExpensiveDay)
+            )
+        )
         statisticsTitleInstructions.isVisible = !state.hasCosts
 
-        textTotalSpent.text = LocalizationHelper.formatMoney(settingsRepository, value = state.totalSpent)
-        todaySpent.text = LocalizationHelper.formatMoney(settingsRepository, value = state.todaySpent)
-        monthSpent.text = LocalizationHelper.formatMoney(settingsRepository, value = state.monthSpent)
-        mostExpensiveDay.text = LocalizationHelper.formatMoney(settingsRepository, value = state.mostExpensiveDaySpent)
-        mostExpensiveDayDate.text = LocalizationHelper.formatLoggedDate(resources, state.mostExpensiveDay)
+        ItemAdapter.setupPager(pager = cigarettesViewPager, indicator = cigarettesPageIndicator, items = cigarettes, bindingInflater = ItemStatisticsBinding::inflate)
+        ItemAdapter.setupPager(pager = moneyViewPager, indicator = moneyPageIndicator, items = money, bindingInflater = ItemStatisticsBinding::inflate)
+        setupNestedPagerTouch(cigarettesViewPager)
+        setupNestedPagerTouch(moneyViewPager)
+    }
+
+    private fun setupNestedPagerTouch(pager: ViewPager2) {
+        val recyclerView = pager.getChildAt(0) as? RecyclerView ?: return
+        recyclerView.addOnItemTouchListener(
+            object : RecyclerView.SimpleOnItemTouchListener() {
+                @Override
+                override fun onInterceptTouchEvent(
+                    recyclerView: RecyclerView,
+                    motionEvent: MotionEvent
+                ): Boolean {
+                    when (motionEvent.actionMasked) {
+                        MotionEvent.ACTION_DOWN -> (parentFragment as? StatisticsFragment)?.setOuterPagerSwipeEnabled(false)
+                        MotionEvent.ACTION_UP,
+                        MotionEvent.ACTION_CANCEL -> (parentFragment as? StatisticsFragment)?.setOuterPagerSwipeEnabled(true)
+                    }
+                    return false
+                }
+            }
+        )
     }
 }

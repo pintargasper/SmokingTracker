@@ -4,8 +4,7 @@ import android.content.Context
 import com.gasperpintar.smokingtracker.R
 import com.gasperpintar.smokingtracker._interface.IIdentifiable
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.model.AchievementJson
 import java.time.LocalDateTime
 
 data class AchievementEntry(
@@ -19,8 +18,8 @@ data class AchievementEntry(
     val lastAchieved: LocalDateTime?,
     val reset: Boolean,
     val notify: Boolean,
-    val category: AchievementCategory,
-    val unit: AchievementUnit
+    val category: AchievementJson.Category,
+    val unit: AchievementJson.Unit
 ): IIdentifiable {
     companion object {
         fun fromEntity(
@@ -42,16 +41,32 @@ data class AchievementEntry(
         }
     }
 
+    fun toEntity(): AchievementEntity {
+        return AchievementEntity(
+            id = id,
+            image = image,
+            value = value,
+            title = title,
+            message = message,
+            times = times,
+            lastAchieved = lastAchieved,
+            reset = reset,
+            notify = notify,
+            category = category,
+            unit = unit
+        )
+    }
+
     fun getDisplayText(
         context: Context
     ): String {
         val resource = when (unit) {
-            AchievementUnit.HOURS -> R.plurals.time_hours
-            AchievementUnit.DAYS -> R.plurals.time_days
-            AchievementUnit.WEEKS -> R.plurals.time_weeks
-            AchievementUnit.MONTHS -> R.plurals.time_months
-            AchievementUnit.YEARS -> R.plurals.time_years
-            AchievementUnit.CIGARETTES -> R.plurals.cigarettes_count
+            AchievementJson.Unit.HOURS -> R.plurals.time_hours
+            AchievementJson.Unit.DAYS -> R.plurals.time_days
+            AchievementJson.Unit.WEEKS -> R.plurals.time_weeks
+            AchievementJson.Unit.MONTHS -> R.plurals.time_months
+            AchievementJson.Unit.YEARS -> R.plurals.time_years
+            AchievementJson.Unit.CIGARETTES -> R.plurals.cigarettes_count
         }
         return context.resources.getQuantityString(resource, value, value)
     }

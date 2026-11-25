@@ -28,7 +28,7 @@
             app:itemActiveIndicatorStyle="?appMenuActive"
             app:itemIconTint="?appMenuIconTint"
             app:itemTextColor="?appMenuTextColor"
-            app:menu="@menu/bottom_nav_menu"
+            app:menu="@menu/menu_bottom_nav"
             tools:ignore="VisualLintBottomNav" />
 
     </LinearLayout>

@@ -1,8 +1,8 @@
 package com.gasperpintar.smokingtracker.database.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
 import com.gasperpintar.smokingtracker.database.model.GraphEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.state.GraphState
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
 import com.gasperpintar.smokingtracker.database.repository.SettingsRepository
@@ -67,7 +67,7 @@ class GraphViewModel(
     }
 
     private fun createHourlyEntries(
-        history: List<HistoryEntity>,
+        history: List<HistoryEntry>,
         start: LocalDateTime
     ): List<GraphEntry> {
         return (0..23).map { index ->
@@ -80,7 +80,7 @@ class GraphViewModel(
     }
 
     private fun createDailyEntries(
-        history: List<HistoryEntity>,
+        history: List<HistoryEntry>,
         start: LocalDateTime,
         end: LocalDateTime
     ): List<GraphEntry> {
@@ -96,7 +96,7 @@ class GraphViewModel(
     }
 
     private fun createYearlyEntries(
-        history: List<HistoryEntity>,
+        history: List<HistoryEntry>,
         start: LocalDateTime
     ): List<GraphEntry> {
         return (0..11).map { index ->

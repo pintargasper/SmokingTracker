@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.R
-import com.gasperpintar.smokingtracker.database.entity.NoteEntity
+import com.gasperpintar.smokingtracker.database.model.NoteEntry
 import com.gasperpintar.smokingtracker.database.viewmodel.NotesViewModel
 import com.gasperpintar.smokingtracker.databinding.FragmentNoteBinding
 import com.gasperpintar.smokingtracker.di.ModelFactory
@@ -23,13 +23,11 @@ class NoteFragment @JvmOverloads constructor(
 ) {
 
     private val viewModel: NotesViewModel by viewModels {
-        ModelFactory(
-            container = (requireActivity().application as Application).container
-        )
+        ModelFactory(container = (requireActivity().application as Application).container)
     }
 
     private var noteId: Long = -1L
-    private var existingNote: NoteEntity? = null
+    private var existingNote: NoteEntry? = null
     private var isSaving = false
 
     @Override
@@ -107,7 +105,7 @@ class NoteFragment @JvmOverloads constructor(
                     try {
                         val now = LocalDateTime.now()
                         viewModel.save(
-                            NoteEntity(
+                            NoteEntry(
                                 id = existingNote?.id ?: 0L,
                                 title = title,
                                 content = content,
@@ -136,9 +134,11 @@ class NoteFragment @JvmOverloads constructor(
 
         @JvmStatic
         @JvmOverloads
-        fun newInstance(noteId: Long = -1L) = NoteFragment().apply {
-            arguments = Bundle().apply {
-                putLong(ARG_NOTE_ID, noteId)
+        fun newInstance(noteId: Long = -1L): NoteFragment {
+            return NoteFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(ARG_NOTE_ID, noteId)
+                }
             }
         }
     }

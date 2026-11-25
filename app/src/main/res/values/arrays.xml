@@ -33,4 +33,33 @@
         <item>@string/notifications_popup_frequency_daily</item>
         <item>@string/notifications_popup_frequency_weekly</item>
     </string-array>
+
+    <string-array name="appearance_theme_options">
+        <item>@string/settings_appearance_theme_system</item>
+        <item>@string/settings_appearance_theme_light</item>
+        <item>@string/settings_appearance_theme_dark</item>
+    </string-array>
+
+    <string-array name="appearance_scheme_options">
+        <item>@string/settings_appearance_scheme_system</item>
+        <item>@string/settings_appearance_scheme_legacy</item>
+        <item>@string/settings_appearance_scheme_sky</item>
+    </string-array>
+
+    <string-array name="appearance_start_page_options">
+        <item>@string/navigation_home</item>
+        <item>@string/navigation_advanced</item>
+        <item>@string/navigation_graph</item>
+    </string-array>
+
+    <string-array name="trigger_options">
+        <item>@string/trigger_no_reason</item>
+        <item>@string/trigger_stress</item>
+        <item>@string/trigger_coffee</item>
+        <item>@string/trigger_alcohol</item>
+        <item>@string/trigger_boredom</item>
+        <item>@string/trigger_social</item>
+        <item>@string/trigger_after_meal</item>
+        <item>@string/trigger_habit</item>
+    </string-array>
 </resources>

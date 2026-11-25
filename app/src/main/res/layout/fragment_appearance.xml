@@ -37,313 +37,316 @@
 
     </LinearLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="8dp">
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/settings_appearance_theme"
-                style="?appTitleStyle" />
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="3dp"
+                android:text="@string/settings_general"
+                style="?appTitleStyle"
+                tools:ignore="VisualLintSystemUi" />
 
-            <HorizontalScrollView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fillViewport="false"
-                android:scrollbars="none"
-                android:clipToPadding="false">
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="5dp"
+                style="?appCardStyle">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:minHeight="55dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="12dp"
+                    android:paddingVertical="8dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/system_theme"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        style="?appCardStyle">
+                        android:layout_weight="1"
+                        android:text="@string/settings_appearance_theme"
+                        android:labelFor="@id/theme_dropdown"
+                        style="?appSubtitleStyle" />
 
-                        <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/theme_dropdown_layout"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:saveEnabled="false"
+                        app:hintEnabled="false"
+                        app:endIconMode="dropdown_menu"
+                        style="?appTextInputLayoutStyle">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/theme_dropdown"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="55dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="12dp"
-                            android:paddingVertical="12dp">
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:inputType="none"
+                            android:saveEnabled="false"
+                            app:simpleItems="@array/appearance_theme_options"
+                            style="?appDropdownStyle" />
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginEnd="5dp"
-                                android:contentDescription="@string/settings_appearance_theme_system"
-                                android:src="@drawable/settings_48px"
-                                style="?appImageStyle" />
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <com.google.android.material.textview.MaterialTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:contentDescription="@string/settings_appearance_theme_system"
-                                    android:text="@string/settings_appearance_theme_system"
-                                    style="?appSubtitleStyle" />
-
-                            </LinearLayout>
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/system_theme_radio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/light_theme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        style="?appCardStyle">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="55dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="12dp"
-                            android:paddingVertical="12dp">
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginEnd="5dp"
-                                android:contentDescription="@string/settings_appearance_theme_light"
-                                android:src="@drawable/light_mode_48px"
-                                style="?appImageStyle" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:contentDescription="@string/settings_appearance_theme_light"
-                                android:text="@string/settings_appearance_theme_light"
-                                style="?appSubtitleStyle" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/light_theme_radio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/dark_theme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        style="?appCardStyle">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="55dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="12dp"
-                            android:paddingVertical="12dp">
-
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginEnd="5dp"
-                                android:contentDescription="@string/settings_appearance_theme_dark"
-                                android:src="@drawable/dark_mode_48px"
-                                style="?appImageStyle" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:contentDescription="@string/settings_appearance_theme_dark"
-                                android:text="@string/settings_appearance_theme_dark"
-                                style="?appSubtitleStyle" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/dark_theme_radio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="55dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="12dp"
+                    android:paddingVertical="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/settings_appearance_scheme"
+                        android:labelFor="@id/scheme_dropdown"
+                        style="?appSubtitleStyle" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/scheme_dropdown_layout"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:saveEnabled="false"
+                        app:hintEnabled="false"
+                        app:endIconMode="dropdown_menu"
+                        style="?appTextInputLayoutStyle">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/scheme_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:inputType="none"
+                            android:saveEnabled="false"
+                            app:simpleItems="@array/appearance_scheme_options"
+                            style="?appDropdownStyle" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="55dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="12dp"
+                    android:paddingVertical="8dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/settings_appearance_start_page"
+                        android:labelFor="@id/start_page_dropdown"
+                        style="?appSubtitleStyle" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/start_page_dropdown_layout"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:saveEnabled="false"
+                        app:hintEnabled="false"
+                        app:endIconMode="dropdown_menu"
+                        style="?appTextInputLayoutStyle">
+
+                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                            android:id="@+id/start_page_dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            android:focusable="false"
+                            android:clickable="true"
+                            android:cursorVisible="false"
+                            android:inputType="none"
+                            android:saveEnabled="false"
+                            app:simpleItems="@array/appearance_start_page_options"
+                            style="?appDropdownStyle" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/settings_appearance_scheme"
-                style="?appTitleStyle" />
+                android:layout_marginBottom="3dp"
+                android:text="@string/settings_appearance_history_display"
+                style="?appTitleStyle"
+                tools:ignore="VisualLintSystemUi" />
 
-            <HorizontalScrollView
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fillViewport="false"
-                android:scrollbars="none"
-                android:clipToPadding="false">
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="5dp"
+                style="?appCardStyle">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:minHeight="65dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="12dp"
+                    android:paddingVertical="12dp">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/system_scheme"
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/settings_appearance_interval_labels"
+                            style="?appSubtitleStyle" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="@string/settings_appearance_interval_labels_description"
+                            style="?appBodyStyle" />
+
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/interval_labels_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        style="?appCardStyle">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="12dp"
-                            android:paddingVertical="12dp">
-
-                            <View
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginEnd="5dp"
-                                android:background="@mipmap/ic_launcher" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/settings_appearance_scheme_system"
-                                style="?appSubtitleStyle" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/system_scheme_radio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:checked="true" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/legacy_scheme"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        style="?appCardStyle">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="55dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="12dp"
-                            android:paddingVertical="12dp">
-
-                            <View
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginEnd="5dp"
-                                android:background="@mipmap/ic_launcher" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                style="?appSubtitleStyle"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/settings_appearance_scheme_legacy" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/legacy_scheme_radio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/sky_scheme"
-                        android:layout_width="160dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        style="?appCardStyle">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="55dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="12dp"
-                            android:paddingVertical="12dp">
-
-                            <View
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_marginEnd="5dp"
-                                android:background="@mipmap/ic_launcher" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/settings_appearance_scheme_sky"
-                                style="?appSubtitleStyle" />
-
-                            <com.google.android.material.radiobutton.MaterialRadioButton
-                                android:id="@+id/sky_scheme_radio"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
+                        android:contentDescription="@string/settings_appearance_interval_labels"
+                        style="?appSwitchStyle" />
 
                 </LinearLayout>
 
-            </HorizontalScrollView>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="3dp"
+                android:text="@string/settings_general_localization"
+                style="?appTitleStyle" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:id="@+id/language_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="55dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="12dp"
+                    android:paddingVertical="12dp">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/settings_general_language"
+                        android:src="@drawable/language_48px"
+                        style="?appImageStyle" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/settings_general_language"
+                            style="?appSubtitleStyle" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/language_service"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="?appBodyStyle" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

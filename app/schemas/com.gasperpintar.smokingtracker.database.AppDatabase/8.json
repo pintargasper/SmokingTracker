@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "3f2da1136cb196bbedc6fd5b139bc6a5",
+    "identityHash": "cb5f66a6b5dfaf015a733c6e2224760e",
     "entities": [
       {
         "tableName": "achievements",
@@ -83,7 +83,7 @@
       },
       {
         "tableName": "history",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `lent` INTEGER NOT NULL, `createdAt` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `lent` INTEGER NOT NULL, `createdAt` TEXT NOT NULL, `trigger` TEXT NOT NULL DEFAULT 'NO_REASON')",
         "fields": [
           {
             "fieldPath": "id",
@@ -102,6 +102,13 @@
             "columnName": "createdAt",
             "affinity": "TEXT",
             "notNull": true
+          },
+          {
+            "fieldPath": "trigger",
+            "columnName": "trigger",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'NO_REASON'"
           }
         ],
         "primaryKey": {
@@ -113,7 +120,7 @@
       },
       {
         "tableName": "settings",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` TEXT NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL DEFAULT '€', `customCurrency` TEXT NOT NULL DEFAULT '', `dayEndMinutes` INTEGER NOT NULL DEFAULT 0, `elapsedTimeWarningMinutes` INTEGER NOT NULL DEFAULT 60, `colorScheme` TEXT NOT NULL DEFAULT 'SYSTEM')",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `theme` INTEGER NOT NULL, `language` TEXT NOT NULL, `frequency` INTEGER NOT NULL, `currency` TEXT NOT NULL DEFAULT '€', `customCurrency` TEXT NOT NULL DEFAULT '', `dayEndMinutes` INTEGER NOT NULL DEFAULT 0, `elapsedTimeWarningMinutes` INTEGER NOT NULL DEFAULT 60, `colorScheme` TEXT NOT NULL DEFAULT 'SYSTEM', `startPage` TEXT NOT NULL DEFAULT 'HOME', `defaultTrigger` TEXT NOT NULL DEFAULT 'NO_REASON', `showIntervalLabel` INTEGER NOT NULL DEFAULT 1)",
         "fields": [
           {
             "fieldPath": "id",
@@ -173,6 +180,27 @@
             "affinity": "TEXT",
             "notNull": true,
             "defaultValue": "'SYSTEM'"
+          },
+          {
+            "fieldPath": "startPage",
+            "columnName": "startPage",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'HOME'"
+          },
+          {
+            "fieldPath": "defaultTrigger",
+            "columnName": "defaultTrigger",
+            "affinity": "TEXT",
+            "notNull": true,
+            "defaultValue": "'NO_REASON'"
+          },
+          {
+            "fieldPath": "showIntervalLabel",
+            "columnName": "showIntervalLabel",
+            "affinity": "INTEGER",
+            "notNull": true,
+            "defaultValue": "1"
           }
         ],
         "primaryKey": {
@@ -301,11 +329,35 @@
             "id"
           ]
         }
+      },
+      {
+        "tableName": "triggers",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
       }
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3f2da1136cb196bbedc6fd5b139bc6a5')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cb5f66a6b5dfaf015a733c6e2224760e')"
     ]
   }
 }

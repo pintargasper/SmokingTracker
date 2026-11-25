@@ -11,8 +11,8 @@ class StatisticsFragment : Base<FragmentStatisticsBinding>(
 ) {
 
     @Override
-    override fun initialize() = binding.apply {
-        buttonBack.setOnClickListener {
+    override fun initialize() {
+        binding.buttonBack.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
 
@@ -20,12 +20,16 @@ class StatisticsFragment : Base<FragmentStatisticsBinding>(
         showContent()
     }
 
+    fun setOuterPagerSwipeEnabled(enabled: Boolean) {
+        binding.statisticsViewPager.isUserInputEnabled = enabled
+    }
+
     private fun setupPager() = binding.apply {
         statisticsViewPager.adapter = Pager(
-            this@StatisticsFragment,
-            listOf(
+            fragment = this@StatisticsFragment,
+            creators = listOf(
                 { BasicFragment() },
-                { ForecastFragment() }
+                { TriggersFragment() }
             )
         )
 
@@ -33,7 +37,7 @@ class StatisticsFragment : Base<FragmentStatisticsBinding>(
             tab.text = getString(
                 when (position) {
                     0 -> R.string.statistics_basic
-                    1 -> R.string.statistics_forecast
+                    1 -> R.string.statistics_triggers
                     else -> R.string.statistics_basic
                 }
             )

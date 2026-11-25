@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
     android:fillViewport="true"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.fragment.SettingsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -82,59 +83,6 @@
             style="?appCardStyle">
 
             <LinearLayout
-                android:id="@+id/language_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_general_language"
-                    android:src="@drawable/language_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_general_language"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/language_service"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        style="?appBodyStyle" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
                 android:id="@+id/notifications_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -188,7 +136,7 @@
             style="?appCardStyle">
 
             <LinearLayout
-                android:id="@+id/day_end_layout"
+                android:id="@+id/tracking_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="55dp"
@@ -204,8 +152,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_general_day_end_hour"
-                    android:src="@drawable/partly_cloudy_night_48px"
+                    android:contentDescription="@string/settings_general_tracking"
+                    android:src="@drawable/timer_48px"
                     style="?appImageStyle" />
 
                 <LinearLayout
@@ -218,67 +166,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="2dp"
-                        android:text="@string/settings_general_day_end_hour"
+                        android:text="@string/settings_general_tracking"
                         style="?appSubtitleStyle" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/settings_general_day_end_hour_description"
-                        style="?appBodyStyle" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:id="@+id/elapsed_time_warning_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_general_elapsed_time_warning"
-                    android:src="@drawable/history_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_general_elapsed_time_warning"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/elapsed_time_warning_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        tools:text="60 min"
+                        android:text="@string/settings_general_tracking_description"
                         style="?appBodyStyle" />
 
                 </LinearLayout>
@@ -332,121 +226,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_general_widgets_description"
-                        style="?appBodyStyle" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="3dp"
-            android:text="@string/settings_finance"
-            style="?appTitleStyle" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:id="@+id/currency_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_finance_currency"
-                    android:src="@drawable/currency_exchange_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_finance_currency"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_finance_currency_description"
-                        style="?appBodyStyle" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:id="@+id/costs_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_finance_costs"
-                    android:src="@drawable/payments_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_finance_costs"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_finance_costs_description"
                         style="?appBodyStyle" />
 
                 </LinearLayout>
@@ -577,7 +356,7 @@
             android:layout_marginHorizontal="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="3dp"
-            android:text="@string/settings_about"
+            android:text="@string/settings_support"
             style="?appTitleStyle" />
 
         <com.google.android.material.card.MaterialCardView
@@ -627,228 +406,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/settings_about_description" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:id="@+id/website_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:minHeight="55dp"
-                android:orientation="horizontal"
-                android:paddingVertical="12dp"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                tools:ignore="TouchTargetSizeCheck">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_about_website"
-                    android:src="@drawable/public_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        style="?appSubtitleStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_about_website" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        style="?appBodyStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_about_website_description" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:id="@+id/changelog_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_about_changelog"
-                    android:src="@drawable/history_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_about_changelog"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_about_changelog_description"
-                        style="?appBodyStyle" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="3dp"
-            android:text="@string/settings_support"
-            style="?appTitleStyle" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginTop="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:id="@+id/translate_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_support_translations"
-                    android:src="@drawable/translate_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_support_translations"
-                        style="?appSubtitleStyle" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_support_translations_description"
-                        style="?appBodyStyle" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
-            android:layout_marginVertical="5dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:id="@+id/privacy_policy_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingStart="5dp"
-                android:paddingEnd="12dp"
-                android:paddingVertical="12dp">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:contentDescription="@string/settings_support_privacy_policy"
-                    android:src="@drawable/policy_48px"
-                    style="?appImageStyle" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        style="?appSubtitleStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/settings_support_privacy_policy" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        style="?appBodyStyle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/settings_support_privacy_policy_description" />
 
                 </LinearLayout>
 

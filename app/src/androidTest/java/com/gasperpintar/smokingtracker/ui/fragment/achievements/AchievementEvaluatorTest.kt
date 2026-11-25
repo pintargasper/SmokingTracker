@@ -5,14 +5,14 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.gasperpintar.smokingtracker.database.AppDatabase
 import com.gasperpintar.smokingtracker.database.TestProvider
-import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
-import com.gasperpintar.smokingtracker.database.entity.HistoryEntity
-import com.gasperpintar.smokingtracker.database.entity.NotificationsSettingsEntity
+import com.gasperpintar.smokingtracker.database.model.AchievementEntry
+import com.gasperpintar.smokingtracker.database.model.HistoryEntry
+import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
 import com.gasperpintar.smokingtracker.database.repository.AchievementRepository
 import com.gasperpintar.smokingtracker.database.repository.HistoryRepository
-import com.gasperpintar.smokingtracker.database.repository.NotificationsSettingsRepository
-import com.gasperpintar.smokingtracker.type.AchievementCategory
-import com.gasperpintar.smokingtracker.type.AchievementUnit
+import com.gasperpintar.smokingtracker.database.repository.NotificationsRepository
+import com.gasperpintar.smokingtracker.model.AchievementJson
+import com.gasperpintar.smokingtracker.model.TriggerJson
 import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.assertEquals
@@ -40,14 +40,14 @@ class AchievementEvaluatorTest {
         achievementRepository = AchievementRepository(achievementDao = database.achievementDao())
         historyRepository = HistoryRepository(historyDao = database.historyDao())
 
-        val notificationsSettingsRepository = NotificationsSettingsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
-        notificationsSettingsRepository.insert(settings = NotificationsSettingsEntity.default().copy(achievements = false))
+        val notificationsRepository = NotificationsRepository(notificationsSettingsDao = database.notificationsSettingsDao())
+        notificationsRepository.insert(settings = NotificationsEntry.default(achievements = false))
 
         evaluator = AchievementEvaluator(
             context = context,
             historyRepository = historyRepository,
             achievementRepository = achievementRepository,
-            notificationsSettingsRepository = notificationsSettingsRepository
+            notificationsRepository = notificationsRepository
         )
     }
 
@@ -58,7 +58,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateUnlocksSmokeFreeAchievementAfterRequiredTime() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = AchievementJson.Unit.DAYS)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(25))
 
@@ -71,7 +71,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateDoesNotUnlockBeforeRequiredTime() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = AchievementJson.Unit.DAYS)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(23))
 
@@ -83,7 +83,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateIsIdempotentForSameLastSmoke() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = AchievementJson.Unit.DAYS)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(25))
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(30))
@@ -93,7 +93,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateUnlocksAgainAfterNewCigarette() = runBlocking {
-        insertAchievement(value = 1, unit = AchievementUnit.DAYS)
+        insertAchievement(value = 1, unit = AchievementJson.Unit.DAYS)
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(25))
 
         val nextSmokeTime = lastSmokeTime.plusDays(2)
@@ -107,9 +107,11 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateUnlocksCigarettesAvoidedUsingDailyAverage() = runBlocking {
-        insertAchievement(value = 20, unit = AchievementUnit.CIGARETTES, category = AchievementCategory.CIGARETTES_AVOIDED)
+        insertAchievement(value = 20, unit = AchievementJson.Unit.CIGARETTES, category = AchievementJson.Category.CIGARETTES_AVOIDED)
         listOf(lastSmokeTime.minusDays(2), lastSmokeTime.minusDays(1)).forEach { day ->
-            repeat(times = 10) { historyRepository.insert(entry = HistoryEntity(id = 0, lent = 0, createdAt = day.plusMinutes(it.toLong()))) }
+            repeat(times = 10) {
+                historyRepository.insert(entry = HistoryEntry(id = 0, isLent = false, createdAt = day.plusMinutes(it.toLong()), timerLabel = "", trigger = TriggerJson.Type.NO_REASON))
+            }
         }
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(47))
@@ -123,7 +125,7 @@ class AchievementEvaluatorTest {
 
     @Test
     fun evaluateSkipsCigarettesAvoidedWithoutHistory() = runBlocking {
-        insertAchievement(value = 20, unit = AchievementUnit.CIGARETTES, category = AchievementCategory.CIGARETTES_AVOIDED)
+        insertAchievement(value = 20, unit = AchievementJson.Unit.CIGARETTES, category = AchievementJson.Category.CIGARETTES_AVOIDED)
 
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusYears(1))
 
@@ -139,12 +141,12 @@ class AchievementEvaluatorTest {
 
     private suspend fun insertAchievement(
         value: Int,
-        unit: AchievementUnit,
-        category: AchievementCategory = AchievementCategory.SMOKE_FREE_TIME
+        unit: AchievementJson.Unit,
+        category: AchievementJson.Category = AchievementJson.Category.SMOKE_FREE_TIME
     ) {
         achievementRepository.insert(
             entries = listOf(
-                AchievementEntity(
+                AchievementEntry(
                     id = 0,
                     image = "W1D",
                     value = value,
