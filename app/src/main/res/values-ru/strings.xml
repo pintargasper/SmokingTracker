@@ -41,7 +41,6 @@
     <string name="settings_data_backup">Бэкап</string>
     <string name="settings_data_backup_text">Бэкап своих данных на устройство</string>
     <string name="settings_general_notifications_description">Будьте в курсе благодаря уведомлениям и оповещениям</string>
-
     <string name="settings_general_notifications">Оповещения</string>
     <string name="notifications_popup_frequency_label">Как часто</string>
     <string name="graph_view_info">Не хватает данных для отображения графика</string>
