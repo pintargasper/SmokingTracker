@@ -192,7 +192,7 @@
                         android:layout_height="40dp"
                         android:layout_marginEnd="5dp"
                         android:contentDescription="@string/tracker_trigger"
-                        android:src="@drawable/question_mark_48px"
+                        android:src="@drawable/ic_stat_name"
                         style="?appImageStyle" />
 
                     <LinearLayout

@@ -79,6 +79,15 @@
     <color name="legacy_switch_thumb_tint">@color/legacy_gray_medium</color>
     <color name="legacy_switch_track_tint">@color/legacy_gray_light</color>
 
+    <color name="legacy_chart_color">@color/legacy_gray</color>
+    <color name="legacy_chart_grid_color">@color/legacy_light_gray</color>
+    <color name="legacy_chart_text_color">@color/legacy_white</color>
+
+    <color name="legacy_toggle_background">@color/legacy_light_gray</color>
+    <color name="legacy_toggle_background_active">@color/legacy_gray</color>
+    <color name="legacy_toggle_color">@color/legacy_white</color>
+    <color name="legacy_toggle_tint">@color/legacy_white</color>
+
     <color name="legacy_error">@color/legacy_red</color>
     <color name="legacy_success">@color/legacy_green</color>
     <color name="legacy_links">@color/legacy_blue</color>

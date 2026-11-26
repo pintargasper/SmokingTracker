@@ -141,6 +141,30 @@ class LocalizationHelperTest {
     }
 
     @Test
+    fun formatNumberFormatsIntegerValue() {
+        val expected = DecimalFormat("0.#").format(25.0)
+        val actual = LocalizationHelper.formatNumber(value = 25.0)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatNumberFormatsDecimalValue() {
+        val expected = DecimalFormat("0.#").format(25.5)
+        val actual = LocalizationHelper.formatNumber(value = 25.5)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun formatNumberRemovesUnnecessaryDecimalPlaces() {
+        val expected = DecimalFormat("0.#").format(25.0)
+        val actual = LocalizationHelper.formatNumber(value = 25.00)
+
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun formatMoneyFormatsValueWithConfiguredCurrency() = runBlocking {
         settingsRepository.insert(settings = SettingsEntry.default(language = languageSystem).copy(currency = "$"))
 

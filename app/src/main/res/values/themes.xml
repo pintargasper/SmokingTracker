@@ -17,6 +17,7 @@
         <item name="appButtonStyle">@style/Legacy.Component.Button</item>
         <item name="appButtonTextStyle">@style/Legacy.Component.Button.TextButton</item>
         <item name="appButtonTextFilledStyle">@style/Legacy.Component.Button.TextButton.Filled</item>
+        <item name="appButtonToggleStyle">@style/Legacy.Component.Button.Toggle</item>
         <item name="appImageButtonStyle">@style/Legacy.Component.ImageButton</item>
         <item name="appImageStyle">@style/Legacy.Component.Image</item>
         <item name="appTextInputLayoutStyle">@style/Legacy.Component.TextInputLayout</item>
@@ -105,6 +106,15 @@
 
         <item name="appSwitchThumbTint">@color/legacy_switch_thumb_tint</item>
         <item name="appSwitchTrackTint">@color/legacy_switch_track_tint</item>
+
+        <item name="appChartColor">@color/legacy_chart_color</item>
+        <item name="appChartGridColor">@color/legacy_chart_grid_color</item>
+        <item name="appChartTextColor">@color/legacy_chart_text_color</item>
+
+        <item name="appToggleBackground">@color/legacy_toggle_background</item>
+        <item name="appToggleBackgroundActive">@color/legacy_toggle_background_active</item>
+        <item name="appToggleColor">@color/legacy_toggle_color</item>
+        <item name="appToggleTint">@color/legacy_toggle_tint</item>
     </style>
 
     <style name="Theme.SmokingTracker.System" parent="Theme.SmokingTracker.Legacy">

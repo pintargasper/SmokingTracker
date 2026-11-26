@@ -58,6 +58,6 @@ data class TriggerJson(
         SOCIAL(R.drawable.groups_48px),
         AFTER_MEAL(R.drawable.restaurant_48px),
         HABIT(R.drawable.repeat_48px),
-        NO_REASON(R.drawable.question_mark_48px)
+        NO_REASON(R.drawable.ic_stat_name)
     }
 }

@@ -34,11 +34,11 @@ class ForecastFragment : Base<FragmentForecastBinding>(
             return@apply
         }
 
-        forecastGraphView.setData(
+        /*forecastGraphView.setData(
             data = state.data,
             forecast = state.forecast,
             graphInterval = state.interval,
             isForecast = true
-        )
+        )*/
     }
 }

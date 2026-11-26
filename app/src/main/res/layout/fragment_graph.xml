@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context="ui.fragment.GraphFragment">
 
     <LinearLayout
@@ -12,264 +13,506 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_graph_daily"
+        <LinearLayout
+            android:id="@+id/daily_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:visibility="visible">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_consumption_peak"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/consumption_peak"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="18:00 – 20:00" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_consumption_change"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/consumption_change_daily"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="+15" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/weekly_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_average"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/average"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="18:00 – 20:00" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_consumption_change"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/consumption_change_weekly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="+15" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/monthly_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_consumption_peak"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/busiest_week"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="18:00 – 20:00" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_consumption_change"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/consumption_change_monthly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="+15" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/yearly_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_consumption_peak"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/busiest_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="18:00 – 20:00" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginBottom="5dp"
+                style="?appCardStyle">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:paddingVertical="4dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="@string/graph_best_month"
+                        style="?appTitleCenterStyle" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/best_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        style="?appBodyStyle"
+                        tools:text="+15" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/period_toggle_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    app:checkedButton="@id/period_daily">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/period_daily"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="2dp"
+                        android:text="@string/graph_period_day"
+                        style="?appButtonToggleStyle"
+                        tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/period_weekly"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="2dp"
+                        android:text="@string/graph_period_week"
+                        style="?appButtonToggleStyle"
+                        tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/period_monthly"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="2dp"
+                        android:text="@string/graph_period_month"
+                        style="?appButtonToggleStyle"
+                        tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/period_yearly"
+                        android:layout_width="0dp"
+                        android:layout_height="48dp"
+                        android:layout_weight="1"
+                        android:minWidth="0dp"
+                        android:paddingHorizontal="2dp"
+                        android:text="@string/graph_period_year"
+                        style="?appButtonToggleStyle"
+                        tools:ignore="VisualLintButtonSize,VisualLintSystemUi" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/type_toggle_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    app:checkedButton="@id/type_normal">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/type_normal"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:minWidth="0dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:contentDescription="@string/graph_type_normal"
+                        app:icon="@drawable/ic_stat_name"
+                        app:iconSize="24dp"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        style="?appButtonToggleStyle"
+                        tools:ignore="VisualLintSystemUi" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/type_borrowed"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:minWidth="0dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:contentDescription="@string/graph_type_borrowed"
+                        app:icon="@drawable/hand_package_48px"
+                        app:iconSize="24dp"
+                        app:iconGravity="textStart"
+                        app:iconPadding="0dp"
+                        style="?appButtonToggleStyle"
+                        tools:ignore="VisualLintSystemUi" />
+
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginVertical="4dp"
             style="?appCardStyle">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:gravity="center_horizontal"
-                android:padding="16dp">
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="8dp">
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/graph_daily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/graph_daily"
-                    android:layout_marginBottom="8dp"
-                    style="?appTitleSpecialStyle" />
-
-                <com.gasperpintar.smokingtracker.ui.view.GraphView
-                    android:id="@+id/graph_view_daily"
+                <com.gasperpintar.smokingtracker.ui.view.chart.LineChartView
+                    android:id="@+id/graph_view"
                     android:layout_width="match_parent"
-                    android:layout_height="240dp" />
+                    android:layout_height="260dp" />
 
                 <LinearLayout
-                    android:id="@+id/graph_controls_daily"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:padding="4dp">
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="8dp">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/previous_day_daily"
+                        android:id="@+id/previous_graph"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/graph_previous_day_daily"
+                        android:contentDescription="@string/graph_previous"
                         style="?appImageButtonStyle"
                         app:icon="@drawable/arrow_circle_left_48px" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/current_date_daily"
-                        android:layout_width="180dp"
+                        android:id="@+id/current_date_graph"
+                        android:layout_width="wrap_content"
                         android:layout_height="48dp"
-                        android:text="%02d.%02d.%04d"
-                        tools:ignore="HardcodedText,TextSizeCheck"
-                        style="?appTitleCenterStyle" />
+                        android:minWidth="120dp"
+                        android:gravity="center"
+                        android:paddingHorizontal="8dp"
+                        style="?appTitleCenterStyle"
+                        tools:text="26. november 2026" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/next_day_daily"
+                        android:id="@+id/next_graph"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:contentDescription="@string/graph_next_day_daily"
-                        style="?appImageButtonStyle"
-                        app:icon="@drawable/arrow_circle_right_48px" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_graph_weekly"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="16dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/graph_weekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/graph_weekly"
-                    android:layout_marginBottom="8dp"
-                    style="?appTitleSpecialStyle" />
-
-                <com.gasperpintar.smokingtracker.ui.view.GraphView
-                    android:id="@+id/graph_view_weekly"
-                    android:layout_width="match_parent"
-                    android:layout_height="240dp" />
-
-                <LinearLayout
-                    android:id="@+id/graph_controls_weekly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:padding="4dp">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/previous_day_weekly"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/graph_previous_day_weekly"
-                        app:icon="@drawable/arrow_circle_left_48px"
-                        style="?appImageButtonStyle"/>
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/current_date_weekly"
-                        android:layout_width="180dp"
-                        android:layout_height="48dp"
-                        android:text="%1$d.%2$d/%3$d.%4$d %5$d"
-                        tools:ignore="HardcodedText,TextSizeCheck"
-                        style="?appTitleCenterStyle" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/next_day_weekly"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/graph_next_day_weekly"
-                        app:icon="@drawable/arrow_circle_right_48px"
-                        style="?appImageButtonStyle"/>
-
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_graph_monthly"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginHorizontal="16dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="16dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/graph_monthly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/graph_monthly"
-                    android:layout_marginBottom="8dp"
-                    style="?appTitleSpecialStyle" />
-
-                <com.gasperpintar.smokingtracker.ui.view.GraphView
-                    android:id="@+id/graph_view_monthly"
-                    android:layout_width="match_parent"
-                    android:layout_height="240dp" />
-
-                <LinearLayout
-                    android:id="@+id/graph_controls_monthly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:padding="4dp">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/previous_day_monthly"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/graph_previous_day_monthly"
-                        style="?appImageButtonStyle"
-                        app:icon="@drawable/arrow_circle_left_48px" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/current_date_monthly"
-                        android:layout_width="180dp"
-                        android:layout_height="48dp"
-                        android:text="%1$s %2$d"
-                        tools:ignore="HardcodedText"
-                        style="?appTitleCenterStyle" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/next_day_monthly"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/graph_next_day_monthly"
-                        android:src="@drawable/arrow_circle_right_48px"
-                        app:icon="@drawable/arrow_circle_right_48px"
-                        style="?appImageButtonStyle" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_graph_yearly"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
-            android:layout_marginHorizontal="16dp"
-            style="?appCardStyle">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:padding="16dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/graph_yearly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/graph_yearly"
-                    android:layout_marginBottom="8dp"
-                    style="?appTitleSpecialStyle" />
-
-                <com.gasperpintar.smokingtracker.ui.view.GraphView
-                    android:id="@+id/graph_view_yearly"
-                    android:layout_width="match_parent"
-                    android:layout_height="240dp" />
-
-                <LinearLayout
-                    android:id="@+id/graph_controls_yearly"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:padding="4dp">
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/previous_day_yearly"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/graph_previous_day_yearly"
-                        style="?appImageButtonStyle"
-                        app:icon="@drawable/arrow_circle_left_48px" />
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/current_date_yearly"
-                        android:layout_width="180dp"
-                        android:layout_height="48dp"
-                        android:text="%1$d"
-                        tools:ignore="HardcodedText"
-                        style="?appTitleCenterStyle" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/next_day_yearly"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:contentDescription="@string/graph_next_day_yearly"
+                        android:contentDescription="@string/graph_next"
                         style="?appImageButtonStyle"
                         app:icon="@drawable/arrow_circle_right_48px" />
 
