@@ -71,7 +71,7 @@
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <com.gasperpintar.smokingtracker.ui.view.GraphView
+                <com.gasperpintar.smokingtracker.ui.view.chart.LineChartView
                     android:id="@+id/forecast_graph_view"
                     android:layout_width="match_parent"
                     android:layout_height="240dp" />

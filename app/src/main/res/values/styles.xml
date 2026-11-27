@@ -69,6 +69,13 @@
         <item name="android:backgroundTint">?appTextButtonTextBackground</item>
     </style>
 
+    <style name="Legacy.Component.Button.Toggle" parent="Legacy.Component.Button.TextButton">
+        <item name="backgroundTint">@color/toggle_background</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:textColor">?appToggleColor</item>
+        <item name="iconTint">?appToggleTint</item>
+    </style>
+
     <style name="Legacy.Component.ImageButton" parent="Widget.Material3.Button.IconButton">
         <item name="iconTint">?appImageButtonIconTint</item>
         <item name="iconSize">48dp</item>

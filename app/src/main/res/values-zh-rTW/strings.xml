@@ -20,14 +20,6 @@
     <string name="graph_weekly">每週概覽（%1$d）</string>
     <string name="graph_monthly">每月概覽（%1$d）</string>
     <string name="graph_yearly">每年概覽（%1$d）</string>
-    <string name="graph_previous_day_daily">前一天（每日）</string>
-    <string name="graph_previous_day_weekly">前一天（每週）</string>
-    <string name="graph_previous_day_monthly">前一天（每月）</string>
-    <string name="graph_previous_day_yearly">前一天（每年）</string>
-    <string name="graph_next_day_daily">後一天（每日）</string>
-    <string name="graph_next_day_weekly">後一天（每週）</string>
-    <string name="graph_next_day_monthly">後一天（每月）</string>
-    <string name="graph_next_day_yearly">後一天（每年）</string>
     <string name="graph_view_info">沒有資料可顯示圖表</string>
     <string name="more_progress">進度</string>
     <string name="more_tools_calculator">計算器</string>
@@ -49,7 +41,6 @@
     <string name="achievements">成就</string>
     <string name="achievements_avoided">免於抽菸</string>
     <string name="achievements_time">無煙時間</string>
-    <string name="home_lent">四旬期紀錄</string>
     <string name="home_edit">編輯記錄</string>
     <string name="home_delete">刪除記錄</string>
     <string name="achievements_icon">成就圖示</string>
@@ -81,7 +72,6 @@
     <string name="about_contributors">貢獻者</string>
     <string name="insert_popup">新增項目</string>
     <string name="insert_popup_lent">一根借來的香菸？</string>
-    <string name="insert_popup_add">添加</string>
     <string name="button_close">關閉</string>
     <string name="button_confirm">確認</string>
     <string name="button_save">保存</string>

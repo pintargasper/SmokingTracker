@@ -24,7 +24,6 @@
     <string name="settings_about">О приложении</string>
     <string name="about_version">Версия %1$s (%2$d)</string>
     <string name="settings_about_website">Сайт</string>
-    <string name="insert_popup_add">Добавить</string>
     <string name="delete_popup_message">Удалить эту запись навсегда?</string>
     <string name="language_popup">Выберите язык</string>
     <string name="settings_appearance_theme">Выберите тему</string>
@@ -77,14 +76,6 @@
     <string name="graph_yearly">Обзор за год (%1$d)</string>
     <string name="button_close">Закрыть</string>
     <string name="graph_daily">Обзор за день (%1$d)</string>
-    <string name="graph_previous_day_daily">Предыдущий период (за день)</string>
-    <string name="graph_previous_day_weekly">Предыдущий период (за неделю)</string>
-    <string name="graph_previous_day_monthly">Предыдущий период (за месяц)</string>
-    <string name="graph_previous_day_yearly">Предыдущий период (за год)</string>
-    <string name="graph_next_day_daily">Следующий период (за день)</string>
-    <string name="graph_next_day_weekly">Следующий период (за неделю)</string>
-    <string name="graph_next_day_monthly">Следующий период (за месяц)</string>
-    <string name="graph_next_day_yearly">Следующий период (за год)</string>
     <string name="notifications_popup_frequency_default">Стандартно</string>
     <string name="restore_popup_info">Вы получите уведомление о восстановлении данных посредством push-уведомления</string>
     <string name="restore_popup_file">Файл: %1$s</string>

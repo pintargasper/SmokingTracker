@@ -73,5 +73,14 @@
 
         <item name="appSwitchThumbTint">@color/legacy_switch_thumb_tint</item>
         <item name="appSwitchTrackTint">@color/legacy_switch_track_tint</item>
+
+        <item name="appChartColor">@color/legacy_chart_color</item>
+        <item name="appChartGridColor">@color/legacy_chart_grid_color</item>
+        <item name="appChartTextColor">@color/legacy_chart_text_color</item>
+
+        <item name="appToggleBackground">@color/legacy_toggle_background</item>
+        <item name="appToggleBackgroundActive">@color/legacy_toggle_background_active</item>
+        <item name="appToggleColor">@color/legacy_toggle_color</item>
+        <item name="appToggleTint">@color/legacy_toggle_tint</item>
     </style>
 </resources>
