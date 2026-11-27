@@ -199,8 +199,8 @@ object Manager {
         val entities = workbook.import(sheetName = "Costs", requiredHeaders = Mappers.COSTS_HEADERS, onStepProgress) { row, col, _ ->
             Mappers.parseCost(row, col, dateFormatter)
         }
-        repository.deleteAll()
-        if (entities.isNotEmpty()) repository.insertAll(entries = entities)
+        repository.delete()
+        if (entities.isNotEmpty()) repository.insert(entries = entities)
     }
 
     private suspend fun importNotesSheet(

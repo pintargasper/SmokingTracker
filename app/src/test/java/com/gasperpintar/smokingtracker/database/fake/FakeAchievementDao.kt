@@ -2,6 +2,7 @@ package com.gasperpintar.smokingtracker.database.fake
 
 import com.gasperpintar.smokingtracker.database.dao.AchievementDao
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
+import com.gasperpintar.smokingtracker.model.AchievementJson
 
 class FakeAchievementDao : FakeDao<AchievementEntity>(
     idOf = { it.id },
@@ -11,7 +12,17 @@ class FakeAchievementDao : FakeDao<AchievementEntity>(
     val resetAllCalls = mutableListOf<Boolean>()
 
     @Override
-    override suspend fun deleteAll() {
+    override suspend fun all(): List<AchievementEntity> {
+        return items.sortedBy { it.id }
+    }
+
+    @Override
+    override suspend fun byCategory(category: AchievementJson.Category): List<AchievementEntity> {
+        return items.filter { it.category == category }
+    }
+
+    @Override
+    override suspend fun delete() {
         items.clear()
     }
 
@@ -21,13 +32,8 @@ class FakeAchievementDao : FakeDao<AchievementEntity>(
     }
 
     @Override
-    override suspend fun resetAll(state: Boolean) {
+    override suspend fun reset(state: Boolean) {
         resetAllCalls += state
         items.replaceAll { it.copy(reset = state, notify = state) }
-    }
-
-    @Override
-    override suspend fun getAll(): List<AchievementEntity> {
-        return items.sortedBy { it.id }
     }
 }

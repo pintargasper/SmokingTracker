@@ -28,14 +28,10 @@ class SettingsViewModel(
 ): ViewModel() {
 
     suspend fun getState(): SettingsState {
-        val settings = settingsRepository.get()
-        val notificationsSettings = notificationsRepository.get()
-        val costs = costsRepository.getAll()
-
         return SettingsState(
-            settings = settings!!,
-            notificationsSettings = notificationsSettings!!,
-            costs = costs
+            settings = settingsRepository.get()!!,
+            notificationsSettings = notificationsRepository.get()!!,
+            costs = costsRepository.getAll()
         )
     }
 
@@ -54,7 +50,7 @@ class SettingsViewModel(
     suspend fun addCost(
         cost: CostEntry
     ) {
-        costsRepository.insert(entry = cost)
+        costsRepository.insert(entries = listOf(cost))
     }
 
     suspend fun deleteCost(

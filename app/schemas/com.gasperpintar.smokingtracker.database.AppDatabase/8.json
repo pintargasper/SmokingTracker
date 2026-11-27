@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "8852afcabbe2ce1428285c3488812b4b",
+    "identityHash": "7c2e5720aff8c140208f8ba078f8b00b",
     "entities": [
       {
         "tableName": "achievements",
@@ -291,7 +291,18 @@
           "columnNames": [
             "id"
           ]
-        }
+        },
+        "indices": [
+          {
+            "name": "index_costs_endDate",
+            "unique": false,
+            "columnNames": [
+              "endDate"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_costs_endDate` ON `${TABLE_NAME}` (`endDate`)"
+          }
+        ]
       },
       {
         "tableName": "notes",
@@ -368,7 +379,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8852afcabbe2ce1428285c3488812b4b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7c2e5720aff8c140208f8ba078f8b00b')"
     ]
   }
 }

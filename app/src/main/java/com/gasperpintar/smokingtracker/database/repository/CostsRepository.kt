@@ -6,13 +6,19 @@ import com.gasperpintar.smokingtracker.database.model.CostEntry
 class CostsRepository(
     private val costDao: CostsDao
 ) {
-    suspend fun insert(
-        entry: CostEntry
-    ) {
-        costDao.insert(entity = entry.toEntity())
+    suspend fun exists(): Boolean {
+        return costDao.exists()
     }
 
-    suspend fun insertAll(
+    suspend fun getAll(): List<CostEntry> {
+        return costDao.all().map(transform = CostEntry::fromEntity)
+    }
+
+    suspend fun getLast(): CostEntry? {
+        return costDao.last()?.let(block = CostEntry::fromEntity)
+    }
+
+    suspend fun insert(
         entries: List<CostEntry>
     ) {
         costDao.insertAll(entities = entries.map(transform = CostEntry::toEntity))
@@ -25,21 +31,10 @@ class CostsRepository(
     }
 
     suspend fun delete(
-        entry: CostEntry
+        entry: CostEntry? = null
     ) {
-        costDao.delete(entity = entry.toEntity())
-    }
-
-    suspend fun deleteAll() {
-        costDao.deleteAll()
-        costDao.resetAutoIncrement()
-    }
-
-    suspend fun getAll(): List<CostEntry> {
-        return costDao.getAll().map(transform = CostEntry::fromEntity)
-    }
-
-    suspend fun getLast(): CostEntry? {
-        return costDao.getLast()?.let(block = CostEntry::fromEntity)
+        entry?.let {
+            costDao.delete(entity = it.toEntity())
+        } ?: costDao.deleteAll()
     }
 }

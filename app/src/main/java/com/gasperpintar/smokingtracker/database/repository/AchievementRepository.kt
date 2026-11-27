@@ -8,13 +8,13 @@ class AchievementRepository(
     private val achievementDao: AchievementDao
 ) {
     suspend fun getAll(): List<AchievementEntry> {
-        return achievementDao.getAll().map(transform = AchievementEntry::fromEntity)
+        return achievementDao.all().map(transform = AchievementEntry::fromEntity)
     }
 
     suspend fun getByCategory(
         category: AchievementJson.Category
     ): List<AchievementEntry> {
-        return achievementDao.getByCategory(category).map(transform = AchievementEntry::fromEntity)
+        return achievementDao.byCategory(category).map(transform = AchievementEntry::fromEntity)
     }
 
     suspend fun insert(
@@ -44,6 +44,6 @@ class AchievementRepository(
     suspend fun reset(
         state: Boolean
     ) {
-        achievementDao.resetAll(state = state)
+        achievementDao.reset(state = state)
     }
 }

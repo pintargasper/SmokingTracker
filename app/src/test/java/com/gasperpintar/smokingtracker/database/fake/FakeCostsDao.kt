@@ -9,22 +9,27 @@ class FakeCostsDao : FakeDao<CostEntity>(
 ), CostsDao {
 
     @Override
-    override suspend fun deleteAll() {
+    override suspend fun exists(): Boolean {
+        return items.isNotEmpty()
+    }
+
+    @Override
+    override suspend fun all(): List<CostEntity> {
+        return items.sortedWith(comparator = compareByDescending<CostEntity> { it.startDate }.thenByDescending { it.endDate })
+    }
+
+    @Override
+    override suspend fun last(): CostEntity? {
+        return items.maxByOrNull { it.endDate }
+    }
+
+    @Override
+    override suspend fun delete() {
         items.clear()
     }
 
     @Override
     override suspend fun resetAutoIncrement() {
         resetId()
-    }
-
-    @Override
-    override suspend fun getAll(): List<CostEntity> {
-        return items.sortedWith(comparator = compareByDescending<CostEntity> { it.startDate }.thenByDescending { it.endDate })
-    }
-
-    @Override
-    override suspend fun getLast(): CostEntity? {
-        return items.maxByOrNull { it.endDate }
     }
 }

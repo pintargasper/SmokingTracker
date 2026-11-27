@@ -146,7 +146,7 @@ class ManagerTest {
                     HistoryEntry(id = 0, isLent = false, createdAt = createdAt.plusDays(1), trigger = TriggerJson.Type.NO_REASON)
                 )
             )
-            costsRepository.insertAll(
+            costsRepository.insert(
                 entries = listOf(
                     CostEntry(id = 0, startDate = createdAt.minusDays(30), endDate = createdAt, price = 0.25),
                     CostEntry(id = 0, startDate = createdAt, endDate = createdAt.plusDays(30), price = 0.3)
@@ -315,7 +315,7 @@ class ManagerTest {
     private suspend fun clearDatabase() {
         historyRepository.deleteAll()
         achievementRepository.delete()
-        costsRepository.deleteAll()
+        costsRepository.delete()
         notesRepository.deleteAll()
         settingsRepository.get()?.let { settingsRepository.delete(settings = it) }
         notificationsRepository.get()?.let { notificationsRepository.delete(settings = it) }

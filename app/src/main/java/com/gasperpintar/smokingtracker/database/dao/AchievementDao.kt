@@ -14,7 +14,7 @@ interface AchievementDao: Base<AchievementEntity> {
         FROM achievements 
         ORDER BY id ASC
     """)
-    suspend fun getAll(): List<AchievementEntity>
+    suspend fun all(): List<AchievementEntity>
 
     @Query("""
         SELECT *
@@ -22,7 +22,7 @@ interface AchievementDao: Base<AchievementEntity> {
         WHERE category = :category
         ORDER BY id ASC
     """)
-    suspend fun getByCategory(
+    suspend fun byCategory(
         category: AchievementJson.Category
     ): List<AchievementEntity>
 
@@ -32,7 +32,7 @@ interface AchievementDao: Base<AchievementEntity> {
             reset = :state,
             notify = :state
     """)
-    suspend fun resetAll(state: Boolean)
+    suspend fun reset(state: Boolean)
 
     @Transaction
     suspend fun deleteAll() {

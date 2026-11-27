@@ -35,7 +35,7 @@ class BasicViewModel(
             totalCigarettes = historyRepository.getTotalCigarettes(),
             firstRecordDate = historyRepository.getFirstRecordDate(),
             longestStreak = getLongestTime(history),
-            hasCosts = costs.isNotEmpty(),
+            hasCosts = costsRepository.exists(),
             totalSpent = getTotalSpent(history, costs),
             todaySpent = getTodaySpent(costs, dayEndMinutes),
             monthSpent = getThisMonthSpent(costs, dayEndMinutes),
