@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "7c2e5720aff8c140208f8ba078f8b00b",
+    "identityHash": "0be958449e8dbfc3d30f741b164e22be",
     "entities": [
       {
         "tableName": "achievements",
@@ -350,7 +350,18 @@
           "columnNames": [
             "id"
           ]
-        }
+        },
+        "indices": [
+          {
+            "name": "index_notes_createdAt",
+            "unique": false,
+            "columnNames": [
+              "createdAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_notes_createdAt` ON `${TABLE_NAME}` (`createdAt`)"
+          }
+        ]
       },
       {
         "tableName": "triggers",
@@ -379,7 +390,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7c2e5720aff8c140208f8ba078f8b00b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0be958449e8dbfc3d30f741b164e22be')"
     ]
   }
 }

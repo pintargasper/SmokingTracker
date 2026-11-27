@@ -152,7 +152,7 @@ class ManagerTest {
                     CostEntry(id = 0, startDate = createdAt, endDate = createdAt.plusDays(30), price = 0.3)
                 )
             )
-            notesRepository.insertAll(
+            notesRepository.insert(
                 entries = listOf(
                     NoteEntry(id = 0, title = "First", content = "Smoking note", mood = 5, createdAt = createdAt, updatedAt = createdAt.plusMinutes(5)),
                     NoteEntry(id = 0, title = "Second", content = "", mood = 1, createdAt = createdAt.plusDays(1), updatedAt = createdAt.plusDays(1))
@@ -316,7 +316,7 @@ class ManagerTest {
         historyRepository.deleteAll()
         achievementRepository.delete()
         costsRepository.delete()
-        notesRepository.deleteAll()
+        notesRepository.delete()
         settingsRepository.get()?.let { settingsRepository.delete(settings = it) }
         notificationsRepository.get()?.let { notificationsRepository.delete(settings = it) }
     }

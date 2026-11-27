@@ -97,14 +97,12 @@ class NotesFragment : Base<FragmentNotesBinding>(
 
     private suspend fun loadNotes() {
         val state = viewModel.getState()
-        val notes = state.notes
-
         if (!isAdded || view == null) return
         binding.apply {
-            recyclerviewNotes.isVisible = notes.isNotEmpty()
-            layoutEmptyNotes.isVisible = notes.isEmpty()
-            adapter.submitList(notes) {
-                if (notes.isNotEmpty()) recyclerviewNotes.scrollToPosition(0)
+            recyclerviewNotes.isVisible = state.notes.isNotEmpty()
+            layoutEmptyNotes.isVisible = state.notes.isEmpty()
+            adapter.submitList(state.notes) {
+                if (state.notes.isNotEmpty()) recyclerviewNotes.scrollToPosition(0)
             }
         }
     }

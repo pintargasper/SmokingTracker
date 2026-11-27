@@ -7,6 +7,7 @@ import com.gasperpintar.smokingtracker.model.AchievementJson
 class AchievementRepository(
     private val achievementDao: AchievementDao
 ) {
+
     suspend fun getAll(): List<AchievementEntry> {
         return achievementDao.all().map(transform = AchievementEntry::fromEntity)
     }

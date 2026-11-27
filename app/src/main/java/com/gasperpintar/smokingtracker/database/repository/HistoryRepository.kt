@@ -11,6 +11,7 @@ import java.time.LocalDateTime
 class HistoryRepository(
     private val historyDao: HistoryDao
 ) {
+
     private val _changes = MutableStateFlow(value = 0L)
     val changes: StateFlow<Long> = _changes.asStateFlow()
 

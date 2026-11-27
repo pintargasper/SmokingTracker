@@ -6,6 +6,7 @@ import com.gasperpintar.smokingtracker.database.model.CostEntry
 class CostsRepository(
     private val costDao: CostsDao
 ) {
+
     suspend fun exists(): Boolean {
         return costDao.exists()
     }

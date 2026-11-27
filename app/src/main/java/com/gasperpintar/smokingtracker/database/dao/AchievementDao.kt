@@ -32,7 +32,9 @@ interface AchievementDao: Base<AchievementEntity> {
             reset = :state,
             notify = :state
     """)
-    suspend fun reset(state: Boolean)
+    suspend fun reset(
+        state: Boolean
+    )
 
     @Transaction
     suspend fun deleteAll() {

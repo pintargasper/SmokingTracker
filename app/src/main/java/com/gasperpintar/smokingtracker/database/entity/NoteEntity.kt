@@ -1,10 +1,16 @@
 package com.gasperpintar.smokingtracker.database.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 
-@Entity(tableName = "notes")
+@Entity(
+    tableName = "notes",
+    indices = [
+        Index(value = ["createdAt"])
+    ]
+)
 data class NoteEntity(
 
     @PrimaryKey(autoGenerate = true)

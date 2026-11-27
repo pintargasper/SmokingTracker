@@ -6,6 +6,7 @@ import com.gasperpintar.smokingtracker.database.model.NotificationsEntry
 class NotificationsRepository(
     private val notificationsSettingsDao: NotificationsSettingsDao
 ) {
+
     suspend fun insert(
         settings: NotificationsEntry
     ) {
