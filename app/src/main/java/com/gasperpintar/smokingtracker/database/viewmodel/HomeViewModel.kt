@@ -122,7 +122,7 @@ class HomeViewModel(
         isLent: Boolean,
         trigger: TriggerJson.Type
     ) {
-        if (!isLent) achievementRepository.resetAll(state = true)
+        if (!isLent) achievementRepository.reset(state = true)
         historyRepository.insert(entry = HistoryEntry.default(isLent = isLent, trigger = trigger))
     }
 
@@ -132,7 +132,7 @@ class HomeViewModel(
         isLent: Boolean,
         trigger: TriggerJson.Type
     ) {
-        if (entry.id == lastEntry?.id && entry.createdAt != dateTime) achievementRepository.resetAll(state = false)
+        if (entry.id == lastEntry?.id && entry.createdAt != dateTime) achievementRepository.reset(state = false)
         val updatedEntry = entry.copy(createdAt = dateTime, isLent = isLent, trigger = trigger)
         historyRepository.update(entry = updatedEntry)
     }
@@ -140,7 +140,7 @@ class HomeViewModel(
     suspend fun delete(
         entry: HistoryEntry
     ) {
-        if (entry.id == lastEntry?.id) achievementRepository.resetAll(state = false)
+        if (entry.id == lastEntry?.id) achievementRepository.reset(state = false)
         historyRepository.delete(entry = entry)
     }
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 8,
-    "identityHash": "cb5f66a6b5dfaf015a733c6e2224760e",
+    "identityHash": "8852afcabbe2ce1428285c3488812b4b",
     "entities": [
       {
         "tableName": "achievements",
@@ -79,7 +79,18 @@
           "columnNames": [
             "id"
           ]
-        }
+        },
+        "indices": [
+          {
+            "name": "index_achievements_category",
+            "unique": false,
+            "columnNames": [
+              "category"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_achievements_category` ON `${TABLE_NAME}` (`category`)"
+          }
+        ]
       },
       {
         "tableName": "history",
@@ -357,7 +368,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'cb5f66a6b5dfaf015a733c6e2224760e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8852afcabbe2ce1428285c3488812b4b')"
     ]
   }
 }

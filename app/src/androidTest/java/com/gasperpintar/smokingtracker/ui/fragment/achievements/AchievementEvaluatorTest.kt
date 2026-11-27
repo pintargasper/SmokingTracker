@@ -97,7 +97,7 @@ class AchievementEvaluatorTest {
         evaluator.evaluate(lastSmokeTime = lastSmokeTime, now = lastSmokeTime.plusHours(25))
 
         val nextSmokeTime = lastSmokeTime.plusDays(2)
-        achievementRepository.resetAll(state = true)
+        achievementRepository.reset(state = true)
         evaluator.evaluate(lastSmokeTime = nextSmokeTime, now = nextSmokeTime.plusHours(25))
 
         val achievement = achievementRepository.getAll().single()

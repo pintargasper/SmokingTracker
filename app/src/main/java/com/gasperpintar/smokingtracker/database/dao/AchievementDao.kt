@@ -2,26 +2,52 @@ package com.gasperpintar.smokingtracker.database.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.gasperpintar.smokingtracker.database.entity.AchievementEntity
+import com.gasperpintar.smokingtracker.model.AchievementJson
 
 @Dao
 interface AchievementDao: Base<AchievementEntity> {
 
-    @Query(value = "DELETE FROM achievements")
-    suspend fun deleteAll()
+    @Query(value = """
+        SELECT * 
+        FROM achievements 
+        ORDER BY id ASC
+    """)
+    suspend fun getAll(): List<AchievementEntity>
 
-    @Query(value = "DELETE FROM sqlite_sequence WHERE name = 'achievements'")
-    suspend fun resetAutoIncrement()
+    @Query("""
+        SELECT *
+        FROM achievements
+        WHERE category = :category
+        ORDER BY id ASC
+    """)
+    suspend fun getByCategory(
+        category: AchievementJson.Category
+    ): List<AchievementEntity>
 
     @Query(value = """
         UPDATE achievements
         SET 
             reset = :state,
             notify = :state
-    """
-    )
+    """)
     suspend fun resetAll(state: Boolean)
 
-    @Query(value = "SELECT * FROM achievements ORDER BY id ASC")
-    suspend fun getAll(): List<AchievementEntity>
+    @Transaction
+    suspend fun deleteAll() {
+        delete()
+        resetAutoIncrement()
+    }
+
+    @Query("""
+        DELETE FROM achievements
+    """)
+    suspend fun delete()
+
+    @Query("""
+        DELETE FROM sqlite_sequence
+        WHERE name = 'achievements'
+    """)
+    suspend fun resetAutoIncrement()
 }

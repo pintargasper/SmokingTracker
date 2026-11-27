@@ -314,7 +314,7 @@ class ManagerTest {
 
     private suspend fun clearDatabase() {
         historyRepository.deleteAll()
-        achievementRepository.deleteAll()
+        achievementRepository.delete()
         costsRepository.deleteAll()
         notesRepository.deleteAll()
         settingsRepository.get()?.let { settingsRepository.delete(settings = it) }

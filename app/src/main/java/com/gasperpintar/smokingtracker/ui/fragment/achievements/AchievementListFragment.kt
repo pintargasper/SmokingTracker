@@ -1,7 +1,10 @@
 package com.gasperpintar.smokingtracker.ui.fragment.achievements
 
+import android.os.Bundle
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gasperpintar.smokingtracker.Application
 import com.gasperpintar.smokingtracker.database.model.AchievementEntry
@@ -16,7 +19,7 @@ import com.gasperpintar.smokingtracker.ui.fragment.Base
 import kotlinx.coroutines.launch
 
 class AchievementListFragment @JvmOverloads constructor(
-    private val initialAchievementType: AchievementJson.Category = AchievementJson.Category.CIGARETTES_AVOIDED
+    private val initialType: AchievementJson.Category = AchievementJson.Category.CIGARETTES_AVOIDED
 ) : Base<FragmentAchievementsListBinding>(
     bindingInflater = FragmentAchievementsListBinding::inflate
 ) {
@@ -31,14 +34,16 @@ class AchievementListFragment @JvmOverloads constructor(
     @Override
     override fun initialize() {
         achievementType = AchievementJson.Category.valueOf(
-            arguments?.getString(ARG_ACHIEVEMENT_TYPE, initialAchievementType.name) ?: initialAchievementType.name
+            arguments?.getString(ACHIEVEMENT_TYPE, initialType.name) ?: initialType.name
         )
 
         setupAdapter()
 
         viewLifecycleOwner.lifecycleScope.launch {
-            loadAchievements()
-            showContent()
+            viewLifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
+                loadAchievements()
+                showContent()
+            }
         }
     }
 
@@ -51,21 +56,19 @@ class AchievementListFragment @JvmOverloads constructor(
     private suspend fun loadAchievements() {
         val state = viewModel.getState(category = achievementType)
         if (!isAdded || view == null) return
-        adapter.submitList(state.achievements) {
-            if (state.achievements.isNotEmpty()) binding.recyclerviewAchievements.scrollToPosition(0)
-        }
+        adapter.submitList(state.achievements)
     }
 
     companion object {
-        private const val ARG_ACHIEVEMENT_TYPE = "achievement_type"
+        private const val ACHIEVEMENT_TYPE = "achievement_type"
 
         @JvmStatic
         fun newInstance(
             achievementType: AchievementJson.Category
         ): AchievementListFragment {
-            return AchievementListFragment(initialAchievementType = achievementType).apply {
-                arguments = android.os.Bundle().apply {
-                    putString(ARG_ACHIEVEMENT_TYPE, achievementType.name)
+            return AchievementListFragment(initialType = achievementType).apply {
+                arguments = Bundle().apply {
+                    putString(ACHIEVEMENT_TYPE, achievementType.name)
                 }
             }
         }

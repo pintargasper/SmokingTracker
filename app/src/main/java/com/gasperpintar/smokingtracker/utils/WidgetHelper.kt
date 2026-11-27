@@ -168,7 +168,7 @@ object WidgetHelper {
             try {
                 val container = (context.applicationContext as Application).container
                 container.historyRepository.insert(entry = HistoryEntry.default(isLent = false, trigger =  container.settingsRepository.get()!!.defaultTrigger))
-                container.achievementRepository.resetAll(state = true)
+                container.achievementRepository.reset(state = true)
                 updateAllWidgets(context)
 
                 val manager = AppWidgetManager.getInstance(context)

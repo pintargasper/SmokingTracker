@@ -19,18 +19,20 @@ class JsonHelper(
     private val achievementRepository: AchievementRepository? = null,
     private val triggerRepository: TriggerRepository? = null
 ) {
+
     suspend fun initializeAchievements(
         context: Context
     ) {
-        val existing = achievementRepository?.getAll()
         val rawData: Map<AchievementJson.Category, List<AchievementJson>> = context.resources
             .openRawResource(R.raw.achievements).bufferedReader().use {
                 Gson().fromJson(it, object : TypeToken<Map<AchievementJson.Category, List<AchievementJson>>>() {}.type)
             }
 
         val newEntries = rawData.flatMap { (category, entries) ->
-            entries.filter { entry -> existing?.none { it.category == category && it.title == entry.title }
-                ?: return@flatMap emptyList() }.map { entry ->
+            val existing = achievementRepository?.getByCategory(category) ?: emptyList()
+            entries.filter { entry ->
+                existing.none { it.title == entry.title }
+            }.map { entry ->
                 AchievementEntry(
                     id = 0,
                     image = entry.icon.uppercase(),
@@ -46,10 +48,7 @@ class JsonHelper(
                 )
             }
         }
-
-        if (newEntries.isNotEmpty()) {
-            achievementRepository?.upsertAll(newEntries)
-        }
+        if (newEntries.isNotEmpty()) achievementRepository?.upsert(newEntries)
     }
 
     suspend fun initializeTriggers(context: Context) {
@@ -67,9 +66,7 @@ class JsonHelper(
             TriggerEntry(id = 0, type = entry.type)
         }
 
-        if (newEntries.isNotEmpty()) {
-            triggerRepository?.upsertAll(newEntries)
-        }
+        if (newEntries.isNotEmpty()) triggerRepository?.upsertAll(newEntries)
     }
 
     fun initializeAbout(context: Context): Pair<List<ItemAdapter.Item>, List<ItemAdapter.Item>> {

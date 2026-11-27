@@ -1,11 +1,17 @@
 package com.gasperpintar.smokingtracker.database.entity
 
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.gasperpintar.smokingtracker.model.AchievementJson
 import java.time.LocalDateTime
 
-@Entity(tableName = "achievements")
+@Entity(
+    tableName = "achievements",
+    indices = [
+        Index(value = ["category"])
+    ]
+)
 data class AchievementEntity(
 
     @PrimaryKey(autoGenerate = true)

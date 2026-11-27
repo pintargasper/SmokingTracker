@@ -12,8 +12,6 @@ class AchievementViewModel(
     suspend fun getState(
         category: AchievementJson.Category
     ): AchievementState {
-        val achievements = achievementRepository.getAll()
-            .filter { it.category == category }
-        return AchievementState(achievements = achievements)
+        return AchievementState(achievements = achievementRepository.getByCategory(category = category))
     }
 }

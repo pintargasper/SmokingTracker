@@ -187,7 +187,7 @@ object Manager {
         val entities = workbook.import(sheetName = "Achievements", requiredHeaders = Mappers.ACHIEVEMENTS_HEADERS, onStepProgress) { row, col, index ->
             Mappers.parseAchievement(row, col, index, dateFormatter)
         }
-        repository.deleteAll()
+        repository.delete()
         if (entities.isNotEmpty()) repository.insert(entries = entities)
     }
 
