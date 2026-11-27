@@ -35,9 +35,8 @@
     <string name="home_next_day">Next day</string>
     <string name="home_add_entry">Add new entry</string>
     <string name="home_add_cigarette">Add cigarette</string>
-    <string name="home_lent">Lent record</string>
-    <string name="home_edit">Edit record</string>
-    <string name="home_delete">Delete record</string>
+    <string name="home_edit">Edit entry</string>
+    <string name="home_delete">Delete entry</string>
     <string name="home_no_entries">No entries found for this day</string>
     <string name="home_no_entries_message">Click the \"Add new entry\" button to add a new entry</string>
     <string name="home_cigarettes_today">Cigarettes today</string>
@@ -158,7 +157,7 @@
     <string name="notes_no_entries_message">Click the + button to create your first note</string>
 
     <string name="cost_price">Cost: %1$s %2$s</string>
-    <string name="cost_delete">Delete record</string>
+    <string name="cost_delete">Delete entry</string>
     <string name="cost_format" translatable="false">%1$s - %2$s</string>
 
     <string name="settings_general">General</string>
@@ -251,12 +250,11 @@
 
     <string name="insert_popup">Add entry</string>
     <string name="insert_popup_lent">A lent cigarette?</string>
-    <string name="insert_popup_add">Add</string>
 
     <string name="edit_popup_message">Date and time</string>
     <string name="edit_popup_lent">A lent cigarette?</string>
 
-    <string name="delete_popup_message">Are you sure to delete this record?</string>
+    <string name="delete_popup_message">Are you sure to delete this entry?</string>
 
     <string name="language_popup">Select language</string>
     <string name="language_popup_info">Choose your preferred language</string>

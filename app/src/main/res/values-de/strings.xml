@@ -20,14 +20,6 @@
     <string name="graph_weekly">Übersicht wöchentlich (%1$d)</string>
     <string name="graph_monthly">Übersicht monatlich (%1$d)</string>
     <string name="graph_yearly">Übersicht jährlich (%1$d)</string>
-    <string name="graph_previous_day_daily">Vorheriger Tag (täglich)</string>
-    <string name="graph_previous_day_weekly">Vorheriger Tag (wöchentlich)</string>
-    <string name="graph_previous_day_monthly">Vorheriger Tag (monatlich)</string>
-    <string name="graph_previous_day_yearly">Vorheriger Tag (jährlich)</string>
-    <string name="graph_next_day_daily">Nächster Tag (täglich)</string>
-    <string name="graph_next_day_weekly">Nächster Tag (wöchentlich)</string>
-    <string name="graph_next_day_monthly">Nächster Tag (monatlich)</string>
-    <string name="graph_next_day_yearly">Nächster Tag (jährlich)</string>
     <string name="graph_view_info">Es gibt keine Daten zum Anzeigen eines Graphen</string>
     <string name="more_progress">Analyse</string>
     <string name="more_tools_calculator">Rechner</string>
@@ -37,7 +29,6 @@
     <string name="achievements">Errungenschaften</string>
     <string name="achievements_avoided">Zigaretten vermieden</string>
     <string name="achievements_time">Rauchfreie Zeit</string>
-    <string name="home_lent">Eintrag (Verliehene)</string>
     <string name="home_edit">Eintrag bearbeiten</string>
     <string name="home_delete">Eintrag löschen</string>
     <string name="achievements_icon">Errungenschaft (Symbol)</string>
@@ -60,7 +51,6 @@
     <string name="about_privacy_policy">Smoking Tracker - Datenschutzbestimmungen</string>
     <string name="insert_popup">Eintrag hinzufügen</string>
     <string name="insert_popup_lent">Eine verliehene Zigarette?</string>
-    <string name="insert_popup_add">Hinzufügen</string>
     <string name="button_close">Schließen</string>
     <string name="button_confirm">Bestätigen</string>
     <string name="edit_popup_message">Datum und Zeit</string>

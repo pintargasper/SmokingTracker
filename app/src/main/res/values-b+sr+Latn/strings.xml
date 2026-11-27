@@ -12,9 +12,7 @@
     <string name="graph_weekly">Pregled nedelje (%1$d)</string>
     <string name="graph_monthly">Pregled meseca (%1$d)</string>
     <string name="graph_yearly">Pregled godine (%1$d)</string>
-    <string name="graph_previous_day_weekly">Prethodni dan (Nedeljno)</string>
     <string name="graph_view_info">Ovde nema podataka za prikaz grafikona</string>
-    <string name="home_lent">Evidencija pozajmica</string>
     <string name="home_edit">Uredi zapis</string>
     <string name="home_delete">Obriši zapis</string>
     <string name="settings_general">Opšte</string>
@@ -34,7 +32,6 @@
     <string name="about_privacy_policy">Praćenje Pušenja-politika privatnosti</string>
     <string name="insert_popup">Dodaj unos</string>
     <string name="insert_popup_lent">Pozajmljena cigareta?</string>
-    <string name="insert_popup_add">Dodaj</string>
     <string name="edit_popup_message">Datum i vreme</string>
     <string name="edit_popup_lent">Pozajmljena cigareta?</string>
     <string name="app_name">Praćenje Pušenja</string>
@@ -45,13 +42,6 @@
     <string name="home_timer_minute">m</string>
     <string name="home_timer_second">s</string>
     <string name="graph_daily">Pregled dana (%1$d)</string>
-    <string name="graph_previous_day_daily">Prethodni dan (Dnevno)</string>
-    <string name="graph_previous_day_monthly">Prethodni dan (Mesečno)</string>
-    <string name="graph_previous_day_yearly">Prethodni dan (Godišnje)</string>
-    <string name="graph_next_day_daily">Sledeći dan (Dnevno)</string>
-    <string name="graph_next_day_weekly">Sledeći dan (Nedeljno)</string>
-    <string name="graph_next_day_monthly">Sledeći dan (Mesečno)</string>
-    <string name="graph_next_day_yearly">Sledeći dan (Godišnje)</string>
     <string name="more_progress">Analitika</string>
     <string name="more_tools_calculator">Kalkulator</string>
     <string name="more_tools_calculator_description">Brzi pregled ukupne upotrebe, troškova i vremena</string>

@@ -19,7 +19,6 @@
     <string name="graph_weekly">Savaitės apžvalga (%1$d)</string>
     <string name="graph_monthly">Mėnesio apžvalga (%1$d)</string>
     <string name="graph_yearly">Metų apžvalga (%1$d)</string>
-    <string name="graph_previous_day_daily">Praėjusi diena</string>
     <string name="graph_view_info">Nėra duomenų grafikui parodyti</string>
     <string name="more_progress">Progresas</string>
     <string name="more_progress_statistics">Statistika</string>

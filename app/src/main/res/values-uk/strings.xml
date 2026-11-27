@@ -20,14 +20,6 @@
     <string name="graph_weekly">Огляд за тиждень (%1$d)</string>
     <string name="graph_monthly">Огляд за місяць (%1$d)</string>
     <string name="graph_yearly">Огляд за рік (%1$d)</string>
-    <string name="graph_previous_day_daily">Попередній період (за день)</string>
-    <string name="graph_previous_day_weekly">Попередній період (за тиждень)</string>
-    <string name="graph_previous_day_monthly">Попередній період (за місяць)</string>
-    <string name="graph_previous_day_yearly">Попередній період (за рік)</string>
-    <string name="graph_next_day_daily">Наступний період (за день)</string>
-    <string name="graph_next_day_weekly">Наступний період (за тиждень)</string>
-    <string name="graph_next_day_monthly">Наступний період (за місяць)</string>
-    <string name="graph_next_day_yearly">Наступний період (за рік)</string>
     <string name="graph_view_info">Немає даних для відображення графіка</string>
     <string name="more_progress">Аналітика</string>
     <string name="more_tools_calculator">Калькулятор</string>
@@ -37,7 +29,6 @@
     <string name="achievements">Ачівки</string>
     <string name="achievements_avoided">Цигарки, які ти скіпнув</string>
     <string name="achievements_time">Час у режимі no‑smoke</string>
-    <string name="home_lent">Твій топовий рекорд</string>
     <string name="home_edit">Редагувати</string>
     <string name="home_delete">Видалити запис</string>
     <string name="achievements_icon">Іконка ачівки</string>
@@ -60,7 +51,6 @@
     <string name="about_version_unknown">Невідомо</string>
     <string name="insert_popup">Додати запис</string>
     <string name="insert_popup_lent">Позичена сигарета?</string>
-    <string name="insert_popup_add">Додати</string>
     <string name="edit_popup_message">Дата й час</string>
     <string name="edit_popup_lent">Позичена сигарета?</string>
     <string name="delete_popup_message">Видалити цей запис назавжди?</string>

@@ -56,7 +56,7 @@
         android:layout_height="32dp"
         android:visibility="gone"
         style="?appImageStyle"
-        tools:src="@drawable/question_mark_48px"
+        tools:src="@drawable/ic_stat_name"
         tools:visibility="visible" />
 
 </LinearLayout>

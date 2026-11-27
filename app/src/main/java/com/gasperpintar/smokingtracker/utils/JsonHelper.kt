@@ -84,7 +84,9 @@ class JsonHelper(
         val contributors: List<AboutJson> = gson.fromJson(rawData["contributors"], type)
 
         val platformItems = platforms.map { platform ->
-            ItemAdapter.Item(title = platform.title, value = platform.value.orEmpty(), url = platform.url)
+            ItemAdapter.Item(title = platform.title, value = platform.value?.let {
+                context.getString(it.stringResource)
+            }.orEmpty(), url = platform.url)
         }
 
         val contributorItems = contributors.map { contributor ->

@@ -2,22 +2,22 @@
   "platforms": [
     {
       "title": "GitHub",
-      "value": "github.com/pintargasper/SmokingTracker",
+      "value": "GITHUB",
       "url": "https://github.com/pintargasper/SmokingTracker"
     },
     {
       "title": "F-Droid",
-      "value": "f-droid.org",
+      "value": "F_DROID",
       "url": "https://f-droid.org/packages/com.gasperpintar.smokingtracker"
     },
     {
       "title": "IzzyOnDroid",
-      "value": "apt.izzysoft.de",
+      "value": "IZZY_ON_DROID",
       "url": "https://apt.izzysoft.de/fdroid/index/apk/com.gasperpintar.smokingtracker"
     },
     {
       "title": "OpenAPK",
-      "value": "openapk.net",
+      "value": "OPEN_APK",
       "url": "https://www.openapk.net/smoking-tracker/com.gasperpintar.smokingtracker/"
     }
   ],

@@ -20,14 +20,6 @@
     <string name="graph_weekly">Преглед недеље (%1$d)</string>
     <string name="graph_monthly">Преглед месеца (%1$d)</string>
     <string name="graph_yearly">Преглед године (%1$d)</string>
-    <string name="graph_previous_day_daily">Претходни дан (Дневно)</string>
-    <string name="graph_previous_day_weekly">Претходни дан (Недељно)</string>
-    <string name="graph_previous_day_monthly">Претходни дан (Месечно)</string>
-    <string name="graph_previous_day_yearly">Претходни дан (Годишње)</string>
-    <string name="graph_next_day_daily">Следећи дан (Дневно)</string>
-    <string name="graph_next_day_weekly">Следећи дан (Недељно)</string>
-    <string name="graph_next_day_monthly">Следећи дан (Месечно)</string>
-    <string name="graph_next_day_yearly">Следећи дан (Годишње)</string>
     <string name="graph_view_info">Нема података за приказ графикона</string>
     <string name="more_progress">Аналитика</string>
     <string name="more_tools_calculator">Калкулатор</string>
@@ -37,7 +29,6 @@
     <string name="achievements">Достигнућа</string>
     <string name="achievements_avoided">Избегнуте цигарете</string>
     <string name="achievements_time">Време без пушења</string>
-    <string name="home_lent">Евиденција позајмица</string>
     <string name="home_edit">Уреди запис</string>
     <string name="home_delete">Обриши запис</string>
     <string name="achievements_icon">Икона достигнућа</string>
@@ -60,7 +51,6 @@
     <string name="about_privacy_policy">Smoking Tracker – Политика приватности</string>
     <string name="insert_popup">Додај унос</string>
     <string name="insert_popup_lent">Позајмљена цигарета?</string>
-    <string name="insert_popup_add">Додај</string>
     <string name="button_close">Затвори</string>
     <string name="button_confirm">Потврди</string>
     <string name="edit_popup_message">Датум и време</string>

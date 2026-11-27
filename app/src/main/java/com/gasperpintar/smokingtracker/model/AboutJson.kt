@@ -12,11 +12,28 @@ data class AboutJson(
     val url: String,
 
     @SerializedName(value = "value")
-    val value: String? = null,
+    val value: Value? = null,
 
     @SerializedName(value = "contributions")
     val contributions: List<ContributionType>? = null
 ) {
+
+    @Suppress("unused")
+    enum class Value(
+        val stringResource: Int
+    ) {
+        @SerializedName(value = "GITHUB")
+        GITHUB(R.string.about_view_github),
+
+        @SerializedName(value = "F_DROID")
+        F_DROID(R.string.about_view_f_droid),
+
+        @SerializedName(value = "IZZY_ON_DROID")
+        IZZY_ON_DROID(R.string.about_view_izzy_on_droid),
+
+        @SerializedName(value = "OPEN_APK")
+        OPEN_APK(R.string.about_view_open_apk),
+    }
 
     @Suppress("unused")
     enum class ContributionType(

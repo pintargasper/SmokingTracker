@@ -13,14 +13,7 @@
     <string name="graph_weekly">Tedenski pregled (%1$d)</string>
     <string name="graph_monthly">Mesečni pregled (%1$d)</string>
     <string name="graph_yearly">Letni pregled (%1$d)</string>
-    <string name="graph_previous_day_weekly">Prejšnji dan (Tedensko)</string>
-    <string name="graph_previous_day_monthly">Prejšnji dan (Mesečno)</string>
-    <string name="graph_previous_day_yearly">Prejšnji dan (Letno)</string>
-    <string name="graph_next_day_weekly">Naslednji dan (Tedensko)</string>
-    <string name="graph_next_day_monthly">Naslednji dan (Mesečno)</string>
-    <string name="graph_next_day_yearly">Naslednji dan (Letno)</string>
     <string name="graph_view_info">Ni podatkov za prikaz grafa</string>
-    <string name="home_lent">Posodi vnos</string>
     <string name="home_edit">Uredi vnos</string>
     <string name="home_delete">Izbriši vnos</string>
     <string name="settings_general">Splošno</string>
@@ -33,7 +26,6 @@
     <string name="settings_about_website">Spletna stran</string>
     <string name="insert_popup">Dodaj vnos</string>
     <string name="insert_popup_lent">Posojena cigareta?</string>
-    <string name="insert_popup_add">Dodaj</string>
     <string name="edit_popup_message">Datum in čas</string>
     <string name="edit_popup_lent">Posojena cigareta?</string>
     <string name="delete_popup_message">Ali ste prepričani, da želite izbrisati ta zapis?</string>
@@ -108,8 +100,6 @@
         <item quantity="other">%d minut</item>
     </plurals>
     <string name="graph_daily">Dnevni pregled (%1$d)</string>
-    <string name="graph_previous_day_daily">Prejšnji dan (Dnevno)</string>
-    <string name="graph_next_day_daily">Naslednji dan (Dnevno)</string>
     <string name="home_timer_day">d</string>
     <string name="home_timer_hour">h</string>
     <string name="home_timer_minute">min</string>

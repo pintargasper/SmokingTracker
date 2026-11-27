@@ -20,14 +20,6 @@
     <string name="graph_weekly">每周概览（%1$d）</string>
     <string name="graph_monthly">每月概览（%1$d）</string>
     <string name="graph_yearly">每年概览（%1$d）</string>
-    <string name="graph_previous_day_daily">上一天（日）</string>
-    <string name="graph_previous_day_weekly">上一天（周）</string>
-    <string name="graph_previous_day_monthly">上一天（月）</string>
-    <string name="graph_previous_day_yearly">上一天（年）</string>
-    <string name="graph_next_day_daily">下一天（日）</string>
-    <string name="graph_next_day_weekly">下一天（周）</string>
-    <string name="graph_next_day_monthly">下一天（月）</string>
-    <string name="graph_next_day_yearly">下一天（年）</string>
     <string name="graph_view_info">暂无数据可显示图表</string>
     <string name="more_progress">进展</string>
     <string name="more_tools_calculator">计算器</string>
@@ -37,7 +29,6 @@
     <string name="achievements">成就</string>
     <string name="achievements_avoided">少吸支数</string>
     <string name="achievements_time">戒烟时长</string>
-    <string name="home_lent">借出记录</string>
     <string name="home_edit">编辑记录</string>
     <string name="home_delete">删除记录</string>
     <string name="achievements_icon">成就图标</string>
@@ -60,7 +51,6 @@
     <string name="about_privacy_policy">隐私政策</string>
     <string name="insert_popup">添加记录</string>
     <string name="insert_popup_lent">是借出的烟？</string>
-    <string name="insert_popup_add">添加</string>
     <string name="button_close">关闭</string>
     <string name="button_confirm">确认</string>
     <string name="edit_popup_message">日期与时间</string>

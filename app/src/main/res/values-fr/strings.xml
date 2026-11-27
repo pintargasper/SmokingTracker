@@ -31,14 +31,6 @@
     <string name="graph_weekly">Récapitulatif Hebdomadaire (%1$d)</string>
     <string name="graph_monthly">Récapitulatif Mensuel (%1$d)</string>
     <string name="graph_yearly">Récapitulatif Annuel (%1$d)</string>
-    <string name="graph_previous_day_daily">Jour précédent (Journalier)</string>
-    <string name="graph_previous_day_weekly">Jour précédent (Hebdomadaire)</string>
-    <string name="graph_previous_day_monthly">Jour précédent (Mensuel)</string>
-    <string name="graph_previous_day_yearly">Jour précédent (Annuel)</string>
-    <string name="graph_next_day_daily">Jour suivant (Journalier)</string>
-    <string name="graph_next_day_weekly">Jour suivant (Hebdomadaire)</string>
-    <string name="graph_next_day_monthly">Jour suivant (Mensuel)</string>
-    <string name="graph_next_day_yearly">Jour suivant (Annuel)</string>
     <string name="graph_view_info">Il n\'y a aucune information à afficher sur ce diagramme</string>
     <string name="more_progress">Analytique</string>
     <string name="more_tools_calculator">Calculatrice</string>
@@ -68,7 +60,6 @@
     <string name="about_privacy_policy">Smoking Tracker : Politique de Confidentialité</string>
     <string name="insert_popup">Ajouter une entrée</string>
     <string name="insert_popup_lent">Une cigarette prêtée ?</string>
-    <string name="insert_popup_add">Ajouter</string>
     <string name="button_close">Fermer</string>
     <string name="button_confirm">Confirmer</string>
     <string name="edit_popup_message">Date et heure</string>
@@ -158,7 +149,6 @@
         <item quantity="other">%d fois</item>
     </plurals>
     <string name="more_progress_achievements_description">Suivez vos étapes et célébrez vos progrès</string>
-    <string name="home_lent">Enregistrer un prêt</string>
     <string name="achievements_icon">Icône d\'achèvement</string>
     <string name="notifications_popup_info">Choisissez vos préférences de notification</string>
     <string name="achievement_congrats_three_weeks">Pionnier de trois semaines</string>
