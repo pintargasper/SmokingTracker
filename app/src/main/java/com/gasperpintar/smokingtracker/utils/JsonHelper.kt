@@ -66,7 +66,7 @@ class JsonHelper(
             TriggerEntry(id = 0, type = entry.type)
         }
 
-        if (newEntries.isNotEmpty()) triggerRepository?.upsertAll(newEntries)
+        if (newEntries.isNotEmpty()) triggerRepository?.insert(newEntries)
     }
 
     fun initializeAbout(context: Context): Pair<List<ItemAdapter.Item>, List<ItemAdapter.Item>> {
