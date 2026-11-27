@@ -7,6 +7,10 @@ class SettingsRepository(
     private val settingsDao: SettingsDao
 ) {
 
+    suspend fun get(): SettingsEntry? {
+        return settingsDao.last()?.let(block = SettingsEntry.Companion::fromEntity)
+    }
+
     suspend fun insert(
         settings: SettingsEntry
     ) {
@@ -19,19 +23,9 @@ class SettingsRepository(
         settingsDao.update(entity = settings.toEntity())
     }
 
-    suspend fun upsert(
-        settings: SettingsEntry
-    ) {
-        settingsDao.upsert(entity = settings.toEntity())
-    }
-
     suspend fun delete(
         settings: SettingsEntry
     ) {
         settingsDao.delete(entity = settings.toEntity())
-    }
-
-    suspend fun get(): SettingsEntry? {
-        return settingsDao.get()?.let(block = SettingsEntry.Companion::fromEntity)
     }
 }

@@ -164,12 +164,16 @@ class ScreenshotTest {
 
     private fun setTestLanguage() = runBlocking {
         val language = getDefaultLanguageIndex()
-        settingsRepository.upsert(settingsRepository.get()?.copy(language = language) ?: SettingsEntry.default(language = language))
+        val settings = settingsRepository.get()
+        if (settings == null) settingsRepository.insert(SettingsEntry.default(language = language))
+        else settingsRepository.update(settings.copy(language = language))
     }
 
     private fun setTestCurrency() = runBlocking {
         val currency = getDefaultCurrency()
-        settingsRepository.upsert(settingsRepository.get()?.copy(currency = currency) ?: SettingsEntry.default(currency = currency))
+        val settings = settingsRepository.get()
+        if (settings == null) settingsRepository.insert(SettingsEntry.default(currency = currency))
+        else settingsRepository.update(settings.copy(currency = currency))
     }
 
     private fun getDefaultLanguageIndex(): String {

@@ -7,6 +7,10 @@ import com.gasperpintar.smokingtracker.database.entity.NotificationsEntity
 @Dao
 interface NotificationsSettingsDao: Base<NotificationsEntity> {
 
-    @Query(value = "SELECT * FROM notifications_settings LIMIT 1")
-    suspend fun get(): NotificationsEntity?
+    @Query(value = """
+        SELECT * 
+        FROM notifications_settings 
+        LIMIT 1
+    """)
+    suspend fun last(): NotificationsEntity?
 }

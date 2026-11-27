@@ -115,7 +115,7 @@ class HomeViewModelTest {
 
     @Test
     fun minimalStateUsesSmokedOnlyCurrentAppDayAndLatestSmokedEntry() = runBlocking {
-        settingsDao.update(entity = settingsDao.get()!!.copy(dayEndMinutes = 120, elapsedTimeWarningMinutes = 90))
+        settingsDao.update(entity = settingsDao.last()!!.copy(dayEndMinutes = 120, elapsedTimeWarningMinutes = 90))
         val now = LocalDateTime.of(2026, 1, 2, 1, 30)
         listOf(
             HistoryEntity(id = 0, lent = 0, createdAt = LocalDateTime.of(2026, 1, 1, 1, 59), trigger = TriggerJson.Type.NO_REASON),

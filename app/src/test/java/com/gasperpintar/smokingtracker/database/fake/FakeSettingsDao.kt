@@ -9,7 +9,7 @@ class FakeSettingsDao : FakeDao<SettingsEntity>(
 ), SettingsDao {
 
     @Override
-    override suspend fun get(): SettingsEntity? {
-        return items.firstOrNull()
+    override suspend fun last(): SettingsEntity? {
+        return items.lastOrNull()
     }
 }

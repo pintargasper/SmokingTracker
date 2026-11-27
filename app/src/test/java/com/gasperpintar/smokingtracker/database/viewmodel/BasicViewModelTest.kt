@@ -62,7 +62,7 @@ class BasicViewModelTest {
 
     @Test
     fun getStateAssignsEntriesBeforeDayEndToPreviousDay() = runBlocking {
-        settingsDao.update(entity = settingsDao.get()!!.copy(dayEndMinutes = 120))
+        settingsDao.update(entity = settingsDao.last()!!.copy(dayEndMinutes = 120))
         insertCost(start = LocalDateTime.of(2026, 1, 1, 0, 0), end = LocalDateTime.of(2026, 2, 1, 0, 0), price = 0.25)
         insertHistory(dates = arrayOf(LocalDateTime.of(2026, 1, 15, 12, 0),
             LocalDateTime.of(2026, 1, 16, 1, 0),

@@ -47,12 +47,10 @@ class MinimalHomeFragmentTest {
         historyRepository = HistoryRepository(historyDao = database.historyDao())
         historyRepository.deleteAll()
         settingsRepository = SettingsRepository(settingsDao = database.settingsDao())
-        settingsRepository.upsert(
-            settingsRepository.get()?.copy(
-                dayEndMinutes = 0,
-                elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES
-            ) ?: SettingsEntry.default().copy(dayEndMinutes = 0)
-        )
+
+        val settings = settingsRepository.get()
+        if (settings == null) settingsRepository.insert(SettingsEntry.default().copy(dayEndMinutes = 0, elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES))
+        else settingsRepository.update(settings.copy(dayEndMinutes = 0, elapsedTimeWarningMinutes = ElapsedTimeWarning.DEFAULT_MINUTES))
 
         PreferencesHelper.with(context = context, name = Preferences.Name.SETTINGS)
             .put(key = Preferences.Key.FIRST_RUN, value = false)

@@ -7,6 +7,10 @@ class NotificationsRepository(
     private val notificationsSettingsDao: NotificationsSettingsDao
 ) {
 
+    suspend fun get(): NotificationsEntry? {
+        return notificationsSettingsDao.last()?.let(block = NotificationsEntry::fromEntity)
+    }
+
     suspend fun insert(
         settings: NotificationsEntry
     ) {
@@ -23,9 +27,5 @@ class NotificationsRepository(
         settings: NotificationsEntry
     ) {
         notificationsSettingsDao.delete(entity = settings.toEntity())
-    }
-
-    suspend fun get(): NotificationsEntry? {
-        return notificationsSettingsDao.get()?.let(block = NotificationsEntry::fromEntity)
     }
 }

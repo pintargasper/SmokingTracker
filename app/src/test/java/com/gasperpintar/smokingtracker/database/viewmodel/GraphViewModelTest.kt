@@ -74,7 +74,7 @@ class GraphViewModelTest {
 
     @Test
     fun getStateStartsDayAtConfiguredDayEnd() = runBlocking {
-        settingsDao.update(entity = settingsDao.get()!!.copy(dayEndMinutes = 120))
+        settingsDao.update(entity = settingsDao.last()!!.copy(dayEndMinutes = 120))
         insertHistory(LocalDateTime.of(2024, 2, 15, 1, 30), LocalDateTime.of(2024, 2, 16, 1, 30))
 
         val state = stateFor(date = selectedDate)
@@ -87,7 +87,7 @@ class GraphViewModelTest {
     @Test
     fun getStateKeepsPastDateWhenDayEndChanges() = runBlocking {
         stateFor(date = selectedDate)
-        settingsDao.update(entity = settingsDao.get()!!.copy(dayEndMinutes = 120))
+        settingsDao.update(entity = settingsDao.last()!!.copy(dayEndMinutes = 120))
 
         assertEquals(selectedDate, viewModel.getState().selectedDate)
     }
